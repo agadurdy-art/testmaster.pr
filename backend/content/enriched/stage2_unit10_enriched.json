@@ -1,0 +1,2730 @@
+{
+  "stage": "stage_2",
+  "stage_id": "stage_2_starters",
+  "stage_title": "Starters (A1)",
+  "units": [
+    {
+      "unit_id": "stage_2_unit_10",
+      "unit_num": 10,
+      "title": "Clothes",
+      "subtitle": "What we wear",
+      "phonics_focus": [
+        "Clothing words",
+        "Color + noun patterns"
+      ],
+      "grammar_focus": [
+        "He/She is wearing...",
+        "Adjective + Noun order (e.g., blue skirt)"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_2_unit_10_lesson_01",
+          "title": "Basic Clothes",
+          "topic": "Getting dressed for school in the morning",
+          "context": "Getting dressed for school in the morning.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What do you put on your feet before you go to school?",
+                  "correct_answer": "shoes",
+                  "options": [
+                    "shoes",
+                    "hat",
+                    "gloves",
+                    "bag"
+                  ],
+                  "image_emoji": "👟",
+                  "hint": "You wear these to walk outside!"
+                },
+                {
+                  "question_text": "When do you get dressed in the morning?",
+                  "correct_answer": "after I wake up",
+                  "options": [
+                    "after I wake up",
+                    "at night",
+                    "at lunchtime",
+                    "in the classroom"
+                  ],
+                  "image_emoji": "🌅",
+                  "hint": "Think about what you do first thing in the day!"
+                },
+                {
+                  "question_text": "What do you wear on your body to school?",
+                  "correct_answer": "clothes",
+                  "options": [
+                    "clothes",
+                    "toys",
+                    "food",
+                    "books"
+                  ],
+                  "image_emoji": "👕",
+                  "hint": "These keep you warm and look nice!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "shirt",
+                  "ipa": "",
+                  "definition": "A piece of clothing for the top of your body.",
+                  "example": "He wears a blue shirt.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_shirt.png"
+                },
+                {
+                  "word": "skirt",
+                  "ipa": "",
+                  "definition": "A piece of clothing that hangs from the waist.",
+                  "example": "Her skirt is pink.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_skirt.png"
+                },
+                {
+                  "word": "dress",
+                  "ipa": "",
+                  "definition": "A piece of clothing for girls.",
+                  "example": "The dress is blue.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/dress.png"
+                },
+                {
+                  "word": "trousers",
+                  "ipa": "",
+                  "definition": "Long pants for your legs.",
+                  "example": "I wear blue trousers.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_trousers.png"
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "shirt",
+                      "emoji": "👕",
+                      "distractors": [
+                        {
+                          "word": "hat",
+                          "emoji": "🎩"
+                        },
+                        {
+                          "word": "shoes",
+                          "emoji": "👞"
+                        },
+                        {
+                          "word": "socks",
+                          "emoji": "🧦"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "skirt",
+                      "emoji": "👗",
+                      "distractors": [
+                        {
+                          "word": "jacket",
+                          "emoji": "🧥"
+                        },
+                        {
+                          "word": "shorts",
+                          "emoji": "🩳"
+                        },
+                        {
+                          "word": "bag",
+                          "emoji": "👜"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "dress",
+                      "emoji": "👗",
+                      "distractors": [
+                        {
+                          "word": "coat",
+                          "emoji": "🧥"
+                        },
+                        {
+                          "word": "scarf",
+                          "emoji": "🧣"
+                        },
+                        {
+                          "word": "boots",
+                          "emoji": "🥾"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "trousers",
+                      "emoji": "👖",
+                      "distractors": [
+                        {
+                          "word": "gloves",
+                          "emoji": "🧤"
+                        },
+                        {
+                          "word": "tie",
+                          "emoji": "👔"
+                        },
+                        {
+                          "word": "cap",
+                          "emoji": "🧢"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "shirt",
+                      "emoji": "👕",
+                      "distractors": [
+                        {
+                          "word": "belt",
+                          "emoji": "🥋"
+                        },
+                        {
+                          "word": "sweater",
+                          "emoji": "🧶"
+                        },
+                        {
+                          "word": "mittens",
+                          "emoji": "🧤"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "skirt",
+                      "emoji": "👗",
+                      "distractors": [
+                        {
+                          "word": "jeans",
+                          "emoji": "👖"
+                        },
+                        {
+                          "word": "ribbon",
+                          "emoji": "🎀"
+                        },
+                        {
+                          "word": "sandals",
+                          "emoji": "👡"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "dress",
+                      "emoji": "👗",
+                      "distractors": [
+                        {
+                          "word": "vest",
+                          "emoji": "🦺"
+                        },
+                        {
+                          "word": "sneakers",
+                          "emoji": "👟"
+                        },
+                        {
+                          "word": "watch",
+                          "emoji": "⌚"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "trousers",
+                      "emoji": "👖",
+                      "distractors": [
+                        {
+                          "word": "blouse",
+                          "emoji": "👚"
+                        },
+                        {
+                          "word": "slippers",
+                          "emoji": "🩴"
+                        },
+                        {
+                          "word": "backpack",
+                          "emoji": "🎒"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "shirt",
+                      "emoji": "👕"
+                    },
+                    {
+                      "word": "skirt",
+                      "emoji": "👗"
+                    },
+                    {
+                      "word": "dress",
+                      "emoji": "👗"
+                    },
+                    {
+                      "word": "trousers",
+                      "emoji": "👖"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "flashcard_match",
+                  "items": [
+                    {
+                      "word": "shirt",
+                      "emoji": "👕",
+                      "definition": "You wear this on top with buttons"
+                    },
+                    {
+                      "word": "skirt",
+                      "emoji": "👗",
+                      "definition": "Girls wear this around their waist"
+                    },
+                    {
+                      "word": "dress",
+                      "emoji": "👗",
+                      "definition": "One piece of clothing for girls"
+                    },
+                    {
+                      "word": "trousers",
+                      "emoji": "👖",
+                      "definition": "You wear these on your legs with two parts"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Emma Gets Ready",
+              "text": "Emma wakes up early. She is wearing her blue dress today. Tom is wearing his red shirt and black trousers. Mia is wearing a yellow skirt. They are all ready for school!",
+              "scene_description": "happy children in school uniforms standing together ready for school morning",
+              "questions": [
+                {
+                  "question": "What is Emma wearing?",
+                  "answer": "a blue dress",
+                  "options": [
+                    "a blue dress",
+                    "a red shirt",
+                    "a yellow skirt",
+                    "black trousers"
+                  ],
+                  "correct_answer": "a blue dress"
+                },
+                {
+                  "question": "Is Tom wearing trousers?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "correct_answer": "Yes"
+                },
+                {
+                  "question": "What color is Mia's skirt?",
+                  "answer": "yellow",
+                  "options": [
+                    "yellow",
+                    "blue",
+                    "red",
+                    "black"
+                  ],
+                  "correct_answer": "yellow"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "He/She is wearing a ___ ___.",
+              "explanation": "We put the color word BEFORE the clothing word to describe what someone is wearing.",
+              "examples": [
+                "She is wearing a red dress.",
+                "He is wearing blue trousers.",
+                "She is wearing a yellow skirt."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "wearing",
+                        "a",
+                        "red",
+                        "dress"
+                      ],
+                      "correctSentence": "She is wearing a red dress"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "wearing",
+                        "blue",
+                        "trousers"
+                      ],
+                      "correctSentence": "He is wearing blue trousers"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "wearing",
+                        "a",
+                        "yellow",
+                        "skirt"
+                      ],
+                      "correctSentence": "She is wearing a yellow skirt"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "wearing",
+                        "a",
+                        "green",
+                        "shirt"
+                      ],
+                      "correctSentence": "He is wearing a green shirt"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "wearing",
+                        "a",
+                        "white",
+                        "dress"
+                      ],
+                      "correctSentence": "She is wearing a white dress"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "She ___ wearing a blue dress.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "He is wearing a ___ shirt.",
+                      "answer": "red",
+                      "options": [
+                        "red",
+                        "shirt red",
+                        "a red",
+                        "reds"
+                      ]
+                    },
+                    {
+                      "sentence": "She is ___ black trousers.",
+                      "answer": "wearing",
+                      "options": [
+                        "wear",
+                        "wearing",
+                        "wears",
+                        "wore"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ wearing a yellow skirt.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "been"
+                      ]
+                    },
+                    {
+                      "sentence": "She is wearing a ___ dress today.",
+                      "answer": "green",
+                      "options": [
+                        "green",
+                        "dress green",
+                        "greens",
+                        "a green"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She are wearing a red dress.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "sentence": "Him is wearing blue trousers.",
+                      "errorWord": "Him",
+                      "correctWord": "He",
+                      "explanation": "Use 'He' as the subject"
+                    },
+                    {
+                      "sentence": "She is wearing dress yellow.",
+                      "errorWord": "dress",
+                      "correctWord": "a yellow dress",
+                      "explanation": "Put color before the noun"
+                    },
+                    {
+                      "sentence": "He wearing a green shirt.",
+                      "errorWord": "wearing",
+                      "correctWord": "is wearing",
+                      "explanation": "Need 'is' before wearing"
+                    },
+                    {
+                      "sentence": "She is wearing two red skirt.",
+                      "errorWord": "skirt",
+                      "correctWord": "skirts",
+                      "explanation": "Use 'skirts' with two"
+                    },
+                    {
+                      "sentence": "He can wearing a blue dress.",
+                      "errorWord": "wearing",
+                      "correctWord": "wear",
+                      "explanation": "Use 'wear' after can"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "She is wearing a blue dress.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "He are wearing red trousers.",
+                      "is_correct": false,
+                      "corrected": "He is wearing red trousers.",
+                      "explanation": "Use 'is' with he"
+                    },
+                    {
+                      "sentence": "She is wearing a yellow skirt.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "He is wearing shirt green.",
+                      "is_correct": false,
+                      "corrected": "He is wearing a green shirt.",
+                      "explanation": "Put color before the noun"
+                    },
+                    {
+                      "sentence": "She wearing a white dress.",
+                      "is_correct": false,
+                      "corrected": "She is wearing a white dress.",
+                      "explanation": "Need 'is' before wearing"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "She ___ wearing a red dress.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "question": "___ is wearing blue trousers.",
+                      "answer": "He",
+                      "options": [
+                        "He",
+                        "Him",
+                        "His",
+                        "Her"
+                      ],
+                      "explanation": "Use 'He' as the subject"
+                    },
+                    {
+                      "question": "She is wearing a ___ skirt.",
+                      "answer": "yellow",
+                      "options": [
+                        "yellow",
+                        "skirt yellow",
+                        "yellows",
+                        "a yellow"
+                      ],
+                      "explanation": "Put color before the noun"
+                    },
+                    {
+                      "question": "He is ___ a green shirt.",
+                      "answer": "wearing",
+                      "options": [
+                        "wear",
+                        "wearing",
+                        "wears",
+                        "wore"
+                      ],
+                      "explanation": "Use 'wearing' after is"
+                    },
+                    {
+                      "question": "She ___ wearing two white dresses.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with she"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Good morning, class! Look at Emma today. She is wearing a beautiful blue dress. And Tom, you look smart! He is wearing a white shirt and black trousers. Mia is wearing her new red skirt. You all look wonderful for school!",
+              "questions": [
+                {
+                  "question": "What color is Emma's dress?",
+                  "answer": "blue",
+                  "options": [
+                    "blue",
+                    "red",
+                    "white",
+                    "black"
+                  ]
+                },
+                {
+                  "question": "Who is wearing a red skirt?",
+                  "answer": "Mia",
+                  "options": [
+                    "Emma",
+                    "Tom",
+                    "Mia",
+                    "teacher"
+                  ]
+                },
+                {
+                  "question": "What is Tom wearing on top?",
+                  "answer": "a white shirt",
+                  "options": [
+                    "a white shirt",
+                    "a blue dress",
+                    "a red skirt",
+                    "black trousers"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Look at what you are wearing today. Tell me about your clothes!",
+              "expected_text": "I am wearing a blue shirt",
+              "prompts": [
+                {
+                  "prompt": "Say: I am wearing a ___ shirt.",
+                  "expected_text": "I am wearing a blue shirt"
+                },
+                {
+                  "prompt": "Say: She is wearing a ___ dress.",
+                  "expected_text": "She is wearing a red dress"
+                },
+                {
+                  "prompt": "Say: He is wearing ___ trousers and a ___ shirt.",
+                  "expected_text": "He is wearing black trousers and a white shirt"
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which emoji shows 'dress'?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "👗",
+                  "options": [
+                    "👗",
+                    "👕",
+                    "👖",
+                    "🧥"
+                  ]
+                },
+                {
+                  "question_text": "She ___ wearing a blue skirt.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "is",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "True or False: We say 'red dress', not 'dress red'.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Tom is wearing black trousers. What is Tom wearing?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "black trousers",
+                  "options": [
+                    "black trousers",
+                    "a red shirt",
+                    "a blue dress",
+                    "a yellow skirt"
+                  ]
+                },
+                {
+                  "question_text": "What do we wear to school?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "clothes",
+                  "options": [
+                    "clothes",
+                    "toys",
+                    "food",
+                    "books"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 1
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_2_unit_10_lesson_02",
+          "title": "Accessories",
+          "topic": "Packing a bag for a cold trip",
+          "context": "Packing a bag for a cold trip.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "When it's cold outside, what do we wear on our hands?",
+                  "correct_answer": "gloves",
+                  "options": [
+                    "gloves",
+                    "shoes",
+                    "sunglasses",
+                    "shorts"
+                  ],
+                  "image_emoji": "🧤",
+                  "hint": "They keep your fingers warm and cozy!"
+                },
+                {
+                  "question_text": "What do we wear around our neck when it's cold?",
+                  "correct_answer": "a scarf",
+                  "options": [
+                    "a scarf",
+                    "a belt",
+                    "a bracelet",
+                    "a necklace"
+                  ],
+                  "image_emoji": "🧣",
+                  "hint": "It's long and soft and wraps around to keep you warm!"
+                },
+                {
+                  "question_text": "Which one do we wear on our head in winter?",
+                  "correct_answer": "a hat",
+                  "options": [
+                    "a hat",
+                    "a crown",
+                    "a flower",
+                    "a bow"
+                  ],
+                  "image_emoji": "🎩",
+                  "hint": "It covers your head and ears when it's very cold!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "shoes",
+                  "ipa": "",
+                  "definition": "Things you wear on your feet.",
+                  "example": "I like my new shoes.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_shoes.png"
+                },
+                {
+                  "word": "socks",
+                  "ipa": "",
+                  "definition": "Clothing for your feet.",
+                  "example": "I wear socks with shoes.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_socks.png"
+                },
+                {
+                  "word": "jacket",
+                  "ipa": "",
+                  "definition": "A piece of clothing for cool weather.",
+                  "example": "I wear a warm jacket.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/jacket.png"
+                },
+                {
+                  "word": "hat",
+                  "ipa": "",
+                  "definition": "Something to cover your head.",
+                  "example": "I wear a hat.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/hat.png"
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_write",
+                  "items": [
+                    {
+                      "word": "shoes",
+                      "emoji": "👟"
+                    },
+                    {
+                      "word": "socks",
+                      "emoji": "🧦"
+                    },
+                    {
+                      "word": "jacket",
+                      "emoji": "🧥"
+                    },
+                    {
+                      "word": "hat",
+                      "emoji": "🎩"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "look_write",
+                  "items": [
+                    {
+                      "word": "shoes",
+                      "emoji": "👟",
+                      "hint": "We wear these on our feet"
+                    },
+                    {
+                      "word": "socks",
+                      "emoji": "🧦",
+                      "hint": "We wear these under our shoes"
+                    },
+                    {
+                      "word": "jacket",
+                      "emoji": "🧥",
+                      "hint": "We wear this to keep warm"
+                    },
+                    {
+                      "word": "hat",
+                      "emoji": "🎩",
+                      "hint": "We wear this on our head"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_gap",
+                  "items": [
+                    {
+                      "sentence": "Put on your ___ before you go outside.",
+                      "answer": "shoes",
+                      "options": [
+                        "shoes",
+                        "socks",
+                        "jacket",
+                        "hat"
+                      ],
+                      "emoji": "👟"
+                    },
+                    {
+                      "sentence": "My feet are cold! I need my ___.",
+                      "answer": "socks",
+                      "options": [
+                        "socks",
+                        "shoes",
+                        "jacket",
+                        "hat"
+                      ],
+                      "emoji": "🧦"
+                    },
+                    {
+                      "sentence": "It's cold today. Wear your ___!",
+                      "answer": "jacket",
+                      "options": [
+                        "jacket",
+                        "shoes",
+                        "socks",
+                        "hat"
+                      ],
+                      "emoji": "🧥"
+                    },
+                    {
+                      "sentence": "Put your ___ on your head to stay warm.",
+                      "answer": "hat",
+                      "options": [
+                        "hat",
+                        "jacket",
+                        "shoes",
+                        "socks"
+                      ],
+                      "emoji": "🎩"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Lily's Winter Trip",
+              "text": "Lily is going on a cold trip. She puts her warm socks in the bag. She packs her red jacket and blue hat. Lily puts on her shoes. Now she is ready to go!",
+              "scene_description": "young girl packing winter clothes in a bag, preparing for a trip",
+              "questions": [
+                {
+                  "question": "Where is Lily going?",
+                  "answer": "on a cold trip",
+                  "options": [
+                    "on a cold trip",
+                    "to the beach",
+                    "to school",
+                    "to bed"
+                  ],
+                  "correct_answer": "on a cold trip"
+                },
+                {
+                  "question": "What color is Lily's jacket?",
+                  "answer": "red",
+                  "options": [
+                    "red",
+                    "blue",
+                    "yellow",
+                    "green"
+                  ],
+                  "correct_answer": "red"
+                },
+                {
+                  "question": "Is Lily wearing her shoes?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "correct_answer": "Yes"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "He/She is wearing a ___ ___.",
+              "explanation": "When we describe clothes, we say the color first, then the thing we wear.",
+              "examples": [
+                "She is wearing a red hat.",
+                "He is wearing a blue jacket.",
+                "She is wearing white socks."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "wearing",
+                        "a",
+                        "red",
+                        "hat"
+                      ],
+                      "correctSentence": "She is wearing a red hat"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "wearing",
+                        "blue",
+                        "socks"
+                      ],
+                      "correctSentence": "He is wearing blue socks"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "wearing",
+                        "a",
+                        "warm",
+                        "jacket"
+                      ],
+                      "correctSentence": "She is wearing a warm jacket"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "wearing",
+                        "black",
+                        "shoes"
+                      ],
+                      "correctSentence": "He is wearing black shoes"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "She ___ wearing a hat.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "He is wearing a ___ jacket.",
+                      "answer": "blue",
+                      "options": [
+                        "blue",
+                        "jacket blue",
+                        "a blue",
+                        "blues"
+                      ]
+                    },
+                    {
+                      "sentence": "She is ___ a red hat.",
+                      "answer": "wearing",
+                      "options": [
+                        "wear",
+                        "wearing",
+                        "wears",
+                        "worn"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ wearing warm socks.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She are wearing a hat.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "sentence": "He is wearing red a jacket.",
+                      "errorWord": "red a",
+                      "correctWord": "a red",
+                      "explanation": "Color comes before 'a' and the noun"
+                    },
+                    {
+                      "sentence": "Her is wearing blue socks.",
+                      "errorWord": "Her",
+                      "correctWord": "She",
+                      "explanation": "Use 'She' as the subject"
+                    },
+                    {
+                      "sentence": "He is wear a warm hat.",
+                      "errorWord": "wear",
+                      "correctWord": "wearing",
+                      "explanation": "Use 'wearing' after 'is'"
+                    },
+                    {
+                      "sentence": "She is wearing two sock.",
+                      "errorWord": "sock",
+                      "correctWord": "socks",
+                      "explanation": "Use 'socks' for more than one"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "She is wearing a green jacket.",
+                      "is_correct": true,
+                      "corrected": "She is wearing a green jacket.",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "He are wearing shoes.",
+                      "is_correct": false,
+                      "corrected": "He is wearing shoes.",
+                      "explanation": "Use 'is' with he"
+                    },
+                    {
+                      "sentence": "She is wearing warm a hat.",
+                      "is_correct": false,
+                      "corrected": "She is wearing a warm hat.",
+                      "explanation": "Write 'a warm hat' not 'warm a hat'"
+                    },
+                    {
+                      "sentence": "He is wearing blue socks.",
+                      "is_correct": true,
+                      "corrected": "He is wearing blue socks.",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "She wearing a red jacket.",
+                      "is_correct": false,
+                      "corrected": "She is wearing a red jacket.",
+                      "explanation": "Don't forget 'is' after she"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "She ___ wearing a hat.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "question": "He is wearing ___ jacket.",
+                      "answer": "a blue",
+                      "options": [
+                        "blue a",
+                        "a blue",
+                        "blues",
+                        "blue"
+                      ],
+                      "explanation": "Write 'a' before the color and noun"
+                    },
+                    {
+                      "question": "___ is wearing white socks.",
+                      "answer": "He",
+                      "options": [
+                        "He",
+                        "Him",
+                        "His",
+                        "Her"
+                      ],
+                      "explanation": "Use 'He' as the subject"
+                    },
+                    {
+                      "question": "She is ___ warm shoes.",
+                      "answer": "wearing",
+                      "options": [
+                        "wear",
+                        "wearing",
+                        "wears",
+                        "wore"
+                      ],
+                      "explanation": "Use 'wearing' after 'is'"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello children! Today we're going on a winter trip. It's very cold outside! First, put on your warm socks. Now, wear your jacket to stay warm. Don't forget your hat on your head! Last, put on your shoes. Now you're ready to go!",
+              "questions": [
+                {
+                  "question": "What do you put on first?",
+                  "answer": "socks",
+                  "options": [
+                    "socks",
+                    "shoes",
+                    "hat",
+                    "jacket"
+                  ]
+                },
+                {
+                  "question": "What keeps your head warm?",
+                  "answer": "hat",
+                  "options": [
+                    "hat",
+                    "socks",
+                    "shoes",
+                    "jacket"
+                  ]
+                },
+                {
+                  "question": "What do you put on last?",
+                  "answer": "shoes",
+                  "options": [
+                    "shoes",
+                    "jacket",
+                    "socks",
+                    "hat"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Look at the picture and tell me what the person is wearing!",
+              "expected_text": "She is wearing a red jacket.",
+              "prompts": [
+                {
+                  "prompt": "Say: She is wearing a hat.",
+                  "expected_text": "She is wearing a hat."
+                },
+                {
+                  "prompt": "Say: He is wearing blue socks.",
+                  "expected_text": "He is wearing blue socks."
+                },
+                {
+                  "prompt": "Tell me: What is she wearing? (Use: red jacket)",
+                  "expected_text": "She is wearing a red jacket."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Accessories Lesson Review",
+              "questions": [
+                {
+                  "question_text": "What do we wear on our feet?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "shoes",
+                  "options": [
+                    "shoes",
+                    "hat",
+                    "jacket",
+                    "socks"
+                  ]
+                },
+                {
+                  "question_text": "She ___ wearing a red jacket.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "is",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "Which sentence is correct?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "He is wearing a blue hat.",
+                  "options": [
+                    "He is wearing a blue hat.",
+                    "He is wearing blue a hat.",
+                    "He are wearing a blue hat.",
+                    "He wearing a blue hat."
+                  ]
+                },
+                {
+                  "question_text": "True or False: We pack warm clothes for a cold trip.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "What keeps your head warm in winter?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "a hat",
+                  "options": [
+                    "a hat",
+                    "shoes",
+                    "socks",
+                    "a jacket"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 2
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_2_unit_10_lesson_03",
+          "title": "Descriptions",
+          "topic": "Identifying people at a party by their clothes",
+          "context": "Identifying people at a party by their clothes.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's think about clothes at a party! Answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What do you wear to a party?",
+                  "correct_answer": "nice clothes",
+                  "options": [
+                    "nice clothes",
+                    "pajamas",
+                    "swimming suit",
+                    "raincoat"
+                  ],
+                  "image_emoji": "👗",
+                  "hint": "Think about clothes that look special and pretty!"
+                },
+                {
+                  "question_text": "Look at your friend's shirt. What color is it?",
+                  "correct_answer": "I can see the color",
+                  "options": [
+                    "I can see the color",
+                    "I can taste it",
+                    "I can smell it",
+                    "I can hear it"
+                  ],
+                  "image_emoji": "👕",
+                  "hint": "We use our eyes to see colors on clothes!"
+                },
+                {
+                  "question_text": "At a party, many children wear different clothes. How can you find your friend?",
+                  "correct_answer": "look at their clothes",
+                  "options": [
+                    "look at their clothes",
+                    "close your eyes",
+                    "go home",
+                    "sit down"
+                  ],
+                  "image_emoji": "👀",
+                  "hint": "Look at what they are wearing! Is it a red dress? Blue shoes?"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "glasses",
+                  "ipa": "",
+                  "definition": "Something you wear to see better.",
+                  "example": "He wears glasses.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/glasses.png"
+                },
+                {
+                  "word": "handbag",
+                  "ipa": "",
+                  "definition": "A small bag for carrying things.",
+                  "example": "She has a handbag.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/handbag.png"
+                },
+                {
+                  "word": "clean",
+                  "ipa": "",
+                  "definition": "To make something not dirty.",
+                  "example": "I clean my room.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/clean.png"
+                },
+                {
+                  "word": "dirty",
+                  "ipa": "",
+                  "definition": "Not clean.",
+                  "example": "The shirt is dirty.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/dirty.png"
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "memory_game",
+                  "items": [
+                    {
+                      "word": "glasses",
+                      "emoji": "👓"
+                    },
+                    {
+                      "word": "handbag",
+                      "emoji": "👜"
+                    },
+                    {
+                      "word": "clean",
+                      "emoji": "✨",
+                      "image_url": "/static/vocab_images/clean.png"
+                    },
+                    {
+                      "word": "dirty",
+                      "emoji": "🟤",
+                      "image_url": "/static/vocab_images/dirty.png"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "listen_choose_word",
+                  "items": [
+                    {
+                      "word": "glasses",
+                      "emoji": "👓",
+                      "distractors": [
+                        "glases",
+                        "glasess",
+                        "glassez"
+                      ]
+                    },
+                    {
+                      "word": "handbag",
+                      "emoji": "👜",
+                      "distractors": [
+                        "hambag",
+                        "handbeg",
+                        "handback"
+                      ]
+                    },
+                    {
+                      "word": "clean",
+                      "emoji": "✨",
+                      "distractors": [
+                        "cleen",
+                        "klean",
+                        "clene"
+                      ],
+                      "image_url": "/static/vocab_images/clean.png"
+                    },
+                    {
+                      "word": "dirty",
+                      "emoji": "🟤",
+                      "distractors": [
+                        "derty",
+                        "dirfy",
+                        "durty"
+                      ],
+                      "image_url": "/static/vocab_images/dirty.png"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "glasses",
+                      "emoji": "👓",
+                      "distractors": [
+                        {
+                          "word": "hat",
+                          "emoji": "🎩"
+                        },
+                        {
+                          "word": "watch",
+                          "emoji": "⌚"
+                        },
+                        {
+                          "word": "shoes",
+                          "emoji": "👞"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "handbag",
+                      "emoji": "👜",
+                      "distractors": [
+                        {
+                          "word": "backpack",
+                          "emoji": "🎒"
+                        },
+                        {
+                          "word": "umbrella",
+                          "emoji": "☂️"
+                        },
+                        {
+                          "word": "wallet",
+                          "emoji": "👛"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "clean",
+                      "emoji": "✨",
+                      "distractors": [
+                        {
+                          "word": "wet",
+                          "emoji": "💧"
+                        },
+                        {
+                          "word": "broken",
+                          "emoji": "💔"
+                        },
+                        {
+                          "word": "new",
+                          "emoji": "🆕",
+                          "image_url": "/static/vocab_images/new.png"
+                        }
+                      ],
+                      "image_url": "/static/vocab_images/clean.png"
+                    },
+                    {
+                      "word": "dirty",
+                      "emoji": "🟤",
+                      "distractors": [
+                        {
+                          "word": "old",
+                          "emoji": "📅"
+                        },
+                        {
+                          "word": "tired",
+                          "emoji": "😴"
+                        },
+                        {
+                          "word": "sad",
+                          "emoji": "😢"
+                        }
+                      ],
+                      "image_url": "/static/vocab_images/dirty.png"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Anna's Birthday Party",
+              "text": "It's Anna's birthday party! Many children are here. Tom is wearing glasses and a clean shirt. Lucy has a red handbag. Ben's shoes are dirty. He is playing outside. Anna is wearing a pink dress.",
+              "scene_description": "children at indoor birthday party wearing colorful clothes",
+              "questions": [
+                {
+                  "question": "Who is wearing glasses?",
+                  "answer": "Tom",
+                  "options": [
+                    "Tom",
+                    "Lucy",
+                    "Ben",
+                    "Anna"
+                  ],
+                  "correct_answer": "Tom"
+                },
+                {
+                  "question": "What color is Lucy's handbag?",
+                  "answer": "red",
+                  "options": [
+                    "red",
+                    "pink",
+                    "blue",
+                    "green"
+                  ],
+                  "correct_answer": "red"
+                },
+                {
+                  "question": "Why are Ben's shoes dirty?",
+                  "answer": "He is playing outside",
+                  "options": [
+                    "He is playing outside",
+                    "He is eating cake",
+                    "He is dancing",
+                    "He is sleeping"
+                  ],
+                  "correct_answer": "He is playing outside"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "He/She is wearing a ___ ___.",
+              "explanation": "When we describe clothes, we say the COLOR first, then the CLOTHES word.",
+              "examples": [
+                "She is wearing a blue skirt.",
+                "He is wearing a red shirt.",
+                "She is wearing clean glasses."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "wearing",
+                        "a",
+                        "red",
+                        "dress"
+                      ],
+                      "correctSentence": "She is wearing a red dress"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "wearing",
+                        "clean",
+                        "glasses"
+                      ],
+                      "correctSentence": "He is wearing clean glasses"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "has",
+                        "a",
+                        "blue",
+                        "handbag"
+                      ],
+                      "correctSentence": "She has a blue handbag"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "wearing",
+                        "dirty",
+                        "shoes"
+                      ],
+                      "correctSentence": "He is wearing dirty shoes"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "wearing",
+                        "a",
+                        "green",
+                        "skirt"
+                      ],
+                      "correctSentence": "She is wearing a green skirt"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "She ___ wearing a pink dress.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "He is wearing ___ glasses.",
+                      "answer": "clean",
+                      "options": [
+                        "clean",
+                        "a clean",
+                        "cleans",
+                        "cleaning"
+                      ]
+                    },
+                    {
+                      "sentence": "She has a ___ handbag.",
+                      "answer": "red",
+                      "options": [
+                        "red",
+                        "a red",
+                        "reds",
+                        "reding"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ wearing dirty shoes.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "She is wearing a blue ___.",
+                      "answer": "skirt",
+                      "options": [
+                        "skirt",
+                        "skirts",
+                        "skirting",
+                        "a skirt"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She are wearing a red dress.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "sentence": "Him is wearing clean glasses.",
+                      "errorWord": "Him",
+                      "correctWord": "He",
+                      "explanation": "Use 'He' as the subject"
+                    },
+                    {
+                      "sentence": "She has blue handbag.",
+                      "errorWord": "has",
+                      "correctWord": "has a",
+                      "explanation": "We need 'a' before handbag"
+                    },
+                    {
+                      "sentence": "He is wearing two dirty shoe.",
+                      "errorWord": "shoe",
+                      "correctWord": "shoes",
+                      "explanation": "Use 'shoes' for two"
+                    },
+                    {
+                      "sentence": "She can wearing a green skirt.",
+                      "errorWord": "wearing",
+                      "correctWord": "wear",
+                      "explanation": "Use 'wear' after 'can'"
+                    },
+                    {
+                      "sentence": "He is wear clean glasses.",
+                      "errorWord": "wear",
+                      "correctWord": "wearing",
+                      "explanation": "Use 'wearing' after 'is'"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "She is wearing a blue skirt.",
+                      "is_correct": true,
+                      "corrected": "She is wearing a blue skirt.",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "He are wearing glasses.",
+                      "is_correct": false,
+                      "corrected": "He is wearing glasses.",
+                      "explanation": "Use 'is' with he"
+                    },
+                    {
+                      "sentence": "She has a red handbag.",
+                      "is_correct": true,
+                      "corrected": "She has a red handbag.",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "He is wearing dirty shoe.",
+                      "is_correct": false,
+                      "corrected": "He is wearing dirty shoes.",
+                      "explanation": "Use 'shoes' for plural"
+                    },
+                    {
+                      "sentence": "She is wearing clean glasses.",
+                      "is_correct": true,
+                      "corrected": "She is wearing clean glasses.",
+                      "explanation": "This sentence is correct!"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "She ___ wearing a pink dress.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "question": "___ is wearing clean glasses.",
+                      "answer": "He",
+                      "options": [
+                        "He",
+                        "Him",
+                        "His",
+                        "Her"
+                      ],
+                      "explanation": "Use 'He' as the subject"
+                    },
+                    {
+                      "question": "She has a ___ handbag.",
+                      "answer": "blue",
+                      "options": [
+                        "blue",
+                        "blues",
+                        "a blue",
+                        "bluing"
+                      ],
+                      "explanation": "Color words come before nouns"
+                    },
+                    {
+                      "question": "He is wearing ___ shoes.",
+                      "answer": "dirty",
+                      "options": [
+                        "dirty",
+                        "a dirty",
+                        "dirtys",
+                        "dirties"
+                      ],
+                      "explanation": "Adjectives describe nouns"
+                    },
+                    {
+                      "question": "She ___ a red skirt.",
+                      "answer": "has",
+                      "options": [
+                        "have",
+                        "has",
+                        "having",
+                        "had"
+                      ],
+                      "explanation": "Use 'has' with she"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello children! Look at this party picture. Can you see the girl with glasses? She is wearing a clean white dress. Now look at the boy. He is wearing dirty brown shoes. Oh, and there's a woman with a red handbag. She is wearing a blue skirt.",
+              "questions": [
+                {
+                  "question": "What color is the girl's dress?",
+                  "answer": "white",
+                  "options": [
+                    "white",
+                    "blue",
+                    "red",
+                    "brown"
+                  ]
+                },
+                {
+                  "question": "Who is wearing glasses?",
+                  "answer": "the girl",
+                  "options": [
+                    "the girl",
+                    "the boy",
+                    "the woman",
+                    "the teacher"
+                  ]
+                },
+                {
+                  "question": "What color is the woman's handbag?",
+                  "answer": "red",
+                  "options": [
+                    "red",
+                    "blue",
+                    "white",
+                    "brown"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Look at the picture and describe what people are wearing!",
+              "expected_text": "She is wearing a blue dress.",
+              "prompts": [
+                {
+                  "prompt": "Look at the girl. What is she wearing? Say: She is wearing...",
+                  "expected_text": "She is wearing a blue dress."
+                },
+                {
+                  "prompt": "Look at the boy with glasses. Describe him. Say: He is wearing...",
+                  "expected_text": "He is wearing clean glasses."
+                },
+                {
+                  "prompt": "Look at the woman with the handbag. What color is it? Say: She has a...",
+                  "expected_text": "She has a red handbag."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which emoji shows 'glasses'?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "👓",
+                  "options": [
+                    "👓",
+                    "👜",
+                    "👗",
+                    "👞"
+                  ]
+                },
+                {
+                  "question_text": "She ___ wearing a red dress.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "is",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "Which sentence is correct?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "He is wearing a blue shirt.",
+                  "options": [
+                    "He is wearing a blue shirt.",
+                    "He is wearing blue a shirt.",
+                    "He wearing a blue shirt.",
+                    "He are wearing a blue shirt."
+                  ]
+                },
+                {
+                  "question_text": "Tom has dirty shoes. What does 'dirty' mean?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "not clean",
+                  "options": [
+                    "not clean",
+                    "very clean",
+                    "very big",
+                    "very small"
+                  ]
+                },
+                {
+                  "question_text": "Lucy is wearing clean glasses and a red handbag. What color is Lucy's handbag?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "red",
+                  "options": [
+                    "red",
+                    "blue",
+                    "green",
+                    "yellow"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 3
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_2_unit_10_lesson_04",
+          "title": "Unit Review",
+          "topic": "Dressing an avatar with specific colors and items",
+          "context": "Dressing an avatar with specific colors and items.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's think about clothes! Answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What color is your shirt today?",
+                  "correct_answer": "Blue",
+                  "options": [
+                    "Blue",
+                    "Red",
+                    "Green",
+                    "Yellow"
+                  ],
+                  "image_emoji": "👕",
+                  "hint": "Look down at what you're wearing right now!"
+                },
+                {
+                  "question_text": "Which clothes do you wear on your feet?",
+                  "correct_answer": "Shoes",
+                  "options": [
+                    "Hat",
+                    "Shoes",
+                    "Gloves",
+                    "Scarf"
+                  ],
+                  "image_emoji": "👟",
+                  "hint": "You use them for walking and running!"
+                },
+                {
+                  "question_text": "What do you wear when it's cold outside?",
+                  "correct_answer": "Jacket",
+                  "options": [
+                    "Shorts",
+                    "Sandals",
+                    "Jacket",
+                    "Swimsuit"
+                  ],
+                  "image_emoji": "🧥",
+                  "hint": "It keeps you warm and cozy!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "shirt",
+                "skirt",
+                "dress",
+                "trousers",
+                "shoes",
+                "socks",
+                "jacket",
+                "hat",
+                "glasses",
+                "handbag",
+                "clean",
+                "dirty"
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "crossword",
+                  "items": [
+                    {
+                      "word": "shirt",
+                      "definition": "You wear this on top with buttons",
+                      "emoji": "👕"
+                    },
+                    {
+                      "word": "skirt",
+                      "definition": "Girls wear this, it goes around the waist",
+                      "emoji": "👗"
+                    },
+                    {
+                      "word": "shoes",
+                      "definition": "You wear these on your feet",
+                      "emoji": "👞"
+                    },
+                    {
+                      "word": "socks",
+                      "definition": "You put these on before your shoes",
+                      "emoji": "🧦"
+                    },
+                    {
+                      "word": "jacket",
+                      "definition": "You wear this when it's cold outside",
+                      "emoji": "🧥"
+                    },
+                    {
+                      "word": "hat",
+                      "definition": "You wear this on your head",
+                      "emoji": "🎩"
+                    },
+                    {
+                      "word": "clean",
+                      "definition": "Not dirty, nice and fresh",
+                      "emoji": "✨",
+                      "image_url": "/static/vocab_images/clean.png"
+                    },
+                    {
+                      "word": "dirty",
+                      "definition": "Not clean, has mud or marks",
+                      "emoji": "🟤",
+                      "image_url": "/static/vocab_images/dirty.png"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "word_search",
+                  "items": [
+                    {
+                      "word": "dress",
+                      "definition": "Girls wear this, one piece of clothing",
+                      "emoji": "👗"
+                    },
+                    {
+                      "word": "trousers",
+                      "definition": "You wear these on your legs, they have two parts",
+                      "emoji": "👖"
+                    },
+                    {
+                      "word": "glasses",
+                      "definition": "You wear these to help you see better",
+                      "emoji": "👓"
+                    },
+                    {
+                      "word": "handbag",
+                      "definition": "You carry things in this",
+                      "emoji": "👜"
+                    },
+                    {
+                      "word": "shirt",
+                      "definition": "You wear this on top with buttons",
+                      "emoji": "👕"
+                    },
+                    {
+                      "word": "jacket",
+                      "definition": "You wear this when it's cold outside",
+                      "emoji": "🧥"
+                    },
+                    {
+                      "word": "clean",
+                      "definition": "Not dirty, nice and fresh",
+                      "emoji": "✨",
+                      "image_url": "/static/vocab_images/clean.png"
+                    },
+                    {
+                      "word": "dirty",
+                      "definition": "Not clean, has mud or marks",
+                      "emoji": "🟤",
+                      "image_url": "/static/vocab_images/dirty.png"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "board_game",
+                  "items": [
+                    {
+                      "question": "What do you wear on your feet?",
+                      "answer": "Shoes",
+                      "options": [
+                        "Shoes",
+                        "Hat",
+                        "Handbag",
+                        "Glasses"
+                      ]
+                    },
+                    {
+                      "question": "What goes on your head?",
+                      "answer": "Hat",
+                      "options": [
+                        "Socks",
+                        "Hat",
+                        "Trousers",
+                        "Skirt"
+                      ]
+                    },
+                    {
+                      "question": "What do girls wear that is one piece?",
+                      "answer": "Dress",
+                      "options": [
+                        "Shirt",
+                        "Trousers",
+                        "Dress",
+                        "Socks"
+                      ]
+                    },
+                    {
+                      "question": "What do you wear when it's cold?",
+                      "answer": "Jacket",
+                      "options": [
+                        "Skirt",
+                        "Jacket",
+                        "Socks",
+                        "Handbag"
+                      ]
+                    },
+                    {
+                      "question": "What helps you see better?",
+                      "answer": "Glasses",
+                      "options": [
+                        "Hat",
+                        "Shoes",
+                        "Glasses",
+                        "Shirt"
+                      ]
+                    },
+                    {
+                      "question": "What does 'clean' mean?",
+                      "answer": "Not dirty",
+                      "options": [
+                        "Not dirty",
+                        "Very big",
+                        "Very small",
+                        "Very cold"
+                      ]
+                    },
+                    {
+                      "question": "What do you put on before your shoes?",
+                      "answer": "Socks",
+                      "options": [
+                        "Hat",
+                        "Socks",
+                        "Jacket",
+                        "Glasses"
+                      ]
+                    },
+                    {
+                      "question": "What can you carry things in?",
+                      "answer": "Handbag",
+                      "options": [
+                        "Socks",
+                        "Shirt",
+                        "Handbag",
+                        "Trousers"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Lily's New Avatar",
+              "text": "Lily is making an avatar on her tablet. She is wearing a pink dress and red shoes. Her avatar has a blue hat and yellow glasses. Lily's avatar looks very fun! She shows it to her mom.",
+              "scene_description": "young girl using tablet computer creating digital avatar, smiling child with device",
+              "questions": [
+                {
+                  "question": "What is Lily wearing?",
+                  "answer": "A pink dress and red shoes",
+                  "options": [
+                    "A pink dress and red shoes",
+                    "A blue hat and yellow glasses",
+                    "A yellow dress and pink shoes"
+                  ],
+                  "correct_answer": "A pink dress and red shoes"
+                },
+                {
+                  "question": "What color is the avatar's hat?",
+                  "answer": "Blue",
+                  "options": [
+                    "Pink",
+                    "Blue",
+                    "Yellow"
+                  ],
+                  "correct_answer": "Blue"
+                },
+                {
+                  "question": "Who does Lily show her avatar to?",
+                  "answer": "Her mom",
+                  "options": [
+                    "Her teacher",
+                    "Her friend",
+                    "Her mom"
+                  ],
+                  "correct_answer": "Her mom"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "She/He is wearing a ___ ___.",
+              "explanation": "We say the color first, then the clothes word!",
+              "examples": [
+                "She is wearing a red dress.",
+                "He is wearing blue trousers.",
+                "She is wearing a yellow hat."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "wearing",
+                        "a",
+                        "red",
+                        "dress"
+                      ],
+                      "correctSentence": "She is wearing a red dress"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "wearing",
+                        "blue",
+                        "trousers"
+                      ],
+                      "correctSentence": "He is wearing blue trousers"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "wearing",
+                        "a",
+                        "yellow",
+                        "hat"
+                      ],
+                      "correctSentence": "She is wearing a yellow hat"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "wearing",
+                        "green",
+                        "shoes"
+                      ],
+                      "correctSentence": "He is wearing green shoes"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "wearing",
+                        "a",
+                        "pink",
+                        "skirt"
+                      ],
+                      "correctSentence": "She is wearing a pink skirt"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "She ___ wearing a red dress.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "He is wearing ___ trousers.",
+                      "answer": "blue",
+                      "options": [
+                        "blue",
+                        "a blue",
+                        "blues",
+                        "the blue"
+                      ]
+                    },
+                    {
+                      "sentence": "She is ___ a green jacket.",
+                      "answer": "wearing",
+                      "options": [
+                        "wear",
+                        "wearing",
+                        "wears",
+                        "wore"
+                      ]
+                    },
+                    {
+                      "sentence": "He is wearing a ___ hat.",
+                      "answer": "yellow",
+                      "options": [
+                        "hat yellow",
+                        "yellow",
+                        "yellows",
+                        "a yellow"
+                      ]
+                    },
+                    {
+                      "sentence": "___ is wearing pink shoes.",
+                      "answer": "She",
+                      "options": [
+                        "She",
+                        "Her",
+                        "Hers",
+                        "Him"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She are wearing a red dress.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "sentence": "He is wearing a skirt blue.",
+                      "errorWord": "skirt blue",
+                      "correctWord": "blue skirt",
+                      "explanation": "Color goes before the clothing word"
+                    },
+                    {
+                      "sentence": "Her is wearing green shoes.",
+                      "errorWord": "Her",
+                      "correctWord": "She",
+                      "explanation": "Use 'She' as the subject"
+                    },
+                    {
+                      "sentence": "She is wearing two sock.",
+                      "errorWord": "sock",
+                      "correctWord": "socks",
+                      "explanation": "Use 'socks' for plural"
+                    },
+                    {
+                      "sentence": "He wearing a yellow hat.",
+                      "errorWord": "wearing",
+                      "correctWord": "is wearing",
+                      "explanation": "Need 'is' before wearing"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "She is wearing a blue dress.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "This is correct!"
+                    },
+                    {
+                      "sentence": "He are wearing red shoes.",
+                      "is_correct": false,
+                      "corrected": "He is wearing red shoes.",
+                      "explanation": "Use 'is' with he"
+                    },
+                    {
+                      "sentence": "She is wearing green trousers.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "This is correct!"
+                    },
+                    {
+                      "sentence": "He is wearing a hat yellow.",
+                      "is_correct": false,
+                      "corrected": "He is wearing a yellow hat.",
+                      "explanation": "Color goes before the clothing word"
+                    },
+                    {
+                      "sentence": "She wearing a pink jacket.",
+                      "is_correct": false,
+                      "corrected": "She is wearing a pink jacket.",
+                      "explanation": "Need 'is' before wearing"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "She ___ wearing a red dress.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "question": "He is wearing ___ shoes.",
+                      "answer": "black",
+                      "options": [
+                        "a black",
+                        "black",
+                        "blacks",
+                        "the black"
+                      ],
+                      "explanation": "Just use the color word before shoes"
+                    },
+                    {
+                      "question": "___ is wearing a blue hat.",
+                      "answer": "He",
+                      "options": [
+                        "Him",
+                        "He",
+                        "His",
+                        "Her"
+                      ],
+                      "explanation": "Use 'He' as the subject"
+                    },
+                    {
+                      "question": "She is wearing a ___ skirt.",
+                      "answer": "green",
+                      "options": [
+                        "skirt green",
+                        "green",
+                        "greens",
+                        "a green"
+                      ],
+                      "explanation": "Color goes before the clothing word"
+                    },
+                    {
+                      "question": "He ___ wearing dirty socks.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with he"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello children! Today we're making avatars on the computer. Look at my avatar! She is wearing a purple dress and green shoes. She is also wearing glasses and a yellow hat. What is your avatar wearing?",
+              "questions": [
+                {
+                  "question": "What color is the teacher's avatar's dress?",
+                  "answer": "Purple",
+                  "options": [
+                    "Purple",
+                    "Green",
+                    "Yellow",
+                    "Pink"
+                  ]
+                },
+                {
+                  "question": "What is the avatar wearing on her feet?",
+                  "answer": "Green shoes",
+                  "options": [
+                    "Green shoes",
+                    "Yellow socks",
+                    "Purple shoes",
+                    "Green socks"
+                  ]
+                },
+                {
+                  "question": "What color is the avatar's hat?",
+                  "answer": "Yellow",
+                  "options": [
+                    "Green",
+                    "Purple",
+                    "Yellow",
+                    "Blue"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Look at your clothes and tell me what you are wearing today!",
+              "expected_text": "I am wearing a blue shirt.",
+              "prompts": [
+                {
+                  "prompt": "Tell me: What color is your shirt?",
+                  "expected_text": "My shirt is blue."
+                },
+                {
+                  "prompt": "Tell me: What are you wearing on your feet?",
+                  "expected_text": "I am wearing black shoes."
+                },
+                {
+                  "prompt": "Tell me: What is your friend wearing today?",
+                  "expected_text": "She is wearing a red dress."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Unit Review Quiz",
+              "questions": [
+                {
+                  "question_text": "What do you wear on your head?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Hat",
+                  "options": [
+                    "Hat",
+                    "Shoes",
+                    "Socks",
+                    "Trousers"
+                  ]
+                },
+                {
+                  "question_text": "She ___ wearing a blue dress.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "is",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "Which is correct?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "He is wearing a red shirt",
+                  "options": [
+                    "He is wearing a red shirt",
+                    "He is wearing a shirt red",
+                    "He are wearing a red shirt",
+                    "He wearing a red shirt"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'Clean' means not dirty.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Emma is wearing a pink skirt and yellow shoes. What color are her shoes?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Yellow",
+                  "options": [
+                    "Pink",
+                    "Yellow",
+                    "Blue",
+                    "Red"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 4
+        }
+      ]
+    }
+  ]
+}

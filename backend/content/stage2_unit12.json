@@ -1,0 +1,468 @@
+{
+  "stage": "stage_2",
+  "stage_id": "stage_2_starters",
+  "stage_title": "Starters (A1)",
+  "units": [
+    {
+      "unit_id": "stage_2_unit_12",
+      "unit_num": 12,
+      "title": "Review & Final Gate",
+      "subtitle": "Cumulative review of all Stage 2",
+      "phonics_focus": [
+        "All Stage 2 phonics"
+      ],
+      "grammar_focus": [
+        "All Stage 2 grammar patterns"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_2_unit_12_lesson_01",
+          "title": "Basics Review",
+          "topic": "A welcome back party",
+          "context": "Grammar: Greetings, Numbers 1-20, Colors. A welcome back party.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about a welcome back party?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "hello",
+                  "ipa": "",
+                  "definition": "A word to greet someone.",
+                  "example": "Say hello to mom.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/hello.png"
+                },
+                {
+                  "word": "twelve",
+                  "ipa": "",
+                  "definition": "The number 12.",
+                  "example": "Twelve is after eleven.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/twelve.png"
+                },
+                {
+                  "word": "purple",
+                  "ipa": "",
+                  "definition": "A color made from red and blue.",
+                  "example": "Grapes are purple.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/purple.png"
+                },
+                {
+                  "word": "desk",
+                  "ipa": "",
+                  "definition": "A table you use for work or study.",
+                  "example": "My books are on the desk.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/desk.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Basics Review",
+              "text": "A short story about a welcome back party.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "All Stage 2 grammar patterns",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about a welcome back party.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about a welcome back party.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about a welcome back party?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_2_unit_12_lesson_02",
+          "title": "Description Review",
+          "topic": "Describing a Mystery Person",
+          "context": "Grammar: Body, Clothes, Animals, Family. Describing a Mystery Person.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about describing a mystery person?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "arm",
+                  "ipa": "",
+                  "definition": "A part of your body with your hand.",
+                  "example": "I broke my arm.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/arm.png"
+                },
+                {
+                  "word": "shirt",
+                  "ipa": "",
+                  "definition": "A piece of clothing for the top of your body.",
+                  "example": "He wears a blue shirt.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_shirt.png"
+                },
+                {
+                  "word": "giraffe",
+                  "ipa": "",
+                  "definition": "An animal with a long neck.",
+                  "example": "The giraffe is tall.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/giraffe.png"
+                },
+                {
+                  "word": "daughter",
+                  "ipa": "",
+                  "definition": "A girl child of a mother or father.",
+                  "example": "I am her daughter.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/daughter.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Description Review",
+              "text": "A short story about describing a mystery person.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "All Stage 2 grammar patterns",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about describing a mystery person.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about describing a mystery person.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about describing a mystery person?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_2_unit_12_lesson_03",
+          "title": "Usage Review",
+          "topic": "A weekend trip story",
+          "context": "Grammar: Present Continuous, Can/Can't, Likes/Dislikes. A weekend trip story.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about a weekend trip story?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "eating",
+                  "ipa": "",
+                  "definition": "Taking in food.",
+                  "example": "She is eating an apple.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/eating.png"
+                },
+                {
+                  "word": "can",
+                  "ipa": "",
+                  "definition": "To be able to do something.",
+                  "example": "I can jump high.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/can.png"
+                },
+                {
+                  "word": "like",
+                  "ipa": "",
+                  "definition": "When you enjoy something.",
+                  "example": "I like ice cream.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/like.png"
+                },
+                {
+                  "word": "kitchen",
+                  "ipa": "",
+                  "definition": "The room where we make food.",
+                  "example": "Mom cooks in the kitchen.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/kitchen.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Usage Review",
+              "text": "A short story about a weekend trip story.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "All Stage 2 grammar patterns",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about a weekend trip story.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about a weekend trip story.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about a weekend trip story?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_2_unit_12_lesson_04",
+          "title": "Starters Mock Exam",
+          "topic": "The Island Adventure - Full Mastery Check",
+          "context": "The Island Adventure where students use all skills to find a treasure and earn their Stage 2 Certificate.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about the island adventure - full mastery check?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "hello",
+                "can",
+                "eating",
+                "shirt",
+                "giraffe",
+                "kitchen",
+                "twelve",
+                "desk"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Starters Mock Exam",
+              "text": "A short story about the island adventure - full mastery check.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "rule_pattern": "All Stage 2 grammar patterns",
+              "explanation": "",
+              "examples": [],
+              "patterns": [
+                "All Stage 2 grammar patterns"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about the island adventure - full mastery check.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about the island adventure - full mastery check.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about the island adventure - full mastery check?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

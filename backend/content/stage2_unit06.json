@@ -1,0 +1,468 @@
+{
+  "stage": "stage_2",
+  "stage_id": "stage_2_starters",
+  "stage_title": "Starters (A1)",
+  "units": [
+    {
+      "unit_id": "stage_2_unit_06",
+      "unit_num": 6,
+      "title": "My Family & Friends",
+      "subtitle": "Family members and people",
+      "phonics_focus": [
+        "Family words",
+        "People words"
+      ],
+      "grammar_focus": [
+        "Possessive 's (Ben's father)",
+        "Who are they?",
+        "Plural nouns"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_2_unit_06_lesson_01",
+          "title": "Family Tree",
+          "topic": "Looking at a family photo album",
+          "context": "Looking at a family photo album.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about looking at a family photo album?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "son",
+                  "ipa": "",
+                  "definition": "A boy child of parents.",
+                  "example": "My son is happy.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_son.png"
+                },
+                {
+                  "word": "daughter",
+                  "ipa": "",
+                  "definition": "A girl child of a mother or father.",
+                  "example": "I am her daughter.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/daughter.png"
+                },
+                {
+                  "word": "baby",
+                  "ipa": "",
+                  "definition": "A very young child.",
+                  "example": "The baby is sleeping.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/baby.png"
+                },
+                {
+                  "word": "parent",
+                  "ipa": "",
+                  "definition": "A mom or dad.",
+                  "example": "My parent reads to me.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_parent.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Family Tree",
+              "text": "A short story about looking at a family photo album.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Possessive 's (Ben's father) / Who are they? / Plural nouns",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about looking at a family photo album.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about looking at a family photo album.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about looking at a family photo album?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_2_unit_06_lesson_02",
+          "title": "Relatives",
+          "topic": "Talking about visitors coming for dinner",
+          "context": "Talking about visitors coming for dinner.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about talking about visitors coming for dinner?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "uncle",
+                  "ipa": "",
+                  "definition": "Your mom or dad's brother.",
+                  "example": "My uncle is funny.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_uncle.png"
+                },
+                {
+                  "word": "aunt",
+                  "ipa": "",
+                  "definition": "Your mom or dad's sister.",
+                  "example": "My aunt is visiting us.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/aunt.png"
+                },
+                {
+                  "word": "cousin",
+                  "ipa": "",
+                  "definition": "A child of your aunt or uncle.",
+                  "example": "She is my cousin.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/cousin.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Relatives",
+              "text": "A short story about talking about visitors coming for dinner.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Possessive 's (Ben's father) / Who are they? / Plural nouns",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about talking about visitors coming for dinner.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about talking about visitors coming for dinner.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about talking about visitors coming for dinner?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_2_unit_06_lesson_03",
+          "title": "People",
+          "topic": "Describing people at a park",
+          "context": "Describing people at a park.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about describing people at a park?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "man",
+                  "ipa": "",
+                  "definition": "A grown-up boy.",
+                  "example": "The man is tall.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/man.png"
+                },
+                {
+                  "word": "woman",
+                  "ipa": "",
+                  "definition": "A grown-up girl.",
+                  "example": "The woman is happy.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_woman.png"
+                },
+                {
+                  "word": "children",
+                  "ipa": "",
+                  "definition": "More than one child.",
+                  "example": "The children play.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/children.png"
+                },
+                {
+                  "word": "person",
+                  "ipa": "",
+                  "definition": "A human being.",
+                  "example": "She is a kind person.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_person.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "People",
+              "text": "A short story about describing people at a park.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Possessive 's (Ben's father) / Who are they? / Plural nouns",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about describing people at a park.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about describing people at a park.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about describing people at a park?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_2_unit_06_lesson_04",
+          "title": "Unit Review",
+          "topic": "Identifying family members and using possessive 's",
+          "context": "Identifying family members and using possessive 's.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about identifying family members and using possessive 's?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "son",
+                "daughter",
+                "baby",
+                "parent",
+                "uncle",
+                "aunt",
+                "cousin",
+                "man",
+                "woman",
+                "children",
+                "person"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Unit Review",
+              "text": "A short story about identifying family members and using possessive 's.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "rule_pattern": "Possessive 's (Ben's father) / Who are they? / Plural nouns",
+              "explanation": "",
+              "examples": [],
+              "patterns": [
+                "Possessive 's (Ben's father)",
+                "Who are they?",
+                "Plural nouns"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about identifying family members and using possessive 's.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about identifying family members and using possessive 's.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about identifying family members and using possessive 's?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

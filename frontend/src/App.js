@@ -12,16 +12,111 @@ import CoursesPage from './pages/CoursesPage';
 import CourseDetail from './pages/CourseDetail';
 import Profile from './pages/Profile';
 import ContentAdmin from './pages/ContentAdmin';
+import AdminPanel from './pages/AdminPanel';
+import AdminFeedback from './pages/AdminFeedback';
 import PricingPage from './pages/PricingPage';
 import VerifyEmailPage from './pages/VerifyEmailPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import AdminCreditsPage from './pages/AdminCreditsPage';
+import AdminDashboard from './pages/AdminDashboard';
+import VocabularyImageManager from './pages/VocabularyImageManager';
 import LevelTest from './pages/LevelTest';
+import ComprehensiveLevelTest from './pages/ComprehensiveLevelTest';
+import AdaptiveLevelTest from './pages/AdaptiveLevelTest';
 import VocabGrammarCourse from './pages/VocabGrammarCourse';
+import VocabGrammarQuiz from './pages/VocabGrammarQuiz';
 import WritingPractice from './pages/WritingPractice';
 import SpeakingPractice from './pages/SpeakingPractice';
+import Progress from './pages/Progress';
+import BeginnerCourse from './pages/BeginnerCourse';
+import MasteryCourse from './pages/MasteryCourse';
+import AdvancedMasteryCourse from './pages/AdvancedMasteryCourse';
+import LessonPreview from './pages/LessonPreview';
+import FeatureShowcase from './pages/FeatureShowcase';
 import { Toaster } from './components/ui/sonner';
 import MobileBottomNav from './components/MobileBottomNav';
+import LearningPlatform from './pages/LearningPlatform';
+import LevelDetail from './pages/LevelDetail';
+import UnitDetail from './pages/UnitDetail';
+import LessonView from './pages/LessonView';
+import { ThemeProvider } from './contexts/ThemeContext';
+import QuestionBank from './pages/QuestionBank';
+import WritingTask1Practice from './pages/WritingTask1Practice';
+import GameBank from './pages/GameBank';
+import WritingTask2Practice from './pages/WritingTask2Practice';
+import GeneralTask1Practice from './pages/GeneralTask1Practice';
+import GeneralTask2Practice from './pages/GeneralTask2Practice';
+import ReadingPracticeAcademic from './pages/ReadingPracticeAcademic';
+import ReadingPracticeGeneral from './pages/ReadingPracticeGeneral';
+import ReadingPracticeMasteryAcademic from './pages/ReadingPracticeMasteryAcademic';
+import ReadingPracticeMasteryGeneral from './pages/ReadingPracticeMasteryGeneral';
+import ReadingPracticeByType from './pages/ReadingPracticeByType';
+import ListeningPractice from './pages/ListeningPractice';
+import SpeakingPracticeQB from './pages/SpeakingPracticeQB';
+import PracticeMode from './pages/PracticeMode';
+import FullTestMode from './pages/FullTestMode';
+import FullTestInterface from './pages/FullTestInterface';
+import FullTestResults from './pages/FullTestResults';
+import VisualGenerator from './pages/VisualGenerator';
+import CambridgeTestInterface from './pages/CambridgeTestInterface';
+import CambridgeTestResults from './pages/CambridgeTestResults';
+import FocusPlan from './pages/FocusPlan';
+import LizTeacher from './pages/LizTeacher';
+import LizFloatingButton from './components/LizFloatingButton';
+import VocabularyLearnMode from './pages/VocabularyLearnMode';
+import VocabularyPracticeMode from './pages/VocabularyPracticeMode';
+import VocabularyQuizMode from './pages/VocabularyQuizMode';
+import VocabularyProductionMode from './pages/VocabularyProductionMode';
+import GrammarLearnMode from './pages/GrammarLearnMode';
+import GrammarPracticeMode from './pages/GrammarPracticeMode';
+import GrammarQuizMode from './pages/GrammarQuizMode';
+import GrammarProductionMode from './pages/GrammarProductionMode';
+import GrammarSmartReview from './pages/GrammarSmartReview';
+import ReviewBank from './pages/ReviewBank';
+import UnifiedCoursePage from './pages/UnifiedCoursePage';
+import UnifiedStagePage from './pages/UnifiedStagePage';
+import UnifiedLessonPage from './pages/UnifiedLessonPage';
+import DailyHabitPage from './pages/DailyHabitPage';
+import GameDemo from './pages/GameDemo';
+import { useI18n } from './lib/i18n';
+import { scanDomForLanguageLeaks } from './lib/leakDetection';
+import { isEnglishLockedRoute, getEffectiveLanguage } from './lib/languageLock';
+import ErrorBoundary from './components/ErrorBoundary';
+import OnboardingQuiz from './pages/OnboardingQuiz';
+import LearningToolsIndex from './pages/LearningToolsIndex';
+import AdminLizAnalytics from './pages/AdminLizAnalytics';
+import AdminOnboardingAnalytics from './pages/AdminOnboardingAnalytics';
+import AdminLearningMode from './pages/AdminLearningMode';
+
+
+// Language Leak Watcher Component (Development Only)
+function LanguageLeakWatcher() {
+  const { language } = useI18n();
+  const location = useLocation();
+  
+  useEffect(() => {
+    if (process.env.NODE_ENV !== 'development') return;
+    
+    const id = setTimeout(() => {
+      // Get effective language based on route
+      const effectiveLang = getEffectiveLanguage(location.pathname, language);
+      const leak = scanDomForLanguageLeaks(effectiveLang);
+      
+      if (leak) {
+        const routeInfo = isEnglishLockedRoute(location.pathname) 
+          ? '(English-locked route)' 
+          : `(System: ${language})`;
+        console.error(`🚨 LANGUAGE LEAK DETECTED ${routeInfo}:`, leak);
+        // Uncomment to break on leak detection:
+        // throw new Error(`${leak.type}: ${leak.sample}`);
+      }
+    }, 500);
+    
+    return () => clearTimeout(id);
+  }, [language, location.pathname]);
+  
+  return null;
+}
 
 
 function EmergentBadgeWrapper() {
@@ -96,14 +191,20 @@ function MobileNavWrapper({ user }) {
 }
 function AppWithSessionHandler() {
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
-      setUser(JSON.parse(savedUser));
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (e) {
+        localStorage.removeItem('user');
+      }
     }
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -139,13 +240,32 @@ function AppWithSessionHandler() {
     localStorage.removeItem('user');
   };
 
+  // Show loading state while checking localStorage
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+      </div>
+    );
+  }
+
   return (
     <>
       <Routes>
         <Route path="/" element={<LandingPage onLogin={handleLogin} user={user} />} />
+        <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <LandingPage onLogin={handleLogin} user={user} showLogin={true} />} />
+        <Route path="/onboarding" element={<OnboardingQuiz user={user} onComplete={() => window.location.href = '/dashboard'} />} />
+        <Route path="/learning-tools" element={<LearningToolsIndex user={user} />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/admin/credits" element={<AdminCreditsPage user={user} />} />
+        <Route path="/admin/feedback" element={<AdminFeedback user={user} />} />
+        <Route path="/admin/users" element={<AdminPanel user={user} />} />
+        <Route path="/admin/vocabulary-images" element={<VocabularyImageManager user={user} />} />
+        <Route path="/admin/liz-analytics" element={<AdminLizAnalytics user={user} />} />
+        <Route path="/admin/onboarding-analytics" element={<AdminOnboardingAnalytics user={user} />} />
+        <Route path="/admin/learning-mode" element={<AdminLearningMode user={user} />} />
+        <Route path="/admin" element={<AdminDashboard user={user} />} />
         <Route 
           path="/dashboard" 
           element={user ? <Dashboard user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
@@ -171,6 +291,22 @@ function AppWithSessionHandler() {
           element={user ? <CourseDetail user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
         />
         <Route 
+          path="/learning" 
+          element={user ? <LearningPlatform user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/learning/level/:levelId" 
+          element={user ? <LevelDetail user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/learning/unit/:unitId" 
+          element={user ? <UnitDetail user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/learning/lesson/:lessonId" 
+          element={user ? <LessonView user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
           path="/profile" 
           element={user ? <Profile user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
         />
@@ -184,11 +320,23 @@ function AppWithSessionHandler() {
         />
         <Route 
           path="/level-test" 
-          element={user ? <LevelTest user={user} /> : <Navigate to="/" />} 
+          element={<LevelTest user={user} />} 
+        />
+        <Route 
+          path="/comprehensive-level-test" 
+          element={<ComprehensiveLevelTest user={user} />} 
+        />
+        <Route 
+          path="/adaptive-level-test" 
+          element={<AdaptiveLevelTest user={user} />} 
         />
         <Route 
           path="/vocab-grammar" 
-          element={user ? <VocabGrammarCourse user={user} /> : <Navigate to="/" />} 
+          element={<VocabGrammarCourse user={user} />} 
+        />
+        <Route 
+          path="/vocab-grammar/quiz" 
+          element={<VocabGrammarQuiz user={user} />} 
         />
         <Route 
           path="/writing-practice" 
@@ -198,7 +346,208 @@ function AppWithSessionHandler() {
           path="/speaking-practice" 
           element={user ? <SpeakingPractice user={user} /> : <Navigate to="/" />} 
         />
+        <Route 
+          path="/progress" 
+          element={user ? <Progress user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/beginner-course" 
+          element={<BeginnerCourse user={user} />} 
+        />
+        <Route 
+          path="/mastery-course" 
+          element={<MasteryCourse user={user} />} 
+        />
+        <Route 
+          path="/advanced-mastery" 
+          element={<AdvancedMasteryCourse user={user} />} 
+        />
+        <Route 
+          path="/vocabulary/learn/:moduleId" 
+          element={user ? <VocabularyLearnMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/vocabulary/practice/:moduleId" 
+          element={user ? <VocabularyPracticeMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/vocabulary/quiz/:moduleId" 
+          element={user ? <VocabularyQuizMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/vocabulary/production/:moduleId" 
+          element={user ? <VocabularyProductionMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/review-bank" 
+          element={user ? <ReviewBank user={user} /> : <Navigate to="/" />} 
+        />
+        
+        {/* Grammar Engine Routes */}
+        <Route 
+          path="/grammar/learn/:moduleId" 
+          element={user ? <GrammarLearnMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/grammar/practice/:moduleId" 
+          element={user ? <GrammarPracticeMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/grammar/quiz/:moduleId" 
+          element={user ? <GrammarQuizMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/grammar/guided/:moduleId" 
+          element={user ? <GrammarProductionMode user={user} stage="guided" /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/grammar/free/:moduleId" 
+          element={user ? <GrammarProductionMode user={user} stage="free" /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/grammar/smart-review/:moduleId" 
+          element={user ? <GrammarSmartReview user={user} /> : <Navigate to="/" />} 
+        />
+        
+        {/* Unified Learning System Routes */}
+        <Route 
+          path="/unified" 
+          element={user ? <UnifiedCoursePage user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/unified/stage/:stageId" 
+          element={user ? <UnifiedStagePage user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/unified/lesson/:lessonId" 
+          element={user ? <UnifiedLessonPage user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/unified/daily-habit" 
+          element={user ? <DailyHabitPage user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/game-demo" 
+          element={<GameDemo />} 
+        />
+        
+        <Route 
+          path="/game-bank" 
+          element={<GameBank />} 
+        />
+        <Route 
+          path="/lesson-preview/:courseType/:lessonId" 
+          element={<LessonPreview />} 
+        />
+        <Route 
+          path="/feature-showcase" 
+          element={<FeatureShowcase />} 
+        />
+        <Route 
+          path="/demo/writing-task1" 
+          element={<WritingTask1Practice user={{id: 'demo', name: 'Demo User', email: 'demo@test.com'}} />} 
+        />
+        <Route 
+          path="/demo/writing-task2" 
+          element={<WritingTask2Practice user={{id: 'demo', name: 'Demo User', email: 'demo@test.com'}} />} 
+        />
+        <Route 
+          path="/demo/general-task1" 
+          element={<GeneralTask1Practice user={{id: 'demo', name: 'Demo User', email: 'demo@test.com'}} />} 
+        />
+        <Route 
+          path="/demo/general-task2" 
+          element={<GeneralTask2Practice user={{id: 'demo', name: 'Demo User', email: 'demo@test.com'}} />} 
+        />
+        <Route 
+          path="/question-bank/writing/task1" 
+          element={user ? <WritingTask1Practice user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/writing/task2" 
+          element={user ? <WritingTask2Practice user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/writing/general/task1" 
+          element={user ? <GeneralTask1Practice user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/writing/general/task2" 
+          element={user ? <GeneralTask2Practice user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/reading/academic" 
+          element={user ? <ReadingPracticeAcademic user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/reading/general" 
+          element={user ? <ReadingPracticeGeneral user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/reading/mastery/academic" 
+          element={user ? <ReadingPracticeMasteryAcademic user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/reading/mastery/general" 
+          element={user ? <ReadingPracticeMasteryGeneral user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/reading/practice" 
+          element={user ? <ReadingPracticeByType user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/listening" 
+          element={user ? <ListeningPractice user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/speaking" 
+          element={user ? <SpeakingPracticeQB user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/practice" 
+          element={user ? <PracticeMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/liz" 
+          element={user ? <LizTeacher user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank" 
+          element={user ? <QuestionBank user={user} /> : <Navigate to="/" />} 
+        />
+        {/* Full Test Mode Routes */}
+        <Route 
+          path="/full-test" 
+          element={user ? <FullTestMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/full-test/take/:testId" 
+          element={user ? <FullTestInterface user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/full-test/results/:sessionId" 
+          element={user ? <FullTestResults user={user} /> : <Navigate to="/" />} 
+        />
+        {/* Cambridge IELTS Tests */}
+        <Route 
+          path="/cambridge-test/:bookId/:testId" 
+          element={user ? <CambridgeTestInterface user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/cambridge-test/:bookId/:testId/results" 
+          element={user ? <CambridgeTestResults user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/focus-plan" 
+          element={user ? <FocusPlan /> : <Navigate to="/" />} 
+        />
+        {/* Admin Tools */}
+        <Route 
+          path="/admin/visual-generator" 
+          element={user ? <VisualGenerator /> : <Navigate to="/" />} 
+        />
       </Routes>
+      {user && !location.pathname.startsWith('/liz') && <LizFloatingButton user={user} />}
       <EmergentBadgeWrapper />
       <MobileNavWrapper user={user} />
       <Toaster position="top-right" />
@@ -210,11 +559,16 @@ function AppWithSessionHandler() {
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <AppWithSessionHandler />
-      </div>
-    </Router>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <Router>
+          <div className="App min-h-screen bg-background text-foreground">
+            <LanguageLeakWatcher />
+            <AppWithSessionHandler />
+          </div>
+        </Router>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }
 

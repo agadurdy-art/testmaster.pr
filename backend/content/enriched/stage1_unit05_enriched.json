@@ -1,0 +1,1879 @@
+{
+  "stage": 1,
+  "stage_title": "Foundations",
+  "units": [
+    {
+      "unit_id": "stage_1_unit_05",
+      "unit_num": 5,
+      "title": "My Family",
+      "subtitle": "Family Members & Alphabet Completion U-Z",
+      "phonics_focus": [
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z"
+      ],
+      "grammar_focus": [
+        "This is my...",
+        "I have a...",
+        "My [Member] is..."
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_1_unit_05_lesson_01",
+          "title": "My Mother and Father",
+          "topic": "Core family and sounds of U and V",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://www.youtube.com/watch?v=GiRUF7hv6uY",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Who is wearing a red hat in the video?",
+                  "correct_answer": "father",
+                  "options": [
+                    "father",
+                    "mother",
+                    "big sister",
+                    "neighbor"
+                  ],
+                  "image_emoji": "🎩",
+                  "hint": "He wears it when he goes outside."
+                },
+                {
+                  "question_text": "What instrument does big sister play?",
+                  "correct_answer": "violin",
+                  "options": [
+                    "violin",
+                    "piano",
+                    "guitar",
+                    "drum"
+                  ],
+                  "image_emoji": "🎻",
+                  "hint": "It's a string instrument she holds under her chin."
+                },
+                {
+                  "question_text": "Who helps big brother with homework in the video?",
+                  "correct_answer": "mother",
+                  "options": [
+                    "mother",
+                    "big sister",
+                    "father",
+                    "grandmother"
+                  ],
+                  "image_emoji": "📖",
+                  "hint": "She is seen sitting at the table with him."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "mother",
+                  "ipa": "/ˈmʌðər/",
+                  "definition": "Your mom at home",
+                  "example": "This is my mother.",
+                  "image_emoji": "👩",
+                  "image_url": "/static/vocab_images/mother.png"
+                },
+                {
+                  "word": "father",
+                  "ipa": "/ˈfɑːðər/",
+                  "definition": "Your dad at home",
+                  "example": "My father is strong.",
+                  "image_emoji": "👨",
+                  "image_url": "/static/vocab_images/father.png"
+                },
+                {
+                  "word": "umbrella",
+                  "ipa": "/ʌmˈbrɛlə/",
+                  "definition": "Keeps you dry from rain",
+                  "example": "I have an umbrella.",
+                  "image_emoji": "☂️",
+                  "image_url": "/static/vocab_images/gpt_umbrella.png"
+                },
+                {
+                  "word": "van",
+                  "ipa": "/væn/",
+                  "definition": "Big car for family",
+                  "example": "This is my van.",
+                  "image_emoji": "🛈",
+                  "image_url": "/static/vocab_images/gpt_van.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "mother",
+                      "emoji": "👩",
+                      "distractors": [
+                        {
+                          "word": "father",
+                          "emoji": "👨"
+                        },
+                        {
+                          "word": "umbrella",
+                          "emoji": "☂️"
+                        },
+                        {
+                          "word": "van",
+                          "emoji": "🚐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "father",
+                      "emoji": "👨",
+                      "distractors": [
+                        {
+                          "word": "mother",
+                          "emoji": "👩"
+                        },
+                        {
+                          "word": "umbrella",
+                          "emoji": "☂️"
+                        },
+                        {
+                          "word": "van",
+                          "emoji": "🚐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "umbrella",
+                      "emoji": "☂️",
+                      "distractors": [
+                        {
+                          "word": "mother",
+                          "emoji": "👩"
+                        },
+                        {
+                          "word": "father",
+                          "emoji": "👨"
+                        },
+                        {
+                          "word": "van",
+                          "emoji": "🚐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "van",
+                      "emoji": "🚐",
+                      "distractors": [
+                        {
+                          "word": "mother",
+                          "emoji": "👩"
+                        },
+                        {
+                          "word": "father",
+                          "emoji": "👨"
+                        },
+                        {
+                          "word": "umbrella",
+                          "emoji": "☂️"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "mother",
+                      "emoji": "👩",
+                      "distractors": [
+                        {
+                          "word": "father",
+                          "emoji": "👨"
+                        },
+                        {
+                          "word": "umbrella",
+                          "emoji": "☂️"
+                        },
+                        {
+                          "word": "van",
+                          "emoji": "🚐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "father",
+                      "emoji": "👨",
+                      "distractors": [
+                        {
+                          "word": "mother",
+                          "emoji": "👩"
+                        },
+                        {
+                          "word": "umbrella",
+                          "emoji": "☂️"
+                        },
+                        {
+                          "word": "van",
+                          "emoji": "🚐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "umbrella",
+                      "emoji": "☂️",
+                      "distractors": [
+                        {
+                          "word": "mother",
+                          "emoji": "👩"
+                        },
+                        {
+                          "word": "father",
+                          "emoji": "👨"
+                        },
+                        {
+                          "word": "van",
+                          "emoji": "🚐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "van",
+                      "emoji": "🚐",
+                      "distractors": [
+                        {
+                          "word": "mother",
+                          "emoji": "👩"
+                        },
+                        {
+                          "word": "father",
+                          "emoji": "👨"
+                        },
+                        {
+                          "word": "umbrella",
+                          "emoji": "☂️"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "mother",
+                      "emoji": "👩"
+                    },
+                    {
+                      "word": "father",
+                      "emoji": "👨"
+                    },
+                    {
+                      "word": "umbrella",
+                      "emoji": "☂️"
+                    },
+                    {
+                      "word": "van",
+                      "emoji": "🚐"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 12
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Family Day",
+              "text": "This is my mother. She has a yellow umbrella. My father drives a big van. At home, we laugh together.",
+              "questions": [
+                {
+                  "question": "What color is the mother's umbrella?",
+                  "answer": "yellow",
+                  "options": [
+                    "yellow",
+                    "blue",
+                    "red"
+                  ]
+                },
+                {
+                  "question": "Who drives the van?",
+                  "answer": "father",
+                  "options": [
+                    "mother",
+                    "father",
+                    "sister"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I have a ___!",
+              "explanation": "Use 'I have a' to show something you own.",
+              "examples": [
+                "I have a toy.",
+                "I have a pet.",
+                "I have a book."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "This",
+                        "is",
+                        "my",
+                        "father"
+                      ],
+                      "correctSentence": "This is my father."
+                    },
+                    {
+                      "words": [
+                        "This",
+                        "is",
+                        "my",
+                        "mother"
+                      ],
+                      "correctSentence": "This is my mother."
+                    },
+                    {
+                      "words": [
+                        "This",
+                        "is",
+                        "my",
+                        "family"
+                      ],
+                      "correctSentence": "This is my family."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "This is my ___.",
+                      "answer": "mother",
+                      "options": [
+                        "cat",
+                        "mother",
+                        "jump",
+                        "banana"
+                      ]
+                    },
+                    {
+                      "sentence": "This is my ___.",
+                      "answer": "father",
+                      "options": [
+                        "apple",
+                        "father",
+                        "run",
+                        "pencil"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "This are my father.",
+                      "errorWord": "are",
+                      "correctWord": "is"
+                    },
+                    {
+                      "sentence": "This am my mother.",
+                      "errorWord": "am",
+                      "correctWord": "is"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hi there! I'm with my father. We are driving our van to the park, and my father is holding our green umbrella.",
+              "questions": [
+                {
+                  "question": "Who is with the speaker in the van?",
+                  "answer": "father",
+                  "options": [
+                    "father",
+                    "mother",
+                    "sister"
+                  ]
+                },
+                {
+                  "question": "What color is the umbrella?",
+                  "answer": "green",
+                  "options": [
+                    "green",
+                    "yellow",
+                    "blue"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: This is my father.",
+              "expected_text": "this is my father",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "This is my ___ (Vocabulary question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "father",
+                  "options": [
+                    "father",
+                    "umbrella",
+                    "van",
+                    "apple"
+                  ]
+                },
+                {
+                  "question_text": "Which vehicle do we drive to the park? (Reading comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "van",
+                  "options": [
+                    "van",
+                    "car",
+                    "bike",
+                    "bus"
+                  ]
+                },
+                {
+                  "question_text": "This is my ___ van. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "yellow",
+                  "options": [
+                    "yellow",
+                    "big",
+                    "red",
+                    "small"
+                  ]
+                },
+                {
+                  "question_text": "True or False: A 'mother' is part of the family.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "What do we use to stay dry in the rain? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "umbrella",
+                  "options": [
+                    "umbrella",
+                    "hat",
+                    "van",
+                    "scarf"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "The Family Song",
+              "url": "https://www.youtube.com/watch?v=GiRUF7hv6uY",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics U",
+              "url": "https://www.youtube.com/watch?v=_e30Mf3MFCY",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics V",
+              "url": "https://www.youtube.com/watch?v=_e30Mf3MFCY",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_1_unit_05_lesson_02",
+          "title": "Brother and Sister",
+          "topic": "Siblings and sounds of W and X",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/family_video_intro",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Who is wearing the striped shirt?",
+                  "correct_answer": "brother",
+                  "options": [
+                    "brother",
+                    "sister",
+                    "mother",
+                    "father"
+                  ],
+                  "image_emoji": "👚",
+                  "hint": "Look for a boy with stripes on his shirt."
+                },
+                {
+                  "question_text": "What game are the children playing?",
+                  "correct_answer": "hide and seek",
+                  "options": [
+                    "hide and seek",
+                    "tag",
+                    "soccer",
+                    "checkers"
+                  ],
+                  "image_emoji": "👀",
+                  "hint": "They are looking for a hiding friend."
+                },
+                {
+                  "question_text": "What sound does the word 'brother' start with?",
+                  "correct_answer": "B",
+                  "options": [
+                    "B",
+                    "T",
+                    "P",
+                    "S"
+                  ],
+                  "image_emoji": "🔊",
+                  "hint": "It's the same sound as in 'ball'."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "brother",
+                  "ipa": "/ˈbrʌðər/",
+                  "definition": "A boy in your family.",
+                  "example": "This is my brother.",
+                  "image_emoji": "👦",
+                  "image_url": "/static/vocab_images/brother.png"
+                },
+                {
+                  "word": "sister",
+                  "ipa": "/ˈsɪstər/",
+                  "definition": "A girl in your family.",
+                  "example": "My sister is happy.",
+                  "image_emoji": "👧",
+                  "image_url": "/static/vocab_images/sister.png"
+                },
+                {
+                  "word": "watch",
+                  "ipa": "/wɑːtʃ/",
+                  "definition": "Shows the time on wrist.",
+                  "example": "I have a watch.",
+                  "image_emoji": "⏱",
+                  "image_url": "/static/vocab_images/watch.png"
+                },
+                {
+                  "word": "box",
+                  "ipa": "/bɒks/",
+                  "definition": "Put things in it.",
+                  "example": "This is my box.",
+                  "image_emoji": "📦",
+                  "image_url": "/static/vocab_images/box.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "brother",
+                      "emoji": "👦",
+                      "distractors": [
+                        {
+                          "word": "sister",
+                          "emoji": "👧"
+                        },
+                        {
+                          "word": "watch",
+                          "emoji": "⌚"
+                        },
+                        {
+                          "word": "box",
+                          "emoji": "📦"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "sister",
+                      "emoji": "👧",
+                      "distractors": [
+                        {
+                          "word": "brother",
+                          "emoji": "👦"
+                        },
+                        {
+                          "word": "watch",
+                          "emoji": "⌚"
+                        },
+                        {
+                          "word": "box",
+                          "emoji": "📦"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "watch",
+                      "emoji": "⌚",
+                      "distractors": [
+                        {
+                          "word": "brother",
+                          "emoji": "👦"
+                        },
+                        {
+                          "word": "sister",
+                          "emoji": "👧"
+                        },
+                        {
+                          "word": "box",
+                          "emoji": "📦"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "box",
+                      "emoji": "📦",
+                      "distractors": [
+                        {
+                          "word": "brother",
+                          "emoji": "👦"
+                        },
+                        {
+                          "word": "sister",
+                          "emoji": "👧"
+                        },
+                        {
+                          "word": "watch",
+                          "emoji": "⌚"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "brother",
+                      "emoji": "👦",
+                      "distractors": [
+                        {
+                          "word": "sister",
+                          "emoji": "👧"
+                        },
+                        {
+                          "word": "watch",
+                          "emoji": "⌚"
+                        },
+                        {
+                          "word": "box",
+                          "emoji": "📦"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "sister",
+                      "emoji": "👧",
+                      "distractors": [
+                        {
+                          "word": "brother",
+                          "emoji": "👦"
+                        },
+                        {
+                          "word": "watch",
+                          "emoji": "⌚"
+                        },
+                        {
+                          "word": "box",
+                          "emoji": "📦"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "watch",
+                      "emoji": "⌚"
+                    },
+                    {
+                      "word": "brother",
+                      "emoji": "👦"
+                    },
+                    {
+                      "word": "sister",
+                      "emoji": "👧"
+                    },
+                    {
+                      "word": "box",
+                      "emoji": "📦"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Our Family Day",
+              "text": "This is my brother. My brother has a big box. My sister is here. She is looking at her watch. We are playing together!",
+              "questions": [
+                {
+                  "question": "What does the brother have?",
+                  "answer": "a big box",
+                  "options": [
+                    "a big box",
+                    "a watch",
+                    "a small box"
+                  ]
+                },
+                {
+                  "question": "Who is looking at a watch?",
+                  "answer": "sister",
+                  "options": [
+                    "brother",
+                    "sister",
+                    "mother"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "This is my ___.",
+              "explanation": "Use this to show your family.",
+              "examples": [
+                "This is my brother.",
+                "This is my sister.",
+                "This is my watch."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "have",
+                        "a",
+                        "brother"
+                      ],
+                      "correctSentence": "I have a brother."
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "have",
+                        "a",
+                        "sister"
+                      ],
+                      "correctSentence": "I have a sister."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I have a ___ brother.",
+                      "answer": "little",
+                      "options": [
+                        "big",
+                        "little",
+                        "watch",
+                        "box"
+                      ]
+                    },
+                    {
+                      "sentence": "I have a ___ sister.",
+                      "answer": "big",
+                      "options": [
+                        "watch",
+                        "happy",
+                        "big",
+                        "box"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "I has a box.",
+                      "errorWord": "has",
+                      "correctWord": "have"
+                    },
+                    {
+                      "sentence": "I have a sister.",
+                      "errorWord": "",
+                      "correctWord": ""
+                    },
+                    {
+                      "sentence": "I have a wacth.",
+                      "errorWord": "wacth",
+                      "correctWord": "watch"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "This is my sister. She has a red box with a yellow watch inside. My brother thinks it's very fun.",
+              "questions": [
+                {
+                  "question": "What color is the sister's watch?",
+                  "answer": "yellow",
+                  "options": [
+                    "yellow",
+                    "red",
+                    "green"
+                  ]
+                },
+                {
+                  "question": "What does the sister keep in the box?",
+                  "answer": "watch",
+                  "options": [
+                    "watch",
+                    "book",
+                    "toy"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: I have a sister.",
+              "expected_text": "i have a sister",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "I have a ___ watch. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "blue",
+                  "options": [
+                    "blue",
+                    "green",
+                    "red",
+                    "yellow"
+                  ]
+                },
+                {
+                  "question_text": "Which word means brother's sibling? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "sister",
+                  "options": [
+                    "sister",
+                    "father",
+                    "mother",
+                    "friend"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'Watch' starts with a W sound.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "What does Ben have in his box? (Reading comprehension)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "watch",
+                  "options": [
+                    "watch",
+                    "toy",
+                    "book",
+                    "pencil"
+                  ]
+                },
+                {
+                  "question_text": "Fill in: My ___ is my best friend.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "brother",
+                  "options": [
+                    "brother",
+                    "sister",
+                    "box",
+                    "watch"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Phonics W",
+              "url": "https://www.youtube.com/watch?v=bck1S86MQfE",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics X",
+              "url": "https://www.youtube.com/watch?v=Db7X1B1Gqpk",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_1_unit_05_lesson_03",
+          "title": "Grandpa and Baby",
+          "topic": "Extended family and sounds of Y and Z",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/familysounds",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Which animal does Baby like to see at the zoo? 🦓",
+                  "correct_answer": "Zebra",
+                  "options": [
+                    "Zebra",
+                    "Elephant",
+                    "Monkey",
+                    "Tiger"
+                  ],
+                  "image_emoji": "🦓",
+                  "hint": "It has black and white stripes."
+                },
+                {
+                  "question_text": "What sound does the lion make in the video? 🦁",
+                  "correct_answer": "Roar",
+                  "options": [
+                    "Roar",
+                    "Chirp",
+                    "Bark",
+                    "Buzz"
+                  ],
+                  "image_emoji": "🦁",
+                  "hint": "It's a loud sound from the king of the jungle."
+                },
+                {
+                  "question_text": "What fruit does Grandpa use to make a funny sound? 🍎",
+                  "correct_answer": "Apple",
+                  "options": [
+                    "Apple",
+                    "Banana",
+                    "Orange",
+                    "Grape"
+                  ],
+                  "image_emoji": "🍎",
+                  "hint": "It's a red fruit and makes a crunch."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "grandpa",
+                  "ipa": "/ˈɡræn.pɑː/",
+                  "definition": "Dad's dad",
+                  "example": "This is my grandpa.",
+                  "image_emoji": "👴",
+                  "image_url": "/static/vocab_images/grandpa.png"
+                },
+                {
+                  "word": "grandma",
+                  "ipa": "/ˈɡræn.mɑː/",
+                  "definition": "Mom's mom",
+                  "example": "I have a kind grandma.",
+                  "image_emoji": "👵",
+                  "image_url": "/static/vocab_images/grandma.png"
+                },
+                {
+                  "word": "baby",
+                  "ipa": "/ˈbeɪ.bi/",
+                  "definition": "A tiny child",
+                  "example": "My baby is cute.",
+                  "image_emoji": "👶",
+                  "image_url": "/static/vocab_images/baby.png"
+                },
+                {
+                  "word": "yo-yo",
+                  "ipa": "/ˈjoʊ.joʊ/",
+                  "definition": "Up and down toy",
+                  "example": "I have a yo-yo.",
+                  "image_emoji": "🪀",
+                  "image_url": "/static/vocab_images/gpt_yo-yo.png"
+                },
+                {
+                  "word": "zebra",
+                  "ipa": "/ˈziː.brə/",
+                  "definition": "Stripy horse",
+                  "example": "This is my zebra toy.",
+                  "image_emoji": "🦓",
+                  "image_url": "/static/vocab_images/gpt_zebra.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "grandpa",
+                      "emoji": "👴",
+                      "distractors": [
+                        {
+                          "word": "grandma",
+                          "emoji": "👵"
+                        },
+                        {
+                          "word": "baby",
+                          "emoji": "👶"
+                        },
+                        {
+                          "word": "zebra",
+                          "emoji": "🦓"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "baby",
+                      "emoji": "👶",
+                      "distractors": [
+                        {
+                          "word": "grandpa",
+                          "emoji": "👴"
+                        },
+                        {
+                          "word": "grandma",
+                          "emoji": "👵"
+                        },
+                        {
+                          "word": "yo-yo",
+                          "emoji": "🪀"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "zebra",
+                      "emoji": "🦓",
+                      "distractors": [
+                        {
+                          "word": "baby",
+                          "emoji": "👶"
+                        },
+                        {
+                          "word": "grandma",
+                          "emoji": "👵"
+                        },
+                        {
+                          "word": "yo-yo",
+                          "emoji": "🪀"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "grandma",
+                      "emoji": "👵",
+                      "distractors": [
+                        {
+                          "word": "grandpa",
+                          "emoji": "👴"
+                        },
+                        {
+                          "word": "baby",
+                          "emoji": "👶"
+                        },
+                        {
+                          "word": "zebra",
+                          "emoji": "🦓"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "yo-yo",
+                      "emoji": "🪀",
+                      "distractors": [
+                        {
+                          "word": "zebra",
+                          "emoji": "🦓"
+                        },
+                        {
+                          "word": "grandma",
+                          "emoji": "👵"
+                        },
+                        {
+                          "word": "baby",
+                          "emoji": "👶"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "zebra",
+                      "emoji": "🦓",
+                      "distractors": [
+                        {
+                          "word": "yo-yo",
+                          "emoji": "🪀"
+                        },
+                        {
+                          "word": "grandpa",
+                          "emoji": "👴"
+                        },
+                        {
+                          "word": "grandma",
+                          "emoji": "👵"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "grandpa",
+                      "emoji": "👴"
+                    },
+                    {
+                      "word": "grandma",
+                      "emoji": "👵"
+                    },
+                    {
+                      "word": "baby",
+                      "emoji": "👶"
+                    },
+                    {
+                      "word": "yo-yo",
+                      "emoji": "🪀"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Family Fun Day",
+              "text": "This is my grandpa. He plays with a yo-yo. My grandma gives me a zebra toy. The baby laughs. We all have fun!",
+              "questions": [
+                {
+                  "question": "What does grandpa play with?",
+                  "answer": "yo-yo",
+                  "options": [
+                    "yo-yo",
+                    "zebra",
+                    "ball"
+                  ]
+                },
+                {
+                  "question": "Who gives the zebra toy?",
+                  "answer": "grandma",
+                  "options": [
+                    "grandma",
+                    "grandpa",
+                    "baby"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "My ___ is ___.",
+              "explanation": "Use this to talk about family.",
+              "examples": [
+                "My grandpa is tall.",
+                "My baby is giggling.",
+                "My grandma is kind."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "My",
+                        "grandpa",
+                        "is",
+                        "funny"
+                      ],
+                      "correctSentence": "My grandpa is funny"
+                    },
+                    {
+                      "words": [
+                        "My",
+                        "baby",
+                        "is",
+                        "sleepy"
+                      ],
+                      "correctSentence": "My baby is sleepy"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "My grandma is ___.",
+                      "answer": "nice",
+                      "options": [
+                        "nice",
+                        "play",
+                        "cat",
+                        "big"
+                      ]
+                    },
+                    {
+                      "sentence": "My brother is ___.",
+                      "answer": "Sam",
+                      "options": [
+                        "Sam",
+                        "run",
+                        "big",
+                        "book"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "My sister is play.",
+                      "errorWord": "play",
+                      "correctWord": "playing"
+                    },
+                    {
+                      "sentence": "My mother are happy.",
+                      "errorWord": "are",
+                      "correctWord": "is"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "This is my grandma. She reads a book to me about zebras. My grandpa likes to play with his yo-yo. We have fun together in the park.",
+              "questions": [
+                {
+                  "question": "What does grandpa like to play with?",
+                  "answer": "yo-yo",
+                  "options": [
+                    "yo-yo",
+                    "kite",
+                    "ball"
+                  ]
+                },
+                {
+                  "question": "What animal is in grandma's book?",
+                  "answer": "zebras",
+                  "options": [
+                    "zebras",
+                    "lions",
+                    "elephants"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: My grandpa is funny.",
+              "expected_text": "my grandpa is funny",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "My grandpa is ___ at the park. (Vocabulary question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "playing",
+                  "options": [
+                    "playing",
+                    "eating",
+                    "reading",
+                    "sleeping"
+                  ]
+                },
+                {
+                  "question_text": "Complete the sentence: My grandma is ___ happy. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "feeling",
+                  "options": [
+                    "feeling",
+                    "have",
+                    "do",
+                    "at"
+                  ]
+                },
+                {
+                  "question_text": "What does grandpa play with? (Reading comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "yo-yo",
+                  "options": [
+                    "yo-yo",
+                    "kite",
+                    "ball",
+                    "book"
+                  ]
+                },
+                {
+                  "question_text": "True or False: Zebras are in grandma's book.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Which sound is like the letter 'Y'? (Phonics question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Yellow",
+                  "options": [
+                    "Yellow",
+                    "Zebra",
+                    "Apple",
+                    "Orange"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Phonics Y",
+              "url": "https://www.youtube.com/watch?v=_e30Mf3MFCY",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics Z",
+              "url": "https://www.youtube.com/watch?v=_e30Mf3MFCY",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_1_unit_05_lesson_04",
+          "title": "Unit 5 Mastery Check",
+          "topic": "Cumulative Review (U-Z & All Family)",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/video",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Which animal has stripes and likes to eat grass?",
+                  "correct_answer": "Zebra",
+                  "options": [
+                    "Zebra",
+                    "Lion",
+                    "Elephant",
+                    "Monkey"
+                  ],
+                  "image_emoji": "🦓",
+                  "hint": "This animal looks a bit like a horse but with black and white stripes."
+                },
+                {
+                  "question_text": "Who is the person that loves to sing you lullabies at night?",
+                  "correct_answer": "Mother",
+                  "options": [
+                    "Mother",
+                    "Brother",
+                    "Uncle",
+                    "Aunt"
+                  ],
+                  "image_emoji": "🎤",
+                  "hint": "This person takes care of you and lives with you at home."
+                },
+                {
+                  "question_text": "What do you see in the sky at night shining bright?",
+                  "correct_answer": "Stars",
+                  "options": [
+                    "Stars",
+                    "Clouds",
+                    "Sun",
+                    "Rain"
+                  ],
+                  "image_emoji": "⭐",
+                  "hint": "These twinkle and can be seen in the dark sky when the moon is out."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "mother",
+                "father",
+                "brother",
+                "sister",
+                "grandpa",
+                "grandma",
+                "baby",
+                "umbrella",
+                "van",
+                "watch",
+                "box",
+                "yo-yo",
+                "zebra"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "apple",
+                      "emoji": "🍎",
+                      "distractors": [
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "grapes",
+                          "emoji": "🍇"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🍊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "sun",
+                      "emoji": "☀️",
+                      "distractors": [
+                        {
+                          "word": "moon",
+                          "emoji": "🌙"
+                        },
+                        {
+                          "word": "star",
+                          "emoji": "⭐"
+                        },
+                        {
+                          "word": "cloud",
+                          "emoji": "☁️"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "frog",
+                      "emoji": "🐸",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "cake",
+                      "emoji": "🍰",
+                      "distractors": [
+                        {
+                          "word": "cookie",
+                          "emoji": "🍪"
+                        },
+                        {
+                          "word": "ice cream",
+                          "emoji": "🍦"
+                        },
+                        {
+                          "word": "candy",
+                          "emoji": "🍬"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "car",
+                      "emoji": "🚗",
+                      "distractors": [
+                        {
+                          "word": "bus",
+                          "emoji": "🚌"
+                        },
+                        {
+                          "word": "bicycle",
+                          "emoji": "🚲"
+                        },
+                        {
+                          "word": "airplane",
+                          "emoji": "✈️"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱"
+                    },
+                    {
+                      "word": "dog",
+                      "emoji": "🐕"
+                    },
+                    {
+                      "word": "tree",
+                      "emoji": "🌳"
+                    },
+                    {
+                      "word": "hat",
+                      "emoji": "🎩"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Lily's Family Day",
+              "text": "Hello! I am Lily. This is my mother and father. I have a big brother. My grandma is here. We have a blue car. I am excited!",
+              "questions": [
+                {
+                  "question": "Does Lily have a brother?",
+                  "answer": "yes",
+                  "options": [
+                    "yes",
+                    "no"
+                  ]
+                },
+                {
+                  "question": "What color is their car?",
+                  "answer": "blue",
+                  "options": [
+                    "red",
+                    "blue",
+                    "green"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "This is my...",
+                "I have a...",
+                "My ___ is ___."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "cats"
+                      ],
+                      "correctSentence": "I like cats"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "has",
+                        "a",
+                        "dog"
+                      ],
+                      "correctSentence": "She has a dog"
+                    },
+                    {
+                      "words": [
+                        "They",
+                        "are",
+                        "happy"
+                      ],
+                      "correctSentence": "They are happy"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "He ___ a cat.",
+                      "answer": "has",
+                      "options": [
+                        "has",
+                        "have",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "We ___ playing.",
+                      "answer": "are",
+                      "options": [
+                        "are",
+                        "is",
+                        "am",
+                        "has"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ a brother.",
+                      "answer": "have",
+                      "options": [
+                        "have",
+                        "has",
+                        "is",
+                        "are"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "He have a cat.",
+                      "errorWord": "have",
+                      "correctWord": "has"
+                    },
+                    {
+                      "sentence": "She are happy.",
+                      "errorWord": "are",
+                      "correctWord": "is"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "This is my mom. She is reading a big blue book. My sister is drawing with her red crayons.",
+              "questions": [
+                {
+                  "question": "What is my mom doing?",
+                  "answer": "reading",
+                  "options": [
+                    "reading",
+                    "cooking",
+                    "singing"
+                  ]
+                },
+                {
+                  "question": "What color are the crayons my sister is using?",
+                  "answer": "red",
+                  "options": [
+                    "red",
+                    "green",
+                    "blue"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: Introduce two family members.",
+              "expected_text": "this is my mother and this is my father",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Unit 5 Mastery Check",
+              "questions": [
+                {
+                  "question_text": "This is ___ dad. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "my",
+                  "options": [
+                    "my",
+                    "your",
+                    "his",
+                    "their"
+                  ]
+                },
+                {
+                  "question_text": "What fruit is yellow and curved? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Banana",
+                  "options": [
+                    "Banana",
+                    "Apple",
+                    "Grapes",
+                    "Orange"
+                  ]
+                },
+                {
+                  "question_text": "True or False: My brother is playing with a yellow toy.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Which one is a family member? (Reading comprehension)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Aunt",
+                  "options": [
+                    "Car",
+                    "Sun",
+                    "Aunt",
+                    "Ball"
+                  ]
+                },
+                {
+                  "question_text": "I have a ___ cat. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "small orange",
+                  "options": [
+                    "small orange",
+                    "big red",
+                    "tiny blue",
+                    "large green"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Family Song",
+              "url": "https://www.youtube.com/watch?v=GiRUF7hv6uY",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        }
+      ]
+    }
+  ],
+  "ai_enriched": true,
+  "enriched_at": "2026-02-17T17:57:05.347351+00:00"
+}

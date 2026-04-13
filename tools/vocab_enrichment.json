@@ -1,0 +1,974 @@
+{
+  "alphabet": {
+    "example": "He sings the alphabet song.",
+    "definition": "Letters from A to Z."
+  },
+  "always": {
+    "example": "I always brush my teeth.",
+    "definition": "Every time, without fail."
+  },
+  "angry": {
+    "example": "She is angry with the cat.",
+    "definition": "Feeling mad or upset."
+  },
+  "answer": {
+    "example": "Can you answer my question?",
+    "definition": "To say or write back."
+  },
+  "apple": {
+    "example": "I eat a red apple.",
+    "definition": "A crunchy fruit."
+  },
+  "arm": {
+    "example": "I broke my arm.",
+    "definition": "A part of your body with your hand."
+  },
+  "aunt": {
+    "example": "My aunt is visiting us.",
+    "definition": "Your mom or dad's sister."
+  },
+  "baby": {
+    "example": "The baby is sleeping.",
+    "definition": "A very young child."
+  },
+  "bag": {
+    "example": "My bag is blue.",
+    "definition": "Something you carry things in."
+  },
+  "ball": {
+    "example": "I bounce the ball.",
+    "definition": "A round toy you can throw."
+  },
+  "basketball": {
+    "example": "He plays basketball outside.",
+    "definition": "A game with a big orange ball."
+  },
+  "bathroom": {
+    "example": "The bathroom is clean.",
+    "definition": "A room to wash and use the toilet."
+  },
+  "beans": {
+    "example": "We eat beans for dinner.",
+    "definition": "Small seeds you can eat."
+  },
+  "bedroom": {
+    "example": "My bedroom is tidy.",
+    "definition": "A room where you sleep."
+  },
+  "behind": {
+    "example": "The ball is behind the chair.",
+    "definition": "At the back of something."
+  },
+  "big": {
+    "example": "The dog is big.",
+    "definition": "Large in size."
+  },
+  "big ears": {
+    "example": "The rabbit has big ears.",
+    "definition": "Very large ears on an animal or person."
+  },
+  "bird": {
+    "example": "The bird is singing.",
+    "definition": "An animal with wings and feathers."
+  },
+  "black": {
+    "example": "My cat is black.",
+    "definition": "The darkest color."
+  },
+  "blue": {
+    "example": "The sky is blue.",
+    "definition": "The color of a clear sky."
+  },
+  "board": {
+    "example": "The board is white.",
+    "definition": "A flat surface for writing or drawing."
+  },
+  "book": {
+    "example": "I read a book.",
+    "definition": "A set of written or printed pages."
+  },
+  "box": {
+    "example": "The box is big.",
+    "definition": "A container with flat sides."
+  },
+  "boy": {
+    "example": "The boy is tall.",
+    "definition": "A young male child."
+  },
+  "bread": {
+    "example": "I eat bread.",
+    "definition": "A food made from flour and water."
+  },
+  "brother": {
+    "example": "He is my brother.",
+    "definition": "A male sibling."
+  },
+  "brown": {
+    "example": "The dog is brown.",
+    "definition": "A color like chocolate or wood."
+  },
+  "can": {
+    "example": "I can jump high.",
+    "definition": "To be able to do something."
+  },
+  "can't": {
+    "example": "I can't fly.",
+    "definition": "Not able to do something."
+  },
+  "cat": {
+    "example": "The cat is soft.",
+    "definition": "A small animal with fur and whiskers."
+  },
+  "chair": {
+    "example": "I sit on the chair.",
+    "definition": "A piece of furniture to sit on."
+  },
+  "chicken": {
+    "example": "We eat chicken.",
+    "definition": "A type of bird or its meat."
+  },
+  "children": {
+    "example": "The children play.",
+    "definition": "More than one child."
+  },
+  "clap": {
+    "example": "I clap my hands.",
+    "definition": "To hit hands together to make noise."
+  },
+  "clean": {
+    "example": "I clean my room.",
+    "definition": "To make something not dirty."
+  },
+  "climb": {
+    "example": "I climb the tree.",
+    "definition": "To go up something."
+  },
+  "clock": {
+    "example": "The clock shows time.",
+    "definition": "A tool that tells time."
+  },
+  "cold": {
+    "example": "The water is cold.",
+    "definition": "The opposite of hot."
+  },
+  "computer": {
+    "example": "The computer is new.",
+    "definition": "A machine for playing games and more."
+  },
+  "cousin": {
+    "example": "She is my cousin.",
+    "definition": "A child of your aunt or uncle."
+  },
+  "cow": {
+    "example": "The cow is big.",
+    "definition": "A big animal that gives milk."
+  },
+  "cute": {
+    "example": "The kitten is cute.",
+    "definition": "Something nice and makes you smile."
+  },
+  "dance": {
+    "example": "Let's dance to the music.",
+    "definition": "To move your body to music."
+  },
+  "dancing": {
+    "example": "She is dancing happily.",
+    "definition": "Moving your body to music."
+  },
+  "daughter": {
+    "example": "I am her daughter.",
+    "definition": "A girl child of a mother or father."
+  },
+  "desk": {
+    "example": "My books are on the desk.",
+    "definition": "A table you use for work or study."
+  },
+  "dirty": {
+    "example": "The shirt is dirty.",
+    "definition": "Not clean."
+  },
+  "dog": {
+    "example": "The dog barks loudly.",
+    "definition": "A pet with four legs that barks."
+  },
+  "don't like": {
+    "example": "I don't like spinach.",
+    "definition": "Not to enjoy something."
+  },
+  "draw": {
+    "example": "I draw a cat.",
+    "definition": "To make pictures with a pencil."
+  },
+  "drawing": {
+    "example": "She is drawing a house.",
+    "definition": "Making pictures with pencils or crayons."
+  },
+  "dress": {
+    "example": "The dress is blue.",
+    "definition": "A piece of clothing for girls."
+  },
+  "drink": {
+    "example": "I drink water.",
+    "definition": "To take in liquid."
+  },
+  "drinking": {
+    "example": "He is drinking juice.",
+    "definition": "Taking in liquid."
+  },
+  "duck": {
+    "example": "The duck swims in the pond.",
+    "definition": "A bird that can swim."
+  },
+  "ear": {
+    "example": "Cover your ear when it's loud.",
+    "definition": "A part of the body used to hear."
+  },
+  "eat": {
+    "example": "We eat lunch at noon.",
+    "definition": "To take in food."
+  },
+  "eating": {
+    "example": "She is eating an apple.",
+    "definition": "Taking in food."
+  },
+  "egg": {
+    "example": "A hen lays an egg.",
+    "definition": "A food that comes from a bird."
+  },
+  "eighteen": {
+    "example": "He has eighteen marbles.",
+    "definition": "The number after seventeen."
+  },
+  "eleven": {
+    "example": "I see eleven stars.",
+    "definition": "A number after ten."
+  },
+  "eraser": {
+    "example": "I use an eraser.",
+    "definition": "A tool to remove pencil marks."
+  },
+  "eye": {
+    "example": "I have two eyes.",
+    "definition": "A part of the body to see with."
+  },
+  "face": {
+    "example": "Wash your face.",
+    "definition": "The front part of your head."
+  },
+  "farm": {
+    "example": "The farm has cows.",
+    "definition": "A place where animals live."
+  },
+  "farmer": {
+    "example": "The farmer plants corn.",
+    "definition": "A person who works on a farm."
+  },
+  "father": {
+    "example": "My father is tall.",
+    "definition": "Another word for dad."
+  },
+  "favorite": {
+    "example": "Blue is my favorite color.",
+    "definition": "The one you like best."
+  },
+  "feel": {
+    "example": "I feel happy today.",
+    "definition": "To have emotions."
+  },
+  "fifteen": {
+    "example": "She is fifteen now.",
+    "definition": "A number after fourteen."
+  },
+  "fine": {
+    "example": "I am feeling fine.",
+    "definition": "Feeling okay or good."
+  },
+  "finger": {
+    "example": "Wiggle your finger.",
+    "definition": "A part of your hand."
+  },
+  "fish": {
+    "example": "I see a fish.",
+    "definition": "An animal that swims."
+  },
+  "floor": {
+    "example": "The toy is on the floor.",
+    "definition": "The bottom part of a room."
+  },
+  "foot": {
+    "example": "My foot is big.",
+    "definition": "The part of the body you stand on."
+  },
+  "football": {
+    "example": "I play football.",
+    "definition": "A game with a ball and goals."
+  },
+  "fourteen": {
+    "example": "He is fourteen today.",
+    "definition": "A number after thirteen."
+  },
+  "friend": {
+    "example": "My friend is nice.",
+    "definition": "A person you like to play with."
+  },
+  "frog": {
+    "example": "The frog jumps high.",
+    "definition": "A small animal that hops."
+  },
+  "fruit": {
+    "example": "I eat fruit.",
+    "definition": "Food like apples and bananas."
+  },
+  "funny": {
+    "example": "That joke is funny.",
+    "definition": "Makes you laugh."
+  },
+  "game": {
+    "example": "I play a game.",
+    "definition": "A fun activity to play."
+  },
+  "giraffe": {
+    "example": "The giraffe is tall.",
+    "definition": "An animal with a long neck."
+  },
+  "girl": {
+    "example": "The girl is happy.",
+    "definition": "A young female person."
+  },
+  "glasses": {
+    "example": "He wears glasses.",
+    "definition": "Something you wear to see better."
+  },
+  "goat": {
+    "example": "The goat is cute.",
+    "definition": "An animal that lives on a farm."
+  },
+  "grandma": {
+    "example": "I love my grandma.",
+    "definition": "Your mother's or father's mom."
+  },
+  "grandpa": {
+    "example": "Grandpa is very kind.",
+    "definition": "Your mother's or father's dad."
+  },
+  "green": {
+    "example": "The leaf is green.",
+    "definition": "A color like grass."
+  },
+  "grey": {
+    "example": "The sky is grey.",
+    "definition": "A color between black and white."
+  },
+  "guitar": {
+    "example": "She plays the guitar.",
+    "definition": "A musical instrument with strings."
+  },
+  "hair": {
+    "example": "My hair is short.",
+    "definition": "The strands growing on your head."
+  },
+  "hand": {
+    "example": "Wash your hand.",
+    "definition": "The part of your body at the end of your arm."
+  },
+  "handbag": {
+    "example": "She has a handbag.",
+    "definition": "A small bag for carrying things."
+  },
+  "happy": {
+    "example": "I feel happy today.",
+    "definition": "When you feel very good."
+  },
+  "hat": {
+    "example": "I wear a hat.",
+    "definition": "Something to cover your head."
+  },
+  "he": {
+    "example": "He is my friend.",
+    "definition": "A word for a boy or man."
+  },
+  "head": {
+    "example": "My head feels warm.",
+    "definition": "The top part of your body."
+  },
+  "hello": {
+    "example": "Say hello to mom.",
+    "definition": "A word to greet someone."
+  },
+  "hi": {
+    "example": "Hi, how are you?",
+    "definition": "A short way to say hello."
+  },
+  "hippo": {
+    "example": "The hippo is big.",
+    "definition": "A large, water-loving animal."
+  },
+  "horse": {
+    "example": "The horse can run.",
+    "definition": "An animal that people can ride."
+  },
+  "hot": {
+    "example": "The soup is hot.",
+    "definition": "When something feels very warm."
+  },
+  "how": {
+    "example": "How are you?",
+    "definition": "A word to ask in what way."
+  },
+  "hungry": {
+    "example": "I am hungry now.",
+    "definition": "When you want to eat."
+  },
+  "igloo": {
+    "example": "The igloo is cold.",
+    "definition": "A house made of snow."
+  },
+  "in": {
+    "example": "The cat is in the box.",
+    "definition": "When something is inside."
+  },
+  "jacket": {
+    "example": "I wear a warm jacket.",
+    "definition": "A piece of clothing for cool weather."
+  },
+  "jet": {
+    "example": "The jet flies fast.",
+    "definition": "A fast airplane."
+  },
+  "juice": {
+    "example": "I drink apple juice.",
+    "definition": "A drink made from fruit."
+  },
+  "jump": {
+    "example": "I can jump high.",
+    "definition": "To move up off the ground."
+  },
+  "kitchen": {
+    "example": "Mom cooks in the kitchen.",
+    "definition": "The room where we make food."
+  },
+  "kite": {
+    "example": "The kite flies in the sky.",
+    "definition": "A toy that flies with the wind."
+  },
+  "knee": {
+    "example": "I hurt my knee.",
+    "definition": "The middle part of your leg."
+  },
+  "knees": {
+    "example": "Bend your knees.",
+    "definition": "Two middle parts of your legs."
+  },
+  "leg": {
+    "example": "My leg is long.",
+    "definition": "The part of your body used for walking."
+  },
+  "letter": {
+    "example": "I wrote a letter.",
+    "definition": "A message you can send."
+  },
+  "like": {
+    "example": "I like ice cream.",
+    "definition": "When you enjoy something."
+  },
+  "lion": {
+    "example": "The lion is strong.",
+    "definition": "A big cat with a loud roar."
+  },
+  "listen": {
+    "example": "Listen to the music.",
+    "definition": "To hear what sounds are made."
+  },
+  "listening to music": {
+    "example": "She is listening to music.",
+    "definition": "Hearing songs or sound."
+  },
+  "living room": {
+    "example": "We play in the living room.",
+    "definition": "A room to sit and relax."
+  },
+  "lizard": {
+    "example": "A lizard is on the wall.",
+    "definition": "A small animal with a long tail."
+  },
+  "long": {
+    "example": "The rope is long.",
+    "definition": "Something not short."
+  },
+  "long neck": {
+    "example": "Giraffes have long necks.",
+    "definition": "A neck that is tall."
+  },
+  "look": {
+    "example": "Look at the sky.",
+    "definition": "To see something."
+  },
+  "mad": {
+    "example": "He feels mad today.",
+    "definition": "Feeling angry."
+  },
+  "man": {
+    "example": "The man is tall.",
+    "definition": "A grown-up boy."
+  },
+  "many": {
+    "example": "There are many apples.",
+    "definition": "A lot of things."
+  },
+  "milk": {
+    "example": "I drink milk.",
+    "definition": "A white drink from cows."
+  },
+  "mirror": {
+    "example": "Look in the mirror.",
+    "definition": "Glass that reflects images."
+  },
+  "monkey": {
+    "example": "The monkey climbs trees.",
+    "definition": "An animal that likes to swing."
+  },
+  "morning": {
+    "example": "Good morning, mom!",
+    "definition": "The first part of the day."
+  },
+  "mother": {
+    "example": "My mother is kind.",
+    "definition": "Another word for mom."
+  },
+  "mouse": {
+    "example": "The mouse is small.",
+    "definition": "A small animal with a long tail."
+  },
+  "mouth": {
+    "example": "Open your mouth.",
+    "definition": "Part of the face to eat."
+  },
+  "mud": {
+    "example": "The pig is in the mud.",
+    "definition": "Wet and soft dirt."
+  },
+  "name": {
+    "example": "My name is Lily.",
+    "definition": "What you are called."
+  },
+  "never": {
+    "example": "I never eat bugs.",
+    "definition": "Not at any time."
+  },
+  "new": {
+    "example": "Look at my new toy!",
+    "definition": "Not old or used."
+  },
+  "next to": {
+    "example": "The cat is next to me.",
+    "definition": "Very close or beside something."
+  },
+  "night": {
+    "example": "Stars come out at night.",
+    "definition": "The time when it is dark outside."
+  },
+  "nine": {
+    "example": "I have nine apples.",
+    "definition": "The number after eight."
+  },
+  "nineteen": {
+    "example": "I see nineteen stars.",
+    "definition": "The number after eighteen."
+  },
+  "no": {
+    "example": "No, I don't want it.",
+    "definition": "A word used to say not."
+  },
+  "nose": {
+    "example": "I smell with my nose.",
+    "definition": "The part of the face you use to smell."
+  },
+  "octopus": {
+    "example": "The octopus lives in the sea.",
+    "definition": "A sea animal with eight arms."
+  },
+  "old": {
+    "example": "The turtle is old.",
+    "definition": "Having lived for many years."
+  },
+  "on": {
+    "example": "The book is on the table.",
+    "definition": "Touching and supported by something."
+  },
+  "one": {
+    "example": "I have one cookie.",
+    "definition": "The first number."
+  },
+  "open": {
+    "example": "Can you open the door?",
+    "definition": "To move something so you can enter or see inside."
+  },
+  "orange": {
+    "example": "I like orange juice.",
+    "definition": "A color or a sweet fruit."
+  },
+  "paint": {
+    "example": "I want to paint a tree.",
+    "definition": "To use color to make pictures."
+  },
+  "parent": {
+    "example": "My parent reads to me.",
+    "definition": "A mom or dad."
+  },
+  "pen": {
+    "example": "I write with a pen.",
+    "definition": "A tool to write with ink."
+  },
+  "pencil": {
+    "example": "Draw with your pencil.",
+    "definition": "A tool to write or draw with lead."
+  },
+  "person": {
+    "example": "She is a kind person.",
+    "definition": "A human being."
+  },
+  "pet": {
+    "example": "I have a pet dog.",
+    "definition": "An animal you look after at home."
+  },
+  "phone": {
+    "example": "I call my friend on the phone.",
+    "definition": "A tool to talk to people far away."
+  },
+  "photo": {
+    "example": "This is a photo of me.",
+    "definition": "A picture taken with a camera."
+  },
+  "piano": {
+    "example": "He plays the piano.",
+    "definition": "A big instrument with keys you press."
+  },
+  "pig": {
+    "example": "The pig is pink.",
+    "definition": "A farm animal that says oink."
+  },
+  "pink": {
+    "example": "She wears a pink dress.",
+    "definition": "A light red color."
+  },
+  "playing": {
+    "example": "They are playing games.",
+    "definition": "Having fun with toys or friends."
+  },
+  "purple": {
+    "example": "Grapes are purple.",
+    "definition": "A color made from red and blue."
+  },
+  "queen": {
+    "example": "The queen has a crown.",
+    "definition": "A lady who is a royal leader."
+  },
+  "rabbit": {
+    "example": "The rabbit hops fast.",
+    "definition": "An animal with long ears."
+  },
+  "radio": {
+    "example": "Music plays on the radio.",
+    "definition": "A machine that plays sound."
+  },
+  "rainbow": {
+    "example": "Look, a rainbow in the sky!",
+    "definition": "A band of many colors in the sky."
+  },
+  "reading": {
+    "example": "She is reading a book.",
+    "definition": "Looking at words and understanding them."
+  },
+  "red": {
+    "example": "The apple is red.",
+    "definition": "A bright color like fire."
+  },
+  "rice": {
+    "example": "I eat rice for lunch.",
+    "definition": "Small white grains you can eat."
+  },
+  "ruler": {
+    "example": "I use a ruler to draw.",
+    "definition": "A tool for measuring."
+  },
+  "run": {
+    "example": "They run in the park.",
+    "definition": "Moving fast on your feet."
+  },
+  "running": {
+    "example": "The dog is running fast.",
+    "definition": "Moving quickly on foot."
+  },
+  "sad": {
+    "example": "He looks sad today.",
+    "definition": "Feeling unhappy."
+  },
+  "scary": {
+    "example": "That movie is scary.",
+    "definition": "Something that frightens you."
+  },
+  "school": {
+    "example": "I go to school.",
+    "definition": "A place where you learn."
+  },
+  "seventeen": {
+    "example": "I see seventeen stars.",
+    "definition": "The number after sixteen."
+  },
+  "she": {
+    "example": "She likes to sing.",
+    "definition": "A word for a girl or woman."
+  },
+  "sheep": {
+    "example": "The sheep is white.",
+    "definition": "A farm animal with wool."
+  },
+  "shirt": {
+    "example": "He wears a blue shirt.",
+    "definition": "A piece of clothing for the top of your body."
+  },
+  "shoes": {
+    "example": "I like my new shoes.",
+    "definition": "Things you wear on your feet."
+  },
+  "short": {
+    "example": "The pencil is short.",
+    "definition": "Not long in size."
+  },
+  "shoulder": {
+    "example": "My shoulder hurts.",
+    "definition": "The part between your neck and arm."
+  },
+  "shoulders": {
+    "example": "She shrugged her shoulders.",
+    "definition": "The two parts between your neck and arms."
+  },
+  "sing": {
+    "example": "I love to sing.",
+    "definition": "To make music with your voice."
+  },
+  "singing": {
+    "example": "She is singing a song.",
+    "definition": "Making music with your voice."
+  },
+  "sister": {
+    "example": "I have one sister.",
+    "definition": "A girl sibling."
+  },
+  "six": {
+    "example": "I am six years old.",
+    "definition": "The number after five."
+  },
+  "sixteen": {
+    "example": "She has sixteen toys.",
+    "definition": "The number after fifteen."
+  },
+  "skirt": {
+    "example": "Her skirt is pink.",
+    "definition": "A piece of clothing that hangs from the waist."
+  },
+  "sleeping": {
+    "example": "The cat is sleeping.",
+    "definition": "The time when you are not awake."
+  },
+  "sleepy": {
+    "example": "I feel sleepy now.",
+    "definition": "Feeling like you need to sleep."
+  },
+  "small": {
+    "example": "The dog is small.",
+    "definition": "Not big in size."
+  },
+  "smile": {
+    "example": "She has a nice smile.",
+    "definition": "The expression on your face when you are happy."
+  },
+  "snake": {
+    "example": "The snake is long.",
+    "definition": "An animal with no legs."
+  },
+  "socks": {
+    "example": "I wear socks with shoes.",
+    "definition": "Clothing for your feet."
+  },
+  "some": {
+    "example": "I want some cake.",
+    "definition": "A small amount or part of something."
+  },
+  "sometimes": {
+    "example": "We sometimes go to the park.",
+    "definition": "Not always; only at times."
+  },
+  "son": {
+    "example": "My son is happy.",
+    "definition": "A boy child of parents."
+  },
+  "spell": {
+    "example": "Can you spell cat?",
+    "definition": "To say or write letters in order."
+  },
+  "spider": {
+    "example": "I see a spider.",
+    "definition": "A small bug with eight legs."
+  },
+  "stairs": {
+    "example": "Go up the stairs.",
+    "definition": "Steps to go up or down."
+  },
+  "stomp": {
+    "example": "I stomp my feet.",
+    "definition": "To walk with heavy steps."
+  },
+  "student": {
+    "example": "The student is reading.",
+    "definition": "A person who learns at school."
+  },
+  "sun": {
+    "example": "The sun is bright.",
+    "definition": "The big star in the sky."
+  },
+  "swim": {
+    "example": "I swim in the pool.",
+    "definition": "To move through water."
+  },
+  "tail": {
+    "example": "The dog wags its tail.",
+    "definition": "The part that sticks out at the back of an animal."
+  },
+  "teacher": {
+    "example": "My teacher is kind.",
+    "definition": "A person who helps you learn."
+  },
+  "ten": {
+    "example": "I have ten apples.",
+    "definition": "A number after nine."
+  },
+  "tennis": {
+    "example": "They play tennis.",
+    "definition": "A game with rackets and a ball."
+  },
+  "there are": {
+    "example": "There are two cats.",
+    "definition": "Words to show more than one thing exists."
+  },
+  "there is": {
+    "example": "There is a car.",
+    "definition": "Words to show one thing exists."
+  },
+  "they": {
+    "example": "They are my friends.",
+    "definition": "The word for more than one person or thing."
+  },
+  "thirsty": {
+    "example": "I am thirsty.",
+    "definition": "When you need to drink water."
+  },
+  "thirteen": {
+    "example": "I see thirteen stars.",
+    "definition": "A number after twelve."
+  },
+  "three": {
+    "example": "I have three toys.",
+    "definition": "A number after two."
+  },
+  "tiger": {
+    "example": "The tiger is big.",
+    "definition": "A large wild cat with stripes."
+  },
+  "toe": {
+    "example": "I hurt my toe.",
+    "definition": "The part at the end of your foot."
+  },
+  "toes": {
+    "example": "I have ten toes.",
+    "definition": "Little parts on your feet."
+  },
+  "trousers": {
+    "example": "I wear blue trousers.",
+    "definition": "Long pants for your legs."
+  },
+  "turtle": {
+    "example": "The turtle walks slow.",
+    "definition": "An animal with a shell."
+  },
+  "twelve": {
+    "example": "Twelve is after eleven.",
+    "definition": "The number 12."
+  },
+  "twenty": {
+    "example": "I see twenty ducks.",
+    "definition": "The number 20."
+  },
+  "two": {
+    "example": "I have two apples.",
+    "definition": "The number 2."
+  },
+  "umbrella": {
+    "example": "The umbrella is red.",
+    "definition": "It keeps you dry in rain."
+  },
+  "uncle": {
+    "example": "My uncle is funny.",
+    "definition": "Your mom or dad's brother."
+  },
+  "under": {
+    "example": "The cat is under the table.",
+    "definition": "Below something."
+  },
+  "van": {
+    "example": "The van is big.",
+    "definition": "A large car."
+  },
+  "wall": {
+    "example": "The wall is white.",
+    "definition": "A side of a room."
+  },
+  "watch": {
+    "example": "I wear a watch.",
+    "definition": "A small clock you wear."
+  },
+  "watching TV": {
+    "example": "I like watching TV.",
+    "definition": "Looking at shows on TV."
+  },
+  "water": {
+    "example": "I drink water.",
+    "definition": "A clear liquid to drink."
+  },
+  "wearing": {
+    "example": "She is wearing a dress.",
+    "definition": "Having clothes on."
+  },
+  "white": {
+    "example": "The paper is white.",
+    "definition": "The color of snow."
+  },
+  "woman": {
+    "example": "The woman is happy.",
+    "definition": "A grown-up girl."
+  },
+  "word": {
+    "example": "Read this word.",
+    "definition": "A group of letters."
+  },
+  "write": {
+    "example": "I write my name.",
+    "definition": "To make words on paper."
+  },
+  "yellow": {
+    "example": "The sun is yellow.",
+    "definition": "The color of the sun."
+  },
+  "yes": {
+    "example": "Yes, I like ice cream.",
+    "definition": "A word to agree or say okay."
+  },
+  "yo-yo": {
+    "example": "I play with my yo-yo.",
+    "definition": "A toy you can make go up and down on a string."
+  },
+  "zebra": {
+    "example": "The zebra has stripes.",
+    "definition": "An animal with black and white stripes."
+  }
+}

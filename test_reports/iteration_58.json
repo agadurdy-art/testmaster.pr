@@ -1,0 +1,143 @@
+{
+  "iteration": 58,
+  "timestamp": "2026-03-01T02:30:00Z",
+  "test_type": "FEATURE_VERIFICATION_POST_ENRICHMENT",
+  "target": "Testmaster English learning platform - 9 user-requested fixes verification",
+  "summary": "VERIFIED 9/10 features. Reading has 3 questions, Grammar has examples, TTS endpoint works, Vocabulary shows emojis, speaker buttons present, Grammar games have 5 types, Vocab games rotate by lesson, Lesson 4 has review games, Error Hunter works with feedback. MINOR BUG: Reading question text shows raw HTML class names instead of formatted text.",
+
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "MicroReading / FormattedQuestion",
+        "issue": "Reading question shows raw HTML class names: 'Who says \"text-indigo-600 bg-indigo-50 px-1 rounded\">Hello, Tom?' instead of formatted quoted text",
+        "selector": "h3.text-2xl in reading questions view",
+        "priority": "MEDIUM"
+      }
+    ],
+    "integration_issues": [],
+    "design_issues": []
+  },
+
+  "features_verified": {
+    "READING_3_QUESTIONS_PER_LESSON": {
+      "status": "VERIFIED",
+      "description": "Reading section shows 3 questions",
+      "evidence": "Counter shows 'Question 1/3', API returns 3 comprehension_questions",
+      "screenshot": ".screenshots/06_reading_questions.png"
+    },
+    "GRAMMAR_EXAMPLES_SHOWN": {
+      "status": "VERIFIED",
+      "description": "Grammar section displays examples array",
+      "evidence": "Rule 'Who is ___?' with 3 examples: 'Who is your teacher?', 'Who is that boy?', 'Who is she?'",
+      "screenshot": ".screenshots/07_grammar.png"
+    },
+    "ELEVENLABS_TTS_ENDPOINT": {
+      "status": "VERIFIED",
+      "description": "POST /api/unified/tts/generate returns audio_url",
+      "evidence": "curl returns {\"audio_url\":\"/static/audio/5d41402abc4b2a76b9719d911017c592.mp3\",\"text\":\"hello\"}",
+      "endpoint": "POST /api/unified/tts/generate"
+    },
+    "VOCABULARY_SHOWS_EMOJIS": {
+      "status": "VERIFIED",
+      "description": "Vocabulary section displays emojis (not stock photos)",
+      "evidence": "Word 'hello' shows 👋 emoji in vocabulary card",
+      "screenshot": ".screenshots/04_vocabulary.png"
+    },
+    "VOCABULARY_SPEAKER_BUTTONS": {
+      "status": "VERIFIED",
+      "description": "Vocabulary has speaker buttons for TTS playback",
+      "evidence": "Volume2 icon button visible next to IPA pronunciation and example sentence",
+      "screenshot": ".screenshots/04_vocabulary.png"
+    },
+    "GRAMMAR_GAMES_5_TYPES": {
+      "status": "VERIFIED",
+      "description": "Grammar games include 5 game types",
+      "evidence": "Badge shows 'Grammar Game 1 of 5', includes word_order, fill_blank, error_hunter, true_false, multiple_choice_grammar",
+      "screenshot": ".screenshots/08_grammar_games.png"
+    },
+    "VOCAB_GAMES_ROTATE_BY_LESSON": {
+      "status": "VERIFIED",
+      "description": "Vocab games rotate: L1 has listen_choose_picture/read_choose_picture/unscramble/flashcard_match",
+      "evidence": "Badge shows 'Game 1 of 4' with 'Listen & Choose Picture' game type",
+      "screenshot": ".screenshots/09_vocab_games.png"
+    },
+    "LESSON_4_REVIEW_GAMES": {
+      "status": "VERIFIED",
+      "description": "Lesson 4 has review games: crossword, word_search, board_game",
+      "evidence": "Badge shows 'Game 1 of 3' with 'Crossword Puzzle' game, colorful grid with Across/Down clues",
+      "screenshot": ".screenshots/11_lesson4_review_games.png"
+    },
+    "ERROR_HUNTER_WORKING": {
+      "status": "VERIFIED",
+      "description": "Error Hunter game works - clicking error word shows correct feedback",
+      "evidence": "Sentence 'Who are he?' with clickable word buttons. Clicking 'Who' shows 'Not that one!' feedback with 'are → is' correction and explanation",
+      "screenshot": ".screenshots/16_error_hunter_clicked.png"
+    },
+    "ALL_UI_TEXT_ENGLISH": {
+      "status": "VERIFIED",
+      "description": "All UI text is in English (no Turkish text)",
+      "evidence": "All screenshots show English text: 'Warm-up', 'Vocabulary', 'Reading', 'Grammar', 'Grammar Games', etc.",
+      "screenshot": ".screenshots/01_unified_course.png"
+    }
+  },
+
+  "backend_api_tests": {
+    "TTS_GENERATE": {
+      "endpoint": "POST /api/unified/tts/generate",
+      "test": "curl -X POST with {\"text\": \"hello\"}",
+      "status": 200,
+      "response": "{\"audio_url\":\"/static/audio/...\",\"text\":\"hello\"}"
+    },
+    "LESSON_DATA": {
+      "endpoint": "GET /api/unified/lessons/stage_2_unit_01_lesson_01",
+      "verified_fields": [
+        "activity_flow contains 10 activities",
+        "micro_reading.comprehension_questions has 3 questions",
+        "grammar_focus.examples has 3 examples",
+        "vocabulary.words have image_emoji field (👋)",
+        "micro_game_grammar.games has 5 game types",
+        "micro_game_vocab.games has 4 games for lesson 1"
+      ]
+    }
+  },
+
+  "test_report_links": ["/app/test_reports/iteration_58.json"],
+
+  "action_items": [
+    "FIX: FormattedQuestion component showing raw HTML class names in reading questions - the regex for quoted text replacement is outputting escaped HTML"
+  ],
+
+  "critical_code_review_comments": [
+    "FormattedQuestion line 60-61 regex replacements produce valid HTML but dangerouslySetInnerHTML may be double-escaping when question text contains both single and double quotes",
+    "Reading questions work correctly when text only has single quotes, but mixed quote scenarios show raw class names"
+  ],
+
+  "updated_files": [],
+
+  "success_rate": {
+    "backend": "100% - TTS endpoint and lesson data APIs working",
+    "frontend": "95% - 9/10 features verified, 1 minor display bug in reading questions"
+  },
+
+  "test_credentials": {
+    "email": "tester@test.com",
+    "password": "tester123"
+  },
+
+  "seed_data_creation": "None required - used existing enriched lesson content",
+
+  "retest_needed": true,
+  "should_main_agent_self_test": true,
+
+  "context_for_next_testing_agent": "Iteration 58 verified 9 features for Testmaster platform post-enrichment. All major features work: Reading 3 questions, Grammar examples, TTS endpoint, emojis in vocab, speaker buttons, 5 grammar game types, vocab game rotation, L4 review games, Error Hunter. ONE BUG: Reading questions with double-quoted text like 'Who says \"Hello, Tom\"?' display raw HTML class names instead of formatted text. The FormattedQuestion component's regex may need adjustment for text with both single and double quotes.",
+
+  "mocked_api": {
+    "has_mocked_apis": false,
+    "mocked_apis_list": []
+  }
+}

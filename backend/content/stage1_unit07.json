@@ -1,0 +1,568 @@
+{
+  "stage": 1,
+  "stage_title": "Foundations",
+  "units": [
+    {
+      "unit_id": "stage_1_unit_07",
+      "unit_num": 7,
+      "title": "My Body - Part 2",
+      "subtitle": "Arms, Legs, Hands, Feet and Actions",
+      "phonics_focus": [],
+      "grammar_focus": [
+        "Touch your...",
+        "I have...",
+        "Plurals review",
+        "Imperatives (Clap/Stomp)"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_1_unit_07_lesson_01",
+          "title": "Move Your Body",
+          "topic": "Main limbs and the grammar of commands",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://www.youtube.com/watch?v=WX8HmogNyCY",
+              "source_channel": "Super Simple Songs",
+              "instruction": "Watch 'Head Shoulders Knees & Toes' and answer:",
+              "question_text": "Which part do you hear?",
+              "correct_answer": "knees",
+              "options": [
+                "knees",
+                "apple",
+                "mother",
+                "red"
+              ],
+              "image_emoji": "🦵",
+              "hint": "It is on your leg."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "arm",
+                  "ipa": "/ɑːrm/",
+                  "definition": "Part from shoulder to hand",
+                  "example": "I have two arms.",
+                  "image_emoji": "💪",
+                  "image_url": "/static/vocab_images/arm.png"
+                },
+                {
+                  "word": "leg",
+                  "ipa": "/leɡ/",
+                  "definition": "What you walk with",
+                  "example": "I have two legs.",
+                  "image_emoji": "🦵",
+                  "image_url": "/static/vocab_images/leg.png"
+                },
+                {
+                  "word": "hand",
+                  "ipa": "/hænd/",
+                  "definition": "End of your arm",
+                  "example": "Touch your hand.",
+                  "image_emoji": "✋",
+                  "image_url": "/static/vocab_images/hand.png"
+                },
+                {
+                  "word": "foot",
+                  "ipa": "/fʊt/",
+                  "definition": "What you wear shoes on",
+                  "example": "This is my foot.",
+                  "image_emoji": "🦶",
+                  "image_url": "/static/vocab_images/foot.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match the part you walk with: 🦵",
+              "correct_answer": "leg",
+              "options": [
+                "leg",
+                "arm",
+                "hand",
+                "eye"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Ben Moves",
+              "text": "Hello! Look at me. I have two long arms. I have two strong legs. I can run! Touch your hand.",
+              "questions": [
+                {
+                  "question": "How many arms?",
+                  "answer": "two",
+                  "options": [
+                    "one",
+                    "two",
+                    "ten"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Touch your ___.",
+              "explanation": "Use 'Touch your' to give a simple command.",
+              "examples": [
+                "Touch your hand.",
+                "Touch your nose."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "fill_blank",
+              "sentence": "______ your leg.",
+              "correct_answer": "Touch",
+              "options": [
+                "Touch",
+                "Am",
+                "I",
+                "Is"
+              ],
+              "hint": "An action command."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Touch your arm and your hand.",
+              "questions": [
+                {
+                  "question": "What to touch?",
+                  "answer": "arm and hand"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Action: Record yourself saying 'Touch your head'.",
+              "expected_text": "touch your head",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Match 🦶:",
+              "correct_answer": "foot",
+              "options": [
+                "foot",
+                "hand",
+                "arm"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Head Shoulders Knees Toes",
+              "url": "https://www.youtube.com/watch?v=WX8HmogNyCY",
+              "type": "youtube"
+            }
+          ]
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_1_unit_07_lesson_02",
+          "title": "Ten Fingers",
+          "topic": "Small body parts and plural review",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "Recall Lesson 1: Match ✋",
+              "correct_answer": "hand",
+              "options": [
+                "hand",
+                "leg",
+                "foot"
+              ],
+              "hint": "It is at the end of your arm."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "finger",
+                  "ipa": "/ˈfɪŋɡər/",
+                  "definition": "On your hand",
+                  "example": "I have ten fingers.",
+                  "image_emoji": "☝️",
+                  "image_url": "/static/vocab_images/finger.png"
+                },
+                {
+                  "word": "toe",
+                  "ipa": "/toʊ/",
+                  "definition": "On your foot",
+                  "example": "I have ten toes.",
+                  "image_emoji": "🦶",
+                  "image_url": "/static/vocab_images/gpt_toe.png"
+                },
+                {
+                  "word": "long",
+                  "ipa": "/lɔːŋ/",
+                  "definition": "Great length",
+                  "example": "My arms are long.",
+                  "image_emoji": "📏",
+                  "image_url": "/static/vocab_images/long.png"
+                },
+                {
+                  "word": "short",
+                  "ipa": "/ʃɔːrt/",
+                  "definition": "Small length",
+                  "example": "My fingers are short.",
+                  "image_emoji": "🤏",
+                  "image_url": "/static/vocab_images/gpt_short.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "How many fingers do you see? 🖐️🖐️",
+              "correct_answer": "ten",
+              "options": [
+                "ten",
+                "five",
+                "two",
+                "one"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Count Them!",
+              "text": "Look at my hands. I have ten fingers. Look at my feet. I have ten toes. My toes are short. I am happy.",
+              "questions": [
+                {
+                  "question": "Are the toes long?",
+                  "answer": "no",
+                  "options": [
+                    "yes",
+                    "no"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "[Body Part]s are [Adjective].",
+              "explanation": "Use 'are' for plural descriptions.",
+              "examples": [
+                "My fingers are short.",
+                "My arms are long."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [
+                "My",
+                "toes",
+                "are",
+                "short"
+              ],
+              "correct_sentence": "My toes are short."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "I have ten fingers and ten toes.",
+              "questions": [
+                {
+                  "question": "How many toes?",
+                  "answer": "ten"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: My fingers are long.",
+              "expected_text": "my fingers are long",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What is ☝️?",
+              "correct_answer": "finger",
+              "options": [
+                "finger",
+                "toe",
+                "hand"
+              ]
+            }
+          ],
+          "extra_links": []
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_1_unit_07_lesson_03",
+          "title": "Up and Down",
+          "topic": "Joints and full body actions",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "Which one is for your foot?",
+              "correct_answer": "toe",
+              "options": [
+                "toe",
+                "finger",
+                "ear"
+              ],
+              "image_emoji": "🦶"
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "shoulder",
+                  "ipa": "/ˈʃoʊldər/",
+                  "definition": "Where arm meets body",
+                  "example": "Touch your shoulders.",
+                  "image_emoji": "🤷",
+                  "image_url": "/static/vocab_images/gpt_shoulder.png"
+                },
+                {
+                  "word": "knee",
+                  "ipa": "/niː/",
+                  "definition": "Middle of leg",
+                  "example": "I have two knees.",
+                  "image_emoji": "🦵",
+                  "image_url": "/static/vocab_images/knee.png"
+                },
+                {
+                  "word": "clap",
+                  "ipa": "/klæp/",
+                  "definition": "Hit hands together",
+                  "example": "Clap your hands!",
+                  "image_emoji": "👏",
+                  "image_url": "/static/vocab_images/clap.png"
+                },
+                {
+                  "word": "stomp",
+                  "ipa": "/stɒmp/",
+                  "definition": "Hit foot on ground",
+                  "example": "Stomp your feet!",
+                  "image_emoji": "👣",
+                  "image_url": "/static/vocab_images/gpt_stomp.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match the action: 👏",
+              "correct_answer": "clap",
+              "options": [
+                "clap",
+                "stomp",
+                "touch",
+                "run"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Simon Says",
+              "text": "Simon says: Clap your hands! Simon says: Stomp your feet! Touch your knees. Touch your shoulders. Good job!",
+              "questions": [
+                {
+                  "question": "What do you clap?",
+                  "answer": "hands",
+                  "options": [
+                    "hands",
+                    "feet"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "[Action] your [Part].",
+              "explanation": "Combine actions with body parts.",
+              "examples": [
+                "Clap your hands.",
+                "Stomp your feet."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "error_hunter",
+              "sentence": "Clap you hands.",
+              "has_error": true,
+              "correct_sentence": "Clap your hands."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Stomp your feet and touch your knees.",
+              "questions": [
+                {
+                  "question": "What is the action?",
+                  "answer": "stomp"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Give a command: Say 'Clap your hands'.",
+              "expected_text": "clap your hands",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Choose 🦵 part:",
+              "correct_answer": "knee",
+              "options": [
+                "knee",
+                "shoulder",
+                "finger"
+              ]
+            }
+          ],
+          "extra_links": []
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_1_unit_07_lesson_04",
+          "title": "Body Master",
+          "topic": "Mastery Check (Full Body & Actions)",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "Mastery Review: What do you hear with?",
+              "correct_answer": "ear",
+              "options": [
+                "ear",
+                "hand",
+                "knee"
+              ],
+              "image_emoji": "👂"
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "arm",
+                "leg",
+                "hand",
+                "foot",
+                "finger",
+                "toe",
+                "shoulder",
+                "knee",
+                "clap",
+                "stomp",
+                "long",
+                "short"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match the feet action: 👣",
+              "correct_answer": "stomp",
+              "options": [
+                "stomp",
+                "clap",
+                "touch"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "My Super Body",
+              "text": "I am a boy. I have two long legs and two arms. I have ten fingers. I can clap my hands and stomp my feet. My shoulders are big. I am fine!",
+              "questions": [
+                {
+                  "question": "Are his shoulders big?",
+                  "answer": "yes",
+                  "options": [
+                    "yes",
+                    "no"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "Touch your...",
+                "Clap your...",
+                "My ___ are ___."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [
+                "Stomp",
+                "your",
+                "feet",
+                "!"
+              ],
+              "correct_sentence": "Stomp your feet."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "I have ten short fingers and two long legs.",
+              "questions": [
+                {
+                  "question": "Are the legs short?",
+                  "answer": "no"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Full Body Intro: Say 'I have two arms and ten fingers'.",
+              "expected_text": "i have two arms and ten fingers",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Final Mastery: Choose the arm part.",
+              "correct_answer": "hand",
+              "options": [
+                "hand",
+                "foot",
+                "toe"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Head Shoulders Knees Toes",
+              "url": "https://www.youtube.com/watch?v=WX8HmogNyCY",
+              "type": "youtube"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

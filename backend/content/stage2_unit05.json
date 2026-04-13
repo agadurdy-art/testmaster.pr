@@ -1,0 +1,474 @@
+{
+  "stage": "stage_2",
+  "stage_id": "stage_2_starters",
+  "stage_title": "Starters (A1)",
+  "units": [
+    {
+      "unit_id": "stage_2_unit_05",
+      "unit_num": 5,
+      "title": "Animals Everywhere",
+      "subtitle": "Zoo and garden animals",
+      "phonics_focus": [
+        "Animal sounds",
+        "Description words"
+      ],
+      "grammar_focus": [
+        "Present Simple (it lives, it eats)",
+        "Has it got...?",
+        "Physical descriptions"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_2_unit_05_lesson_01",
+          "title": "Zoo Animals",
+          "topic": "A virtual trip to the zoo",
+          "context": "A virtual trip to the zoo.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about a virtual trip to the zoo?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "giraffe",
+                  "ipa": "",
+                  "definition": "An animal with a long neck.",
+                  "example": "The giraffe is tall.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/giraffe.png"
+                },
+                {
+                  "word": "hippo",
+                  "ipa": "",
+                  "definition": "A large, water-loving animal.",
+                  "example": "The hippo is big.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/hippo.png"
+                },
+                {
+                  "word": "zebra",
+                  "ipa": "",
+                  "definition": "An animal with black and white stripes.",
+                  "example": "The zebra has stripes.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_zebra.png"
+                },
+                {
+                  "word": "snake",
+                  "ipa": "",
+                  "definition": "An animal with no legs.",
+                  "example": "The snake is long.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/snake.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Zoo Animals",
+              "text": "A short story about a virtual trip to the zoo.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Present Simple (it lives, it eats) / Has it got...? / Physical descriptions",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about a virtual trip to the zoo.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about a virtual trip to the zoo.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about a virtual trip to the zoo?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_2_unit_05_lesson_02",
+          "title": "Small Animals",
+          "topic": "Looking for tiny animals in a garden",
+          "context": "Looking for tiny animals in a garden.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about looking for tiny animals in a garden?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "spider",
+                  "ipa": "",
+                  "definition": "A small bug with eight legs.",
+                  "example": "I see a spider.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/spider.png"
+                },
+                {
+                  "word": "frog",
+                  "ipa": "",
+                  "definition": "A small animal that hops.",
+                  "example": "The frog jumps high.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/frog.png"
+                },
+                {
+                  "word": "lizard",
+                  "ipa": "",
+                  "definition": "A small animal with a long tail.",
+                  "example": "A lizard is on the wall.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/lizard.png"
+                },
+                {
+                  "word": "tail",
+                  "ipa": "",
+                  "definition": "The part that sticks out at the back of an animal.",
+                  "example": "The dog wags its tail.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_tail.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Small Animals",
+              "text": "A short story about looking for tiny animals in a garden.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Present Simple (it lives, it eats) / Has it got...? / Physical descriptions",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about looking for tiny animals in a garden.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about looking for tiny animals in a garden.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about looking for tiny animals in a garden?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_2_unit_05_lesson_03",
+          "title": "Descriptions",
+          "topic": "Guessing an animal based on physical clues",
+          "context": "Guessing an animal based on physical clues.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about guessing an animal based on physical clues?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "long neck",
+                  "ipa": "",
+                  "definition": "A neck that is tall.",
+                  "example": "Giraffes have long necks.",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "big ears",
+                  "ipa": "",
+                  "definition": "Very large ears on an animal or person.",
+                  "example": "The rabbit has big ears.",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "scary",
+                  "ipa": "",
+                  "definition": "Something that frightens you.",
+                  "example": "That movie is scary.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_scary.png"
+                },
+                {
+                  "word": "funny",
+                  "ipa": "",
+                  "definition": "Makes you laugh.",
+                  "example": "That joke is funny.",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Descriptions",
+              "text": "A short story about guessing an animal based on physical clues.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Present Simple (it lives, it eats) / Has it got...? / Physical descriptions",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about guessing an animal based on physical clues.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about guessing an animal based on physical clues.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about guessing an animal based on physical clues?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_2_unit_05_lesson_04",
+          "title": "Unit Review",
+          "topic": "Sorting animals by size and habitat",
+          "context": "Sorting animals by size and habitat.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about sorting animals by size and habitat?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "giraffe",
+                "hippo",
+                "zebra",
+                "snake",
+                "spider",
+                "frog",
+                "lizard",
+                "tail",
+                "long neck",
+                "big ears",
+                "scary",
+                "funny"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Unit Review",
+              "text": "A short story about sorting animals by size and habitat.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "rule_pattern": "Present Simple (it lives, it eats) / Has it got...? / Physical descriptions",
+              "explanation": "",
+              "examples": [],
+              "patterns": [
+                "Present Simple (it lives, it eats)",
+                "Has it got...?",
+                "Physical descriptions"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about sorting animals by size and habitat.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about sorting animals by size and habitat.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about sorting animals by size and habitat?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

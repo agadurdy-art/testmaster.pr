@@ -1,0 +1,150 @@
+{
+  "type": "campus_map",
+  "width": 900,
+  "height": 700,
+  "title": "Westbrook University - South Campus",
+  "subtitle": "Label the buildings A-G (Questions 1-10)",
+  "showCompass": true,
+  "showScale": true,
+  "showKey": true,
+  "background": "#e8f4e8",
+  
+  "roads": [
+    {"id": "university_ave", "type": "main", "points": [[50, 620], [850, 620]], "name": "University Avenue", "width": 28},
+    {"id": "campus_drive", "type": "main", "points": [[450, 620], [450, 80]], "name": "Campus Drive", "width": 22},
+    {"id": "west_road", "type": "secondary", "points": [[450, 380], [120, 380], [120, 200]], "name": "West Road", "width": 14},
+    {"id": "east_road", "type": "secondary", "points": [[450, 380], [780, 380], [780, 200]], "name": "East Road", "width": 14},
+    {"id": "north_road", "type": "secondary", "points": [[200, 150], [700, 150]], "name": "North Academic Way", "width": 14},
+    {"id": "library_path", "type": "path", "points": [[450, 280], [350, 180], [550, 180], [450, 280]], "name": "", "width": 8}
+  ],
+  
+  "walkways": [
+    {"from": [450, 520], "to": [320, 460]},
+    {"from": [450, 520], "to": [580, 460]},
+    {"from": [320, 380], "to": [320, 280]},
+    {"from": [580, 380], "to": [580, 280]},
+    {"from": [200, 380], "to": [200, 280]},
+    {"from": [700, 380], "to": [700, 280]},
+    {"from": [450, 280], "to": [450, 200]},
+    {"from": [300, 150], "to": [300, 100]},
+    {"from": [600, 150], "to": [600, 100]},
+    {"from": [780, 200], "to": [820, 120]}
+  ],
+  
+  "buildings": [
+    {
+      "id": "A",
+      "x": 380,
+      "y": 440,
+      "width": 140,
+      "height": 90,
+      "name": "Administration Building",
+      "style": "classic",
+      "color": "#d4a574",
+      "given": false
+    },
+    {
+      "id": "B",
+      "x": 100,
+      "y": 260,
+      "width": 110,
+      "height": 80,
+      "name": "Science Complex",
+      "style": "modern",
+      "color": "#87CEEB",
+      "given": false
+    },
+    {
+      "id": "C",
+      "x": 350,
+      "y": 80,
+      "width": 200,
+      "height": 90,
+      "name": "Main Library",
+      "style": "classic",
+      "color": "#deb887",
+      "given": false
+    },
+    {
+      "id": "D",
+      "x": 600,
+      "y": 80,
+      "width": 130,
+      "height": 70,
+      "name": "Student Union",
+      "style": "classic",
+      "color": "#f4a460",
+      "given": false
+    },
+    {
+      "id": "E",
+      "x": 700,
+      "y": 220,
+      "width": 80,
+      "height": 130,
+      "name": "Engineering Faculty",
+      "style": "tower",
+      "color": "#b8860b",
+      "given": false
+    },
+    {
+      "id": "F",
+      "x": 760,
+      "y": 380,
+      "width": 90,
+      "height": 70,
+      "name": "Planetarium",
+      "style": "dome",
+      "color": "#708090",
+      "given": false
+    },
+    {
+      "id": "G",
+      "x": 780,
+      "y": 60,
+      "width": 100,
+      "height": 60,
+      "name": "Sports Centre",
+      "style": "classic",
+      "color": "#20B2AA",
+      "given": false
+    }
+  ],
+  
+  "givenBuildings": [
+    {"x": 400, "y": 580, "width": 100, "height": 50, "name": "Main Entrance", "style": "gate"},
+    {"x": 380, "y": 300, "width": 140, "height": 80, "name": "Central Lawn", "style": "plaza"},
+    {"x": 100, "y": 560, "width": 90, "height": 50, "name": "West Gate", "style": "gate"},
+    {"x": 710, "y": 560, "width": 90, "height": 50, "name": "East Gate", "style": "gate"}
+  ],
+  
+  "greenAreas": [
+    {"type": "lawn", "x": 240, "y": 440, "width": 100, "height": 80, "name": "West Quad"},
+    {"type": "lawn", "x": 560, "y": 440, "width": 100, "height": 80, "name": "East Quad"},
+    {"type": "park", "x": 240, "y": 180, "width": 70, "height": 60, "name": ""},
+    {"type": "park", "x": 600, "y": 200, "width": 60, "height": 50, "name": ""}
+  ],
+  
+  "water": [
+    {"type": "lake", "x": 60, "y": 100, "width": 100, "height": 70, "name": "University Lake"}
+  ],
+  
+  "trees": [
+    [80, 200], [100, 220], [60, 240],
+    [180, 200], [200, 220],
+    [280, 260], [300, 280],
+    [500, 260], [520, 280],
+    [640, 260], [660, 280],
+    [180, 500], [200, 520],
+    [700, 500], [720, 520],
+    [350, 400], [550, 400],
+    [250, 120], [270, 140],
+    [650, 170], [670, 190],
+    [820, 180], [840, 200]
+  ],
+  
+  "parkingAreas": [
+    {"x": 50, "y": 450, "width": 70, "height": 100, "name": "P1"},
+    {"x": 780, "y": 470, "width": 70, "height": 80, "name": "P2"}
+  ]
+}

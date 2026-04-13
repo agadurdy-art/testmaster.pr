@@ -1,22 +1,25 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Progress } from '../components/ui/progress';
 import { Input } from '../components/ui/input';
 import { 
-  BookOpen, Volume2, Mic, Square, Play, ChevronLeft, ChevronRight, 
+  BookOpen, Volume2, Play, ChevronLeft, ChevronRight, 
   CheckCircle, XCircle, RotateCcw, Shuffle, Trophy, Star, GraduationCap,
-  ArrowLeft, Loader2, Image
+  ArrowLeft, Loader2
 } from 'lucide-react';
 import { toast } from 'sonner';
+import PronunciationRecorder from '../components/PronunciationRecorder';
+import SignUpCTA from '../components/SignUpCTA';
+import { useI18n } from '../lib/i18n';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 // Band level configuration
 const BAND_LEVELS = [
-  { id: 'beginner', label: 'Band 4.5 & Below', color: 'from-green-500 to-emerald-600', icon: '🌱' },
-  { id: 'intermediate', label: 'Band 4.5 - 6.5', color: 'from-yellow-500 to-orange-500', icon: '📚' },
+  { id: 'foundation', label: 'Band 4.5 & Below', color: 'from-green-500 to-emerald-600', icon: '🌱' },
+  { id: 'development', label: 'Band 4.5 - 6.5', color: 'from-yellow-500 to-orange-500', icon: '📚' },
   { id: 'advanced', label: 'Band 6.5+', color: 'from-red-500 to-pink-600', icon: '🎯' }
 ];
 
@@ -65,6 +68,8 @@ const getVocabImage = (word) => {
 
 export default function VocabGrammarCourse({ user }) {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const lessonFromUrl = searchParams.get('lesson');
   
   // ALL HOOKS MUST BE AT TOP LEVEL - NEVER INSIDE CONDITIONS
   const [selectedBand, setSelectedBand] = useState(null);
@@ -76,8 +81,6 @@ export default function VocabGrammarCourse({ user }) {
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [playingAudio, setPlayingAudio] = useState(null);
-  const [recording, setRecording] = useState(false);
-  const [pronunciationResult, setPronunciationResult] = useState(null);
   const [practiceAnswers, setPracticeAnswers] = useState({});
   const [practiceScore, setPracticeScore] = useState({ correct: 0, total: 0 });
   const [showResults, setShowResults] = useState(false);
@@ -87,13 +90,39 @@ export default function VocabGrammarCourse({ user }) {
   const [matchingSelectedWord, setMatchingSelectedWord] = useState(null);
   const [matchingMatches, setMatchingMatches] = useState({});
   const [shuffledDefs, setShuffledDefs] = useState([]);
-  
-  const mediaRecorderRef = useRef(null);
-  const audioChunksRef = useRef([]);
+  const [mcqShuffledOptions, setMcqShuffledOptions] = useState([]);
+
+  // Handle URL lesson parameter - auto-navigate to lesson from quiz
+  useEffect(() => {
+    if (lessonFromUrl) {
+      const loadLessonFromUrl = async () => {
+        setLoading(true);
+        try {
+          const res = await fetch(`${API_URL}/api/vocab-grammar/lessons`);
+          const data = await res.json();
+          const targetLesson = data.find(l => l.id === lessonFromUrl);
+          if (targetLesson) {
+            setSelectedBand(targetLesson.band_level);
+            setLessons(data.filter(l => l.band_level === targetLesson.band_level));
+            setSelectedLesson(targetLesson);
+            setView('lesson');
+            toast.success(`Opened: ${targetLesson.title}`, { duration: 2000 });
+          } else {
+            toast.error('Lesson not found');
+          }
+        } catch (error) {
+          console.error('Error loading lesson:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      loadLessonFromUrl();
+    }
+  }, [lessonFromUrl]);
 
   // Fetch lessons for selected band
   useEffect(() => {
-    if (selectedBand) {
+    if (selectedBand && !lessonFromUrl) {
       fetchLessons();
     }
   }, [selectedBand]);
@@ -109,6 +138,19 @@ export default function VocabGrammarCourse({ user }) {
   useEffect(() => {
     setFillBlankInput('');
   }, [currentItemIndex]);
+
+  // Shuffle MCQ options when entering MCQ mode or changing questions
+  useEffect(() => {
+    if (practiceMode === 'mcq' && selectedLesson?.items) {
+      const currentItem = selectedLesson.items[currentItemIndex];
+      if (currentItem) {
+        const otherItems = selectedLesson.items.filter(i => i.id !== currentItem.id);
+        const wrongOptions = otherItems.slice(0, 3).map(i => i.definition);
+        const allOptions = [currentItem.definition, ...wrongOptions];
+        setMcqShuffledOptions([...allOptions].sort(() => 0.5 - Math.random()));
+      }
+    }
+  }, [practiceMode, currentItemIndex, selectedLesson]);
 
   const fetchLessons = async () => {
     setLoading(true);
@@ -194,85 +236,6 @@ export default function VocabGrammarCourse({ user }) {
     } else {
       toast.error('Audio not supported in this browser');
       setPlayingAudio(null);
-    }
-  };
-
-  // Recording for pronunciation practice
-  const startRecording = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mediaRecorder = new MediaRecorder(stream);
-      mediaRecorderRef.current = mediaRecorder;
-      audioChunksRef.current = [];
-
-      mediaRecorder.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-          audioChunksRef.current.push(event.data);
-        }
-      };
-
-      mediaRecorder.onstop = async () => {
-        const blob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
-        stream.getTracks().forEach(track => track.stop());
-        await evaluatePronunciation(blob);
-      };
-
-      mediaRecorder.start();
-      setRecording(true);
-      toast.info('Recording... Speak now!');
-    } catch (error) {
-      console.error('Microphone error:', error);
-      toast.error('Failed to access microphone');
-    }
-  };
-
-  const stopRecording = () => {
-    if (mediaRecorderRef.current && recording) {
-      mediaRecorderRef.current.stop();
-      setRecording(false);
-    }
-  };
-
-  const evaluatePronunciation = async (audioBlob) => {
-    const currentItem = selectedLesson?.items[currentItemIndex];
-    if (!currentItem) return;
-
-    toast.info('Analyzing your pronunciation...');
-    
-    try {
-      const formData = new FormData();
-      formData.append('file', new File([audioBlob], 'recording.webm', { type: 'audio/webm' }));
-      
-      const transcribeResponse = await fetch(`${API_URL}/api/speaking/transcribe`, {
-        method: 'POST',
-        body: formData
-      });
-      
-      if (!transcribeResponse.ok) throw new Error('Transcription failed');
-      const transcribeData = await transcribeResponse.json();
-      
-      const evalResponse = await fetch(`${API_URL}/api/vocab-grammar/evaluate-pronunciation`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          word: currentItem.word,
-          user_transcript: transcribeData.text || ''
-        })
-      });
-      
-      const evalData = await evalResponse.json();
-      setPronunciationResult(evalData);
-      
-      if (evalData.score === 'correct') {
-        toast.success('Excellent pronunciation! 🎉');
-      } else if (evalData.score === 'partially_correct') {
-        toast.info('Good try! Keep practicing.');
-      } else {
-        toast.warning('Let\'s try again!');
-      }
-    } catch (error) {
-      console.error('Evaluation error:', error);
-      toast.error('Failed to evaluate pronunciation');
     }
   };
 
@@ -582,41 +545,20 @@ export default function VocabGrammarCourse({ user }) {
             </div>
           )}
           
-          {/* Pronunciation Practice */}
+          {/* Pronunciation Practice - Using Azure-powered component */}
           <div className="border-t pt-6">
             <p className="text-sm font-medium text-gray-700 mb-3">🎤 Practice Your Pronunciation</p>
-            <div className="flex gap-3 justify-center">
-              {!recording ? (
-                <Button onClick={startRecording} className="primary-gradient text-white">
-                  <Mic className="w-4 h-4 mr-2" /> Record
-                </Button>
-              ) : (
-                <Button onClick={stopRecording} className="bg-red-500 text-white hover:bg-red-600">
-                  <Square className="w-4 h-4 mr-2" /> Stop
-                </Button>
-              )}
-            </div>
-            
-            {pronunciationResult && (
-              <div className={`mt-4 p-4 rounded-lg ${
-                pronunciationResult.score === 'correct' ? 'bg-green-50 border border-green-200' :
-                pronunciationResult.score === 'partially_correct' ? 'bg-yellow-50 border border-yellow-200' :
-                'bg-red-50 border border-red-200'
-              }`}>
-                <div className="flex items-center gap-2 mb-2">
-                  {pronunciationResult.score === 'correct' ? (
-                    <CheckCircle className="w-5 h-5 text-green-600" />
-                  ) : pronunciationResult.score === 'partially_correct' ? (
-                    <Star className="w-5 h-5 text-yellow-600" />
-                  ) : (
-                    <XCircle className="w-5 h-5 text-red-600" />
-                  )}
-                  <span className="font-medium">{pronunciationResult.score_percent}% Match</span>
-                </div>
-                <p className="text-sm text-gray-700">{pronunciationResult.feedback}</p>
-                <p className="text-sm text-gray-600 mt-1">💡 Tip: {pronunciationResult.tip}</p>
-              </div>
-            )}
+            <PronunciationRecorder
+              word={currentItem.word}
+              phonetic={currentItem.ipa}
+              imageUrl={selectedLesson.type !== 'grammar' ? vocabImage : null}
+              userId={user?.id || 'anonymous'}
+              type="word"
+              maxAttempts={5}
+              onFeedback={(result) => {
+                console.log('Pronunciation result:', result);
+              }}
+            />
           </div>
         </Card>
         
@@ -624,14 +566,14 @@ export default function VocabGrammarCourse({ user }) {
         <div className="flex justify-between items-center mb-6">
           <Button
             variant="outline"
-            onClick={() => { setCurrentItemIndex(Math.max(0, currentItemIndex - 1)); setPronunciationResult(null); }}
+            onClick={() => { setCurrentItemIndex(Math.max(0, currentItemIndex - 1)); }}
             disabled={currentItemIndex === 0}
           >
             <ChevronLeft className="w-4 h-4 mr-2" /> Previous
           </Button>
           
           <Button
-            onClick={() => { setCurrentItemIndex(Math.min(selectedLesson.items.length - 1, currentItemIndex + 1)); setPronunciationResult(null); }}
+            onClick={() => { setCurrentItemIndex(Math.min(selectedLesson.items.length - 1, currentItemIndex + 1)); }}
             disabled={currentItemIndex === selectedLesson.items.length - 1}
             className="primary-gradient text-white"
           >
@@ -802,14 +744,6 @@ export default function VocabGrammarCourse({ user }) {
     // Multiple Choice Quiz
     if (practiceMode === 'mcq') {
       const answered = practiceAnswers[currentItem.id];
-      const otherItems = items.filter(i => i.id !== currentItem.id);
-      const wrongOptions = otherItems.slice(0, 3).map(i => i.definition);
-      const allOptions = [currentItem.definition, ...wrongOptions];
-      // Shuffle options (but keep them stable for this question)
-      const shuffledOptions = useMemo(() => 
-        [...allOptions].sort(() => 0.5 - Math.random()), 
-        [currentItem.id]
-      );
       
       return (
         <div className="max-w-2xl mx-auto">
@@ -822,7 +756,7 @@ export default function VocabGrammarCourse({ user }) {
             <h2 className="text-2xl font-bold text-gray-900 mb-6">What does "{currentItem.word}" mean?</h2>
             
             <div className="space-y-3">
-              {shuffledOptions.map((option, idx) => (
+              {mcqShuffledOptions.map((option, idx) => (
                 <button
                   key={idx}
                   disabled={!!answered}
@@ -1023,7 +957,7 @@ export default function VocabGrammarCourse({ user }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 py-8 px-4 pb-32">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
@@ -1037,6 +971,9 @@ export default function VocabGrammarCourse({ user }) {
         {view === 'lesson' && renderLessonDetail()}
         {view === 'practice' && renderPractice()}
       </div>
+      
+      {/* CTA Banner for visitors - only show on practice mode (flashcards/quiz) */}
+      {!user && view === 'practice' && <SignUpCTA variant="banner" />}
     </div>
   );
 }

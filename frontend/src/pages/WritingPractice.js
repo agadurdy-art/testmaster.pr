@@ -20,9 +20,9 @@ const TASK_TYPES = [
 
 const WRITING_PROMPTS = {
   task1_academic: [
-    { id: 'ac1', title: 'Line Graph - Internet Usage', prompt: 'The graph below shows the percentage of households with access to the internet in three different countries between 2000 and 2020.\n\nSummarize the information by selecting and reporting the main features, and make comparisons where relevant.', imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop', type: 'line_graph' },
-    { id: 'ac2', title: 'Bar Chart - Energy Sources', prompt: 'The bar chart below shows the percentage of electricity generated from different sources in four countries.\n\nSummarize the information by selecting and reporting the main features, and make comparisons where relevant.', imageUrl: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&h=400&fit=crop', type: 'bar_chart' },
-    { id: 'ac3', title: 'Process Diagram - Water Treatment', prompt: 'The diagram below shows the process of treating water to make it drinkable.\n\nSummarize the information by selecting and reporting the main features.', imageUrl: 'https://images.unsplash.com/photo-1581093458791-9d42e3c2fd45?w=600&h=400&fit=crop', type: 'process' }
+    { id: 'ac1', title: 'Line Graph - Internet Usage', prompt: 'The graph below shows the percentage of households with access to the internet in three different countries between 2000 and 2020.\n\nSummarize the information by selecting and reporting the main features, and make comparisons where relevant.', imageUrl: 'https://customer-assets.emergentagent.com/job_ielts-ace-3/artifacts/zkfesaxt_Screenshot%202025-12-18%20at%2011.06.08.png', type: 'line_graph' },
+    { id: 'ac2', title: 'Bar Chart - Energy Sources', prompt: 'The bar chart below shows the percentage of electricity generated from different sources in four countries.\n\nSummarize the information by selecting and reporting the main features, and make comparisons where relevant.', imageUrl: 'https://customer-assets.emergentagent.com/job_ielts-ace-3/artifacts/t9vh6l2n_Code_Generated_Image.png', type: 'bar_chart' },
+    { id: 'ac3', title: 'Process Diagram - Water Treatment', prompt: 'The diagram below shows the process of treating water to make it drinkable.\n\nSummarize the information by selecting and reporting the main features.', imageUrl: 'https://customer-assets.emergentagent.com/job_ielts-ace-3/artifacts/oslspp62_Gemini_Generated_Image_njmstsnjmstsnjms.png', type: 'process' }
   ],
   task1_general: [
     { id: 'gt1', title: 'Formal Letter - Job Application', prompt: 'You saw an advertisement for a job at an international company. Write a letter to the Human Resources Manager.\n\nIn your letter:\n• Explain which job you are applying for\n• Describe your qualifications and experience\n• Say why you would be suitable for the job', type: 'formal' },
@@ -77,12 +77,41 @@ export default function WritingPractice({ user }) {
     if (wordCount < 50) { toast.error('Please write at least 50 words.'); return; }
     setLoading(true); setTimerActive(false);
     try {
-      const response = await fetch(`${API_URL}/api/writing-practice/evaluate`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ task_type: selectedTaskType, prompt: selectedPrompt.prompt, essay, word_count: wordCount }) });
-      if (!response.ok) throw new Error('Evaluation failed');
+      console.log('Submitting essay for evaluation...', { task_type: selectedTaskType, word_count: wordCount });
+      const response = await fetch(`${API_URL}/api/writing-practice/evaluate`, { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify({ 
+          task_type: selectedTaskType, 
+          prompt: selectedPrompt.prompt, 
+          essay, 
+          word_count: wordCount 
+        }) 
+      });
+      
+      console.log('Response status:', response.status);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Evaluation failed:', response.status, errorText);
+        throw new Error(`Evaluation failed: ${response.status}`);
+      }
+      
       const data = await response.json();
-      setFeedback(data); setView('feedback');
+      console.log('Evaluation result:', data);
+      
+      if (!data || typeof data.overall_band === 'undefined') {
+        console.error('Invalid response format:', data);
+        throw new Error('Invalid response format from server');
+      }
+      
+      setFeedback(data); 
+      setView('feedback');
       toast.success('Essay evaluated!');
-    } catch (error) { toast.error('Failed to evaluate essay.'); }
+    } catch (error) { 
+      console.error('Essay submission error:', error);
+      toast.error(`Failed to evaluate essay: ${error.message || 'Unknown error'}`); 
+    }
     finally { setLoading(false); }
   };
 
@@ -92,7 +121,7 @@ export default function WritingPractice({ user }) {
 
   // Task Selection View
   if (view === 'tasks') return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 py-8 px-4 pb-32">
       <div className="max-w-4xl mx-auto">
         <Button variant="ghost" onClick={() => navigate('/dashboard')} className="mb-6 text-gray-600 hover:text-violet-600"><ArrowLeft className="w-4 h-4 mr-2" /> Dashboard</Button>
         <div className="text-center mb-8">
@@ -134,7 +163,7 @@ export default function WritingPractice({ user }) {
     const task = TASK_TYPES.find(t => t.id === selectedTaskType);
     const prompts = WRITING_PROMPTS[selectedTaskType] || [];
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 py-8 px-4">
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 py-8 px-4 pb-32">
         <div className="max-w-4xl mx-auto">
           <Button variant="ghost" onClick={() => setView('tasks')} className="mb-4 text-gray-600"><ArrowLeft className="w-4 h-4 mr-2" /> Back</Button>
           <div className="flex items-center gap-3 mb-6">
@@ -164,17 +193,27 @@ export default function WritingPractice({ user }) {
     const minWords = selectedTaskType === 'task2' ? 250 : 150;
     const wordProgress = Math.min((wordCount / minWords) * 100, 100);
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 py-8 px-4">
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 py-8 px-4 pb-32">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between mb-4">
-            <Button variant="ghost" onClick={() => { if (window.confirm('Exit? Progress will be lost.')) resetPractice(); }} className="text-gray-600"><ArrowLeft className="w-4 h-4 mr-2" /> Exit</Button>
+            <Button variant="ghost" onClick={() => resetPractice()} className="text-gray-600"><ArrowLeft className="w-4 h-4 mr-2" /> Exit</Button>
             <div className={`px-4 py-2 rounded-xl font-mono text-lg ${timeLeft < 300 ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-700'}`}><Clock className="w-4 h-4 inline mr-2" />{formatTime(timeLeft)}</div>
           </div>
           <div className="grid lg:grid-cols-2 gap-6">
             <Card className="p-6 h-fit lg:sticky lg:top-4 bg-white border-0 shadow-lg rounded-2xl">
               <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${task.color} text-white mb-4`}>{task.title}</span>
               <h3 className="font-semibold text-gray-900 mb-3">{selectedPrompt.title}</h3>
-              {selectedPrompt.imageUrl && <div className="mb-4 rounded-xl overflow-hidden"><img src={selectedPrompt.imageUrl} alt="Task visual" className="w-full h-48 object-cover" /></div>}
+              {selectedPrompt.imageUrl && (
+                <div className="mb-4 rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+                  <div className="p-2 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
+                    <div className="flex items-center gap-2 text-blue-600">
+                      <BarChart2 className="w-4 h-4" />
+                      <span className="text-sm font-medium">Task Visual: {selectedPrompt.type?.replace('_', ' ').toUpperCase()}</span>
+                    </div>
+                  </div>
+                  <img src={selectedPrompt.imageUrl} alt="Task visual" className="w-full object-contain max-h-64 bg-white" />
+                </div>
+              )}
               <p className="text-gray-700 whitespace-pre-line">{selectedPrompt.prompt}</p>
               <div className="mt-4 p-3 bg-amber-50 rounded-xl"><p className="text-xs text-amber-800"><strong>Remember:</strong> Write at least {minWords} words.</p></div>
             </Card>
@@ -202,41 +241,213 @@ export default function WritingPractice({ user }) {
     );
   }
 
-  // Feedback View
-  if (view === 'feedback' && feedback) return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
-        <Button variant="ghost" onClick={resetPractice} className="mb-4 text-gray-600"><ArrowLeft className="w-4 h-4 mr-2" /> Back</Button>
-        <Card className="p-6 mb-6 text-center bg-gradient-to-br from-violet-50 to-purple-50 border-0 shadow-lg rounded-2xl">
-          <div className="w-16 h-16 bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg"><Award className="w-8 h-8 text-white" /></div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Estimated Band Score</h2>
-          <div className={`inline-block px-6 py-3 rounded-full text-4xl font-bold ${getBandColor(feedback.overall_band)}`}>{feedback.overall_band}</div>
-          <p className="text-gray-500 mt-3">Word count: {wordCount}</p>
-        </Card>
-        <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Detailed Scores</h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            {[{ key: 'task_achievement', label: 'Task Achievement' }, { key: 'coherence_cohesion', label: 'Coherence & Cohesion' }, { key: 'lexical_resource', label: 'Lexical Resource' }, { key: 'grammar', label: 'Grammar' }].map((c) => (
-              <div key={c.key} className="p-4 bg-gray-50 rounded-xl flex items-center justify-between">
-                <span className="font-medium text-gray-900">{c.label}</span>
-                <span className={`px-3 py-1 rounded-lg text-sm font-bold ${getBandColor(feedback.scores?.[c.key] || feedback.overall_band)}`}>{feedback.scores?.[c.key] || feedback.overall_band}</span>
+  // Feedback View - Enhanced Teacher-Style Feedback
+  if (view === 'feedback' && feedback) {
+    const validityCheck = feedback.validity_check;
+    const hasValidityIssues = validityCheck && (!validityCheck.is_valid || validityCheck.band_cap_applied);
+    
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 py-8 px-4 pb-32">
+        <div className="max-w-4xl mx-auto">
+          <Button variant="ghost" onClick={resetPractice} className="mb-4 text-gray-600"><ArrowLeft className="w-4 h-4 mr-2" /> Back</Button>
+          
+          {/* Validity Warning (if applicable) */}
+          {hasValidityIssues && (
+            <Card className="p-5 mb-6 bg-red-50 border-red-200 rounded-2xl">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <XCircle className="w-5 h-5 text-red-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-red-800 mb-1">Task Validity Issues</h3>
+                  <p className="text-sm text-red-700 mb-2">{validityCheck.cap_reason || 'Your response has validity issues that affect your score.'}</p>
+                  {validityCheck.validity_issues?.length > 0 && (
+                    <ul className="space-y-1">
+                      {validityCheck.validity_issues.map((issue, i) => (
+                        <li key={i} className="text-sm text-red-600 flex items-start gap-2">
+                          <span>•</span>{issue}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {validityCheck.band_cap_applied && (
+                    <p className="mt-2 text-sm font-medium text-red-800">
+                      ⚠️ Band capped at {validityCheck.band_cap_applied} due to validity issues
+                    </p>
+                  )}
+                </div>
               </div>
-            ))}
+            </Card>
+          )}
+          
+          {/* Band Score Card */}
+          <Card className="p-6 mb-6 text-center bg-gradient-to-br from-violet-50 to-purple-50 border-0 shadow-lg rounded-2xl">
+            <div className="w-16 h-16 bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <Award className="w-8 h-8 text-white" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Estimated Band Score</h2>
+            <div className={`inline-block px-6 py-3 rounded-full text-4xl font-bold ${getBandColor(feedback.overall_band)}`}>
+              {feedback.overall_band}
+            </div>
+            {feedback.band_confidence && (
+              <p className="text-sm text-gray-500 mt-2">
+                Confidence: <span className={`font-medium ${feedback.band_confidence === 'high' ? 'text-green-600' : feedback.band_confidence === 'medium' ? 'text-yellow-600' : 'text-gray-600'}`}>{feedback.band_confidence}</span>
+              </p>
+            )}
+            <p className="text-gray-500 mt-1">Word count: {wordCount}</p>
+          </Card>
+          
+          {/* Teacher's Summary */}
+          {feedback.teacher_summary && (
+            <Card className="p-5 mb-6 bg-blue-50 border-blue-200 rounded-2xl">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <BookOpen className="w-5 h-5 text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-blue-800 mb-1">Teacher's Feedback</h3>
+                  <p className="text-gray-700">{feedback.teacher_summary}</p>
+                </div>
+              </div>
+            </Card>
+          )}
+          
+          {/* Detailed Scores */}
+          <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Detailed Scores</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              {[
+                { key: 'task_achievement', label: 'Task Achievement' },
+                { key: 'coherence_cohesion', label: 'Coherence & Cohesion' },
+                { key: 'lexical_resource', label: 'Lexical Resource' },
+                { key: 'grammar', label: 'Grammar' }
+              ].map((c) => (
+                <div key={c.key} className="p-4 bg-gray-50 rounded-xl flex items-center justify-between">
+                  <span className="font-medium text-gray-900">{c.label}</span>
+                  <span className={`px-3 py-1 rounded-lg text-sm font-bold ${getBandColor(feedback.scores?.[c.key] || feedback.overall_band)}`}>
+                    {feedback.scores?.[c.key] || feedback.overall_band}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </Card>
+          
+          {/* Key Problems (Prioritized) */}
+          {feedback.key_problems?.length > 0 && (
+            <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <Target className="w-5 h-5 text-red-500" /> Key Issues to Address
+              </h3>
+              <div className="space-y-3">
+                {feedback.key_problems.map((problem, i) => (
+                  <div key={i} className="p-4 bg-gray-50 rounded-xl border-l-4 border-red-400">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-xs font-medium px-2 py-0.5 bg-red-100 text-red-700 rounded">Priority {problem.priority}</span>
+                      <span className="text-xs font-medium px-2 py-0.5 bg-gray-200 text-gray-700 rounded capitalize">{problem.category?.replace('_', ' ')}</span>
+                    </div>
+                    <p className="font-medium text-gray-900">{problem.issue}</p>
+                    {problem.impact && <p className="text-sm text-gray-500 mt-1">Impact: {problem.impact}</p>}
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
+          
+          {/* Strengths & Improvements */}
+          <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
+            <div className="mb-6">
+              <h4 className="font-medium text-green-700 mb-3 flex items-center gap-2">
+                <CheckCircle className="w-5 h-5" /> What You Did Well
+              </h4>
+              <ul className="space-y-2">
+                {(feedback.strengths || []).map((s, i) => (
+                  <li key={i} className="text-sm text-gray-700 flex items-start gap-2 p-2 bg-green-50 rounded-lg">
+                    <span className="text-green-500 mt-0.5">✓</span>
+                    <span>{s}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            {/* Next Steps */}
+            {feedback.next_steps?.length > 0 && (
+              <div>
+                <h4 className="font-medium text-amber-700 mb-3 flex items-center gap-2">
+                  <AlertCircle className="w-5 h-5" /> Your Next Steps
+                </h4>
+                <ul className="space-y-2">
+                  {feedback.next_steps.map((step, i) => (
+                    <li key={i} className="text-sm text-gray-700 flex items-start gap-2 p-2 bg-amber-50 rounded-lg">
+                      <span className="font-bold text-amber-600">{i + 1}.</span>
+                      <span>{step}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </Card>
+          
+          {/* Teacher-Style Corrections */}
+          {feedback.corrections?.length > 0 && (
+            <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <PenTool className="w-5 h-5 text-violet-500" /> Corrections & Explanations
+              </h3>
+              <div className="space-y-4">
+                {feedback.corrections.map((correction, i) => (
+                  <div key={i} className="p-4 bg-gray-50 rounded-xl">
+                    <div className="mb-2">
+                      <span className="text-xs font-medium text-gray-500 uppercase">You wrote:</span>
+                      <p className="text-red-600 line-through italic">"{correction.original}"</p>
+                    </div>
+                    <div className="mb-2">
+                      <span className="text-xs font-medium text-gray-500 uppercase">Correction:</span>
+                      <p className="text-green-700 font-medium">"{correction.corrected}"</p>
+                    </div>
+                    <div className="mb-2">
+                      <span className="text-xs font-medium text-gray-500 uppercase">Explanation:</span>
+                      <p className="text-gray-700 text-sm">{correction.explanation}</p>
+                    </div>
+                    {correction.better_alternative && (
+                      <div className="mt-2 p-2 bg-violet-50 rounded-lg">
+                        <span className="text-xs font-medium text-violet-600 uppercase">Better option:</span>
+                        <p className="text-violet-800 text-sm italic">"{correction.better_alternative}"</p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
+          
+          {/* Improved Paragraph */}
+          {(feedback.improved_paragraph || feedback.improved_version) && (
+            <Card className="p-6 mb-6 bg-emerald-50 border-emerald-200 rounded-2xl">
+              <h3 className="text-lg font-semibold text-emerald-800 mb-3 flex items-center gap-2">
+                <Lightbulb className="w-5 h-5" /> Model Answer / Improvement
+              </h3>
+              <p className="text-gray-700 whitespace-pre-line leading-relaxed">
+                {feedback.improved_paragraph || feedback.improved_version}
+              </p>
+            </Card>
+          )}
+          
+          {/* Action Buttons */}
+          <div className="flex gap-3">
+            <Button variant="outline" onClick={resetPractice} className="flex-1">
+              <RotateCcw className="w-4 h-4 mr-2" /> Try Another
+            </Button>
+            <Button 
+              className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white" 
+              onClick={() => { setView('writing'); setFeedback(null); }}
+            >
+              <PenTool className="w-4 h-4 mr-2" /> Revise Essay
+            </Button>
           </div>
-        </Card>
-        <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Feedback</h3>
-          <div className="mb-6"><h4 className="font-medium text-green-700 mb-2 flex items-center gap-2"><CheckCircle className="w-4 h-4" /> Strengths</h4><ul className="space-y-2">{(feedback.strengths || []).map((s, i) => <li key={i} className="text-sm text-gray-700 flex items-start gap-2"><span className="text-green-500">•</span>{s}</li>)}</ul></div>
-          <div><h4 className="font-medium text-amber-700 mb-2 flex items-center gap-2"><AlertCircle className="w-4 h-4" /> Improvements</h4><ul className="space-y-2">{(feedback.improvements || []).map((s, i) => <li key={i} className="text-sm text-gray-700 flex items-start gap-2"><span className="text-amber-500">•</span>{s}</li>)}</ul></div>
-        </Card>
-        {feedback.improved_version && <Card className="p-6 mb-6 bg-emerald-50 border-emerald-200 rounded-2xl"><h3 className="text-lg font-semibold text-emerald-800 mb-3 flex items-center gap-2"><Lightbulb className="w-5 h-5" /> Sample Improved Version</h3><p className="text-gray-700 whitespace-pre-line">{feedback.improved_version}</p></Card>}
-        <div className="flex gap-3">
-          <Button variant="outline" onClick={resetPractice} className="flex-1"><RotateCcw className="w-4 h-4 mr-2" /> Try Another</Button>
-          <Button className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white" onClick={() => { setView('writing'); setFeedback(null); }}><PenTool className="w-4 h-4 mr-2" /> Revise Essay</Button>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 
   return null;
 }

@@ -99,7 +99,7 @@ export default function SpeakingPractice({ user }) {
     try {
       const formData = new FormData();
       formData.append('file', new File([blob], 'recording.webm', { type: 'audio/webm' }));
-      const response = await fetch(`${API_URL}/api/speaking/transcribe`, { method: 'POST', body: formData });
+      const response = await fetch(`${API_URL}/api/transcribe-audio`, { method: 'POST', body: formData });
       if (!response.ok) throw new Error('Transcription failed');
       const data = await response.json();
       const currentQuestion = getCurrentQuestion();
@@ -140,7 +140,29 @@ export default function SpeakingPractice({ user }) {
 
   const resetPractice = () => { setView('parts'); setSelectedPart(null); setSelectedTopic(null); setCurrentQuestionIndex(0); setRecordings([]); setTranscripts([]); setAudioBlob(null); setFeedback(null); setIsPreparing(false); setIsSpeaking(false); setPrepTime(0); setSpeakTime(0); };
 
-  const playQuestion = (text) => { if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; u.rate = 0.9; setPlayingAudio(text); u.onend = () => setPlayingAudio(null); window.speechSynthesis.speak(u); } };
+  // Auto-record mode state
+  const [autoRecordEnabled, setAutoRecordEnabled] = useState(true);
+  
+  const playQuestion = (text, autoStartRecord = false) => { 
+    if ('speechSynthesis' in window) { 
+      window.speechSynthesis.cancel(); 
+      const u = new SpeechSynthesisUtterance(text); 
+      u.lang = 'en-US'; 
+      u.rate = 0.9; 
+      setPlayingAudio(text); 
+      u.onend = () => { 
+        setPlayingAudio(null);
+        // Auto-start recording after prompt plays (if enabled and not Part 2 which has prep time)
+        if (autoStartRecord && autoRecordEnabled && selectedPart !== 'part2' && !recording) {
+          setTimeout(() => {
+            toast.info('🎤 Recording starting...');
+            startRecording();
+          }, 500);
+        }
+      }; 
+      window.speechSynthesis.speak(u); 
+    } 
+  };
 
   const getBandColor = (band) => band >= 7 ? 'bg-green-100 text-green-700' : band >= 6 ? 'bg-blue-100 text-blue-700' : band >= 5 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700';
 
@@ -207,18 +229,56 @@ export default function SpeakingPractice({ user }) {
           <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-2"><Bot className="w-5 h-5 text-blue-600" /><span className="text-sm font-medium text-blue-600">Examiner</span></div>
-              <Button variant="ghost" size="sm" onClick={() => playQuestion(currentQuestion)} disabled={playingAudio === currentQuestion}><Volume2 className="w-4 h-4" /></Button>
+              <div className="flex items-center gap-2">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => playQuestion(currentQuestion, true)} 
+                  disabled={playingAudio === currentQuestion || recording}
+                  className="text-blue-600"
+                >
+                  <Play className="w-4 h-4 mr-1" />
+                  {autoRecordEnabled ? 'Play & Record' : 'Play'}
+                </Button>
+              </div>
             </div>
             <p className="text-lg text-gray-800 whitespace-pre-line leading-relaxed">{currentQuestion}</p>
             {selectedPart === 'part2' && isPreparing && <div className="mt-4 p-3 bg-amber-50 rounded-xl"><p className="text-sm text-amber-800">⏱️ {formatTime(prepTime)} to prepare. Click &quot;Start Speaking&quot; when ready.</p></div>}
           </Card>
           <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
-            <div className="flex items-center gap-2 mb-4"><User className="w-5 h-5 text-green-600" /><span className="text-sm font-medium text-green-600">Your Response</span></div>
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2"><User className="w-5 h-5 text-green-600" /><span className="text-sm font-medium text-green-600">Your Response</span></div>
+              <label className="flex items-center gap-2 text-xs text-gray-500 cursor-pointer">
+                <input 
+                  type="checkbox" 
+                  checked={autoRecordEnabled} 
+                  onChange={(e) => setAutoRecordEnabled(e.target.checked)}
+                  className="rounded border-gray-300"
+                />
+                Auto-record after play
+              </label>
+            </div>
             <div className="flex flex-col items-center gap-4">
               {!recording ? (
-                <Button size="lg" className={`w-full max-w-xs ${hasRecordedCurrent ? 'bg-amber-500 hover:bg-amber-600' : 'bg-gradient-to-r from-green-500 to-emerald-600'} text-white`} onClick={startRecording} disabled={loading || isPreparing}>
-                  <Mic className="w-5 h-5 mr-2" />{hasRecordedCurrent ? 'Re-record' : (selectedPart === 'part2' && prepTime > 0 ? 'Start Speaking' : 'Start Recording')}
-                </Button>
+                <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md">
+                  <Button 
+                    size="lg" 
+                    className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 text-white" 
+                    onClick={() => playQuestion(currentQuestion, true)} 
+                    disabled={loading || isPreparing || playingAudio === currentQuestion || recording}
+                  >
+                    <Play className="w-5 h-5 mr-2" />Play & Record
+                  </Button>
+                  <Button 
+                    size="lg" 
+                    variant="outline"
+                    className={`flex-1 ${hasRecordedCurrent ? 'border-amber-400 text-amber-600' : ''}`} 
+                    onClick={startRecording} 
+                    disabled={loading || isPreparing}
+                  >
+                    <Mic className="w-5 h-5 mr-2" />{hasRecordedCurrent ? 'Re-record' : 'Record Only'}
+                  </Button>
+                </div>
               ) : (
                 <Button size="lg" className="w-full max-w-xs bg-red-500 hover:bg-red-600 text-white" onClick={stopRecording}><Square className="w-5 h-5 mr-2" />Stop ({formatTime(speakTime)})</Button>
               )}

@@ -1,0 +1,486 @@
+{
+  "stage": "stage_2",
+  "stage_id": "stage_2_starters",
+  "stage_title": "Starters (A1)",
+  "units": [
+    {
+      "unit_id": "stage_2_unit_07",
+      "unit_num": 7,
+      "title": "Food I Like!",
+      "subtitle": "Food preferences and meals",
+      "phonics_focus": [
+        "Food words",
+        "Question intonation"
+      ],
+      "grammar_focus": [
+        "Do you like...?",
+        "Yes, I do / No, I don't",
+        "Conjunction and"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_2_unit_07_lesson_01",
+          "title": "Lunch Time",
+          "topic": "Choosing food in the school canteen",
+          "context": "Choosing food in the school canteen.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about choosing food in the school canteen?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "chicken",
+                  "ipa": "",
+                  "definition": "A type of bird or its meat.",
+                  "example": "We eat chicken.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/chicken.png"
+                },
+                {
+                  "word": "rice",
+                  "ipa": "",
+                  "definition": "Small white grains you can eat.",
+                  "example": "I eat rice for lunch.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/rice.png"
+                },
+                {
+                  "word": "beans",
+                  "ipa": "",
+                  "definition": "Small seeds you can eat.",
+                  "example": "We eat beans for dinner.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/beans.png"
+                },
+                {
+                  "word": "bread",
+                  "ipa": "",
+                  "definition": "A food made from flour and water.",
+                  "example": "I eat bread.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/bread.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Lunch Time",
+              "text": "A short story about choosing food in the school canteen.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Do you like...? / Yes, I do / No, I don't / Conjunction and",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about choosing food in the school canteen.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about choosing food in the school canteen.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about choosing food in the school canteen?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_2_unit_07_lesson_02",
+          "title": "Drinks",
+          "topic": "Ordering drinks at a cafe",
+          "context": "Ordering drinks at a cafe.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about ordering drinks at a cafe?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "water",
+                  "ipa": "",
+                  "definition": "A clear liquid to drink.",
+                  "example": "I drink water.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/water.png"
+                },
+                {
+                  "word": "juice",
+                  "ipa": "",
+                  "definition": "A drink made from fruit.",
+                  "example": "I drink apple juice.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/juice.png"
+                },
+                {
+                  "word": "milk",
+                  "ipa": "",
+                  "definition": "A white drink from cows.",
+                  "example": "I drink milk.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/milk.png"
+                },
+                {
+                  "word": "hot",
+                  "ipa": "",
+                  "definition": "When something feels very warm.",
+                  "example": "The soup is hot.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/hot.png"
+                },
+                {
+                  "word": "cold",
+                  "ipa": "",
+                  "definition": "The opposite of hot.",
+                  "example": "The water is cold.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/cold.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Drinks",
+              "text": "A short story about ordering drinks at a cafe.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Do you like...? / Yes, I do / No, I don't / Conjunction and",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about ordering drinks at a cafe.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about ordering drinks at a cafe.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about ordering drinks at a cafe?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_2_unit_07_lesson_03",
+          "title": "Preferences",
+          "topic": "A survey about favorite snacks",
+          "context": "A survey about favorite snacks.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about a survey about favorite snacks?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "like",
+                  "ipa": "",
+                  "definition": "When you enjoy something.",
+                  "example": "I like ice cream.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/like.png"
+                },
+                {
+                  "word": "don't like",
+                  "ipa": "",
+                  "definition": "Not to enjoy something.",
+                  "example": "I don't like spinach.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/don't like.png"
+                },
+                {
+                  "word": "favorite",
+                  "ipa": "",
+                  "definition": "The one you like best.",
+                  "example": "Blue is my favorite color.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/favorite.png"
+                },
+                {
+                  "word": "fruit",
+                  "ipa": "",
+                  "definition": "Food like apples and bananas.",
+                  "example": "I eat fruit.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/fruit.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Preferences",
+              "text": "A short story about a survey about favorite snacks.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Do you like...? / Yes, I do / No, I don't / Conjunction and",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about a survey about favorite snacks.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about a survey about favorite snacks.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about a survey about favorite snacks?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_2_unit_07_lesson_04",
+          "title": "Unit Review",
+          "topic": "Creating a healthy meal plan",
+          "context": "Creating a healthy meal plan.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about creating a healthy meal plan?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "chicken",
+                "rice",
+                "beans",
+                "bread",
+                "water",
+                "juice",
+                "milk",
+                "hot",
+                "cold",
+                "like",
+                "don't like",
+                "favorite",
+                "fruit"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Unit Review",
+              "text": "A short story about creating a healthy meal plan.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "rule_pattern": "Do you like...? / Yes, I do / No, I don't / Conjunction and",
+              "explanation": "",
+              "examples": [],
+              "patterns": [
+                "Do you like...?",
+                "Yes, I do / No, I don't",
+                "Conjunction and"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about creating a healthy meal plan.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about creating a healthy meal plan.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about creating a healthy meal plan?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

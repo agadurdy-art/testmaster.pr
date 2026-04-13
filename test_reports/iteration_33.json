@@ -1,0 +1,136 @@
+{
+  "iteration": 33,
+  "timestamp": "2026-02-12T14:00:00Z",
+  "test_type": "NEW_FEATURE_TESTING",
+  "target": "Liz AI Teacher - Teacher-Focused UI Redesign with Auto-Greeting, Lesson Modes, Voice-First Design",
+  "summary": "All features working correctly. Backend: 18/18 pytest tests passed including 4 new greet endpoint tests. Frontend: Complete teacher-focused UI working - auto-greeting on page load, lesson mode buttons, voice-first design with large microphone button, transcript toggle, speaking animation states, history dropdown with 'New Lesson' option, and Liz floating button on other pages.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "features_tested": [
+    {
+      "feature": "Liz Greet API (NEW)",
+      "endpoint": "POST /api/liz/greet",
+      "status": "WORKING",
+      "test_method": "pytest - 4 tests: test_greet_basic, test_greet_creates_session, test_greet_personalized, test_greet_missing_user_id",
+      "notes": "Returns {success, session_id, greeting, audio} - Greeting text + TTS audio in single call for auto-play on page load"
+    },
+    {
+      "feature": "Liz Chat with Lesson Modes",
+      "endpoint": "POST /api/liz/chat",
+      "status": "WORKING",
+      "test_method": "pytest - test_chat_lesson_speaking_practice, test_chat_lesson_vocabulary_builder, test_chat_lesson_study_plan",
+      "notes": "All lesson mode prompts return structured IELTS lesson content"
+    },
+    {
+      "feature": "Auto-Greeting on Page Load",
+      "route": "/liz",
+      "status": "WORKING",
+      "test_method": "Playwright - verified greeting appears automatically",
+      "notes": "Personalized greeting mentioning user name, study streak, and recommending next steps"
+    },
+    {
+      "feature": "Teacher-Focused UI Layout",
+      "route": "/liz",
+      "status": "WORKING",
+      "test_method": "Playwright - verified all UI elements",
+      "notes": "Large centered avatar, speech bubble, status indicators (idle/thinking/speaking), lesson mode buttons visible after greeting"
+    },
+    {
+      "feature": "Lesson Mode Buttons",
+      "component": "LizTeacher.js",
+      "status": "WORKING",
+      "test_method": "Playwright - verified visibility and click functionality",
+      "notes": "4 buttons visible: Speaking Practice, Vocabulary Builder, Grammar Lesson, Study Plan. Disappear after first interaction."
+    },
+    {
+      "feature": "Speaking Animation State",
+      "component": "LizPresence",
+      "status": "WORKING",
+      "test_method": "Playwright - observed status changes",
+      "notes": "Status dot changes color (amber when thinking, teal when speaking), 'Liz is preparing...' text appears during processing"
+    },
+    {
+      "feature": "Microphone Button (Primary Input)",
+      "component": "LizTeacher.js",
+      "status": "WORKING",
+      "test_method": "Playwright - verified visibility and styling",
+      "notes": "Large teal microphone button is primary input with 'Tap to speak to Liz' helper text"
+    },
+    {
+      "feature": "Text Input (Secondary Input)",
+      "component": "LizTeacher.js",
+      "status": "WORKING",
+      "test_method": "Playwright - typed message and sent",
+      "notes": "Text input with 'Or type here...' placeholder, sends message on Enter or button click"
+    },
+    {
+      "feature": "Auto-Voice Toggle",
+      "component": "Header",
+      "status": "WORKING",
+      "test_method": "Playwright - clicked toggle button",
+      "notes": "Volume icon in header toggles auto-TTS on/off"
+    },
+    {
+      "feature": "Session History Dropdown",
+      "component": "Header",
+      "status": "WORKING",
+      "test_method": "Playwright - opened dropdown and verified contents",
+      "notes": "Shows 'New Lesson' option and list of previous sessions with preview text"
+    },
+    {
+      "feature": "Conversation Transcript Toggle",
+      "component": "LizTeacher.js",
+      "status": "WORKING",
+      "test_method": "Playwright - toggled show/hide",
+      "notes": "Shows/hides message history with 'Show/Hide conversation (N messages)' toggle"
+    },
+    {
+      "feature": "Liz Floating Button",
+      "component": "LizFloatingButton.js",
+      "status": "WORKING",
+      "test_method": "Playwright - tested on dashboard",
+      "notes": "Graduation cap icon visible in bottom-right corner on other pages, hidden on /liz page, navigates correctly"
+    },
+    {
+      "feature": "TTS Endpoint",
+      "endpoint": "POST /api/liz/tts",
+      "status": "WORKING",
+      "test_method": "pytest - test_tts_basic, test_tts_empty_text",
+      "notes": "Returns base64 MP3 audio, validates empty text"
+    },
+    {
+      "feature": "STT Endpoint",
+      "endpoint": "POST /api/liz/stt",
+      "status": "WORKING",
+      "test_method": "pytest - test_stt_no_file (validation)",
+      "notes": "Returns 422 for missing file as expected"
+    }
+  ],
+  "test_report_links": [
+    "/app/backend/tests/test_liz_teacher.py",
+    "/app/test_reports/pytest/liz_teacher_v33_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [
+    "/app/backend/tests/test_liz_teacher.py"
+  ],
+  "success_rate": {
+    "backend": "100% (18/18 pytest tests passed)",
+    "frontend": "100% (All UI features verified via Playwright)"
+  },
+  "test_credentials": {
+    "localStorage_user": "{\"id\":\"6565a865-dbf9-4596-b756-eaf6c29295c8\",\"email\":\"test@test.com\",\"name\":\"Test User\",\"plan\":\"free\"}"
+  },
+  "seed_data_creation": "Created multiple Liz chat sessions during testing - stored in MongoDB liz_sessions collection",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Liz Teacher v33 - Teacher-focused UI redesign fully tested. Key features: 1) POST /api/liz/greet returns greeting text + TTS audio in single call for auto-play on page load. 2) UI has status states: idle, listening, transcribing, thinking, speaking with visual indicators. 3) Lesson modes (Speaking Practice, Vocabulary Builder, Grammar Lesson, Study Plan) send specific prompts and disappear after first interaction. 4) Transcript toggle shows/hides conversation history. 5) Microphone is primary input, text is secondary. 6) Auto-voice toggle controls TTS playback. 7) Floating button visible on all pages except /liz."
+}

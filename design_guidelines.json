@@ -1,0 +1,126 @@
+{
+  "project_name": "Testmaster Reborn - iOS 26 Edition",
+  "design_philosophy": {
+    "theme": "Glass Nature",
+    "core_concept": "Learning feels like exploring a floating garden. Everything is light, airy, and tactile.",
+    "emotional_tone": "Playful, Safe, Futuristic, Premium",
+    "target_audience": "Children (4-8) & Parents"
+  },
+  "typography": {
+    "font_family": {
+      "headings": "Fredoka, 'Comic Sans MS', sans-serif",
+      "body": "Nunito, 'Segoe UI', sans-serif",
+      "mono": "JetBrains Mono, monospace"
+    },
+    "scale": {
+      "h1": "text-5xl md:text-6xl font-bold tracking-tight text-slate-800 drop-shadow-sm",
+      "h2": "text-3xl md:text-4xl font-bold text-slate-700",
+      "h3": "text-2xl font-semibold text-slate-700",
+      "body": "text-lg md:text-xl font-medium text-slate-600 leading-relaxed",
+      "caption": "text-sm font-bold text-slate-400 uppercase tracking-wider"
+    },
+    "imports": [
+      "@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap');"
+    ]
+  },
+  "colors": {
+    "palette": {
+      "primary": {
+        "main": "#10B981", 
+        "light": "#6EE7B7",
+        "dark": "#059669",
+        "glass": "rgba(16, 185, 129, 0.15)"
+      },
+      "secondary": {
+        "main": "#38BDF8",
+        "light": "#BAE6FD",
+        "glass": "rgba(56, 189, 248, 0.15)"
+      },
+      "accent": {
+        "main": "#FBBF24",
+        "glass": "rgba(251, 191, 36, 0.2)"
+      },
+      "neutral": {
+        "bg": "#F8FAFC",
+        "text_primary": "#1E293B",
+        "text_secondary": "#64748B"
+      },
+      "glass": {
+        "panel": "rgba(255, 255, 255, 0.65)",
+        "card": "rgba(255, 255, 255, 0.85)",
+        "border": "rgba(255, 255, 255, 0.6)"
+      }
+    },
+    "gradients": {
+      "bg_mesh": "radial-gradient(at 0% 0%, hsla(152,100%,90%,1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(190,100%,92%,1) 0, transparent 50%), radial-gradient(at 100% 100%, hsla(37,100%,91%,1) 0, transparent 50%)",
+      "button_gloss": "linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%)"
+    }
+  },
+  "components": {
+    "GlassCard": {
+      "className": "bg-white/70 backdrop-blur-2xl border border-white/50 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] rounded-3xl",
+      "description": "The fundamental building block. Looks like a frosted piece of quartz."
+    },
+    "Button": {
+      "primary": "relative overflow-hidden bg-emerald-500 hover:bg-emerald-400 text-white font-bold rounded-full px-8 py-4 shadow-[0_10px_20px_-10px_rgba(16,185,129,0.5)] transition-all transform active:scale-95 hover:-translate-y-1",
+      "secondary": "bg-white/80 hover:bg-white text-emerald-600 font-bold rounded-full px-6 py-3 border border-emerald-100 shadow-sm backdrop-blur-sm transition-all"
+    },
+    "RoadmapNode": {
+      "active": "w-16 h-16 rounded-full bg-emerald-400 border-4 border-white shadow-lg flex items-center justify-center animate-pulse",
+      "locked": "w-12 h-12 rounded-full bg-slate-200 border-4 border-white opacity-50 grayscale",
+      "completed": "w-14 h-14 rounded-full bg-emerald-500 border-4 border-white shadow-md flex items-center justify-center text-white"
+    },
+    "GameContainer": {
+      "wrapper": "fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm p-4",
+      "inner": "w-full max-w-4xl bg-white/90 backdrop-blur-xl rounded-[2.5rem] shadow-2xl overflow-hidden border border-white/60 relative"
+    }
+  },
+  "assets": {
+    "images": {
+      "vocabulary": {
+        "dog": "https://images.unsplash.com/photo-1629098932831-6a58b4307b2a?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "cat": "https://images.unsplash.com/photo-1456796148441-485386946471?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "apple": "https://images.unsplash.com/photo-1669295456118-e5982337c8d4?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "map_bg": "https://images.unsplash.com/photo-1743361657693-7b60363b6d16?crop=entropy&cs=srgb&fm=jpg&q=85"
+      },
+      "ui": {
+        "star_gold": "https://cdn-icons-png.flaticon.com/512/1828/1828884.png", 
+        "star_empty": "https://cdn-icons-png.flaticon.com/512/1828/1828970.png",
+        "trophy": "https://cdn-icons-png.flaticon.com/512/3112/3112946.png"
+      }
+    }
+  },
+  "layout_strategies": {
+    "UnifiedLessonPage": {
+      "structure": "Grid Layout: 12 cols. Sidebar (3 cols) for Roadmap, Main (9 cols) for Content.",
+      "sidebar": "h-screen sticky top-0 bg-white/40 backdrop-blur-lg border-r border-white/30 flex flex-col items-center py-10 overflow-y-auto hidden md:flex",
+      "mobile_nav": "Fixed bottom bar with glass effect for mobile roadmap access."
+    },
+    "GameArea": {
+      "mode": "Focus Mode",
+      "style": "Everything outside the game container should be blurred. The game container itself is a 'stage'."
+    }
+  },
+  "universal_guidelines": {
+    "general": [
+      "Use 'Fredoka' font for all headings. It makes the app feel child-friendly immediately.",
+      "Rounded corners should be EXTREME (rounded-2xl or rounded-3xl). No sharp edges.",
+      "Shadows should be colored, not black. E.g., shadow-emerald-200.",
+      "Never use pure black text. Use slate-700 or slate-800.",
+      "Add 'hover:scale-105' transitions to almost every interactive card. Kids love feedback.",
+      "Use the 'GlassCard' style for all major containers."
+    ],
+    "animations": {
+      "page_transition": "animate-in fade-in slide-in-from-bottom-4 duration-500",
+      "success_pop": "animate-bounce duration-300"
+    }
+  },
+  "instructions_to_main_agent": [
+    "Step 1: Update index.css to import 'Fredoka' and 'Nunito' fonts.",
+    "Step 2: Apply the background gradient (bg_mesh) to the main App wrapper.",
+    "Step 3: Redesign 'UnifiedLessonPage' to use the Glass Sidebar layout.",
+    "Step 4: Update game components (ListenChoose, Memory, etc.) to use GlassCard containers and the new rounded buttons.",
+    "Step 5: Replace any hardcoded standard fonts with the new typography classes.",
+    "CRITICAL: Ensure the 'Green and White' theme is dominant. Use Emerald-500 for primary actions."
+  ]
+}

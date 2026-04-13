@@ -35,6 +35,11 @@ export const verifyEmail = async (token) => {
   return response.data;
 };
 
+export const resendVerificationEmail = async (email) => {
+  const response = await api.post('/auth/resend-verification', { email });
+  return response.data;
+};
+
 export const requestPasswordReset = async (email) => {
   const response = await api.post('/auth/forgot-password', { email });
   return response.data;
@@ -81,7 +86,7 @@ export const evaluateSpeaking = async (data) => {
 export const transcribeAudio = async (audioFile) => {
   const formData = new FormData();
   formData.append('file', audioFile);
-  const response = await api.post('/speaking/transcribe', formData, {
+  const response = await api.post('/transcribe-audio', formData, {
     headers: { 'Content-Type': 'multipart/form-data' }
   });
   return response.data;
@@ -127,12 +132,13 @@ export const getCourse = async (courseId) => {
   return response.data;
 };
 
-export const manualCreditSimple = async ({ email, plan, exam_credits }) => {
+export const manualCreditSimple = async ({ email, plan, exam_credits, admin_email }) => {
   const response = await api.post('/payments/manual-credit-simple', {
     email,
     plan,
     exam_credits,
-    admin_token: ''
+    admin_token: '',
+    admin_email,
   });
   return response.data;
 };

@@ -2,15 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
-import { Trophy, User, Mail, Calendar, Award, ArrowLeft } from 'lucide-react';
+import { Trophy, User, Mail, Calendar, Award, ArrowLeft, GraduationCap, Globe } from 'lucide-react';
 import { getUserProgress } from '../lib/api';
 import { getBandScoreColor } from '../lib/utils';
 import { toast } from 'sonner';
+import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
+import ThemeToggle from '../components/ThemeToggle';
+
+const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function Profile({ user, onLogout }) {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [learningMode, setLearningMode] = useState(user?.learning_mode || null);
+  const [savingMode, setSavingMode] = useState(false);
+  
+  // Theme support
+  const { activeTheme } = useTheme();
+  const isDark = activeTheme === THEME_MODES.DARK;
+  const isNightShift = activeTheme === THEME_MODES.NIGHT_SHIFT;
+  
+  // Theme-aware classes
+  const bgMain = isDark ? 'bg-gray-900' : isNightShift ? 'bg-amber-50' : 'bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50';
+  const bgCard = isDark ? 'bg-gray-800 border-gray-700' : isNightShift ? 'bg-amber-100/50 border-amber-200' : 'bg-white border-gray-200';
+  const bgHeader = isDark ? 'bg-gray-800 border-gray-700' : isNightShift ? 'bg-amber-100 border-amber-200' : 'bg-white border-gray-200';
+  const textPrimary = isDark ? 'text-gray-100' : isNightShift ? 'text-amber-900' : 'text-gray-900';
+  const textSecondary = isDark ? 'text-gray-400' : isNightShift ? 'text-amber-700' : 'text-gray-600';
 
   useEffect(() => {
     loadProgress();
@@ -27,23 +45,46 @@ export default function Profile({ user, onLogout }) {
     }
   };
 
+  const handleModeChange = async (mode) => {
+    if (mode === learningMode || savingMode) return;
+    setSavingMode(true);
+    try {
+      const res = await fetch(`${API_URL}/api/user/learning-mode`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: user.id, mode })
+      });
+      if (!res.ok) throw new Error();
+      setLearningMode(mode);
+      toast.success(`Switched to ${mode === 'ielts' ? 'IELTS Ace' : 'General English'}`);
+    } catch {
+      toast.error('Failed to update learning path');
+    } finally {
+      setSavingMode(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50">
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <div className={`min-h-screen ${bgMain} transition-colors duration-300`}>
+      <header className={`${bgHeader} border-b sticky top-0 z-50 shadow-sm transition-colors duration-300`}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-sky-500 to-cyan-500 flex items-center justify-center">
               <Trophy className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">IELTS Ace</h1>
+            <h1 className={`text-2xl font-bold ${textPrimary}`}>IELTS Ace</h1>
           </div>
-          <Button
-            variant="outline"
-            onClick={() => navigate('/dashboard')}
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Dashboard
-          </Button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Button
+              variant="outline"
+              onClick={() => navigate('/dashboard')}
+              className={isDark ? 'border-gray-600' : ''}
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Dashboard
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -102,6 +143,37 @@ export default function Profile({ user, onLogout }) {
                   </div>
                 </div>
               )}
+
+              {/* Learning Path Toggle */}
+              <div className="pt-6 border-t">
+                <h3 className="text-sm font-semibold text-gray-700 mb-3">Learning Path</h3>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => handleModeChange('ielts')}
+                    disabled={savingMode}
+                    className={`flex-1 flex items-center gap-2 px-4 py-3 rounded-xl border-2 font-semibold text-sm transition ${
+                      learningMode === 'ielts'
+                        ? 'border-violet-600 bg-violet-600 text-white'
+                        : 'border-gray-200 text-gray-600 hover:border-violet-400'
+                    }`}
+                  >
+                    <GraduationCap className="w-4 h-4" />
+                    IELTS Ace
+                  </button>
+                  <button
+                    onClick={() => handleModeChange('general')}
+                    disabled={savingMode}
+                    className={`flex-1 flex items-center gap-2 px-4 py-3 rounded-xl border-2 font-semibold text-sm transition ${
+                      learningMode === 'general'
+                        ? 'border-sky-500 bg-sky-500 text-white'
+                        : 'border-gray-200 text-gray-600 hover:border-sky-400'
+                    }`}
+                  >
+                    <Globe className="w-4 h-4" />
+                    General English
+                  </button>
+                </div>
+              </div>
 
               <div className="pt-6 border-t">
                 <div className="flex items-center text-gray-600 mb-4">

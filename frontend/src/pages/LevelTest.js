@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
@@ -8,46 +8,41 @@ import { toast } from 'sonner';
 import { useI18n } from '../lib/i18n';
 
 // Reading questions of varying difficulty
-const readingQuestions = [
+const defaultReadingQuestions = [
   {
     id: 1,
     level: 'elementary',
     passage: "The weather today is sunny and warm. Many people are going to the park to enjoy the day. Children are playing on the grass while their parents sit on benches.",
     question: "What are the children doing in the park?",
-    options: ["A) Sitting on benches", "B) Playing on the grass", "C) Going home", "D) Reading books"],
-    correct: "B"
+    options: ["A) Sitting on benches", "B) Playing on the grass", "C) Going home", "D) Reading books"]
   },
   {
     id: 2,
     level: 'pre-intermediate',
     passage: "Scientists have discovered that regular exercise not only improves physical health but also has significant benefits for mental well-being. Studies show that just 30 minutes of moderate exercise can reduce stress and improve mood.",
     question: "According to the passage, what is one benefit of regular exercise?",
-    options: ["A) It makes you taller", "B) It reduces stress", "C) It helps you sleep longer", "D) It increases appetite"],
-    correct: "B"
+    options: ["A) It makes you taller", "B) It reduces stress", "C) It helps you sleep longer", "D) It increases appetite"]
   },
   {
     id: 3,
     level: 'intermediate',
     passage: "The proliferation of smartphones has fundamentally altered the way humans communicate and access information. While these devices offer unprecedented connectivity, critics argue that excessive screen time may be detrimental to interpersonal relationships and cognitive development, particularly among younger users.",
     question: "What concern do critics have about smartphones?",
-    options: ["A) They are too expensive", "B) They may harm relationships and brain development", "C) They don't have enough features", "D) They are difficult to use"],
-    correct: "B"
+    options: ["A) They are too expensive", "B) They may harm relationships and brain development", "C) They don't have enough features", "D) They are difficult to use"]
   },
   {
     id: 4,
     level: 'upper-intermediate',
     passage: "The phenomenon of confirmation bias—the tendency to seek out information that supports one's existing beliefs while dismissing contradictory evidence—poses a significant challenge to objective decision-making. This cognitive bias is particularly pronounced in politically charged discussions, where individuals often interpret ambiguous information in ways that reinforce their preconceptions.",
     question: "What does confirmation bias cause people to do?",
-    options: ["A) Accept all information equally", "B) Favor information that supports their existing beliefs", "C) Avoid making any decisions", "D) Change their opinions frequently"],
-    correct: "B"
+    options: ["A) Accept all information equally", "B) Favor information that supports their existing beliefs", "C) Avoid making any decisions", "D) Change their opinions frequently"]
   },
   {
     id: 5,
     level: 'advanced',
     passage: "The epistemological implications of artificial intelligence have sparked considerable debate among philosophers and technologists alike. As machine learning algorithms demonstrate increasingly sophisticated pattern recognition capabilities, questions arise regarding the nature of understanding itself—whether computational processes can be said to 'comprehend' in any meaningful sense, or whether they merely simulate comprehension through statistical correlation.",
     question: "What philosophical question does AI raise according to the passage?",
-    options: ["A) Whether computers will replace humans", "B) Whether machines can truly understand or just imitate understanding", "C) How to make AI more affordable", "D) When AI was first invented"],
-    correct: "B"
+    options: ["A) Whether computers will replace humans", "B) Whether machines can truly understand or just imitate understanding", "C) How to make AI more affordable", "D) When AI was first invented"]
   }
 ];
 
@@ -57,11 +52,12 @@ const speakingPrompts = [
   { id: 2, level: 'ielts', prompt: "Describe a skill you would like to learn. You should say: what the skill is, why you want to learn it, how you would learn it, and explain how this skill would benefit you.", duration: 120, tip: "Try to speak for 1-2 minutes, covering all points" }
 ];
 
-export default function LevelTest({ user }) {
+export default function LevelTest({ user, onShowAuth }) {
   const navigate = useNavigate();
   const { t } = useI18n();
   
   const [stage, setStage] = useState('intro');
+  const [readingQuestions, setReadingQuestions] = useState(defaultReadingQuestions);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [readingAnswers, setReadingAnswers] = useState({});
   const [currentSpeakingPrompt, setCurrentSpeakingPrompt] = useState(0);
@@ -76,6 +72,24 @@ export default function LevelTest({ user }) {
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const audioRef = useRef(null);
+
+  useEffect(() => {
+    const loadReadingQuestions = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/level-test/reading-questions`);
+        if (!response.ok) throw new Error('Could not load reading questions.');
+        const data = await response.json();
+        if (Array.isArray(data.questions) && data.questions.length > 0) {
+          setReadingQuestions(data.questions);
+        }
+      } catch (error) {
+        console.error('Reading question load error:', error);
+        toast.error('Could not load the latest reading questions. Using built-in questions.');
+      }
+    };
+
+    loadReadingQuestions();
+  }, []);
 
   const handleReadingAnswer = (questionId, answer) => {
     setReadingAnswers(prev => ({ ...prev, [questionId]: answer }));
@@ -124,8 +138,21 @@ export default function LevelTest({ user }) {
     try {
       const formData = new FormData();
       formData.append('file', new File([blob], 'recording.webm', { type: 'audio/webm' }));
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/speaking/transcribe`, { method: 'POST', body: formData });
-      if (!response.ok) throw new Error('Transcription failed');
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/transcribe-audio`, { method: 'POST', body: formData });
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        const errorMessage = errorData.detail || 'Transcription failed';
+        
+        // Check if it's a language detection error
+        if (errorMessage.includes('speak in English') || errorMessage.includes('Detected language')) {
+          toast.error('🌐 Please speak in English only. This is an English proficiency test.', { duration: 5000 });
+          setTranscribing(false);
+          return;
+        }
+        throw new Error(errorMessage);
+      }
+      
       const data = await response.json();
       setCurrentTranscript(data.text || '');
       toast.success('Audio transcribed!');
@@ -159,7 +186,6 @@ export default function LevelTest({ user }) {
         body: JSON.stringify({
           user_id: user?.id,
           reading_answers: readingAnswers,
-          reading_questions: readingQuestions.map(q => ({ id: q.id, level: q.level, correct: q.correct })),
           speaking_responses: [...speakingResponses, { promptId: speakingPrompts[currentSpeakingPrompt].id, prompt: speakingPrompts[currentSpeakingPrompt].prompt, response: currentTranscript }]
         })
       });
@@ -199,16 +225,19 @@ export default function LevelTest({ user }) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-50 via-cyan-50/30 to-gray-100 py-12 px-4">
         <div className="max-w-2xl mx-auto">
-          <Button variant="ghost" onClick={() => navigate('/dashboard')} className="mb-6 text-gray-600 hover:text-violet-600">
-            <ArrowLeft className="w-4 h-4 mr-2" /> Dashboard
+          <Button variant="ghost" onClick={() => navigate(user ? '/dashboard' : '/')} className="mb-6 text-gray-600 hover:text-violet-600">
+            <ArrowLeft className="w-4 h-4 mr-2" /> {user ? 'Dashboard' : 'Home'}
           </Button>
           <Card className="p-8 bg-white border-0 shadow-lg rounded-2xl">
             <div className="text-center mb-8">
               <div className="w-20 h-20 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-cyan-200">
                 <Target className="w-10 h-10 text-white" />
               </div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">English Level Test</h1>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">Free English Level Test</h1>
               <p className="text-gray-500">Discover your English proficiency in 5-7 minutes</p>
+              {!user && (
+                <p className="text-sm text-violet-600 mt-2">✨ No registration required - start testing now!</p>
+              )}
             </div>
             
             <div className="space-y-4 mb-8">
@@ -426,14 +455,34 @@ export default function LevelTest({ user }) {
               </div>
             </div>
             
-            <div className="flex gap-4">
-              <Button variant="outline" onClick={() => { setStage('intro'); setCurrentQuestion(0); setReadingAnswers({}); setCurrentSpeakingPrompt(0); setSpeakingResponses([]); setCurrentTranscript(''); setResults(null); }} className="flex-1">
-                Take Test Again
-              </Button>
-              <Button onClick={() => navigate('/dashboard')} className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 shadow-lg shadow-purple-200">
-                Go to Dashboard
-              </Button>
+            <div className="flex flex-col gap-4">
+              {!user && (
+                <Button onClick={() => window.location.href = '/?action=signup'} size="lg" className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white border-0 shadow-lg hover:from-green-600 hover:to-emerald-700">
+                  <Award className="w-5 h-5 mr-2" />
+                  Sign Up to Save Results & Start Learning
+                </Button>
+              )}
+              <div className="flex gap-4">
+                <Button variant="outline" onClick={() => { setStage('intro'); setCurrentQuestion(0); setReadingAnswers({}); setCurrentSpeakingPrompt(0); setSpeakingResponses([]); setCurrentTranscript(''); setResults(null); }} className="flex-1">
+                  Take Test Again
+                </Button>
+                {user ? (
+                  <Button onClick={() => navigate('/dashboard')} className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 shadow-lg shadow-purple-200">
+                    Go to Dashboard
+                  </Button>
+                ) : (
+                  <Button onClick={() => window.location.href = '/?action=signup'} className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 shadow-lg shadow-purple-200">
+                    Get Started
+                  </Button>
+                )}
+              </div>
             </div>
+            
+            {!user && (
+              <p className="text-center text-sm text-gray-500 mt-4">
+                Create an account to save your results and access all IELTS practice features!
+              </p>
+            )}
           </Card>
         </div>
       </div>

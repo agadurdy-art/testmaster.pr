@@ -149,7 +149,7 @@ export default function CourseDetail({ user, onLogout }) {
         {/* Modules and lessons */}
         <Card className="p-6">
           <Accordion type="single" collapsible className="w-full">
-            {course.modules.map((module, mIndex) => (
+            {(course.modules || []).map((module, mIndex) => (
               <AccordionItem key={module.id || mIndex} value={`module-${module.id || mIndex}`}>
                 <AccordionTrigger className="text-left">
                   <div className="flex items-center space-x-3">

@@ -1,0 +1,567 @@
+{
+  "stage": 1,
+  "stage_title": "Foundations",
+  "units": [
+    {
+      "unit_id": "stage_1_unit_11",
+      "unit_num": 11,
+      "title": "Feelings & Emotions",
+      "subtitle": "Happy, Sad, Angry, Sleepy, Hungry, Thirsty",
+      "phonics_focus": [],
+      "grammar_focus": [
+        "How are you?",
+        "I am [feeling]",
+        "Are you [feeling]?",
+        "Yes, I am / No, I am not."
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_1_unit_11_lesson_01",
+          "title": "How Are You?",
+          "topic": "Basic emotions and How are you?",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://www.youtube.com/watch?v=l4WNrvVjiTw",
+              "source_channel": "Super Simple Songs",
+              "instruction": "Watch 'If You're Happy' and answer:",
+              "question_text": "How is the boy in the song?",
+              "correct_answer": "happy",
+              "options": [
+                "happy",
+                "black",
+                "ten",
+                "book"
+              ],
+              "image_emoji": "😊",
+              "hint": "He has a big smile."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "happy",
+                  "ipa": "/ˈhæpi/",
+                  "definition": "Feeling good",
+                  "example": "I am happy.",
+                  "image_emoji": "😊",
+                  "image_url": "/static/vocab_images/happy.png"
+                },
+                {
+                  "word": "sad",
+                  "ipa": "/sæd/",
+                  "definition": "Not feeling good",
+                  "example": "The girl is sad.",
+                  "image_emoji": "😢",
+                  "image_url": "/static/vocab_images/gpt_sad.png"
+                },
+                {
+                  "word": "how",
+                  "ipa": "/haʊ/",
+                  "definition": "Question for state",
+                  "example": "How are you?",
+                  "image_emoji": "❓",
+                  "image_url": "/static/vocab_images/how.png"
+                },
+                {
+                  "word": "feel",
+                  "ipa": "/fiːl/",
+                  "definition": "To have an emotion",
+                  "example": "How do you feel?",
+                  "image_emoji": "🧠",
+                  "image_url": "/static/vocab_images/feel.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match the feeling: 😢",
+              "correct_answer": "sad",
+              "options": [
+                "sad",
+                "happy",
+                "feel",
+                "teacher"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Leo and Kim",
+              "text": "Hello, Kim! How are you? I am happy. How are you, Leo? I am sad. I don't have my ball.",
+              "questions": [
+                {
+                  "question": "Is Leo happy?",
+                  "answer": "no",
+                  "options": [
+                    "yes",
+                    "no"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "How are you? I am ___.",
+              "explanation": "Use this to ask and answer about feelings.",
+              "examples": [
+                "How are you? I am happy.",
+                "How are you? I am sad."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [
+                "How",
+                "are",
+                "you",
+                "?"
+              ],
+              "correct_sentence": "How are you?"
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "I am happy. I have a red apple.",
+              "questions": [
+                {
+                  "question": "How is he?",
+                  "answer": "happy"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: I am happy.",
+              "expected_text": "i am happy",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Choose 😊:",
+              "correct_answer": "happy",
+              "options": [
+                "happy",
+                "sad",
+                "how"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "If You're Happy Song",
+              "url": "https://www.youtube.com/watch?v=l4WNrvVjiTw",
+              "type": "youtube"
+            }
+          ]
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_1_unit_11_lesson_02",
+          "title": "I Want Water",
+          "topic": "Physical needs and Are you...? questions",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "Recall Lesson 1: Match 😢",
+              "correct_answer": "sad",
+              "options": [
+                "sad",
+                "happy",
+                "one"
+              ],
+              "hint": "Opposite of happy."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "hungry",
+                  "ipa": "/ˈhʌŋɡri/",
+                  "definition": "Wanting food",
+                  "example": "I am hungry.",
+                  "image_emoji": "😋",
+                  "image_url": "/static/vocab_images/hungry.png"
+                },
+                {
+                  "word": "thirsty",
+                  "ipa": "/ˈθɜːrsti/",
+                  "definition": "Wanting water",
+                  "example": "I am thirsty.",
+                  "image_emoji": "🚱",
+                  "image_url": "/static/vocab_images/gpt_thirsty.png"
+                },
+                {
+                  "word": "eat",
+                  "ipa": "/iːt/",
+                  "definition": "To have food",
+                  "example": "I eat an apple.",
+                  "image_emoji": "🍎",
+                  "image_url": "/static/vocab_images/eat.png"
+                },
+                {
+                  "word": "drink",
+                  "ipa": "/drɪŋk/",
+                  "definition": "To have water/juice",
+                  "example": "Drink water.",
+                  "image_emoji": "💧",
+                  "image_url": "/static/vocab_images/drink.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match the feeling for food: 😋",
+              "correct_answer": "hungry",
+              "options": [
+                "hungry",
+                "thirsty",
+                "happy",
+                "eat"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Snack Time",
+              "text": "Are you hungry? Yes, I am. I want to eat an apple. Are you thirsty? Yes, I am. I want to drink water.",
+              "questions": [
+                {
+                  "question": "What does he eat?",
+                  "answer": "apple",
+                  "options": [
+                    "apple",
+                    "water"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Are you ___? Yes, I am / No, I am not.",
+              "explanation": "Ask a question about a feeling.",
+              "examples": [
+                "Are you hungry? Yes, I am.",
+                "Are you thirsty? No, I am not."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "fill_blank",
+              "sentence": "______ you hungry?",
+              "correct_answer": "Are",
+              "options": [
+                "Are",
+                "Am",
+                "Is"
+              ],
+              "hint": "Question with 'you'."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "I am thirsty. I want water.",
+              "questions": [
+                {
+                  "question": "Is he hungry?",
+                  "answer": "no"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Ask: Are you thirsty?",
+              "expected_text": "are you thirsty",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Choose 🚱:",
+              "correct_answer": "thirsty",
+              "options": [
+                "thirsty",
+                "hungry",
+                "drink"
+              ]
+            }
+          ],
+          "extra_links": []
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_1_unit_11_lesson_03",
+          "title": "I am Sleepy",
+          "topic": "Strong emotions and physical states",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "Which one is for food? 😋",
+              "correct_answer": "hungry",
+              "options": [
+                "hungry",
+                "thirsty",
+                "sad"
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "angry",
+                  "ipa": "/ˈæŋɡri/",
+                  "definition": "Feeling very mad",
+                  "example": "My face is red. I am angry.",
+                  "image_emoji": "😡",
+                  "image_url": "/static/vocab_images/angry.png"
+                },
+                {
+                  "word": "sleepy",
+                  "ipa": "/ˈsliːpi/",
+                  "definition": "Wanting to sleep",
+                  "example": "I am sleepy. Goodnight.",
+                  "image_emoji": "😴",
+                  "image_url": "/static/vocab_images/gpt_sleepy.png"
+                },
+                {
+                  "word": "mad",
+                  "ipa": "/mæd/",
+                  "definition": "Angry",
+                  "example": "Don't be mad.",
+                  "image_emoji": "💢",
+                  "image_url": "/static/vocab_images/mad.png"
+                },
+                {
+                  "word": "night",
+                  "ipa": "/naɪt/",
+                  "definition": "Time to sleep",
+                  "example": "It is night.",
+                  "image_emoji": "🌙",
+                  "image_url": "/static/vocab_images/night.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match the mad face: 😡",
+              "correct_answer": "angry",
+              "options": [
+                "angry",
+                "sleepy",
+                "happy",
+                "night"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Goodnight",
+              "text": "It is night. I am sleepy. Look! My cat is sleepy too. Are you angry? No, I am not. I am fine.",
+              "questions": [
+                {
+                  "question": "Who is sleepy?",
+                  "answer": "boy and cat",
+                  "options": [
+                    "boy and cat",
+                    "lion"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "My face is [Color]. I am [Feeling].",
+              "explanation": "Using colors to show feelings.",
+              "examples": [
+                "My face is red. I am angry.",
+                "My face is yellow. I am happy."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "error_hunter",
+              "sentence": "I are sleepy.",
+              "has_error": true,
+              "correct_sentence": "I am sleepy."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "I am sleepy. Goodnight, Mother.",
+              "questions": [
+                {
+                  "question": "Who is he speaking to?",
+                  "answer": "mother"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: I am angry.",
+              "expected_text": "i am angry",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Choose 😴:",
+              "correct_answer": "sleepy",
+              "options": [
+                "sleepy",
+                "angry",
+                "night"
+              ]
+            }
+          ],
+          "extra_links": []
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_1_unit_11_lesson_04",
+          "title": "Feeling Master",
+          "topic": "Mastery Check (All Feelings & Needs)",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "Mastery Check: How do you feel when you want water?",
+              "correct_answer": "thirsty",
+              "options": [
+                "thirsty",
+                "hungry",
+                "angry"
+              ],
+              "image_emoji": "🚱"
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "happy",
+                "sad",
+                "how",
+                "feel",
+                "hungry",
+                "thirsty",
+                "eat",
+                "drink",
+                "angry",
+                "sleepy",
+                "mad",
+                "night"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match 😴:",
+              "correct_answer": "sleepy",
+              "options": [
+                "sleepy",
+                "happy",
+                "angry",
+                "hungry"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "A Long Day",
+              "text": "Hello, my name is Sam. I am at school. I am hungry and thirsty. I have an apple and water. Now I am happy. It is night. I am sleepy. Goodnight!",
+              "questions": [
+                {
+                  "question": "How is Sam at the end?",
+                  "answer": "sleepy",
+                  "options": [
+                    "sleepy",
+                    "angry",
+                    "thirsty"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "How are you?",
+                "Are you...?",
+                "I am..."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [
+                "Are",
+                "you",
+                "happy",
+                "?"
+              ],
+              "correct_sentence": "Are you happy?"
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "My face is red. I am very angry.",
+              "questions": [
+                {
+                  "question": "What color is his face?",
+                  "answer": "red"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Emotion Check: Tell how you feel now and why (hungry? sleepy?).",
+              "expected_text": "i am happy i have an apple",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Final Check: Opposite of mad/angry.",
+              "correct_answer": "happy",
+              "options": [
+                "happy",
+                "sad",
+                "thirsty"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "If You're Happy Song",
+              "url": "https://www.youtube.com/watch?v=l4WNrvVjiTw",
+              "type": "youtube"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

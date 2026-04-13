@@ -1,0 +1,23 @@
+{
+  "type": "line_graph",
+  "width": 800,
+  "height": 500,
+  "title": "Internet Access by Country (2005-2020)",
+  "subtitle": "Percentage of population with internet access",
+  "showGrid": true,
+  "showPoints": true,
+  
+  "xLabels": ["2005", "2008", "2011", "2014", "2017", "2020"],
+  
+  "series": [
+    {"name": "Japan", "color": "#ef4444", "values": [65, 75, 79, 86, 90, 92]},
+    {"name": "Germany", "color": "#3b82f6", "values": [58, 72, 78, 83, 87, 89]},
+    {"name": "Brazil", "color": "#22c55e", "values": [21, 34, 45, 55, 65, 71]},
+    {"name": "Nigeria", "color": "#f59e0b", "values": [4, 11, 24, 32, 38, 42]}
+  ],
+  
+  "xLabel": "Year",
+  "yLabel": "Internet Access (%)",
+  "yMin": 0,
+  "yMax": 100
+}

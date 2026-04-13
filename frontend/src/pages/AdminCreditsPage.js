@@ -31,7 +31,12 @@ export default function AdminCreditsPage({ user }) {
 
     try {
       setLoading(true);
-      const res = await manualCreditSimple({ email, plan: plan || null, exam_credits });
+      const res = await manualCreditSimple({
+        email,
+        plan: plan || null,
+        exam_credits,
+        admin_email: user?.email || '',
+      });
       toast.success(`Updated ${res.email}: ${JSON.stringify(res.update)}`);
     } catch (err) {
       const msg = err?.response?.data?.detail || 'Failed to update user';

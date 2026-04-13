@@ -1,0 +1,89 @@
+{
+  "iteration": 46,
+  "timestamp": "2026-02-15T18:20:00Z",
+  "test_type": "BUG_FIXES_AND_FEATURE_VERIFICATION",
+  "target": "Verify 4 reported issues: Grammar Game bug fixes, Lesson Roadmap, Warmup images, PDF Worksheet",
+  "summary": "All 4 features/fixes verified working. P0 Grammar Game 'Build the Sentence' normalization fix confirmed - 'It is one' now correctly matches 'It is one.' (with period). P1 Lesson Roadmap shows 6 steps with winding path. P1 Warmup images display emoji above questions. P2 PDF Worksheet button visible in Lesson Summary.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "features_verified": {
+    "P0_grammar_game_build_sentence_fix": {
+      "status": "VERIFIED",
+      "description": "Build the Sentence evaluation now correctly marks answers as correct despite period mismatch",
+      "evidence": "Playwright test: arranged words 'It', 'is', 'one' and clicked Check Answer - result showed 'Perfect!' instead of incorrect",
+      "code_fix_location": "/app/frontend/src/pages/UnifiedLessonPage.js lines 825-833 - normalize() strips trailing punctuation",
+      "root_cause": "Seed data has words=['It','is','one'] (no period) but correct_sentence='It is one.' (with period). Fix normalizes both strings."
+    },
+    "P0_grammar_game_fill_blank_case_insensitive": {
+      "status": "VERIFIED",
+      "description": "Fill in the Blank now uses case-insensitive comparison",
+      "evidence": "Code review confirms optLower and correct_answer are both .toLowerCase().trim() compared",
+      "code_fix_location": "/app/frontend/src/pages/UnifiedLessonPage.js lines 836-846"
+    },
+    "P1_lesson_roadmap": {
+      "status": "VERIFIED",
+      "description": "Visual winding path roadmap appears FIRST when entering any lesson",
+      "evidence": "Playwright test: navigated to lesson, found [data-testid='lesson-roadmap'], 6 roadmap steps visible, 'Start Lesson' button present",
+      "screenshot": "/app/.screenshots/unit3_lesson1_roadmap.png",
+      "roadmap_steps": ["Vocabulary", "Practice", "Lesson", "Practice", "Skills", "Review"]
+    },
+    "P1_warmup_images": {
+      "status": "VERIFIED",
+      "description": "RetrievalWarmup displays image_emoji above question text",
+      "evidence": "Playwright test: warmup question showed '1️⃣' emoji in styled container above 'What does the number 1 mean?'",
+      "screenshot": "/app/.screenshots/warmup_with_image.png"
+    },
+    "P2_pdf_worksheet_download": {
+      "status": "VERIFIED",
+      "description": "Download Worksheet (PDF) button appears in Lesson Summary",
+      "evidence": "Playwright test: found [data-testid='download-worksheet-btn'] with text 'Download Worksheet (PDF)'",
+      "screenshot": "/app/.screenshots/lesson_summary.png",
+      "note": "PDF generation is client-side only using jsPDF - MOCKED backend-wise"
+    }
+  },
+  "api_test_results": {
+    "grammar_game_word_order_pattern": "PASS - words have no period, correct_sentence has period, normalization works",
+    "fill_blank_items_structure": "PASS - all items have sentence, options, correct_answer",
+    "warmup_has_image_emoji": "PASS - questions include image_emoji field",
+    "lesson_has_activity_flow": "PASS - supports roadmap grouping",
+    "multiple_lessons_load": "PASS - 4/4 tested lessons load correctly"
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iter46_features.py",
+    "/app/test_reports/pytest/iter46_features_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "checkWordOrder() fix correctly normalizes strings by stripping trailing punctuation [.!?,;:] and lowercasing",
+    "handleFillBlank() uses toLowerCase().trim() for case-insensitive comparison",
+    "LessonRoadmap component properly groups activities into 6 visual steps",
+    "RetrievalWarmup correctly renders image_emoji in styled container when present",
+    "generatePDF() uses jsPDF for client-side PDF generation (no backend required)"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iter46_features.py"
+  ],
+  "success_rate": {
+    "backend": "100% - 8/8 tests passed",
+    "frontend": "100% - All features verified via Playwright"
+  },
+  "test_credentials": {
+    "email": "tester@test.com",
+    "password": "tester123"
+  },
+  "seed_data_creation": "None - tested existing data",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "All 4 features verified. Grammar Game now correctly evaluates Build the Sentence by normalizing punctuation. Lesson Roadmap appears first on lesson entry. Warmup shows image_emoji. PDF download button in summary uses client-side jsPDF.",
+  "mocked_api": {
+    "listening_audio": "Uses browser SpeechSynthesis (TTS) - MOCKED",
+    "pdf_generation": "Client-side jsPDF - no backend API needed"
+  }
+}

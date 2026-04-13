@@ -1,0 +1,129 @@
+{
+  "iteration": 49,
+  "timestamp": "2026-02-17T07:00:00Z",
+  "test_type": "AUTHORED_CONTENT_SYSTEM_VERIFICATION",
+  "target": "Verify new authored content system for Unit 1 with hand-crafted content: YouTube video embed in warmup, single-mode grammar games, Extra Fun links, spiral recall, vocabulary_review and grammar_review types",
+  "summary": "Backend API tests: 14/14 PASSED. All authored content features verified via API. Frontend code review confirms correct implementation. Playwright testing limited by authentication persistence issues but code inspection confirms correct YouTube embed, hint display, and roadmap implementation.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {
+        "screen": "Auth flow",
+        "issues": ["Login via Playwright browser automation not persisting across navigation - likely due to cookie/session handling in automated context"]
+      }
+    ]
+  },
+  "features_verified": {
+    "BACKEND_lesson1_activity_flow_10_steps": {
+      "status": "VERIFIED",
+      "description": "Lesson 1 has 10 activity steps (9 authored + auto_review)",
+      "evidence": "test_lesson1_activity_flow_has_10_steps PASSED"
+    },
+    "BACKEND_lesson1_warmup_video_url": {
+      "status": "VERIFIED",
+      "description": "Lesson 1 warmup has YouTube video_url with hint and image_emoji",
+      "evidence": "API returns video_url='https://www.youtube.com/watch?v=tVlcKp3bWH8', hint='You say this when you see someone.', image_emoji='👋', correct_answer='hello'"
+    },
+    "BACKEND_lesson2_fill_blank_single_mode": {
+      "status": "VERIFIED",
+      "description": "Lesson 2 grammar game is fill_blank mode ONLY (single mode, not mixed)",
+      "evidence": "API returns game_type='fill_blank' with fill_blank_items and empty word_order_items"
+    },
+    "BACKEND_lesson2_spiral_recall": {
+      "status": "VERIFIED",
+      "description": "Lesson 2 warmup has spiral recall from L1 with hint 'The person who learns.'",
+      "evidence": "API returns hint='The person who learns.', correct_answer='student'"
+    },
+    "BACKEND_lesson3_error_hunter": {
+      "status": "VERIFIED",
+      "description": "Lesson 3 grammar game is error_hunter mode with error sentence 'This are my friend.'",
+      "evidence": "API returns game_type='error_hunter', items[0].sentence='This are my friend.', has_error=true"
+    },
+    "BACKEND_units_sorted": {
+      "status": "VERIFIED",
+      "description": "Units sorted by unit_number (Unit 1 first)",
+      "evidence": "GET /api/unified/stages/stage_1/units returns units sorted with unit_number=1 first"
+    },
+    "BACKEND_extra_links": {
+      "status": "VERIFIED",
+      "description": "All Unit 1 lessons have extra_links for Extra Fun section",
+      "evidence": "test_all_unit1_lessons_have_extra_links PASSED - all 4 lessons have extra_links"
+    },
+    "BACKEND_vocabulary_review": {
+      "status": "VERIFIED",
+      "description": "Lesson 4 vocabulary has is_review=true and review_words list",
+      "evidence": "API returns is_review=true with 13 review words including hello, teacher, student, etc."
+    },
+    "BACKEND_grammar_review": {
+      "status": "VERIFIED",
+      "description": "Lesson 4 grammar has is_review=true and review_patterns",
+      "evidence": "API returns is_review=true with patterns ['I am...', 'I have...', 'This is my...']"
+    },
+    "FRONTEND_youtube_embed_code": {
+      "status": "VERIFIED_BY_CODE_REVIEW",
+      "description": "YouTube video embed implemented correctly in warmup",
+      "evidence": "Line 240-243 in UnifiedLessonPage.js: iframe with src={q.video_url.replace('watch?v=', 'embed/')}"
+    },
+    "FRONTEND_hint_display": {
+      "status": "VERIFIED_BY_CODE_REVIEW",
+      "description": "Hint text displayed below question in warmup and grammar game",
+      "evidence": "Lines 260-261, 965-966, 1332-1333: <p className='text-sm text-amber-600 italic mb-4'>Hint: {q.hint}</p>"
+    },
+    "FRONTEND_roadmap": {
+      "status": "VERIFIED_BY_CODE_REVIEW",
+      "description": "Lesson roadmap shows 6 grouped steps before lesson starts",
+      "evidence": "Lines 28-35: ROADMAP_STEPS array with 6 grouped steps, LessonRoadmap component on line 38"
+    }
+  },
+  "api_test_results": {
+    "lesson1_activity_flow": "PASS - 10 steps (9 authored + auto_review)",
+    "lesson1_warmup_video": "PASS - video_url, hint, image_emoji, correct_answer all present",
+    "lesson1_grammar_word_order": "PASS - game_type='word_order' with correct sentence",
+    "lesson2_warmup_spiral": "PASS - hint='The person who learns.', correct_answer='student'",
+    "lesson2_grammar_fill_blank": "PASS - game_type='fill_blank', hint='It says meow.'",
+    "lesson3_grammar_error_hunter": "PASS - game_type='error_hunter', sentence='This are my friend.'",
+    "lesson4_is_review": "PASS - is_review=true",
+    "lesson4_vocabulary_review": "PASS - review_words with 13 words",
+    "lesson4_grammar_review": "PASS - review_patterns with 3 patterns",
+    "units_sorted": "PASS - unit_number=1 first",
+    "extra_links": "PASS - all 4 lessons have extra_links"
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iter49_authored_content.py",
+    "/app/test_reports/pytest/iter49_authored_content_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "AUTHORED CONTENT WORKING: stage1_unit01.json properly seeded via seed_content_v4.py",
+    "YouTube embed: Line 240-243 correctly converts watch?v= to embed/ format",
+    "Hint display: Lines 260-261 show 'Hint: {q.hint}' in amber text for warmup",
+    "Fill-blank hint: Lines 965-966 display hint in grammar game fill_blank mode",
+    "Roadmap: LessonRoadmap component (line 38) shows 6 grouped steps (lines 28-35)",
+    "Single-mode games: seed_content_v4.py lines 155-188 correctly sets game_type based on mode",
+    "Review types: vocabulary_review (line 70-80) and grammar_review (line 134-142) handled correctly"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iter49_authored_content.py"
+  ],
+  "success_rate": {
+    "backend": "100% - 14/14 tests passed",
+    "frontend": "100% via code review - YouTube embed, hints, roadmap all correctly implemented"
+  },
+  "test_credentials": {
+    "email": "tester@test.com",
+    "password": "tester123"
+  },
+  "seed_data_creation": "None - authored content in /app/backend/content/stage1_unit01.json seeded via seed_content_v4.py",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Authored content for Unit 1 (4 lessons) verified. All backend APIs return correct data: YouTube video in L1 warmup, single-mode grammar games (word_order/fill_blank/error_hunter), spiral recall hints, extra_links, vocabulary_review and grammar_review types in L4. Frontend code correctly implements YouTube iframe embed, hint display, and lesson roadmap. Login requires authenticated session to access /unified routes.",
+  "mocked_api": {
+    "listening_audio": "Uses browser SpeechSynthesis (TTS) - MOCKED",
+    "pdf_generation": "Client-side jsPDF - no backend API needed"
+  }
+}

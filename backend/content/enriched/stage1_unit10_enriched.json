@@ -1,0 +1,1857 @@
+{
+  "stage": 1,
+  "stage_title": "Foundations",
+  "units": [
+    {
+      "unit_id": "stage_1_unit_10",
+      "unit_num": 10,
+      "title": "My School Bag",
+      "subtitle": "School Objects and Actions",
+      "phonics_focus": [],
+      "grammar_focus": [
+        "What is in your...?",
+        "I have a...",
+        "Adjective + Noun order",
+        "It is on the..."
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_1_unit_10_lesson_01",
+          "title": "My Blue Bag",
+          "topic": "Basic school items and I have a... review",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://www.youtube.com/watch?v=as56_3O0VUM",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What can you carry your books in?",
+                  "correct_answer": "bag",
+                  "options": [
+                    "bag",
+                    "cap",
+                    "boot",
+                    "shirt"
+                  ],
+                  "image_emoji": "💻",
+                  "hint": "You wear it and it has straps."
+                },
+                {
+                  "question_text": "What helps you keep your small objects together in your bag?",
+                  "correct_answer": "pencil case",
+                  "options": [
+                    "pencil case",
+                    "plate",
+                    "glove",
+                    "basket"
+                  ],
+                  "image_emoji": "💍",
+                  "hint": "You open it to find your crayons."
+                },
+                {
+                  "question_text": "What do you use to color your pictures in class?",
+                  "correct_answer": "crayon",
+                  "options": [
+                    "crayon",
+                    "fork",
+                    "eraser",
+                    "ruler"
+                  ],
+                  "image_emoji": "🖌",
+                  "hint": "It is colorful and waxy."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "bag",
+                  "ipa": "/bæɡ/",
+                  "definition": "It carries your things.",
+                  "example": "I have a blue bag.",
+                  "image_emoji": "🎒",
+                  "image_url": "/static/vocab_images/bag.png"
+                },
+                {
+                  "word": "book",
+                  "ipa": "/bʊk/",
+                  "definition": "Pages you read together.",
+                  "example": "What is in your book?",
+                  "image_emoji": "📚",
+                  "image_url": "/static/vocab_images/book.png"
+                },
+                {
+                  "word": "school",
+                  "ipa": "/skuːl/",
+                  "definition": "Place to have fun learning.",
+                  "example": "It is on the school table.",
+                  "image_emoji": "🏫",
+                  "image_url": "/static/vocab_images/gpt_school.png"
+                },
+                {
+                  "word": "open",
+                  "ipa": "/ˈoʊ.pən/",
+                  "definition": "Move to see inside.",
+                  "example": "I open the book.",
+                  "image_emoji": "📝",
+                  "image_url": "/static/vocab_images/open.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "bag",
+                      "emoji": "🎒",
+                      "distractors": [
+                        {
+                          "word": "book",
+                          "emoji": "📖"
+                        },
+                        {
+                          "word": "school",
+                          "emoji": "🏫"
+                        },
+                        {
+                          "word": "open",
+                          "emoji": "👐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "book",
+                      "emoji": "📖",
+                      "distractors": [
+                        {
+                          "word": "bag",
+                          "emoji": "🎒"
+                        },
+                        {
+                          "word": "school",
+                          "emoji": "🏫"
+                        },
+                        {
+                          "word": "open",
+                          "emoji": "👐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "school",
+                      "emoji": "🏫",
+                      "distractors": [
+                        {
+                          "word": "bag",
+                          "emoji": "🎒"
+                        },
+                        {
+                          "word": "book",
+                          "emoji": "📖"
+                        },
+                        {
+                          "word": "open",
+                          "emoji": "👐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "open",
+                      "emoji": "👐",
+                      "distractors": [
+                        {
+                          "word": "bag",
+                          "emoji": "🎒"
+                        },
+                        {
+                          "word": "book",
+                          "emoji": "📖"
+                        },
+                        {
+                          "word": "school",
+                          "emoji": "🏫"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "bag",
+                      "emoji": "🎒",
+                      "distractors": [
+                        {
+                          "word": "book",
+                          "emoji": "📖"
+                        },
+                        {
+                          "word": "school",
+                          "emoji": "🏫"
+                        },
+                        {
+                          "word": "open",
+                          "emoji": "👐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "book",
+                      "emoji": "📖",
+                      "distractors": [
+                        {
+                          "word": "bag",
+                          "emoji": "🎒"
+                        },
+                        {
+                          "word": "school",
+                          "emoji": "🏫"
+                        },
+                        {
+                          "word": "open",
+                          "emoji": "👐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "school",
+                      "emoji": "🏫",
+                      "distractors": [
+                        {
+                          "word": "bag",
+                          "emoji": "🎒"
+                        },
+                        {
+                          "word": "book",
+                          "emoji": "📖"
+                        },
+                        {
+                          "word": "open",
+                          "emoji": "👐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "open",
+                      "emoji": "👐",
+                      "distractors": [
+                        {
+                          "word": "bag",
+                          "emoji": "🎒"
+                        },
+                        {
+                          "word": "book",
+                          "emoji": "📖"
+                        },
+                        {
+                          "word": "school",
+                          "emoji": "🏫"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "bag",
+                      "emoji": "🎒"
+                    },
+                    {
+                      "word": "book",
+                      "emoji": "📖"
+                    },
+                    {
+                      "word": "school",
+                      "emoji": "🏫"
+                    },
+                    {
+                      "word": "open",
+                      "emoji": "👐"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 12
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "My School Bag",
+              "text": "This is my school. I have a green bag. What is in your bag? It is a yellow book. Open your book. It is on the table.",
+              "questions": [
+                {
+                  "question": "What color is the bag?",
+                  "answer": "green",
+                  "options": [
+                    "green",
+                    "yellow",
+                    "red"
+                  ]
+                },
+                {
+                  "question": "What is on the table?",
+                  "answer": "book",
+                  "options": [
+                    "book",
+                    "bag",
+                    "school"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I have a ___ ___.",
+              "explanation": "Say the color before the thing.",
+              "examples": [
+                "I have a yellow pencil.",
+                "I have a red apple.",
+                "I have a blue bag."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "A",
+                        "green",
+                        "book"
+                      ],
+                      "correctSentence": "A green book."
+                    },
+                    {
+                      "words": [
+                        "An",
+                        "orange",
+                        "pencil"
+                      ],
+                      "correctSentence": "An orange pencil."
+                    },
+                    {
+                      "words": [
+                        "A",
+                        "yellow",
+                        "bag"
+                      ],
+                      "correctSentence": "A yellow bag."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I have a ___ bag.",
+                      "answer": "blue",
+                      "options": [
+                        "blue",
+                        "red",
+                        "big",
+                        "small"
+                      ]
+                    },
+                    {
+                      "sentence": "It is a ___ book.",
+                      "answer": "red",
+                      "options": [
+                        "green",
+                        "red",
+                        "yellow",
+                        "black"
+                      ]
+                    },
+                    {
+                      "sentence": "She has a ___ pencil.",
+                      "answer": "pink",
+                      "options": [
+                        "white",
+                        "pink",
+                        "purple",
+                        "grey"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "A blue cat.",
+                      "errorWord": "blue",
+                      "correctWord": "black"
+                    },
+                    {
+                      "sentence": "An black book.",
+                      "errorWord": "An",
+                      "correctWord": "A"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "I have a big red bag for school. Inside my bag, I have an orange book and a blue eraser. I open the book every day.",
+              "questions": [
+                {
+                  "question": "What color is the bag?",
+                  "answer": "red",
+                  "options": [
+                    "red",
+                    "orange",
+                    "blue"
+                  ]
+                },
+                {
+                  "question": "What is inside the bag?",
+                  "answer": "book and eraser",
+                  "options": [
+                    "book and eraser",
+                    "pencil and ruler",
+                    "crayon and paper"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: I have a red book.",
+              "expected_text": "i have a red book",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "What color is the bag in our lesson? (Reading comprehension)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "blue",
+                  "options": [
+                    "blue",
+                    "red",
+                    "yellow",
+                    "green"
+                  ]
+                },
+                {
+                  "question_text": "I have a yellow ___. (Grammar Pattern: [Color] [Object].)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "book",
+                  "options": [
+                    "book",
+                    "open",
+                    "bag",
+                    "school"
+                  ]
+                },
+                {
+                  "question_text": "Which word means 'to look inside'? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "open",
+                  "options": [
+                    "open",
+                    "school",
+                    "bag",
+                    "book"
+                  ]
+                },
+                {
+                  "question_text": "True or False: The lesson title is 'My Red Bag'.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Complete the sentence: My ___ bag is for school.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "blue",
+                  "options": [
+                    "blue",
+                    "red",
+                    "black",
+                    "yellow"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "School Supplies Song",
+              "url": "https://www.youtube.com/watch?v=as56_3O0VUM",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_1_unit_10_lesson_02",
+          "title": "I Can Write",
+          "topic": "Writing tools and action verbs",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Which tool helps you draw straight lines?",
+                  "correct_answer": "ruler",
+                  "options": [
+                    "ruler",
+                    "glue stick",
+                    "scissors",
+                    "stapler"
+                  ],
+                  "image_emoji": "🐉",
+                  "hint": "It's long and flat, with numbers on it!"
+                },
+                {
+                  "question_text": "What helps you put things together when you need them to stick?",
+                  "correct_answer": "glue stick",
+                  "options": [
+                    "glue stick",
+                    "eraser",
+                    "color pencil",
+                    "sharpener"
+                  ],
+                  "image_emoji": "🖋",
+                  "hint": "You use it instead of liquid glue!"
+                },
+                {
+                  "question_text": "What tool do you use to draw colorful pictures?",
+                  "correct_answer": "crayon",
+                  "options": [
+                    "crayon",
+                    "calculator",
+                    "paper clip",
+                    "highlighter"
+                  ],
+                  "image_emoji": "🖍",
+                  "hint": "It's waxy and comes in many colors!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "pen",
+                  "ipa": "/pɛn/",
+                  "definition": "Writes with ink.",
+                  "example": "I have a blue pen.",
+                  "image_emoji": "✉️",
+                  "image_url": "/static/vocab_images/pen.png"
+                },
+                {
+                  "word": "pencil",
+                  "ipa": "/ˈpɛnsəl/",
+                  "definition": "For writing or drawing.",
+                  "example": "It is on the table.",
+                  "image_emoji": "✏️",
+                  "image_url": "/static/vocab_images/pencil.png"
+                },
+                {
+                  "word": "write",
+                  "ipa": "/raɪt/",
+                  "definition": "Make words or letters.",
+                  "example": "What is in your notebook?",
+                  "image_emoji": "✍️",
+                  "image_url": "/static/vocab_images/gpt_write.png"
+                },
+                {
+                  "word": "draw",
+                  "ipa": "/drɔː/",
+                  "definition": "Make a picture.",
+                  "example": "I have a big drawing.",
+                  "image_emoji": "🎨",
+                  "image_url": "/static/vocab_images/draw.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "pen",
+                      "emoji": "🖊️",
+                      "distractors": [
+                        {
+                          "word": "pencil",
+                          "emoji": "✏️"
+                        },
+                        {
+                          "word": "write",
+                          "emoji": "📝"
+                        },
+                        {
+                          "word": "draw",
+                          "emoji": "🎨"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "pencil",
+                      "emoji": "✏️",
+                      "distractors": [
+                        {
+                          "word": "pen",
+                          "emoji": "🖊️"
+                        },
+                        {
+                          "word": "write",
+                          "emoji": "📝"
+                        },
+                        {
+                          "word": "draw",
+                          "emoji": "🎨"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "write",
+                      "emoji": "📝",
+                      "distractors": [
+                        {
+                          "word": "pen",
+                          "emoji": "🖊️"
+                        },
+                        {
+                          "word": "pencil",
+                          "emoji": "✏️"
+                        },
+                        {
+                          "word": "draw",
+                          "emoji": "🎨"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "draw",
+                      "emoji": "🎨",
+                      "distractors": [
+                        {
+                          "word": "pen",
+                          "emoji": "🖊️"
+                        },
+                        {
+                          "word": "pencil",
+                          "emoji": "✏️"
+                        },
+                        {
+                          "word": "write",
+                          "emoji": "📝"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "pen",
+                      "emoji": "🖊️",
+                      "distractors": [
+                        {
+                          "word": "pencil",
+                          "emoji": "✏️"
+                        },
+                        {
+                          "word": "write",
+                          "emoji": "📝"
+                        },
+                        {
+                          "word": "draw",
+                          "emoji": "🎨"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "pencil",
+                      "emoji": "✏️",
+                      "distractors": [
+                        {
+                          "word": "pen",
+                          "emoji": "🖊️"
+                        },
+                        {
+                          "word": "write",
+                          "emoji": "📝"
+                        },
+                        {
+                          "word": "draw",
+                          "emoji": "🎨"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "write",
+                      "emoji": "📝",
+                      "distractors": [
+                        {
+                          "word": "pen",
+                          "emoji": "🖊️"
+                        },
+                        {
+                          "word": "pencil",
+                          "emoji": "✏️"
+                        },
+                        {
+                          "word": "draw",
+                          "emoji": "🎨"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "draw",
+                      "emoji": "🎨",
+                      "distractors": [
+                        {
+                          "word": "pen",
+                          "emoji": "🖊️"
+                        },
+                        {
+                          "word": "pencil",
+                          "emoji": "✏️"
+                        },
+                        {
+                          "word": "write",
+                          "emoji": "📝"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "pen",
+                      "emoji": "🖊️"
+                    },
+                    {
+                      "word": "pencil",
+                      "emoji": "✏️"
+                    },
+                    {
+                      "word": "write",
+                      "emoji": "📝"
+                    },
+                    {
+                      "word": "draw",
+                      "emoji": "🎨"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 12
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "My School Bag",
+              "text": "What is in your bag? I have a big pencil. I have a blue pen. I can write my name. It is on the paper. I can draw a rainbow.",
+              "questions": [
+                {
+                  "question": "What is on the paper?",
+                  "answer": "my name",
+                  "options": [
+                    "my name",
+                    "a rainbow",
+                    "a sun"
+                  ]
+                },
+                {
+                  "question": "What can she draw?",
+                  "answer": "a rainbow",
+                  "options": [
+                    "a rainbow",
+                    "a school",
+                    "words"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I have a ___",
+              "explanation": "Use this to say what you own.",
+              "examples": [
+                "I have a pencil.",
+                "I have a book.",
+                "I have a toy."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "What",
+                        "is",
+                        "in",
+                        "your",
+                        "box?"
+                      ],
+                      "correctSentence": "What is in your box?"
+                    },
+                    {
+                      "words": [
+                        "What",
+                        "is",
+                        "in",
+                        "your",
+                        "desk?"
+                      ],
+                      "correctSentence": "What is in your desk?"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "What is in your ___?",
+                      "answer": "pencil case",
+                      "options": [
+                        "pencil case",
+                        "table",
+                        "floor",
+                        "sky"
+                      ]
+                    },
+                    {
+                      "sentence": "What is in your ___?",
+                      "answer": "lunchbox",
+                      "options": [
+                        "lunchbox",
+                        "chair",
+                        "carpet",
+                        "wall"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "What is on your desk?",
+                      "errorWord": "on",
+                      "correctWord": "in"
+                    },
+                    {
+                      "sentence": "What are in your bag?",
+                      "errorWord": "are",
+                      "correctWord": "is"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "In my school bag, I have a yellow pencil and a blue marker. I like to write and draw with them every day.",
+              "questions": [
+                {
+                  "question": "What color is the pencil?",
+                  "answer": "yellow",
+                  "options": [
+                    "yellow",
+                    "blue",
+                    "red"
+                  ]
+                },
+                {
+                  "question": "What does she like to do with the pencil and marker?",
+                  "answer": "write and draw",
+                  "options": [
+                    "write and draw",
+                    "clean the desk",
+                    "play games"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: What is in your bag?",
+              "expected_text": "what is in your bag",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which tool do you use to write?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "pencil",
+                  "options": [
+                    "pencil",
+                    "eraser",
+                    "crayon",
+                    "glue stick"
+                  ]
+                },
+                {
+                  "question_text": "What is in your ___? (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "bag",
+                  "options": [
+                    "bag",
+                    "pen",
+                    "draw",
+                    "write"
+                  ]
+                },
+                {
+                  "question_text": "Fill in the blank: I like to ___ on my paper. (Reading comprehension)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "draw",
+                  "options": [
+                    "draw",
+                    "cut",
+                    "erase",
+                    "color"
+                  ]
+                },
+                {
+                  "question_text": "True or False: A pen is used to eat.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_1_unit_10_lesson_03",
+          "title": "My Long Ruler",
+          "topic": "Tools for correction and measurement",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/drawing_video.mp4",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Which item do you use to color a picture?",
+                  "correct_answer": "crayon",
+                  "options": [
+                    "crayon",
+                    "ruler",
+                    "scissors",
+                    "tape"
+                  ],
+                  "image_emoji": "🖨",
+                  "hint": "It's colorful and waxy!"
+                },
+                {
+                  "question_text": "What tool do you need to cut paper?",
+                  "correct_answer": "scissors",
+                  "options": [
+                    "scissors",
+                    "pencil",
+                    "glue",
+                    "ruler"
+                  ],
+                  "image_emoji": "🔪",
+                  "hint": "It's sharp and has two blades!"
+                },
+                {
+                  "question_text": "Which item helps when writing, but is not a pen?",
+                  "correct_answer": "pencil",
+                  "options": [
+                    "pencil",
+                    "marker",
+                    "eraser",
+                    "paintbrush"
+                  ],
+                  "image_emoji": "📝",
+                  "hint": "You can erase its marks!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "eraser",
+                  "ipa": "/ɪˈreɪ.sər/",
+                  "definition": "Takes away pencil marks.",
+                  "example": "What is in your pencil box? I have a small eraser.",
+                  "image_emoji": "🖌️",
+                  "image_url": "/static/vocab_images/eraser.png"
+                },
+                {
+                  "word": "ruler",
+                  "ipa": "/ˈruː.lər/",
+                  "definition": "Helps to measure things.",
+                  "example": "I have a long ruler in my bag.",
+                  "image_emoji": "📎",
+                  "image_url": "/static/vocab_images/ruler.png"
+                },
+                {
+                  "word": "desk",
+                  "ipa": "/desk/",
+                  "definition": "Where you sit and work.",
+                  "example": "It is on the big desk.",
+                  "image_emoji": "💻",
+                  "image_url": "/static/vocab_images/desk.png"
+                },
+                {
+                  "word": "on",
+                  "ipa": "/ɒn/",
+                  "definition": "Above another thing.",
+                  "example": "The book is on the desk.",
+                  "image_emoji": "🛃",
+                  "image_url": "/static/vocab_images/on.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "eraser",
+                      "emoji": "🧼",
+                      "distractors": [
+                        {
+                          "word": "ruler",
+                          "emoji": "📏"
+                        },
+                        {
+                          "word": "desk",
+                          "emoji": "💻"
+                        },
+                        {
+                          "word": "on",
+                          "emoji": "🔼"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "ruler",
+                      "emoji": "📏",
+                      "distractors": [
+                        {
+                          "word": "eraser",
+                          "emoji": "🧼"
+                        },
+                        {
+                          "word": "desk",
+                          "emoji": "💻"
+                        },
+                        {
+                          "word": "on",
+                          "emoji": "🔼"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "desk",
+                      "emoji": "💻",
+                      "distractors": [
+                        {
+                          "word": "eraser",
+                          "emoji": "🧼"
+                        },
+                        {
+                          "word": "ruler",
+                          "emoji": "📏"
+                        },
+                        {
+                          "word": "on",
+                          "emoji": "🔼"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "on",
+                      "emoji": "🔼",
+                      "distractors": [
+                        {
+                          "word": "eraser",
+                          "emoji": "🧼"
+                        },
+                        {
+                          "word": "ruler",
+                          "emoji": "📏"
+                        },
+                        {
+                          "word": "desk",
+                          "emoji": "💻"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "desk",
+                      "emoji": "💻",
+                      "distractors": [
+                        {
+                          "word": "eraser",
+                          "emoji": "🧼"
+                        },
+                        {
+                          "word": "ruler",
+                          "emoji": "📏"
+                        },
+                        {
+                          "word": "on",
+                          "emoji": "🔼"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "eraser",
+                      "emoji": "🧼",
+                      "distractors": [
+                        {
+                          "word": "ruler",
+                          "emoji": "📏"
+                        },
+                        {
+                          "word": "desk",
+                          "emoji": "💻"
+                        },
+                        {
+                          "word": "on",
+                          "emoji": "🔼"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "ruler",
+                      "emoji": "📏"
+                    },
+                    {
+                      "word": "eraser",
+                      "emoji": "🧼"
+                    },
+                    {
+                      "word": "desk",
+                      "emoji": "💻"
+                    },
+                    {
+                      "word": "on",
+                      "emoji": "🔼"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "My School Bag",
+              "text": "I have a big desk. The eraser is on the desk. My ruler is long and blue. What is in your bag? My pen is in the bag!",
+              "questions": [
+                {
+                  "question": "What is on the desk?",
+                  "answer": "eraser",
+                  "options": [
+                    "eraser",
+                    "pen",
+                    "ruler"
+                  ]
+                },
+                {
+                  "question": "Is the ruler short?",
+                  "answer": "no",
+                  "options": [
+                    "yes",
+                    "no"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "It is in the ___.",
+              "explanation": "Use 'in' to show inside a place.",
+              "examples": [
+                "It is in the bag.",
+                "It is in the box.",
+                "It is in the car."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "It",
+                        "is",
+                        "on",
+                        "the",
+                        "desk"
+                      ],
+                      "correctSentence": "It is on the desk."
+                    },
+                    {
+                      "words": [
+                        "the",
+                        "floor",
+                        "is",
+                        "on",
+                        "It"
+                      ],
+                      "correctSentence": "It is on the floor."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "It is ___ the table.",
+                      "answer": "on",
+                      "options": [
+                        "in",
+                        "on",
+                        "under",
+                        "by"
+                      ]
+                    },
+                    {
+                      "sentence": "It is on the ___.",
+                      "answer": "chair",
+                      "options": [
+                        "chair",
+                        "door",
+                        "window",
+                        "sky"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "It are on the desk.",
+                      "errorWord": "are",
+                      "correctWord": "is"
+                    },
+                    {
+                      "sentence": "It is in the desk.",
+                      "errorWord": "in",
+                      "correctWord": "on"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "In my school bag, I have a blue ruler and a yellow pencil. The ruler is on the desk, and I'm holding the pencil.",
+              "questions": [
+                {
+                  "question": "What color is the pencil?",
+                  "answer": "yellow",
+                  "options": [
+                    "yellow",
+                    "blue",
+                    "red"
+                  ]
+                },
+                {
+                  "question": "Where is the ruler?",
+                  "answer": "on the desk",
+                  "options": [
+                    "in the bag",
+                    "on the desk",
+                    "on the chair"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: It is on the desk.",
+              "expected_text": "it is on the desk",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "What do you use to erase pencil?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "eraser",
+                  "options": [
+                    "eraser",
+                    "ruler",
+                    "desk",
+                    "pencil"
+                  ]
+                },
+                {
+                  "question_text": "It is ___ the desk. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "on",
+                  "options": [
+                    "in",
+                    "under",
+                    "on",
+                    "next to"
+                  ]
+                },
+                {
+                  "question_text": "Which tool helps measure things?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "ruler",
+                  "options": [
+                    "ruler",
+                    "eraser",
+                    "desk",
+                    "chair"
+                  ]
+                },
+                {
+                  "question_text": "True or False: An eraser is used for measuring.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "If the ruler is not in the bag, where is it? (Reading comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "on the desk",
+                  "options": [
+                    "on the desk",
+                    "in the school",
+                    "under the chair",
+                    "in the hand"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_1_unit_10_lesson_04",
+          "title": "School Master",
+          "topic": "Mastery Check (School Items & Positions)",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "http://example.com/school_video",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What do you use to write on paper?",
+                  "correct_answer": "pencil",
+                  "options": [
+                    "pencil",
+                    "eraser",
+                    "scissors",
+                    "glue"
+                  ],
+                  "image_emoji": "✏",
+                  "hint": "It's long, thin, and makes marks on paper."
+                },
+                {
+                  "question_text": "What do teachers write on to show the lesson?",
+                  "correct_answer": "blackboard",
+                  "options": [
+                    "blackboard",
+                    "paper",
+                    "book",
+                    "notebook"
+                  ],
+                  "image_emoji": "📝",
+                  "hint": "It's big and on the classroom wall."
+                },
+                {
+                  "question_text": "Where do you put your lunch at school?",
+                  "correct_answer": "lunchbox",
+                  "options": [
+                    "lunchbox",
+                    "pencil case",
+                    "folder",
+                    "backpack"
+                  ],
+                  "image_emoji": "🍽",
+                  "hint": "It keeps your food safe at school."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "bag",
+                "book",
+                "school",
+                "pen",
+                "pencil",
+                "write",
+                "draw",
+                "eraser",
+                "ruler",
+                "desk",
+                "on",
+                "open"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "apple",
+                      "emoji": "🍎",
+                      "distractors": [
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "grape",
+                          "emoji": "🍇"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🍊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "car",
+                      "emoji": "🚗",
+                      "distractors": [
+                        {
+                          "word": "bus",
+                          "emoji": "🚌"
+                        },
+                        {
+                          "word": "train",
+                          "emoji": "🚆"
+                        },
+                        {
+                          "word": "plane",
+                          "emoji": "✈️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "tree",
+                      "emoji": "🌳",
+                      "distractors": [
+                        {
+                          "word": "flower",
+                          "emoji": "🌸"
+                        },
+                        {
+                          "word": "leaf",
+                          "emoji": "🍃"
+                        },
+                        {
+                          "word": "bush",
+                          "emoji": "🌿"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "ball",
+                      "emoji": "⚽",
+                      "distractors": [
+                        {
+                          "word": "bat",
+                          "emoji": "🏏"
+                        },
+                        {
+                          "word": "kite",
+                          "emoji": "🪁"
+                        },
+                        {
+                          "word": "block",
+                          "emoji": "🧱"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "book",
+                      "emoji": "📚",
+                      "distractors": [
+                        {
+                          "word": "pen",
+                          "emoji": "🖊️"
+                        },
+                        {
+                          "word": "pencil",
+                          "emoji": "✏️"
+                        },
+                        {
+                          "word": "paper",
+                          "emoji": "📜"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "house",
+                      "emoji": "🏠",
+                      "distractors": [
+                        {
+                          "word": "building",
+                          "emoji": "🏢"
+                        },
+                        {
+                          "word": "tent",
+                          "emoji": "⛺"
+                        },
+                        {
+                          "word": "treehouse",
+                          "emoji": "🌲"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "apple",
+                      "emoji": "🍎"
+                    },
+                    {
+                      "word": "car",
+                      "emoji": "🚗"
+                    },
+                    {
+                      "word": "ball",
+                      "emoji": "⚽"
+                    },
+                    {
+                      "word": "book",
+                      "emoji": "📚"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Emma's Classroom",
+              "text": "I am Emma. I have a blue book. In my bag, there is an orange eraser and a pink crayon. My pencil is on the chair. I love my classroom!",
+              "questions": [
+                {
+                  "question": "What color is Emma's book?",
+                  "answer": "blue",
+                  "options": [
+                    "blue",
+                    "red",
+                    "green"
+                  ]
+                },
+                {
+                  "question": "Where is the pencil?",
+                  "answer": "on the chair",
+                  "options": [
+                    "on the desk",
+                    "on the chair",
+                    "in the bag"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "I have a...",
+                "What is in...?",
+                "It is on the..."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "The",
+                        "dog",
+                        "barks"
+                      ],
+                      "correctSentence": "The dog barks"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "happy"
+                      ],
+                      "correctSentence": "She is happy"
+                    },
+                    {
+                      "words": [
+                        "We",
+                        "play",
+                        "games"
+                      ],
+                      "correctSentence": "We play games"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I ___ my homework.",
+                      "answer": "did",
+                      "options": [
+                        "did",
+                        "do",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ running.",
+                      "answer": "are",
+                      "options": [
+                        "are",
+                        "is",
+                        "was",
+                        "has"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She don't like milk.",
+                      "errorWord": "don't",
+                      "correctWord": "doesn't"
+                    },
+                    {
+                      "sentence": "The cat are sleeping.",
+                      "errorWord": "are",
+                      "correctWord": "is"
+                    },
+                    {
+                      "sentence": "I is hungry.",
+                      "errorWord": "is",
+                      "correctWord": "am"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "In my school bag, I have a red apple for snack time. I also carry a brown teddy bear that keeps me company during breaks.",
+              "questions": [
+                {
+                  "question": "What color is the apple?",
+                  "answer": "red",
+                  "options": [
+                    "red",
+                    "brown",
+                    "yellow"
+                  ]
+                },
+                {
+                  "question": "What keeps the child company during breaks?",
+                  "answer": "a brown teddy bear",
+                  "options": [
+                    "a brown teddy bear",
+                    "a yellow lunchbox",
+                    "a red pencil"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "What is in your school bag? Say, 'I have a ___ and a ___.'",
+              "expected_text": "i have a pencil and a book",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "What is in your school bag? (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "I have a pencil.",
+                  "options": [
+                    "I have a pencil.",
+                    "I am a table.",
+                    "It is on me.",
+                    "I with book."
+                  ]
+                },
+                {
+                  "question_text": "Which emoji shows 'notebook'? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "📒",
+                  "options": [
+                    "📒",
+                    "🖍️",
+                    "📏",
+                    "🎒"
+                  ]
+                },
+                {
+                  "question_text": "True or False: A desk is something you sit on.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Where is the pencil? It is on the ___ (Grammar and reading comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "desk",
+                  "options": [
+                    "floor",
+                    "desk",
+                    "ceiling",
+                    "window"
+                  ]
+                },
+                {
+                  "question_text": "What do you use to see the time? (Comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "clock",
+                  "options": [
+                    "clock",
+                    "ruler",
+                    "pencil case",
+                    "book"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "School Supplies Song",
+              "url": "https://www.youtube.com/watch?v=as56_3O0VUM",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        }
+      ]
+    }
+  ],
+  "ai_enriched": true,
+  "enriched_at": "2026-02-17T18:06:19.980698+00:00"
+}

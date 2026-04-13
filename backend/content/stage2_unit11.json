@@ -1,0 +1,471 @@
+{
+  "stage": "stage_2",
+  "stage_id": "stage_2_starters",
+  "stage_title": "Starters (A1)",
+  "units": [
+    {
+      "unit_id": "stage_2_unit_11",
+      "unit_num": 11,
+      "title": "Play & Hobbies",
+      "subtitle": "Sports and free-time activities",
+      "phonics_focus": [
+        "Sport words",
+        "Hobby sounds"
+      ],
+      "grammar_focus": [
+        "Verbs Play, Go, Do",
+        "Adverbs of frequency (always, never)"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_2_unit_11_lesson_01",
+          "title": "Sports",
+          "topic": "Choosing a sport to play at the weekend",
+          "context": "Choosing a sport to play at the weekend.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about choosing a sport to play at the weekend?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "basketball",
+                  "ipa": "",
+                  "definition": "A game with a big orange ball.",
+                  "example": "He plays basketball outside.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/basketball.png"
+                },
+                {
+                  "word": "football",
+                  "ipa": "",
+                  "definition": "A game with a ball and goals.",
+                  "example": "I play football.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/football.png"
+                },
+                {
+                  "word": "tennis",
+                  "ipa": "",
+                  "definition": "A game with rackets and a ball.",
+                  "example": "They play tennis.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/tennis.png"
+                },
+                {
+                  "word": "game",
+                  "ipa": "",
+                  "definition": "A fun activity to play.",
+                  "example": "I play a game.",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Sports",
+              "text": "A short story about choosing a sport to play at the weekend.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Verbs Play, Go, Do / Adverbs of frequency (always, never)",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about choosing a sport to play at the weekend.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about choosing a sport to play at the weekend.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about choosing a sport to play at the weekend?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_2_unit_11_lesson_02",
+          "title": "Arts & Music",
+          "topic": "An after-school hobby club",
+          "context": "An after-school hobby club.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about an after-school hobby club?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "guitar",
+                  "ipa": "",
+                  "definition": "A musical instrument with strings.",
+                  "example": "She plays the guitar.",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "piano",
+                  "ipa": "",
+                  "definition": "A big instrument with keys you press.",
+                  "example": "He plays the piano.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/piano.png"
+                },
+                {
+                  "word": "paint",
+                  "ipa": "",
+                  "definition": "To use color to make pictures.",
+                  "example": "I want to paint a tree.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_paint.png"
+                },
+                {
+                  "word": "photo",
+                  "ipa": "",
+                  "definition": "A picture taken with a camera.",
+                  "example": "This is a photo of me.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_photo.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Arts & Music",
+              "text": "A short story about an after-school hobby club.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Verbs Play, Go, Do / Adverbs of frequency (always, never)",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about an after-school hobby club.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about an after-school hobby club.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about an after-school hobby club?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_2_unit_11_lesson_03",
+          "title": "Frequency",
+          "topic": "Describing daily hobby routines",
+          "context": "Describing daily hobby routines.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about describing daily hobby routines?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "always",
+                  "ipa": "",
+                  "definition": "Every time, without fail.",
+                  "example": "I always brush my teeth.",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "never",
+                  "ipa": "",
+                  "definition": "Not at any time.",
+                  "example": "I never eat bugs.",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "sometimes",
+                  "ipa": "",
+                  "definition": "Not always; only at times.",
+                  "example": "We sometimes go to the park.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_sometimes.png"
+                },
+                {
+                  "word": "radio",
+                  "ipa": "",
+                  "definition": "A machine that plays sound.",
+                  "example": "Music plays on the radio.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/radio.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Frequency",
+              "text": "A short story about describing daily hobby routines.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Verbs Play, Go, Do / Adverbs of frequency (always, never)",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about describing daily hobby routines.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about describing daily hobby routines.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about describing daily hobby routines?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_2_unit_11_lesson_04",
+          "title": "Unit Review",
+          "topic": "Creating a weekly hobby schedule",
+          "context": "Creating a weekly hobby schedule.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about creating a weekly hobby schedule?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "basketball",
+                "football",
+                "tennis",
+                "game",
+                "guitar",
+                "piano",
+                "paint",
+                "photo",
+                "always",
+                "never",
+                "sometimes",
+                "radio"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Unit Review",
+              "text": "A short story about creating a weekly hobby schedule.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "rule_pattern": "Verbs Play, Go, Do / Adverbs of frequency (always, never)",
+              "explanation": "",
+              "examples": [],
+              "patterns": [
+                "Verbs Play, Go, Do",
+                "Adverbs of frequency (always, never)"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about creating a weekly hobby schedule.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about creating a weekly hobby schedule.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about creating a weekly hobby schedule?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

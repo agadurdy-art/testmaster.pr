@@ -1,0 +1,614 @@
+{
+  "stage": 1,
+  "stage_title": "Foundations",
+  "units": [
+    {
+      "unit_id": "stage_1_unit_05",
+      "unit_num": 5,
+      "title": "My Family",
+      "subtitle": "Family Members & Alphabet Completion U-Z",
+      "phonics_focus": [
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z"
+      ],
+      "grammar_focus": [
+        "This is my...",
+        "I have a...",
+        "My [Member] is..."
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_1_unit_05_lesson_01",
+          "title": "My Mother and Father",
+          "topic": "Core family and sounds of U and V",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://www.youtube.com/watch?v=GiRUF7hv6uY",
+              "source_channel": "Super Simple Songs",
+              "instruction": "Watch 'The Family Song' and answer:",
+              "question_text": "Who is in the family?",
+              "correct_answer": "mother",
+              "options": [
+                "mother",
+                "apple",
+                "red",
+                "ten"
+              ],
+              "image_emoji": "👪",
+              "hint": "A person in your home."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "mother",
+                  "ipa": "/ˈmʌðər/",
+                  "definition": "A female parent",
+                  "example": "This is my mother.",
+                  "image_emoji": "👩",
+                  "image_url": "/static/vocab_images/mother.png"
+                },
+                {
+                  "word": "father",
+                  "ipa": "/ˈfɑːðər/",
+                  "definition": "A male parent",
+                  "example": "This is my father.",
+                  "image_emoji": "👨",
+                  "image_url": "/static/vocab_images/father.png"
+                },
+                {
+                  "word": "umbrella",
+                  "ipa": "/ʌmˈbrelə/",
+                  "definition": "Protects from rain (Sound U)",
+                  "example": "It is an umbrella.",
+                  "image_emoji": "☂️",
+                  "image_url": "/static/vocab_images/gpt_umbrella.png"
+                },
+                {
+                  "word": "van",
+                  "ipa": "/væn/",
+                  "definition": "A big car (Sound V)",
+                  "example": "I see a van.",
+                  "image_emoji": "🚐",
+                  "image_url": "/static/vocab_images/gpt_van.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match the mother: 👩",
+              "correct_answer": "mother",
+              "options": [
+                "mother",
+                "father",
+                "van",
+                "umbrella"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "At Home",
+              "text": "Hello! This is my mother. She is happy. This is my father. He has a van. Look! A blue umbrella.",
+              "questions": [
+                {
+                  "question": "What does the father have?",
+                  "answer": "van",
+                  "options": [
+                    "van",
+                    "umbrella"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "This is my ___.",
+              "explanation": "Use 'This is my' to introduce a family member.",
+              "examples": [
+                "This is my mother.",
+                "This is my father."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [
+                "This",
+                "is",
+                "my",
+                "mother"
+              ],
+              "correct_sentence": "This is my mother."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "This is my father. He is in the van.",
+              "questions": [
+                {
+                  "question": "Where is the father?",
+                  "answer": "van"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: This is my mother.",
+              "expected_text": "This is my mother",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Sound for 🚐:",
+              "correct_answer": "V",
+              "options": [
+                "V",
+                "U",
+                "T"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "The Family Song",
+              "url": "https://www.youtube.com/watch?v=GiRUF7hv6uY",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics U",
+              "url": "https://www.youtube.com/watch?v=_e30Mf3MFCY",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics V",
+              "url": "https://www.youtube.com/watch?v=_e30Mf3MFCY",
+              "type": "youtube"
+            }
+          ]
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_1_unit_05_lesson_02",
+          "title": "Brother and Sister",
+          "topic": "Siblings and sounds of W and X",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "Recall Lesson 1: Match 👨",
+              "correct_answer": "father",
+              "options": [
+                "father",
+                "mother",
+                "student"
+              ],
+              "hint": "A male parent."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "brother",
+                  "ipa": "/ˈbrʌðər/",
+                  "definition": "A male sibling",
+                  "example": "He is my brother.",
+                  "image_emoji": "👦",
+                  "image_url": "/static/vocab_images/brother.png"
+                },
+                {
+                  "word": "sister",
+                  "ipa": "/ˈsɪstər/",
+                  "definition": "A female sibling",
+                  "example": "She is my sister.",
+                  "image_emoji": "👧",
+                  "image_url": "/static/vocab_images/sister.png"
+                },
+                {
+                  "word": "watch",
+                  "ipa": "/wɒtʃ/",
+                  "definition": "Tells time (Sound W)",
+                  "example": "I have a watch.",
+                  "image_emoji": "⌚",
+                  "image_url": "/static/vocab_images/watch.png"
+                },
+                {
+                  "word": "box",
+                  "ipa": "/bɒks/",
+                  "definition": "A container (Sound X)",
+                  "example": "It is a box.",
+                  "image_emoji": "📦",
+                  "image_url": "/static/vocab_images/box.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match the sister: 👧",
+              "correct_answer": "sister",
+              "options": [
+                "sister",
+                "brother",
+                "watch",
+                "van"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "My Siblings",
+              "text": "He is my brother. He has a box. She is my sister. She has a watch. We are a family!",
+              "questions": [
+                {
+                  "question": "Who has a watch?",
+                  "answer": "sister",
+                  "options": [
+                    "sister",
+                    "brother"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I have a ___.",
+              "explanation": "Use this to tell if you have a brother or sister.",
+              "examples": [
+                "I have a brother.",
+                "I have a sister."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "fill_blank",
+              "sentence": "I ______ a sister.",
+              "correct_answer": "have",
+              "options": [
+                "have",
+                "am",
+                "is"
+              ],
+              "hint": "Use it for things/people you have."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "I have one brother and one sister.",
+              "questions": [
+                {
+                  "question": "How many sisters?",
+                  "answer": "one"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: He is my brother.",
+              "expected_text": "He is my brother",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Choose 📦:",
+              "correct_answer": "box",
+              "options": [
+                "box",
+                "watch",
+                "van"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Phonics W",
+              "url": "https://www.youtube.com/watch?v=bck1S86MQfE",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics X",
+              "url": "https://www.youtube.com/watch?v=Db7X1B1Gqpk",
+              "type": "youtube"
+            }
+          ]
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_1_unit_05_lesson_03",
+          "title": "Grandpa and Baby",
+          "topic": "Extended family and sounds of Y and Z",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "Which sound is for ⌚?",
+              "correct_answer": "W",
+              "options": [
+                "W",
+                "V",
+                "X"
+              ],
+              "hint": "W...atch."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "grandpa",
+                  "ipa": "/ˈɡrænpɑː/",
+                  "definition": "Father of a parent",
+                  "example": "He is my grandpa.",
+                  "image_emoji": "👴",
+                  "image_url": "/static/vocab_images/grandpa.png"
+                },
+                {
+                  "word": "grandma",
+                  "ipa": "/ˈɡrænmɑː/",
+                  "definition": "Mother of a parent",
+                  "example": "She is my grandma.",
+                  "image_emoji": "👵",
+                  "image_url": "/static/vocab_images/grandma.png"
+                },
+                {
+                  "word": "baby",
+                  "ipa": "/ˈbeɪbi/",
+                  "definition": "A very young child",
+                  "example": "The baby is happy.",
+                  "image_emoji": "👶",
+                  "image_url": "/static/vocab_images/baby.png"
+                },
+                {
+                  "word": "yo-yo",
+                  "ipa": "/ˈjoʊ.joʊ/",
+                  "definition": "A toy (Sound Y)",
+                  "example": "I have a yo-yo.",
+                  "image_emoji": "🪀",
+                  "image_url": "/static/vocab_images/gpt_yo-yo.png"
+                },
+                {
+                  "word": "zebra",
+                  "ipa": "/ˈzebrə/",
+                  "definition": "A striped animal (Sound Z)",
+                  "example": "It is a zebra.",
+                  "image_emoji": "🦓",
+                  "image_url": "/static/vocab_images/gpt_zebra.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match the grandpa: 👴",
+              "correct_answer": "grandpa",
+              "options": [
+                "grandpa",
+                "grandma",
+                "baby",
+                "zebra"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Big Family",
+              "text": "Look at my grandpa! He is fine. This is my grandma. The baby is happy. I see a zebra and a yo-yo.",
+              "questions": [
+                {
+                  "question": "Is the baby happy?",
+                  "answer": "yes",
+                  "options": [
+                    "yes",
+                    "no"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "My [Member] is [Name/Feeling].",
+              "explanation": "Use this to describe a family member.",
+              "examples": [
+                "My mother is happy.",
+                "My brother is Ben."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "error_hunter",
+              "sentence": "My grandpa are happy.",
+              "has_error": true,
+              "correct_sentence": "My grandpa is happy."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "This is my grandma. She is happy.",
+              "questions": [
+                {
+                  "question": "Who is happy?",
+                  "answer": "grandma"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: My grandma is happy.",
+              "expected_text": "My grandma is happy",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Sound for 🦓:",
+              "correct_answer": "Z",
+              "options": [
+                "Z",
+                "Y",
+                "W"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Phonics Y",
+              "url": "https://www.youtube.com/watch?v=_e30Mf3MFCY",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics Z",
+              "url": "https://www.youtube.com/watch?v=_e30Mf3MFCY",
+              "type": "youtube"
+            }
+          ]
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_1_unit_05_lesson_04",
+          "title": "Unit 5 Mastery Check",
+          "topic": "Cumulative Review (U-Z & All Family)",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "Phonics Review: Which word starts with 'Z'?",
+              "correct_answer": "zebra",
+              "options": [
+                "zebra",
+                "yo-yo",
+                "box",
+                "van"
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "mother",
+                "father",
+                "brother",
+                "sister",
+                "grandpa",
+                "grandma",
+                "baby",
+                "umbrella",
+                "van",
+                "watch",
+                "box",
+                "yo-yo",
+                "zebra"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match 👵:",
+              "correct_answer": "grandma",
+              "options": [
+                "grandma",
+                "grandpa",
+                "mother",
+                "sister"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Sam's Family",
+              "text": "Hello! I am Sam. This is my father and mother. I have one sister. This is my grandma and grandpa. We have a van. I am happy!",
+              "questions": [
+                {
+                  "question": "Does Sam have a sister?",
+                  "answer": "yes",
+                  "options": [
+                    "yes",
+                    "no"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "This is my...",
+                "I have a...",
+                "My ___ is ___."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [
+                "This",
+                "is",
+                "my",
+                "grandpa"
+              ],
+              "correct_sentence": "This is my grandpa."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "I have an umbrella and a watch. My mother is fine.",
+              "questions": [
+                {
+                  "question": "Who is fine?",
+                  "answer": "mother"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Full Intro: Introduce your family (Mother, Father, and one more).",
+              "expected_text": "This is my mother this is my father this is my baby brother",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Mastery Final: Choose the Child.",
+              "correct_answer": "baby",
+              "options": [
+                "baby",
+                "grandpa",
+                "van"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Family Song",
+              "url": "https://www.youtube.com/watch?v=GiRUF7hv6uY",
+              "type": "youtube"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

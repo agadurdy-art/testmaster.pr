@@ -1,0 +1,109 @@
+{
+  "iteration": 20,
+  "timestamp": "2026-02-11T18:10:00Z",
+  "test_type": "BACKEND_AND_FRONTEND",
+  "target": "Speaking P2 Features - Fluency Insights, Personalized Drills, Model Answer Compare",
+  "summary": {
+    "status": "BACKEND PASSED, FRONTEND CODE VERIFIED",
+    "overall_result": "All Speaking P2 backend APIs working correctly. Frontend components have correct data-testid attributes and implementation. All 16 existing Phase 2 tests pass, plus 13 new Speaking P2 tests pass."
+  },
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "features_tested": [
+    {
+      "feature": "Backend: POST /api/cambridge/speaking/generate-drills",
+      "status": "PASSED",
+      "details": "Accepts criteria, weaknesses, transcript. Returns drill objects with title, steps, personalized_tip. Targets weak criteria (< band 6). DRILL_TEMPLATES for fluency, lexical, grammar, pronunciation all work."
+    },
+    {
+      "feature": "Backend: POST /api/cambridge/speaking/model-answers",
+      "status": "PASSED",
+      "details": "Accepts question, part, book_id, test_id. Returns band7 + band8 answers with key_features and differences. Works for Parts 1, 2, 3."
+    },
+    {
+      "feature": "Backend: Model answer caching in MongoDB",
+      "status": "PASSED",
+      "details": "First call returns cached=false, second call for same question returns cached=true. Cache key uses book_id, test_id, part, and question hash."
+    },
+    {
+      "feature": "Backend: Existing 16 mistake analysis tests",
+      "status": "PASSED",
+      "details": "All Phase 2 tests (reason codes, evidence text, reason summary, retry functionality) continue to pass."
+    },
+    {
+      "feature": "Frontend: fluency-insights-card data-testid",
+      "status": "CODE VERIFIED",
+      "details": "Line 1302: Card with data-testid='fluency-insights-card' renders when speakingEvaluations exist"
+    },
+    {
+      "feature": "Frontend: Fluency metrics (filler count, rate, words, corrections)",
+      "status": "CODE VERIFIED",
+      "details": "Lines 1316-1333: metric-filler-count, metric-filler-rate, metric-word-count, metric-self-corrections all present with correct styling"
+    },
+    {
+      "feature": "Frontend: fluency-not-available message",
+      "status": "CODE VERIFIED",
+      "details": "Line 1364: Shows 'not available' message when fluencyInsights?.available is false"
+    },
+    {
+      "feature": "Frontend: speaking-drills-card and generate-drills-btn",
+      "status": "CODE VERIFIED",
+      "details": "Lines 1371-1430: Card with 'Get Drills' button (data-testid='generate-drills-btn') that loads drills via fetchDrills function"
+    },
+    {
+      "feature": "Frontend: drill-{criterion} data-testid",
+      "status": "CODE VERIFIED",
+      "details": "Line 1399: Each drill has data-testid='drill-{criterion}' with title, steps, personalized_tip displayed"
+    },
+    {
+      "feature": "Frontend: model-answers-card",
+      "status": "CODE VERIFIED",
+      "details": "Line 1433: Card with 'Show Model Answers' button per speaking response (data-testid='get-model-{idx}')"
+    },
+    {
+      "feature": "Frontend: model-band7-{idx} and model-band8-{idx}",
+      "status": "CODE VERIFIED",
+      "details": "Lines 1473, 1490: Band 7 and Band 8 model answers rendered with key_features and differences"
+    },
+    {
+      "feature": "Frontend: Phase 2 features (reason codes, evidence, retry)",
+      "status": "CODE VERIFIED",
+      "details": "All data-testids from iteration_19 present: reason-summary-card, retry-by-filter-card, reason-badge-*, evidence-reading-*, retry-wrong-only-btn"
+    }
+  ],
+  "test_report_links": [
+    "/app/backend/tests/test_mistake_analysis.py",
+    "/app/backend/tests/test_speaking_p2.py",
+    "/app/test_reports/pytest/speaking_p2_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Speaking P2 cards only render when speakingEvaluations object has data (requires completing speaking test with audio). Frontend logic verified via code review.",
+    "Fluency analysis is client-side (uses FILLER_WORDS array in useEffect hook) - works only when transcript is available"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_speaking_p2.py"
+  ],
+  "success_rate": {
+    "backend": "100% (29/29 tests passed)",
+    "frontend": "100% (code verification - all features implemented with correct data-testid attributes)"
+  },
+  "test_credentials": "localStorage user: {id: 'test-user-123', email: 'test@ieltsace.com', plan: 'pro', examCredits: 100}",
+  "seed_data_creation": "None - uses existing ielts17/test1 test data for model answer caching tests",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Speaking P2 features are fully implemented. Backend endpoints work correctly: generate-drills returns personalized drills with templates + LLM tips, model-answers returns Band 7/8 answers with MongoDB caching. Frontend has all required data-testid attributes. To UI test the Speaking P2 cards, complete a speaking test with audio recording - the results page requires speakingEvaluations in location.state. Fluency insights compute client-side from transcript.",
+  "pytest_results": {
+    "total": 29,
+    "passed": 29,
+    "failed": 0,
+    "test_files": ["test_mistake_analysis.py (16 tests)", "test_speaking_p2.py (13 tests)"]
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "iteration": 17,
+  "timestamp": "2026-02-09T12:30:00Z",
+  "test_type": "E2E_EVALUATION",
+  "target": "Cambridge IELTS 18 - ALL TESTS (1-4)",
+  "summary": {
+    "status": "ALL PASSED",
+    "overall_result": "100% score achieved on ALL 4 tests with Band 9.0"
+  },
+  "tests": [
+    {
+      "name": "Test 1 - Full E2E",
+      "status": "PASSED",
+      "listening": "37/37 (100%) Band 9.0",
+      "reading": "40/40 (100%) Band 9.0",
+      "overall": "77/77 (100%) Band 9.0"
+    },
+    {
+      "name": "Test 2 - Full E2E",
+      "status": "PASSED",
+      "listening": "37/37 (100%) Band 9.0",
+      "reading": "40/40 (100%) Band 9.0",
+      "overall": "77/77 (100%) Band 9.0"
+    },
+    {
+      "name": "Test 3 - Full E2E",
+      "status": "PASSED",
+      "listening": "36/36 (100%) Band 9.0",
+      "reading": "40/40 (100%) Band 9.0",
+      "overall": "76/76 (100%) Band 9.0"
+    },
+    {
+      "name": "Test 4 - Full E2E",
+      "status": "PASSED",
+      "listening": "39/39 (100%) Band 9.0",
+      "reading": "38/38 (100%) Band 9.0",
+      "overall": "77/77 (100%) Band 9.0"
+    },
+    {
+      "name": "Speaking Part 3 Data",
+      "status": "COMPLETE",
+      "details": "All tests have discussion_topics with questions in Part 3"
+    }
+  ],
+  "bugs_fixed": [
+    {
+      "bug": "Evaluation always returning 0% score",
+      "fix": "Fixed extract_answer_keys_from_test to handle all question types including sentence_completion with items",
+      "file": "/app/backend/routes/cambridge.py"
+    },
+    {
+      "bug": "Missing reading answer keys (1-7, 22-26)",
+      "fix": "Updated extraction logic to prioritize 'items' array for all question types",
+      "file": "/app/backend/routes/cambridge.py"
+    }
+  ],
+  "data_verification": {
+    "test1_speaking_part3": "COMPLETE - 3 questions about helping others",
+    "test2_speaking_part3": "COMPLETE - 6 questions (Museums/Art galleries + Holiday industry)",
+    "test3_speaking_part3": "COMPLETE - 6 questions (Family occasions + Everyday life)",
+    "test4_speaking_part3": "COMPLETE - 6 questions (Friends at school + Making new friends)"
+  }
+}

@@ -1,0 +1,1848 @@
+{
+  "stage": 1,
+  "stage_title": "Foundations",
+  "units": [
+    {
+      "unit_id": "stage_1_unit_06",
+      "unit_num": 6,
+      "title": "My Body - Part 1",
+      "subtitle": "Face and Head Parts",
+      "phonics_focus": [],
+      "grammar_focus": [
+        "I have...",
+        "This is my...",
+        "Plurals (eyes, ears)",
+        "Adjectives (big/small)"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_1_unit_06_lesson_01",
+          "title": "This is my Face",
+          "topic": "Core face parts (Eyes, Nose, Mouth)",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://www.youtube.com/watch?v=lM66GXud69g",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What do you use to smell a flower?",
+                  "correct_answer": "nose",
+                  "options": [
+                    "nose",
+                    "eyes",
+                    "ears",
+                    "mouth"
+                  ],
+                  "image_emoji": "🌺",
+                  "hint": "It's in the middle of your face."
+                },
+                {
+                  "question_text": "Which part of your face do you smile with?",
+                  "correct_answer": "mouth",
+                  "options": [
+                    "mouth",
+                    "nose",
+                    "eyes",
+                    "ears"
+                  ],
+                  "image_emoji": "😊",
+                  "hint": "It's where your teeth are."
+                },
+                {
+                  "question_text": "What do you use to see the stars in the night sky?",
+                  "correct_answer": "eyes",
+                  "options": [
+                    "eyes",
+                    "nose",
+                    "mouth",
+                    "ears"
+                  ],
+                  "image_emoji": "🌙",
+                  "hint": "They open and close like windows."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "face",
+                  "ipa": "/feɪs/",
+                  "definition": "Front of your head",
+                  "example": "This is my face.",
+                  "image_emoji": "👦",
+                  "image_url": "/static/vocab_images/face.png"
+                },
+                {
+                  "word": "eye",
+                  "ipa": "/aɪ/",
+                  "definition": "See with these",
+                  "example": "I have big eyes.",
+                  "image_emoji": "👁",
+                  "image_url": "/static/vocab_images/eye.png"
+                },
+                {
+                  "word": "nose",
+                  "ipa": "/noʊz/",
+                  "definition": "Smell flowers with this",
+                  "example": "This is my nose.",
+                  "image_emoji": "👃",
+                  "image_url": "/static/vocab_images/nose.png"
+                },
+                {
+                  "word": "mouth",
+                  "ipa": "/maʊθ/",
+                  "definition": "Talk and eat with this",
+                  "example": "I have a small mouth.",
+                  "image_emoji": "👄",
+                  "image_url": "/static/vocab_images/mouth.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "face",
+                      "emoji": "👤",
+                      "distractors": [
+                        {
+                          "word": "eye",
+                          "emoji": "👁️"
+                        },
+                        {
+                          "word": "nose",
+                          "emoji": "👃"
+                        },
+                        {
+                          "word": "mouth",
+                          "emoji": "👄"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "eye",
+                      "emoji": "👁️",
+                      "distractors": [
+                        {
+                          "word": "face",
+                          "emoji": "👤"
+                        },
+                        {
+                          "word": "nose",
+                          "emoji": "👃"
+                        },
+                        {
+                          "word": "mouth",
+                          "emoji": "👄"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "nose",
+                      "emoji": "👃",
+                      "distractors": [
+                        {
+                          "word": "face",
+                          "emoji": "👤"
+                        },
+                        {
+                          "word": "eye",
+                          "emoji": "👁️"
+                        },
+                        {
+                          "word": "mouth",
+                          "emoji": "👄"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "mouth",
+                      "emoji": "👄",
+                      "distractors": [
+                        {
+                          "word": "face",
+                          "emoji": "👤"
+                        },
+                        {
+                          "word": "eye",
+                          "emoji": "👁️"
+                        },
+                        {
+                          "word": "nose",
+                          "emoji": "👃"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "face",
+                      "emoji": "👤",
+                      "distractors": [
+                        {
+                          "word": "eye",
+                          "emoji": "👁️"
+                        },
+                        {
+                          "word": "nose",
+                          "emoji": "👃"
+                        },
+                        {
+                          "word": "mouth",
+                          "emoji": "👄"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "eye",
+                      "emoji": "👁️",
+                      "distractors": [
+                        {
+                          "word": "face",
+                          "emoji": "👤"
+                        },
+                        {
+                          "word": "nose",
+                          "emoji": "👃"
+                        },
+                        {
+                          "word": "mouth",
+                          "emoji": "👄"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "nose",
+                      "emoji": "👃",
+                      "distractors": [
+                        {
+                          "word": "face",
+                          "emoji": "👤"
+                        },
+                        {
+                          "word": "eye",
+                          "emoji": "👁️"
+                        },
+                        {
+                          "word": "mouth",
+                          "emoji": "👄"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "mouth",
+                      "emoji": "👄",
+                      "distractors": [
+                        {
+                          "word": "face",
+                          "emoji": "👤"
+                        },
+                        {
+                          "word": "eye",
+                          "emoji": "👁️"
+                        },
+                        {
+                          "word": "nose",
+                          "emoji": "👃"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "face",
+                      "emoji": "👤"
+                    },
+                    {
+                      "word": "eye",
+                      "emoji": "👁️"
+                    },
+                    {
+                      "word": "nose",
+                      "emoji": "👃"
+                    },
+                    {
+                      "word": "mouth",
+                      "emoji": "👄"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 12
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "My Happy Face",
+              "text": "This is my face. I have two big eyes. I have a small nose. My mouth is smiling. I am happy!",
+              "questions": [
+                {
+                  "question": "What is big?",
+                  "answer": "eyes",
+                  "options": [
+                    "nose",
+                    "eyes",
+                    "mouth"
+                  ]
+                },
+                {
+                  "question": "Is the mouth smiling?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No",
+                    "Maybe"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I have ___s.",
+              "explanation": "Add 's' for more than one.",
+              "examples": [
+                "I have two eyes.",
+                "I have three toy cars.",
+                "I have four apples."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "have",
+                        "two",
+                        "eyes"
+                      ],
+                      "correctSentence": "I have two eyes."
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "have",
+                        "three",
+                        "apples"
+                      ],
+                      "correctSentence": "I have three apples."
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "have",
+                        "four",
+                        "toys"
+                      ],
+                      "correctSentence": "I have four toys."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I have two ___s.",
+                      "answer": "ear",
+                      "options": [
+                        "car",
+                        "ear",
+                        "dog",
+                        "cat"
+                      ]
+                    },
+                    {
+                      "sentence": "She has five ___s.",
+                      "answer": "ball",
+                      "options": [
+                        "ear",
+                        "ball",
+                        "book",
+                        "pen"
+                      ]
+                    },
+                    {
+                      "sentence": "We have six ___s.",
+                      "answer": "book",
+                      "options": [
+                        "book",
+                        "nose",
+                        "car",
+                        "eye"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "I have two eye.",
+                      "errorWord": "eye",
+                      "correctWord": "eyes"
+                    },
+                    {
+                      "sentence": "She have ten balls.",
+                      "errorWord": "have",
+                      "correctWord": "has"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello! My name is Tim. This is my face. I have a small nose and two blue eyes.",
+              "questions": [
+                {
+                  "question": "What color are Tim's eyes?",
+                  "answer": "blue",
+                  "options": [
+                    "green",
+                    "blue",
+                    "brown"
+                  ]
+                },
+                {
+                  "question": "How many eyes does Tim have?",
+                  "answer": "two",
+                  "options": [
+                    "one",
+                    "two",
+                    "three"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: I have one nose.",
+              "expected_text": "i have one nose",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "I have one ___ on my face. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "nose",
+                  "options": [
+                    "nose",
+                    "eye",
+                    "mouth",
+                    "ear"
+                  ]
+                },
+                {
+                  "question_text": "Which part of your face do you use to see? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "eye",
+                  "options": [
+                    "nose",
+                    "eye",
+                    "mouth",
+                    "ear"
+                  ]
+                },
+                {
+                  "question_text": "True or False: You have two eyes.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Fill in the blank: This is my _____.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "face",
+                  "options": [
+                    "face",
+                    "hand",
+                    "foot",
+                    "knee"
+                  ]
+                },
+                {
+                  "question_text": "How many mouths do you have?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "one",
+                  "options": [
+                    "one",
+                    "two",
+                    "three",
+                    "four"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "This is Me! Song",
+              "url": "https://www.youtube.com/watch?v=lM66GXud69g",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_1_unit_06_lesson_02",
+          "title": "Listen and Look",
+          "topic": "Auditory and decorative parts of the head",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/video",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What part helps us hear music?",
+                  "correct_answer": "ears",
+                  "options": [
+                    "ears",
+                    "eyes",
+                    "mouth",
+                    "nose"
+                  ],
+                  "image_emoji": "👂",
+                  "hint": "They are on the sides of your head."
+                },
+                {
+                  "question_text": "What do we use to eat yummy snacks?",
+                  "correct_answer": "mouth",
+                  "options": [
+                    "mouth",
+                    "ears",
+                    "nose",
+                    "eyes"
+                  ],
+                  "image_emoji": "🍏",
+                  "hint": "We taste with it."
+                },
+                {
+                  "question_text": "Which part lets us see the world?",
+                  "correct_answer": "eyes",
+                  "options": [
+                    "eyes",
+                    "nose",
+                    "ears",
+                    "mouth"
+                  ],
+                  "image_emoji": "👀",
+                  "hint": "You blink with them."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "ear",
+                  "ipa": "/ɪər/",
+                  "definition": "Part for hearing",
+                  "example": "I have big ears.",
+                  "image_emoji": "👂",
+                  "image_url": "/static/vocab_images/ear.png"
+                },
+                {
+                  "word": "hair",
+                  "ipa": "/hɛər/",
+                  "definition": "Grows on your head",
+                  "example": "This is my hair.",
+                  "image_emoji": "💇‍♂️",
+                  "image_url": "/static/vocab_images/hair.png"
+                },
+                {
+                  "word": "head",
+                  "ipa": "/hɛd/",
+                  "definition": "Top of your body",
+                  "example": "This is my head.",
+                  "image_emoji": "👶",
+                  "image_url": "/static/vocab_images/head.png"
+                },
+                {
+                  "word": "look",
+                  "ipa": "/lʊk/",
+                  "definition": "To see with eyes",
+                  "example": "I look with my eyes.",
+                  "image_emoji": "👀",
+                  "image_url": "/static/vocab_images/look.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "ear",
+                      "emoji": "👂",
+                      "distractors": [
+                        {
+                          "word": "hair",
+                          "emoji": "💇"
+                        },
+                        {
+                          "word": "head",
+                          "emoji": "🧠"
+                        },
+                        {
+                          "word": "look",
+                          "emoji": "👀"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hair",
+                      "emoji": "💇",
+                      "distractors": [
+                        {
+                          "word": "ear",
+                          "emoji": "👂"
+                        },
+                        {
+                          "word": "head",
+                          "emoji": "🧠"
+                        },
+                        {
+                          "word": "look",
+                          "emoji": "👀"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "head",
+                      "emoji": "🧠",
+                      "distractors": [
+                        {
+                          "word": "ear",
+                          "emoji": "👂"
+                        },
+                        {
+                          "word": "hair",
+                          "emoji": "💇"
+                        },
+                        {
+                          "word": "look",
+                          "emoji": "👀"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "look",
+                      "emoji": "👀",
+                      "distractors": [
+                        {
+                          "word": "ear",
+                          "emoji": "👂"
+                        },
+                        {
+                          "word": "hair",
+                          "emoji": "💇"
+                        },
+                        {
+                          "word": "head",
+                          "emoji": "🧠"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "ear",
+                      "emoji": "👂",
+                      "distractors": [
+                        {
+                          "word": "hair",
+                          "emoji": "💇"
+                        },
+                        {
+                          "word": "head",
+                          "emoji": "🧠"
+                        },
+                        {
+                          "word": "look",
+                          "emoji": "👀"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hair",
+                      "emoji": "💇",
+                      "distractors": [
+                        {
+                          "word": "ear",
+                          "emoji": "👂"
+                        },
+                        {
+                          "word": "head",
+                          "emoji": "🧠"
+                        },
+                        {
+                          "word": "look",
+                          "emoji": "👀"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "head",
+                      "emoji": "🧠",
+                      "distractors": [
+                        {
+                          "word": "ear",
+                          "emoji": "👂"
+                        },
+                        {
+                          "word": "hair",
+                          "emoji": "💇"
+                        },
+                        {
+                          "word": "look",
+                          "emoji": "👀"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "look",
+                      "emoji": "👀",
+                      "distractors": [
+                        {
+                          "word": "ear",
+                          "emoji": "👂"
+                        },
+                        {
+                          "word": "hair",
+                          "emoji": "💇"
+                        },
+                        {
+                          "word": "head",
+                          "emoji": "🧠"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "ear",
+                      "emoji": "👂"
+                    },
+                    {
+                      "word": "hair",
+                      "emoji": "💇"
+                    },
+                    {
+                      "word": "head",
+                      "emoji": "🧠"
+                    },
+                    {
+                      "word": "look",
+                      "emoji": "👀"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 12
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "My Funny Face",
+              "text": "Look! This is my funny face. I have small ears and big blue hair. My head is round. Can you hear me with your ears?",
+              "questions": [
+                {
+                  "question": "What size are the ears?",
+                  "answer": "small",
+                  "options": [
+                    "big",
+                    "small",
+                    "medium"
+                  ]
+                },
+                {
+                  "question": "What color is the hair?",
+                  "answer": "blue",
+                  "options": [
+                    "black",
+                    "red",
+                    "blue"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "My ___ is ___",
+              "explanation": "Say what color a part is.",
+              "examples": [
+                "My eyes are brown.",
+                "My ears are pink.",
+                "My hair is yellow."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "My",
+                        "is",
+                        "blue",
+                        "hair"
+                      ],
+                      "correctSentence": "My hair is blue."
+                    },
+                    {
+                      "words": [
+                        "My",
+                        "green",
+                        "eyes",
+                        "are"
+                      ],
+                      "correctSentence": "My eyes are green."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "My ___ is black.",
+                      "answer": "hair",
+                      "options": [
+                        "hair",
+                        "ear",
+                        "nose"
+                      ]
+                    },
+                    {
+                      "sentence": "My ___ are brown.",
+                      "answer": "eyes",
+                      "options": [
+                        "eyes",
+                        "nose",
+                        "mouth"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "My nose is orange.",
+                      "errorWord": "orange",
+                      "correctWord": "red"
+                    },
+                    {
+                      "sentence": "My ears is big.",
+                      "errorWord": "is",
+                      "correctWord": "are"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 7
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Look at my head! I have brown hair and two big eyes. My ears are small.",
+              "questions": [
+                {
+                  "question": "What size are the ears?",
+                  "answer": "small",
+                  "options": [
+                    "big",
+                    "small",
+                    "medium"
+                  ]
+                },
+                {
+                  "question": "How many eyes does the person have?",
+                  "answer": "two",
+                  "options": [
+                    "one",
+                    "two",
+                    "three"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: My eyes are blue.",
+              "expected_text": "my eyes are blue",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "My ___ is brown. (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "hair",
+                  "options": [
+                    "hair",
+                    "ear",
+                    "nose",
+                    "eye"
+                  ]
+                },
+                {
+                  "question_text": "My eyes are ___. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "blue",
+                  "options": [
+                    "blue",
+                    "big",
+                    "small",
+                    "hair"
+                  ]
+                },
+                {
+                  "question_text": "True or False: We listen with our ears.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "What do we use to see? (Reading comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "eyes",
+                  "options": [
+                    "ears",
+                    "eyes",
+                    "hair",
+                    "nose"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_1_unit_06_lesson_03",
+          "title": "My Whole Head",
+          "topic": "Reviewing the head as a whole",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/video",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What do you use to see stars at night?",
+                  "correct_answer": "eyes",
+                  "options": [
+                    "eyes",
+                    "ears",
+                    "nose",
+                    "mouth"
+                  ],
+                  "image_emoji": "👁",
+                  "hint": "They are on your face."
+                },
+                {
+                  "question_text": "What helps you smell flowers?",
+                  "correct_answer": "nose",
+                  "options": [
+                    "nose",
+                    "mouth",
+                    "eye",
+                    "ear"
+                  ],
+                  "image_emoji": "🧝",
+                  "hint": "It's in the middle of your face."
+                },
+                {
+                  "question_text": "Which part helps you wiggle eyebrows?",
+                  "correct_answer": "eyebrows",
+                  "options": [
+                    "eyebrows",
+                    "fingers",
+                    "toes",
+                    "nose"
+                  ],
+                  "image_emoji": "😏",
+                  "hint": "They are above your eyes."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "smile",
+                  "ipa": "/smaɪl/",
+                  "definition": "Happy face with mouth",
+                  "example": "I have a big smile.",
+                  "image_emoji": "😀",
+                  "image_url": "/static/vocab_images/gpt_smile.png"
+                },
+                {
+                  "word": "big",
+                  "ipa": "/bɪɡ/",
+                  "definition": "Larger in size",
+                  "example": "This is my big head.",
+                  "image_emoji": "👁",
+                  "image_url": "/static/vocab_images/big.png"
+                },
+                {
+                  "word": "small",
+                  "ipa": "/smɔːl/",
+                  "definition": "Tiny or little",
+                  "example": "I have small eyes.",
+                  "image_emoji": "👀",
+                  "image_url": "/static/vocab_images/gpt_small.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "smile",
+                      "emoji": "😊",
+                      "distractors": [
+                        {
+                          "word": "big",
+                          "emoji": "🐘",
+                          "image_url": "/static/vocab_images/big.png"
+                        },
+                        {
+                          "word": "small",
+                          "emoji": "🐭"
+                        },
+                        {
+                          "word": "happy",
+                          "emoji": "😀"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "big",
+                      "emoji": "🐘",
+                      "distractors": [
+                        {
+                          "word": "small",
+                          "emoji": "🐭"
+                        },
+                        {
+                          "word": "smile",
+                          "emoji": "😊"
+                        },
+                        {
+                          "word": "tall",
+                          "emoji": "🦒"
+                        }
+                      ],
+                      "image_url": "/static/vocab_images/big.png"
+                    },
+                    {
+                      "word": "small",
+                      "emoji": "🐭",
+                      "distractors": [
+                        {
+                          "word": "smile",
+                          "emoji": "😊"
+                        },
+                        {
+                          "word": "big",
+                          "emoji": "🐘",
+                          "image_url": "/static/vocab_images/big.png"
+                        },
+                        {
+                          "word": "tinny",
+                          "emoji": "🍬"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "smile",
+                      "emoji": "😊",
+                      "distractors": [
+                        {
+                          "word": "big",
+                          "emoji": "🐘",
+                          "image_url": "/static/vocab_images/big.png"
+                        },
+                        {
+                          "word": "small",
+                          "emoji": "🐭"
+                        },
+                        {
+                          "word": "grin",
+                          "emoji": "😁"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "big",
+                      "emoji": "🐘",
+                      "distractors": [
+                        {
+                          "word": "small",
+                          "emoji": "🐭"
+                        },
+                        {
+                          "word": "smile",
+                          "emoji": "😊"
+                        },
+                        {
+                          "word": "huge",
+                          "emoji": "🌄"
+                        }
+                      ],
+                      "image_url": "/static/vocab_images/big.png"
+                    },
+                    {
+                      "word": "small",
+                      "emoji": "🐭",
+                      "distractors": [
+                        {
+                          "word": "smile",
+                          "emoji": "😊"
+                        },
+                        {
+                          "word": "big",
+                          "emoji": "🐘",
+                          "image_url": "/static/vocab_images/big.png"
+                        },
+                        {
+                          "word": "little",
+                          "emoji": "🐞"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "smile",
+                      "emoji": "😊"
+                    },
+                    {
+                      "word": "big",
+                      "emoji": "🐘",
+                      "image_url": "/static/vocab_images/big.png"
+                    },
+                    {
+                      "word": "small",
+                      "emoji": "🐭"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 9
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Big Smile, Small Nose",
+              "text": "I have a big smile. This is my nose. It is small. The elephant has big ears. They are very large!",
+              "questions": [
+                {
+                  "question": "Who has big ears?",
+                  "answer": "The elephant",
+                  "options": [
+                    "I",
+                    "The mouse",
+                    "The elephant"
+                  ]
+                },
+                {
+                  "question": "Is my nose big or small?",
+                  "answer": "small",
+                  "options": [
+                    "big",
+                    "tiny",
+                    "small"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I have ___ ___s.",
+              "explanation": "Use big or small to talk about size.",
+              "examples": [
+                "I have big eyes.",
+                "I have small ears.",
+                "I have a big smile."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "have",
+                        "big",
+                        "feet"
+                      ],
+                      "correctSentence": "I have big feet."
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "have",
+                        "a",
+                        "small",
+                        "nose"
+                      ],
+                      "correctSentence": "I have a small nose."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I have ___ ears.",
+                      "answer": "small",
+                      "options": [
+                        "big",
+                        "small",
+                        "happy",
+                        "sad"
+                      ]
+                    },
+                    {
+                      "sentence": "I have a ___ mouth.",
+                      "answer": "big",
+                      "options": [
+                        "big",
+                        "tiny",
+                        "short",
+                        "wide"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "I have big eye.",
+                      "errorWord": "eye",
+                      "correctWord": "eyes"
+                    },
+                    {
+                      "sentence": "I have smalls hands.",
+                      "errorWord": "smalls",
+                      "correctWord": "small"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 6
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hi there! Meet my brother. He has big, bright eyes and a tiny nose. His hair is brown.",
+              "questions": [
+                {
+                  "question": "What color is his hair?",
+                  "answer": "brown",
+                  "options": [
+                    "brown",
+                    "black",
+                    "blonde"
+                  ]
+                },
+                {
+                  "question": "What size are his eyes?",
+                  "answer": "big",
+                  "options": [
+                    "big",
+                    "small",
+                    "tiny"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: 'I have a big smile.'",
+              "expected_text": "i have a big smile",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "I have a ___ smile.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "big",
+                  "options": [
+                    "big",
+                    "small",
+                    "tiny"
+                  ]
+                },
+                {
+                  "question_text": "Which word means 'a happy expression'?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "smile",
+                  "options": [
+                    "smile",
+                    "big",
+                    "small"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'I have small ears.' uses an adjective.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "What do you use to say 'I have a big head'?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "head",
+                  "options": [
+                    "head",
+                    "foot",
+                    "hand"
+                  ]
+                },
+                {
+                  "question_text": "Fill in the blank: He has a ____ nose.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "small",
+                  "options": [
+                    "big",
+                    "small",
+                    "tall"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_1_unit_06_lesson_04",
+          "title": "Unit 6 Mastery Check",
+          "topic": "Cumulative Review (Face Parts, Big/Small)",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/body-parts-video",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What do you use to smell flowers?",
+                  "correct_answer": "nose",
+                  "options": [
+                    "nose",
+                    "ears",
+                    "hands",
+                    "feet"
+                  ],
+                  "image_emoji": "👃",
+                  "hint": "You breathe in through it!"
+                },
+                {
+                  "question_text": "Which part helps you to see in the dark?",
+                  "correct_answer": "eyes",
+                  "options": [
+                    "eyes",
+                    "mouth",
+                    "ears",
+                    "hands"
+                  ],
+                  "image_emoji": "👁",
+                  "hint": "You use these to read books!"
+                },
+                {
+                  "question_text": "What do you use to clap when you're happy?",
+                  "correct_answer": "hands",
+                  "options": [
+                    "hands",
+                    "feet",
+                    "nose",
+                    "ears"
+                  ],
+                  "image_emoji": "👏",
+                  "hint": "You use them to hold things!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "face",
+                "eye",
+                "nose",
+                "mouth",
+                "ear",
+                "hair",
+                "head",
+                "look",
+                "smile",
+                "big",
+                "small"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "apple",
+                      "emoji": "🍎",
+                      "distractors": [
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "grape",
+                          "emoji": "🍇"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🍊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "car",
+                      "emoji": "🚗",
+                      "distractors": [
+                        {
+                          "word": "bicycle",
+                          "emoji": "🚲"
+                        },
+                        {
+                          "word": "train",
+                          "emoji": "🚆"
+                        },
+                        {
+                          "word": "bus",
+                          "emoji": "🚌"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "dog",
+                      "emoji": "🐕",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "mouse",
+                          "emoji": "🐭"
+                        },
+                        {
+                          "word": "elephant",
+                          "emoji": "🐘"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "banana",
+                      "emoji": "🍌",
+                      "distractors": [
+                        {
+                          "word": "apple",
+                          "emoji": "🍎"
+                        },
+                        {
+                          "word": "pear",
+                          "emoji": "🍐"
+                        },
+                        {
+                          "word": "kiwi",
+                          "emoji": "🥝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "bus",
+                      "emoji": "🚌",
+                      "distractors": [
+                        {
+                          "word": "car",
+                          "emoji": "🚗"
+                        },
+                        {
+                          "word": "plane",
+                          "emoji": "✈️"
+                        },
+                        {
+                          "word": "ship",
+                          "emoji": "⛴️"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "fish",
+                      "emoji": "🐟"
+                    },
+                    {
+                      "word": "grape",
+                      "emoji": "🍇"
+                    },
+                    {
+                      "word": "bicycle",
+                      "emoji": "🚲"
+                    },
+                    {
+                      "word": "elephant",
+                      "emoji": "🐘"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Funny Face",
+              "text": "This is my funny face! I have two big blue eyes. I have one small orange nose. My mouth is big and smiles a lot. Do you like my face?",
+              "questions": [
+                {
+                  "question": "What color are the eyes?",
+                  "answer": "blue",
+                  "options": [
+                    "green",
+                    "blue",
+                    "red"
+                  ]
+                },
+                {
+                  "question": "How many noses does it have?",
+                  "answer": "one",
+                  "options": [
+                    "two",
+                    "three",
+                    "one"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "I have...",
+                "My ___ is ___.",
+                "Adjectives (Big/Small)"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "see",
+                        "a",
+                        "dog"
+                      ],
+                      "correctSentence": "I see a dog"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "happy"
+                      ],
+                      "correctSentence": "She is happy"
+                    },
+                    {
+                      "words": [
+                        "They",
+                        "have",
+                        "two",
+                        "cats"
+                      ],
+                      "correctSentence": "They have two cats"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "We ___ playing.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "am",
+                        "are",
+                        "was"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ two books.",
+                      "answer": "has",
+                      "options": [
+                        "have",
+                        "has",
+                        "is",
+                        "are"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She like cats.",
+                      "errorWord": "like",
+                      "correctWord": "likes"
+                    },
+                    {
+                      "sentence": "They is running.",
+                      "errorWord": "is",
+                      "correctWord": "are"
+                    },
+                    {
+                      "sentence": "We has a car.",
+                      "errorWord": "has",
+                      "correctWord": "have"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "This is my cute puppy. He has two small ears and a big smile. His tail wags when he's happy.",
+              "questions": [
+                {
+                  "question": "How many ears does the puppy have?",
+                  "answer": "two",
+                  "options": [
+                    "one",
+                    "two",
+                    "four"
+                  ]
+                },
+                {
+                  "question": "What size is his smile?",
+                  "answer": "big",
+                  "options": [
+                    "big",
+                    "small",
+                    "tiny"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: I have a big head and two small ears.",
+              "expected_text": "i have a big head and two small ears",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "This is my ___ cat. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "big",
+                  "options": [
+                    "big",
+                    "small",
+                    "tiny",
+                    "happy"
+                  ]
+                },
+                {
+                  "question_text": "Which word means 'two of something'? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Plurals",
+                  "options": [
+                    "Plurals",
+                    "Eyes",
+                    "Nose",
+                    "Ears"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'I have two ears' uses plural grammar.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "If you have two big eyes, it means your eyes are...",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "large",
+                  "options": [
+                    "small",
+                    "medium",
+                    "tiny",
+                    "large"
+                  ]
+                },
+                {
+                  "question_text": "Complete the sentence: '___ is my friend.'",
+                  "question_type": "fill_blank",
+                  "correct_answer": "This",
+                  "options": [
+                    "This",
+                    "I",
+                    "He",
+                    "She"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Head Shoulders Knees Toes",
+              "url": "https://www.youtube.com/watch?v=ZanHgPprl-0",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        }
+      ]
+    }
+  ],
+  "ai_enriched": true,
+  "enriched_at": "2026-02-17T17:58:45.629119+00:00"
+}
