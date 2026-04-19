@@ -10,9 +10,9 @@ export default function PricingNav() {
         <nav aria-label="Primary">
           <ul className="nav-links">
             <li><a href="/landing/v2#samples">Samples</a></li>
-            <li><a href="/pricing/v2" aria-current="page">Pricing</a></li>
-            <li><a href="/landing/v2#blog">Teacher Blog</a></li>
-            <li><a href="/landing/v2#about">About</a></li>
+            <li><a href="/pricing" aria-current="page">Pricing</a></li>
+            <li><a href="/blog">Teacher Blog</a></li>
+            <li><a href="/about">About</a></li>
           </ul>
         </nav>
         <div className="nav-right">

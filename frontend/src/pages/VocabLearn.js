@@ -189,7 +189,7 @@ export default function VocabLearn() {
           </div>
           <Button
             size="sm"
-            onClick={() => navigate(`/vocab-practice/${moduleId}`)}
+            onClick={() => navigate(`/vocabulary/practice/${moduleId}`)}
             className="bg-emerald-500 hover:bg-emerald-600 text-white text-xs"
             data-testid="go-practice-btn"
           >

@@ -1,0 +1,4 @@
+node_modules/
+REPORT.md
+playwright-report/
+test-results/

@@ -597,7 +597,7 @@ export default function GeneralTask1Practice() {
                           <li 
                             key={idx} 
                             className="text-xs bg-white p-2 rounded border border-indigo-100 cursor-pointer hover:border-indigo-300 transition-colors"
-                            onClick={() => navigate(`/courses/mastery/general/${lesson.lesson_id}`)}
+                            onClick={() => navigate(`/mastery-course?lesson=${lesson.lesson_id}`)}
                           >
                             <div className="flex items-center justify-between">
                               <span className="font-medium text-indigo-700">{lesson.title}</span>

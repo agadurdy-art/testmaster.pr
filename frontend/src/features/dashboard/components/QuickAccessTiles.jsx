@@ -93,12 +93,12 @@ export const QuickAccessIcons = {
 
 /** Default 8-item set matching the design handoff. */
 export const DEFAULT_QUICK_ACCESS = [
-  { label: "Beginner Course", href: "/courses/beginner",  tint: "default", icon: QuickAccessIcons.BeginnerCourse },
-  { label: "Mastery Course",  href: "/courses/mastery",   tint: "gold",    icon: QuickAccessIcons.Trophy },
-  { label: "Advanced",        href: "/courses/advanced",  tint: "default", icon: QuickAccessIcons.Zap },
-  { label: "Learning Tools",  href: "/tools",             tint: "sky",     icon: QuickAccessIcons.Settings },
-  { label: "Question Bank",   href: "/questions",         tint: "default", icon: QuickAccessIcons.SearchPlus },
-  { label: "Vocabulary",      href: "/vocabulary",        tint: "liz",     icon: QuickAccessIcons.Book },
-  { label: "Grammar",         href: "/grammar",           tint: "sky",     icon: QuickAccessIcons.Brackets },
-  { label: "Speaking Topics", href: "/speaking/topics",   tint: "gold",    icon: QuickAccessIcons.Mic },
+  { label: "Beginner Course", href: "/beginner-course",       tint: "default", icon: QuickAccessIcons.BeginnerCourse },
+  { label: "Mastery Course",  href: "/mastery-course",        tint: "gold",    icon: QuickAccessIcons.Trophy },
+  { label: "Advanced",        href: "/advanced-mastery",      tint: "default", icon: QuickAccessIcons.Zap },
+  { label: "Learning Tools",  href: "/learning-tools",        tint: "sky",     icon: QuickAccessIcons.Settings },
+  { label: "Question Bank",   href: "/question-bank",         tint: "default", icon: QuickAccessIcons.SearchPlus },
+  { label: "Vocabulary",      href: "/vocab-grammar",         tint: "liz",     icon: QuickAccessIcons.Book },
+  { label: "Grammar",         href: "/vocab-grammar",         tint: "sky",     icon: QuickAccessIcons.Brackets },
+  { label: "Speaking Topics", href: "/question-bank/speaking",tint: "gold",    icon: QuickAccessIcons.Mic },
 ];

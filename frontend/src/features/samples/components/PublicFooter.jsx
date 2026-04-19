@@ -44,10 +44,10 @@ export default function PublicFooter({ className, currentSampleSlug }) {
         <div>
           <div className="font-semibold mb-2">Practice</div>
           <ul className="space-y-1.5 text-slate-500">
-            <li><a className="hover:text-slate-900" href="/writing-task1-practice">Writing Task 1</a></li>
-            <li><a className="hover:text-slate-900" href="/writing-task2-practice">Writing Task 2</a></li>
+            <li><a className="hover:text-slate-900" href="/question-bank/writing/task1">Writing Task 1</a></li>
+            <li><a className="hover:text-slate-900" href="/question-bank/writing/task2">Writing Task 2</a></li>
             <li><a className="hover:text-slate-900" href="/speaking-practice">Speaking</a></li>
-            <li><a className="hover:text-slate-900" href="#">Reading</a></li>
+            <li><a className="hover:text-slate-900" href="/question-bank/reading/practice">Reading</a></li>
           </ul>
         </div>
         <div>
@@ -66,16 +66,16 @@ export default function PublicFooter({ className, currentSampleSlug }) {
                 </a>
               </li>
             ))}
-            <li><a className="hover:text-slate-900" href="/samples">All samples</a></li>
+            <li><a className="hover:text-slate-900" href="/samples/writing/band-6-5-task2">All samples</a></li>
           </ul>
         </div>
         <div>
           <div className="font-semibold mb-2">Company</div>
           <ul className="space-y-1.5 text-slate-500">
             <li><a className="hover:text-slate-900" href="/pricing">Pricing</a></li>
-            <li><a className="hover:text-slate-900" href="#">Blog</a></li>
-            <li><a className="hover:text-slate-900" href="#">Contact</a></li>
-            <li><a className="hover:text-slate-900" href="#">Privacy</a></li>
+            <li><a className="hover:text-slate-900" href="/blog">Blog</a></li>
+            <li><a className="hover:text-slate-900" href="/contact">Contact</a></li>
+            <li><a className="hover:text-slate-900" href="/privacy">Privacy</a></li>
           </ul>
         </div>
       </div>

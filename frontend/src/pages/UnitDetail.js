@@ -251,7 +251,7 @@ export default function UnitDetail({ user }) {
 
                 <Button
                   className="bg-violet-500 hover:bg-violet-600"
-                  onClick={() => navigate(`/learning/quiz/${unit.unit_quiz.id}`)}
+                  onClick={() => navigate(`/learning/lesson/${unit.unit_quiz.id}`)}
                   disabled={!isAdmin && !unit.user_progress?.is_unlocked}
                 >
                   {unit.user_progress?.completed ? 'Passed! Review Quiz' : 'Take Quiz'}

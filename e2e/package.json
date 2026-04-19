@@ -1,0 +1,14 @@
+{
+  "name": "testmaster-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "description": "End-to-end link/workflow crawler for TestMaster frontend. Run against a local dev server (both frontend and backend must be up).",
+  "scripts": {
+    "setup": "npm install && npx playwright install chromium",
+    "crawl": "node crawl.js",
+    "crawl:verbose": "VERBOSE=1 node crawl.js"
+  },
+  "dependencies": {
+    "playwright": "^1.48.0"
+  }
+}
