@@ -1,22 +1,25 @@
 import React from 'react';
+import { useI18n } from '../../../lib/i18n';
 import ArrowRightIcon from './ArrowRightIcon';
 
 export default function PricingTeaser() {
+  const { t } = useI18n();
+
   return (
     <section id="pricing" style={{ paddingTop: 0 }}>
       <div className="container">
         <div className="price-teaser">
           <div>
             <div className="headline-sm">
-              Starts at <span className="amt">$2.99</span>/week.
+              {t('landingV2PriceStartsAt')} <span className="amt">$2.99</span>{t('landingV2PriceTrailing')}
             </div>
             <div className="sub-sm">
-              Unlimited evaluations, mock tests, and Liz coaching. Cancel anytime.
+              {t('landingV2PriceSub')}
             </div>
-            <span className="compare-chip">Less than half the price of leading AI IELTS platforms</span>
+            <span className="compare-chip">{t('landingV2PriceCompare')}</span>
           </div>
           <a href="/pricing" className="btn btn-outline btn-lg">
-            See all plans
+            {t('landingV2PriceCta')}
             <ArrowRightIcon size={14} />
           </a>
         </div>

@@ -441,6 +441,62 @@ export const translations = {
     example: 'Example',
     vocabulary: 'Vocabulary',
     grammar: 'Grammar',
+
+    // ============================================================
+    // V2 Landing (LandingPageV2 + feature components)
+    // ============================================================
+    // Nav
+    landingV2NavSamples: 'Samples',
+    landingV2NavPricing: 'Pricing',
+    landingV2NavBlog: 'Teacher Blog',
+    landingV2NavAbout: 'About',
+    landingV2NavLogin: 'Log in',
+    landingV2NavStart: 'Start free',
+
+    // Hero
+    landingV2HeroEyebrow: 'Backed by a real IELTS teacher',
+    landingV2HeroEyebrowStudents: '500+ students',
+    landingV2HeroTitleA: 'Score your IELTS essay in',
+    landingV2HeroTitleTime: '12 seconds',
+    landingV2HeroTitleB: 'in your language.',
+    landingV2HeroSub: 'Inline feedback on all four IELTS criteria. A band-level rewrite included. Used by students in Vietnam, Turkey, and 30+ countries.',
+    landingV2HeroCtaPrimary: 'See a sample evaluation',
+    landingV2HeroCtaSecondary: 'Band 5, 6.5, 8 reports',
+    landingV2HeroMicro: 'Real student essay · Full band-level report.',
+
+    // How it works
+    landingV2HowEyebrow: 'How it works',
+    landingV2HowTitle: 'Three steps. Twelve seconds.',
+    landingV2HowSub: 'From blank page to band-level feedback — in less time than it takes to re-read your intro.',
+    landingV2HowStep1Title: 'Submit your essay',
+    landingV2HowStep1Body: 'Paste or type. Task 1, Task 2, or General Training. No word-count games — just your writing.',
+    landingV2HowStep2Title: 'Get 4-criterion feedback',
+    landingV2HowStep2Body: 'Inline comments and a band estimate — translated into Vietnamese, Turkish, Chinese, or your language of choice.',
+    landingV2HowStep3Title: "Practice with Liz's guidance",
+    landingV2HowStep3Body: 'Weekly focus areas, targeted drills, and rewrites on demand. Your writing coach, always on.',
+    landingV2HowLizTag: 'Meet Liz, your AI guide',
+
+    // Final CTA
+    landingV2FinalTitleA: 'Your IELTS band is',
+    landingV2FinalTitleEm: '0.5–1.0 lower',
+    landingV2FinalTitleB: "than it could be. Let's fix that.",
+    landingV2FinalSub: 'See three real student essays evaluated at band 5, 6.5, and 8 — every comment, every rewrite, exactly what students receive.',
+    landingV2FinalCta: 'See a sample evaluation',
+
+    // Pricing teaser
+    landingV2PriceStartsAt: 'Starts at',
+    landingV2PriceTrailing: '/week.',
+    landingV2PriceSub: 'Unlimited evaluations, mock tests, and Liz coaching. Cancel anytime.',
+    landingV2PriceCompare: 'Less than half the price of leading AI IELTS platforms',
+    landingV2PriceCta: 'See all plans',
+
+    // Pricing nav (shared with /pricing)
+    pricingV2NavSamples: 'Samples',
+    pricingV2NavPricing: 'Pricing',
+    pricingV2NavBlog: 'Teacher Blog',
+    pricingV2NavAbout: 'About',
+    pricingV2NavLogin: 'Log in',
+    pricingV2NavStart: 'Start free',
   },
   vi: {
     languageLabel: 'Ngôn ngữ',
@@ -866,6 +922,62 @@ export const translations = {
     example: 'Ví dụ',
     vocabulary: 'Từ vựng',
     grammar: 'Ngữ pháp',
+
+    // ============================================================
+    // V2 Landing (LandingPageV2 + feature components)
+    // ============================================================
+    // Nav
+    landingV2NavSamples: 'Mẫu bài',
+    landingV2NavPricing: 'Giá',
+    landingV2NavBlog: 'Blog giáo viên',
+    landingV2NavAbout: 'Giới thiệu',
+    landingV2NavLogin: 'Đăng nhập',
+    landingV2NavStart: 'Bắt đầu miễn phí',
+
+    // Hero
+    landingV2HeroEyebrow: 'Được hỗ trợ bởi giáo viên IELTS thực thụ',
+    landingV2HeroEyebrowStudents: '500+ học viên',
+    landingV2HeroTitleA: 'Chấm điểm bài luận IELTS của bạn trong',
+    landingV2HeroTitleTime: '12 giây',
+    landingV2HeroTitleB: 'bằng ngôn ngữ của bạn.',
+    landingV2HeroSub: 'Nhận xét trực tiếp trên cả bốn tiêu chí IELTS. Kèm theo bài viết lại đạt band điểm. Được học viên tại Việt Nam, Thổ Nhĩ Kỳ và hơn 30 quốc gia tin dùng.',
+    landingV2HeroCtaPrimary: 'Xem bài đánh giá mẫu',
+    landingV2HeroCtaSecondary: 'Báo cáo Band 5, 6.5, 8',
+    landingV2HeroMicro: 'Bài luận thực của học viên · Báo cáo band điểm đầy đủ.',
+
+    // How it works
+    landingV2HowEyebrow: 'Cách hoạt động',
+    landingV2HowTitle: 'Ba bước. Mười hai giây.',
+    landingV2HowSub: 'Từ trang trắng đến phản hồi band điểm — nhanh hơn cả việc đọc lại phần mở bài.',
+    landingV2HowStep1Title: 'Gửi bài luận',
+    landingV2HowStep1Body: 'Dán hoặc gõ. Task 1, Task 2, hoặc General Training. Không tính toán số từ — chỉ bài viết của bạn.',
+    landingV2HowStep2Title: 'Nhận phản hồi 4 tiêu chí',
+    landingV2HowStep2Body: 'Nhận xét trực tiếp và ước tính band — dịch sang tiếng Việt, Thổ Nhĩ Kỳ, Trung Quốc, hoặc ngôn ngữ bạn chọn.',
+    landingV2HowStep3Title: 'Luyện tập với Liz',
+    landingV2HowStep3Body: 'Trọng tâm hàng tuần, bài tập nhắm mục tiêu, và viết lại theo yêu cầu. Huấn luyện viên viết luận của bạn, luôn sẵn sàng.',
+    landingV2HowLizTag: 'Gặp Liz, trợ lý AI của bạn',
+
+    // Final CTA
+    landingV2FinalTitleA: 'Band điểm IELTS của bạn',
+    landingV2FinalTitleEm: 'thấp hơn 0.5–1.0',
+    landingV2FinalTitleB: 'so với khả năng thực sự. Hãy sửa điều đó.',
+    landingV2FinalSub: 'Xem ba bài luận thực được chấm ở band 5, 6.5 và 8 — mọi nhận xét, mọi bản viết lại, đúng những gì học viên nhận được.',
+    landingV2FinalCta: 'Xem bài đánh giá mẫu',
+
+    // Pricing teaser
+    landingV2PriceStartsAt: 'Từ',
+    landingV2PriceTrailing: '/tuần.',
+    landingV2PriceSub: 'Đánh giá không giới hạn, thi thử, và huấn luyện cùng Liz. Hủy bất cứ lúc nào.',
+    landingV2PriceCompare: 'Chưa bằng một nửa giá của các nền tảng AI IELTS hàng đầu',
+    landingV2PriceCta: 'Xem tất cả gói',
+
+    // Pricing nav (shared with /pricing)
+    pricingV2NavSamples: 'Mẫu bài',
+    pricingV2NavPricing: 'Giá',
+    pricingV2NavBlog: 'Blog giáo viên',
+    pricingV2NavAbout: 'Giới thiệu',
+    pricingV2NavLogin: 'Đăng nhập',
+    pricingV2NavStart: 'Bắt đầu miễn phí',
   },
   tr: {
     languageLabel: 'Dil',
@@ -1254,6 +1366,62 @@ export const translations = {
     example: 'Örnek',
     vocabulary: 'Kelime',
     grammar: 'Dilbilgisi',
+
+    // ============================================================
+    // V2 Landing (LandingPageV2 + feature components)
+    // ============================================================
+    // Nav
+    landingV2NavSamples: 'Örnekler',
+    landingV2NavPricing: 'Fiyatlar',
+    landingV2NavBlog: 'Öğretmen Blogu',
+    landingV2NavAbout: 'Hakkında',
+    landingV2NavLogin: 'Giriş yap',
+    landingV2NavStart: 'Ücretsiz başla',
+
+    // Hero
+    landingV2HeroEyebrow: 'Gerçek bir IELTS öğretmeni tarafından destekleniyor',
+    landingV2HeroEyebrowStudents: '500+ öğrenci',
+    landingV2HeroTitleA: 'IELTS yazı puanınızı',
+    landingV2HeroTitleTime: '12 saniyede',
+    landingV2HeroTitleB: 'kendi dilinizde alın.',
+    landingV2HeroSub: 'Dört IELTS kriterinde satır içi geri bildirim. Band seviyesinde yeniden yazım dahil. Vietnam, Türkiye ve 30+ ülkedeki öğrenciler tarafından kullanılıyor.',
+    landingV2HeroCtaPrimary: 'Örnek değerlendirmeyi gör',
+    landingV2HeroCtaSecondary: 'Band 5, 6.5, 8 raporları',
+    landingV2HeroMicro: 'Gerçek öğrenci kompozisyonu · Tam band raporu.',
+
+    // How it works
+    landingV2HowEyebrow: 'Nasıl çalışır',
+    landingV2HowTitle: 'Üç adım. On iki saniye.',
+    landingV2HowSub: 'Boş sayfadan band seviyesi geri bildirime — girişi yeniden okuman kadar sürede.',
+    landingV2HowStep1Title: 'Kompozisyonunu gönder',
+    landingV2HowStep1Body: 'Yapıştır veya yaz. Task 1, Task 2 veya General Training. Kelime sayısı oyunu yok — sadece yazın.',
+    landingV2HowStep2Title: '4 kriter geri bildirim al',
+    landingV2HowStep2Body: 'Satır içi yorumlar ve band tahmini — Vietnamca, Türkçe, Çince veya seçtiğin dile çevrilmiş olarak.',
+    landingV2HowStep3Title: "Liz'in rehberliğiyle pratik yap",
+    landingV2HowStep3Body: 'Haftalık odak alanları, hedeflenmiş alıştırmalar ve talep üzerine yeniden yazımlar. Yazı koçun, her zaman hazır.',
+    landingV2HowLizTag: 'Liz ile tanış, AI rehberin',
+
+    // Final CTA
+    landingV2FinalTitleA: 'IELTS band puanın',
+    landingV2FinalTitleEm: '0,5–1,0 puan düşük',
+    landingV2FinalTitleB: 'olabileceğinden. Bunu düzeltelim.',
+    landingV2FinalSub: 'Band 5, 6.5 ve 8 seviyelerinde değerlendirilmiş üç gerçek öğrenci kompozisyonunu gör — her yorum, her yeniden yazım, öğrencilerin gerçekten aldığı şey.',
+    landingV2FinalCta: 'Örnek değerlendirmeyi gör',
+
+    // Pricing teaser
+    landingV2PriceStartsAt: 'Başlangıç',
+    landingV2PriceTrailing: '/hafta.',
+    landingV2PriceSub: 'Sınırsız değerlendirme, deneme sınavları ve Liz koçluğu. İstediğin zaman iptal et.',
+    landingV2PriceCompare: 'Önde gelen AI IELTS platformlarının yarısından az fiyatla',
+    landingV2PriceCta: 'Tüm planları gör',
+
+    // Pricing nav (shared with /pricing)
+    pricingV2NavSamples: 'Örnekler',
+    pricingV2NavPricing: 'Fiyatlar',
+    pricingV2NavBlog: 'Öğretmen Blogu',
+    pricingV2NavAbout: 'Hakkında',
+    pricingV2NavLogin: 'Giriş yap',
+    pricingV2NavStart: 'Ücretsiz başla',
   },
 };
 

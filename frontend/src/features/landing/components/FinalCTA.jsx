@@ -1,17 +1,20 @@
 import React from 'react';
+import { useI18n } from '../../../lib/i18n';
 import ArrowRightIcon from './ArrowRightIcon';
 
 export default function FinalCTA() {
+  const { t } = useI18n();
+
   return (
     <section className="final">
       <div className="container final-inner">
         <h2>
-          Your IELTS band is <span className="em">0.5–1.0 lower</span> than it could be.
-          Let's fix that.
+          {t('landingV2FinalTitleA')} <span className="em">{t('landingV2FinalTitleEm')}</span>{' '}
+          {t('landingV2FinalTitleB')}
         </h2>
-        <p>See three real student essays evaluated at band 5, 6.5, and 8 — every comment, every rewrite, exactly what students receive.</p>
+        <p>{t('landingV2FinalSub')}</p>
         <a href="/samples/writing/band-6-5-task2" className="btn btn-primary btn-xl">
-          See a sample evaluation
+          {t('landingV2FinalCta')}
           <ArrowRightIcon size={16} />
         </a>
       </div>

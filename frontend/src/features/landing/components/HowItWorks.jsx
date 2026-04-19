@@ -1,14 +1,17 @@
 import React from 'react';
+import { useI18n } from '../../../lib/i18n';
 
 export default function HowItWorks() {
+  const { t } = useI18n();
+
   return (
     <section>
       <div className="container">
         <div className="section-head">
-          <div className="section-eyebrow">How it works</div>
-          <h2 className="section-title">Three steps. Twelve seconds.</h2>
+          <div className="section-eyebrow">{t('landingV2HowEyebrow')}</div>
+          <h2 className="section-title">{t('landingV2HowTitle')}</h2>
           <p className="section-sub">
-            From blank page to band-level feedback — in less time than it takes to re-read your intro.
+            {t('landingV2HowSub')}
           </p>
         </div>
         <div className="how-grid">
@@ -20,8 +23,8 @@ export default function HowItWorks() {
                 <path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3" />
               </svg>
             </div>
-            <h4>Submit your essay</h4>
-            <p>Paste or type. Task 1, Task 2, or General Training. No word-count games — just your writing.</p>
+            <h4>{t('landingV2HowStep1Title')}</h4>
+            <p>{t('landingV2HowStep1Body')}</p>
           </div>
           <div className="step">
             <span className="num">02</span>
@@ -31,8 +34,8 @@ export default function HowItWorks() {
                 <path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20" />
               </svg>
             </div>
-            <h4>Get 4-criterion feedback</h4>
-            <p>Inline comments and a band estimate — translated into Vietnamese, Turkish, Chinese, or your language of choice.</p>
+            <h4>{t('landingV2HowStep2Title')}</h4>
+            <p>{t('landingV2HowStep2Body')}</p>
           </div>
           <div className="step liz-step">
             <span className="num">03</span>
@@ -41,9 +44,9 @@ export default function HowItWorks() {
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
               </svg>
             </div>
-            <h4>Practice with Liz's guidance</h4>
-            <p>Weekly focus areas, targeted drills, and rewrites on demand. Your writing coach, always on.</p>
-            <div className="liz-tag"><span className="liz-avatar">L</span>Meet Liz, your AI guide</div>
+            <h4>{t('landingV2HowStep3Title')}</h4>
+            <p>{t('landingV2HowStep3Body')}</p>
+            <div className="liz-tag"><span className="liz-avatar">L</span>{t('landingV2HowLizTag')}</div>
           </div>
         </div>
       </div>
