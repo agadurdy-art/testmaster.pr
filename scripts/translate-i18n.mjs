@@ -1,0 +1,288 @@
+#!/usr/bin/env node
+/**
+ * Auto-translate the i18n dictionary in frontend/src/lib/i18n.js.
+ *
+ * What it does:
+ *   1. Parses the EN dictionary block out of i18n.js (source of truth).
+ *   2. For each target language with an empty `xx: {}` placeholder, asks Claude
+ *      Sonnet to translate all keys.
+ *   3. Writes the result back into i18n.js in place of the placeholder.
+ *
+ * Usage:
+ *     export ANTHROPIC_API_KEY=sk-ant-...
+ *     node scripts/translate-i18n.mjs
+ *
+ *   Optional:
+ *     LANGS=ar,ko,th node scripts/translate-i18n.mjs   # only these
+ *     DRY=1 node scripts/translate-i18n.mjs            # don't write file
+ *     MODEL=claude-sonnet-4-6 node scripts/translate-i18n.mjs
+ *
+ * Notes:
+ *   - Safe to re-run — skips languages whose block is non-empty unless FORCE=1.
+ *   - IELTS terms (band descriptors, "Task Response", "Coherence & Cohesion",
+ *     "Lexical Resource", "Grammatical Range & Accuracy", "Task 1"/"Task 2",
+ *     "Band 6.5") stay in English, per Liz pedagogy. Product name "IELTS Ace"
+ *     and "Liz" stay unchanged.
+ */
+
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const I18N_PATH = path.resolve(__dirname, '..', 'frontend', 'src', 'lib', 'i18n.js');
+const MODEL = process.env.MODEL || 'claude-sonnet-4-6';
+const BATCH_SIZE = 80;
+const API_KEY = process.env.ANTHROPIC_API_KEY;
+const DRY = process.env.DRY === '1';
+const FORCE = process.env.FORCE === '1';
+
+// code -> human-readable name for the prompt
+const LANG_NAMES = {
+  mandarin: 'Mandarin Chinese (Simplified, 简体中文)',
+  ar: 'Arabic (Modern Standard Arabic, العربية)',
+  ko: 'Korean (한국어)',
+  th: 'Thai (ภาษาไทย)',
+  ja: 'Japanese (日本語)',
+  es: 'Spanish (neutral Latin American, Español)',
+  pt: 'Portuguese (Brazilian, Português do Brasil)',
+  ru: 'Russian (Русский)',
+  id: 'Indonesian (Bahasa Indonesia)',
+};
+
+if (!API_KEY && !DRY) {
+  console.error('ANTHROPIC_API_KEY is required (or set DRY=1 to preview).');
+  process.exit(1);
+}
+
+// ---------------------------------------------------------------------------
+// 1. Parse i18n.js — extract EN dict + locate placeholder blocks
+// ---------------------------------------------------------------------------
+
+const source = await fs.readFile(I18N_PATH, 'utf8');
+
+function extractBlock(langKey) {
+  // Matches:  <langKey>: {   ...balanced braces...   },
+  // Non-greedy; relies on the file keeping one key per line inside the block.
+  const marker = `  ${langKey}: {`;
+  const start = source.indexOf(marker);
+  if (start === -1) throw new Error(`Block not found: ${langKey}`);
+  let depth = 0;
+  let i = source.indexOf('{', start);
+  const braceStart = i;
+  for (; i < source.length; i++) {
+    const c = source[i];
+    if (c === '{') depth++;
+    else if (c === '}') {
+      depth--;
+      if (depth === 0) {
+        const braceEnd = i;
+        return { start: braceStart, end: braceEnd + 1, body: source.slice(braceStart + 1, braceEnd) };
+      }
+    }
+  }
+  throw new Error(`Unbalanced braces for ${langKey}`);
+}
+
+function parseDictBody(body) {
+  // Accepts: `    keyName: 'string value',`  OR `    keyName: "string",`
+  // Handles escaped quotes inside the string. Comment lines (`    //`) ignored.
+  const entries = [];
+  const lines = body.split('\n');
+  let buffer = '';
+  for (const raw of lines) {
+    const line = buffer ? buffer + '\n' + raw : raw;
+    // skip blank / comment / section divider
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('//')) { buffer = ''; continue; }
+    // try a simple single-line key: 'value', pattern
+    const m = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*):\s*(['"])((?:\\.|(?!\2).)*)\2,?\s*$/);
+    if (m) {
+      const [, key, , value] = m;
+      entries.push([key, unescapeJs(value)]);
+      buffer = '';
+      continue;
+    }
+    // keep accumulating for multi-line strings (rare)
+    buffer = line;
+  }
+  return entries;
+}
+
+function unescapeJs(s) {
+  return s
+    .replace(/\\n/g, '\n')
+    .replace(/\\t/g, '\t')
+    .replace(/\\'/g, "'")
+    .replace(/\\"/g, '"')
+    .replace(/\\\\/g, '\\');
+}
+
+function escapeJsSingle(s) {
+  // Use single-quoted JS string: escape backslash + single quote only.
+  return s.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+}
+
+function formatDictBlock(langKey, entries) {
+  const lines = [`  ${langKey}: {`];
+  for (const [key, value] of entries) {
+    lines.push(`    ${key}: '${escapeJsSingle(value)}',`);
+  }
+  lines.push('  },');
+  return lines.join('\n');
+}
+
+const enBlock = extractBlock('en');
+const enEntries = parseDictBody(enBlock.body);
+console.log(`Parsed ${enEntries.length} EN keys.`);
+
+// ---------------------------------------------------------------------------
+// 2. Determine target languages to fill
+// ---------------------------------------------------------------------------
+
+const envLangs = (process.env.LANGS || '').split(',').map(s => s.trim()).filter(Boolean);
+const candidates = envLangs.length ? envLangs : Object.keys(LANG_NAMES);
+
+const targets = [];
+for (const lang of candidates) {
+  if (!LANG_NAMES[lang]) {
+    console.warn(`Skip unknown language: ${lang}`);
+    continue;
+  }
+  const block = extractBlock(lang);
+  const existing = parseDictBody(block.body);
+  if (existing.length > 0 && !FORCE) {
+    console.log(`Skip ${lang} (already has ${existing.length} keys; set FORCE=1 to overwrite).`);
+    continue;
+  }
+  targets.push({ lang, block });
+}
+
+if (!targets.length) {
+  console.log('Nothing to translate.');
+  process.exit(0);
+}
+
+// ---------------------------------------------------------------------------
+// 3. Call Claude Sonnet per language, batched
+// ---------------------------------------------------------------------------
+
+async function translateBatch(lang, batch) {
+  const langName = LANG_NAMES[lang];
+  const systemPrompt = [
+    'You are a professional IELTS-domain localizer.',
+    `Translate the following UI strings from English into ${langName}.`,
+    '',
+    'HARD RULES:',
+    '1. Keep the product name "IELTS Ace" and the coach name "Liz" unchanged.',
+    '2. Keep IELTS terminology in English: band descriptors, Task 1, Task 2, ' +
+      'Task Response, Task Achievement, Coherence & Cohesion, Lexical Resource, ' +
+      'Grammatical Range & Accuracy, Speaking Parts 1/2/3, CEFR labels (A2/B1/B2/C1).',
+    '3. Numbers, punctuation, and emoji stay as-is.',
+    '4. Preserve placeholders like {name}, {{count}}, {0}, %s, and HTML tags.',
+    '5. Do NOT add or remove keys. Output the SAME keys you receive.',
+    '6. Respond with ONLY a valid JSON object: {"key": "translation", ...}.',
+    '   No markdown fences, no commentary.',
+  ].join('\n');
+
+  const userPayload = Object.fromEntries(batch);
+
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      'x-api-key': API_KEY,
+      'anthropic-version': '2023-06-01',
+    },
+    body: JSON.stringify({
+      model: MODEL,
+      max_tokens: 8192,
+      system: systemPrompt,
+      messages: [
+        { role: 'user', content: JSON.stringify(userPayload) },
+      ],
+    }),
+  });
+
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`Anthropic API ${res.status}: ${errText}`);
+  }
+
+  const data = await res.json();
+  const text = data?.content?.[0]?.text?.trim() ?? '';
+  // Strip optional code fences defensively.
+  const cleaned = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '');
+  let parsed;
+  try {
+    parsed = JSON.parse(cleaned);
+  } catch (e) {
+    console.error('Raw response:', text.slice(0, 500));
+    throw new Error(`JSON parse failed for ${lang}: ${e.message}`);
+  }
+  const out = [];
+  for (const [key] of batch) {
+    if (typeof parsed[key] !== 'string') {
+      throw new Error(`Missing key in ${lang} response: ${key}`);
+    }
+    out.push([key, parsed[key]]);
+  }
+  return out;
+}
+
+async function translateAll(lang) {
+  const batches = [];
+  for (let i = 0; i < enEntries.length; i += BATCH_SIZE) {
+    batches.push(enEntries.slice(i, i + BATCH_SIZE));
+  }
+  console.log(`[${lang}] ${enEntries.length} keys in ${batches.length} batches…`);
+  const all = [];
+  for (let b = 0; b < batches.length; b++) {
+    process.stdout.write(`  batch ${b + 1}/${batches.length} `);
+    const start = Date.now();
+    const part = await translateBatch(lang, batches[b]);
+    all.push(...part);
+    console.log(`(${Math.round((Date.now() - start) / 1000)}s)`);
+  }
+  return all;
+}
+
+// ---------------------------------------------------------------------------
+// 4. Rewrite file — replace placeholder blocks with generated dicts
+// ---------------------------------------------------------------------------
+
+let mutated = source;
+for (const { lang } of targets) {
+  if (DRY) {
+    console.log(`\n[DRY] would translate ${lang} (${enEntries.length} keys).`);
+    continue;
+  }
+  const entries = await translateAll(lang);
+  // Re-locate block after each replacement since offsets shift.
+  const block = (function () {
+    // Re-run extract on the mutated string
+    const marker = `  ${lang}: {`;
+    const start = mutated.indexOf(marker);
+    let depth = 0;
+    let i = mutated.indexOf('{', start);
+    const braceStart = i;
+    for (; i < mutated.length; i++) {
+      if (mutated[i] === '{') depth++;
+      else if (mutated[i] === '}') {
+        depth--;
+        if (depth === 0) return { start: start, end: i + 1 };
+      }
+    }
+    throw new Error(`Unbalanced braces (re-locate) for ${lang}`);
+  })();
+  const replacement = formatDictBlock(lang, entries);
+  mutated = mutated.slice(0, block.start) + replacement + mutated.slice(block.end);
+  console.log(`[${lang}] ✓ ${entries.length} keys written.`);
+}
+
+if (!DRY) {
+  await fs.writeFile(I18N_PATH, mutated, 'utf8');
+  console.log(`\nWrote ${I18N_PATH}`);
+} else {
+  console.log('\nDRY run — no file changes.');
+}

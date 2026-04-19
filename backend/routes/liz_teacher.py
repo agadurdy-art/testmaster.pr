@@ -28,7 +28,9 @@ logger = logging.getLogger(__name__)
 LIZ_ALLOWED_HOMEWORK_TYPES = {"vocabulary", "writing", "grammar", "speaking"}
 LIZ_HISTORY_TURNS = 6
 LIZ_CONTEXT_MESSAGE_CHARS = 240
-LIZ_SUPPORTED_FEEDBACK_LANGUAGES = {"en", "tr", "vi", "zh"}
+LIZ_SUPPORTED_FEEDBACK_LANGUAGES = {
+    "en", "tr", "vi", "zh", "ar", "ko", "th", "ja", "es", "pt", "ru", "id",
+}
 NAVIGATE_PATTERN = re.compile(r"\[NAVIGATE:\s*(?P<path>[^|\]]+?)\s*\|\s*(?P<label>[^\]]+?)\s*\]")
 
 LIZ_SYSTEM_PROMPT = """You are Liz, a professional IELTS teacher and personal study coach on the "IELTS Ace" platform.
@@ -168,7 +170,7 @@ class ChatRequest(BaseModel):
     user_id: str
     is_voice: bool = False
     audio_data: Optional[str] = None
-    feedback_language: Optional[str] = None  # "en" | "tr" | "vi" | "zh"
+    feedback_language: Optional[str] = None  # ISO 639-1; see LIZ_SUPPORTED_FEEDBACK_LANGUAGES
 
 
 class NewSessionRequest(BaseModel):
@@ -227,7 +229,19 @@ def _language_directive(lang: Optional[str]) -> str:
     """
     if not lang or lang == "en":
         return ""
-    names = {"tr": "Turkish", "vi": "Vietnamese", "zh": "Mandarin Chinese"}
+    names = {
+        "tr": "Turkish",
+        "vi": "Vietnamese",
+        "zh": "Mandarin Chinese",
+        "ar": "Arabic",
+        "ko": "Korean",
+        "th": "Thai",
+        "ja": "Japanese",
+        "es": "Spanish",
+        "pt": "Portuguese",
+        "ru": "Russian",
+        "id": "Indonesian",
+    }
     name = names.get(lang)
     if not name:
         return ""

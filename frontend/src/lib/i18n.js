@@ -1,4 +1,6 @@
-// Simple trilingual (EN/VI/TR) i18n helper for the app
+// Multilingual i18n helper for the app.
+// EN/VI/TR have full dictionaries; other languages fall back to EN for any
+// missing key and are populated via scripts/translate-i18n.mjs (Sonnet auto-translate).
 import React from 'react';
 
 
@@ -6,7 +8,35 @@ export const LANGUAGES = {
   en: 'English',
   vi: 'Tiếng Việt',
   tr: 'Türkçe',
+  mandarin: '中文 (Mandarin)',
+  ar: 'العربية',
+  ko: '한국어',
+  th: 'ภาษาไทย',
+  ja: '日本語',
+  es: 'Español',
+  pt: 'Português',
+  ru: 'Русский',
+  id: 'Bahasa Indonesia',
 };
+
+// Backend uses ISO 639-1 codes. We display "Mandarin" but keep the wire code "zh"
+// so backend contracts (liz_teacher, evaluators, auth) stay unchanged.
+export const LANGUAGE_WIRE_CODE = {
+  en: 'en',
+  vi: 'vi',
+  tr: 'tr',
+  mandarin: 'zh',
+  ar: 'ar',
+  ko: 'ko',
+  th: 'th',
+  ja: 'ja',
+  es: 'es',
+  pt: 'pt',
+  ru: 'ru',
+  id: 'id',
+};
+
+export const SUPPORTED_LANGUAGE_CODES = Object.keys(LANGUAGES);
 
 // Translation keys used across the app. Keep keys stable.
 export const translations = {
@@ -471,7 +501,7 @@ export const translations = {
     landingV2HowStep1Title: 'Submit your essay',
     landingV2HowStep1Body: 'Paste or type. Task 1, Task 2, or General Training. No word-count games — just your writing.',
     landingV2HowStep2Title: 'Get 4-criterion feedback',
-    landingV2HowStep2Body: 'Inline comments and a band estimate — translated into Vietnamese, Turkish, Chinese, or your language of choice.',
+    landingV2HowStep2Body: 'Inline comments and a band estimate — translated into Vietnamese, Turkish, Mandarin, Arabic, Korean, Thai, Japanese, Spanish, Portuguese, Russian, Indonesian, or English.',
     landingV2HowStep3Title: "Practice with Liz's guidance",
     landingV2HowStep3Body: 'Weekly focus areas, targeted drills, and rewrites on demand. Your writing coach, always on.',
     landingV2HowLizTag: 'Meet Liz, your AI guide',
@@ -952,7 +982,7 @@ export const translations = {
     landingV2HowStep1Title: 'Gửi bài luận',
     landingV2HowStep1Body: 'Dán hoặc gõ. Task 1, Task 2, hoặc General Training. Không tính toán số từ — chỉ bài viết của bạn.',
     landingV2HowStep2Title: 'Nhận phản hồi 4 tiêu chí',
-    landingV2HowStep2Body: 'Nhận xét trực tiếp và ước tính band — dịch sang tiếng Việt, Thổ Nhĩ Kỳ, Trung Quốc, hoặc ngôn ngữ bạn chọn.',
+    landingV2HowStep2Body: 'Nhận xét trực tiếp và ước tính band — dịch sang tiếng Việt, Thổ Nhĩ Kỳ, Quan Thoại, Ả Rập, Hàn, Thái, Nhật, Tây Ban Nha, Bồ Đào Nha, Nga, Indonesia hoặc tiếng Anh.',
     landingV2HowStep3Title: 'Luyện tập với Liz',
     landingV2HowStep3Body: 'Trọng tâm hàng tuần, bài tập nhắm mục tiêu, và viết lại theo yêu cầu. Huấn luyện viên viết luận của bạn, luôn sẵn sàng.',
     landingV2HowLizTag: 'Gặp Liz, trợ lý AI của bạn',
@@ -1396,7 +1426,7 @@ export const translations = {
     landingV2HowStep1Title: 'Kompozisyonunu gönder',
     landingV2HowStep1Body: 'Yapıştır veya yaz. Task 1, Task 2 veya General Training. Kelime sayısı oyunu yok — sadece yazın.',
     landingV2HowStep2Title: '4 kriter geri bildirim al',
-    landingV2HowStep2Body: 'Satır içi yorumlar ve band tahmini — Vietnamca, Türkçe, Çince veya seçtiğin dile çevrilmiş olarak.',
+    landingV2HowStep2Body: 'Satır içi yorumlar ve band tahmini — Vietnamca, Türkçe, Mandarin, Arapça, Korece, Tayca, Japonca, İspanyolca, Portekizce, Rusça, Endonezce veya İngilizce olarak çevrilir.',
     landingV2HowStep3Title: "Liz'in rehberliğiyle pratik yap",
     landingV2HowStep3Body: 'Haftalık odak alanları, hedeflenmiş alıştırmalar ve talep üzerine yeniden yazımlar. Yazı koçun, her zaman hazır.',
     landingV2HowLizTag: 'Liz ile tanış, AI rehberin',
@@ -1423,6 +1453,19 @@ export const translations = {
     pricingV2NavLogin: 'Giriş yap',
     pricingV2NavStart: 'Ücretsiz başla',
   },
+  // ------------------------------------------------------------
+  // The dictionaries below are populated by scripts/translate-i18n.mjs
+  // (Sonnet auto-translate). Empty objects fall back to EN via t().
+  // ------------------------------------------------------------
+  mandarin: {},
+  ar: {},
+  ko: {},
+  th: {},
+  ja: {},
+  es: {},
+  pt: {},
+  ru: {},
+  id: {},
 };
 
 export const I18nContext = React.createContext({
@@ -1435,7 +1478,7 @@ export function I18nProvider({ children }) {
   const [language, setLanguage] = React.useState(() => {
     if (typeof window === 'undefined') return 'en';
     const stored = window.localStorage.getItem('ieltsace_language');
-    return ['en', 'vi', 'tr'].includes(stored) ? stored : 'en';
+    return SUPPORTED_LANGUAGE_CODES.includes(stored) ? stored : 'en';
   });
 
   const t = React.useCallback(
@@ -1447,13 +1490,18 @@ export function I18nProvider({ children }) {
   );
 
   const value = React.useMemo(
-    () => ({ language, setLanguage: (lng) => {
-      const next = ['en', 'vi', 'tr'].includes(lng) ? lng : 'en';
-      setLanguage(next);
-      if (typeof window !== 'undefined') {
-        window.localStorage.setItem('ieltsace_language', next);
-      }
-    }, t }),
+    () => ({
+      language,
+      languageWireCode: LANGUAGE_WIRE_CODE[language] || 'en',
+      setLanguage: (lng) => {
+        const next = SUPPORTED_LANGUAGE_CODES.includes(lng) ? lng : 'en';
+        setLanguage(next);
+        if (typeof window !== 'undefined') {
+          window.localStorage.setItem('ieltsace_language', next);
+        }
+      },
+      t,
+    }),
     [language, t]
   );
 

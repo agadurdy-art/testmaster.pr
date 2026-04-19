@@ -79,10 +79,11 @@ export const DEFAULT_SAMPLE_FAQ = [
         Your essay is always graded in English (as the real test demands), but
         every explanation from Liz can be delivered in{" "}
         <span className="font-medium text-slate-900">
-          Vietnamese, Thai, Indonesian, Mandarin, Arabic, Spanish, Portuguese
+          English, Vietnamese, Turkish, Mandarin, Arabic, Korean, Thai,
+          Japanese, Spanish, Portuguese, Russian, and Indonesian
         </span>
-        , and twelve more. Students consistently say reading feedback in their
-        first language is what finally makes a grammar rule stick.
+        . Students consistently say reading feedback in their first language is
+        what finally makes a grammar rule stick.
       </>
     ),
   },
