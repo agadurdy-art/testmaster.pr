@@ -9,6 +9,7 @@ import {
   CheckCircle2, Clock, X, Star, FileText
 } from 'lucide-react';
 import { canAccessLiz } from '../lib/lizAccess';
+import { parseLizSegments } from '../lib/lizNavigateParser';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const LIZ_AVATAR = 'https://static.prod-images.emergentagent.com/jobs/799d7d0f-0425-4acb-aa13-54128002d580/images/baeb03c8118b149f97024b78f7f053e092a9d4c22d6c09656fd3a17aacf6359b.png';
@@ -95,8 +96,34 @@ function SpeechDisplay({ text, status }) {
         ? 'bg-white/90 border border-teal-200 shadow-md text-slate-800'
         : 'bg-white/60 border border-slate-200 text-slate-700'
     }`} data-testid="liz-speech">
-      {text}
+      <LizContent text={text} />
     </div>
+  );
+}
+
+// Render Liz's message with any [NAVIGATE: /path | Label] directives turned
+// into clickable buttons. Plain text segments keep whitespace-pre-wrap.
+function LizContent({ text }) {
+  const navigate = useNavigate();
+  const segments = parseLizSegments(text);
+  return (
+    <>
+      {segments.map((seg, i) => {
+        if (seg.type === 'nav') {
+          return (
+            <button
+              key={i}
+              type="button"
+              onClick={() => navigate(seg.path)}
+              className="inline-flex items-center gap-1 mx-1 px-2.5 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-700 text-xs font-semibold hover:bg-teal-100 transition-colors"
+            >
+              {seg.label} →
+            </button>
+          );
+        }
+        return <span key={i}>{seg.value}</span>;
+      })}
+    </>
   );
 }
 
@@ -387,7 +414,7 @@ export default function LizTeacher({ user }) {
       const res = await fetch(`${API_URL}/api/liz/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id: user.id, message: trimmed, session_id: sessionId, is_voice: isVoice, audio_data: audioData })
+        body: JSON.stringify({ user_id: user.id, message: trimmed, session_id: sessionId, is_voice: isVoice, audio_data: audioData, feedback_language: user.feedback_language || undefined })
       });
       const data = await res.json();
       if (res.ok && data.success) {

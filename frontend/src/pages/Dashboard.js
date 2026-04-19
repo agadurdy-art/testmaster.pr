@@ -17,9 +17,77 @@ import VerificationBanner, { LockedContentModal, canAccessFeature } from '../com
 import ThemeToggle from '../components/ThemeToggle';
 import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
 import FeedbackModal from '../components/FeedbackModal';
+import UsageMeter from '../components/UsageMeter';
+import SubscriptionCard from '../components/SubscriptionCard';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const SUPPORT_EMAIL = 'support@testmaster.pro';
+
+// Days between today (UTC) and an ISO YYYY-MM-DD exam date. Returns null when
+// the date is missing / unparseable; negative numbers mean the exam has passed.
+function daysUntilExam(isoDate) {
+  if (!isoDate) return null;
+  const exam = new Date(`${isoDate}T00:00:00Z`);
+  if (Number.isNaN(exam.getTime())) return null;
+  const today = new Date();
+  const todayUtc = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
+  return Math.round((exam.getTime() - todayUtc) / 86400000);
+}
+
+// Personalized welcome subtitle. Uses onboarding fields (target_band,
+// exam_date, learning_mode) when available and falls back to the generic
+// IELTS copy otherwise, so users who signed up before onboarding launched
+// still see something sensible.
+function buildWelcomeSubtitle(profile, getText) {
+  const mode = profile?.learning_mode;
+  const targetBand = profile?.target_band;
+  const days = daysUntilExam(profile?.exam_date);
+
+  // Mode-aware base line
+  const baseIelts = getText(
+    'Continue your IELTS preparation journey',
+    'Tiếp tục hành trình IELTS của bạn',
+    'IELTS hazırlık yolculuğunuza devam edin'
+  );
+  const baseGeneral = getText(
+    'Continue building your English, one session at a time',
+    'Tiếp tục cải thiện tiếng Anh của bạn',
+    'İngilizcenizi adım adım geliştirmeye devam edin'
+  );
+  const parts = [];
+
+  if (mode === 'general_english') {
+    parts.push(baseGeneral);
+  } else if (targetBand) {
+    parts.push(
+      getText(
+        `Targeting Band ${targetBand}`,
+        `Mục tiêu Band ${targetBand}`,
+        `Hedef Band ${targetBand}`
+      )
+    );
+  } else {
+    parts.push(baseIelts);
+  }
+
+  if (typeof days === 'number') {
+    if (days > 0) {
+      parts.push(
+        getText(
+          `${days} day${days === 1 ? '' : 's'} until your exam`,
+          `Còn ${days} ngày đến kỳ thi`,
+          `Sınavına ${days} gün kaldı`
+        )
+      );
+    } else if (days === 0) {
+      parts.push(
+        getText('Exam day — you\'ve got this.', 'Ngày thi — bạn làm được!', 'Sınav günü — başaracaksın!')
+      );
+    }
+  }
+
+  return parts.join(' · ');
+}
 
 export default function Dashboard({ user, onLogout }) {
   const navigate = useNavigate();
@@ -170,13 +238,19 @@ export default function Dashboard({ user, onLogout }) {
     { id: 'advanced', name: getText('Advanced Mastery', 'Khóa Nâng cao', 'İleri Düzey Ustalık'), band: 'Band 6.5-9.0', icon: '🏆', color: 'from-amber-500 to-orange-600', route: '/advanced-mastery', lessons: 20 }
   ];
 
-  const learningTools = [
-    { name: getText('Question Bank', 'Ngân hàng câu hỏi', 'Soru Bankası'), icon: LayoutDashboard, color: 'from-indigo-500 to-purple-600', route: '/question-bank', badge: 'NEW' },
+  const allLearningTools = [
+    { name: getText('Question Bank', 'Ngân hàng câu hỏi', 'Soru Bankası'), icon: LayoutDashboard, color: 'from-indigo-500 to-purple-600', route: '/question-bank', badge: 'NEW', ieltsOnly: true },
     { name: getText('Vocab & Grammar', 'Từ vựng & Ngữ pháp', 'Kelime & Dilbilgisi'), icon: BookMarked, color: 'from-emerald-500 to-teal-600', route: '/vocab-grammar' },
     { name: getText('Writing Practice', 'Luyện viết', 'Yazma Pratiği'), icon: FileText, color: 'from-orange-500 to-amber-600', route: '/writing-practice' },
     { name: getText('Speaking Practice', 'Luyện nói', 'Konuşma Pratiği'), icon: MessageSquare, color: 'from-violet-500 to-purple-600', route: '/speaking-practice', requiredPlan: 'Speaking Practice' },
-    { name: getText('Tips & Strategies', 'Mẹo & Chiến lược', 'İpuçları & Stratejiler'), icon: Lightbulb, color: 'from-pink-500 to-rose-600', route: '/tips' }
+    { name: getText('Tips & Strategies', 'Mẹo & Chiến lược', 'İpuçları & Stratejiler'), icon: Lightbulb, color: 'from-pink-500 to-rose-600', route: '/tips', ieltsOnly: true }
   ];
+  // Filter IELTS-specific tools out for General English mode. Unknown / null
+  // mode (pre-onboarding users) sees the full set — safer default.
+  const learningMode = userDetails?.learning_mode || user?.learning_mode || null;
+  const learningTools = learningMode === 'general_english'
+    ? allLearningTools.filter((t) => !t.ieltsOnly)
+    : allLearningTools;
 
   const startTest = (testType) => { navigate(`/test/${testType}`); };
 
@@ -317,13 +391,17 @@ export default function Dashboard({ user, onLogout }) {
               <Button variant="ghost" className={`w-full justify-start ${textSecondary}`} onClick={() => { navigate('/progress'); setMobileMenuOpen(false); }}>
                 <BarChart3 className="w-4 h-4 mr-3" />{getText('Progress', 'Tiến độ', 'İlerleme')}
               </Button>
-              <hr className={`my-2 ${isDark ? 'border-gray-700' : isNightShift ? 'border-amber-200' : 'border-gray-200'}`} />
-              <p className={`text-xs ${textSecondary} px-3 py-1`}>{getText('Tests', 'Bài kiểm tra', 'Testler')}</p>
-              {testModules.map((m) => (
-                <Button key={m.type} variant="ghost" className={`w-full justify-start ${textSecondary}`} onClick={() => { startTest(m.type); setMobileMenuOpen(false); }}>
-                  <m.icon className="w-4 h-4 mr-3" />{m.title}
-                </Button>
-              ))}
+              {learningMode !== 'general_english' && (
+                <>
+                  <hr className={`my-2 ${isDark ? 'border-gray-700' : isNightShift ? 'border-amber-200' : 'border-gray-200'}`} />
+                  <p className={`text-xs ${textSecondary} px-3 py-1`}>{getText('Tests', 'Bài kiểm tra', 'Testler')}</p>
+                  {testModules.map((m) => (
+                    <Button key={m.type} variant="ghost" className={`w-full justify-start ${textSecondary}`} onClick={() => { startTest(m.type); setMobileMenuOpen(false); }}>
+                      <m.icon className="w-4 h-4 mr-3" />{m.title}
+                    </Button>
+                  ))}
+                </>
+              )}
               <hr className={`my-2 ${isDark ? 'border-gray-700' : isNightShift ? 'border-amber-200' : 'border-gray-200'}`} />
               <p className={`text-xs ${textSecondary} px-3 py-1`}>{getText('Courses', 'Khóa học', 'Kurslar')}</p>
               <Button variant="ghost" className={`w-full justify-start text-blue-600 font-semibold`} onClick={() => { navigate('/unified'); setMobileMenuOpen(false); }}>
@@ -363,21 +441,17 @@ export default function Dashboard({ user, onLogout }) {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 pb-24">
         
-        {/* Welcome + Continue Section */}
+        {/* Welcome + Continue Section — personalized from onboarding */}
         <div className="mb-6">
           <h1 className={`text-2xl sm:text-3xl font-bold ${textPrimary} mb-1`}>
             {getText(
-              `Welcome back, ${user.name?.split(' ')[0] || 'Student'}!`,
-              `Chào mừng trở lại, ${user.name?.split(' ')[0] || 'Học viên'}!`,
-              `Tekrar hoş geldin, ${user.name?.split(' ')[0] || 'Öğrenci'}!`
+              `Welcome back, ${userDetails?.name?.split(' ')[0] || user.name?.split(' ')[0] || 'Student'}!`,
+              `Chào mừng trở lại, ${userDetails?.name?.split(' ')[0] || user.name?.split(' ')[0] || 'Học viên'}!`,
+              `Tekrar hoş geldin, ${userDetails?.name?.split(' ')[0] || user.name?.split(' ')[0] || 'Öğrenci'}!`
             )} 👋
           </h1>
           <p className={`${textSecondary} text-sm`}>
-            {getText(
-              'Continue your IELTS preparation journey',
-              'Tiếp tục hành trình IELTS của bạn',
-              'IELTS hazırlık yolculuğunuza devam edin'
-            )}
+            {buildWelcomeSubtitle(userDetails || user, getText)}
           </p>
         </div>
 
@@ -399,6 +473,22 @@ export default function Dashboard({ user, onLogout }) {
           ))}
         </div>
 
+
+        <UsageMeter
+          userId={user?.id}
+          getText={getText}
+          textPrimary={textPrimary}
+          textSecondary={textSecondary}
+          bgCard={bgCard}
+        />
+
+        <SubscriptionCard
+          user={user}
+          getText={getText}
+          textPrimary={textPrimary}
+          textSecondary={textSecondary}
+          bgCard={bgCard}
+        />
 
         {/* Continue Learning Card - Prominent CTA */}
         {continueData && (
@@ -431,7 +521,11 @@ export default function Dashboard({ user, onLogout }) {
         )}
 
 
-        {/* ── Section 1: Practice & Test ── */}
+        {/* ── Section 1: Practice & Test ──
+            Hidden for General English users — "Practice & Test" here means
+            IELTS mock tests (60 min reading, 40 questions, etc.). GE users
+            don't need that surface. */}
+        {learningMode !== 'general_english' && (
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-4">
             <div className="w-1.5 h-5 bg-violet-500 rounded-full" />
@@ -459,34 +553,37 @@ export default function Dashboard({ user, onLogout }) {
                 </div>
               ))}
             </div>
-            <div className={`flex gap-3 mt-4 pt-4 border-t ${isDark ? "border-gray-700" : "border-gray-100"}`}>
-              <div
-                onClick={() => navigate('/question-bank')}
-                className={`flex-1 p-3 ${isDark ? "bg-gray-700/50 hover:bg-gray-700" : "bg-violet-50 hover:bg-violet-100"} rounded-xl cursor-pointer transition-all flex items-center gap-3 group`}
-              >
-                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <BookOpen className="w-4 h-4 text-white" />
+            {learningMode !== 'general_english' && (
+              <div className={`flex gap-3 mt-4 pt-4 border-t ${isDark ? "border-gray-700" : "border-gray-100"}`}>
+                <div
+                  onClick={() => navigate('/question-bank')}
+                  className={`flex-1 p-3 ${isDark ? "bg-gray-700/50 hover:bg-gray-700" : "bg-violet-50 hover:bg-violet-100"} rounded-xl cursor-pointer transition-all flex items-center gap-3 group`}
+                >
+                  <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <BookOpen className="w-4 h-4 text-white" />
+                  </div>
+                  <div>
+                    <p className={`font-semibold text-sm ${textPrimary}`}>{getText("Question Bank", "Ngân hàng câu hỏi", "Soru Bankası")}</p>
+                    <p className={`text-xs ${textSecondary}`}>{getText("1420+ questions", "1420+ câu hỏi", "1420+ soru")}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className={`font-semibold text-sm ${textPrimary}`}>{getText("Question Bank", "Ngân hàng câu hỏi", "Soru Bankası")}</p>
-                  <p className={`text-xs ${textSecondary}`}>{getText("1420+ questions", "1420+ câu hỏi", "1420+ soru")}</p>
+                <div
+                  onClick={() => navigate('/quick-practice')}
+                  className={`flex-1 p-3 ${isDark ? "bg-gray-700/50 hover:bg-gray-700" : "bg-purple-50 hover:bg-purple-100"} rounded-xl cursor-pointer transition-all flex items-center gap-3 group`}
+                >
+                  <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Zap className="w-4 h-4 text-white" />
+                  </div>
+                  <div>
+                    <p className={`font-semibold text-sm ${textPrimary}`}>{getText("Quick Practice", "Luyện nhanh", "Hızlı Pratik")}</p>
+                    <p className={`text-xs ${textSecondary}`}>{getText("Short practice sets", "Bài tập ngắn", "Kısa pratik setleri")}</p>
+                  </div>
                 </div>
               </div>
-              <div
-                onClick={() => navigate('/question-bank?tab=practice')}
-                className={`flex-1 p-3 ${isDark ? "bg-gray-700/50 hover:bg-gray-700" : "bg-purple-50 hover:bg-purple-100"} rounded-xl cursor-pointer transition-all flex items-center gap-3 group`}
-              >
-                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Zap className="w-4 h-4 text-white" />
-                </div>
-                <div>
-                  <p className={`font-semibold text-sm ${textPrimary}`}>{getText("Quick Practice", "Luyện nhanh", "Hızlı Pratik")}</p>
-                  <p className={`text-xs ${textSecondary}`}>{getText("Short practice sets", "Bài tập ngắn", "Kısa pratik setleri")}</p>
-                </div>
-              </div>
-            </div>
+            )}
           </Card>
         </div>
+        )}
 
         {/* ── Section 2: Learn & Grow ── */}
         <div className="mb-8">
@@ -510,11 +607,17 @@ export default function Dashboard({ user, onLogout }) {
                   {getText('Complete Learning Path', 'Lộ trình học tập hoàn chỉnh', 'Tam Öğrenme Yolu')}
                 </h2>
                 <p className="text-white/80 text-sm">
-                  {getText(
-                    'Pre-A1 → A1 → A2 → B1 → B2 → IELTS Mastery',
-                    'Pre-A1 → A1 → A2 → B1 → B2 → IELTS Mastery',
-                    'Pre-A1 → A1 → A2 → B1 → B2 → IELTS Ustalık'
-                  )}
+                  {learningMode === 'general_english'
+                    ? getText(
+                        'Pre-A1 → A1 → A2 → B1 → B2 → Advanced',
+                        'Pre-A1 → A1 → A2 → B1 → B2 → Nâng cao',
+                        'Pre-A1 → A1 → A2 → B1 → B2 → İleri Düzey'
+                      )
+                    : getText(
+                        'Pre-A1 → A1 → A2 → B1 → B2 → IELTS Mastery',
+                        'Pre-A1 → A1 → A2 → B1 → B2 → IELTS Mastery',
+                        'Pre-A1 → A1 → A2 → B1 → B2 → IELTS Ustalık'
+                      )}
                 </p>
               </div>
             </div>

@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Progress } from '../components/ui/progress';
-import { 
-  PenTool, ArrowLeft, Clock, CheckCircle, XCircle, Loader2, 
-  ChevronRight, BarChart2, BookOpen, FileText, Send, RotateCcw,
-  Target, AlertCircle, Lightbulb, Award
+import {
+  PenTool, ArrowLeft, Clock, CheckCircle, Loader2,
+  ChevronRight, BarChart2, BookOpen, FileText, Send,
+  Lightbulb
 } from 'lucide-react';
 import { toast } from 'sonner';
+import WritingEvaluatorResult from '../features/evaluator/components/WritingEvaluatorResult';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -77,47 +78,66 @@ export default function WritingPractice({ user }) {
     if (wordCount < 50) { toast.error('Please write at least 50 words.'); return; }
     setLoading(true); setTimerActive(false);
     try {
-      console.log('Submitting essay for evaluation...', { task_type: selectedTaskType, word_count: wordCount });
-      const response = await fetch(`${API_URL}/api/writing-practice/evaluate`, { 
-        method: 'POST', 
-        headers: { 'Content-Type': 'application/json' }, 
-        body: JSON.stringify({ 
-          task_type: selectedTaskType, 
-          prompt: selectedPrompt.prompt, 
-          essay, 
-          word_count: wordCount 
-        }) 
+      const userLanguage = (typeof user?.feedback_language === 'string' && user.feedback_language) || 'en';
+      const response = await fetch(`${API_URL}/api/writing-practice/evaluate/v2`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          task_type: selectedTaskType,
+          prompt: selectedPrompt.prompt,
+          essay,
+          user_language: userLanguage,
+        }),
       });
-      
-      console.log('Response status:', response.status);
-      
+
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Evaluation failed:', response.status, errorText);
-        throw new Error(`Evaluation failed: ${response.status}`);
+        let detail = `HTTP ${response.status}`;
+        try {
+          const body = await response.json();
+          detail = body?.detail?.message || body?.detail || detail;
+        } catch (_) {}
+        throw new Error(detail);
       }
-      
+
       const data = await response.json();
-      console.log('Evaluation result:', data);
-      
-      if (!data || typeof data.overall_band === 'undefined') {
-        console.error('Invalid response format:', data);
+      if (!data || typeof data.overall_band === 'undefined' || !data.criteria) {
         throw new Error('Invalid response format from server');
       }
-      
-      setFeedback(data); 
+
+      setFeedback(data);
       setView('feedback');
       toast.success('Essay evaluated!');
-    } catch (error) { 
+    } catch (error) {
       console.error('Essay submission error:', error);
-      toast.error(`Failed to evaluate essay: ${error.message || 'Unknown error'}`); 
+      toast.error(`Failed to evaluate essay: ${error.message || 'Unknown error'}`);
+    } finally {
+      setLoading(false);
     }
-    finally { setLoading(false); }
   };
 
   const resetPractice = () => { setView('tasks'); setSelectedTaskType(null); setSelectedPrompt(null); setEssay(''); setFeedback(null); setTimerActive(false); setTimeLeft(0); };
 
-  const getBandColor = (band) => band >= 7 ? 'bg-green-100 text-green-700' : band >= 6 ? 'bg-blue-100 text-blue-700' : band >= 5 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700';
+  // Build a 1-2 sentence Liz "take" from the v2 evaluation — the biggest
+  // weakness tends to be the most actionable thing to say out loud.
+  const buildLizMessage = (result) => {
+    if (!result?.criteria) return null;
+    const order = [
+      ['task_achievement', 'task achievement'],
+      ['coherence_cohesion', 'coherence and cohesion'],
+      ['lexical_resource', 'lexical resource'],
+      ['grammatical_range_accuracy', 'grammar'],
+    ];
+    let weakest = null;
+    for (const [key, label] of order) {
+      const c = result.criteria[key];
+      if (!c) continue;
+      if (!weakest || c.band < weakest.band) weakest = { ...c, label };
+    }
+    if (!weakest) return null;
+    const firstWeak = weakest.weaknesses?.[0];
+    const headline = `Overall ${result.overall_band} — your weakest area is ${weakest.label} (${weakest.band}).`;
+    return firstWeak ? `${headline} ${firstWeak}` : headline;
+  };
 
   // Task Selection View
   if (view === 'tasks') return (
@@ -241,210 +261,30 @@ export default function WritingPractice({ user }) {
     );
   }
 
-  // Feedback View - Enhanced Teacher-Style Feedback
+  // Feedback View — V4 Teacher's Margin UI, wired to the v2 evaluator
   if (view === 'feedback' && feedback) {
-    const validityCheck = feedback.validity_check;
-    const hasValidityIssues = validityCheck && (!validityCheck.is_valid || validityCheck.band_cap_applied);
-    
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 py-8 px-4 pb-32">
-        <div className="max-w-4xl mx-auto">
-          <Button variant="ghost" onClick={resetPractice} className="mb-4 text-gray-600"><ArrowLeft className="w-4 h-4 mr-2" /> Back</Button>
-          
-          {/* Validity Warning (if applicable) */}
-          {hasValidityIssues && (
-            <Card className="p-5 mb-6 bg-red-50 border-red-200 rounded-2xl">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <XCircle className="w-5 h-5 text-red-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-red-800 mb-1">Task Validity Issues</h3>
-                  <p className="text-sm text-red-700 mb-2">{validityCheck.cap_reason || 'Your response has validity issues that affect your score.'}</p>
-                  {validityCheck.validity_issues?.length > 0 && (
-                    <ul className="space-y-1">
-                      {validityCheck.validity_issues.map((issue, i) => (
-                        <li key={i} className="text-sm text-red-600 flex items-start gap-2">
-                          <span>•</span>{issue}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  {validityCheck.band_cap_applied && (
-                    <p className="mt-2 text-sm font-medium text-red-800">
-                      ⚠️ Band capped at {validityCheck.band_cap_applied} due to validity issues
-                    </p>
-                  )}
-                </div>
-              </div>
-            </Card>
-          )}
-          
-          {/* Band Score Card */}
-          <Card className="p-6 mb-6 text-center bg-gradient-to-br from-violet-50 to-purple-50 border-0 shadow-lg rounded-2xl">
-            <div className="w-16 h-16 bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-              <Award className="w-8 h-8 text-white" />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Estimated Band Score</h2>
-            <div className={`inline-block px-6 py-3 rounded-full text-4xl font-bold ${getBandColor(feedback.overall_band)}`}>
-              {feedback.overall_band}
-            </div>
-            {feedback.band_confidence && (
-              <p className="text-sm text-gray-500 mt-2">
-                Confidence: <span className={`font-medium ${feedback.band_confidence === 'high' ? 'text-green-600' : feedback.band_confidence === 'medium' ? 'text-yellow-600' : 'text-gray-600'}`}>{feedback.band_confidence}</span>
-              </p>
-            )}
-            <p className="text-gray-500 mt-1">Word count: {wordCount}</p>
-          </Card>
-          
-          {/* Teacher's Summary */}
-          {feedback.teacher_summary && (
-            <Card className="p-5 mb-6 bg-blue-50 border-blue-200 rounded-2xl">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <BookOpen className="w-5 h-5 text-blue-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-blue-800 mb-1">Teacher's Feedback</h3>
-                  <p className="text-gray-700">{feedback.teacher_summary}</p>
-                </div>
-              </div>
-            </Card>
-          )}
-          
-          {/* Detailed Scores */}
-          <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Detailed Scores</h3>
-            <div className="grid md:grid-cols-2 gap-4">
-              {[
-                { key: 'task_achievement', label: 'Task Achievement' },
-                { key: 'coherence_cohesion', label: 'Coherence & Cohesion' },
-                { key: 'lexical_resource', label: 'Lexical Resource' },
-                { key: 'grammar', label: 'Grammar' }
-              ].map((c) => (
-                <div key={c.key} className="p-4 bg-gray-50 rounded-xl flex items-center justify-between">
-                  <span className="font-medium text-gray-900">{c.label}</span>
-                  <span className={`px-3 py-1 rounded-lg text-sm font-bold ${getBandColor(feedback.scores?.[c.key] || feedback.overall_band)}`}>
-                    {feedback.scores?.[c.key] || feedback.overall_band}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </Card>
-          
-          {/* Key Problems (Prioritized) */}
-          {feedback.key_problems?.length > 0 && (
-            <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <Target className="w-5 h-5 text-red-500" /> Key Issues to Address
-              </h3>
-              <div className="space-y-3">
-                {feedback.key_problems.map((problem, i) => (
-                  <div key={i} className="p-4 bg-gray-50 rounded-xl border-l-4 border-red-400">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs font-medium px-2 py-0.5 bg-red-100 text-red-700 rounded">Priority {problem.priority}</span>
-                      <span className="text-xs font-medium px-2 py-0.5 bg-gray-200 text-gray-700 rounded capitalize">{problem.category?.replace('_', ' ')}</span>
-                    </div>
-                    <p className="font-medium text-gray-900">{problem.issue}</p>
-                    {problem.impact && <p className="text-sm text-gray-500 mt-1">Impact: {problem.impact}</p>}
-                  </div>
-                ))}
-              </div>
-            </Card>
-          )}
-          
-          {/* Strengths & Improvements */}
-          <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
-            <div className="mb-6">
-              <h4 className="font-medium text-green-700 mb-3 flex items-center gap-2">
-                <CheckCircle className="w-5 h-5" /> What You Did Well
-              </h4>
-              <ul className="space-y-2">
-                {(feedback.strengths || []).map((s, i) => (
-                  <li key={i} className="text-sm text-gray-700 flex items-start gap-2 p-2 bg-green-50 rounded-lg">
-                    <span className="text-green-500 mt-0.5">✓</span>
-                    <span>{s}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            {/* Next Steps */}
-            {feedback.next_steps?.length > 0 && (
-              <div>
-                <h4 className="font-medium text-amber-700 mb-3 flex items-center gap-2">
-                  <AlertCircle className="w-5 h-5" /> Your Next Steps
-                </h4>
-                <ul className="space-y-2">
-                  {feedback.next_steps.map((step, i) => (
-                    <li key={i} className="text-sm text-gray-700 flex items-start gap-2 p-2 bg-amber-50 rounded-lg">
-                      <span className="font-bold text-amber-600">{i + 1}.</span>
-                      <span>{step}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </Card>
-          
-          {/* Teacher-Style Corrections */}
-          {feedback.corrections?.length > 0 && (
-            <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <PenTool className="w-5 h-5 text-violet-500" /> Corrections & Explanations
-              </h3>
-              <div className="space-y-4">
-                {feedback.corrections.map((correction, i) => (
-                  <div key={i} className="p-4 bg-gray-50 rounded-xl">
-                    <div className="mb-2">
-                      <span className="text-xs font-medium text-gray-500 uppercase">You wrote:</span>
-                      <p className="text-red-600 line-through italic">"{correction.original}"</p>
-                    </div>
-                    <div className="mb-2">
-                      <span className="text-xs font-medium text-gray-500 uppercase">Correction:</span>
-                      <p className="text-green-700 font-medium">"{correction.corrected}"</p>
-                    </div>
-                    <div className="mb-2">
-                      <span className="text-xs font-medium text-gray-500 uppercase">Explanation:</span>
-                      <p className="text-gray-700 text-sm">{correction.explanation}</p>
-                    </div>
-                    {correction.better_alternative && (
-                      <div className="mt-2 p-2 bg-violet-50 rounded-lg">
-                        <span className="text-xs font-medium text-violet-600 uppercase">Better option:</span>
-                        <p className="text-violet-800 text-sm italic">"{correction.better_alternative}"</p>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </Card>
-          )}
-          
-          {/* Improved Paragraph */}
-          {(feedback.improved_paragraph || feedback.improved_version) && (
-            <Card className="p-6 mb-6 bg-emerald-50 border-emerald-200 rounded-2xl">
-              <h3 className="text-lg font-semibold text-emerald-800 mb-3 flex items-center gap-2">
-                <Lightbulb className="w-5 h-5" /> Model Answer / Improvement
-              </h3>
-              <p className="text-gray-700 whitespace-pre-line leading-relaxed">
-                {feedback.improved_paragraph || feedback.improved_version}
-              </p>
-            </Card>
-          )}
-          
-          {/* Action Buttons */}
-          <div className="flex gap-3">
-            <Button variant="outline" onClick={resetPractice} className="flex-1">
-              <RotateCcw className="w-4 h-4 mr-2" /> Try Another
-            </Button>
-            <Button 
-              className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white" 
-              onClick={() => { setView('writing'); setFeedback(null); }}
-            >
-              <PenTool className="w-4 h-4 mr-2" /> Revise Essay
-            </Button>
-          </div>
+      <div>
+        <div className="px-4 pt-4 lg:px-8 lg:pt-6 max-w-[1400px] mx-auto">
+          <Button variant="ghost" onClick={resetPractice} className="text-gray-600">
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back to tasks
+          </Button>
         </div>
+        <WritingEvaluatorResult
+          result={feedback}
+          essayText={essay}
+          prompt={selectedPrompt?.prompt}
+          lizMessage={buildLizMessage(feedback)}
+          onRewrite={() => { setView('writing'); setFeedback(null); }}
+          onPracticeMore={resetPractice}
+          onViewRewrite={() => {
+            // Simple "show improved version" toast for now — a richer diff view
+            // lives in features/evaluator but isn't wired into this page yet.
+            if (feedback.improved_version) {
+              toast.message('Model rewrite', { description: feedback.improved_version.slice(0, 500) });
+            }
+          }}
+        />
       </div>
     );
   }

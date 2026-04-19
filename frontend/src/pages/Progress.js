@@ -35,7 +35,11 @@ export default function Progress({ user }) {
     recentTrend: []
   });
   const [filter, setFilter] = useState('all');
+  // Prefer the target band captured during onboarding (user.target_band) over
+  // the legacy localStorage key. Pre-onboarding users or accounts created
+  // before this field existed still fall back to the old storage → 7.0 default.
   const [targetBand, setTargetBand] = useState(() => {
+    if (typeof user?.target_band === 'number') return user.target_band;
     const saved = localStorage.getItem('targetBand');
     return saved ? parseFloat(saved) : 7.0;
   });
@@ -198,6 +202,17 @@ export default function Progress({ user }) {
     setTargetBand(band);
     localStorage.setItem('targetBand', band.toString());
     setShowTargetModal(false);
+    // Sync the new target back to the onboarding profile so other surfaces
+    // (Dashboard hero, Liz) reflect it without waiting for a re-login.
+    // Best-effort — the modal already closed; we don't block the UI on this.
+    if (user?.id) {
+      api
+        .post(`/users/${encodeURIComponent(user.id)}/onboarding`, { targetBand: band })
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.warn('[progress] target band sync failed', err);
+        });
+    }
   };
 
   const weeklyData = getWeeklyComparison();

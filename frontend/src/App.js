@@ -11,6 +11,9 @@ import { useI18n } from './lib/i18n';
 import { scanDomForLanguageLeaks } from './lib/leakDetection';
 import { isEnglishLockedRoute, getEffectiveLanguage } from './lib/languageLock';
 import ErrorBoundary from './components/ErrorBoundary';
+import QuotaExceededModal from './components/QuotaExceededModal';
+import { stashPendingPlan, consumePendingPlan, pendingPlanRedirect } from './lib/pendingPlan';
+import { isIeltsMode } from './lib/learningMode';
 
 // Critical pages - loaded immediately
 import Dashboard from './pages/Dashboard';
@@ -30,6 +33,11 @@ const VerifyEmailPage = lazy(() => import('./pages/VerifyEmailPage'));
 const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage'));
 const AdminCreditsPage = lazy(() => import('./pages/AdminCreditsPage'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const AdminLizAnalytics = lazy(() => import('./pages/AdminLizAnalytics'));
+const AdminOnboardingAnalytics = lazy(() => import('./pages/AdminOnboardingAnalytics'));
+const AdminLearningMode = lazy(() => import('./pages/AdminLearningMode'));
+const AdminTestimonials = lazy(() => import('./pages/AdminTestimonials'));
+const ShareYourStoryPage = lazy(() => import('./pages/ShareYourStoryPage'));
 const VocabularyImageManager = lazy(() => import('./pages/VocabularyImageManager'));
 const LevelTest = lazy(() => import('./pages/LevelTest'));
 const ComprehensiveLevelTest = lazy(() => import('./pages/ComprehensiveLevelTest'));
@@ -37,6 +45,16 @@ const AdaptiveLevelTest = lazy(() => import('./pages/AdaptiveLevelTest'));
 const VocabGrammarCourse = lazy(() => import('./pages/VocabGrammarCourse'));
 const VocabGrammarQuiz = lazy(() => import('./pages/VocabGrammarQuiz'));
 const WritingPractice = lazy(() => import('./pages/WritingPractice'));
+const EvaluatorResultPreview = lazy(() => import('./pages/EvaluatorResultPreview'));
+const SampleReportBand65Task2 = lazy(() => import('./pages/SampleReportBand65Task2'));
+const SampleReportBand50Task2 = lazy(() => import('./pages/SampleReportBand50Task2'));
+const SampleReportBand80Task2 = lazy(() => import('./pages/SampleReportBand80Task2'));
+const DashboardPage = lazy(() => import('./pages/DashboardPage'));
+const LandingPageV2 = lazy(() => import('./pages/LandingPageV2'));
+const PricingPageV2 = lazy(() => import('./pages/PricingPageV2'));
+const BankTransferCheckout = lazy(() => import('./pages/BankTransferCheckout'));
+const OnboardingPageV2 = lazy(() => import('./pages/OnboardingPageV2'));
+const SpeakingPracticeV2 = lazy(() => import('./pages/SpeakingPracticeV2'));
 const SpeakingPractice = lazy(() => import('./pages/SpeakingPractice'));
 const Progress = lazy(() => import('./pages/Progress'));
 const BeginnerCourse = lazy(() => import('./pages/BeginnerCourse'));
@@ -62,6 +80,7 @@ const ReadingPracticeByType = lazy(() => import('./pages/ReadingPracticeByType')
 const ListeningPractice = lazy(() => import('./pages/ListeningPractice'));
 const SpeakingPracticeQB = lazy(() => import('./pages/SpeakingPracticeQB'));
 const PracticeMode = lazy(() => import('./pages/PracticeMode'));
+const LearningToolsIndex = lazy(() => import('./pages/LearningToolsIndex'));
 const FullTestMode = lazy(() => import('./pages/FullTestMode'));
 const FullTestInterface = lazy(() => import('./pages/FullTestInterface'));
 const FullTestResults = lazy(() => import('./pages/FullTestResults'));
@@ -200,6 +219,40 @@ function MobileNavWrapper({ user }) {
 
   return <MobileBottomNav currentPath={location.pathname} />;
 }
+// Landing CTAs point here with `?path=ielts|general`. We stash the choice in
+// localStorage so the onboarding hook can pre-select Step 1 after signup, then
+// redirect to `/login?action=signup` (or `/onboarding` if the user is already
+// authenticated — they got linked a signup URL in error, just skip ahead).
+//
+// Pricing CTAs point here with `?plan=weekly|monthly|exam|free`. We stash the
+// plan so that after signup/onboarding completes we can bounce the user back
+// to /pricing (paid plans) where their chosen tier is ready to check out, or
+// /dashboard (free) — without losing the conversion.
+function SignupBridge({ user }) {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const path = (params.get('path') || '').trim().toLowerCase();
+  const plan = (params.get('plan') || '').trim().toLowerCase();
+  if (path === 'ielts' || path === 'general' || path === 'general_english' || path === 'general-english' || path === 'ge') {
+    try {
+      window.localStorage.setItem('testmaster_onboarding_path', path);
+    } catch (_) {
+      // non-fatal — user will re-select on step 1
+    }
+  }
+  stashPendingPlan(plan);
+  if (user) {
+    // Already logged in — honor the pending plan immediately.
+    if (!user.onboarding_complete) {
+      return <Navigate to="/onboarding" replace />;
+    }
+    const pending = consumePendingPlan();
+    const target = pendingPlanRedirect(pending) || '/dashboard';
+    return <Navigate to={target} replace />;
+  }
+  return <Navigate to="/login?action=signup" replace />;
+}
+
 function AppWithSessionHandler() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -244,6 +297,16 @@ function AppWithSessionHandler() {
   const handleLogin = (userData) => {
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
+    // If the user hasn't finished onboarding yet, route them there so the
+    // landing-page path selection isn't silently dropped. Onboarding will
+    // consume the pending plan (if any) on finish.
+    if (userData && userData.onboarding_complete === false) {
+      navigate('/onboarding');
+      return;
+    }
+    // Already-onboarded user came in via /signup?plan=X — honor the plan.
+    const target = pendingPlanRedirect(consumePendingPlan());
+    if (target) navigate(target);
   };
 
   const handleLogout = () => {
@@ -264,8 +327,10 @@ function AppWithSessionHandler() {
     <>
       <Suspense fallback={<PageLoader />}>
       <Routes>
-        <Route path="/" element={<LandingPage onLogin={handleLogin} user={user} />} />
+        <Route path="/" element={<LandingPageV2 onLogin={handleLogin} user={user} />} />
+        <Route path="/landing/v1" element={<LandingPage onLogin={handleLogin} user={user} />} />
         <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <LandingPage onLogin={handleLogin} user={user} showLogin={true} />} />
+        <Route path="/signup" element={<SignupBridge user={user} />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/admin/credits" element={<AdminCreditsPage user={user} />} />
@@ -273,9 +338,20 @@ function AppWithSessionHandler() {
         <Route path="/admin/users" element={<AdminPanel user={user} />} />
         <Route path="/admin/vocabulary-images" element={<VocabularyImageManager user={user} />} />
         <Route path="/admin" element={<AdminDashboard user={user} />} />
-        <Route 
-          path="/dashboard" 
-          element={user ? <Dashboard user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
+        <Route path="/admin/liz-analytics" element={<AdminLizAnalytics user={user} />} />
+        <Route path="/admin/onboarding-analytics" element={<AdminOnboardingAnalytics user={user} />} />
+        <Route path="/admin/learning-mode" element={<AdminLearningMode user={user} /> } />
+        <Route path="/admin/testimonials" element={<AdminTestimonials user={user} />} />
+        <Route path="/share-your-story" element={<ShareYourStoryPage user={user} />} />
+        <Route
+          path="/dashboard"
+          element={
+            user
+              ? (isIeltsMode(user)
+                  ? <DashboardPage user={user} onLogout={handleLogout} />
+                  : <Dashboard user={user} onLogout={handleLogout} />)
+              : <Navigate to="/" />
+          }
         />
         <Route 
           path="/test/:testType" 
@@ -317,9 +393,18 @@ function AppWithSessionHandler() {
           path="/profile" 
           element={user ? <Profile user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
         />
-        <Route 
-          path="/pricing" 
-          element={user ? <PricingPage user={user} /> : <Navigate to="/" />} 
+        <Route
+          path="/pricing"
+          element={isIeltsMode(user) ? <PricingPageV2 user={user} /> : <PricingPage user={user} />}
+        />
+        <Route
+          path="/checkout/bank/:plan"
+          element={user ? <BankTransferCheckout user={user} /> : <Navigate to="/" />}
+        />
+        <Route path="/pricing/v1" element={<PricingPage user={user} />} />
+        <Route
+          path="/onboarding"
+          element={user ? <OnboardingPageV2 user={user} /> : <Navigate to="/" />}
         />
         <Route 
           path="/admin/content" 
@@ -345,13 +430,43 @@ function AppWithSessionHandler() {
           path="/vocab-grammar/quiz" 
           element={<VocabGrammarQuiz user={user} />} 
         />
-        <Route 
-          path="/writing-practice" 
-          element={user ? <WritingPractice user={user} /> : <Navigate to="/" />} 
+        <Route
+          path="/writing-practice"
+          element={user ? <WritingPractice user={user} /> : <Navigate to="/" />}
         />
-        <Route 
-          path="/speaking-practice" 
-          element={user ? <SpeakingPractice user={user} /> : <Navigate to="/" />} 
+        <Route
+          path="/dev/evaluator-result"
+          element={<EvaluatorResultPreview />}
+        />
+        <Route
+          path="/samples/writing/band-5-0-task2"
+          element={<SampleReportBand50Task2 />}
+        />
+        <Route
+          path="/samples/writing/band-6-5-task2"
+          element={<SampleReportBand65Task2 />}
+        />
+        <Route
+          path="/samples/writing/band-8-0-task2"
+          element={<SampleReportBand80Task2 />}
+        />
+        <Route
+          path="/dashboard/v2"
+          element={user ? <DashboardPage /> : <Navigate to="/" />}
+        />
+        <Route path="/landing/v2" element={<LandingPageV2 />} />
+        <Route path="/pricing/v2" element={<PricingPageV2 user={user} />} />
+        <Route path="/onboarding/v2" element={<OnboardingPageV2 user={user} />} />
+        <Route path="/speaking/v2" element={<SpeakingPracticeV2 />} />
+        <Route
+          path="/speaking-practice"
+          element={
+            user
+              ? (isIeltsMode(user)
+                  ? <SpeakingPracticeV2 user={user} />
+                  : <SpeakingPractice user={user} />)
+              : <Navigate to="/" />
+          }
         />
         <Route 
           path="/progress" 
@@ -510,9 +625,17 @@ function AppWithSessionHandler() {
           path="/question-bank/speaking" 
           element={user ? <SpeakingPracticeQB user={user} /> : <Navigate to="/" />} 
         />
-        <Route 
-          path="/question-bank/practice" 
-          element={user ? <PracticeMode user={user} /> : <Navigate to="/" />} 
+        <Route
+          path="/question-bank/practice"
+          element={user ? <PracticeMode user={user} /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/quick-practice"
+          element={user ? <PracticeMode user={user} /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/learning-tools"
+          element={user ? <LearningToolsIndex user={user} /> : <Navigate to="/" />}
         />
         <Route 
           path="/liz" 
@@ -574,6 +697,7 @@ function App() {
         <Router>
           <div className="App min-h-screen bg-background text-foreground">
             <LanguageLeakWatcher />
+            <QuotaExceededModal />
             <AppWithSessionHandler />
           </div>
         </Router>

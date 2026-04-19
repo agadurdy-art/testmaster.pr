@@ -76,6 +76,30 @@ export default function QuestionBank({ user }) {
     loadData();
   }, []);
 
+  // Deep-link support: `/question-bank?tab=practice` (from the Dashboard) opens
+  // the Practice tab. Legacy `?tab=tests` and `?tab=progress` get redirected to
+  // their standalone pages so those URLs keep working after the 4→2 consolidation.
+  useEffect(() => {
+    const requested = searchParams.get('tab');
+    if (!requested) return;
+    if (requested === 'tests') {
+      navigate('/full-test', { replace: true });
+      return;
+    }
+    if (requested === 'progress') {
+      navigate('/progress', { replace: true });
+      return;
+    }
+    if (requested === 'browse' || requested === 'overview') {
+      setActiveTab('overview');
+    } else if (requested === 'practice') {
+      setActiveTab('practice');
+    }
+    // clean up the URL so refreshes don't re-trigger the redirect
+    searchParams.delete('tab');
+    setSearchParams(searchParams, { replace: true });
+  }, [searchParams, setSearchParams, navigate]);
+
   // Auto-open Cambridge test modal when returning from a test via openTest param
   useEffect(() => {
     const openTest = searchParams.get('openTest');
@@ -382,13 +406,15 @@ export default function QuestionBank({ user }) {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Tab Navigation */}
+        {/* Tab Navigation — simplified to 2 tabs per 2026-04-19 design decision.
+            'Smart Practice' bundles the old Browse + Practice surfaces (skill/
+            topic/band filters feed straight into practice sessions). 'Full
+            Tests' is the timed Cambridge/AI mock test catalog. Progress lives
+            on the /progress route now, not inside the QB. */}
         <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
           {[
-            { id: 'overview', label: 'Overview', icon: BarChart3 },
-            { id: 'practice', label: 'Practice', icon: Target },
-            { id: 'tests', label: 'Full Tests', icon: Clock },
-            { id: 'progress', label: 'Progress', icon: TrendingUp }
+            { id: 'overview', label: 'Smart Practice', icon: Target },
+            { id: 'tests', label: 'Full Tests', icon: Award },
           ].map(tab => {
             const Icon = tab.icon;
             return (
