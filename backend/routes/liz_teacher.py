@@ -7,6 +7,7 @@ speaking/writing evaluation, and structured study planning.
 """
 import os
 import re
+import json
 import uuid
 import tempfile
 import logging
@@ -14,20 +15,21 @@ import base64
 from datetime import datetime, timezone, timedelta
 from typing import Optional, List, Dict, Any
 from fastapi import APIRouter, HTTPException, UploadFile, File
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-from emergentintegrations.llm.chat import LlmChat, UserMessage
 from plan_access import get_plan_features
+from services import liz_llm, liz_tts
 
 router = APIRouter(prefix="/api/liz", tags=["liz-teacher"])
 
 db = None
 logger = logging.getLogger(__name__)
-LIZ_DEFAULT_MODEL = os.environ.get("LIZ_DEFAULT_MODEL", "gpt-4o-mini")
-LIZ_DEEP_MODEL = os.environ.get("LIZ_DEEP_MODEL", "gpt-4o")
 LIZ_ALLOWED_HOMEWORK_TYPES = {"vocabulary", "writing", "grammar", "speaking"}
 LIZ_HISTORY_TURNS = 6
 LIZ_CONTEXT_MESSAGE_CHARS = 240
+LIZ_SUPPORTED_FEEDBACK_LANGUAGES = {"en", "tr", "vi", "zh"}
+NAVIGATE_PATTERN = re.compile(r"\[NAVIGATE:\s*(?P<path>[^|\]]+?)\s*\|\s*(?P<label>[^\]]+?)\s*\]")
 
 LIZ_SYSTEM_PROMPT = """You are Liz, a professional IELTS teacher and personal study coach on the "IELTS Ace" platform.
 
@@ -121,6 +123,20 @@ Example: "You haven't practiced writing in 4 days. This may slow your progress t
 
 {homework_context}
 
+## Deep-linking to IELTS Ace routes
+When you recommend a specific practice activity inside the app, add a navigation marker at the end of the sentence using this EXACT format:
+
+[NAVIGATE: /route | Button label]
+
+Examples:
+- Try a Task 2 essay next. [NAVIGATE: /writing-task2 | Start Task 2]
+- Let's fix your pronunciation on /θ/. [NAVIGATE: /speaking/v2 | Speaking practice]
+
+Rules:
+- Only use real in-app routes (start with /). Never invent URLs.
+- Maximum 2 NAVIGATE markers per response.
+- The marker itself is stripped from the chat bubble and rendered as a button — so the surrounding sentence must still make sense without it.
+
 ## Homework Assignment
 At the end of lessons or when appropriate, you can assign homework to the student. Use this EXACT format:
 
@@ -152,6 +168,7 @@ class ChatRequest(BaseModel):
     user_id: str
     is_voice: bool = False
     audio_data: Optional[str] = None
+    feedback_language: Optional[str] = None  # "en" | "tr" | "vi" | "zh"
 
 
 class NewSessionRequest(BaseModel):
@@ -176,6 +193,51 @@ class HomeworkAssignRequest(BaseModel):
 
 
 HOMEWORK_PATTERN = re.compile(r'\[HOMEWORK\](.*?)\[/HOMEWORK\]', re.DOTALL)
+
+
+def parse_navigate_links(response: str):
+    """Extract [NAVIGATE: /route | Label] tokens from Liz's response.
+
+    Returns (cleaned_response, [{"path": "/x", "label": "Y"}, ...]).
+    The tokens are stripped so they don't render in the chat bubble; the
+    frontend is expected to render them as pill-buttons next to the message.
+    """
+    links = []
+    for match in NAVIGATE_PATTERN.finditer(response):
+        path = match.group("path").strip()
+        label = match.group("label").strip()
+        if path and label and path.startswith("/"):
+            links.append({"path": path, "label": label})
+    cleaned = NAVIGATE_PATTERN.sub("", response).strip()
+    return cleaned, links
+
+
+def _normalize_feedback_language(lang: Optional[str]) -> Optional[str]:
+    if not lang:
+        return None
+    code = lang.strip().lower()[:2]
+    return code if code in LIZ_SUPPORTED_FEEDBACK_LANGUAGES else None
+
+
+def _language_directive(lang: Optional[str]) -> str:
+    """Build a language instruction block for the system prompt.
+
+    English output stays the default. Other supported languages override the
+    explanatory portion while keeping IELTS terminology in English.
+    """
+    if not lang or lang == "en":
+        return ""
+    names = {"tr": "Turkish", "vi": "Vietnamese", "zh": "Mandarin Chinese"}
+    name = names.get(lang)
+    if not name:
+        return ""
+    return (
+        f"\n\n## Feedback Language\n"
+        f"Write your explanations and coaching in {name}. Keep IELTS-specific "
+        f"terms (band descriptors, task achievement, coherence & cohesion, "
+        f"lexical resource, grammatical range & accuracy) in English. Model "
+        f"answers and vocabulary examples stay in English."
+    )
 
 
 def _sanitize_homework_text(value: str, max_length: int) -> str:
@@ -255,25 +317,16 @@ async def get_homework_context(user_id: str) -> str:
 
 
 def get_api_key():
-    return os.environ.get("EMERGENT_LLM_KEY", "")
+    """Legacy helper kept for callers; real auth is inside liz_llm."""
+    return os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("EMERGENT_LLM_KEY", "")
 
 
 def get_liz_model(task: str = "chat") -> str:
-    if task in {"chat", "greet", "homework_review"}:
-        return LIZ_DEFAULT_MODEL
-    return LIZ_DEEP_MODEL
+    return liz_llm.deep_model() if task not in {"chat", "greet"} else liz_llm.default_model()
 
 
 def select_chat_model(message: str, is_voice: bool = False) -> str:
-    normalized = (message or "").lower()
-    deep_keywords = [
-        "study plan", "analyze my progress", "weekly plan", "band prediction",
-        "evaluate my writing", "evaluate my speaking", "detailed feedback",
-        "essay", "cue card", "part 3", "homework review"
-    ]
-    if is_voice or any(keyword in normalized for keyword in deep_keywords):
-        return LIZ_DEEP_MODEL
-    return LIZ_DEFAULT_MODEL
+    return liz_llm.select_model(message, is_voice=is_voice)
 
 
 async def get_liz_user_access(user_id: str) -> dict:
@@ -560,12 +613,9 @@ async def get_or_create_session(user_id: str, session_id: Optional[str] = None) 
     return {k: v for k, v in new_session.items() if k != "_id"}
 
 
-@router.post("/chat")
-async def chat_with_liz(req: ChatRequest):
-    """Send a message to Liz and get a response."""
-    api_key = get_api_key()
-    if not api_key:
-        raise HTTPException(status_code=500, detail="LLM API key not configured")
+async def _prepare_chat_context(req: ChatRequest):
+    """Shared setup for both /chat and /chat/stream. Runs access checks,
+    builds the system prompt, and returns everything the LLM call needs."""
     access = await ensure_liz_access(req.user_id)
     if access["usage"]["remaining_messages"] <= 0:
         raise HTTPException(status_code=402, detail="You have reached your Liz Teacher monthly message limit for this plan.")
@@ -577,32 +627,57 @@ async def chat_with_liz(req: ChatRequest):
     hw_context = await get_homework_context(req.user_id)
     system_msg = LIZ_SYSTEM_PROMPT.replace("{user_context}", user_context).replace("{homework_context}", hw_context)
 
-    # Add voice context if this is a spoken message
+    azure_scores = None
     if req.is_voice:
-        system_msg += "\n\n## Voice Mode Active\nThe student is speaking to you via voice. Their message was transcribed from speech. When evaluating, consider natural speech patterns. Keep your response conversational but still structured. This is similar to an IELTS Speaking test scenario."
+        system_msg += (
+            "\n\n## Voice Mode Active\nThe student is speaking to you via voice. "
+            "Their message was transcribed from speech. When evaluating, consider "
+            "natural speech patterns. Keep your response conversational but still "
+            "structured. This is similar to an IELTS Speaking test scenario."
+        )
         azure_context, azure_scores = await build_voice_pronunciation_context(req.audio_data)
         if azure_context:
             system_msg += azure_context
-    else:
-        azure_scores = None
 
-    # Build conversation context from history
-    prev_messages = session.get("messages", [])
-    system_msg += build_recent_conversation_context(prev_messages)
+    lang = _normalize_feedback_language(req.feedback_language)
+    if not lang:
+        # Fall back to the user's stored onboarding preference.
+        try:
+            profile = await db.users.find_one(
+                {"id": req.user_id}, {"_id": 0, "feedback_language": 1}
+            )
+            if profile:
+                lang = _normalize_feedback_language(profile.get("feedback_language"))
+        except Exception:
+            pass
+    system_msg += _language_directive(lang)
 
-    chat = LlmChat(
-        api_key=api_key,
+    system_msg += build_recent_conversation_context(session.get("messages", []))
+
+    return {
+        "access": access, "session_id": session_id, "system_msg": system_msg,
+        "azure_scores": azure_scores,
+    }
+
+
+@router.post("/chat")
+async def chat_with_liz(req: ChatRequest):
+    """Send a message to Liz and get a response (non-streaming)."""
+    ctx = await _prepare_chat_context(req)
+    session_id = ctx["session_id"]
+
+    response = await liz_llm.complete(
+        system=ctx["system_msg"],
+        user_message=req.message,
         session_id=f"liz_{session_id}_{datetime.now(timezone.utc).strftime('%H%M%S')}",
-        system_message=system_msg
-    ).with_model("openai", select_chat_model(req.message, req.is_voice))
+        is_voice=req.is_voice,
+    )
 
-    response = await chat.send_message(UserMessage(text=req.message))
-
-    # Parse homework assignments from response
-    cleaned_response, hw_list = parse_homework_from_response(response, req.user_id, session_id)
+    # Parse homework + navigation markers
+    response_after_hw, hw_list = parse_homework_from_response(response, req.user_id, session_id)
+    display_response, nav_links = parse_navigate_links(response_after_hw)
     for hw in hw_list:
         await db.liz_homework.insert_one(hw)
-    display_response = cleaned_response if cleaned_response else response
 
     now = datetime.now(timezone.utc).isoformat()
     await db.liz_sessions.update_one(
@@ -610,7 +685,8 @@ async def chat_with_liz(req: ChatRequest):
         {"$push": {"messages": {
             "$each": [
                 {"role": "user", "content": req.message, "timestamp": now, "is_voice": req.is_voice},
-                {"role": "assistant", "content": display_response, "timestamp": now}
+                {"role": "assistant", "content": display_response, "timestamp": now,
+                 "navigate_links": nav_links or None}
             ]
         }}}
     )
@@ -619,10 +695,77 @@ async def chat_with_liz(req: ChatRequest):
         "success": True,
         "session_id": session_id,
         "response": display_response,
+        "navigate_links": nav_links,
         "homework_assigned": [{"homework_id": h["homework_id"], "title": h["title"], "type": h["type"]} for h in hw_list],
-        "voice_pronunciation": azure_scores,
-        "usage": await get_liz_usage_stats(req.user_id, int(access["features"].get("max_liz_messages", 0) or 0)),
+        "voice_pronunciation": ctx["azure_scores"],
+        "usage": await get_liz_usage_stats(
+            req.user_id, int(ctx["access"]["features"].get("max_liz_messages", 0) or 0)
+        ),
     }
+
+
+@router.post("/chat/stream")
+async def chat_with_liz_stream(req: ChatRequest):
+    """SSE streaming variant. Emits token deltas, then a final JSON payload
+    carrying homework + navigation links + usage. Frontend parses:
+
+        data: {"type":"delta","text":"..."}
+        data: {"type":"done","response":"...","navigate_links":[...], ...}
+    """
+    ctx = await _prepare_chat_context(req)
+    session_id = ctx["session_id"]
+
+    async def event_stream():
+        collected = []
+        try:
+            async for delta in liz_llm.stream(
+                system=ctx["system_msg"],
+                user_message=req.message,
+                is_voice=req.is_voice,
+            ):
+                collected.append(delta)
+                yield f"data: {json.dumps({'type': 'delta', 'text': delta})}\n\n"
+        except Exception as exc:
+            logger.exception("Liz stream failed")
+            yield f"data: {json.dumps({'type': 'error', 'detail': str(exc)})}\n\n"
+            return
+
+        full = "".join(collected)
+        response_after_hw, hw_list = parse_homework_from_response(full, req.user_id, session_id)
+        display_response, nav_links = parse_navigate_links(response_after_hw)
+        for hw in hw_list:
+            await db.liz_homework.insert_one(hw)
+
+        now = datetime.now(timezone.utc).isoformat()
+        await db.liz_sessions.update_one(
+            {"session_id": session_id},
+            {"$push": {"messages": {
+                "$each": [
+                    {"role": "user", "content": req.message, "timestamp": now, "is_voice": req.is_voice},
+                    {"role": "assistant", "content": display_response, "timestamp": now,
+                     "navigate_links": nav_links or None}
+                ]
+            }}}
+        )
+
+        usage = await get_liz_usage_stats(
+            req.user_id, int(ctx["access"]["features"].get("max_liz_messages", 0) or 0)
+        )
+        final = {
+            "type": "done",
+            "session_id": session_id,
+            "response": display_response,
+            "navigate_links": nav_links,
+            "homework_assigned": [
+                {"homework_id": h["homework_id"], "title": h["title"], "type": h["type"]}
+                for h in hw_list
+            ],
+            "voice_pronunciation": ctx["azure_scores"],
+            "usage": usage,
+        }
+        yield f"data: {json.dumps(final)}\n\n"
+
+    return StreamingResponse(event_stream(), media_type="text/event-stream")
 
 
 @router.post("/new-session")
@@ -639,6 +782,8 @@ async def get_liz_status(user_id: str):
     access = await get_liz_user_access(user_id)
     max_messages = int(access["features"].get("max_liz_messages", 0) or 0)
     usage = await get_liz_usage_stats(user_id, max_messages)
+    llm_health = liz_llm.health()
+    tts_health = liz_tts.health()
     return {
         "success": True,
         "plan": access["plan"],
@@ -647,9 +792,11 @@ async def get_liz_status(user_id: str):
         "used_messages": usage["used_messages"],
         "remaining_messages": usage["remaining_messages"],
         "resets_at": usage["resets_at"],
-        "default_model": LIZ_DEFAULT_MODEL,
-        "deep_model": LIZ_DEEP_MODEL,
+        "provider": llm_health["provider"],
+        "default_model": llm_health["default_model"],
+        "deep_model": llm_health["deep_model"],
         "azure_pronunciation_enabled": bool(os.getenv("AZURE_SPEECH_KEY")),
+        "tts": tts_health,
     }
 
 
@@ -657,9 +804,6 @@ async def get_liz_status(user_id: str):
 async def greet_student(req: NewSessionRequest):
     """Generate a personalized greeting when the student opens a lesson.
     Returns greeting text + TTS audio in a single call."""
-    api_key = get_api_key()
-    if not api_key:
-        raise HTTPException(status_code=500, detail="LLM API key not configured")
     await ensure_liz_access(req.user_id)
 
     session = await get_or_create_session(req.user_id)
@@ -676,13 +820,13 @@ Based on their profile, mention something specific about their progress and sugg
 Student Profile:
 {user_context}"""
 
-    chat = LlmChat(
-        api_key=api_key,
+    greeting = await liz_llm.complete(
+        system=greeting_system,
+        user_message="Greet me and suggest today's lesson.",
         session_id=f"liz_greet_{session['session_id']}",
-        system_message=greeting_system
-    ).with_model("openai", get_liz_model("greet"))
-
-    greeting = await chat.send_message(UserMessage(text="Greet me and suggest today's lesson."))
+        task="chat",
+        max_tokens=400,
+    )
 
     # Store greeting in session
     now = datetime.now(timezone.utc).isoformat()
@@ -691,22 +835,15 @@ Student Profile:
         {"$push": {"messages": {"role": "assistant", "content": greeting, "timestamp": now}}}
     )
 
-    # Generate TTS audio
-    audio_base64 = None
-    try:
-        from emergentintegrations.llm.openai import OpenAITextToSpeech
-        tts = OpenAITextToSpeech(api_key=api_key)
-        audio_base64 = await tts.generate_speech_base64(
-            text=greeting[:500], voice="nova", model="tts-1"
-        )
-    except Exception:
-        pass
+    # Generate TTS audio (Azure SoniaNeural primary, OpenAI fallback)
+    tts_result = await liz_tts.synthesize(greeting)
 
     return {
         "success": True,
         "session_id": session["session_id"],
         "greeting": greeting,
-        "audio": audio_base64
+        "audio": tts_result["audio"],
+        "audio_provider": tts_result["provider"],
     }
 
 
@@ -748,25 +885,14 @@ async def get_user_sessions(user_id: str):
 
 @router.post("/tts")
 async def liz_speak(req: TTSRequest):
-    """Convert Liz's response to speech."""
+    """Convert Liz's response to speech (Azure SoniaNeural primary, OpenAI fallback)."""
     if not req.text:
         raise HTTPException(status_code=400, detail="No text provided")
 
-    api_key = get_api_key()
-    if not api_key:
-        raise HTTPException(status_code=500, detail="TTS API key not configured")
-
-    try:
-        from emergentintegrations.llm.openai import OpenAITextToSpeech
-        tts = OpenAITextToSpeech(api_key=api_key)
-        audio_base64 = await tts.generate_speech_base64(
-            text=req.text[:500],
-            voice="nova",
-            model="tts-1"
-        )
-        return {"audio": audio_base64, "format": "mp3"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    result = await liz_tts.synthesize(req.text)
+    if not result["audio"]:
+        raise HTTPException(status_code=503, detail="TTS provider not configured")
+    return {"audio": result["audio"], "format": result["format"], "provider": result["provider"]}
 
 
 @router.post("/stt")
@@ -861,13 +987,11 @@ async def submit_homework(homework_id: str, req: HomeworkSubmitRequest):
         }}
     )
 
-    # Auto-review with Liz
-    api_key = get_api_key()
+    # Auto-review with Liz (deep model)
     feedback = ""
     score = None
-    if api_key:
-        try:
-            review_prompt = f"""Review this student's homework submission using IELTS criteria.
+    try:
+        review_prompt = f"""Review this student's homework submission using IELTS criteria.
 
 Homework: [{hw.get('type', 'general').upper()}] {hw.get('title', '')}
 Task: {hw.get('task', '')}
@@ -880,19 +1004,21 @@ Provide:
 4. Corrected version or model answer (if applicable)
 Keep feedback concise but specific."""
 
-            chat = LlmChat(
-                api_key=api_key,
-                session_id=f"liz_review_{homework_id}",
-                system_message="You are Liz, a professional IELTS teacher reviewing a student's homework. Be specific and constructive."
-            ).with_model("openai", "gpt-4o")
-            feedback = await chat.send_message(UserMessage(text=review_prompt))
+        feedback = await liz_llm.complete(
+            system="You are Liz, a professional IELTS teacher reviewing a student's homework. Be specific and constructive.",
+            user_message=review_prompt,
+            session_id=f"liz_review_{homework_id}",
+            task="homework_review",
+            max_tokens=1200,
+        )
 
-            # Try to extract score
-            score_match = re.search(r'(\d+)\s*(?:/|out of)\s*10', feedback)
-            if score_match:
-                score = float(score_match.group(1))
-        except Exception:
-            feedback = "I'll review this in our next session."
+        # Try to extract score
+        score_match = re.search(r'(\d+)\s*(?:/|out of)\s*10', feedback)
+        if score_match:
+            score = float(score_match.group(1))
+    except Exception:
+        logger.exception("Homework auto-review failed")
+        feedback = "I'll review this in our next session."
 
     await db.liz_homework.update_one(
         {"homework_id": homework_id},

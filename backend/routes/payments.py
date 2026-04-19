@@ -8,6 +8,8 @@ Handles: PayPal orders/subscriptions, Ko-fi IPN, bank upload, manual credits,
 import os
 import json
 import logging
+import secrets
+import string
 from datetime import datetime, timezone, timedelta
 from typing import Optional, Dict, Any
 
@@ -15,7 +17,14 @@ import httpx
 from fastapi import APIRouter, HTTPException, Request, UploadFile, File, Form
 from pydantic import BaseModel
 
-from plan_access import PLAN_PRICES_USD, get_plan_features, PLAN_FEATURES
+from plan_access import (
+    PLAN_PRICES_USD,
+    PLAN_PRICES_VND,
+    SUPPORTED_CURRENCIES,
+    get_plan_features,
+    get_plan_price,
+    PLAN_FEATURES,
+)
 
 router = APIRouter(prefix="/api", tags=["payments"])
 
@@ -25,26 +34,44 @@ logger = logging.getLogger(__name__)
 PAYPAL_CLIENT_ID = os.getenv("PAYPAL_CLIENT_ID")
 PAYPAL_CLIENT_SECRET = os.getenv("PAYPAL_CLIENT_SECRET")
 PAYPAL_API_BASE = os.getenv("PAYPAL_API_BASE", "https://api-m.paypal.com")
+PAYPAL_WEBHOOK_ID = os.getenv("PAYPAL_WEBHOOK_ID", "")
 
 PAYPAL_PLAN_PRICES = {
+    # Legacy GE plans
     "explorer": PLAN_PRICES_USD["explorer"],
     "learner": PLAN_PRICES_USD["learner"],
     "achiever": PLAN_PRICES_USD["achiever"],
     "master": PLAN_PRICES_USD["master"],
+    # New IELTS plans
+    "weekly": PLAN_PRICES_USD["weekly"],
+    "monthly": PLAN_PRICES_USD["monthly"],
+    "exam": PLAN_PRICES_USD["exam"],
 }
 
 PAYPAL_PLAN_MAPPING = {
+    # Legacy GE plans
     "explorer": ("explorer", "Explorer"),
     "learner": ("learner", "Learner"),
     "achiever": ("achiever", "Achiever"),
     "master": ("master", "Master"),
+    # New IELTS plans
+    "weekly": ("weekly", "Weekly"),
+    "monthly": ("monthly", "Monthly"),
+    "exam": ("exam", "Exam Pack"),
 }
 
+# Reverse lookup: PayPal plan ID (P-XXX...) -> our internal plan key.
+# Weekly + Monthly are subscriptions (recurring). Exam Pack is one-time
+# (Orders API, no subscription plan ID).
 PAYPAL_SUBSCRIPTION_PLAN_IDS = {
+    # Legacy GE subscriptions
     os.getenv("PAYPAL_EXPLORER_PLAN_ID", ""): "explorer",
     os.getenv("PAYPAL_LEARNER_PLAN_ID", ""): "learner",
     os.getenv("PAYPAL_ACHIEVER_PLAN_ID", ""): "achiever",
     os.getenv("PAYPAL_MASTER_PLAN_ID", ""): "master",
+    # New IELTS subscriptions
+    os.getenv("PAYPAL_WEEKLY_PLAN_ID", ""): "weekly",
+    os.getenv("PAYPAL_MONTHLY_PLAN_ID", ""): "monthly",
 }
 
 
@@ -70,6 +97,11 @@ class ActivateSubscriptionRequest(BaseModel):
     subscriptionId: str
     planId: str
     email: str
+
+
+class CancelSubscriptionRequest(BaseModel):
+    email: str
+    reason: Optional[str] = None
 
 
 class ManualCreditRequest(BaseModel):
@@ -103,6 +135,57 @@ async def get_paypal_access_token() -> str:
             logger.error(f"PayPal token missing in response: {data}")
             raise HTTPException(status_code=502, detail="PayPal auth failed")
         return token
+
+
+async def verify_paypal_webhook_signature(headers: dict, body: dict) -> bool:
+    """
+    Calls PayPal's /v1/notifications/verify-webhook-signature to validate
+    a webhook's authenticity. Returns True only if PayPal returns
+    verification_status == "SUCCESS".
+
+    Fails closed: returns False on any error (missing config, non-2xx, etc.)
+    so the webhook handler can reject the event.
+    """
+    if not PAYPAL_WEBHOOK_ID:
+        logger.error("PAYPAL_WEBHOOK_ID not configured — cannot verify webhook")
+        return False
+    required_headers = [
+        "paypal-auth-algo", "paypal-cert-url", "paypal-transmission-id",
+        "paypal-transmission-sig", "paypal-transmission-time",
+    ]
+    # headers from Starlette are case-insensitive but dict() lowercases them
+    lc = {k.lower(): v for k, v in headers.items()}
+    for h in required_headers:
+        if h not in lc:
+            logger.warning(f"PayPal webhook missing header: {h}")
+            return False
+    try:
+        access_token = await get_paypal_access_token()
+    except HTTPException:
+        return False
+    verify_payload = {
+        "auth_algo": lc["paypal-auth-algo"],
+        "cert_url": lc["paypal-cert-url"],
+        "transmission_id": lc["paypal-transmission-id"],
+        "transmission_sig": lc["paypal-transmission-sig"],
+        "transmission_time": lc["paypal-transmission-time"],
+        "webhook_id": PAYPAL_WEBHOOK_ID,
+        "webhook_event": body,
+    }
+    async with httpx.AsyncClient() as client:
+        try:
+            resp = await client.post(
+                f"{PAYPAL_API_BASE}/v1/notifications/verify-webhook-signature",
+                headers={"Authorization": f"Bearer {access_token}", "Content-Type": "application/json"},
+                json=verify_payload,
+                timeout=10.0,
+            )
+            resp.raise_for_status()
+            result = resp.json()
+            return result.get("verification_status") == "SUCCESS"
+        except Exception as e:
+            logger.error(f"PayPal webhook verify error: {e}")
+            return False
 
 
 async def _check_plan_expiry(user: dict) -> dict:
@@ -263,15 +346,87 @@ async def activate_subscription(req: ActivateSubscriptionRequest):
     return {"detail": "Subscription activated", "plan": plan_name, "subscription": subscription_label}
 
 
+@router.post("/payments/paypal/cancel-subscription")
+async def cancel_subscription(req: CancelSubscriptionRequest):
+    """Cancel the user's active PayPal subscription.
+
+    Calls PayPal /v1/billing/subscriptions/{id}/cancel. We do NOT immediately
+    flip the user back to free — PayPal keeps the sub active until the end of
+    the current billing period and fires BILLING.SUBSCRIPTION.CANCELLED /
+    EXPIRED webhook events. The user keeps paid features until then. What we
+    DO set is `subscription_cancelled_at` so the dashboard can show the
+    pending-cancellation banner.
+    """
+    email = req.email.strip().lower()
+    user = await _get_user_by_email(email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    sub_id = user.get("paypal_subscription_id")
+    if not sub_id:
+        raise HTTPException(status_code=400, detail="No active subscription to cancel")
+    access_token = await get_paypal_access_token()
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(
+            f"{PAYPAL_API_BASE}/v1/billing/subscriptions/{sub_id}/cancel",
+            headers={
+                "Authorization": f"Bearer {access_token}",
+                "Content-Type": "application/json",
+            },
+            json={"reason": req.reason or "Customer requested cancellation"},
+        )
+        # 204 No Content is success; 422 with ALREADY_CANCELLED we also
+        # treat as success so the UI settles even if PayPal is ahead of us.
+        if resp.status_code not in (204, 200):
+            body_text = resp.text
+            if resp.status_code == 422 and "ALREADY_CANCELLED" in body_text:
+                logger.info(f"Subscription {sub_id} already cancelled upstream")
+            else:
+                logger.warning(f"PayPal cancel failed {resp.status_code}: {body_text}")
+                raise HTTPException(status_code=502, detail="PayPal cancel call failed")
+    await db.users.update_one(
+        {"id": user["id"]},
+        {"$set": {
+            "subscription_cancelled_at": datetime.now(timezone.utc).isoformat(),
+            "subscription_cancel_reason": req.reason or "",
+        }},
+    )
+    await db.kofi_events.insert_one({
+        "provider": "paypal", "kind": "subscription-cancelled-by-user",
+        "subscription_id": sub_id, "email": email,
+        "reason": req.reason or "",
+        "processed_at": datetime.now(timezone.utc).isoformat(),
+    })
+    return {
+        "detail": "Subscription cancelled. You keep paid access until the end of the current period.",
+        "subscription_id": sub_id,
+    }
+
+
 @router.post("/payments/paypal/subscription-webhook")
 async def paypal_subscription_webhook(request: Request):
     body = await request.json()
+    # 1. Verify signature — reject unverified events with 401.
+    verified = await verify_paypal_webhook_signature(dict(request.headers), body)
+    if not verified:
+        logger.warning(f"PayPal webhook signature verification FAILED: event_id={body.get('id')}")
+        raise HTTPException(status_code=401, detail="Webhook signature verification failed")
+    event_id = body.get("id") or ""
     event_type = body.get("event_type", "")
     resource = body.get("resource", {})
-    logger.info(f"PayPal webhook: {event_type}")
+    # 2. Idempotency — skip if we've already processed this event.
+    if event_id:
+        existing = await db.kofi_events.find_one(
+            {"provider": "paypal", "kind": "webhook", "event_id": event_id},
+            {"_id": 1},
+        )
+        if existing:
+            logger.info(f"PayPal webhook duplicate event_id={event_id}, skipping")
+            return {"status": "ok", "duplicate": True}
+    logger.info(f"PayPal webhook verified: {event_type} id={event_id}")
     await db.kofi_events.insert_one({
-        "provider": "paypal", "kind": "webhook", "event_type": event_type,
-        "payload": body, "received_at": datetime.now(timezone.utc).isoformat(),
+        "provider": "paypal", "kind": "webhook", "event_id": event_id,
+        "event_type": event_type, "payload": body,
+        "received_at": datetime.now(timezone.utc).isoformat(),
     })
     if event_type == "PAYMENT.SALE.COMPLETED":
         billing_agreement_id = resource.get("billing_agreement_id", "")
@@ -296,6 +451,34 @@ async def paypal_subscription_webhook(request: Request):
                     {"$set": {"plan": "free", "subscription": None, "paypal_subscription_id": None}}
                 )
                 logger.info(f"Cancelled/suspended subscription for {user.get('email')}")
+    elif event_type == "BILLING.SUBSCRIPTION.ACTIVATED":
+        # Safety net: if the frontend /activate-subscription call failed or
+        # was bypassed, PayPal's webhook still activates the user. Resolve
+        # plan tier from the subscription's plan_id via PAYPAL_SUBSCRIPTION_PLAN_IDS.
+        sub_id = resource.get("id", "")
+        paypal_plan_id = resource.get("plan_id", "")
+        subscriber = resource.get("subscriber") or {}
+        email = (subscriber.get("email_address") or "").strip().lower()
+        tier_key = PAYPAL_SUBSCRIPTION_PLAN_IDS.get(paypal_plan_id)
+        if not tier_key:
+            logger.warning(f"Subscription activated for unknown plan_id={paypal_plan_id}")
+        elif not email:
+            logger.warning(f"Subscription activated without subscriber email: sub={sub_id}")
+        else:
+            plan_name, subscription_label = PAYPAL_PLAN_MAPPING[tier_key]
+            result = await db.users.update_one(
+                {"email": email},
+                {"$set": {
+                    "plan": plan_name,
+                    "subscription": subscription_label,
+                    "paypal_subscription_id": sub_id,
+                    "lastPayment": datetime.now(timezone.utc).isoformat(),
+                }},
+            )
+            if result.matched_count:
+                logger.info(f"Webhook activated {plan_name} for {email} (sub={sub_id})")
+            else:
+                logger.warning(f"Subscription activated but user not found: {email}")
     return {"status": "ok"}
 
 
@@ -319,7 +502,34 @@ async def get_user_plan_info(user_email: str):
 
 @router.get("/plan/features")
 async def get_all_plan_features():
-    return {"plans": PLAN_FEATURES, "prices": PLAN_PRICES_USD}
+    return {
+        "plans": PLAN_FEATURES,
+        "prices": PLAN_PRICES_USD,  # kept for backward compatibility
+        "prices_usd": PLAN_PRICES_USD,
+        "prices_vnd": PLAN_PRICES_VND,
+        "currencies": list(SUPPORTED_CURRENCIES),
+    }
+
+
+@router.get("/pricing/plans")
+async def get_pricing_plans(currency: str = "USD"):
+    """Pricing page endpoint — returns plans with prices in the requested
+    currency. Currency query param: USD (default) or VND.
+    Frontend currency toggle hits this with ?currency=VND.
+    """
+    cur = (currency or "USD").upper()
+    if cur not in SUPPORTED_CURRENCIES:
+        cur = "USD"
+    plans = []
+    for plan_id in ("explorer", "learner", "achiever", "master"):
+        plans.append({
+            "id": plan_id,
+            "features": PLAN_FEATURES[plan_id],
+            "price": get_plan_price(plan_id, cur),
+            "price_usd": PLAN_PRICES_USD[plan_id],
+            "price_vnd": PLAN_PRICES_VND[plan_id],
+        })
+    return {"currency": cur, "plans": plans, "currencies": list(SUPPORTED_CURRENCIES)}
 
 
 # ============ Speaking Session Credits ============
@@ -506,3 +716,198 @@ async def upload_bank_payment(
         "expires_at": expires_at, "screenshot_path": filepath,
     })
     return {"detail": "Bank payment recorded. Plan active for 30 days.", "plan": plan_name, "subscription": subscription_label, "expires_at": expires_at}
+
+
+# ============ SePay (Vietnamese bank webhook) ============
+#
+# Flow: user picks a plan on the pricing page and elects "bank transfer".
+# Frontend calls /payments/sepay/initiate to mint a short reference code
+# (e.g. TM-A1B2C3-MONTHLY-7K9P). Backend stores a pending_payments row.
+# User transfers the VND amount with that code in the memo/description.
+# SePay relays the bank notification to /payments/sepay/webhook — we match
+# on the reference code, activate the plan, and mark the row processed.
+#
+# Signature/API-key verification on the webhook is added once the user
+# provides the SePay credentials (pending).
+
+SEPAY_BANK_INFO = {
+    "bank_name": os.getenv("SEPAY_BANK_NAME", ""),
+    "account_number": os.getenv("SEPAY_ACCOUNT_NUMBER", ""),
+    "account_holder": os.getenv("SEPAY_ACCOUNT_HOLDER", ""),
+}
+SEPAY_API_KEY = os.getenv("SEPAY_API_KEY", "")
+
+PLAN_DURATION_DAYS = {
+    "explorer": 30, "learner": 30, "achiever": 30, "master": 30,
+    # Design-handoff plan keys (consumer-facing)
+    "weekly": 7, "monthly": 30, "exam": 30,
+}
+
+
+def _generate_sepay_reference(user_id: str, plan_id: str) -> str:
+    """Produce a short, human-transcribable reference code.
+    Format: TM-{user6}-{plan3}-{nonce4}. The user6 slug lets support trace
+    a code back to a user without the DB; the nonce prevents collisions if
+    the same user initiates multiple pending payments."""
+    user_short = (user_id or "").replace("-", "")[:6].upper() or "ANON00"
+    plan_short = (plan_id or "").upper()[:3] or "XXX"
+    alphabet = string.ascii_uppercase + string.digits
+    nonce = "".join(secrets.choice(alphabet) for _ in range(4))
+    return f"TM-{user_short}-{plan_short}-{nonce}"
+
+
+class SepayInitiateRequest(BaseModel):
+    planId: str
+    email: str
+    currency: Optional[str] = "VND"
+
+
+@router.post("/payments/sepay/initiate")
+async def sepay_initiate(req: SepayInitiateRequest):
+    plan_id = (req.planId or "").strip().lower()
+    if plan_id not in PLAN_DURATION_DAYS:
+        raise HTTPException(status_code=400, detail="Invalid planId")
+    email = req.email.strip().lower()
+    user = await _get_user_by_email(email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    # Backend plans (explorer/learner/...) price off PLAN_PRICES_VND.
+    # Handoff plans (weekly/monthly/exam) don't have a VND entry yet --
+    # fall back to a lookup table keeping the two price sources in sync.
+    amount_vnd = PLAN_PRICES_VND.get(plan_id)
+    if amount_vnd is None:
+        handoff_vnd = {"weekly": "73000", "monthly": "219000", "exam": "365000"}
+        amount_vnd = handoff_vnd.get(plan_id, "0")
+    reference_code = _generate_sepay_reference(user["id"], plan_id)
+    # Expire pending payments after 24h -- prevents stale codes stacking up.
+    expires_at = (datetime.now(timezone.utc) + timedelta(hours=24)).isoformat()
+    await db.pending_payments.insert_one({
+        "provider": "sepay",
+        "reference_code": reference_code,
+        "user_id": user["id"],
+        "email": email,
+        "plan_id": plan_id,
+        "amount_vnd": amount_vnd,
+        "status": "pending",
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "expires_at": expires_at,
+    })
+    return {
+        "reference_code": reference_code,
+        "amount_vnd": amount_vnd,
+        "bank_info": SEPAY_BANK_INFO,
+        "expires_at": expires_at,
+        "instructions": (
+            "Chuyen khoan voi noi dung giao dich chua dung ma "
+            f"{reference_code}. Goi se kich hoat tu dong sau khi nhan duoc chuyen khoan."
+        ),
+    }
+
+
+@router.get("/payments/sepay/status/{reference_code}")
+async def sepay_status(reference_code: str):
+    row = await db.pending_payments.find_one(
+        {"provider": "sepay", "reference_code": reference_code},
+        {"_id": 0},
+    )
+    if not row:
+        raise HTTPException(status_code=404, detail="Reference not found")
+    return {
+        "reference_code": reference_code,
+        "status": row.get("status", "pending"),
+        "plan_id": row.get("plan_id"),
+        "processed_at": row.get("processed_at"),
+    }
+
+
+@router.post("/payments/sepay/webhook")
+async def sepay_webhook(request: Request):
+    """SePay relays a bank transaction notification here. Expected payload
+    shape (per SePay docs): transferAmount, content (memo), gateway, etc.
+
+    Signature / API key verification is enforced once SEPAY_API_KEY is set.
+    Until then the handler logs + processes (dev/staging only -- do NOT
+    deploy without SEPAY_API_KEY in production env)."""
+    # 1. Optional API key gate (header-based). When SEPAY_API_KEY is set,
+    #    require matching Authorization: Apikey <key>.
+    if SEPAY_API_KEY:
+        auth_hdr = request.headers.get("authorization", "")
+        expected = f"Apikey {SEPAY_API_KEY}"
+        if auth_hdr != expected:
+            logger.warning("SePay webhook: bad or missing API key")
+            raise HTTPException(status_code=401, detail="Invalid API key")
+    try:
+        payload = await request.json()
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid JSON body")
+    # SePay payload fields: id, gateway, transactionDate, accountNumber,
+    # content, transferAmount (VND, integer), referenceCode, description.
+    content = (payload.get("content") or payload.get("description") or "")
+    amount = payload.get("transferAmount") or 0
+    try:
+        amount_int = int(amount)
+    except (TypeError, ValueError):
+        amount_int = 0
+    # Extract our reference code (TM-XXXXXX-XXX-XXXX) from the memo.
+    # Search rather than split -- SePay includes bank-added prefixes.
+    import re
+    match = re.search(r"TM-[A-Z0-9]{4,8}-[A-Z]{2,4}-[A-Z0-9]{4}", content.upper())
+    await db.kofi_events.insert_one({
+        "provider": "sepay",
+        "kind": "webhook",
+        "payload": payload,
+        "reference_match": match.group(0) if match else None,
+        "received_at": datetime.now(timezone.utc).isoformat(),
+    })
+    if not match:
+        logger.info(f"SePay webhook: no reference code in content='{content}'")
+        return {"status": "ok", "matched": False}
+    reference_code = match.group(0)
+    pending = await db.pending_payments.find_one({
+        "provider": "sepay",
+        "reference_code": reference_code,
+        "status": "pending",
+    })
+    if not pending:
+        logger.warning(f"SePay webhook: reference {reference_code} not pending")
+        return {"status": "ok", "matched": False, "reason": "not_pending"}
+    # Amount sanity check -- allow a small tolerance (some banks deduct a
+    # tiny fee on inbound VND transfers).
+    expected_amount = int(pending.get("amount_vnd") or "0")
+    if amount_int and expected_amount and amount_int < expected_amount * 0.98:
+        logger.warning(
+            f"SePay amount mismatch for {reference_code}: got {amount_int}, expected {expected_amount}"
+        )
+        return {"status": "ok", "matched": True, "reason": "amount_too_low"}
+    plan_id = pending.get("plan_id")
+    days = PLAN_DURATION_DAYS.get(plan_id, 30)
+    # Map handoff plan keys to backend plan tiers for feature gating.
+    plan_mapping = {
+        "weekly": "explorer", "monthly": "learner", "exam": "achiever",
+        "explorer": "explorer", "learner": "learner",
+        "achiever": "achiever", "master": "master",
+    }
+    plan_name = plan_mapping.get(plan_id, "free")
+    subscription_label = plan_name.title()
+    expires_at = (datetime.now(timezone.utc) + timedelta(days=days)).isoformat()
+    await db.users.update_one(
+        {"id": pending["user_id"]},
+        {"$set": {
+            "plan": plan_name,
+            "subscription": subscription_label,
+            "plan_expires_at": expires_at,
+            "payment_method": "sepay",
+            "lastPayment": datetime.now(timezone.utc).isoformat(),
+        }},
+    )
+    await db.pending_payments.update_one(
+        {"_id": pending["_id"]},
+        {"$set": {
+            "status": "completed",
+            "processed_at": datetime.now(timezone.utc).isoformat(),
+            "sepay_transaction_id": payload.get("id"),
+            "sepay_amount_received": amount_int,
+        }},
+    )
+    logger.info(f"SePay activated plan={plan_name} for user={pending['user_id']} ref={reference_code}")
+    return {"status": "ok", "matched": True, "plan": plan_name}

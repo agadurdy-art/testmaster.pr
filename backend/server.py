@@ -572,6 +572,24 @@ except Exception as e:
     import traceback
     traceback.print_exc()
 
+try:
+    from routes.admin_analytics import router as admin_analytics_router
+    app.include_router(admin_analytics_router)
+    print("✅ Admin analytics routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Admin analytics routes: {e}")
+    import traceback
+    traceback.print_exc()
+
+try:
+    from routes.testimonials import router as testimonials_router
+    app.include_router(testimonials_router)
+    print("✅ Testimonials routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Testimonials routes: {e}")
+    import traceback
+    traceback.print_exc()
+
 
 
 # ============ Models ============
@@ -594,6 +612,14 @@ class User(BaseModel):
     last_resend_at: Optional[str] = None
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     test_history: List[str] = Field(default_factory=list)
+    # Onboarding + personalization (set via /api/users/{id}/onboarding)
+    learning_mode: Optional[str] = None  # "ielts" | "general_english"
+    onboarding_complete: bool = False
+    onboarding_completed_at: Optional[str] = None
+    target_band: Optional[float] = None
+    current_band: Optional[float] = None
+    exam_date: Optional[str] = None  # ISO date string (YYYY-MM-DD)
+    feedback_language: Optional[str] = None  # ISO 639-1, e.g. "en", "tr", "vi"
 
 class UserCreate(BaseModel):
     email: str
@@ -1685,29 +1711,60 @@ async def get_test_attempt(attempt_id: str):
     return attempt
 
 # AI Evaluation routes
+from services.usage_tracking import check_usage, increment_usage
+
+
+async def _enforce_evaluation_quota(user_id: str, counter: str) -> dict:
+    """Look up the user, check their monthly quota for `counter`, raise 402
+    if exhausted. Returns the user doc on success."""
+    user = await db.users.find_one({"id": user_id}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    usage = await check_usage(db, user, counter)
+    if not usage["allowed"]:
+        raise HTTPException(
+            status_code=402,
+            detail={
+                "code": "quota_exceeded",
+                "message": "Monthly evaluation quota reached. Upgrade to keep going.",
+                "counter": counter,
+                "used": usage["used"],
+                "quota": usage["quota"],
+                "period": usage["period"],
+                "upgrade_url": "/pricing",
+            },
+        )
+    return user
+
+
 @api_router.post("/evaluate/writing")
 async def evaluate_writing(data: EvaluateWriting):
+    user = await _enforce_evaluation_quota(data.user_id, "evaluations")
     try:
         evaluation = await evaluate_with_ai(
             test_type="writing",
             question=data.question,
             user_answer=data.answer
         )
-        return evaluation
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    # Only increment on success so a failed call doesn't burn quota.
+    await increment_usage(db, user, "evaluations")
+    return evaluation
 
 @api_router.post("/evaluate/speaking")
 async def evaluate_speaking(data: SpeakingTest):
+    user = await _enforce_evaluation_quota(data.user_id, "evaluations")
     try:
         evaluation = await evaluate_with_ai(
             test_type="speaking",
             question=data.question,
             user_answer=data.user_response
         )
-        return evaluation
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    await increment_usage(db, user, "evaluations")
+    return evaluation
 
 # Speaking test with AI - simple transcribe endpoint
 @api_router.post("/transcribe-audio")
@@ -2745,6 +2802,78 @@ class WritingPracticeRequest(BaseModel):
     prompt: str
     essay: str
     word_count: int
+
+
+# ── Writing Evaluator v2 (Claude Sonnet, 4-criterion + inline annotations) ──
+
+def _map_task_type_hint(task_type: str) -> str:
+    """Map the loose task_type string from the client to the v2 TaskType enum."""
+    if task_type == "task2":
+        return "task2_opinion"
+    if task_type == "task1_academic":
+        return "task1_academic_chart"
+    if task_type == "task1_general":
+        return "task1_general_formal"
+    return "task2_opinion"
+
+
+class WritingPracticeV2Request(BaseModel):
+    task_type: str
+    prompt: str
+    essay: str
+    user_language: Optional[str] = "en"
+
+
+@api_router.post("/writing-practice/evaluate/v2")
+async def evaluate_writing_practice_v2(request: WritingPracticeV2Request):
+    """Claude Sonnet evaluator — returns full WritingEvaluationResult schema.
+
+    New route is additive; /writing-practice/evaluate (below) stays live so old
+    clients don't break. Frontend V4 UI consumes this endpoint."""
+    from services.writing_evaluator_v2 import evaluate_writing, EvaluatorFailure
+    from schemas.writing_evaluator import WritingEvaluationRequest, TaskType
+    from security_utils import sanitize_ai_input
+
+    essay = sanitize_ai_input(request.essay or "")
+    prompt = sanitize_ai_input(request.prompt or "")
+    if not essay.strip():
+        raise HTTPException(status_code=400, detail="Essay is empty")
+    if not prompt.strip():
+        raise HTTPException(status_code=400, detail="Task prompt is required")
+
+    hint = _map_task_type_hint(request.task_type)
+    try:
+        task_hint_enum = TaskType(hint)
+    except ValueError:
+        task_hint_enum = TaskType.task2_opinion
+
+    try:
+        eval_req = WritingEvaluationRequest(
+            essay_text=essay,
+            task_type_hint=task_hint_enum,
+            task_prompt=prompt,
+            user_language=(request.user_language or "en"),
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=f"Invalid request: {exc}")
+
+    try:
+        result = await evaluate_writing(eval_req)
+    except EvaluatorFailure as exc:
+        logging.getLogger(__name__).error(
+            "Writing evaluator v2 failed after %d attempts: %s",
+            exc.attempts, exc.last_error,
+        )
+        raise HTTPException(
+            status_code=502,
+            detail={
+                "message": "Evaluator unavailable. Please try again.",
+                "attempts": exc.attempts,
+                "last_error": exc.last_error,
+            },
+        )
+    return result.model_dump()
+
 
 @api_router.post("/writing-practice/evaluate")
 async def evaluate_writing_practice(request: WritingPracticeRequest):

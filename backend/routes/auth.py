@@ -20,6 +20,8 @@ import resend
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field, ConfigDict
 
+from services.usage_tracking import get_all_counters
+
 router = APIRouter(prefix="/api", tags=["auth"])
 
 db = None
@@ -61,6 +63,14 @@ class User(BaseModel):
     last_resend_at: Optional[str] = None
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     test_history: list = Field(default_factory=list)
+    # Onboarding + personalization (set via /api/users/{id}/onboarding)
+    learning_mode: Optional[str] = None  # "ielts" | "general_english"
+    onboarding_complete: bool = False
+    onboarding_completed_at: Optional[str] = None
+    target_band: Optional[float] = None
+    current_band: Optional[float] = None
+    exam_date: Optional[str] = None
+    feedback_language: Optional[str] = None
 
 
 class UserCreate(BaseModel):
@@ -445,6 +455,28 @@ async def resend_verification_email(input: ResendVerificationRequest):
         return {"message": "Email service temporarily unavailable. Please try again later.", "sent": False}
 
 
+@router.get("/users/{user_id}/usage")
+async def get_user_usage(user_id: str):
+    """Return the current-period quota + used counts for every tracked counter.
+
+    Response shape:
+        {
+          "plan": "learner",
+          "period": "2026-04",
+          "counters": {
+            "evaluations": {"used": 12, "quota": 100, "remaining": 88, "unlimited": false, "allowed": true, ...},
+            "mocks": {...},
+            "speaking_minutes": {...}
+          }
+        }
+    The dashboard usage meter consumes this verbatim.
+    """
+    user = await db.users.find_one({"id": user_id}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return await get_all_counters(db, user)
+
+
 @router.get("/users/{user_id}", response_model=User)
 async def get_user(user_id: str):
     user = await db.users.find_one({"id": user_id}, {"_id": 0})
@@ -455,6 +487,116 @@ async def get_user(user_id: str):
         user['created_at'] = datetime.fromisoformat(user['created_at'])
     user.pop("password_hash", None)
     return User(**user)
+
+
+# ─── Onboarding persistence ──────────────────────────────────────────────────
+
+_ALLOWED_LANGS = {"en", "vi", "tr", "zh", "ar", "ko", "th", "ja", "es", "pt", "ru", "id"}
+_ALLOWED_MODES = {"ielts", "general_english"}
+
+
+class OnboardingPayload(BaseModel):
+    """Accepts the OnboardingQuiz state. Tolerant of extra fields so the
+    frontend can evolve without breaking this contract."""
+    model_config = ConfigDict(extra="ignore")
+    path: Optional[str] = None  # "ielts" | "general"
+    targetBand: Optional[float] = None
+    currentBand: Optional[float] = None
+    examDate: Optional[str] = None  # ISO string or free-text
+    language: Optional[Dict[str, Any]] = None  # {name, code?}
+
+
+def _normalize_language_code(lang_field: Any) -> Optional[str]:
+    """Extract ISO 639-1 code from the quiz's language object."""
+    if not lang_field:
+        return None
+    if isinstance(lang_field, str):
+        candidate = lang_field
+    elif isinstance(lang_field, dict):
+        candidate = lang_field.get("code") or lang_field.get("name") or ""
+    else:
+        candidate = str(lang_field)
+    code = candidate.strip().lower().split("-")[0][:2]
+    return code if code in _ALLOWED_LANGS else None
+
+
+def _normalize_learning_mode(path: Optional[str]) -> Optional[str]:
+    if not path:
+        return None
+    p = path.strip().lower()
+    if p in {"ielts", "ielts_ace", "ielts-ace"}:
+        return "ielts"
+    if p in {"general", "general_english", "general-english", "ge"}:
+        return "general_english"
+    return None
+
+
+def _normalize_exam_date(value: Any) -> Optional[str]:
+    """Accept Date-ish inputs, return ISO YYYY-MM-DD when possible."""
+    if not value:
+        return None
+    if isinstance(value, str):
+        # Already a string — store as-is (trim length to something safe)
+        return value.strip()[:32] or None
+    # Frontend may JSON-serialize Date objects as ISO strings; other shapes we
+    # just stringify defensively.
+    return str(value)[:32]
+
+
+@router.post("/users/{user_id}/onboarding", response_model=User)
+async def save_onboarding(user_id: str, payload: OnboardingPayload):
+    """Persist OnboardingQuiz completion and mark the user onboarded.
+
+    Idempotent: posting again simply overwrites with the latest values.
+    """
+    user = await db.users.find_one({"id": user_id}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    update: Dict[str, Any] = {}
+    mode = _normalize_learning_mode(payload.path)
+    if mode:
+        update["learning_mode"] = mode
+    if payload.targetBand is not None:
+        try:
+            tb = float(payload.targetBand)
+            if 0 <= tb <= 9:
+                update["target_band"] = round(tb * 2) / 2
+        except (TypeError, ValueError):
+            pass
+    if payload.currentBand is not None:
+        try:
+            cb = float(payload.currentBand)
+            if 0 <= cb <= 9:
+                update["current_band"] = round(cb * 2) / 2
+        except (TypeError, ValueError):
+            pass
+    exam_date = _normalize_exam_date(payload.examDate)
+    if exam_date:
+        update["exam_date"] = exam_date
+    lang = _normalize_language_code(payload.language)
+    if lang:
+        update["feedback_language"] = lang
+
+    # First completion only — subsequent partial patches (e.g. the Progress
+    # page updating just targetBand) must not re-flip the completion timestamp.
+    if not user.get("onboarding_complete"):
+        update["onboarding_complete"] = True
+        update["onboarding_completed_at"] = datetime.now(timezone.utc).isoformat()
+
+    if not update:
+        # No-op patch — avoid an empty $set which Mongo rejects.
+        refreshed = user
+    else:
+        await db.users.update_one({"id": user_id}, {"$set": update})
+        refreshed = None  # force a re-read below
+
+    if refreshed is None:
+        refreshed = await db.users.find_one({"id": user_id}, {"_id": 0})
+    if isinstance(refreshed.get("created_at"), str):
+        refreshed["created_at"] = datetime.fromisoformat(refreshed["created_at"])
+    refreshed.pop("password_hash", None)
+    return User(**refreshed)
 
 
 @router.post("/auth/verify-email")
