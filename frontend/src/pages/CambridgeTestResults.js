@@ -1851,7 +1851,7 @@ export default function CambridgeTestResults() {
             <BookMarked className="w-4 h-4 mr-2" /> More Tests
           </Button>
           <Button 
-            onClick={() => navigate('/mastery')} 
+            onClick={() => navigate('/mastery-course')}
             className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 shadow-lg"
           >
             <GraduationCap className="w-4 h-4 mr-2" /> Study Weak Areas

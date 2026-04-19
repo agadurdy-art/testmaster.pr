@@ -107,7 +107,7 @@ export default function DashboardPage() {
             subtitle: "Task 2 essay · 40 min",
             progressLabel: "Draft 2 of 4",
             ctaLabel: "Continue",
-            href: "/practice/writing",
+            href: "/question-bank/writing/task2",
           },
           {
             status: "New",
@@ -115,7 +115,7 @@ export default function DashboardPage() {
             subtitle: "Part 2 cue card · 3–4 min",
             progressLabel: "Fresh prompt",
             ctaLabel: "Try now",
-            href: "/practice/speaking",
+            href: "/question-bank/speaking",
           },
           {
             status: "Daily",
@@ -123,7 +123,7 @@ export default function DashboardPage() {
             subtitle: "Academic passage · 20 min",
             progressLabel: "Passage 7 of 40",
             ctaLabel: "Continue",
-            href: "/practice/reading",
+            href: "/question-bank/reading/practice",
           },
           {
             status: "Section 3",
@@ -131,7 +131,7 @@ export default function DashboardPage() {
             subtitle: "Lecture excerpt · 15 min",
             progressLabel: "Set 12 of 30",
             ctaLabel: "Try new",
-            href: "/practice/listening",
+            href: "/question-bank/listening",
           },
         ]}
       />

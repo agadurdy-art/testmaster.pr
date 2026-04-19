@@ -241,7 +241,7 @@ export default function VocabPractice() {
           <Button
             size="sm"
             variant="outline"
-            onClick={() => navigate(`/vocab-learn/${moduleId}`)}
+            onClick={() => navigate(`/vocabulary/learn/${moduleId}`)}
             className="text-xs"
             data-testid="go-learn-btn"
           >
@@ -293,7 +293,7 @@ export default function VocabPractice() {
                 <Button onClick={restart} variant="outline" data-testid="restart-btn">
                   <RefreshCw className="w-4 h-4 mr-2" /> Try Again
                 </Button>
-                <Button onClick={() => navigate(`/vocab-learn/${moduleId}`)} className="bg-indigo-600 hover:bg-indigo-700 text-white" data-testid="back-to-learn-btn">
+                <Button onClick={() => navigate(`/vocabulary/learn/${moduleId}`)} className="bg-indigo-600 hover:bg-indigo-700 text-white" data-testid="back-to-learn-btn">
                   <BookOpen className="w-4 h-4 mr-2" /> Back to Slides
                 </Button>
               </div>

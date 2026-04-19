@@ -15,7 +15,7 @@ export default function PricingFinalBanner() {
               essay — every comment, every rewrite, every criterion score.
             </p>
           </div>
-          <a href="/sample-report" className="btn btn-primary btn-xl">
+          <a href="/samples/writing/band-6-5-task2" className="btn btn-primary btn-xl">
             View sample report
             <ArrowRightIcon />
           </a>

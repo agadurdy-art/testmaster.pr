@@ -6,7 +6,7 @@ import { cn } from "../../../lib/utils";
  * Public top nav shown above unauthenticated sample pages.
  * Sticky with a translucent backdrop-blur so the content below reads through.
  */
-export default function PublicNav({ className, ctaHref = "#cta" }) {
+export default function PublicNav({ className, ctaHref = "/signup" }) {
   return (
     <header
       className={cn(
@@ -47,10 +47,10 @@ export default function PublicNav({ className, ctaHref = "#cta" }) {
           <a href="/speaking-practice" className="hover:text-slate-900">
             Speaking
           </a>
-          <a href="#" className="hover:text-slate-900">
+          <a href="/question-bank/reading/practice" className="hover:text-slate-900">
             Reading
           </a>
-          <a href="/samples" className="hover:text-slate-900">
+          <a href="/samples/writing/band-6-5-task2" className="hover:text-slate-900">
             Samples
           </a>
           <a href="/pricing" className="hover:text-slate-900">

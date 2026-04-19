@@ -23,7 +23,7 @@ export default function DashboardTopBar({
     >
       <div className="max-w-[1160px] mx-auto px-6 md:px-10 h-[68px] flex items-center justify-between">
         <div className="flex items-center gap-10">
-          <a href="/" className="flex items-center gap-2.5">
+          <a href="/dashboard" className="flex items-center gap-2.5">
             <div className="logomark" aria-hidden="true">
               <img src="/brand/ielts-ace-logo.jpg" alt="IELTS Ace" />
             </div>
@@ -34,10 +34,10 @@ export default function DashboardTopBar({
             </div>
           </a>
           <nav className="desktop-nav items-center gap-8 flex">
-            <NavLink href="/" active={activeSection === "dashboard"}>
+            <NavLink href="/dashboard" active={activeSection === "dashboard"}>
               Dashboard
             </NavLink>
-            <NavLink href="/practice" active={activeSection === "practice"}>
+            <NavLink href="/question-bank" active={activeSection === "practice"}>
               Practice
             </NavLink>
             <NavLink href="/courses" active={activeSection === "courses"}>
