@@ -37,9 +37,10 @@ I18N_PATH = REPO_ROOT / "frontend" / "src" / "lib" / "i18n.js"
 BACKEND_ENV = REPO_ROOT / "backend" / ".env"
 
 BATCH_SIZE = 80
-MODEL = os.environ.get("MODEL", "claude-sonnet-4-6")
+MODEL = os.environ.get("MODEL", "claude-sonnet-4-5-20250929")
 DRY = os.environ.get("DRY") == "1"
 FORCE = os.environ.get("FORCE") == "1"
+MAX_RETRIES = 3
 
 LANG_NAMES = {
     "mandarin": "Mandarin Chinese (Simplified, 简体中文)",
@@ -90,7 +91,14 @@ ENTRY_RE = re.compile(
 
 
 def find_block(source: str, lang_key: str) -> tuple[int, int, str]:
-    """Return (start, end, body) for `  <lang_key>: { ... }` with balanced braces."""
+    """Return (start, end, body) covering the full `  <lang_key>: { ... },` block.
+
+    `start` points at the two-space indent before `<lang_key>:` and `end` is one
+    past the trailing comma (if present). `body` is the content between braces,
+    excluding them. This way callers can do
+    `source[:start] + format_dict_block(...) + source[end:]` without creating
+    duplicate `  lang:` prefixes or double commas.
+    """
     marker = f"  {lang_key}: {{"
     start = source.find(marker)
     if start == -1:
@@ -104,7 +112,10 @@ def find_block(source: str, lang_key: str) -> tuple[int, int, str]:
         elif ch == "}":
             depth -= 1
             if depth == 0:
-                return brace_start, i + 1, source[brace_start + 1 : i]
+                end = i + 1
+                if end < len(source) and source[end] == ",":
+                    end += 1
+                return start, end, source[brace_start + 1 : i]
     raise ValueError(f"Unbalanced braces for {lang_key}")
 
 
@@ -210,6 +221,55 @@ async def translate_batch(
     return out
 
 
+_PERMANENT_ERROR_MARKERS = (
+    "budget",
+    "insufficient",
+    "quota",
+    "unauthorized",
+    "forbidden",
+    "invalid api key",
+    "401",
+    "402",
+    "403",
+)
+
+
+def _is_permanent_error(err: BaseException) -> bool:
+    msg = str(err).lower()
+    return any(marker in msg for marker in _PERMANENT_ERROR_MARKERS)
+
+
+async def translate_batch_with_retry(
+    lang_code: str,
+    batch: list[tuple[str, str]],
+    batch_index: int,
+) -> list[tuple[str, str]]:
+    """Retry transient failures (502 Bad Gateway, network flaps) up to MAX_RETRIES.
+
+    Permanent failures — budget exceeded, auth errors — re-raise immediately so
+    we don't burn the remaining budget on doomed calls.
+    """
+    delay = 2.0
+    last_err: BaseException | None = None
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            return await translate_batch(lang_code, batch, batch_index)
+        except BaseException as err:  # noqa: BLE001 — gateway raises broad types
+            last_err = err
+            if _is_permanent_error(err):
+                raise
+            if attempt == MAX_RETRIES:
+                break
+            print(
+                f"\n  retry {attempt}/{MAX_RETRIES - 1} after {delay:.0f}s: {err}",
+                flush=True,
+            )
+            await asyncio.sleep(delay)
+            delay *= 2
+    assert last_err is not None
+    raise last_err
+
+
 async def translate_all(
     lang_code: str,
     en_entries: list[tuple[str, str]],
@@ -223,7 +283,7 @@ async def translate_all(
     for idx, batch in enumerate(batches, start=1):
         print(f"  batch {idx}/{len(batches)} … ", end="", flush=True)
         # Sequential — avoids Emergent rate-limit issues and keeps order stable.
-        part = await translate_batch(lang_code, batch, idx)
+        part = await translate_batch_with_retry(lang_code, batch, idx)
         results.extend(part)
         print("ok")
     return results
@@ -259,21 +319,39 @@ async def main() -> None:
         return
 
     mutated = source
+    completed: list[str] = []
+    failed: list[tuple[str, str]] = []
     for lang in targets:
         if DRY:
             print(f"[DRY] would translate {lang} ({len(en_entries)} keys).")
             continue
-        entries = await translate_all(lang, en_entries)
+        try:
+            entries = await translate_all(lang, en_entries)
+        except BaseException as err:  # noqa: BLE001
+            print(f"[{lang}] ✗ {err}")
+            failed.append((lang, str(err)))
+            if _is_permanent_error(err):
+                print("Permanent error — stopping further languages.")
+                break
+            continue
         start, end, _ = find_block(mutated, lang)
         mutated = mutated[:start] + format_dict_block(lang, entries) + mutated[end:]
-        print(f"[{lang}] ✓ {len(entries)} keys written.")
+        # Incremental write: persist after each language so a later failure
+        # doesn't throw away progress already made.
+        I18N_PATH.write_text(mutated, encoding="utf-8")
+        completed.append(lang)
+        print(f"[{lang}] ✓ {len(entries)} keys written + file flushed.")
 
     if DRY:
         print("DRY run — no file changes.")
         return
 
-    I18N_PATH.write_text(mutated, encoding="utf-8")
-    print(f"Wrote {I18N_PATH}")
+    print(f"\nDone. Completed: {completed or '∅'}")
+    if failed:
+        print("Failed:")
+        for lang, msg in failed:
+            print(f"  - {lang}: {msg}")
+    print(f"File: {I18N_PATH}")
 
 
 if __name__ == "__main__":

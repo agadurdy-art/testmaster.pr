@@ -31,7 +31,8 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const I18N_PATH = path.resolve(__dirname, '..', 'frontend', 'src', 'lib', 'i18n.js');
-const MODEL = process.env.MODEL || 'claude-sonnet-4-6';
+const MODEL = process.env.MODEL || 'claude-sonnet-4-5-20250929';
+const MAX_RETRIES = 3;
 const BATCH_SIZE = 80;
 const API_KEY = process.env.ANTHROPIC_API_KEY;
 const DRY = process.env.DRY === '1';
@@ -61,27 +62,33 @@ if (!API_KEY && !DRY) {
 
 const source = await fs.readFile(I18N_PATH, 'utf8');
 
-function extractBlock(langKey) {
-  // Matches:  <langKey>: {   ...balanced braces...   },
-  // Non-greedy; relies on the file keeping one key per line inside the block.
+function extractBlockFrom(src, langKey) {
+  // Returns { start, end, body } covering the full `  langKey: { ... },` block.
+  // `start` points at the two-space indent; `end` is one past the trailing
+  // comma (if present). `body` is between braces, exclusive.
   const marker = `  ${langKey}: {`;
-  const start = source.indexOf(marker);
+  const start = src.indexOf(marker);
   if (start === -1) throw new Error(`Block not found: ${langKey}`);
   let depth = 0;
-  let i = source.indexOf('{', start);
+  let i = src.indexOf('{', start);
   const braceStart = i;
-  for (; i < source.length; i++) {
-    const c = source[i];
+  for (; i < src.length; i++) {
+    const c = src[i];
     if (c === '{') depth++;
     else if (c === '}') {
       depth--;
       if (depth === 0) {
-        const braceEnd = i;
-        return { start: braceStart, end: braceEnd + 1, body: source.slice(braceStart + 1, braceEnd) };
+        let end = i + 1;
+        if (src[end] === ',') end += 1;
+        return { start, end, body: src.slice(braceStart + 1, i) };
       }
     }
   }
   throw new Error(`Unbalanced braces for ${langKey}`);
+}
+
+function extractBlock(langKey) {
+  return extractBlockFrom(source, langKey);
 }
 
 function parseDictBody(body) {
@@ -230,6 +237,34 @@ async function translateBatch(lang, batch) {
   return out;
 }
 
+const PERMANENT_ERROR_MARKERS = [
+  'budget', 'insufficient', 'quota', 'unauthorized', 'forbidden',
+  'invalid api key', '401', '402', '403',
+];
+
+function isPermanentError(err) {
+  const msg = String(err?.message ?? err).toLowerCase();
+  return PERMANENT_ERROR_MARKERS.some(m => msg.includes(m));
+}
+
+async function translateBatchWithRetry(lang, batch) {
+  let delayMs = 2000;
+  let lastErr;
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      return await translateBatch(lang, batch);
+    } catch (err) {
+      lastErr = err;
+      if (isPermanentError(err)) throw err;
+      if (attempt === MAX_RETRIES) break;
+      console.log(`\n  retry ${attempt}/${MAX_RETRIES - 1} after ${delayMs / 1000}s: ${err.message ?? err}`);
+      await new Promise(r => setTimeout(r, delayMs));
+      delayMs *= 2;
+    }
+  }
+  throw lastErr;
+}
+
 async function translateAll(lang) {
   const batches = [];
   for (let i = 0; i < enEntries.length; i += BATCH_SIZE) {
@@ -240,7 +275,7 @@ async function translateAll(lang) {
   for (let b = 0; b < batches.length; b++) {
     process.stdout.write(`  batch ${b + 1}/${batches.length} `);
     const start = Date.now();
-    const part = await translateBatch(lang, batches[b]);
+    const part = await translateBatchWithRetry(lang, batches[b]);
     all.push(...part);
     console.log(`(${Math.round((Date.now() - start) / 1000)}s)`);
   }
@@ -252,37 +287,43 @@ async function translateAll(lang) {
 // ---------------------------------------------------------------------------
 
 let mutated = source;
+const completed = [];
+const failed = [];
 for (const { lang } of targets) {
   if (DRY) {
     console.log(`\n[DRY] would translate ${lang} (${enEntries.length} keys).`);
     continue;
   }
-  const entries = await translateAll(lang);
-  // Re-locate block after each replacement since offsets shift.
-  const block = (function () {
-    // Re-run extract on the mutated string
-    const marker = `  ${lang}: {`;
-    const start = mutated.indexOf(marker);
-    let depth = 0;
-    let i = mutated.indexOf('{', start);
-    const braceStart = i;
-    for (; i < mutated.length; i++) {
-      if (mutated[i] === '{') depth++;
-      else if (mutated[i] === '}') {
-        depth--;
-        if (depth === 0) return { start: start, end: i + 1 };
-      }
+  let entries;
+  try {
+    entries = await translateAll(lang);
+  } catch (err) {
+    console.log(`[${lang}] ✗ ${err.message ?? err}`);
+    failed.push([lang, String(err.message ?? err)]);
+    if (isPermanentError(err)) {
+      console.log('Permanent error — stopping further languages.');
+      break;
     }
-    throw new Error(`Unbalanced braces (re-locate) for ${lang}`);
-  })();
+    continue;
+  }
+  // Re-locate block on the mutated buffer — offsets shift after each rewrite.
+  const block = extractBlockFrom(mutated, lang);
   const replacement = formatDictBlock(lang, entries);
   mutated = mutated.slice(0, block.start) + replacement + mutated.slice(block.end);
-  console.log(`[${lang}] ✓ ${entries.length} keys written.`);
+  // Incremental write: persist after each language so a later failure
+  // doesn't throw away progress already made.
+  await fs.writeFile(I18N_PATH, mutated, 'utf8');
+  completed.push(lang);
+  console.log(`[${lang}] ✓ ${entries.length} keys written + file flushed.`);
 }
 
-if (!DRY) {
-  await fs.writeFile(I18N_PATH, mutated, 'utf8');
-  console.log(`\nWrote ${I18N_PATH}`);
-} else {
+if (DRY) {
   console.log('\nDRY run — no file changes.');
+} else {
+  console.log(`\nDone. Completed: ${completed.length ? completed.join(', ') : '∅'}`);
+  if (failed.length) {
+    console.log('Failed:');
+    for (const [lang, msg] of failed) console.log(`  - ${lang}: ${msg}`);
+  }
+  console.log(`File: ${I18N_PATH}`);
 }

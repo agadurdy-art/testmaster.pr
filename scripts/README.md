@@ -21,7 +21,7 @@ Options:
 | `LANGS`       | all empty blocks    | Comma list, e.g. `LANGS=ar,ko,th`            |
 | `DRY=1`       | off                 | Preview without writing the file             |
 | `FORCE=1`     | off                 | Retranslate even if a block is already full  |
-| `MODEL`       | `claude-sonnet-4-6` | Override model                               |
+| `MODEL`       | `claude-sonnet-4-5-20250929` | Override model                      |
 
 ### What it does
 
