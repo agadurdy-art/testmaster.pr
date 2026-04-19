@@ -8,7 +8,7 @@ const REPORTS = [
     tier: 'Working toward band 6',
     title: '"Technology in education"',
     meta: 'Task 2 · 248 words · 23 fixes',
-    href: '/samples/writing/band-5-task2',
+    href: '/samples/writing/band-5-0-task2',
   },
   {
     cls: 'b65',
@@ -26,7 +26,7 @@ const REPORTS = [
     tier: 'High-band benchmark',
     title: '"Environmental responsibility"',
     meta: 'Task 2 · 312 words · 4 refinements',
-    href: '/samples/writing/band-8-task2',
+    href: '/samples/writing/band-8-0-task2',
   },
 ];
 

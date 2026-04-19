@@ -11,8 +11,8 @@ export default function LandingNav() {
           <ul className="nav-links">
             <li><a href="#samples">Samples</a></li>
             <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#blog">Teacher Blog</a></li>
-            <li><a href="#about">About</a></li>
+            <li><a href="/blog">Teacher Blog</a></li>
+            <li><a href="/about">About</a></li>
           </ul>
         </nav>
         <div className="nav-right">
