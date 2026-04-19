@@ -33,7 +33,6 @@ export default function SpeakingPractice({ onExit, user }) {
       userLanguage: user?.feedback_language || 'en',
       targetBand: user?.target_band || 7.0,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [flow.state]);
 
   const handleExit = () => {
