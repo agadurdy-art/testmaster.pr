@@ -29,7 +29,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function WritingTask2Practice() {
   const navigate = useNavigate();
-  const { language } = useI18n();
+  const { languageWireCode } = useI18n();
   const [searchParams] = useSearchParams();
   const examType = searchParams.get('type') || 'academic'; // academic or general
   const urlTopic = searchParams.get('topic');
@@ -167,7 +167,7 @@ export default function WritingTask2Practice() {
           topic: selectedPrompt?.topic,
           band_level: selectedPrompt?.band_level || '5.5-6.5',
           task_description: selectedPrompt?.prompt || '',
-          user_language: language
+          user_language: languageWireCode
         })
       });
       

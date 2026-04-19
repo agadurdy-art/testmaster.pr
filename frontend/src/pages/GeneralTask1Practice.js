@@ -28,7 +28,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function GeneralTask1Practice() {
   const navigate = useNavigate();
-  const { language } = useI18n();
+  const { languageWireCode } = useI18n();
   const [searchParams] = useSearchParams();
   const urlTopic = searchParams.get('topic');
   const urlBand = searchParams.get('band') || '5.5-6.5';
@@ -154,7 +154,7 @@ export default function GeneralTask1Practice() {
           band_level: urlBand || '5.5-6.5',
           task_description: selectedPrompt?.prompt || '',
           track: 'general',  // Dual-Track: General Training
-          user_language: language
+          user_language: languageWireCode
         })
       });
       

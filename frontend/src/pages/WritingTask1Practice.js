@@ -31,7 +31,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function WritingTask1Practice() {
   const navigate = useNavigate();
-  const { language } = useI18n();
+  const { languageWireCode } = useI18n();
   const [searchParams] = useSearchParams();
   const topic = searchParams.get('topic') || 'participation';
   const bandLevel = searchParams.get('band') || '5.5-6.5';
@@ -230,7 +230,7 @@ export default function WritingTask1Practice() {
           topic: topic,
           band_level: bandLevel,
           task_description: taskData?.task_description || '',
-          user_language: language
+          user_language: languageWireCode
         })
       });
       
