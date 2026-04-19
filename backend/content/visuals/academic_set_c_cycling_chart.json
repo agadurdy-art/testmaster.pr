@@ -1,0 +1,20 @@
+{
+  "type": "bar_chart",
+  "width": 800,
+  "height": 500,
+  "title": "Cycling to Work in European Cities",
+  "subtitle": "Percentage of commuters who cycle (2010 vs 2020)",
+  "showGrid": true,
+  "showLegend": true,
+  
+  "categories": ["Amsterdam", "Copenhagen", "Berlin", "Paris", "London"],
+  
+  "series": [
+    {"name": "2010", "color": "#93c5fd", "values": [38, 35, 13, 3, 2]},
+    {"name": "2020", "color": "#3b82f6", "values": [43, 41, 18, 8, 5]}
+  ],
+  
+  "xLabel": "City",
+  "yLabel": "Percentage (%)",
+  "yMax": 50
+}

@@ -1,0 +1,145 @@
+{
+  "iteration": 55,
+  "timestamp": "2026-02-18T12:20:00Z",
+  "test_type": "FEATURE_VERIFICATION",
+  "target": "PDF Worksheet Generator with GPT-4o exercises (6 activity types) and cumulative review",
+  "summary": "ALL FEATURES VERIFIED. Backend: 18/18 tests passed. Frontend: All PDF buttons and regression tests confirmed.",
+
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+
+  "features_verified": {
+    "FEATURE_1_WORKSHEET_CURRENT_MODE": {
+      "status": "VERIFIED",
+      "description": "GET /api/worksheet/generate/stage_1_unit_03_lesson_01?mode=current&max_words=20 returns exercises",
+      "evidence": "Backend test passed - returns vocabulary_section, grammar_section, mixed_review with items",
+      "api_response": "word_count:5, vocab_matching:5, fill_blank:5, true_false:5, grammar_reorder:5, correct_mistake:5, complete_pattern:5, mixed_review:5"
+    },
+    "FEATURE_2_WORKSHEET_CUMULATIVE_MODE": {
+      "status": "VERIFIED",
+      "description": "GET /api/worksheet/generate/stage_1_unit_06_lesson_04?mode=cumulative&max_words=20 returns word_count<=20",
+      "evidence": "Backend test passed - word_count:20 (limited from 69 available), total_lessons:24",
+      "api_response": "Cumulative mode correctly limits to 20 words from 24 lessons"
+    },
+    "FEATURE_3_VOCAB_SECTION_ACTIVITIES": {
+      "status": "VERIFIED",
+      "description": "vocabulary_section contains matching, fill_blank, true_false items",
+      "evidence": "test_current_worksheet_vocabulary_section_has_items PASSED - all 3 activity types have items"
+    },
+    "FEATURE_4_GRAMMAR_SECTION_ACTIVITIES": {
+      "status": "VERIFIED",
+      "description": "grammar_section contains reorder, correct_mistake, complete_pattern items",
+      "evidence": "test_current_worksheet_grammar_section_has_items PASSED - all 3 activity types have items"
+    },
+    "FEATURE_5_MIXED_REVIEW": {
+      "status": "VERIFIED",
+      "description": "mixed_review section has questions",
+      "evidence": "test_current_worksheet_mixed_review_has_questions PASSED - 5 questions returned"
+    },
+    "FEATURE_6_CUMULATIVE_VOCAB_ENDPOINT": {
+      "status": "VERIFIED",
+      "description": "GET /api/unified/cumulative-vocab/stage_1_unit_06_lesson_04?max_words=20 returns max 20 words from 24 lessons",
+      "evidence": "Backend test passed - total_lessons:24, total_vocab_available:69, selected_count:20"
+    },
+    "FEATURE_7_CACHING": {
+      "status": "VERIFIED",
+      "description": "Second call to same worksheet returns instantly from cache",
+      "evidence": "test_cached_response_is_instant PASSED - both calls under 2s with identical MD5 hashes"
+    },
+    "FEATURE_8_PDF_BUTTONS_IN_REVIEW": {
+      "status": "VERIFIED",
+      "description": "Frontend Review section shows 'This Lesson' and 'All Lessons (Cumulative)' download buttons",
+      "evidence": "Playwright found both buttons in Review activity - screenshot 15_review_activity.png",
+      "screenshot": ".screenshots/15_review_activity.png"
+    },
+    "FEATURE_9_WARMUP_3_QUESTIONS_REGRESSION": {
+      "status": "VERIFIED",
+      "description": "Warm-up shows 3 questions (1/3 counter)",
+      "evidence": "UI screenshot shows '1 / 3' counter in Warm-up activity - screenshot 16_warmup.png",
+      "screenshot": ".screenshots/16_warmup.png"
+    },
+    "FEATURE_10_EXIT_QUIZ_5_QUESTIONS_REGRESSION": {
+      "status": "VERIFIED",
+      "description": "Exit Quiz shows 5 questions (1/5 counter)",
+      "evidence": "UI screenshot shows '1 / 5' counter in Exit Quiz activity - screenshot 17_exit_quiz.png",
+      "screenshot": ".screenshots/17_exit_quiz.png"
+    }
+  },
+
+  "api_test_results": {
+    "test_current_worksheet_returns_exercises": "PASS",
+    "test_current_worksheet_vocabulary_section_has_items": "PASS",
+    "test_current_worksheet_grammar_section_has_items": "PASS",
+    "test_current_worksheet_mixed_review_has_questions": "PASS",
+    "test_cumulative_worksheet_word_count_max_20": "PASS",
+    "test_cumulative_worksheet_has_exercises": "PASS",
+    "test_cumulative_worksheet_total_lessons": "PASS",
+    "test_cumulative_vocab_max_20_words": "PASS",
+    "test_cumulative_vocab_returns_words_from_previous_units": "PASS",
+    "test_cumulative_vocab_returns_grammar_rules": "PASS",
+    "test_cached_response_is_instant": "PASS",
+    "test_force_refresh_regenerates": "PASS",
+    "test_matching_item_format": "PASS",
+    "test_fill_blank_item_format": "PASS",
+    "test_reorder_item_format": "PASS",
+    "test_mixed_review_item_format": "PASS",
+    "test_warmup_has_3_questions": "PASS",
+    "test_exit_ticket_has_5_questions": "PASS"
+  },
+
+  "frontend_ui_verification": {
+    "lesson_roadmap": "VERIFIED - Shows Vocabulary, Practice, Lesson, Skills, Review steps",
+    "pdf_this_lesson_button": "VERIFIED - 'This Lesson' button visible in Review section",
+    "pdf_cumulative_button": "VERIFIED - 'All Lessons (Cumulative)' button visible in Review section",
+    "warmup_1_of_3": "VERIFIED - Screenshot shows '1 / 3' counter",
+    "exit_quiz_1_of_5": "VERIFIED - Screenshot shows '1 / 5' counter"
+  },
+
+  "test_report_links": [
+    "/app/backend/tests/test_iter55_worksheet_generator.py",
+    "/app/test_reports/pytest/iter55_worksheet_results.xml"
+  ],
+
+  "action_items": [],
+
+  "critical_code_review_comments": [
+    "worksheet_routes.py correctly uses GPT-4o for exercise generation with proper fallback to local generation",
+    "Caching works via MD5 hash of lesson_id+mode stored in /app/backend/content/worksheets/",
+    "Cumulative mode correctly calculates lesson_ids from unit/lesson numbers and limits words to max_words",
+    "Frontend buildPDFContent() and generatePDF() functions handle both current and cumulative modes"
+  ],
+
+  "updated_files": [
+    "/app/backend/tests/test_iter55_worksheet_generator.py"
+  ],
+
+  "success_rate": {
+    "backend": "100% - 18/18 tests passed",
+    "frontend": "100% - All 10 features verified"
+  },
+
+  "test_credentials": {
+    "email": "tester@test.com",
+    "password": "tester123"
+  },
+
+  "seed_data_creation": "None required - existing curriculum content used",
+
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+
+  "context_for_next_testing_agent": "Iteration 55 verified PDF worksheet generator with GPT-4o. Key endpoints: GET /api/worksheet/generate/{lesson_id}?mode=current|cumulative&max_words=20 and GET /api/unified/cumulative-vocab/{lesson_id}?max_words=20. Cache files stored in /app/backend/content/worksheets/. Frontend PDF buttons are in Review activity at end of lesson sidebar. Warm-up has 3 questions (1/3), Exit Quiz has 5 questions (1/5) - both regression tests passed.",
+
+  "mocked_api": {
+    "has_mocked_apis": false,
+    "mocked_apis_list": []
+  }
+}

@@ -1,53 +1,708 @@
-import { useEffect } from "react";
-import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect, Suspense, lazy } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import './App.css';
+import LandingPage from './pages/LandingPage';
+import { loginWithEmergentSession } from './lib/api';
+import { toast } from 'sonner';
+import { Toaster } from './components/ui/sonner';
+import MobileBottomNav from './components/MobileBottomNav';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { useI18n } from './lib/i18n';
+import { scanDomForLanguageLeaks } from './lib/leakDetection';
+import { isEnglishLockedRoute, getEffectiveLanguage } from './lib/languageLock';
+import ErrorBoundary from './components/ErrorBoundary';
+import QuotaExceededModal from './components/QuotaExceededModal';
+import { stashPendingPlan, consumePendingPlan, pendingPlanRedirect } from './lib/pendingPlan';
+import { isIeltsMode } from './lib/learningMode';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+// Critical pages - loaded immediately
+import Dashboard from './pages/Dashboard';
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
+// All other pages - lazy loaded on demand
+const TestInterface = lazy(() => import('./pages/TestInterface'));
+const Results = lazy(() => import('./pages/Results'));
+const TipsPage = lazy(() => import('./pages/TipsPage'));
+const CoursesPage = lazy(() => import('./pages/CoursesPage'));
+const CourseDetail = lazy(() => import('./pages/CourseDetail'));
+const Profile = lazy(() => import('./pages/Profile'));
+const ContentAdmin = lazy(() => import('./pages/ContentAdmin'));
+const AdminPanel = lazy(() => import('./pages/AdminPanel'));
+const AdminFeedback = lazy(() => import('./pages/AdminFeedback'));
+const PricingPage = lazy(() => import('./pages/PricingPage'));
+const VerifyEmailPage = lazy(() => import('./pages/VerifyEmailPage'));
+const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage'));
+const AdminCreditsPage = lazy(() => import('./pages/AdminCreditsPage'));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const AdminLizAnalytics = lazy(() => import('./pages/AdminLizAnalytics'));
+const AdminOnboardingAnalytics = lazy(() => import('./pages/AdminOnboardingAnalytics'));
+const AdminLearningMode = lazy(() => import('./pages/AdminLearningMode'));
+const AdminTestimonials = lazy(() => import('./pages/AdminTestimonials'));
+const ShareYourStoryPage = lazy(() => import('./pages/ShareYourStoryPage'));
+const VocabularyImageManager = lazy(() => import('./pages/VocabularyImageManager'));
+const LevelTest = lazy(() => import('./pages/LevelTest'));
+const ComprehensiveLevelTest = lazy(() => import('./pages/ComprehensiveLevelTest'));
+const AdaptiveLevelTest = lazy(() => import('./pages/AdaptiveLevelTest'));
+const VocabGrammarCourse = lazy(() => import('./pages/VocabGrammarCourse'));
+const VocabGrammarQuiz = lazy(() => import('./pages/VocabGrammarQuiz'));
+const WritingPractice = lazy(() => import('./pages/WritingPractice'));
+const EvaluatorResultPreview = lazy(() => import('./pages/EvaluatorResultPreview'));
+const SampleReportBand65Task2 = lazy(() => import('./pages/SampleReportBand65Task2'));
+const SampleReportBand50Task2 = lazy(() => import('./pages/SampleReportBand50Task2'));
+const SampleReportBand80Task2 = lazy(() => import('./pages/SampleReportBand80Task2'));
+const DashboardPage = lazy(() => import('./pages/DashboardPage'));
+const LandingPageV2 = lazy(() => import('./pages/LandingPageV2'));
+const PricingPageV2 = lazy(() => import('./pages/PricingPageV2'));
+const BankTransferCheckout = lazy(() => import('./pages/BankTransferCheckout'));
+const OnboardingPageV2 = lazy(() => import('./pages/OnboardingPageV2'));
+const SpeakingPracticeV2 = lazy(() => import('./pages/SpeakingPracticeV2'));
+const SpeakingPractice = lazy(() => import('./pages/SpeakingPractice'));
+const Progress = lazy(() => import('./pages/Progress'));
+const BeginnerCourse = lazy(() => import('./pages/BeginnerCourse'));
+const MasteryCourse = lazy(() => import('./pages/MasteryCourse'));
+const AdvancedMasteryCourse = lazy(() => import('./pages/AdvancedMasteryCourse'));
+const LessonPreview = lazy(() => import('./pages/LessonPreview'));
+const FeatureShowcase = lazy(() => import('./pages/FeatureShowcase'));
+const LearningPlatform = lazy(() => import('./pages/LearningPlatform'));
+const LevelDetail = lazy(() => import('./pages/LevelDetail'));
+const UnitDetail = lazy(() => import('./pages/UnitDetail'));
+const LessonView = lazy(() => import('./pages/LessonView'));
+const QuestionBank = lazy(() => import('./pages/QuestionBank'));
+const WritingTask1Practice = lazy(() => import('./pages/WritingTask1Practice'));
+const GameBank = lazy(() => import('./pages/GameBank'));
+const WritingTask2Practice = lazy(() => import('./pages/WritingTask2Practice'));
+const GeneralTask1Practice = lazy(() => import('./pages/GeneralTask1Practice'));
+const GeneralTask2Practice = lazy(() => import('./pages/GeneralTask2Practice'));
+const ReadingPracticeAcademic = lazy(() => import('./pages/ReadingPracticeAcademic'));
+const ReadingPracticeGeneral = lazy(() => import('./pages/ReadingPracticeGeneral'));
+const ReadingPracticeMasteryAcademic = lazy(() => import('./pages/ReadingPracticeMasteryAcademic'));
+const ReadingPracticeMasteryGeneral = lazy(() => import('./pages/ReadingPracticeMasteryGeneral'));
+const ReadingPracticeByType = lazy(() => import('./pages/ReadingPracticeByType'));
+const ListeningPractice = lazy(() => import('./pages/ListeningPractice'));
+const SpeakingPracticeQB = lazy(() => import('./pages/SpeakingPracticeQB'));
+const PracticeMode = lazy(() => import('./pages/PracticeMode'));
+const LearningToolsIndex = lazy(() => import('./pages/LearningToolsIndex'));
+const FullTestMode = lazy(() => import('./pages/FullTestMode'));
+const FullTestInterface = lazy(() => import('./pages/FullTestInterface'));
+const FullTestResults = lazy(() => import('./pages/FullTestResults'));
+const VisualGenerator = lazy(() => import('./pages/VisualGenerator'));
+const CambridgeTestInterface = lazy(() => import('./pages/CambridgeTestInterface'));
+const CambridgeTestResults = lazy(() => import('./pages/CambridgeTestResults'));
+const FocusPlan = lazy(() => import('./pages/FocusPlan'));
+const LizTeacher = lazy(() => import('./pages/LizTeacher'));
+const LizFloatingButton = lazy(() => import('./components/LizFloatingButton'));
+const VocabularyLearnMode = lazy(() => import('./pages/VocabularyLearnMode'));
+const VocabularyPracticeMode = lazy(() => import('./pages/VocabularyPracticeMode'));
+const VocabularyQuizMode = lazy(() => import('./pages/VocabularyQuizMode'));
+const VocabularyProductionMode = lazy(() => import('./pages/VocabularyProductionMode'));
+const GrammarLearnMode = lazy(() => import('./pages/GrammarLearnMode'));
+const GrammarPracticeMode = lazy(() => import('./pages/GrammarPracticeMode'));
+const GrammarQuizMode = lazy(() => import('./pages/GrammarQuizMode'));
+const GrammarProductionMode = lazy(() => import('./pages/GrammarProductionMode'));
+const GrammarSmartReview = lazy(() => import('./pages/GrammarSmartReview'));
+const ReviewBank = lazy(() => import('./pages/ReviewBank'));
+const UnifiedCoursePage = lazy(() => import('./pages/UnifiedCoursePage'));
+const UnifiedStagePage = lazy(() => import('./pages/UnifiedStagePage'));
+const UnifiedLessonPage = lazy(() => import('./pages/UnifiedLessonPage'));
+const DailyHabitPage = lazy(() => import('./pages/DailyHabitPage'));
+const GameDemo = lazy(() => import('./pages/GameDemo'));
 
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
+// Page loading spinner
+function PageLoader() {
   return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="flex flex-col items-center gap-3">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-violet-600"></div>
+        <p className="text-sm text-muted-foreground">Loading...</p>
+      </div>
     </div>
   );
-};
+}
+
+
+// Language Leak Watcher Component (Development Only)
+function LanguageLeakWatcher() {
+  const { language } = useI18n();
+  const location = useLocation();
+  
+  useEffect(() => {
+    if (process.env.NODE_ENV !== 'development') return;
+    
+    const id = setTimeout(() => {
+      // Get effective language based on route
+      const effectiveLang = getEffectiveLanguage(location.pathname, language);
+      const leak = scanDomForLanguageLeaks(effectiveLang);
+      
+      if (leak) {
+        const routeInfo = isEnglishLockedRoute(location.pathname) 
+          ? '(English-locked route)' 
+          : `(System: ${language})`;
+        console.error(`🚨 LANGUAGE LEAK DETECTED ${routeInfo}:`, leak);
+        // Uncomment to break on leak detection:
+        // throw new Error(`${leak.type}: ${leak.sample}`);
+      }
+    }, 500);
+    
+    return () => clearTimeout(id);
+  }, [language, location.pathname]);
+  
+  return null;
+}
+
+
+function EmergentBadgeWrapper() {
+  const location = useLocation();
+
+  // Only show badge (and allow ElevenLabs widget) when user is on speaking test AND logged in
+  const isSpeakingTest = location.pathname.startsWith('/test/speaking');
+
+  if (!isSpeakingTest) return null;
+
+  return (
+    <a
+      id="emergent-badge"
+      target="_blank"
+      rel="noreferrer"
+      href="https://app.emergent.sh/?utm_source=emergent-badge"
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        position: 'fixed',
+        bottom: 20,
+        left: 20,
+        textDecoration: 'none',
+        padding: '6px 10px',
+        fontFamily:
+          '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
+        fontSize: 12,
+        zIndex: 9999,
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+        borderRadius: 8,
+        backgroundColor: '#ffffff',
+        border: '1px solid rgba(255, 255, 255, 0.25)'
+      }}
+    >
+      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+        <img
+          style={{ width: 20, height: 20, marginRight: 8 }}
+          src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4"
+          alt="Emergent avatar"
+        />
+        <p
+          style={{
+            color: '#000000',
+            fontFamily:
+              '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
+            fontSize: 12,
+            alignItems: 'center',
+            marginBottom: 0
+          }}
+        >
+          Made with Emergent
+        </p>
+      </div>
+    </a>
+  );
+}
+
+function MobileNavWrapper({ user }) {
+  const location = useLocation();
+
+  // Only show bottom nav when logged in and not on landing/auth-only pages
+  if (!user) return null;
+  if (
+    location.pathname === '/' ||
+    location.pathname === '/verify-email' ||
+    location.pathname === '/reset-password'
+  ) {
+    return null;
+  }
+
+  return <MobileBottomNav currentPath={location.pathname} />;
+}
+// Landing CTAs point here with `?path=ielts|general`. We stash the choice in
+// localStorage so the onboarding hook can pre-select Step 1 after signup, then
+// redirect to `/login?action=signup` (or `/onboarding` if the user is already
+// authenticated — they got linked a signup URL in error, just skip ahead).
+//
+// Pricing CTAs point here with `?plan=weekly|monthly|exam|free`. We stash the
+// plan so that after signup/onboarding completes we can bounce the user back
+// to /pricing (paid plans) where their chosen tier is ready to check out, or
+// /dashboard (free) — without losing the conversion.
+function SignupBridge({ user }) {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const path = (params.get('path') || '').trim().toLowerCase();
+  const plan = (params.get('plan') || '').trim().toLowerCase();
+  if (path === 'ielts' || path === 'general' || path === 'general_english' || path === 'general-english' || path === 'ge') {
+    try {
+      window.localStorage.setItem('testmaster_onboarding_path', path);
+    } catch (_) {
+      // non-fatal — user will re-select on step 1
+    }
+  }
+  stashPendingPlan(plan);
+  if (user) {
+    // Already logged in — honor the pending plan immediately.
+    if (!user.onboarding_complete) {
+      return <Navigate to="/onboarding" replace />;
+    }
+    const pending = consumePendingPlan();
+    const target = pendingPlanRedirect(pending) || '/dashboard';
+    return <Navigate to={target} replace />;
+  }
+  return <Navigate to="/login?action=signup" replace />;
+}
+
+function AppWithSessionHandler() {
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (e) {
+        localStorage.removeItem('user');
+      }
+    }
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    const hash = window.location.hash || '';
+    if (hash.startsWith('#session_id=')) {
+      const sessionId = hash.replace('#session_id=', '').trim();
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      if (!sessionId) return;
+      (async () => {
+        try {
+          const userData = await loginWithEmergentSession(sessionId);
+          setUser(userData);
+          localStorage.setItem('user', JSON.stringify(userData));
+          toast.success('Logged in with Google');
+        } catch (err) {
+          const message = err?.response?.data?.detail || 'Google login failed. Please try again.';
+          toast.error(message);
+        } finally {
+          // Always send user to dashboard (if login worked, they will see it; if not, they stay unauthenticated)
+          navigate('/dashboard');
+        }
+      })();
+    }
+  }, [location, navigate]);
+
+  const handleLogin = (userData) => {
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData));
+    // If the user hasn't finished onboarding yet, route them there so the
+    // landing-page path selection isn't silently dropped. Onboarding will
+    // consume the pending plan (if any) on finish.
+    if (userData && userData.onboarding_complete === false) {
+      navigate('/onboarding');
+      return;
+    }
+    // Already-onboarded user came in via /signup?plan=X — honor the plan.
+    const target = pendingPlanRedirect(consumePendingPlan());
+    if (target) navigate(target);
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem('user');
+  };
+
+  // Show loading state while checking localStorage
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <Suspense fallback={<PageLoader />}>
+      <Routes>
+        <Route path="/" element={<LandingPageV2 onLogin={handleLogin} user={user} />} />
+        <Route path="/landing/v1" element={<LandingPage onLogin={handleLogin} user={user} />} />
+        <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <LandingPage onLogin={handleLogin} user={user} showLogin={true} />} />
+        <Route path="/signup" element={<SignupBridge user={user} />} />
+        <Route path="/verify-email" element={<VerifyEmailPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/admin/credits" element={<AdminCreditsPage user={user} />} />
+        <Route path="/admin/feedback" element={<AdminFeedback user={user} />} />
+        <Route path="/admin/users" element={<AdminPanel user={user} />} />
+        <Route path="/admin/vocabulary-images" element={<VocabularyImageManager user={user} />} />
+        <Route path="/admin" element={<AdminDashboard user={user} />} />
+        <Route path="/admin/liz-analytics" element={<AdminLizAnalytics user={user} />} />
+        <Route path="/admin/onboarding-analytics" element={<AdminOnboardingAnalytics user={user} />} />
+        <Route path="/admin/learning-mode" element={<AdminLearningMode user={user} /> } />
+        <Route path="/admin/testimonials" element={<AdminTestimonials user={user} />} />
+        <Route path="/share-your-story" element={<ShareYourStoryPage user={user} />} />
+        <Route
+          path="/dashboard"
+          element={
+            user
+              ? (isIeltsMode(user)
+                  ? <DashboardPage user={user} onLogout={handleLogout} />
+                  : <Dashboard user={user} onLogout={handleLogout} />)
+              : <Navigate to="/" />
+          }
+        />
+        <Route 
+          path="/test/:testType" 
+          element={user ? <TestInterface user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/results/:attemptId" 
+          element={user ? <Results user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/tips" 
+          element={user ? <TipsPage user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/courses" 
+          element={user ? <CoursesPage user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/courses/:courseId" 
+          element={user ? <CourseDetail user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/learning" 
+          element={user ? <LearningPlatform user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/learning/level/:levelId" 
+          element={user ? <LevelDetail user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/learning/unit/:unitId" 
+          element={user ? <UnitDetail user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/learning/lesson/:lessonId" 
+          element={user ? <LessonView user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/profile" 
+          element={user ? <Profile user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
+        />
+        <Route
+          path="/pricing"
+          element={isIeltsMode(user) ? <PricingPageV2 user={user} /> : <PricingPage user={user} />}
+        />
+        <Route
+          path="/checkout/bank/:plan"
+          element={user ? <BankTransferCheckout user={user} /> : <Navigate to="/" />}
+        />
+        <Route path="/pricing/v1" element={<PricingPage user={user} />} />
+        <Route
+          path="/onboarding"
+          element={user ? <OnboardingPageV2 user={user} /> : <Navigate to="/" />}
+        />
+        <Route 
+          path="/admin/content" 
+          element={<ContentAdmin />} 
+        />
+        <Route 
+          path="/level-test" 
+          element={<LevelTest user={user} />} 
+        />
+        <Route 
+          path="/comprehensive-level-test" 
+          element={<ComprehensiveLevelTest user={user} />} 
+        />
+        <Route 
+          path="/adaptive-level-test" 
+          element={<AdaptiveLevelTest user={user} />} 
+        />
+        <Route 
+          path="/vocab-grammar" 
+          element={<VocabGrammarCourse user={user} />} 
+        />
+        <Route 
+          path="/vocab-grammar/quiz" 
+          element={<VocabGrammarQuiz user={user} />} 
+        />
+        <Route
+          path="/writing-practice"
+          element={user ? <WritingPractice user={user} /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/dev/evaluator-result"
+          element={<EvaluatorResultPreview />}
+        />
+        <Route
+          path="/samples/writing/band-5-0-task2"
+          element={<SampleReportBand50Task2 />}
+        />
+        <Route
+          path="/samples/writing/band-6-5-task2"
+          element={<SampleReportBand65Task2 />}
+        />
+        <Route
+          path="/samples/writing/band-8-0-task2"
+          element={<SampleReportBand80Task2 />}
+        />
+        <Route
+          path="/dashboard/v2"
+          element={user ? <DashboardPage /> : <Navigate to="/" />}
+        />
+        <Route path="/landing/v2" element={<LandingPageV2 />} />
+        <Route path="/pricing/v2" element={<PricingPageV2 user={user} />} />
+        <Route path="/onboarding/v2" element={<OnboardingPageV2 user={user} />} />
+        <Route path="/speaking/v2" element={<SpeakingPracticeV2 />} />
+        <Route
+          path="/speaking-practice"
+          element={
+            user
+              ? (isIeltsMode(user)
+                  ? <SpeakingPracticeV2 user={user} />
+                  : <SpeakingPractice user={user} />)
+              : <Navigate to="/" />
+          }
+        />
+        <Route 
+          path="/progress" 
+          element={user ? <Progress user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/beginner-course" 
+          element={<BeginnerCourse user={user} />} 
+        />
+        <Route 
+          path="/mastery-course" 
+          element={<MasteryCourse user={user} />} 
+        />
+        <Route 
+          path="/advanced-mastery" 
+          element={<AdvancedMasteryCourse user={user} />} 
+        />
+        <Route 
+          path="/vocabulary/learn/:moduleId" 
+          element={user ? <VocabularyLearnMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/vocabulary/practice/:moduleId" 
+          element={user ? <VocabularyPracticeMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/vocabulary/quiz/:moduleId" 
+          element={user ? <VocabularyQuizMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/vocabulary/production/:moduleId" 
+          element={user ? <VocabularyProductionMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/review-bank" 
+          element={user ? <ReviewBank user={user} /> : <Navigate to="/" />} 
+        />
+        
+        {/* Grammar Engine Routes */}
+        <Route 
+          path="/grammar/learn/:moduleId" 
+          element={user ? <GrammarLearnMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/grammar/practice/:moduleId" 
+          element={user ? <GrammarPracticeMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/grammar/quiz/:moduleId" 
+          element={user ? <GrammarQuizMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/grammar/guided/:moduleId" 
+          element={user ? <GrammarProductionMode user={user} stage="guided" /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/grammar/free/:moduleId" 
+          element={user ? <GrammarProductionMode user={user} stage="free" /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/grammar/smart-review/:moduleId" 
+          element={user ? <GrammarSmartReview user={user} /> : <Navigate to="/" />} 
+        />
+        
+        {/* Unified Learning System Routes */}
+        <Route 
+          path="/unified" 
+          element={user ? <UnifiedCoursePage user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/unified/stage/:stageId" 
+          element={user ? <UnifiedStagePage user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/unified/lesson/:lessonId" 
+          element={user ? <UnifiedLessonPage user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/unified/daily-habit" 
+          element={user ? <DailyHabitPage user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/game-demo" 
+          element={<GameDemo />} 
+        />
+        
+        <Route 
+          path="/game-bank" 
+          element={<GameBank />} 
+        />
+        <Route 
+          path="/lesson-preview/:courseType/:lessonId" 
+          element={<LessonPreview />} 
+        />
+        <Route 
+          path="/feature-showcase" 
+          element={<FeatureShowcase />} 
+        />
+        <Route 
+          path="/demo/writing-task1" 
+          element={<WritingTask1Practice user={{id: 'demo', name: 'Demo User', email: 'demo@test.com'}} />} 
+        />
+        <Route 
+          path="/demo/writing-task2" 
+          element={<WritingTask2Practice user={{id: 'demo', name: 'Demo User', email: 'demo@test.com'}} />} 
+        />
+        <Route 
+          path="/demo/general-task1" 
+          element={<GeneralTask1Practice user={{id: 'demo', name: 'Demo User', email: 'demo@test.com'}} />} 
+        />
+        <Route 
+          path="/demo/general-task2" 
+          element={<GeneralTask2Practice user={{id: 'demo', name: 'Demo User', email: 'demo@test.com'}} />} 
+        />
+        <Route 
+          path="/question-bank/writing/task1" 
+          element={user ? <WritingTask1Practice user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/writing/task2" 
+          element={user ? <WritingTask2Practice user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/writing/general/task1" 
+          element={user ? <GeneralTask1Practice user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/writing/general/task2" 
+          element={user ? <GeneralTask2Practice user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/reading/academic" 
+          element={user ? <ReadingPracticeAcademic user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/reading/general" 
+          element={user ? <ReadingPracticeGeneral user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/reading/mastery/academic" 
+          element={user ? <ReadingPracticeMasteryAcademic user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/reading/mastery/general" 
+          element={user ? <ReadingPracticeMasteryGeneral user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/reading/practice" 
+          element={user ? <ReadingPracticeByType user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/listening" 
+          element={user ? <ListeningPractice user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/speaking" 
+          element={user ? <SpeakingPracticeQB user={user} /> : <Navigate to="/" />} 
+        />
+        <Route
+          path="/question-bank/practice"
+          element={user ? <PracticeMode user={user} /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/quick-practice"
+          element={user ? <PracticeMode user={user} /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/learning-tools"
+          element={user ? <LearningToolsIndex user={user} /> : <Navigate to="/" />}
+        />
+        <Route 
+          path="/liz" 
+          element={user ? <LizTeacher user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank" 
+          element={user ? <QuestionBank user={user} /> : <Navigate to="/" />} 
+        />
+        {/* Full Test Mode Routes */}
+        <Route 
+          path="/full-test" 
+          element={user ? <FullTestMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/full-test/take/:testId" 
+          element={user ? <FullTestInterface user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/full-test/results/:sessionId" 
+          element={user ? <FullTestResults user={user} /> : <Navigate to="/" />} 
+        />
+        {/* Cambridge IELTS Tests */}
+        <Route 
+          path="/cambridge-test/:bookId/:testId" 
+          element={user ? <CambridgeTestInterface user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/cambridge-test/:bookId/:testId/results" 
+          element={user ? <CambridgeTestResults user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/focus-plan" 
+          element={user ? <FocusPlan /> : <Navigate to="/" />} 
+        />
+        {/* Admin Tools */}
+        <Route 
+          path="/admin/visual-generator" 
+          element={user ? <VisualGenerator /> : <Navigate to="/" />} 
+        />
+      </Routes>
+      </Suspense>
+      {user && !location.pathname.startsWith('/liz') && (
+        <Suspense fallback={null}><LizFloatingButton user={user} /></Suspense>
+      )}
+      <EmergentBadgeWrapper />
+      <MobileNavWrapper user={user} />
+      <Toaster position="top-right" />
+    </>
+  );
+}
+
+
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <Router>
+          <div className="App min-h-screen bg-background text-foreground">
+            <LanguageLeakWatcher />
+            <QuotaExceededModal />
+            <AppWithSessionHandler />
+          </div>
+        </Router>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }
 

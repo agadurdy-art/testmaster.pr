@@ -1,0 +1,39 @@
+{
+  "type": "technical_diagram",
+  "width": 900,
+  "height": 500,
+  "title": "Research Methodology Stages",
+  "subtitle": "Complete the flowchart (Questions 21-25)",
+  "showLabels": true,
+  
+  "containers": [
+    {"id": "1", "type": "chamber", "x": 80, "y": 80, "width": 120, "height": 60, "label": "Topic Selection"},
+    {"id": "2", "type": "chamber", "x": 250, "y": 80, "width": 120, "height": 60, "label": "Research ______"},
+    {"id": "3", "type": "chamber", "x": 420, "y": 80, "width": 120, "height": 60, "label": "______ Design"},
+    {"id": "4", "type": "chamber", "x": 590, "y": 80, "width": 120, "height": 60, "label": "______ Testing"},
+    {"id": "5", "type": "chamber", "x": 250, "y": 250, "width": 120, "height": 60, "label": "Data ______"},
+    {"id": "6", "type": "chamber", "x": 420, "y": 250, "width": 120, "height": 60, "label": "Analysis"},
+    {"id": "7", "type": "chamber", "x": 590, "y": 250, "width": 120, "height": 60, "label": "Report ______"}
+  ],
+  
+  "pipes": [
+    {"from": [200, 110], "to": [250, 110], "type": "solid", "flow": true},
+    {"from": [370, 110], "to": [420, 110], "type": "solid", "flow": true},
+    {"from": [540, 110], "to": [590, 110], "type": "solid", "flow": true},
+    {"from": [650, 140], "to": [650, 200], "type": "solid", "flow": true},
+    {"from": [650, 200], "to": [310, 200], "type": "solid", "flow": false},
+    {"from": [310, 200], "to": [310, 250], "type": "solid", "flow": true},
+    {"from": [370, 280], "to": [420, 280], "type": "solid", "flow": true},
+    {"from": [540, 280], "to": [590, 280], "type": "solid", "flow": true}
+  ],
+  
+  "annotations": [
+    {"x": 140, "y": 50, "text": "Stage 1"},
+    {"x": 310, "y": 50, "text": "Stage 2"},
+    {"x": 480, "y": 50, "text": "Stage 3"},
+    {"x": 650, "y": 50, "text": "Stage 4"},
+    {"x": 310, "y": 220, "text": "Stage 5"},
+    {"x": 480, "y": 220, "text": "Stage 6"},
+    {"x": 650, "y": 220, "text": "Stage 7"}
+  ]
+}

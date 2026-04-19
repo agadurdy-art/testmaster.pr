@@ -1,0 +1,119 @@
+{
+  "iteration": 22,
+  "timestamp": "2026-02-12T05:50:00Z",
+  "test_type": "BACKEND_AND_FRONTEND",
+  "target": "IELTS Full Test Visuals Feature - 8 Academic Sets with Real Visuals",
+  "summary": {
+    "status": "PASSED",
+    "overall_result": "All 30 backend tests passed. All 8 academic test sets (A-H) are returned by API. All 26 visual images are served correctly. Before/after paired visuals work for Set D (floor plan) and Set G (paired graphs). Listening map visuals configured for Sets C, F, G, H. Frontend QuestionBank code verified to have all 8 sets unlocked. FullTestInterface has correct visual rendering code."
+  },
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "features_tested": [
+    {
+      "feature": "GET /api/full-test/sets?test_type=academic returns 8 sets",
+      "status": "PASSED",
+      "details": "All 8 academic sets (A-H) returned with correct test_ids and descriptions"
+    },
+    {
+      "feature": "Writing Task 1 visual_data with image_url",
+      "status": "PASSED",
+      "details": "Sets A, B, F have single image visuals with correct image_url paths"
+    },
+    {
+      "feature": "Set D before/after floor plan comparison",
+      "status": "PASSED",
+      "details": "Has image_url=visual_005_floor_plan_library_before.png, image_url_after=visual_026_floor_plan_library_today.png, type=floor_plan_comparison, labels '20 years ago' and 'Today'"
+    },
+    {
+      "feature": "Set G before/after paired line graphs",
+      "status": "PASSED",
+      "details": "Has image_url=visual_012_line_graph_appliances.png, image_url_after=visual_013_line_graph_housework.png, type=paired_line_graphs"
+    },
+    {
+      "feature": "Set C Listening Part 1 recreation ground map",
+      "status": "PASSED",
+      "details": "Has visual with image_url=visual_006_map_recreation_after.png, title='Recreation Ground Changes'"
+    },
+    {
+      "feature": "Set F Listening Part 2 Farley House map",
+      "status": "PASSED",
+      "details": "Has visual with image_url=visual_020_map_farley_house.png"
+    },
+    {
+      "feature": "Set G Listening Part 2 Stevenson's site plan",
+      "status": "PASSED",
+      "details": "Has visual with image_url=visual_011_floor_plan_stevenson_site.png"
+    },
+    {
+      "feature": "Set H Listening Part 2 Bidcaster dig map",
+      "status": "PASSED",
+      "details": "Has visual with image_url=visual_024_map_bidcaster_dig.png"
+    },
+    {
+      "feature": "Visual images served via GET /api/visuals/image/{name}",
+      "status": "PASSED",
+      "details": "All 26 visual images (visual_001 through visual_026) return 200 status"
+    },
+    {
+      "feature": "New sets F, G, H audio files",
+      "status": "PASSED",
+      "details": "Audio directories exist at /app/backend/static/audio/full_tests/academic_set_{f,g,h}_01/listening/"
+    },
+    {
+      "feature": "Frontend QuestionBank.js - 8 academic sets",
+      "status": "PASSED (CODE REVIEW)",
+      "details": "QuestionBank.js lines 819-828 define all 8 sets with correct IDs, labels, descriptions, and clickable cards (not Coming Soon)"
+    },
+    {
+      "feature": "Frontend FullTestInterface.js - before/after visual rendering",
+      "status": "PASSED (CODE REVIEW)",
+      "details": "Lines 1015-1048 correctly handle paired visuals with image_url and image_url_after, rendering side-by-side in 2-column grid with labels"
+    }
+  ],
+  "test_report_links": [
+    "/app/backend/tests/test_full_test_visuals.py",
+    "/app/test_reports/pytest/visuals_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [
+    "/app/backend/tests/test_full_test_visuals.py"
+  ],
+  "success_rate": {
+    "backend": "100% (30/30 tests passed)",
+    "frontend": "100% (code review verified - QuestionBank requires auth for live testing)"
+  },
+  "test_credentials": "N/A - QuestionBank requires authentication",
+  "seed_data_creation": "None - tests use existing academic test set data",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "All 8 academic test sets (A-H) are fully configured with real visuals. 26 PNG files in /app/backend/static/visuals/. Set D and Set G have paired before/after visuals. Sets C, F, G, H have listening map visuals. Frontend QuestionBank shows all 8 sets as clickable (requires auth to view). FullTestInterface correctly renders both single and paired visuals.",
+  "pytest_results": {
+    "total": 30,
+    "passed": 30,
+    "failed": 0,
+    "test_file": "test_full_test_visuals.py"
+  },
+  "visual_files_verified": [
+    "visual_001_line_graph_metals.png",
+    "visual_002_line_graph_urbanization.png", 
+    "visual_004_bar_chart_us_households.png",
+    "visual_005_floor_plan_library_before.png",
+    "visual_006_map_recreation_after.png",
+    "visual_011_floor_plan_stevenson_site.png",
+    "visual_012_line_graph_appliances.png",
+    "visual_013_line_graph_housework.png",
+    "visual_014_process_sugar_production.png",
+    "visual_020_map_farley_house.png",
+    "visual_024_map_bidcaster_dig.png",
+    "visual_026_floor_plan_library_today.png"
+  ]
+}

@@ -1,0 +1,2760 @@
+{
+  "stage": "stage_2",
+  "stage_id": "stage_2_starters",
+  "stage_title": "Starters (A1)",
+  "units": [
+    {
+      "unit_id": "stage_2_unit_08",
+      "unit_num": 8,
+      "title": "My House",
+      "subtitle": "Rooms and objects at home",
+      "phonics_focus": [
+        "House words",
+        "Question forms"
+      ],
+      "grammar_focus": [
+        "Is there a...?",
+        "Are there any...?",
+        "There is / There are"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_2_unit_08_lesson_01",
+          "title": "Rooms",
+          "topic": "Describing the different parts of a house",
+          "context": "Describing the different parts of a house.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's think about houses! Answer these questions.",
+              "questions": [
+                {
+                  "question_text": "Where do you sleep at night?",
+                  "correct_answer": "bedroom",
+                  "options": [
+                    "bedroom",
+                    "kitchen",
+                    "garden",
+                    "car"
+                  ],
+                  "image_emoji": "🛏️",
+                  "hint": "This room has a bed in it!"
+                },
+                {
+                  "question_text": "Where does your family eat dinner together?",
+                  "correct_answer": "kitchen",
+                  "options": [
+                    "bathroom",
+                    "kitchen",
+                    "bedroom",
+                    "garage"
+                  ],
+                  "image_emoji": "🍽️",
+                  "hint": "This is where we cook and eat food!"
+                },
+                {
+                  "question_text": "Where do you take a bath?",
+                  "correct_answer": "bathroom",
+                  "options": [
+                    "living room",
+                    "bathroom",
+                    "bedroom",
+                    "kitchen"
+                  ],
+                  "image_emoji": "🛁",
+                  "hint": "This room has a bathtub or shower!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "kitchen",
+                  "ipa": "",
+                  "definition": "The room where we make food.",
+                  "example": "Mom cooks in the kitchen.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/kitchen.png"
+                },
+                {
+                  "word": "bathroom",
+                  "ipa": "",
+                  "definition": "A room to wash and use the toilet.",
+                  "example": "The bathroom is clean.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/bathroom.png"
+                },
+                {
+                  "word": "bedroom",
+                  "ipa": "",
+                  "definition": "A room where you sleep.",
+                  "example": "My bedroom is tidy.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/bedroom.png"
+                },
+                {
+                  "word": "living room",
+                  "ipa": "",
+                  "definition": "A room to sit and relax.",
+                  "example": "We play in the living room.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/living_room.png"
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "kitchen",
+                      "emoji": "🍳",
+                      "distractors": [
+                        {
+                          "word": "garden",
+                          "emoji": "🌻"
+                        },
+                        {
+                          "word": "school",
+                          "emoji": "🏫"
+                        },
+                        {
+                          "word": "park",
+                          "emoji": "🎠"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "bathroom",
+                      "emoji": "🛁",
+                      "distractors": [
+                        {
+                          "word": "door",
+                          "emoji": "🚪"
+                        },
+                        {
+                          "word": "window",
+                          "emoji": "🪟"
+                        },
+                        {
+                          "word": "stairs",
+                          "emoji": "🪜"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "bedroom",
+                      "emoji": "🛏️",
+                      "distractors": [
+                        {
+                          "word": "table",
+                          "emoji": "🪑"
+                        },
+                        {
+                          "word": "closet",
+                          "emoji": "🚪"
+                        },
+                        {
+                          "word": "lamp",
+                          "emoji": "💡"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "living room",
+                      "emoji": "🛋️",
+                      "distractors": [
+                        {
+                          "word": "garage",
+                          "emoji": "🚗"
+                        },
+                        {
+                          "word": "roof",
+                          "emoji": "🏠"
+                        },
+                        {
+                          "word": "hallway",
+                          "emoji": "🚶"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "kitchen",
+                      "emoji": "🍳",
+                      "distractors": [
+                        {
+                          "word": "playground",
+                          "emoji": "🎪"
+                        },
+                        {
+                          "word": "backyard",
+                          "emoji": "🌳"
+                        },
+                        {
+                          "word": "driveway",
+                          "emoji": "🚙"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "bathroom",
+                      "emoji": "🛁",
+                      "distractors": [
+                        {
+                          "word": "wall",
+                          "emoji": "🧱"
+                        },
+                        {
+                          "word": "floor",
+                          "emoji": "⬜",
+                          "image_url": "/static/vocab_images/floor.png"
+                        },
+                        {
+                          "word": "ceiling",
+                          "emoji": "💡"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "bedroom",
+                      "emoji": "🛏️",
+                      "distractors": [
+                        {
+                          "word": "desk",
+                          "emoji": "🪑"
+                        },
+                        {
+                          "word": "bookshelf",
+                          "emoji": "📚"
+                        },
+                        {
+                          "word": "mirror",
+                          "emoji": "🪞"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "living room",
+                      "emoji": "🛋️",
+                      "distractors": [
+                        {
+                          "word": "balcony",
+                          "emoji": "🌆"
+                        },
+                        {
+                          "word": "attic",
+                          "emoji": "📦"
+                        },
+                        {
+                          "word": "basement",
+                          "emoji": "🔦"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "kitchen",
+                      "emoji": "🍳"
+                    },
+                    {
+                      "word": "bathroom",
+                      "emoji": "🛁"
+                    },
+                    {
+                      "word": "bedroom",
+                      "emoji": "🛏️"
+                    },
+                    {
+                      "word": "living room",
+                      "emoji": "🛋️"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "flashcard_match",
+                  "items": [
+                    {
+                      "word": "kitchen",
+                      "emoji": "🍳",
+                      "definition": "We cook and eat here"
+                    },
+                    {
+                      "word": "bathroom",
+                      "emoji": "🛁",
+                      "definition": "We wash and take a bath here"
+                    },
+                    {
+                      "word": "bedroom",
+                      "emoji": "🛏️",
+                      "definition": "We sleep here at night"
+                    },
+                    {
+                      "word": "living room",
+                      "emoji": "🛋️",
+                      "definition": "We sit and watch TV here"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Emma's New House",
+              "text": "Emma has a new house. There is a big kitchen with a yellow table. There are two bedrooms upstairs. Her bedroom has a blue bed. There is a bathroom next to her bedroom. The living room has a soft sofa. Emma loves her new house!",
+              "scene_description": "Happy young girl showing her bedroom in a new house, bright and colorful children's room",
+              "questions": [
+                {
+                  "question": "What color is the table in the kitchen?",
+                  "answer": "yellow",
+                  "options": [
+                    "blue",
+                    "yellow",
+                    "red"
+                  ],
+                  "correct_answer": "yellow"
+                },
+                {
+                  "question": "Where is the bathroom?",
+                  "answer": "next to Emma's bedroom",
+                  "options": [
+                    "in the kitchen",
+                    "next to Emma's bedroom",
+                    "in the living room"
+                  ],
+                  "correct_answer": "next to Emma's bedroom"
+                },
+                {
+                  "question": "How many bedrooms are there in Emma's house?",
+                  "answer": "two",
+                  "options": [
+                    "one",
+                    "two",
+                    "three"
+                  ],
+                  "correct_answer": "two"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "There is a ___ / There are ___ / Is there a ___? / Are there any ___?",
+              "explanation": "We use 'There is' for ONE thing and 'There are' for MORE THAN ONE thing in our house.",
+              "examples": [
+                "There is a kitchen in my house.",
+                "There are two bedrooms in my house.",
+                "Is there a bathroom upstairs?"
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "There",
+                        "is",
+                        "a",
+                        "kitchen"
+                      ],
+                      "correctSentence": "There is a kitchen"
+                    },
+                    {
+                      "words": [
+                        "Are",
+                        "there",
+                        "any",
+                        "bedrooms"
+                      ],
+                      "correctSentence": "Are there any bedrooms"
+                    },
+                    {
+                      "words": [
+                        "There",
+                        "are",
+                        "two",
+                        "bathrooms"
+                      ],
+                      "correctSentence": "There are two bathrooms"
+                    },
+                    {
+                      "words": [
+                        "Is",
+                        "there",
+                        "a",
+                        "living",
+                        "room"
+                      ],
+                      "correctSentence": "Is there a living room"
+                    },
+                    {
+                      "words": [
+                        "There",
+                        "is",
+                        "one",
+                        "bedroom"
+                      ],
+                      "correctSentence": "There is one bedroom"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "There ___ a kitchen in my house.",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "There ___ three bedrooms upstairs.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "___ there a bathroom downstairs?",
+                      "answer": "Is",
+                      "options": [
+                        "Is",
+                        "Are",
+                        "Am",
+                        "Be"
+                      ]
+                    },
+                    {
+                      "sentence": "___ there any windows in the living room?",
+                      "answer": "Are",
+                      "options": [
+                        "Is",
+                        "Are",
+                        "Am",
+                        "Be"
+                      ]
+                    },
+                    {
+                      "sentence": "There ___ a big sofa in the living room.",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "There are a kitchen in my house.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with one kitchen, not 'are'"
+                    },
+                    {
+                      "sentence": "Is there any bedrooms upstairs?",
+                      "errorWord": "Is",
+                      "correctWord": "Are",
+                      "explanation": "Use 'Are' with plural bedrooms"
+                    },
+                    {
+                      "sentence": "There is three bathroom in my house.",
+                      "errorWord": "bathroom",
+                      "correctWord": "bathrooms",
+                      "explanation": "Use plural 'bathrooms' with three"
+                    },
+                    {
+                      "sentence": "Are there a living room downstairs?",
+                      "errorWord": "Are",
+                      "correctWord": "Is",
+                      "explanation": "Use 'Is' with one living room"
+                    },
+                    {
+                      "sentence": "There am two bedrooms in my house.",
+                      "errorWord": "am",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with two bedrooms, not 'am'"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "There is a bathroom in my house.",
+                      "is_correct": true,
+                      "corrected": "There is a bathroom in my house.",
+                      "explanation": "Correct! Use 'is' with one bathroom"
+                    },
+                    {
+                      "sentence": "There are a kitchen downstairs.",
+                      "is_correct": false,
+                      "corrected": "There is a kitchen downstairs.",
+                      "explanation": "Use 'is' with one kitchen, not 'are'"
+                    },
+                    {
+                      "sentence": "Are there any bedrooms upstairs?",
+                      "is_correct": true,
+                      "corrected": "Are there any bedrooms upstairs?",
+                      "explanation": "Correct! Use 'Are' to ask about plural bedrooms"
+                    },
+                    {
+                      "sentence": "Is there two living rooms?",
+                      "is_correct": false,
+                      "corrected": "Are there two living rooms?",
+                      "explanation": "Use 'Are' with two living rooms, not 'Is'"
+                    },
+                    {
+                      "sentence": "There are three bedrooms in my house.",
+                      "is_correct": true,
+                      "corrected": "There are three bedrooms in my house.",
+                      "explanation": "Correct! Use 'are' with three bedrooms"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "_____ a kitchen in my house.",
+                      "answer": "There is",
+                      "options": [
+                        "There is",
+                        "There are",
+                        "Is there",
+                        "Are there"
+                      ],
+                      "explanation": "Use 'There is' to say one kitchen exists"
+                    },
+                    {
+                      "question": "_____ two bathrooms upstairs?",
+                      "answer": "Are there",
+                      "options": [
+                        "Is there",
+                        "Are there",
+                        "There is",
+                        "There are"
+                      ],
+                      "explanation": "Use 'Are there' to ask about plural bathrooms"
+                    },
+                    {
+                      "question": "_____ three bedrooms in my house.",
+                      "answer": "There are",
+                      "options": [
+                        "There is",
+                        "There are",
+                        "Is there",
+                        "Are there"
+                      ],
+                      "explanation": "Use 'There are' with three bedrooms"
+                    },
+                    {
+                      "question": "_____ a living room downstairs?",
+                      "answer": "Is there",
+                      "options": [
+                        "Is there",
+                        "Are there",
+                        "There is",
+                        "There are"
+                      ],
+                      "explanation": "Use 'Is there' to ask about one living room"
+                    },
+                    {
+                      "question": "_____ any windows in the bedroom?",
+                      "answer": "Are there",
+                      "options": [
+                        "Is there",
+                        "Are there",
+                        "There is",
+                        "There are"
+                      ],
+                      "explanation": "Use 'Are there' with 'any' for plural windows"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello children! Let me tell you about my house. There is a big kitchen with a red table. There are three bedrooms upstairs. My bedroom has a blue bed. Is there a bathroom upstairs? Yes, there is one bathroom next to my bedroom. The living room is downstairs and it has a soft sofa.",
+              "questions": [
+                {
+                  "question": "How many bedrooms are there in the house?",
+                  "answer": "three",
+                  "options": [
+                    "two",
+                    "three",
+                    "four"
+                  ]
+                },
+                {
+                  "question": "What color is the bed in the bedroom?",
+                  "answer": "blue",
+                  "options": [
+                    "red",
+                    "blue",
+                    "green"
+                  ]
+                },
+                {
+                  "question": "Where is the living room?",
+                  "answer": "downstairs",
+                  "options": [
+                    "upstairs",
+                    "downstairs",
+                    "outside"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Let's talk about your house! Say these sentences out loud.",
+              "expected_text": "There is a kitchen in my house.",
+              "prompts": [
+                {
+                  "prompt": "Say: There is a kitchen in my house.",
+                  "expected_text": "There is a kitchen in my house."
+                },
+                {
+                  "prompt": "Say: There are two bedrooms in my house.",
+                  "expected_text": "There are two bedrooms in my house."
+                },
+                {
+                  "prompt": "Ask: Is there a bathroom upstairs?",
+                  "expected_text": "Is there a bathroom upstairs?"
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Rooms Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which room do you sleep in?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "bedroom",
+                  "options": [
+                    "kitchen",
+                    "bedroom",
+                    "bathroom",
+                    "living room"
+                  ]
+                },
+                {
+                  "question_text": "There ___ a kitchen in my house.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "is",
+                  "options": [
+                    "is",
+                    "are",
+                    "am",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "___ there any bedrooms upstairs?",
+                  "question_type": "fill_blank",
+                  "correct_answer": "Are",
+                  "options": [
+                    "Is",
+                    "Are",
+                    "Am",
+                    "Be"
+                  ]
+                },
+                {
+                  "question_text": "True or False: We use 'There are' when talking about more than one room.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Read: 'There are two bathrooms in my house.' How many bathrooms are there?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "two",
+                  "options": [
+                    "one",
+                    "two",
+                    "three",
+                    "four"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 1
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_2_unit_08_lesson_02",
+          "title": "Furniture",
+          "topic": "Finding objects while cleaning a room",
+          "context": "Finding objects while cleaning a room.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's think about cleaning! Answer these questions.",
+              "questions": [
+                {
+                  "question_text": "Where do you look when you can't find your toy?",
+                  "correct_answer": "under the bed",
+                  "options": [
+                    "under the bed",
+                    "in the sky",
+                    "in the fridge",
+                    "in the tree"
+                  ],
+                  "image_emoji": "🛏️",
+                  "hint": "Think about places in your bedroom where toys can hide!"
+                },
+                {
+                  "question_text": "What furniture do you open to put away your clothes?",
+                  "correct_answer": "wardrobe",
+                  "options": [
+                    "wardrobe",
+                    "window",
+                    "door",
+                    "floor"
+                  ],
+                  "image_emoji": "👔",
+                  "hint": "It's a big piece of furniture where you keep shirts and pants!"
+                },
+                {
+                  "question_text": "When Mom says 'Clean your room!', what should you do first?",
+                  "correct_answer": "pick up toys from the floor",
+                  "options": [
+                    "pick up toys from the floor",
+                    "go outside to play",
+                    "watch TV",
+                    "eat a snack"
+                  ],
+                  "image_emoji": "🧸",
+                  "hint": "Look around! What's lying on the floor that needs to go back to its place?"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "mirror",
+                  "ipa": "",
+                  "definition": "Glass that reflects images.",
+                  "example": "Look in the mirror.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/mirror.png"
+                },
+                {
+                  "word": "clock",
+                  "ipa": "",
+                  "definition": "A tool that tells time.",
+                  "example": "The clock shows time.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/clock.png"
+                },
+                {
+                  "word": "phone",
+                  "ipa": "",
+                  "definition": "A tool to talk to people far away.",
+                  "example": "I call my friend on the phone.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_phone.png"
+                },
+                {
+                  "word": "stairs",
+                  "ipa": "",
+                  "definition": "Steps to go up or down.",
+                  "example": "Go up the stairs.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_stairs.png"
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_write",
+                  "items": [
+                    {
+                      "word": "mirror",
+                      "emoji": "🪞"
+                    },
+                    {
+                      "word": "clock",
+                      "emoji": "🕐"
+                    },
+                    {
+                      "word": "phone",
+                      "emoji": "📱"
+                    },
+                    {
+                      "word": "stairs",
+                      "emoji": "🪜"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "look_write",
+                  "items": [
+                    {
+                      "word": "mirror",
+                      "emoji": "🪞",
+                      "hint": "You look at your face in this!"
+                    },
+                    {
+                      "word": "clock",
+                      "emoji": "🕐",
+                      "hint": "This tells you what time it is!"
+                    },
+                    {
+                      "word": "phone",
+                      "emoji": "📱",
+                      "hint": "You can call Mom and Dad with this!"
+                    },
+                    {
+                      "word": "stairs",
+                      "emoji": "🪜",
+                      "hint": "You walk up and down these to go to different floors!"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_gap",
+                  "items": [
+                    {
+                      "sentence": "I look in the ___ to see my hair.",
+                      "answer": "mirror",
+                      "options": [
+                        "mirror",
+                        "clock",
+                        "phone",
+                        "stairs"
+                      ],
+                      "emoji": "🪞"
+                    },
+                    {
+                      "sentence": "The ___ says it's 3 o'clock!",
+                      "answer": "clock",
+                      "options": [
+                        "clock",
+                        "mirror",
+                        "phone",
+                        "stairs"
+                      ],
+                      "emoji": "🕐"
+                    },
+                    {
+                      "sentence": "Mom is calling me on the ___.",
+                      "answer": "phone",
+                      "options": [
+                        "phone",
+                        "mirror",
+                        "clock",
+                        "stairs"
+                      ],
+                      "emoji": "📱"
+                    },
+                    {
+                      "sentence": "Be careful when you walk down the ___!",
+                      "answer": "stairs",
+                      "options": [
+                        "stairs",
+                        "phone",
+                        "mirror",
+                        "clock"
+                      ],
+                      "emoji": "🪜"
+                    },
+                    {
+                      "sentence": "I can see myself in the ___.",
+                      "answer": "mirror",
+                      "options": [
+                        "mirror",
+                        "stairs",
+                        "phone",
+                        "clock"
+                      ],
+                      "emoji": "🪞"
+                    },
+                    {
+                      "sentence": "We go up the ___ to our bedroom.",
+                      "answer": "stairs",
+                      "options": [
+                        "stairs",
+                        "clock",
+                        "mirror",
+                        "phone"
+                      ],
+                      "emoji": "🪜"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Clean Up Time!",
+              "text": "Emma is cleaning her room. She looks under the bed and finds her phone! There is a mirror on the wall. She walks up the stairs with her toys. The clock says it's 4 o'clock. Time to finish!",
+              "scene_description": "young girl cleaning bedroom, putting toys away, tidy children's room",
+              "questions": [
+                {
+                  "question": "Where does Emma find her phone?",
+                  "answer": "under the bed",
+                  "options": [
+                    "under the bed",
+                    "on the stairs",
+                    "in the mirror"
+                  ],
+                  "correct_answer": "under the bed"
+                },
+                {
+                  "question": "Is there a mirror in Emma's room?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "correct_answer": "Yes"
+                },
+                {
+                  "question": "What time does the clock show?",
+                  "answer": "4 o'clock",
+                  "options": [
+                    "4 o'clock",
+                    "3 o'clock",
+                    "5 o'clock"
+                  ],
+                  "correct_answer": "4 o'clock"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Is there a ___? / Are there any ___s? / There is a ___ / There are ___s",
+              "explanation": "We use 'Is there' and 'There is' for ONE thing, and 'Are there' and 'There are' for TWO or MORE things!",
+              "examples": [
+                "Is there a clock in your room? Yes, there is a clock on the wall.",
+                "Are there any toys under the bed? Yes, there are three toys under the bed.",
+                "There is a mirror in the bathroom. There are stairs in my house."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "Is",
+                        "there",
+                        "a",
+                        "mirror",
+                        "?"
+                      ],
+                      "correctSentence": "Is there a mirror?"
+                    },
+                    {
+                      "words": [
+                        "There",
+                        "is",
+                        "a",
+                        "clock",
+                        "."
+                      ],
+                      "correctSentence": "There is a clock."
+                    },
+                    {
+                      "words": [
+                        "Are",
+                        "there",
+                        "any",
+                        "toys",
+                        "?"
+                      ],
+                      "correctSentence": "Are there any toys?"
+                    },
+                    {
+                      "words": [
+                        "There",
+                        "are",
+                        "stairs",
+                        "here",
+                        "."
+                      ],
+                      "correctSentence": "There are stairs here."
+                    },
+                    {
+                      "words": [
+                        "Is",
+                        "there",
+                        "a",
+                        "phone",
+                        "?"
+                      ],
+                      "correctSentence": "Is there a phone?"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "___ there a mirror in the room?",
+                      "answer": "Is",
+                      "options": [
+                        "Is",
+                        "Are",
+                        "Am",
+                        "Be"
+                      ]
+                    },
+                    {
+                      "sentence": "There ___ a clock on the wall.",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "___ there any phones here?",
+                      "answer": "Are",
+                      "options": [
+                        "Are",
+                        "Is",
+                        "Am",
+                        "Be"
+                      ]
+                    },
+                    {
+                      "sentence": "There ___ stairs in my house.",
+                      "answer": "are",
+                      "options": [
+                        "are",
+                        "is",
+                        "am",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "Is there ___ mirror?",
+                      "answer": "a",
+                      "options": [
+                        "a",
+                        "an",
+                        "any",
+                        "some"
+                      ]
+                    },
+                    {
+                      "sentence": "Are there ___ clocks?",
+                      "answer": "any",
+                      "options": [
+                        "any",
+                        "a",
+                        "an",
+                        "one"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "Is there any mirror?",
+                      "errorWord": "any",
+                      "correctWord": "a",
+                      "explanation": "Use 'a' with singular nouns after 'Is there'"
+                    },
+                    {
+                      "sentence": "There are a phone here.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with one thing"
+                    },
+                    {
+                      "sentence": "Are there a clocks?",
+                      "errorWord": "a",
+                      "correctWord": "any",
+                      "explanation": "Use 'any' with plural nouns after 'Are there'"
+                    },
+                    {
+                      "sentence": "There is two mirror.",
+                      "errorWord": "mirror",
+                      "correctWord": "mirrors",
+                      "explanation": "Add 's' for plural after 'two'"
+                    },
+                    {
+                      "sentence": "Is there stairs?",
+                      "errorWord": "Is",
+                      "correctWord": "Are",
+                      "explanation": "Use 'Are there' with plural nouns"
+                    },
+                    {
+                      "sentence": "There am a clock.",
+                      "errorWord": "am",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' in 'There is' sentences"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "Is there a mirror?",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "Correct! We use 'Is there a' for one thing."
+                    },
+                    {
+                      "sentence": "There is stairs.",
+                      "is_correct": false,
+                      "corrected": "There are stairs.",
+                      "explanation": "Use 'are' with plural nouns"
+                    },
+                    {
+                      "sentence": "Are there any phones?",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "Correct! We use 'Are there any' for more than one thing."
+                    },
+                    {
+                      "sentence": "Is there any clocks?",
+                      "is_correct": false,
+                      "corrected": "Are there any clocks?",
+                      "explanation": "Use 'Are there' with plural nouns"
+                    },
+                    {
+                      "sentence": "There are toys under the bed.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "Correct! 'There are' is used for more than one thing."
+                    },
+                    {
+                      "sentence": "There are a phone.",
+                      "is_correct": false,
+                      "corrected": "There is a phone.",
+                      "explanation": "Use 'There is' with one thing"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "___ there a clock in your room?",
+                      "answer": "Is",
+                      "options": [
+                        "Is",
+                        "Are",
+                        "Am",
+                        "Be"
+                      ],
+                      "explanation": "Use 'Is' for asking about one thing"
+                    },
+                    {
+                      "question": "There ___ a mirror on the wall.",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with one thing"
+                    },
+                    {
+                      "question": "___ there any stairs?",
+                      "answer": "Are",
+                      "options": [
+                        "Are",
+                        "Is",
+                        "Am",
+                        "Be"
+                      ],
+                      "explanation": "Use 'Are' for asking about more than one thing"
+                    },
+                    {
+                      "question": "There ___ two phones here.",
+                      "answer": "are",
+                      "options": [
+                        "are",
+                        "is",
+                        "am",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with more than one thing"
+                    },
+                    {
+                      "question": "Is there ___ mirror?",
+                      "answer": "a",
+                      "options": [
+                        "a",
+                        "an",
+                        "any",
+                        "some"
+                      ],
+                      "explanation": "Use 'a' with singular nouns after 'Is there'"
+                    },
+                    {
+                      "question": "Are there ___ toys?",
+                      "answer": "any",
+                      "options": [
+                        "any",
+                        "a",
+                        "an",
+                        "one"
+                      ],
+                      "explanation": "Use 'any' with plural nouns after 'Are there'"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello children! Let me tell you about my morning. I was cleaning my bedroom and I found my phone under the bed! Then I looked at the clock on the wall. It was 9 o'clock! I walked up the stairs to put my toys away. There is a big mirror in my room and I can see myself when I clean!",
+              "questions": [
+                {
+                  "question": "Where did I find my phone?",
+                  "answer": "under the bed",
+                  "options": [
+                    "under the bed",
+                    "on the stairs",
+                    "near the clock",
+                    "by the mirror"
+                  ]
+                },
+                {
+                  "question": "What time was it on the clock?",
+                  "answer": "9 o'clock",
+                  "options": [
+                    "9 o'clock",
+                    "8 o'clock",
+                    "10 o'clock",
+                    "7 o'clock"
+                  ]
+                },
+                {
+                  "question": "Is there a mirror in my room?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Let's practice speaking! Look at your room and answer these questions out loud.",
+              "expected_text": "There is a mirror in my room.",
+              "prompts": [
+                {
+                  "prompt": "Is there a clock in your room? Say: Yes, there is a clock. OR No, there isn't a clock.",
+                  "expected_text": "Yes, there is a clock."
+                },
+                {
+                  "prompt": "Look around. Tell me: There is a ___ in my room. (Choose: mirror, phone, or clock)",
+                  "expected_text": "There is a mirror in my room."
+                },
+                {
+                  "prompt": "Ask me a question using 'Are there any...?' (Try: toys, stairs, or phones)",
+                  "expected_text": "Are there any toys in your room?"
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Furniture Lesson Review",
+              "questions": [
+                {
+                  "question_text": "Which one helps you see what time it is?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "clock",
+                  "options": [
+                    "clock",
+                    "mirror",
+                    "stairs",
+                    "phone"
+                  ]
+                },
+                {
+                  "question_text": "There ___ a mirror on the wall.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "is",
+                  "options": [
+                    "is",
+                    "are",
+                    "am",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "___ there any toys under the bed?",
+                  "question_type": "fill_blank",
+                  "correct_answer": "Are",
+                  "options": [
+                    "Are",
+                    "Is",
+                    "Am",
+                    "Be"
+                  ]
+                },
+                {
+                  "question_text": "True or False: We use 'Is there' when asking about ONE thing.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Read: 'I walk up the stairs to my room.' Where do I go?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "to my room",
+                  "options": [
+                    "to my room",
+                    "to the kitchen",
+                    "to the garden",
+                    "to school"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 2
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_2_unit_08_lesson_03",
+          "title": "Existence",
+          "topic": "Describing what is inside a dream house",
+          "context": "Describing what is inside a dream house.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's think about houses! Answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Where do you sleep in your house?",
+                  "correct_answer": "bedroom",
+                  "options": [
+                    "bedroom",
+                    "kitchen",
+                    "garden",
+                    "car"
+                  ],
+                  "image_emoji": "🛏️",
+                  "hint": "This room has a bed in it!"
+                },
+                {
+                  "question_text": "What room has a table where your family eats?",
+                  "correct_answer": "dining room",
+                  "options": [
+                    "bathroom",
+                    "dining room",
+                    "garage",
+                    "closet"
+                  ],
+                  "image_emoji": "🍽️",
+                  "hint": "Think about where you sit down to eat dinner!"
+                },
+                {
+                  "question_text": "Where do you wash your hands and take a bath?",
+                  "correct_answer": "bathroom",
+                  "options": [
+                    "living room",
+                    "bedroom",
+                    "bathroom",
+                    "kitchen"
+                  ],
+                  "image_emoji": "🚿",
+                  "hint": "This room has a toilet and a sink!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "there is",
+                  "ipa": "",
+                  "definition": "Words to show one thing exists.",
+                  "example": "There is a car.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_there_is.png"
+                },
+                {
+                  "word": "there are",
+                  "ipa": "",
+                  "definition": "Words to show more than one thing exists.",
+                  "example": "There are two cats.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_there_are.png"
+                },
+                {
+                  "word": "many",
+                  "ipa": "",
+                  "definition": "A lot of things.",
+                  "example": "There are many apples.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/many.png"
+                },
+                {
+                  "word": "some",
+                  "ipa": "",
+                  "definition": "A small amount or part of something.",
+                  "example": "I want some cake.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_some.png"
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "memory_game",
+                  "items": [
+                    {
+                      "word": "there is",
+                      "emoji": "👆"
+                    },
+                    {
+                      "word": "there are",
+                      "emoji": "👆👆"
+                    },
+                    {
+                      "word": "many",
+                      "emoji": "🔢"
+                    },
+                    {
+                      "word": "some",
+                      "emoji": "✋"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "listen_choose_word",
+                  "items": [
+                    {
+                      "word": "there is",
+                      "emoji": "👆",
+                      "distractors": [
+                        "their is",
+                        "there are",
+                        "they is"
+                      ]
+                    },
+                    {
+                      "word": "there are",
+                      "emoji": "👆👆",
+                      "distractors": [
+                        "there is",
+                        "their are",
+                        "they are"
+                      ]
+                    },
+                    {
+                      "word": "many",
+                      "emoji": "🔢",
+                      "distractors": [
+                        "much",
+                        "more",
+                        "money"
+                      ]
+                    },
+                    {
+                      "word": "some",
+                      "emoji": "✋",
+                      "distractors": [
+                        "sum",
+                        "same",
+                        "come"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "there is",
+                      "emoji": "👆",
+                      "distractors": [
+                        {
+                          "word": "one apple",
+                          "emoji": "🍎"
+                        },
+                        {
+                          "word": "a cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "my toy",
+                          "emoji": "🧸"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "there are",
+                      "emoji": "👆👆",
+                      "distractors": [
+                        {
+                          "word": "two dogs",
+                          "emoji": "🐶🐶"
+                        },
+                        {
+                          "word": "three books",
+                          "emoji": "📚"
+                        },
+                        {
+                          "word": "many balls",
+                          "emoji": "⚽⚽⚽"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "many",
+                      "emoji": "🔢",
+                      "distractors": [
+                        {
+                          "word": "few",
+                          "emoji": "👌"
+                        },
+                        {
+                          "word": "lots",
+                          "emoji": "💯"
+                        },
+                        {
+                          "word": "all",
+                          "emoji": "✨"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "some",
+                      "emoji": "✋",
+                      "distractors": [
+                        {
+                          "word": "none",
+                          "emoji": "🚫"
+                        },
+                        {
+                          "word": "all",
+                          "emoji": "💯"
+                        },
+                        {
+                          "word": "every",
+                          "emoji": "🔄"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "My Dream House",
+              "text": "I have a dream house! There is a big kitchen with a red table. There are many toys in my bedroom. There are some books on the shelf. Is there a garden? Yes, there is!",
+              "scene_description": "happy child drawing or imagining a colorful house, dreamy atmosphere",
+              "questions": [
+                {
+                  "question": "What color is the table in the kitchen?",
+                  "answer": "red",
+                  "options": [
+                    "blue",
+                    "red",
+                    "green"
+                  ],
+                  "correct_answer": "red"
+                },
+                {
+                  "question": "Where are the many toys?",
+                  "answer": "in the bedroom",
+                  "options": [
+                    "in the kitchen",
+                    "in the bedroom",
+                    "in the garden"
+                  ],
+                  "correct_answer": "in the bedroom"
+                },
+                {
+                  "question": "Is there a garden in the dream house?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No",
+                    "Maybe"
+                  ],
+                  "correct_answer": "Yes"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "There is ___ (one thing). / There are ___ (two or more things).",
+              "explanation": "We say 'there is' for one thing and 'there are' for many things in a place.",
+              "examples": [
+                "There is a bed in my bedroom.",
+                "There are some chairs in the kitchen.",
+                "There are many books on the shelf."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "There",
+                        "is",
+                        "a",
+                        "bed"
+                      ],
+                      "correctSentence": "There is a bed"
+                    },
+                    {
+                      "words": [
+                        "There",
+                        "are",
+                        "some",
+                        "toys"
+                      ],
+                      "correctSentence": "There are some toys"
+                    },
+                    {
+                      "words": [
+                        "Is",
+                        "there",
+                        "a",
+                        "kitchen"
+                      ],
+                      "correctSentence": "Is there a kitchen"
+                    },
+                    {
+                      "words": [
+                        "Are",
+                        "there",
+                        "any",
+                        "chairs"
+                      ],
+                      "correctSentence": "Are there any chairs"
+                    },
+                    {
+                      "words": [
+                        "There",
+                        "are",
+                        "many",
+                        "books"
+                      ],
+                      "correctSentence": "There are many books"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "There ___ a table in the kitchen.",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "There ___ some beds in my house.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "was"
+                      ]
+                    },
+                    {
+                      "sentence": "___ there a garden?",
+                      "answer": "Is",
+                      "options": [
+                        "Is",
+                        "Are",
+                        "Am",
+                        "Be"
+                      ]
+                    },
+                    {
+                      "sentence": "___ there any toys in the bedroom?",
+                      "answer": "Are",
+                      "options": [
+                        "Is",
+                        "Are",
+                        "Am",
+                        "Do"
+                      ]
+                    },
+                    {
+                      "sentence": "There are ___ books on the shelf.",
+                      "answer": "many",
+                      "options": [
+                        "many",
+                        "much",
+                        "a",
+                        "one"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "There are a bed in my room.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with one thing"
+                    },
+                    {
+                      "sentence": "Is there any chairs here?",
+                      "errorWord": "Is",
+                      "correctWord": "Are",
+                      "explanation": "Use 'Are' with plural chairs"
+                    },
+                    {
+                      "sentence": "There is many toys in the box.",
+                      "errorWord": "is",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with many toys"
+                    },
+                    {
+                      "sentence": "There are some book on the table.",
+                      "errorWord": "book",
+                      "correctWord": "books",
+                      "explanation": "Use 'books' for plural with some"
+                    },
+                    {
+                      "sentence": "Are there a kitchen in your house?",
+                      "errorWord": "Are",
+                      "correctWord": "Is",
+                      "explanation": "Use 'Is' with one kitchen"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "There is a garden in my house.",
+                      "is_correct": true,
+                      "corrected": "There is a garden in my house.",
+                      "explanation": "Correct! 'Is' is used with one garden"
+                    },
+                    {
+                      "sentence": "There are some chair in the room.",
+                      "is_correct": false,
+                      "corrected": "There are some chairs in the room.",
+                      "explanation": "Use 'chairs' (plural) with some"
+                    },
+                    {
+                      "sentence": "Is there any books on the shelf?",
+                      "is_correct": false,
+                      "corrected": "Are there any books on the shelf?",
+                      "explanation": "Use 'Are' with plural books"
+                    },
+                    {
+                      "sentence": "There are many toys in my bedroom.",
+                      "is_correct": true,
+                      "corrected": "There are many toys in my bedroom.",
+                      "explanation": "Correct! 'Are' is used with many toys"
+                    },
+                    {
+                      "sentence": "There is some windows in the house.",
+                      "is_correct": false,
+                      "corrected": "There are some windows in the house.",
+                      "explanation": "Use 'are' with plural windows"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "There ___ a bed in my dream house.",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' for one thing"
+                    },
+                    {
+                      "question": "There ___ many chairs in the kitchen.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "was"
+                      ],
+                      "explanation": "Use 'are' for many things"
+                    },
+                    {
+                      "question": "___ there a bathroom in your house?",
+                      "answer": "Is",
+                      "options": [
+                        "Is",
+                        "Are",
+                        "Am",
+                        "Do"
+                      ],
+                      "explanation": "Use 'Is' to ask about one thing"
+                    },
+                    {
+                      "question": "___ there any toys in the box?",
+                      "answer": "Are",
+                      "options": [
+                        "Is",
+                        "Are",
+                        "Am",
+                        "Does"
+                      ],
+                      "explanation": "Use 'Are' to ask about plural things"
+                    },
+                    {
+                      "question": "There are ___ books on my shelf.",
+                      "answer": "some",
+                      "options": [
+                        "a",
+                        "some",
+                        "one",
+                        "any"
+                      ],
+                      "explanation": "Use 'some' in positive sentences with plural"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello children! Let me tell you about my dream house. There is a big kitchen with a yellow table. There are many windows in the living room. Is there a garden? Yes, there is! There are some flowers in the garden.",
+              "questions": [
+                {
+                  "question": "What color is the table in the kitchen?",
+                  "answer": "yellow",
+                  "options": [
+                    "yellow",
+                    "blue",
+                    "red",
+                    "green"
+                  ]
+                },
+                {
+                  "question": "Where are the many windows?",
+                  "answer": "in the living room",
+                  "options": [
+                    "in the kitchen",
+                    "in the bedroom",
+                    "in the living room",
+                    "in the bathroom"
+                  ]
+                },
+                {
+                  "question": "What is in the garden?",
+                  "answer": "flowers",
+                  "options": [
+                    "flowers",
+                    "toys",
+                    "chairs",
+                    "books"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Tell me about your dream house! Use 'there is' and 'there are'.",
+              "expected_text": "There is a bed in my bedroom.",
+              "prompts": [
+                {
+                  "prompt": "Say: There is a kitchen in my dream house.",
+                  "expected_text": "There is a kitchen in my dream house."
+                },
+                {
+                  "prompt": "Say: There are some toys in my bedroom.",
+                  "expected_text": "There are some toys in my bedroom."
+                },
+                {
+                  "prompt": "Ask your friend: Is there a garden in your dream house?",
+                  "expected_text": "Is there a garden in your dream house?"
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "There ___ a bed in my bedroom.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "is",
+                  "options": [
+                    "is",
+                    "are",
+                    "am",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "Which word means 'a lot of'?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "many",
+                  "options": [
+                    "some",
+                    "many",
+                    "there is",
+                    "there are"
+                  ]
+                },
+                {
+                  "question_text": "___ there any chairs in the kitchen?",
+                  "question_type": "fill_blank",
+                  "correct_answer": "Are",
+                  "options": [
+                    "Is",
+                    "Are",
+                    "Am",
+                    "Do"
+                  ]
+                },
+                {
+                  "question_text": "True or False: We say 'There are' for many things.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Read: 'There are some toys in my room.' How many toys are there?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "We don't know the exact number",
+                  "options": [
+                    "one toy",
+                    "two toys",
+                    "We don't know the exact number",
+                    "no toys"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 3
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_2_unit_08_lesson_04",
+          "title": "Unit Review",
+          "topic": "Matching furniture to the correct rooms",
+          "context": "Matching furniture to the correct rooms.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's think about our homes! Answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Where do you sleep at night?",
+                  "correct_answer": "bedroom",
+                  "options": [
+                    "bedroom",
+                    "kitchen",
+                    "garden",
+                    "bathroom"
+                  ],
+                  "image_emoji": "🛏️",
+                  "hint": "This room has a bed in it!"
+                },
+                {
+                  "question_text": "Where does mummy cook dinner?",
+                  "correct_answer": "kitchen",
+                  "options": [
+                    "living room",
+                    "kitchen",
+                    "bedroom",
+                    "bathroom"
+                  ],
+                  "image_emoji": "🍳",
+                  "hint": "This room has a cooker and fridge!"
+                },
+                {
+                  "question_text": "What do you sit on when you watch TV?",
+                  "correct_answer": "sofa",
+                  "options": [
+                    "bed",
+                    "bath",
+                    "sofa",
+                    "table"
+                  ],
+                  "image_emoji": "🛋️",
+                  "hint": "It's soft and long, and the whole family can sit on it!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "kitchen",
+                "bathroom",
+                "bedroom",
+                "living room",
+                "mirror",
+                "clock",
+                "phone",
+                "stairs",
+                "there is",
+                "there are",
+                "many",
+                "some"
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "crossword",
+                  "items": [
+                    {
+                      "word": "kitchen",
+                      "definition": "The room where we cook food",
+                      "emoji": "🍳"
+                    },
+                    {
+                      "word": "bathroom",
+                      "definition": "The room where we take a bath",
+                      "emoji": "🛁"
+                    },
+                    {
+                      "word": "bedroom",
+                      "definition": "The room where we sleep",
+                      "emoji": "🛏️"
+                    },
+                    {
+                      "word": "mirror",
+                      "definition": "You look at yourself in this",
+                      "emoji": "🪞"
+                    },
+                    {
+                      "word": "clock",
+                      "definition": "This tells us what time it is",
+                      "emoji": "🕐"
+                    },
+                    {
+                      "word": "phone",
+                      "definition": "We use this to call people",
+                      "emoji": "📱"
+                    },
+                    {
+                      "word": "stairs",
+                      "definition": "We climb these to go upstairs",
+                      "emoji": "🪜"
+                    },
+                    {
+                      "word": "many",
+                      "definition": "A lot of something",
+                      "emoji": "🔢"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "word_search",
+                  "items": [
+                    {
+                      "word": "kitchen",
+                      "definition": "The room where we cook food",
+                      "emoji": "🍳"
+                    },
+                    {
+                      "word": "bathroom",
+                      "definition": "The room where we take a bath",
+                      "emoji": "🛁"
+                    },
+                    {
+                      "word": "bedroom",
+                      "definition": "The room where we sleep",
+                      "emoji": "🛏️"
+                    },
+                    {
+                      "word": "living room",
+                      "definition": "The room where the family watches TV",
+                      "emoji": "🛋️"
+                    },
+                    {
+                      "word": "mirror",
+                      "definition": "You look at yourself in this",
+                      "emoji": "🪞"
+                    },
+                    {
+                      "word": "clock",
+                      "definition": "This tells us what time it is",
+                      "emoji": "🕐"
+                    },
+                    {
+                      "word": "phone",
+                      "definition": "We use this to call people",
+                      "emoji": "📱"
+                    },
+                    {
+                      "word": "stairs",
+                      "definition": "We climb these to go upstairs",
+                      "emoji": "🪜"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "board_game",
+                  "items": [
+                    {
+                      "question": "Where do you cook dinner?",
+                      "answer": "kitchen",
+                      "options": [
+                        "kitchen",
+                        "bedroom",
+                        "bathroom",
+                        "stairs"
+                      ]
+                    },
+                    {
+                      "question": "Which room has a sofa and TV?",
+                      "answer": "living room",
+                      "options": [
+                        "living room",
+                        "bathroom",
+                        "kitchen",
+                        "stairs"
+                      ]
+                    },
+                    {
+                      "question": "What do you look in to see your face?",
+                      "answer": "mirror",
+                      "options": [
+                        "mirror",
+                        "clock",
+                        "phone",
+                        "stairs"
+                      ]
+                    },
+                    {
+                      "question": "What tells you the time?",
+                      "answer": "clock",
+                      "options": [
+                        "phone",
+                        "mirror",
+                        "clock",
+                        "stairs"
+                      ]
+                    },
+                    {
+                      "question": "We use 'there is' with how many things?",
+                      "answer": "one thing",
+                      "options": [
+                        "one thing",
+                        "many things",
+                        "no things",
+                        "all things"
+                      ]
+                    },
+                    {
+                      "question": "We use 'there are' with how many things?",
+                      "answer": "more than one",
+                      "options": [
+                        "more than one",
+                        "one thing",
+                        "no things",
+                        "zero things"
+                      ]
+                    },
+                    {
+                      "question": "Which word means 'a lot'?",
+                      "answer": "many",
+                      "options": [
+                        "many",
+                        "one",
+                        "there is",
+                        "mirror"
+                      ]
+                    },
+                    {
+                      "question": "Where do you have a shower?",
+                      "answer": "bathroom",
+                      "options": [
+                        "bathroom",
+                        "kitchen",
+                        "living room",
+                        "bedroom"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Emma's New House",
+              "text": "Emma has a new house. There is a big bed in the bedroom. There are two chairs in the kitchen. Is there a mirror in the bathroom? Yes, there is! Are there any toys in the living room? Yes, there are many toys!",
+              "scene_description": "happy young girl standing in a bright modern house interior with furniture visible in different rooms",
+              "questions": [
+                {
+                  "question": "Where is the big bed?",
+                  "answer": "in the bedroom",
+                  "options": [
+                    "in the bedroom",
+                    "in the kitchen",
+                    "in the bathroom",
+                    "in the living room"
+                  ],
+                  "correct_answer": "in the bedroom"
+                },
+                {
+                  "question": "Are there chairs in the kitchen?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "correct_answer": "Yes"
+                },
+                {
+                  "question": "What is in the living room?",
+                  "answer": "toys",
+                  "options": [
+                    "toys",
+                    "a bed",
+                    "a mirror",
+                    "chairs"
+                  ],
+                  "correct_answer": "toys"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "There is a ___. / There are ___ ___s.",
+              "explanation": "We use 'There is' for ONE thing and 'There are' for MORE THAN ONE thing.",
+              "examples": [
+                "There is a bed in the bedroom.",
+                "There are two chairs in the kitchen.",
+                "Is there a mirror in the bathroom? Yes, there is!",
+                "Are there any toys in the living room? Yes, there are!"
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "There",
+                        "is",
+                        "a",
+                        "bed"
+                      ],
+                      "correctSentence": "There is a bed"
+                    },
+                    {
+                      "words": [
+                        "There",
+                        "are",
+                        "many",
+                        "toys"
+                      ],
+                      "correctSentence": "There are many toys"
+                    },
+                    {
+                      "words": [
+                        "Is",
+                        "there",
+                        "a",
+                        "mirror"
+                      ],
+                      "correctSentence": "Is there a mirror"
+                    },
+                    {
+                      "words": [
+                        "Are",
+                        "there",
+                        "any",
+                        "chairs"
+                      ],
+                      "correctSentence": "Are there any chairs"
+                    },
+                    {
+                      "words": [
+                        "There",
+                        "is",
+                        "a",
+                        "clock",
+                        "in",
+                        "the",
+                        "kitchen"
+                      ],
+                      "correctSentence": "There is a clock in the kitchen"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "There ___ a phone in the living room.",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "There ___ some stairs in the house.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "___ there a mirror in the bathroom?",
+                      "answer": "Is",
+                      "options": [
+                        "Is",
+                        "Are",
+                        "Am",
+                        "Be"
+                      ]
+                    },
+                    {
+                      "sentence": "___ there any clocks in the bedroom?",
+                      "answer": "Are",
+                      "options": [
+                        "Is",
+                        "Are",
+                        "Am",
+                        "Be"
+                      ]
+                    },
+                    {
+                      "sentence": "There ___ many rooms in my house.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "There are a bed in the bedroom.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with one thing"
+                    },
+                    {
+                      "sentence": "Is there any chairs in the kitchen?",
+                      "errorWord": "Is",
+                      "correctWord": "Are",
+                      "explanation": "Use 'Are' with plural things"
+                    },
+                    {
+                      "sentence": "There is two mirror in the bathroom.",
+                      "errorWord": "mirror",
+                      "correctWord": "mirrors",
+                      "explanation": "Use plural 's' with two"
+                    },
+                    {
+                      "sentence": "There is many toy in the living room.",
+                      "errorWord": "toy",
+                      "correctWord": "toys",
+                      "explanation": "Use plural 's' with many"
+                    },
+                    {
+                      "sentence": "Are there a phone in the house?",
+                      "errorWord": "Are",
+                      "correctWord": "Is",
+                      "explanation": "Use 'Is' with one thing"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "There is a clock in the kitchen.",
+                      "is_correct": true,
+                      "corrected": "There is a clock in the kitchen.",
+                      "explanation": "Correct! Use 'is' with one thing"
+                    },
+                    {
+                      "sentence": "There are many stairs in the house.",
+                      "is_correct": true,
+                      "corrected": "There are many stairs in the house.",
+                      "explanation": "Correct! Use 'are' with many things"
+                    },
+                    {
+                      "sentence": "Is there a mirrors in the bathroom?",
+                      "is_correct": false,
+                      "corrected": "Is there a mirror in the bathroom?",
+                      "explanation": "Don't use 's' after 'a'"
+                    },
+                    {
+                      "sentence": "Are there a bed in the bedroom?",
+                      "is_correct": false,
+                      "corrected": "Is there a bed in the bedroom?",
+                      "explanation": "Use 'Is' with one thing"
+                    },
+                    {
+                      "sentence": "There are some phones in the living room.",
+                      "is_correct": true,
+                      "corrected": "There are some phones in the living room.",
+                      "explanation": "Correct! Use 'are' with some things"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "___ a bathroom in the house?",
+                      "answer": "Is there",
+                      "options": [
+                        "Is there",
+                        "Are there",
+                        "There is",
+                        "There are"
+                      ],
+                      "explanation": "Use 'Is there' to ask about one thing"
+                    },
+                    {
+                      "question": "___ any clocks in the bedroom?",
+                      "answer": "Are there",
+                      "options": [
+                        "Is there",
+                        "Are there",
+                        "There is",
+                        "There are"
+                      ],
+                      "explanation": "Use 'Are there' to ask about many things"
+                    },
+                    {
+                      "question": "___ a big kitchen in my house.",
+                      "answer": "There is",
+                      "options": [
+                        "Is there",
+                        "Are there",
+                        "There is",
+                        "There are"
+                      ],
+                      "explanation": "Use 'There is' to tell about one thing"
+                    },
+                    {
+                      "question": "___ many rooms in the house.",
+                      "answer": "There are",
+                      "options": [
+                        "Is there",
+                        "Are there",
+                        "There is",
+                        "There are"
+                      ],
+                      "explanation": "Use 'There are' to tell about many things"
+                    },
+                    {
+                      "question": "___ a mirror and a clock?",
+                      "answer": "Are there",
+                      "options": [
+                        "Is there",
+                        "Are there",
+                        "There is",
+                        "There are"
+                      ],
+                      "explanation": "Use 'Are there' to ask about more than one thing"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello children! Let me tell you about my house. There is a big mirror in my bathroom. There are three clocks in my living room. Is there a phone in the kitchen? Yes, there is! Are there any stairs? Yes, there are many stairs!",
+              "questions": [
+                {
+                  "question": "Where is the big mirror?",
+                  "answer": "in the bathroom",
+                  "options": [
+                    "in the bathroom",
+                    "in the kitchen",
+                    "in the living room",
+                    "in the bedroom"
+                  ]
+                },
+                {
+                  "question": "How many clocks are in the living room?",
+                  "answer": "three",
+                  "options": [
+                    "one",
+                    "two",
+                    "three",
+                    "four"
+                  ]
+                },
+                {
+                  "question": "Is there a phone in the kitchen?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Let's talk about your house! Say these sentences about the rooms and furniture.",
+              "expected_text": "There is a bed in my bedroom.",
+              "prompts": [
+                {
+                  "prompt": "Say: There is a bed in my bedroom.",
+                  "expected_text": "There is a bed in my bedroom."
+                },
+                {
+                  "prompt": "Say: There are some chairs in the kitchen.",
+                  "expected_text": "There are some chairs in the kitchen."
+                },
+                {
+                  "prompt": "Say: Is there a mirror in the bathroom? Yes, there is!",
+                  "expected_text": "Is there a mirror in the bathroom? Yes, there is!"
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Unit Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Where do you cook food?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "kitchen",
+                  "options": [
+                    "kitchen",
+                    "bedroom",
+                    "bathroom",
+                    "living room"
+                  ]
+                },
+                {
+                  "question_text": "There ___ a mirror in the bathroom.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "is",
+                  "options": [
+                    "is",
+                    "are",
+                    "am",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "There ___ many toys in the living room.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "are",
+                  "options": [
+                    "is",
+                    "are",
+                    "am",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "True or False: We use 'There are' with one thing.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Which question is correct?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Is there a clock?",
+                  "options": [
+                    "Is there a clock?",
+                    "Are there a clock?",
+                    "There is a clock?",
+                    "Is a clock there?"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 4
+        }
+      ]
+    }
+  ]
+}

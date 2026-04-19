@@ -1,0 +1,2794 @@
+{
+  "stage": "stage_2",
+  "stage_id": "stage_2_starters",
+  "stage_title": "Starters (A1)",
+  "units": [
+    {
+      "unit_id": "stage_2_unit_04",
+      "unit_num": 4,
+      "title": "Body & Action",
+      "subtitle": "Body parts and what we can do",
+      "phonics_focus": [
+        "Body words",
+        "Action sounds"
+      ],
+      "grammar_focus": [
+        "Modal Can/Can't",
+        "Can you...?",
+        "Action verbs"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_2_unit_04_lesson_01",
+          "title": "Body Review",
+          "topic": "A morning exercise routine",
+          "context": "A morning exercise routine.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "When do we do morning exercise?",
+                  "correct_answer": "In the morning when we wake up",
+                  "options": [
+                    "In the morning when we wake up",
+                    "Before we go to bed",
+                    "After lunch time",
+                    "During snack time"
+                  ],
+                  "image_emoji": "🌅",
+                  "hint": "Think about the first thing you do when you get up!"
+                },
+                {
+                  "question_text": "What part of your body do you move when you jump?",
+                  "correct_answer": "My legs",
+                  "options": [
+                    "My legs",
+                    "My nose",
+                    "My ears",
+                    "My hair"
+                  ],
+                  "image_emoji": "🦵",
+                  "hint": "You use these to stand and run too!"
+                },
+                {
+                  "question_text": "How does your body feel after you exercise?",
+                  "correct_answer": "Strong and awake",
+                  "options": [
+                    "Strong and awake",
+                    "Very sleepy",
+                    "Cold and sad",
+                    "Hungry for cake"
+                  ],
+                  "image_emoji": "💪",
+                  "hint": "Exercise gives us energy and makes us feel good!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "shoulders",
+                  "ipa": "",
+                  "definition": "The two parts between your neck and arms.",
+                  "example": "She shrugged her shoulders.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_shoulders.png"
+                },
+                {
+                  "word": "knees",
+                  "ipa": "",
+                  "definition": "Two middle parts of your legs.",
+                  "example": "Bend your knees.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/knees.png"
+                },
+                {
+                  "word": "toes",
+                  "ipa": "",
+                  "definition": "Little parts on your feet.",
+                  "example": "I have ten toes.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_toes.png"
+                },
+                {
+                  "word": "arm",
+                  "ipa": "",
+                  "definition": "A part of your body with your hand.",
+                  "example": "I broke my arm.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/arm.png"
+                },
+                {
+                  "word": "leg",
+                  "ipa": "",
+                  "definition": "The part of your body used for walking.",
+                  "example": "My leg is long.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/leg.png"
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "shoulders",
+                      "emoji": "🫱",
+                      "distractors": [
+                        {
+                          "word": "table",
+                          "emoji": "🪑"
+                        },
+                        {
+                          "word": "apple",
+                          "emoji": "🍎"
+                        },
+                        {
+                          "word": "sun",
+                          "emoji": "☀️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "knees",
+                      "emoji": "🦵",
+                      "distractors": [
+                        {
+                          "word": "tree",
+                          "emoji": "🌳"
+                        },
+                        {
+                          "word": "book",
+                          "emoji": "📚"
+                        },
+                        {
+                          "word": "hat",
+                          "emoji": "🎩"
+                        }
+                      ],
+                      "image_url": "/static/vocab_images/knees.png"
+                    },
+                    {
+                      "word": "toes",
+                      "emoji": "🦶",
+                      "distractors": [
+                        {
+                          "word": "ball",
+                          "emoji": "⚽"
+                        },
+                        {
+                          "word": "car",
+                          "emoji": "🚗"
+                        },
+                        {
+                          "word": "flower",
+                          "emoji": "🌸"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "arm",
+                      "emoji": "💪",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "moon",
+                          "emoji": "🌙"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "leg",
+                      "emoji": "🦿",
+                      "distractors": [
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        },
+                        {
+                          "word": "cup",
+                          "emoji": "☕"
+                        },
+                        {
+                          "word": "star",
+                          "emoji": "⭐"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "shoulders",
+                      "emoji": "🫱",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        },
+                        {
+                          "word": "pizza",
+                          "emoji": "🍕"
+                        },
+                        {
+                          "word": "clock",
+                          "emoji": "⏰"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "knees",
+                      "emoji": "🦵",
+                      "distractors": [
+                        {
+                          "word": "rainbow",
+                          "emoji": "🌈"
+                        },
+                        {
+                          "word": "bed",
+                          "emoji": "🛏️"
+                        },
+                        {
+                          "word": "ice cream",
+                          "emoji": "🍦"
+                        }
+                      ],
+                      "image_url": "/static/vocab_images/knees.png"
+                    },
+                    {
+                      "word": "toes",
+                      "emoji": "🦶",
+                      "distractors": [
+                        {
+                          "word": "pencil",
+                          "emoji": "✏️"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "house",
+                          "emoji": "🏠"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "arm",
+                      "emoji": "💪",
+                      "distractors": [
+                        {
+                          "word": "umbrella",
+                          "emoji": "☂️"
+                        },
+                        {
+                          "word": "cookie",
+                          "emoji": "🍪"
+                        },
+                        {
+                          "word": "train",
+                          "emoji": "🚂"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "leg",
+                      "emoji": "🦿",
+                      "distractors": [
+                        {
+                          "word": "butterfly",
+                          "emoji": "🦋"
+                        },
+                        {
+                          "word": "door",
+                          "emoji": "🚪"
+                        },
+                        {
+                          "word": "cheese",
+                          "emoji": "🧀"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "shoulders",
+                      "emoji": "🫱"
+                    },
+                    {
+                      "word": "knees",
+                      "emoji": "🦵",
+                      "image_url": "/static/vocab_images/knees.png"
+                    },
+                    {
+                      "word": "toes",
+                      "emoji": "🦶"
+                    },
+                    {
+                      "word": "arm",
+                      "emoji": "💪"
+                    },
+                    {
+                      "word": "leg",
+                      "emoji": "🦿"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "flashcard_match",
+                  "items": [
+                    {
+                      "word": "shoulders",
+                      "emoji": "🫱",
+                      "definition": "The parts at the top of your arms"
+                    },
+                    {
+                      "word": "knees",
+                      "emoji": "🦵",
+                      "definition": "The parts in the middle of your legs that bend",
+                      "image_url": "/static/vocab_images/knees.png"
+                    },
+                    {
+                      "word": "toes",
+                      "emoji": "🦶",
+                      "definition": "The five small parts at the end of your foot"
+                    },
+                    {
+                      "word": "arm",
+                      "emoji": "💪",
+                      "definition": "The part from your shoulder to your hand"
+                    },
+                    {
+                      "word": "leg",
+                      "emoji": "🦿",
+                      "definition": "The part you use to walk and stand"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Emma's Morning Exercise",
+              "text": "Every morning, Emma wakes up and does exercise. She can touch her toes with her hands. She can lift her arms up high. She can bend her knees and jump. Emma moves her shoulders and legs. Exercise makes her strong!",
+              "scene_description": "young girl doing morning stretching exercises in bedroom, touching toes, arms raised",
+              "questions": [
+                {
+                  "question": "What can Emma touch with her hands?",
+                  "answer": "Her toes",
+                  "options": [
+                    "Her toes",
+                    "Her shoulders",
+                    "The ceiling",
+                    "Her pillow"
+                  ],
+                  "correct_answer": "Her toes"
+                },
+                {
+                  "question": "When does Emma do exercise?",
+                  "answer": "In the morning",
+                  "options": [
+                    "In the morning",
+                    "At night before bed",
+                    "After lunch",
+                    "At school"
+                  ],
+                  "correct_answer": "In the morning"
+                },
+                {
+                  "question": "How does exercise make Emma feel?",
+                  "answer": "Strong",
+                  "options": [
+                    "Strong",
+                    "Sleepy",
+                    "Hungry",
+                    "Sad"
+                  ],
+                  "correct_answer": "Strong"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I can ___ my ___.",
+              "explanation": "We use 'can' to talk about things our body is able to do.",
+              "examples": [
+                "I can move my arms.",
+                "I can bend my knees.",
+                "I can touch my toes."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "can",
+                        "touch",
+                        "my",
+                        "toes"
+                      ],
+                      "correctSentence": "I can touch my toes"
+                    },
+                    {
+                      "words": [
+                        "Can",
+                        "you",
+                        "move",
+                        "your",
+                        "arms"
+                      ],
+                      "correctSentence": "Can you move your arms"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "can",
+                        "bend",
+                        "her",
+                        "knees"
+                      ],
+                      "correctSentence": "She can bend her knees"
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "can't",
+                        "touch",
+                        "the",
+                        "ceiling"
+                      ],
+                      "correctSentence": "I can't touch the ceiling"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "can",
+                        "lift",
+                        "his",
+                        "leg"
+                      ],
+                      "correctSentence": "He can lift his leg"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I ___ move my shoulders.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "do",
+                        "am",
+                        "is"
+                      ]
+                    },
+                    {
+                      "sentence": "Can you ___ your toes?",
+                      "answer": "touch",
+                      "options": [
+                        "touch",
+                        "touches",
+                        "touching",
+                        "touched"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ jump high.",
+                      "answer": "can't",
+                      "options": [
+                        "can't",
+                        "not",
+                        "don't",
+                        "doesn't"
+                      ]
+                    },
+                    {
+                      "sentence": "___ you bend your knees?",
+                      "answer": "Can",
+                      "options": [
+                        "Can",
+                        "Do",
+                        "Does",
+                        "Are"
+                      ]
+                    },
+                    {
+                      "sentence": "He can ___ his arms up.",
+                      "answer": "lift",
+                      "options": [
+                        "lift",
+                        "lifts",
+                        "lifting",
+                        "lifted"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "I can touches my toes.",
+                      "errorWord": "touches",
+                      "correctWord": "touch",
+                      "explanation": "After 'can' we use the base form of the verb"
+                    },
+                    {
+                      "sentence": "Her can move her shoulders.",
+                      "errorWord": "Her",
+                      "correctWord": "She",
+                      "explanation": "Use 'She' as the subject pronoun"
+                    },
+                    {
+                      "sentence": "Can you bends your knees?",
+                      "errorWord": "bends",
+                      "correctWord": "bend",
+                      "explanation": "After 'can' use the base form of the verb"
+                    },
+                    {
+                      "sentence": "He can lift his two leg.",
+                      "errorWord": "leg",
+                      "correctWord": "legs",
+                      "explanation": "Use plural 'legs' after 'two'"
+                    },
+                    {
+                      "sentence": "I cans touch my toes.",
+                      "errorWord": "cans",
+                      "correctWord": "can",
+                      "explanation": "Use 'can' not 'cans'"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "I can move my arms.",
+                      "is_correct": true,
+                      "corrected": "I can move my arms.",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "She can bends her knees.",
+                      "is_correct": false,
+                      "corrected": "She can bend her knees.",
+                      "explanation": "Use 'bend' not 'bends' after 'can'"
+                    },
+                    {
+                      "sentence": "Can you touch your toes?",
+                      "is_correct": true,
+                      "corrected": "Can you touch your toes?",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "He can't moving his leg.",
+                      "is_correct": false,
+                      "corrected": "He can't move his leg.",
+                      "explanation": "Use 'move' not 'moving' after 'can't'"
+                    },
+                    {
+                      "sentence": "I can lift my shoulders up.",
+                      "is_correct": true,
+                      "corrected": "I can lift my shoulders up.",
+                      "explanation": "This sentence is correct!"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "I ___ touch my toes every morning.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "cans",
+                        "canning",
+                        "could"
+                      ],
+                      "explanation": "Use 'can' to show ability"
+                    },
+                    {
+                      "question": "___ you move your shoulders?",
+                      "answer": "Can",
+                      "options": [
+                        "Can",
+                        "Do",
+                        "Does",
+                        "Are"
+                      ],
+                      "explanation": "Use 'Can' to ask about ability"
+                    },
+                    {
+                      "question": "She can ___ her knees.",
+                      "answer": "bend",
+                      "options": [
+                        "bend",
+                        "bends",
+                        "bending",
+                        "bent"
+                      ],
+                      "explanation": "Use base form 'bend' after 'can'"
+                    },
+                    {
+                      "question": "He ___ lift his arm high.",
+                      "answer": "can't",
+                      "options": [
+                        "can't",
+                        "not",
+                        "don't",
+                        "doesn't"
+                      ],
+                      "explanation": "Use 'can't' to show inability"
+                    },
+                    {
+                      "question": "Can they ___ their legs?",
+                      "answer": "move",
+                      "options": [
+                        "move",
+                        "moves",
+                        "moving",
+                        "moved"
+                      ],
+                      "explanation": "Use base form 'move' after 'Can'"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Good morning, everyone! Let's do our morning exercise together. First, touch your toes with your hands. Good! Now, lift your arms up high. Great! Can you bend your knees and jump? Wonderful! Now move your shoulders up and down. Last, shake your legs. You can all do it!",
+              "questions": [
+                {
+                  "question": "What body part do you touch first?",
+                  "answer": "Toes",
+                  "options": [
+                    "Toes",
+                    "Knees",
+                    "Shoulders",
+                    "Arms"
+                  ]
+                },
+                {
+                  "question": "What do you do with your arms?",
+                  "answer": "Lift them up high",
+                  "options": [
+                    "Lift them up high",
+                    "Touch your toes",
+                    "Bend them down",
+                    "Shake them fast"
+                  ]
+                },
+                {
+                  "question": "What do you do after you bend your knees?",
+                  "answer": "Jump",
+                  "options": [
+                    "Jump",
+                    "Sit down",
+                    "Run fast",
+                    "Clap hands"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Practice saying sentences about what you can do with your body!",
+              "expected_text": "I can touch my toes.",
+              "prompts": [
+                {
+                  "prompt": "Say: I can touch my toes.",
+                  "expected_text": "I can touch my toes."
+                },
+                {
+                  "prompt": "Say: I can move my shoulders.",
+                  "expected_text": "I can move my shoulders."
+                },
+                {
+                  "prompt": "Say: Can you bend your knees?",
+                  "expected_text": "Can you bend your knees?"
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Body Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which body part is in the middle of your leg?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Knees",
+                  "options": [
+                    "Knees",
+                    "Toes",
+                    "Shoulders",
+                    "Arm"
+                  ]
+                },
+                {
+                  "question_text": "I ___ touch my toes.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "can",
+                  "options": [
+                    "can",
+                    "cans",
+                    "am",
+                    "is"
+                  ]
+                },
+                {
+                  "question_text": "___ you move your shoulders?",
+                  "question_type": "fill_blank",
+                  "correct_answer": "Can",
+                  "options": [
+                    "Can",
+                    "Do",
+                    "Are",
+                    "Is"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'I can bends my knees' is correct.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Emma does exercise in the morning. When does she exercise?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "In the morning",
+                  "options": [
+                    "In the morning",
+                    "At night",
+                    "After lunch",
+                    "Before bed"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 1
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_2_unit_04_lesson_02",
+          "title": "Actions",
+          "topic": "A talent show where kids show what they can do",
+          "context": "A talent show where kids show what they can do.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What can you do with your body?",
+                  "correct_answer": "Jump and dance",
+                  "options": [
+                    "Jump and dance",
+                    "Eat pizza",
+                    "Sleep all day",
+                    "Watch TV only"
+                  ],
+                  "image_emoji": "🤸",
+                  "hint": "Think about moving and having fun!"
+                },
+                {
+                  "question_text": "Where do kids show their talents to other people?",
+                  "correct_answer": "On a stage",
+                  "options": [
+                    "In bed",
+                    "On a stage",
+                    "In the bathroom",
+                    "Under a table"
+                  ],
+                  "image_emoji": "🎭",
+                  "hint": "It's a special place where everyone can see you perform!"
+                },
+                {
+                  "question_text": "What do kids do at a talent show?",
+                  "correct_answer": "Show what they can do",
+                  "options": [
+                    "Show what they can do",
+                    "Go to sleep",
+                    "Eat lunch",
+                    "Do homework"
+                  ],
+                  "image_emoji": "⭐",
+                  "hint": "They perform and share their special skills!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "jump",
+                  "ipa": "",
+                  "definition": "To move up off the ground.",
+                  "example": "I can jump high.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/jump.png"
+                },
+                {
+                  "word": "run",
+                  "ipa": "",
+                  "definition": "Moving fast on your feet.",
+                  "example": "They run in the park.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/run.png"
+                },
+                {
+                  "word": "sing",
+                  "ipa": "",
+                  "definition": "To make music with your voice.",
+                  "example": "I love to sing.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_sing.png"
+                },
+                {
+                  "word": "dance",
+                  "ipa": "",
+                  "definition": "To move your body to music.",
+                  "example": "Let's dance to the music.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/dance.png"
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_write",
+                  "items": [
+                    {
+                      "word": "jump",
+                      "emoji": "🦘"
+                    },
+                    {
+                      "word": "run",
+                      "emoji": "🏃"
+                    },
+                    {
+                      "word": "sing",
+                      "emoji": "🎤"
+                    },
+                    {
+                      "word": "dance",
+                      "emoji": "💃"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "look_write",
+                  "items": [
+                    {
+                      "word": "jump",
+                      "emoji": "🦘",
+                      "hint": "Go up and down!"
+                    },
+                    {
+                      "word": "run",
+                      "emoji": "🏃",
+                      "hint": "Move very fast!"
+                    },
+                    {
+                      "word": "sing",
+                      "emoji": "🎤",
+                      "hint": "Make music with your voice!"
+                    },
+                    {
+                      "word": "dance",
+                      "emoji": "💃",
+                      "hint": "Move to the music!"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_gap",
+                  "items": [
+                    {
+                      "sentence": "I can ___ very high!",
+                      "answer": "jump",
+                      "options": [
+                        "jump",
+                        "eat",
+                        "sleep",
+                        "read"
+                      ],
+                      "emoji": "🦘"
+                    },
+                    {
+                      "sentence": "Let's ___ fast to the park!",
+                      "answer": "run",
+                      "options": [
+                        "run",
+                        "sit",
+                        "write",
+                        "draw"
+                      ],
+                      "emoji": "🏃"
+                    },
+                    {
+                      "sentence": "I love to ___ my favorite song!",
+                      "answer": "sing",
+                      "options": [
+                        "sing",
+                        "drink",
+                        "walk",
+                        "paint"
+                      ],
+                      "emoji": "🎤"
+                    },
+                    {
+                      "sentence": "Can you ___ to this music?",
+                      "answer": "dance",
+                      "options": [
+                        "dance",
+                        "cook",
+                        "study",
+                        "clean"
+                      ],
+                      "emoji": "💃"
+                    },
+                    {
+                      "sentence": "Watch me ___ like a star!",
+                      "answer": "dance",
+                      "options": [
+                        "dance",
+                        "swim",
+                        "fly",
+                        "talk"
+                      ],
+                      "emoji": "💃"
+                    },
+                    {
+                      "sentence": "The children ___ in the talent show.",
+                      "answer": "sing",
+                      "options": [
+                        "sing",
+                        "cry",
+                        "hide",
+                        "play"
+                      ],
+                      "emoji": "🎤"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "The Talent Show",
+              "text": "Today is the school talent show! Emma can sing a beautiful song. Tom can dance to the music. Sarah can jump very high. Ben can run really fast. All the children are happy!",
+              "scene_description": "diverse children performing on stage at school talent show with audience watching",
+              "questions": [
+                {
+                  "question": "What can Emma do?",
+                  "answer": "She can sing",
+                  "options": [
+                    "She can sing",
+                    "She can jump",
+                    "She can run"
+                  ],
+                  "correct_answer": "She can sing"
+                },
+                {
+                  "question": "Can Tom dance?",
+                  "answer": "Yes, he can",
+                  "options": [
+                    "Yes, he can",
+                    "No, he can't",
+                    "He can jump"
+                  ],
+                  "correct_answer": "Yes, he can"
+                },
+                {
+                  "question": "Where are the children?",
+                  "answer": "At the school talent show",
+                  "options": [
+                    "At the school talent show",
+                    "At the park",
+                    "At home"
+                  ],
+                  "correct_answer": "At the school talent show"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I can ___ / I can't ___ / Can you ___?",
+              "explanation": "We use 'can' to talk about things we are able to do, and 'can't' for things we cannot do.",
+              "examples": [
+                "I can jump high!",
+                "I can't fly like a bird.",
+                "Can you dance with me?"
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "can",
+                        "jump"
+                      ],
+                      "correctSentence": "I can jump"
+                    },
+                    {
+                      "words": [
+                        "Can",
+                        "you",
+                        "sing",
+                        "?"
+                      ],
+                      "correctSentence": "Can you sing?"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "can't",
+                        "run",
+                        "fast"
+                      ],
+                      "correctSentence": "She can't run fast"
+                    },
+                    {
+                      "words": [
+                        "We",
+                        "can",
+                        "dance",
+                        "together"
+                      ],
+                      "correctSentence": "We can dance together"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "can",
+                        "sing",
+                        "well"
+                      ],
+                      "correctSentence": "He can sing well"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I ___ jump high!",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "am",
+                        "is",
+                        "do"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ dance very well.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "cans",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ fly like a bird.",
+                      "answer": "can't",
+                      "options": [
+                        "can't",
+                        "can",
+                        "am",
+                        "not"
+                      ]
+                    },
+                    {
+                      "sentence": "___ you run fast?",
+                      "answer": "Can",
+                      "options": [
+                        "Can",
+                        "Do",
+                        "Are",
+                        "Is"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ sing together.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "cans",
+                        "do",
+                        "are"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "I can jumps high.",
+                      "errorWord": "jumps",
+                      "correctWord": "jump",
+                      "explanation": "After 'can', use the base form of the verb"
+                    },
+                    {
+                      "sentence": "She can't to dance.",
+                      "errorWord": "to",
+                      "correctWord": "",
+                      "explanation": "Don't use 'to' after 'can't'"
+                    },
+                    {
+                      "sentence": "He cans sing well.",
+                      "errorWord": "cans",
+                      "correctWord": "can",
+                      "explanation": "Use 'can', not 'cans'"
+                    },
+                    {
+                      "sentence": "They can running fast.",
+                      "errorWord": "running",
+                      "correctWord": "run",
+                      "explanation": "After 'can', use the base form of the verb"
+                    },
+                    {
+                      "sentence": "Can you jumps?",
+                      "errorWord": "jumps",
+                      "correctWord": "jump",
+                      "explanation": "After 'can', use the base form of the verb"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "I can dance.",
+                      "is_correct": true,
+                      "corrected": "I can dance.",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "She can sings.",
+                      "is_correct": false,
+                      "corrected": "She can sing.",
+                      "explanation": "After 'can', use the base form 'sing'"
+                    },
+                    {
+                      "sentence": "Can you jump?",
+                      "is_correct": true,
+                      "corrected": "Can you jump?",
+                      "explanation": "This question is correct!"
+                    },
+                    {
+                      "sentence": "He can't runs.",
+                      "is_correct": false,
+                      "corrected": "He can't run.",
+                      "explanation": "After 'can't', use the base form 'run'"
+                    },
+                    {
+                      "sentence": "We can sing together.",
+                      "is_correct": true,
+                      "corrected": "We can sing together.",
+                      "explanation": "This sentence is correct!"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "I ___ jump very high.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "cans",
+                        "am",
+                        "do"
+                      ],
+                      "explanation": "Use 'can' to show ability"
+                    },
+                    {
+                      "question": "She ___ dance well.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "cans",
+                        "is",
+                        "does"
+                      ],
+                      "explanation": "Use 'can' to show what she is able to do"
+                    },
+                    {
+                      "question": "___ you sing?",
+                      "answer": "Can",
+                      "options": [
+                        "Can",
+                        "Do",
+                        "Are",
+                        "Is"
+                      ],
+                      "explanation": "Use 'Can' to ask about ability"
+                    },
+                    {
+                      "question": "He can't ___.",
+                      "answer": "run",
+                      "options": [
+                        "run",
+                        "runs",
+                        "running",
+                        "to run"
+                      ],
+                      "explanation": "After 'can't', use the base form of the verb"
+                    },
+                    {
+                      "question": "They can ___ together.",
+                      "answer": "dance",
+                      "options": [
+                        "dance",
+                        "dances",
+                        "dancing",
+                        "to dance"
+                      ],
+                      "explanation": "After 'can', use the base form of the verb"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello everyone! Today we have a talent show at school. Look at Emma! She can sing a beautiful song. Now watch Tom. He can dance to the music. Can you jump like Sarah? She can jump very high!",
+              "questions": [
+                {
+                  "question": "What can Emma do?",
+                  "answer": "Sing",
+                  "options": [
+                    "Sing",
+                    "Dance",
+                    "Jump",
+                    "Run"
+                  ]
+                },
+                {
+                  "question": "Who can dance?",
+                  "answer": "Tom",
+                  "options": [
+                    "Tom",
+                    "Emma",
+                    "Sarah",
+                    "Ben"
+                  ]
+                },
+                {
+                  "question": "What can Sarah do very high?",
+                  "answer": "Jump",
+                  "options": [
+                    "Jump",
+                    "Sing",
+                    "Dance",
+                    "Run"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Let's talk about what you can do! Practice saying these sentences.",
+              "expected_text": "I can jump",
+              "prompts": [
+                {
+                  "prompt": "Say: I can jump",
+                  "expected_text": "I can jump"
+                },
+                {
+                  "prompt": "Say: I can sing and dance",
+                  "expected_text": "I can sing and dance"
+                },
+                {
+                  "prompt": "Say: Can you run fast?",
+                  "expected_text": "Can you run fast?"
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which emoji shows 'dance'?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "💃",
+                  "options": [
+                    "💃",
+                    "🏃",
+                    "🎤",
+                    "🦘"
+                  ]
+                },
+                {
+                  "question_text": "I ___ jump very high!",
+                  "question_type": "fill_blank",
+                  "correct_answer": "can",
+                  "options": [
+                    "can",
+                    "am",
+                    "is",
+                    "do"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'She can sings' is correct.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "What do children do at a talent show?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Show what they can do",
+                  "options": [
+                    "Show what they can do",
+                    "Go to sleep",
+                    "Eat lunch",
+                    "Do homework"
+                  ]
+                },
+                {
+                  "question_text": "___ you run fast?",
+                  "question_type": "fill_blank",
+                  "correct_answer": "Can",
+                  "options": [
+                    "Can",
+                    "Do",
+                    "Are",
+                    "Is"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 2
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_2_unit_04_lesson_03",
+          "title": "Abilities",
+          "topic": "Describing a robot's functions",
+          "context": "Describing a robot's functions.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What can YOU do with your hands?",
+                  "correct_answer": "I can clap my hands",
+                  "options": [
+                    "I can clap my hands",
+                    "I can fly in the sky",
+                    "I can swim underwater",
+                    "I can grow flowers"
+                  ],
+                  "image_emoji": "👏",
+                  "hint": "Put your hands together and make a sound!"
+                },
+                {
+                  "question_text": "What can a robot do?",
+                  "correct_answer": "It can move and talk",
+                  "options": [
+                    "It can move and talk",
+                    "It can eat pizza",
+                    "It can sleep all day",
+                    "It can feel sad"
+                  ],
+                  "image_emoji": "🤖",
+                  "hint": "Think about what machines can do!"
+                },
+                {
+                  "question_text": "Can you jump?",
+                  "correct_answer": "Yes, I can jump",
+                  "options": [
+                    "Yes, I can jump",
+                    "No, I'm a tree",
+                    "Yes, I can bark",
+                    "No, I can only sit"
+                  ],
+                  "image_emoji": "🦘",
+                  "hint": "Show me! Jump up and down!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "can",
+                  "ipa": "",
+                  "definition": "To be able to do something.",
+                  "example": "I can jump high.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/can.png"
+                },
+                {
+                  "word": "can't",
+                  "ipa": "",
+                  "definition": "Not able to do something.",
+                  "example": "I can't fly.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/can't.png"
+                },
+                {
+                  "word": "swim",
+                  "ipa": "",
+                  "definition": "To move through water.",
+                  "example": "I swim in the pool.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/swim.png"
+                },
+                {
+                  "word": "climb",
+                  "ipa": "",
+                  "definition": "To go up something.",
+                  "example": "I climb the tree.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/climb.png"
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "memory_game",
+                  "items": [
+                    {
+                      "word": "can",
+                      "emoji": "✅"
+                    },
+                    {
+                      "word": "can't",
+                      "emoji": "❌",
+                      "image_url": "/static/vocab_images/can't.png"
+                    },
+                    {
+                      "word": "swim",
+                      "emoji": "🏊"
+                    },
+                    {
+                      "word": "climb",
+                      "emoji": "🧗"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "listen_choose_word",
+                  "items": [
+                    {
+                      "word": "can",
+                      "emoji": "✅",
+                      "distractors": [
+                        "cat",
+                        "man",
+                        "ran"
+                      ]
+                    },
+                    {
+                      "word": "can't",
+                      "emoji": "❌",
+                      "distractors": [
+                        "cat",
+                        "ant",
+                        "cent"
+                      ],
+                      "image_url": "/static/vocab_images/can't.png"
+                    },
+                    {
+                      "word": "swim",
+                      "emoji": "🏊",
+                      "distractors": [
+                        "slim",
+                        "swam",
+                        "sweet"
+                      ]
+                    },
+                    {
+                      "word": "climb",
+                      "emoji": "🧗",
+                      "distractors": [
+                        "clap",
+                        "cloud",
+                        "crab"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "can",
+                      "emoji": "✅",
+                      "distractors": [
+                        {
+                          "word": "cup",
+                          "emoji": "☕"
+                        },
+                        {
+                          "word": "car",
+                          "emoji": "🚗"
+                        },
+                        {
+                          "word": "cake",
+                          "emoji": "🎂"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "can't",
+                      "emoji": "❌",
+                      "distractors": [
+                        {
+                          "word": "happy",
+                          "emoji": "😊"
+                        },
+                        {
+                          "word": "stop",
+                          "emoji": "🛑"
+                        },
+                        {
+                          "word": "question",
+                          "emoji": "❓"
+                        }
+                      ],
+                      "image_url": "/static/vocab_images/can't.png"
+                    },
+                    {
+                      "word": "swim",
+                      "emoji": "🏊",
+                      "distractors": [
+                        {
+                          "word": "run",
+                          "emoji": "🏃"
+                        },
+                        {
+                          "word": "sleep",
+                          "emoji": "😴"
+                        },
+                        {
+                          "word": "eat",
+                          "emoji": "🍽️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "climb",
+                      "emoji": "🧗",
+                      "distractors": [
+                        {
+                          "word": "jump",
+                          "emoji": "🦘"
+                        },
+                        {
+                          "word": "walk",
+                          "emoji": "🚶"
+                        },
+                        {
+                          "word": "dance",
+                          "emoji": "💃"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Meet Robo!",
+              "text": "This is Robo. Robo is a helpful robot. Robo can climb stairs and open doors. Robo can carry heavy boxes. But Robo can't swim in water. Robo can't jump high like you!",
+              "scene_description": "friendly blue robot toy standing in modern classroom with children watching",
+              "questions": [
+                {
+                  "question": "What can Robo do?",
+                  "answer": "Robo can climb stairs",
+                  "options": [
+                    "Robo can climb stairs",
+                    "Robo can swim in water",
+                    "Robo can fly in the sky"
+                  ],
+                  "correct_answer": "Robo can climb stairs"
+                },
+                {
+                  "question": "Can Robo swim?",
+                  "answer": "No, Robo can't swim",
+                  "options": [
+                    "Yes, Robo can swim",
+                    "No, Robo can't swim",
+                    "Robo swims every day"
+                  ],
+                  "correct_answer": "No, Robo can't swim"
+                },
+                {
+                  "question": "What can't Robo do?",
+                  "answer": "Robo can't jump high",
+                  "options": [
+                    "Robo can't open doors",
+                    "Robo can't climb stairs",
+                    "Robo can't jump high"
+                  ],
+                  "correct_answer": "Robo can't jump high"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I can ___. / I can't ___. / Can you ___?",
+              "explanation": "We use 'can' to say what we are able to do, and 'can't' to say what we cannot do!",
+              "examples": [
+                "I can jump high.",
+                "I can't fly like a bird.",
+                "Can you swim?"
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "can",
+                        "swim"
+                      ],
+                      "correctSentence": "I can swim"
+                    },
+                    {
+                      "words": [
+                        "can't",
+                        "I",
+                        "climb"
+                      ],
+                      "correctSentence": "I can't climb"
+                    },
+                    {
+                      "words": [
+                        "Can",
+                        "you",
+                        "jump",
+                        "?"
+                      ],
+                      "correctSentence": "Can you jump?"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "can",
+                        "run",
+                        "fast"
+                      ],
+                      "correctSentence": "She can run fast"
+                    },
+                    {
+                      "words": [
+                        "can't",
+                        "The",
+                        "robot",
+                        "swim"
+                      ],
+                      "correctSentence": "The robot can't swim"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I ___ swim in the pool.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "cans",
+                        "canning",
+                        "could"
+                      ]
+                    },
+                    {
+                      "sentence": "The robot ___ climb the stairs.",
+                      "answer": "can't",
+                      "options": [
+                        "can",
+                        "can't",
+                        "not can",
+                        "no can"
+                      ]
+                    },
+                    {
+                      "sentence": "___ you ride a bike?",
+                      "answer": "Can",
+                      "options": [
+                        "Can",
+                        "Are",
+                        "Do",
+                        "Is"
+                      ]
+                    },
+                    {
+                      "sentence": "Birds ___ fly high.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "cans",
+                        "are",
+                        "is"
+                      ]
+                    },
+                    {
+                      "sentence": "Fish can ___ in water.",
+                      "answer": "swim",
+                      "options": [
+                        "swim",
+                        "swims",
+                        "swimming",
+                        "swam"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She can swims fast.",
+                      "errorWord": "swims",
+                      "correctWord": "swim",
+                      "explanation": "After 'can' we use the simple verb form"
+                    },
+                    {
+                      "sentence": "I not can climb trees.",
+                      "errorWord": "not",
+                      "correctWord": "can't",
+                      "explanation": "Use 'can't' or 'cannot' to make negative"
+                    },
+                    {
+                      "sentence": "The robot can jumps high.",
+                      "errorWord": "jumps",
+                      "correctWord": "jump",
+                      "explanation": "Use the simple verb form after 'can'"
+                    },
+                    {
+                      "sentence": "He can playing soccer.",
+                      "errorWord": "playing",
+                      "correctWord": "play",
+                      "explanation": "Use the simple verb form after 'can'"
+                    },
+                    {
+                      "sentence": "Can she runs fast?",
+                      "errorWord": "runs",
+                      "correctWord": "run",
+                      "explanation": "Use the simple verb form in questions with 'can'"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "I can swim.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "She can't flies.",
+                      "is_correct": false,
+                      "corrected": "She can't fly.",
+                      "explanation": "Use 'fly' not 'flies' after can't"
+                    },
+                    {
+                      "sentence": "Can you climb?",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "This question is correct!"
+                    },
+                    {
+                      "sentence": "The robot can to walk.",
+                      "is_correct": false,
+                      "corrected": "The robot can walk.",
+                      "explanation": "Don't use 'to' after 'can'"
+                    },
+                    {
+                      "sentence": "Dogs can run fast.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "This sentence is correct!"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "I ___ ride a bike.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "cans",
+                        "am can",
+                        "do can"
+                      ],
+                      "explanation": "Use 'can' to show ability"
+                    },
+                    {
+                      "question": "Fish ___ walk on land.",
+                      "answer": "can't",
+                      "options": [
+                        "can",
+                        "can't",
+                        "not",
+                        "don't can"
+                      ],
+                      "explanation": "Use 'can't' to show inability"
+                    },
+                    {
+                      "question": "___ the robot talk?",
+                      "answer": "Can",
+                      "options": [
+                        "Can",
+                        "Is",
+                        "Does",
+                        "Do"
+                      ],
+                      "explanation": "Use 'Can' to ask about ability"
+                    },
+                    {
+                      "question": "Birds can ___ in the sky.",
+                      "answer": "fly",
+                      "options": [
+                        "fly",
+                        "flies",
+                        "flying",
+                        "flew"
+                      ],
+                      "explanation": "Use simple verb form after 'can'"
+                    },
+                    {
+                      "question": "I can ___ very high.",
+                      "answer": "jump",
+                      "options": [
+                        "jump",
+                        "jumps",
+                        "jumping",
+                        "jumped"
+                      ],
+                      "explanation": "Use simple verb form after 'can'"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello children! Today we have a special robot friend. His name is Max. Max can do many things. He can climb up the wall and he can carry your books. But Max can't swim in water. Can you swim? Yes, you can! You're very clever!",
+              "questions": [
+                {
+                  "question": "What is the robot's name?",
+                  "answer": "Max",
+                  "options": [
+                    "Sam",
+                    "Max",
+                    "Tom",
+                    "Ben"
+                  ]
+                },
+                {
+                  "question": "What can Max do?",
+                  "answer": "He can climb up the wall",
+                  "options": [
+                    "He can swim in water",
+                    "He can climb up the wall",
+                    "He can fly in the sky",
+                    "He can dance"
+                  ]
+                },
+                {
+                  "question": "Can Max swim?",
+                  "answer": "No, he can't",
+                  "options": [
+                    "Yes, he can",
+                    "No, he can't",
+                    "Yes, very well",
+                    "Sometimes"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Let's talk about what you can do! Listen and repeat, then answer the questions.",
+              "expected_text": "I can jump",
+              "prompts": [
+                {
+                  "prompt": "Say: I can jump",
+                  "expected_text": "I can jump"
+                },
+                {
+                  "prompt": "Say: I can't fly",
+                  "expected_text": "I can't fly"
+                },
+                {
+                  "prompt": "Now tell me: Can you swim?",
+                  "expected_text": "Yes, I can swim"
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Abilities Review Quiz",
+              "questions": [
+                {
+                  "question_text": "I ___ swim in the pool.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "can",
+                  "options": [
+                    "can",
+                    "cans",
+                    "am",
+                    "is"
+                  ]
+                },
+                {
+                  "question_text": "Which word means 'not able to do something'?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "can't",
+                  "options": [
+                    "can",
+                    "can't",
+                    "swim",
+                    "climb"
+                  ]
+                },
+                {
+                  "question_text": "Read: 'The robot can climb stairs.' Can the robot climb?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Yes, it can",
+                  "options": [
+                    "Yes, it can",
+                    "No, it can't",
+                    "Maybe",
+                    "We don't know"
+                  ]
+                },
+                {
+                  "question_text": "True or False: We say 'I can swims' to show ability.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "___ you jump high?",
+                  "question_type": "fill_blank",
+                  "correct_answer": "Can",
+                  "options": [
+                    "Can",
+                    "Are",
+                    "Do",
+                    "Is"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 3
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_2_unit_04_lesson_04",
+          "title": "Unit Review",
+          "topic": "Combining body parts and actions",
+          "context": "Combining body parts and actions (e.g., I can jump with my legs).",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What can you do with your hands?",
+                  "correct_answer": "clap",
+                  "options": [
+                    "clap",
+                    "jump",
+                    "run",
+                    "sleep"
+                  ],
+                  "image_emoji": "👏",
+                  "hint": "You put your hands together and make a sound!"
+                },
+                {
+                  "question_text": "What do you use to kick a ball?",
+                  "correct_answer": "feet",
+                  "options": [
+                    "feet",
+                    "ears",
+                    "nose",
+                    "arms"
+                  ],
+                  "image_emoji": "⚽",
+                  "hint": "You wear shoes on these body parts!"
+                },
+                {
+                  "question_text": "When you wave goodbye, what do you move?",
+                  "correct_answer": "hand",
+                  "options": [
+                    "hand",
+                    "head",
+                    "leg",
+                    "tummy"
+                  ],
+                  "image_emoji": "👋",
+                  "hint": "It's at the end of your arm!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "shoulders",
+                "knees",
+                "toes",
+                "arm",
+                "leg",
+                "jump",
+                "run",
+                "sing",
+                "dance",
+                "can",
+                "can't",
+                "swim",
+                "climb"
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "crossword",
+                  "items": [
+                    {
+                      "word": "shoulders",
+                      "definition": "Body parts between your neck and arms",
+                      "emoji": "💪"
+                    },
+                    {
+                      "word": "knees",
+                      "definition": "Body parts in the middle of your legs",
+                      "emoji": "🦵",
+                      "image_url": "/static/vocab_images/knees.png"
+                    },
+                    {
+                      "word": "toes",
+                      "definition": "Five small parts at the end of your foot",
+                      "emoji": "👣"
+                    },
+                    {
+                      "word": "jump",
+                      "definition": "Go up in the air with both feet",
+                      "emoji": "🦘"
+                    },
+                    {
+                      "word": "dance",
+                      "definition": "Move your body to music",
+                      "emoji": "💃"
+                    },
+                    {
+                      "word": "swim",
+                      "definition": "Move through water",
+                      "emoji": "🏊"
+                    },
+                    {
+                      "word": "climb",
+                      "definition": "Go up using hands and feet",
+                      "emoji": "🧗"
+                    },
+                    {
+                      "word": "sing",
+                      "definition": "Make music with your voice",
+                      "emoji": "🎤"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "word_search",
+                  "items": [
+                    {
+                      "word": "arm",
+                      "definition": "Body part from shoulder to hand",
+                      "emoji": "💪"
+                    },
+                    {
+                      "word": "leg",
+                      "definition": "Body part you use to walk",
+                      "emoji": "🦵"
+                    },
+                    {
+                      "word": "run",
+                      "definition": "Move very fast with your legs",
+                      "emoji": "🏃"
+                    },
+                    {
+                      "word": "can",
+                      "definition": "Word that means you are able to do something",
+                      "emoji": "✅"
+                    },
+                    {
+                      "word": "cant",
+                      "definition": "Word that means you are not able to do something",
+                      "emoji": "❌"
+                    },
+                    {
+                      "word": "jump",
+                      "definition": "Go up in the air with both feet",
+                      "emoji": "🦘"
+                    },
+                    {
+                      "word": "dance",
+                      "definition": "Move your body to music",
+                      "emoji": "💃"
+                    },
+                    {
+                      "word": "swim",
+                      "definition": "Move through water",
+                      "emoji": "🏊"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "board_game",
+                  "items": [
+                    {
+                      "question": "What do you bend when you sit down?",
+                      "answer": "knees",
+                      "options": [
+                        "knees",
+                        "toes",
+                        "shoulders",
+                        "arms"
+                      ]
+                    },
+                    {
+                      "question": "What are at the end of your feet?",
+                      "answer": "toes",
+                      "options": [
+                        "toes",
+                        "knees",
+                        "shoulders",
+                        "legs"
+                      ]
+                    },
+                    {
+                      "question": "Which word means 'I am able to do it'?",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "can't",
+                        "climb",
+                        "run"
+                      ]
+                    },
+                    {
+                      "question": "What action do you do in a pool?",
+                      "answer": "swim",
+                      "options": [
+                        "swim",
+                        "climb",
+                        "sing",
+                        "jump"
+                      ]
+                    },
+                    {
+                      "question": "What do you do when you go up a tree?",
+                      "answer": "climb",
+                      "options": [
+                        "climb",
+                        "swim",
+                        "dance",
+                        "run"
+                      ]
+                    },
+                    {
+                      "question": "What body parts do you touch in the song 'Head, Shoulders...'?",
+                      "answer": "knees",
+                      "options": [
+                        "knees",
+                        "arms",
+                        "legs",
+                        "toes"
+                      ]
+                    },
+                    {
+                      "question": "What action do you do with a song?",
+                      "answer": "sing",
+                      "options": [
+                        "sing",
+                        "jump",
+                        "run",
+                        "climb"
+                      ]
+                    },
+                    {
+                      "question": "What do you use to throw a ball?",
+                      "answer": "arm",
+                      "options": [
+                        "arm",
+                        "leg",
+                        "toe",
+                        "knee"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Tom's Busy Day",
+              "text": "Tom can do many things! He can run with his legs. He can clap with his hands. Tom can jump and touch his toes. He can't fly, but he can dance and sing. Tom loves to move his body!",
+              "scene_description": "happy young boy playing and moving actively in a bright room",
+              "questions": [
+                {
+                  "question": "What can Tom do with his legs?",
+                  "answer": "run",
+                  "options": [
+                    "run",
+                    "sing",
+                    "clap"
+                  ],
+                  "correct_answer": "run"
+                },
+                {
+                  "question": "Can Tom fly?",
+                  "answer": "No",
+                  "options": [
+                    "Yes",
+                    "No",
+                    "Sometimes"
+                  ],
+                  "correct_answer": "No"
+                },
+                {
+                  "question": "What does Tom touch when he jumps?",
+                  "answer": "his toes",
+                  "options": [
+                    "his toes",
+                    "his nose",
+                    "his knees"
+                  ],
+                  "correct_answer": "his toes"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I can ___ with my ___.",
+              "explanation": "We use 'can' to say what we are able to do with our body parts.",
+              "examples": [
+                "I can jump with my legs.",
+                "I can clap with my hands.",
+                "I can kick with my feet."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "can",
+                        "jump",
+                        "with",
+                        "my",
+                        "legs"
+                      ],
+                      "correctSentence": "I can jump with my legs"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "can't",
+                        "swim",
+                        "today"
+                      ],
+                      "correctSentence": "She can't swim today"
+                    },
+                    {
+                      "words": [
+                        "Can",
+                        "you",
+                        "run",
+                        "fast"
+                      ],
+                      "correctSentence": "Can you run fast"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "can",
+                        "dance",
+                        "and",
+                        "sing"
+                      ],
+                      "correctSentence": "He can dance and sing"
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "can",
+                        "touch",
+                        "my",
+                        "toes"
+                      ],
+                      "correctSentence": "I can touch my toes"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I ___ jump high.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "am",
+                        "is",
+                        "do"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ swim in the pool.",
+                      "answer": "can't",
+                      "options": [
+                        "can't",
+                        "not",
+                        "don't",
+                        "isn't"
+                      ]
+                    },
+                    {
+                      "sentence": "___ you dance?",
+                      "answer": "Can",
+                      "options": [
+                        "Can",
+                        "Do",
+                        "Are",
+                        "Is"
+                      ]
+                    },
+                    {
+                      "sentence": "He can climb ___ his arms.",
+                      "answer": "with",
+                      "options": [
+                        "with",
+                        "on",
+                        "at",
+                        "to"
+                      ]
+                    },
+                    {
+                      "sentence": "I can kick with my ___.",
+                      "answer": "legs",
+                      "options": [
+                        "legs",
+                        "arms",
+                        "head",
+                        "nose"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "I can jumps with my legs.",
+                      "errorWord": "jumps",
+                      "correctWord": "jump",
+                      "explanation": "After 'can' use the base verb form"
+                    },
+                    {
+                      "sentence": "She can't climbing trees.",
+                      "errorWord": "climbing",
+                      "correctWord": "climb",
+                      "explanation": "After 'can't' use the base verb form"
+                    },
+                    {
+                      "sentence": "Him can run fast.",
+                      "errorWord": "Him",
+                      "correctWord": "He",
+                      "explanation": "Use 'He' as the subject pronoun"
+                    },
+                    {
+                      "sentence": "Can you touching your toes?",
+                      "errorWord": "touching",
+                      "correctWord": "touch",
+                      "explanation": "After 'can' use the base verb form"
+                    },
+                    {
+                      "sentence": "I can dance with my two leg.",
+                      "errorWord": "leg",
+                      "correctWord": "legs",
+                      "explanation": "Use plural 'legs' after 'two'"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "I can swim with my arms.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "Correct! We use 'can' + base verb"
+                    },
+                    {
+                      "sentence": "She can runs very fast.",
+                      "is_correct": false,
+                      "corrected": "She can run very fast.",
+                      "explanation": "After 'can' use base verb 'run', not 'runs'"
+                    },
+                    {
+                      "sentence": "Can you jump high?",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "Correct! This is the right question form"
+                    },
+                    {
+                      "sentence": "He can't to dance.",
+                      "is_correct": false,
+                      "corrected": "He can't dance.",
+                      "explanation": "Don't use 'to' after 'can't'"
+                    },
+                    {
+                      "sentence": "I can touch my knees.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "Correct! This sentence is perfect"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "I ___ run with my legs.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "cans",
+                        "canning",
+                        "to can"
+                      ],
+                      "explanation": "Use 'can' with I/you/he/she/we/they"
+                    },
+                    {
+                      "question": "___ you climb trees?",
+                      "answer": "Can",
+                      "options": [
+                        "Can",
+                        "Do",
+                        "Are",
+                        "Is"
+                      ],
+                      "explanation": "Use 'Can' to ask about ability"
+                    },
+                    {
+                      "question": "She can ___ with her arms.",
+                      "answer": "swim",
+                      "options": [
+                        "swim",
+                        "swims",
+                        "swimming",
+                        "to swim"
+                      ],
+                      "explanation": "After 'can' use the base verb form"
+                    },
+                    {
+                      "question": "He ___ sing well.",
+                      "answer": "can't",
+                      "options": [
+                        "can't",
+                        "no can",
+                        "not can",
+                        "don't"
+                      ],
+                      "explanation": "Use 'can't' to say you are not able to do something"
+                    },
+                    {
+                      "question": "I can dance ___ my feet.",
+                      "answer": "with",
+                      "options": [
+                        "with",
+                        "on",
+                        "at",
+                        "to"
+                      ],
+                      "explanation": "Use 'with' to show which body part you use"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello children! Let's move our bodies! Can you jump with your legs? Yes, you can! Now, can you clap with your hands? Great! I can touch my toes. Can you touch your toes too? Very good! Dancing is fun. We can dance with our whole body!",
+              "questions": [
+                {
+                  "question": "What can you jump with?",
+                  "answer": "your legs",
+                  "options": [
+                    "your legs",
+                    "your arms",
+                    "your head",
+                    "your shoulders"
+                  ]
+                },
+                {
+                  "question": "What does the teacher touch?",
+                  "answer": "toes",
+                  "options": [
+                    "toes",
+                    "knees",
+                    "nose",
+                    "ears"
+                  ]
+                },
+                {
+                  "question": "What can you clap with?",
+                  "answer": "hands",
+                  "options": [
+                    "hands",
+                    "feet",
+                    "legs",
+                    "elbows"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Let's talk about what you can do with your body! Listen and repeat, then tell me about you!",
+              "expected_text": "I can jump with my legs.",
+              "prompts": [
+                {
+                  "prompt": "Say: I can jump with my legs.",
+                  "expected_text": "I can jump with my legs."
+                },
+                {
+                  "prompt": "Say: I can clap with my hands.",
+                  "expected_text": "I can clap with my hands."
+                },
+                {
+                  "prompt": "Now tell me: What can YOU do with your legs?",
+                  "expected_text": "I can run with my legs."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "What do you use to jump?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "legs",
+                  "options": [
+                    "legs",
+                    "arms",
+                    "shoulders",
+                    "knees"
+                  ]
+                },
+                {
+                  "question_text": "I ___ swim in the pool.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "can",
+                  "options": [
+                    "can",
+                    "am",
+                    "is",
+                    "do"
+                  ]
+                },
+                {
+                  "question_text": "___ you touch your toes?",
+                  "question_type": "fill_blank",
+                  "correct_answer": "Can",
+                  "options": [
+                    "Can",
+                    "Do",
+                    "Are",
+                    "Is"
+                  ]
+                },
+                {
+                  "question_text": "Read: 'She can dance with her feet.' What can she do?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "dance",
+                  "options": [
+                    "dance",
+                    "swim",
+                    "climb",
+                    "run"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'He can runs fast' is correct.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 4
+        }
+      ]
+    }
+  ]
+}

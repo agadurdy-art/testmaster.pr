@@ -1,0 +1,264 @@
+{
+  "stage": 1,
+  "stage_title": "Foundations",
+  "units": [
+    {
+      "unit_id": "stage_1_unit_12",
+      "unit_num": 12,
+      "title": "Review & Final Gate",
+      "subtitle": "Cumulative Review & Stage 1 Certification",
+      "phonics_focus": [],
+      "grammar_focus": ["All Stage 1 Grammar", "am/is/are", "have/has", "like", "in/on", "a/an"],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_1_unit_12_lesson_01",
+          "title": "Phonics & Numbers Review",
+          "topic": "Phonics A-Z, Greetings, and Numbers 1-10",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1, "type": "warm_up",
+              "video_url": "https://www.youtube.com/watch?v=75p-N9YKqNo",
+              "source_channel": "Super Simple Songs",
+              "instruction": "Watch the 'Alphabet Song' and get ready for the final review!",
+              "question_text": "Which letter comes after A?",
+              "correct_answer": "B", "options": ["B", "D", "Z", "M"],
+              "image_emoji": "🔡", "hint": "A, ..., C, D"
+            },
+            {
+              "step": 2, "type": "vocabulary_review",
+              "items": ["apple", "egg", "igloo", "octopus", "umbrella", "zebra", "one", "ten", "hello", "morning"]
+            },
+            {
+              "step": 3, "type": "micro_game_vocab",
+              "question_text": "Match the number 10: 🔟",
+              "correct_answer": "ten", "options": ["ten", "one", "six", "nine"]
+            },
+            {
+              "step": 4, "type": "micro_reading",
+              "title": "Ben's Morning",
+              "text": "Good morning! I am Ben. I have one red apple and ten eggs. I am happy.",
+              "questions": [
+                {"question": "How many eggs?", "answer": "ten", "options": ["one", "ten"]}
+              ]
+            },
+            {
+              "step": 5, "type": "grammar_review",
+              "patterns": ["I am...", "I have...", "A/An usage"]
+            },
+            {
+              "step": 6, "type": "grammar_game",
+              "mode": "error_hunter",
+              "sentence": "I have a egg.",
+              "has_error": true,
+              "correct_sentence": "I have an egg.",
+              "hint": "Use 'an' before 'e'."
+            },
+            {
+              "step": 7, "type": "listening",
+              "audio_text": "Hello, my name is Ben. I have ten red apples.",
+              "questions": [{"question": "What does Ben have?", "answer": "ten apples"}]
+            },
+            {
+              "step": 8, "type": "production",
+              "prompt": "Say the alphabet from A to G.",
+              "expected_text": "a b c d e f g",
+              "mode": "speaking"
+            },
+            {
+              "step": 9, "type": "exit_ticket",
+              "question_text": "Choose the greeting:",
+              "correct_answer": "hello", "options": ["hello", "apple", "ten"]
+            }
+          ],
+          "extra_links": [
+            {"label": "Alphabet Song", "url": "https://www.youtube.com/watch?v=75p-N9YKqNo", "type": "youtube"}
+          ]
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_1_unit_12_lesson_02",
+          "title": "My Family & My Body",
+          "topic": "Family, Body Parts, and Personal Descriptions",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1, "type": "warm_up",
+              "question_text": "Who is 👩?",
+              "correct_answer": "mother", "options": ["mother", "father", "brother"],
+              "hint": "She is in your family."
+            },
+            {
+              "step": 2, "type": "vocabulary_review",
+              "items": ["mother", "father", "sister", "grandpa", "eye", "nose", "hand", "leg", "hair", "small", "big"]
+            },
+            {
+              "step": 3, "type": "micro_game_vocab",
+              "question_text": "Match what you see with: 👁️",
+              "correct_answer": "eye", "options": ["eye", "ear", "hand", "nose"]
+            },
+            {
+              "step": 4, "type": "micro_reading",
+              "title": "My Sister",
+              "text": "This is my sister. Her name is Kim. She has big blue eyes and long hair. She is cute.",
+              "questions": [
+                {"question": "Are her eyes small?", "answer": "no", "options": ["yes", "no"]}
+              ]
+            },
+            {
+              "step": 5, "type": "grammar_review",
+              "patterns": ["This is my...", "He/She has...", "Adjectives (Big/Small)"]
+            },
+            {
+              "step": 6, "type": "grammar_game",
+              "mode": "word_order",
+              "words": ["She", "has", "big", "eyes"],
+              "correct_sentence": "She has big eyes."
+            },
+            {
+              "step": 7, "type": "listening",
+              "audio_text": "This is my father. He has a big nose and two small ears.",
+              "questions": [{"question": "Who is he?", "answer": "father"}]
+            },
+            {
+              "step": 8, "type": "production",
+              "prompt": "Describe yourself: Say 'I have two eyes and two hands'.",
+              "expected_text": "i have two eyes and two hands",
+              "mode": "speaking"
+            },
+            {
+              "step": 9, "type": "exit_ticket",
+              "question_text": "Match 🦵 part:",
+              "correct_answer": "leg", "options": ["leg", "arm", "eye"]
+            }
+          ],
+          "extra_links": []
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_1_unit_12_lesson_03",
+          "title": "Animals & School Review",
+          "topic": "Farm/Pets, School Bag, Colors, and Emotions",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1, "type": "warm_up",
+              "question_text": "What animal says Moo? 🐄",
+              "correct_answer": "cow", "options": ["cow", "dog", "cat"]
+            },
+            {
+              "step": 2, "type": "vocabulary_review",
+              "items": ["cow", "pig", "duck", "dog", "cat", "rabbit", "bag", "book", "pencil", "happy", "hungry", "thirsty", "red", "green"]
+            },
+            {
+              "step": 3, "type": "micro_game_vocab",
+              "question_text": "Match the school tool: ✏️",
+              "correct_answer": "pencil", "options": ["pencil", "pig", "sad", "cow"]
+            },
+            {
+              "step": 4, "type": "micro_reading",
+              "title": "On the Farm",
+              "text": "I see a pink pig and a green duck. I am hungry. I have a red apple in my bag. I like my school bag!",
+              "questions": [
+                {"question": "What color is the pig?", "answer": "pink", "options": ["pink", "red"]}
+              ]
+            },
+            {
+              "step": 5, "type": "grammar_review",
+              "patterns": ["I like...", "Do you like...?", "Prepositions (On/In)"]
+            },
+            {
+              "step": 6, "type": "grammar_game",
+              "mode": "fill_blank",
+              "sentence": "Do you ______ cats?",
+              "correct_answer": "like", "options": ["like", "am", "is"],
+              "hint": "Question for preference."
+            },
+            {
+              "step": 7, "type": "listening",
+              "audio_text": "I am thirsty. I want water. The water is on the desk.",
+              "questions": [{"question": "Where is the water?", "answer": "on the desk"}]
+            },
+            {
+              "step": 8, "type": "production",
+              "prompt": "Tell us: What is in your bag? (Color + Object)",
+              "expected_text": "a red book",
+              "mode": "speaking"
+            },
+            {
+              "step": 9, "type": "exit_ticket",
+              "question_text": "How do you feel when you want food?",
+              "correct_answer": "hungry", "options": ["hungry", "thirsty", "happy"]
+            }
+          ],
+          "extra_links": []
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_1_unit_12_lesson_04",
+          "title": "Stage 1 Final Gate",
+          "topic": "Comprehensive Final Exam - Stage 1 Certification",
+          "is_review": true,
+          "is_final_gate": true,
+          "steps": [
+            {
+              "step": 1, "type": "warm_up",
+              "question_text": "Are you ready for the final test?",
+              "correct_answer": "yes", "options": ["yes", "no"],
+              "image_emoji": "🏆"
+            },
+            {
+              "step": 2, "type": "vocabulary_review",
+              "items": ["hello", "mother", "father", "eye", "hand", "red", "blue", "green", "one", "ten", "cat", "dog", "cow", "bag", "book", "pen", "happy", "sad", "hungry", "sleepy"]
+            },
+            {
+              "step": 3, "type": "micro_game_vocab",
+              "question_text": "Final Vocab: Match 🐄",
+              "correct_answer": "cow", "options": ["cow", "cat", "duck", "pig"]
+            },
+            {
+              "step": 4, "type": "micro_reading",
+              "title": "Leo's Story",
+              "text": "Hello! My name is Leo. I am a student. I have a green bag. In my bag, I have a red book and a blue pen. I have a pet cat. My cat is small and cute. I am very happy today!",
+              "questions": [
+                {"question": "What is Leo's job?", "answer": "student", "options": ["student", "farmer", "teacher"]},
+                {"question": "What color is the book?", "answer": "red", "options": ["red", "blue", "green"]},
+                {"question": "Is the cat big?", "answer": "no", "options": ["yes", "no"]}
+              ]
+            },
+            {
+              "step": 5, "type": "grammar_review",
+              "patterns": ["am/is/are", "have/has", "like", "in/on", "a/an"]
+            },
+            {
+              "step": 6, "type": "grammar_game",
+              "mode": "word_order",
+              "words": ["I", "have", "a", "cute", "cat"],
+              "correct_sentence": "I have a cute cat."
+            },
+            {
+              "step": 7, "type": "listening",
+              "audio_text": "I have a father and a mother. We have a pink pig and two dogs. I like animals.",
+              "questions": [{"question": "How many dogs?", "answer": "two"}]
+            },
+            {
+              "step": 8, "type": "production",
+              "prompt": "Final Task: Introduce yourself, tell your feeling, and name your favorite animal.",
+              "expected_text": "hello my name is leo i am happy i like cats",
+              "mode": "speaking"
+            },
+            {
+              "step": 9, "type": "exit_ticket",
+              "question_text": "Stage 1 Final: What do you say in the morning?",
+              "correct_answer": "good morning", "options": ["good morning", "goodnight", "goodbye"]
+            }
+          ],
+          "extra_links": [
+            {"label": "Celebration!", "url": "https://www.youtube.com/watch?v=75p-N9YKqNo", "type": "youtube"}
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+{
+  "name": "general_set_c_shopping",
+  "type": "floor_plan",
+  "created_at": "2025-12-31T22:10:47.748939",
+  "png_file": "general_set_c_shopping.png",
+  "data": {
+    "type": "floor_plan",
+    "width": 900,
+    "height": 600,
+    "title": "Riverside Shopping Centre - Ground Floor",
+    "subtitle": "Label the shops A-H",
+    "showKey": true,
+    "corridors": [
+      {
+        "x": 50,
+        "y": 250,
+        "width": 800,
+        "height": 100,
+        "type": "main"
+      },
+      {
+        "x": 400,
+        "y": 50,
+        "width": 100,
+        "height": 500,
+        "type": "main"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "A",
+        "x": 50,
+        "y": 50,
+        "width": 150,
+        "height": 180,
+        "door": "bottom",
+        "unlabeled": true
+      },
+      {
+        "id": "B",
+        "x": 220,
+        "y": 50,
+        "width": 160,
+        "height": 180,
+        "door": "bottom",
+        "unlabeled": true
+      },
+      {
+        "id": "C",
+        "x": 520,
+        "y": 50,
+        "width": 160,
+        "height": 180,
+        "door": "bottom",
+        "unlabeled": true
+      },
+      {
+        "id": "D",
+        "x": 700,
+        "y": 50,
+        "width": 150,
+        "height": 180,
+        "door": "bottom",
+        "unlabeled": true
+      },
+      {
+        "id": "E",
+        "x": 50,
+        "y": 370,
+        "width": 150,
+        "height": 180,
+        "door": "top",
+        "unlabeled": true
+      },
+      {
+        "id": "F",
+        "x": 220,
+        "y": 370,
+        "width": 160,
+        "height": 180,
+        "door": "top",
+        "unlabeled": true
+      },
+      {
+        "id": "G",
+        "x": 520,
+        "y": 370,
+        "width": 160,
+        "height": 180,
+        "door": "top",
+        "unlabeled": true
+      },
+      {
+        "id": "H",
+        "x": 700,
+        "y": 370,
+        "width": 150,
+        "height": 180,
+        "door": "top",
+        "unlabeled": true
+      }
+    ],
+    "givenRooms": [
+      {
+        "x": 380,
+        "y": 270,
+        "width": 140,
+        "height": 60,
+        "name": "Information Desk",
+        "style": "info"
+      },
+      {
+        "x": 50,
+        "y": 250,
+        "width": 80,
+        "height": 100,
+        "name": "Main Entrance",
+        "style": "entrance"
+      },
+      {
+        "x": 770,
+        "y": 250,
+        "width": 80,
+        "height": 100,
+        "name": "South Exit",
+        "style": "entrance"
+      }
+    ],
+    "features": [
+      {
+        "type": "escalator",
+        "x": 350,
+        "y": 150,
+        "direction": "up"
+      },
+      {
+        "type": "escalator",
+        "x": 350,
+        "y": 450,
+        "direction": "down"
+      },
+      {
+        "type": "lift",
+        "x": 480,
+        "y": 300
+      },
+      {
+        "type": "fountain",
+        "x": 450,
+        "y": 300,
+        "size": 30
+      },
+      {
+        "type": "toilets",
+        "x": 820,
+        "y": 300
+      }
+    ],
+    "benches": [
+      {
+        "x": 300,
+        "y": 285
+      },
+      {
+        "x": 300,
+        "y": 315
+      },
+      {
+        "x": 600,
+        "y": 285
+      },
+      {
+        "x": 600,
+        "y": 315
+      }
+    ]
+  }
+}

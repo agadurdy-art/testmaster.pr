@@ -1,0 +1,1839 @@
+{
+  "stage": 1,
+  "stage_title": "Foundations",
+  "units": [
+    {
+      "unit_id": "stage_1_unit_11",
+      "unit_num": 11,
+      "title": "Feelings & Emotions",
+      "subtitle": "Happy, Sad, Angry, Sleepy, Hungry, Thirsty",
+      "phonics_focus": [],
+      "grammar_focus": [
+        "How are you?",
+        "I am [feeling]",
+        "Are you [feeling]?",
+        "Yes, I am / No, I am not."
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_1_unit_11_lesson_01",
+          "title": "How Are You?",
+          "topic": "Basic emotions and How are you?",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://www.youtube.com/watch?v=l4WNrvVjiTw",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "How does the sun make you feel in the video?",
+                  "correct_answer": "happy",
+                  "options": [
+                    "happy",
+                    "scared",
+                    "sleepy",
+                    "angry"
+                  ],
+                  "image_emoji": "☀️",
+                  "hint": "Think warm and bright!"
+                },
+                {
+                  "question_text": "What makes the boy excited in the video?",
+                  "correct_answer": "a singing bird",
+                  "options": [
+                    "a singing bird",
+                    "a loud whistle",
+                    "a fast car",
+                    "a quiet breeze"
+                  ],
+                  "image_emoji": "🐦",
+                  "hint": "It's a musical animal!"
+                },
+                {
+                  "question_text": "What kind of day is shown in the video?",
+                  "correct_answer": "sunny",
+                  "options": [
+                    "sunny",
+                    "rainy",
+                    "cloudy",
+                    "snowy"
+                  ],
+                  "image_emoji": "☀️",
+                  "hint": "The opposite of rainy!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "happy",
+                  "ipa": "/ˈhæpi/",
+                  "definition": "Feeling very good",
+                  "example": "How are you? I am happy.",
+                  "image_emoji": "😊",
+                  "image_url": "/static/vocab_images/happy.png"
+                },
+                {
+                  "word": "sad",
+                  "ipa": "/sæd/",
+                  "definition": "Feeling not good",
+                  "example": "Are you sad? No, I am not.",
+                  "image_emoji": "😢",
+                  "image_url": "/static/vocab_images/gpt_sad.png"
+                },
+                {
+                  "word": "how",
+                  "ipa": "/haʊ/",
+                  "definition": "Ask about feelings",
+                  "example": "How are you today?",
+                  "image_emoji": "❓",
+                  "image_url": "/static/vocab_images/how.png"
+                },
+                {
+                  "word": "feel",
+                  "ipa": "/fiːl/",
+                  "definition": "Have an emotion",
+                  "example": "I feel happy now.",
+                  "image_emoji": "❤️",
+                  "image_url": "/static/vocab_images/feel.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "happy",
+                      "emoji": "😊",
+                      "distractors": [
+                        {
+                          "word": "sad",
+                          "emoji": "😢"
+                        },
+                        {
+                          "word": "how",
+                          "emoji": "❓"
+                        },
+                        {
+                          "word": "feel",
+                          "emoji": "🧠"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "sad",
+                      "emoji": "😢",
+                      "distractors": [
+                        {
+                          "word": "happy",
+                          "emoji": "😊"
+                        },
+                        {
+                          "word": "how",
+                          "emoji": "❓"
+                        },
+                        {
+                          "word": "feel",
+                          "emoji": "🧠"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "how",
+                      "emoji": "❓",
+                      "distractors": [
+                        {
+                          "word": "happy",
+                          "emoji": "😊"
+                        },
+                        {
+                          "word": "sad",
+                          "emoji": "😢"
+                        },
+                        {
+                          "word": "feel",
+                          "emoji": "🧠"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "feel",
+                      "emoji": "🧠",
+                      "distractors": [
+                        {
+                          "word": "happy",
+                          "emoji": "😊"
+                        },
+                        {
+                          "word": "sad",
+                          "emoji": "😢"
+                        },
+                        {
+                          "word": "how",
+                          "emoji": "❓"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "happy",
+                      "emoji": "😊",
+                      "distractors": [
+                        {
+                          "word": "sad",
+                          "emoji": "😢"
+                        },
+                        {
+                          "word": "how",
+                          "emoji": "❓"
+                        },
+                        {
+                          "word": "feel",
+                          "emoji": "🧠"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "sad",
+                      "emoji": "😢",
+                      "distractors": [
+                        {
+                          "word": "happy",
+                          "emoji": "😊"
+                        },
+                        {
+                          "word": "how",
+                          "emoji": "❓"
+                        },
+                        {
+                          "word": "feel",
+                          "emoji": "🧠"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "how",
+                      "emoji": "❓",
+                      "distractors": [
+                        {
+                          "word": "happy",
+                          "emoji": "😊"
+                        },
+                        {
+                          "word": "sad",
+                          "emoji": "😢"
+                        },
+                        {
+                          "word": "feel",
+                          "emoji": "🧠"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "feel",
+                      "emoji": "🧠",
+                      "distractors": [
+                        {
+                          "word": "happy",
+                          "emoji": "😊"
+                        },
+                        {
+                          "word": "sad",
+                          "emoji": "😢"
+                        },
+                        {
+                          "word": "how",
+                          "emoji": "❓"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "happy",
+                      "emoji": "😊"
+                    },
+                    {
+                      "word": "sad",
+                      "emoji": "😢"
+                    },
+                    {
+                      "word": "how",
+                      "emoji": "❓"
+                    },
+                    {
+                      "word": "feel",
+                      "emoji": "🧠"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 12
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Amy and Tom's Day",
+              "text": "Hello, Amy! How do you feel? I am happy. How are you, Tom? I am sad. Where is my teddy bear?",
+              "questions": [
+                {
+                  "question": "Is Amy happy?",
+                  "answer": "yes",
+                  "options": [
+                    "yes",
+                    "no"
+                  ]
+                },
+                {
+                  "question": "Why is Tom sad?",
+                  "answer": "He lost his teddy bear.",
+                  "options": [
+                    "He lost his teddy bear.",
+                    "He is tired.",
+                    "He is hungry."
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "How are you? I am ___.",
+              "explanation": "Use this to talk about how you feel.",
+              "examples": [
+                "How are you? I am excited.",
+                "How are you? I am sleepy.",
+                "How are you? I am okay."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "you",
+                        "How",
+                        "are",
+                        "?"
+                      ],
+                      "correctSentence": "How are you?"
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "am",
+                        "happy",
+                        "."
+                      ],
+                      "correctSentence": "I am happy."
+                    },
+                    {
+                      "words": [
+                        "am",
+                        "I",
+                        "sad",
+                        "."
+                      ],
+                      "correctSentence": "I am sad."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "How are you? I am ___.",
+                      "answer": "happy",
+                      "options": [
+                        "happy",
+                        "apple",
+                        "car",
+                        "run"
+                      ]
+                    },
+                    {
+                      "sentence": "How are you? I am ___.",
+                      "answer": "sad",
+                      "options": [
+                        "sad",
+                        "dog",
+                        "fast",
+                        "red"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "How am you? I am happy.",
+                      "errorWord": "am",
+                      "correctWord": "are"
+                    },
+                    {
+                      "sentence": "How are you? I is sad.",
+                      "errorWord": "is",
+                      "correctWord": "am"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello, my friend! Are you feeling happy today? I am not sad because I have my favorite toy!",
+              "questions": [
+                {
+                  "question": "Why is she not sad?",
+                  "answer": "she has her favorite toy",
+                  "options": [
+                    "she has her favorite toy",
+                    "it is raining",
+                    "she is hungry"
+                  ]
+                },
+                {
+                  "question": "How is she feeling?",
+                  "answer": "happy",
+                  "options": [
+                    "happy",
+                    "tired",
+                    "confused"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: I am sad.",
+              "expected_text": "i am sad",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "I ___ Ben. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "am",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "Which word means feeling joy? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "happy",
+                  "options": [
+                    "happy",
+                    "sad",
+                    "angry",
+                    "tired"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'I am happy' means you feel good.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "'How are you?' 'I am ___'. Fill the blank. (Grammar review)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "fine",
+                  "options": [
+                    "fine",
+                    "up",
+                    "down",
+                    "over"
+                  ]
+                },
+                {
+                  "question_text": "What is the question we ask to know someone's feelings? (Reading comprehension)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "How are you?",
+                  "options": [
+                    "How are you?",
+                    "Where are you?",
+                    "What are you?",
+                    "Who are you?"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "If You're Happy Song",
+              "url": "https://www.youtube.com/watch?v=l4WNrvVjiTw",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_1_unit_11_lesson_02",
+          "title": "I Want Water",
+          "topic": "Physical needs and Are you...? questions",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/lesson1video",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What do we drink when we are thirsty?",
+                  "correct_answer": "water",
+                  "options": [
+                    "water",
+                    "juice",
+                    "soda",
+                    "milk"
+                  ],
+                  "image_emoji": "💧",
+                  "hint": "It's clear and falls from the sky."
+                },
+                {
+                  "question_text": "What do you need when you feel hot on a sunny day?",
+                  "correct_answer": "water",
+                  "options": [
+                    "water",
+                    "ice cream",
+                    "snack",
+                    "hat"
+                  ],
+                  "image_emoji": "☀️",
+                  "hint": "You drink it to cool down."
+                },
+                {
+                  "question_text": "How do you feel after playing at the playground?",
+                  "correct_answer": "tired",
+                  "options": [
+                    "tired",
+                    "sleepy",
+                    "bored",
+                    "sad"
+                  ],
+                  "image_emoji": "😴",
+                  "hint": "You want to rest afterwards."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "hungry",
+                  "ipa": "/ˈhʌŋɡri/",
+                  "definition": "Wanting to eat food.",
+                  "example": "Are you hungry? Yes, I am.",
+                  "image_emoji": "🍲",
+                  "image_url": "/static/vocab_images/hungry.png"
+                },
+                {
+                  "word": "thirsty",
+                  "ipa": "/ˈθɜːrsti/",
+                  "definition": "Wanting to drink water.",
+                  "example": "How are you? I am thirsty.",
+                  "image_emoji": "💦",
+                  "image_url": "/static/vocab_images/gpt_thirsty.png"
+                },
+                {
+                  "word": "eat",
+                  "ipa": "/iːt/",
+                  "definition": "To put food in mouth.",
+                  "example": "Do you want to eat? Yes, I do.",
+                  "image_emoji": "🍴",
+                  "image_url": "/static/vocab_images/eat.png"
+                },
+                {
+                  "word": "drink",
+                  "ipa": "/drɪŋk/",
+                  "definition": "To have some water.",
+                  "example": "Are you thirsty? Yes, I will drink.",
+                  "image_emoji": "🍷",
+                  "image_url": "/static/vocab_images/drink.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "hungry",
+                      "emoji": "😋",
+                      "distractors": [
+                        {
+                          "word": "thirsty",
+                          "emoji": "🚱"
+                        },
+                        {
+                          "word": "eat",
+                          "emoji": "🍎"
+                        },
+                        {
+                          "word": "drink",
+                          "emoji": "💧"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "thirsty",
+                      "emoji": "🚱",
+                      "distractors": [
+                        {
+                          "word": "hungry",
+                          "emoji": "😋"
+                        },
+                        {
+                          "word": "eat",
+                          "emoji": "🍎"
+                        },
+                        {
+                          "word": "drink",
+                          "emoji": "💧"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "eat",
+                      "emoji": "🍎",
+                      "distractors": [
+                        {
+                          "word": "hungry",
+                          "emoji": "😋"
+                        },
+                        {
+                          "word": "thirsty",
+                          "emoji": "🚱"
+                        },
+                        {
+                          "word": "drink",
+                          "emoji": "💧"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "drink",
+                      "emoji": "💧",
+                      "distractors": [
+                        {
+                          "word": "hungry",
+                          "emoji": "😋"
+                        },
+                        {
+                          "word": "thirsty",
+                          "emoji": "🚱"
+                        },
+                        {
+                          "word": "eat",
+                          "emoji": "🍎"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "eat",
+                      "emoji": "🍎",
+                      "distractors": [
+                        {
+                          "word": "hungry",
+                          "emoji": "😋"
+                        },
+                        {
+                          "word": "thirsty",
+                          "emoji": "🚱"
+                        },
+                        {
+                          "word": "drink",
+                          "emoji": "💧"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "thirsty",
+                      "emoji": "🚱",
+                      "distractors": [
+                        {
+                          "word": "hungry",
+                          "emoji": "😋"
+                        },
+                        {
+                          "word": "eat",
+                          "emoji": "🍎"
+                        },
+                        {
+                          "word": "drink",
+                          "emoji": "💧"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "hungry",
+                      "emoji": "😋"
+                    },
+                    {
+                      "word": "thirsty",
+                      "emoji": "🚱"
+                    },
+                    {
+                      "word": "eat",
+                      "emoji": "🍎"
+                    },
+                    {
+                      "word": "drink",
+                      "emoji": "💧"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Park Adventure",
+              "text": "How are you? I am hungry. Are you thirsty? Yes, I am. Let's eat a sandwich and drink some juice. Are you happy now? Yes, I am!",
+              "questions": [
+                {
+                  "question": "What do they eat?",
+                  "answer": "sandwich",
+                  "options": [
+                    "sandwich",
+                    "apple",
+                    "banana"
+                  ]
+                },
+                {
+                  "question": "Are they thirsty?",
+                  "answer": "Yes, they are.",
+                  "options": [
+                    "Yes, they are.",
+                    "No, they are not.",
+                    "Maybe."
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Are you ___? Yes, I am.",
+              "explanation": "Use this to talk about feelings.",
+              "examples": [
+                "Are you sleepy? Yes, I am.",
+                "Are you happy? Yes, I am.",
+                "Are you cold? No, I am not."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "are",
+                        "you",
+                        "happy",
+                        "?"
+                      ],
+                      "correctSentence": "Are you happy?"
+                    },
+                    {
+                      "words": [
+                        "is",
+                        "thirsty",
+                        "he",
+                        "?"
+                      ],
+                      "correctSentence": "Is he thirsty?"
+                    },
+                    {
+                      "words": [
+                        "am",
+                        "Yes",
+                        "I",
+                        ","
+                      ],
+                      "correctSentence": "Yes, I am."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "Are you ___? Yes, I am.",
+                      "answer": "hungry",
+                      "options": [
+                        "hungry",
+                        "have",
+                        "is",
+                        "has"
+                      ]
+                    },
+                    {
+                      "sentence": "Are you thirsty? No, I ___ not.",
+                      "answer": "am",
+                      "options": [
+                        "is",
+                        "was",
+                        "am",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "___ you happy? Yes, I am.",
+                      "answer": "Are",
+                      "options": [
+                        "Is",
+                        "Are",
+                        "Am",
+                        "Was"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "Are you are happy? Yes, I am.",
+                      "errorWord": "are",
+                      "correctWord": ""
+                    },
+                    {
+                      "sentence": "He thirsty? Yes, he am.",
+                      "errorWord": "am",
+                      "correctWord": "is"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hi Lucy, do you want to eat something? No, thank you. I just want a drink. I'm a bit thirsty.",
+              "questions": [
+                {
+                  "question": "What does Lucy want?",
+                  "answer": "a drink",
+                  "options": [
+                    "a drink",
+                    "to eat",
+                    "to sleep"
+                  ]
+                },
+                {
+                  "question": "Is Lucy hungry?",
+                  "answer": "No",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: Are you hungry?",
+              "expected_text": "are you hungry",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Are you hungry? (Grammar question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Yes, I am",
+                  "options": [
+                    "Yes, I am",
+                    "No, I am not",
+                    "Yes, I do",
+                    "No, I don't"
+                  ]
+                },
+                {
+                  "question_text": "What do you drink when thirsty? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "water",
+                  "options": [
+                    "water",
+                    "bread",
+                    "apple",
+                    "toy"
+                  ]
+                },
+                {
+                  "question_text": "Tim feels thirsty. What does Tim want? (Reading comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "a drink",
+                  "options": [
+                    "a pillow",
+                    "a drink",
+                    "a toy",
+                    "a book"
+                  ]
+                },
+                {
+                  "question_text": "Fill in the blank: Are you ___? No, I am not. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "thirsty",
+                  "options": [
+                    "thirsty",
+                    "eat",
+                    "water",
+                    "drink"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_1_unit_11_lesson_03",
+          "title": "I am Sleepy",
+          "topic": "Strong emotions and physical states",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/video_food_and_emotions",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What color is the sky on a sunny day?",
+                  "correct_answer": "blue",
+                  "options": [
+                    "blue",
+                    "red",
+                    "green",
+                    "yellow"
+                  ],
+                  "image_emoji": "🌞",
+                  "hint": "It's the same color as calm ocean waves."
+                },
+                {
+                  "question_text": "What animal says 'woof woof'?",
+                  "correct_answer": "dog",
+                  "options": [
+                    "dog",
+                    "cat",
+                    "cow",
+                    "bird"
+                  ],
+                  "image_emoji": "🐶",
+                  "hint": "This pet wags its tail and loves to play fetch."
+                },
+                {
+                  "question_text": "What do you do when you feel sleepy?",
+                  "correct_answer": "go to bed",
+                  "options": [
+                    "go to bed",
+                    "jump around",
+                    "eat candy",
+                    "play games"
+                  ],
+                  "image_emoji": "🛌",
+                  "hint": "You do this to rest and close your eyes."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "angry",
+                  "ipa": "/ˈæŋɡri/",
+                  "definition": "Feeling very upset",
+                  "example": "Are you angry? Yes, I am.",
+                  "image_emoji": "😡",
+                  "image_url": "/static/vocab_images/angry.png"
+                },
+                {
+                  "word": "sleepy",
+                  "ipa": "/ˈsliːpi/",
+                  "definition": "Wanting to sleep now",
+                  "example": "How are you? I am sleepy.",
+                  "image_emoji": "😴",
+                  "image_url": "/static/vocab_images/gpt_sleepy.png"
+                },
+                {
+                  "word": "mad",
+                  "ipa": "/mæd/",
+                  "definition": "Very, very angry",
+                  "example": "Are you mad? No, I am not.",
+                  "image_emoji": "😠",
+                  "image_url": "/static/vocab_images/mad.png"
+                },
+                {
+                  "word": "night",
+                  "ipa": "/naɪt/",
+                  "definition": "Dark time to sleep",
+                  "example": "It is night. I am sleepy.",
+                  "image_emoji": "🌙",
+                  "image_url": "/static/vocab_images/night.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "angry",
+                      "emoji": "😡",
+                      "distractors": [
+                        {
+                          "word": "sleepy",
+                          "emoji": "😴"
+                        },
+                        {
+                          "word": "mad",
+                          "emoji": "💢"
+                        },
+                        {
+                          "word": "night",
+                          "emoji": "🌙"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "sleepy",
+                      "emoji": "😴",
+                      "distractors": [
+                        {
+                          "word": "angry",
+                          "emoji": "😡"
+                        },
+                        {
+                          "word": "mad",
+                          "emoji": "💢"
+                        },
+                        {
+                          "word": "night",
+                          "emoji": "🌙"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "mad",
+                      "emoji": "💢",
+                      "distractors": [
+                        {
+                          "word": "angry",
+                          "emoji": "😡"
+                        },
+                        {
+                          "word": "sleepy",
+                          "emoji": "😴"
+                        },
+                        {
+                          "word": "night",
+                          "emoji": "🌙"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "night",
+                      "emoji": "🌙",
+                      "distractors": [
+                        {
+                          "word": "angry",
+                          "emoji": "😡"
+                        },
+                        {
+                          "word": "sleepy",
+                          "emoji": "😴"
+                        },
+                        {
+                          "word": "mad",
+                          "emoji": "💢"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "angry",
+                      "emoji": "😡",
+                      "distractors": [
+                        {
+                          "word": "sleepy",
+                          "emoji": "😴"
+                        },
+                        {
+                          "word": "mad",
+                          "emoji": "💢"
+                        },
+                        {
+                          "word": "night",
+                          "emoji": "🌙"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "sleepy",
+                      "emoji": "😴",
+                      "distractors": [
+                        {
+                          "word": "angry",
+                          "emoji": "😡"
+                        },
+                        {
+                          "word": "mad",
+                          "emoji": "💢"
+                        },
+                        {
+                          "word": "night",
+                          "emoji": "🌙"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "mad",
+                      "emoji": "💢",
+                      "distractors": [
+                        {
+                          "word": "angry",
+                          "emoji": "😡"
+                        },
+                        {
+                          "word": "sleepy",
+                          "emoji": "😴"
+                        },
+                        {
+                          "word": "night",
+                          "emoji": "🌙"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "night",
+                      "emoji": "🌙",
+                      "distractors": [
+                        {
+                          "word": "angry",
+                          "emoji": "😡"
+                        },
+                        {
+                          "word": "sleepy",
+                          "emoji": "😴"
+                        },
+                        {
+                          "word": "mad",
+                          "emoji": "💢"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "angry",
+                      "emoji": "😡"
+                    },
+                    {
+                      "word": "sleepy",
+                      "emoji": "😴"
+                    },
+                    {
+                      "word": "mad",
+                      "emoji": "💢"
+                    },
+                    {
+                      "word": "night",
+                      "emoji": "🌙"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Sleepy Night",
+              "text": "It is night. I am sleepy. My dog is sleepy too. Are you mad? No, I am not. I am happy.",
+              "questions": [
+                {
+                  "question": "Who is sleepy?",
+                  "answer": "I and my dog",
+                  "options": [
+                    "I and my dog",
+                    "lion and tiger",
+                    "bird and fish"
+                  ]
+                },
+                {
+                  "question": "Are you mad?",
+                  "answer": "No, I am not.",
+                  "options": [
+                    "Yes, I am.",
+                    "No, I am not.",
+                    "Yes, I am happy."
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Are you ___? Yes, I am.",
+              "explanation": "Ask and answer how you feel.",
+              "examples": [
+                "Are you sleepy? Yes, I am.",
+                "Are you angry? No, I am not.",
+                "Are you happy? Yes, I am."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "is",
+                        "My",
+                        "red",
+                        "face"
+                      ],
+                      "correctSentence": "My face is red"
+                    },
+                    {
+                      "words": [
+                        "am",
+                        "I",
+                        "happy"
+                      ],
+                      "correctSentence": "I am happy"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "My face is ___. I am angry.",
+                      "answer": "red",
+                      "options": [
+                        "blue",
+                        "yellow",
+                        "red",
+                        "green"
+                      ]
+                    },
+                    {
+                      "sentence": "My face is ___. I am happy.",
+                      "answer": "yellow",
+                      "options": [
+                        "orange",
+                        "yellow",
+                        "black",
+                        "purple"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "My face is red. I am feel angry.",
+                      "errorWord": "feel",
+                      "correctWord": "angry"
+                    },
+                    {
+                      "sentence": "My face are yellow. I am happy.",
+                      "errorWord": "are",
+                      "correctWord": "is"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Amy, is it time for bed? Yes, I am very sleepy. Today was so much fun.",
+              "questions": [
+                {
+                  "question": "Why is Amy sleepy?",
+                  "answer": "She is ready for bed",
+                  "options": [
+                    "She is ready for bed",
+                    "She is hungry",
+                    "She is angry"
+                  ]
+                },
+                {
+                  "question": "Was today fun for Amy?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No",
+                    "Maybe"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: My face is red. I am mad.",
+              "expected_text": "my face is red. i am mad.",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "What do you feel at night when you want to rest? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "sleepy",
+                  "options": [
+                    "angry",
+                    "mad",
+                    "sleepy",
+                    "happy"
+                  ]
+                },
+                {
+                  "question_text": "My face is [color]. I am [feeling]. Fill in the blank: My face is red. I am _____. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "angry",
+                  "options": [
+                    "sleepy",
+                    "happy",
+                    "angry",
+                    "sad"
+                  ]
+                },
+                {
+                  "question_text": "True or False: If it is night, we go to bed.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "What is the opposite of sleepy? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "awake",
+                  "options": [
+                    "mad",
+                    "angry",
+                    "awake",
+                    "night"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_1_unit_11_lesson_04",
+          "title": "Feeling Master",
+          "topic": "Mastery Check (All Feelings & Needs)",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/feeling-thirsty-video",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What drink do you choose when you need to cool down?",
+                  "correct_answer": "Cold water",
+                  "options": [
+                    "Cold water",
+                    "Hot tea",
+                    "Hot chocolate",
+                    "Warm milk"
+                  ],
+                  "image_emoji": "🥶",
+                  "hint": "It's refreshing and not warm."
+                },
+                {
+                  "question_text": "How do you feel when you haven't had a drink for a while?",
+                  "correct_answer": "Thirsty",
+                  "options": [
+                    "Thirsty",
+                    "Sleepy",
+                    "Excited",
+                    "Hungry"
+                  ],
+                  "image_emoji": "😋",
+                  "hint": "You want a drink."
+                },
+                {
+                  "question_text": "Which drink should you reach for to stay healthy?",
+                  "correct_answer": "Water",
+                  "options": [
+                    "Water",
+                    "Soda",
+                    "Juice",
+                    "Ice tea"
+                  ],
+                  "image_emoji": "💧",
+                  "hint": "It's the most natural and has no sugar."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "happy",
+                "sad",
+                "how",
+                "feel",
+                "hungry",
+                "thirsty",
+                "eat",
+                "drink",
+                "angry",
+                "sleepy",
+                "mad",
+                "night"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "apple",
+                      "emoji": "🍎",
+                      "distractors": [
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "grape",
+                          "emoji": "🍇"
+                        },
+                        {
+                          "word": "pear",
+                          "emoji": "🍐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "sun",
+                      "emoji": "☀️",
+                      "distractors": [
+                        {
+                          "word": "moon",
+                          "emoji": "🌜"
+                        },
+                        {
+                          "word": "star",
+                          "emoji": "⭐"
+                        },
+                        {
+                          "word": "cloud",
+                          "emoji": "☁️"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "ball",
+                      "emoji": "⚽",
+                      "distractors": [
+                        {
+                          "word": "bat",
+                          "emoji": "🦇"
+                        },
+                        {
+                          "word": "hat",
+                          "emoji": "🎩"
+                        },
+                        {
+                          "word": "mat",
+                          "emoji": "🧼"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "cake",
+                      "emoji": "🍰",
+                      "distractors": [
+                        {
+                          "word": "juice",
+                          "emoji": "🧃"
+                        },
+                        {
+                          "word": "bread",
+                          "emoji": "🍞"
+                        },
+                        {
+                          "word": "egg",
+                          "emoji": "🥚"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "car",
+                      "emoji": "🚗",
+                      "distractors": [
+                        {
+                          "word": "bus",
+                          "emoji": "🚌"
+                        },
+                        {
+                          "word": "train",
+                          "emoji": "🚂"
+                        },
+                        {
+                          "word": "bike",
+                          "emoji": "🚲"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱"
+                    },
+                    {
+                      "word": "dog",
+                      "emoji": "🐕"
+                    },
+                    {
+                      "word": "sun",
+                      "emoji": "☀️"
+                    },
+                    {
+                      "word": "car",
+                      "emoji": "🚗"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "A Happy Day",
+              "text": "Hi, I am Lucy. How are you? I am happy because I am playing. Are you happy too? Yes, I am!",
+              "questions": [
+                {
+                  "question": "Why is Lucy happy?",
+                  "answer": "because she is playing",
+                  "options": [
+                    "because she is hungry",
+                    "because she is playing",
+                    "because she is sleepy"
+                  ]
+                },
+                {
+                  "question": "Is Lucy happy?",
+                  "answer": "Yes, she is",
+                  "options": [
+                    "Yes, she is",
+                    "No, she is not",
+                    "She is sleepy"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "How are you?",
+                "Are you...?",
+                "I am..."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "cats"
+                      ],
+                      "correctSentence": "I like cats"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "happy"
+                      ],
+                      "correctSentence": "She is happy"
+                    },
+                    {
+                      "words": [
+                        "They",
+                        "are",
+                        "running"
+                      ],
+                      "correctSentence": "They are running"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "He ___ a cat.",
+                      "answer": "has",
+                      "options": [
+                        "has",
+                        "have",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ eating an apple.",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "has"
+                      ]
+                    },
+                    {
+                      "sentence": "We ___ friends.",
+                      "answer": "are",
+                      "options": [
+                        "are",
+                        "is",
+                        "was",
+                        "has"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "He have a cat.",
+                      "errorWord": "have",
+                      "correctWord": "has"
+                    },
+                    {
+                      "sentence": "She are happy.",
+                      "errorWord": "are",
+                      "correctWord": "is"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello! How are you today? I'm happy because I have a new toy to play with. Do you like toys?",
+              "questions": [
+                {
+                  "question": "Why is the speaker happy?",
+                  "answer": "has a new toy",
+                  "options": [
+                    "has a new toy",
+                    "went to the park",
+                    "ate ice cream"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: How are you feeling now and why?",
+              "expected_text": "i am happy because i am playing",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Feeling Master - Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "I ___ happy today. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "am",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "Which emoji shows 'happy'? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "😊",
+                  "options": [
+                    "😊",
+                    "😢",
+                    "😠",
+                    "😴"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'I am thirsty' means you want to eat.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "How do you feel when you get a new toy?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Happy",
+                  "options": [
+                    "Sad",
+                    "Happy",
+                    "Angry",
+                    "Scared"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "If You're Happy Song",
+              "url": "https://www.youtube.com/watch?v=l4WNrvVjiTw",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        }
+      ]
+    }
+  ],
+  "ai_enriched": true,
+  "enriched_at": "2026-02-17T18:08:11.462141+00:00"
+}

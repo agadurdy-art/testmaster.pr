@@ -1,0 +1,471 @@
+/* D7 Speaking Practice — scoped stylesheet.
+ * Ported from Claude Design bundle Uf8SWiooEr4N-Mti1X95Iw (Speaking Practice.html).
+ * Everything lives under .speaking-scope so tokens don't leak into the shared theme.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@500;600;700&display=swap');
+
+.speaking-scope {
+  --sp-background: hsl(210 40% 98%);
+  --sp-foreground: hsl(222 47% 11%);
+  --sp-card: hsl(0 0% 100%);
+  --sp-muted: hsl(210 40% 96%);
+  --sp-muted-fg: hsl(215 16% 47%);
+  --sp-border: hsl(214 32% 91%);
+
+  --sp-primary: hsl(160 84% 39%);
+  --sp-primary-50: hsl(160 60% 96%);
+  --sp-primary-100: hsl(160 60% 92%);
+  --sp-primary-200: hsl(160 55% 82%);
+  --sp-primary-600: hsl(160 84% 33%);
+  --sp-primary-700: hsl(160 82% 27%);
+
+  --sp-secondary: hsl(199 89% 60%);
+  --sp-secondary-50: hsl(199 90% 96%);
+  --sp-secondary-700: hsl(199 89% 40%);
+
+  --sp-accent: hsl(43 96% 56%);
+  --sp-accent-50: hsl(43 96% 96%);
+  --sp-accent-100: hsl(43 96% 90%);
+  --sp-accent-500: hsl(43 96% 56%);
+  --sp-accent-700: hsl(38 92% 40%);
+
+  --sp-destructive: hsl(0 84% 60%);
+  --sp-warn: hsl(25 95% 50%);
+  --sp-warn-dark: hsl(25 95% 40%);
+  --sp-bad: hsl(0 78% 55%);
+
+  --sp-liz-50: hsl(262 70% 97%);
+  --sp-liz-100: hsl(262 66% 93%);
+  --sp-liz-500: hsl(262 52% 55%);
+  --sp-liz-700: hsl(262 52% 38%);
+
+  --sp-radius: 1rem;
+  --sp-radius-sm: 0.75rem;
+  --sp-radius-lg: 1.5rem;
+
+  --sp-shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.05);
+  --sp-shadow-lift: 0 4px 14px rgba(15, 23, 42, 0.06), 0 16px 40px -12px rgba(15, 23, 42, 0.12);
+
+  font-family: Inter, system-ui, sans-serif;
+  background: var(--sp-background);
+  color: var(--sp-foreground);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.speaking-scope * { box-sizing: border-box; }
+.speaking-scope h1, .speaking-scope h2, .speaking-scope h3, .speaking-scope h4 { margin: 0; }
+.speaking-scope p { margin: 0; }
+.speaking-scope button { font-family: inherit; cursor: pointer; }
+.speaking-scope a { color: inherit; text-decoration: none; }
+
+.speaking-scope .sp-font-display { font-family: 'Playfair Display', Georgia, serif; }
+.speaking-scope .sp-font-mono    { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+.speaking-scope .sp-font-hand    { font-family: 'Caveat', cursive; }
+
+/* ===== Page chrome ===== */
+.speaking-scope .sp-header {
+  border-bottom: 1px solid hsl(214 32% 91% / 0.7);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+.speaking-scope .sp-header-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.speaking-scope .sp-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+.speaking-scope .sp-logo-tld { font-style: italic; color: var(--sp-primary); }
+.speaking-scope .sp-nav { display: none; gap: 4px; font-size: 14.5px; }
+@media (min-width: 768px) { .speaking-scope .sp-nav { display: flex; } }
+.speaking-scope .sp-nav-link {
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--sp-muted-fg);
+}
+.speaking-scope .sp-nav-link:hover { background: var(--sp-muted); }
+.speaking-scope .sp-nav-link.active {
+  color: var(--sp-foreground);
+  background: var(--sp-muted);
+  font-weight: 500;
+}
+.speaking-scope .sp-avatar {
+  width: 36px; height: 36px;
+  border-radius: 999px;
+  background: var(--sp-primary-100);
+  border: 1px solid var(--sp-primary-200);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 500;
+  color: var(--sp-primary-700);
+  font-size: 14px;
+}
+
+/* ===== Shared primitives ===== */
+.speaking-scope .sp-container { max-width: 1320px; margin: 0 auto; padding: 0 2rem; }
+.speaking-scope .sp-btn-primary {
+  height: 44px; padding: 0 20px;
+  border: none;
+  border-radius: var(--sp-radius-sm);
+  background: var(--sp-primary);
+  color: white;
+  font-weight: 500;
+  font-size: 15px;
+  display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+  transition: background 120ms ease;
+  box-shadow: 0 4px 14px -4px hsl(160 84% 39% / 0.55);
+}
+.speaking-scope .sp-btn-primary:hover { background: var(--sp-primary-600); }
+.speaking-scope .sp-btn-secondary {
+  height: 44px; padding: 0 20px;
+  border: 1px solid var(--sp-border);
+  border-radius: var(--sp-radius-sm);
+  background: white;
+  color: var(--sp-foreground);
+  font-weight: 500;
+  font-size: 14px;
+  display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+  transition: background 120ms ease;
+}
+.speaking-scope .sp-btn-secondary:hover { background: var(--sp-muted); }
+.speaking-scope .sp-btn-ghost {
+  background: transparent;
+  border: none;
+  color: var(--sp-muted-fg);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 10px;
+}
+.speaking-scope .sp-btn-ghost:hover { color: var(--sp-foreground); }
+
+.speaking-scope .sp-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--sp-border);
+  background: white;
+  color: hsl(222 47% 22%);
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+.speaking-scope .sp-chip:hover {
+  border-color: hsl(160 55% 60%);
+  color: var(--sp-primary-700);
+  background: hsl(160 60% 98%);
+}
+.speaking-scope .sp-chip-on {
+  background: var(--sp-primary);
+  border-color: var(--sp-primary);
+  color: white;
+}
+.speaking-scope .sp-chip-on:hover {
+  background: var(--sp-primary);
+  color: white;
+}
+
+.speaking-scope .sp-mono-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sp-muted-fg);
+}
+
+/* ===== Cue card paper ===== */
+.speaking-scope .sp-cue-paper {
+  background:
+    radial-gradient(1200px 500px at 50% -10%, rgba(253, 235, 200, 0.55), transparent 60%),
+    repeating-linear-gradient(0deg, rgba(160, 130, 70, 0.035) 0 1px, transparent 1px 28px),
+    linear-gradient(180deg, #fdf7e9 0%, #faf0d8 100%);
+  border: 1px solid rgba(150, 115, 60, 0.22);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+    0 1px 0 rgba(255, 255, 255, 0.9),
+    0 2px 4px rgba(120, 90, 40, 0.10),
+    0 12px 30px -12px rgba(120, 90, 40, 0.30),
+    0 28px 70px -28px rgba(120, 90, 40, 0.25);
+  position: relative;
+  border-radius: 22px;
+}
+.speaking-scope .sp-cue-paper::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 30% 20%, rgba(120, 80, 20, 0.06), transparent 60%),
+    radial-gradient(1px 1px at 80% 70%, rgba(120, 80, 20, 0.05), transparent 60%),
+    radial-gradient(1px 1px at 50% 90%, rgba(120, 80, 20, 0.04), transparent 60%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+.speaking-scope .sp-cue-stamp {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: hsl(30 40% 35% / 0.85);
+  border: 1px solid hsl(30 40% 45% / 0.5);
+  padding: 3px 8px 2px;
+  border-radius: 999px;
+  background: hsl(40 60% 94% / 0.6);
+}
+.speaking-scope .sp-cue-ink-heading {
+  color: hsl(30 35% 18%);
+  font-family: 'Playfair Display', serif;
+}
+.speaking-scope .sp-cue-ink-body { color: hsl(30 35% 22%); }
+.speaking-scope .sp-cue-ink-meta {
+  color: hsl(30 30% 40%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.speaking-scope .sp-cue-ink-dash { color: hsl(30 45% 45%); }
+
+/* Lined notepad */
+.speaking-scope .sp-notepad {
+  background:
+    repeating-linear-gradient(180deg, transparent 0 27px, hsl(210 60% 92%) 27px 28px),
+    linear-gradient(180deg, #fcfdff 0%, #f7faff 100%);
+  border: 1px solid var(--sp-border);
+  border-left: 3px solid hsl(0 75% 65% / 0.4);
+  border-radius: 10px;
+}
+
+/* ===== Orb ===== */
+@keyframes sp-orbBreath {
+  0%, 100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.35), 0 20px 60px -15px rgba(16, 185, 129, 0.45); }
+  50%      { transform: scale(1.04); box-shadow: 0 0 0 28px rgba(16, 185, 129, 0), 0 28px 80px -10px rgba(16, 185, 129, 0.55); }
+}
+@keyframes sp-orbRing1 {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+@keyframes sp-orbRing2 {
+  0%   { transform: scale(1);   opacity: 0.4; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+@keyframes sp-wordIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes sp-caret {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@keyframes sp-waveBar {
+  0%, 100% { transform: scaleY(0.3); }
+  50%      { transform: scaleY(1); }
+}
+@keyframes sp-spin { to { transform: rotate(360deg); } }
+
+.speaking-scope .sp-orb-core {
+  background: radial-gradient(circle at 35% 30%, hsl(160 80% 62%) 0%, hsl(160 84% 39%) 45%, hsl(160 82% 27%) 100%);
+  animation: sp-orbBreath 2.8s ease-in-out infinite;
+  border-radius: 9999px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.speaking-scope .sp-orb-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 2px solid hsl(160 84% 39% / 0.5);
+  animation: sp-orbRing1 2.8s ease-out infinite;
+}
+.speaking-scope .sp-orb-ring-2 {
+  animation: sp-orbRing2 2.8s ease-out infinite;
+  animation-delay: 0.6s;
+}
+.speaking-scope .sp-amp-bar {
+  background: hsl(160 84% 45%);
+  border-radius: 2px;
+  transform-origin: center;
+  animation: sp-waveBar 900ms ease-in-out infinite;
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 3px;
+  opacity: 0.85;
+}
+.speaking-scope .sp-word-new { animation: sp-wordIn 220ms ease-out both; }
+.speaking-scope .sp-caret {
+  display: inline-block;
+  width: 2px; height: 1em;
+  background: hsl(160 84% 39%);
+  vertical-align: -2px;
+  margin-left: 2px;
+  animation: sp-caret 1s steps(1) infinite;
+}
+.speaking-scope .sp-caret-white { background: white; }
+
+/* Processing waveform */
+.speaking-scope .sp-wave-bar {
+  background: linear-gradient(180deg, hsl(160 84% 55%), hsl(160 84% 39%));
+  border-radius: 3px;
+  animation: sp-waveBar 1.2s ease-in-out infinite;
+  width: 4px;
+  display: inline-block;
+}
+.speaking-scope .sp-spinner {
+  width: 18px; height: 18px;
+  border: 2px solid hsl(160 60% 92%);
+  border-top-color: var(--sp-primary);
+  border-radius: 50%;
+  animation: sp-spin 700ms linear infinite;
+}
+
+/* Pronunciation underlines */
+.speaking-scope .sp-pron {
+  position: relative;
+  padding: 1px 2px;
+  border-radius: 3px;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 2px;
+  background-image: linear-gradient(var(--pc), var(--pc));
+  transition: background-color 120ms ease, background-size 120ms ease;
+}
+.speaking-scope .sp-pron-good { --pc: hsl(160 84% 42%); }
+.speaking-scope .sp-pron-ok   { --pc: hsl(25 95% 50%); }
+.speaking-scope .sp-pron-bad {
+  --pc: hsl(0 78% 55%);
+  background-size: 100% 2px;
+  background-image: repeating-linear-gradient(135deg, var(--pc) 0 2px, transparent 2px 4px);
+}
+.speaking-scope .sp-pron:hover {
+  background-color: color-mix(in oklab, var(--pc) 12%, transparent);
+  background-size: 100% 3px;
+}
+
+/* Liz card */
+.speaking-scope .sp-liz-card {
+  background: linear-gradient(180deg, hsl(262 70% 98%) 0%, hsl(262 66% 96%) 100%);
+  border: 1px solid hsl(262 40% 88%);
+  border-radius: var(--sp-radius);
+}
+.speaking-scope .sp-liz-avatar {
+  background: var(--sp-liz-100);
+  border: 1px solid hsl(262 52% 55% / 0.3);
+  color: var(--sp-liz-700);
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  border-radius: 9999px;
+  display: flex; align-items: center; justify-content: center;
+}
+.speaking-scope .sp-liz-meta {
+  color: var(--sp-liz-500);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Focus dim canvas */
+.speaking-scope .sp-focus-dim {
+  background: radial-gradient(ellipse at center, hsl(222 47% 10% / 0.86) 0%, hsl(222 47% 6% / 0.96) 80%);
+  border-radius: var(--sp-radius-lg);
+  overflow: hidden;
+  position: relative;
+}
+.speaking-scope .sp-focus-dim .sp-dots-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+
+/* Part cards */
+.speaking-scope .sp-part-card {
+  position: relative;
+  border-radius: var(--sp-radius);
+  border: 1px solid var(--sp-border);
+  background: white;
+  padding: 28px;
+  transition: box-shadow 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+.speaking-scope .sp-part-card:hover {
+  box-shadow: var(--sp-shadow-lift);
+  border-color: hsl(160 84% 39% / 0.4);
+}
+.speaking-scope .sp-part-card-selected {
+  border-width: 2px;
+  border-color: var(--sp-primary);
+  background: linear-gradient(180deg, var(--sp-primary-50) 0%, white 100%);
+  box-shadow: var(--sp-shadow-lift);
+}
+.speaking-scope .sp-part-card-tag {
+  position: absolute;
+  top: -12px;
+  left: 28px;
+  background: var(--sp-primary);
+  color: white;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+.speaking-scope .sp-part-icon {
+  width: 56px; height: 56px;
+  border-radius: var(--sp-radius);
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Radar */
+.speaking-scope .sp-radar-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  fill: var(--sp-muted-fg);
+  text-transform: uppercase;
+}
+
+/* Progress bar */
+.speaking-scope .sp-progress-bar {
+  height: 6px;
+  background: var(--sp-secondary-50);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.speaking-scope .sp-progress-bar-fill {
+  height: 100%;
+  background: var(--sp-secondary);
+  border-radius: 999px;
+  transition: width 300ms ease;
+}
+.speaking-scope .sp-progress-bar-fill.sp-danger {
+  background: var(--sp-destructive);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .speaking-scope .sp-orb-core,
+  .speaking-scope .sp-orb-ring,
+  .speaking-scope .sp-amp-bar,
+  .speaking-scope .sp-wave-bar,
+  .speaking-scope .sp-word-new,
+  .speaking-scope .sp-caret,
+  .speaking-scope .sp-spinner {
+    animation: none !important;
+  }
+}
+
+.speaking-scope { overflow-x: hidden; }

@@ -1,0 +1,91 @@
+{
+  "summary": "Audio transcription endpoint fix testing completed. Fixed route conflict where multiple frontend files were calling `/api/speaking/transcribe` with wrong parameters. Updated 5 frontend files to use `/api/transcribe-audio` endpoint. Backend: 13/13 tests passed (100%). Frontend: All speaking practice pages verified working.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/tests/test_transcription_endpoints.py",
+    "/app/test_reports/pytest/transcription_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Fixed SpeakingPractice.js - was calling /api/speaking/transcribe with 'file' param but endpoint expects 'audio', 'question_id', 'part'. Changed to /api/transcribe-audio",
+    "Fixed ComprehensiveLevelTest.js - same issue, updated to /api/transcribe-audio",
+    "Fixed MasteryCourse.js - same issue, updated to /api/transcribe-audio",
+    "Fixed LevelTest.js - same issue, updated to /api/transcribe-audio",
+    "Fixed lib/api.js transcribeAudio function - updated to /api/transcribe-audio",
+    "BeginnerCourse.js was already correctly using /api/transcribe-audio (fixed by main agent)",
+    "SpeakingPracticeQB.js correctly uses /api/speaking/transcribe with proper params (audio, question_id, part)"
+  ],
+  "updated_files": [
+    "/app/frontend/src/pages/SpeakingPractice.js",
+    "/app/frontend/src/pages/ComprehensiveLevelTest.js",
+    "/app/frontend/src/pages/MasteryCourse.js",
+    "/app/frontend/src/pages/LevelTest.js",
+    "/app/frontend/src/lib/api.js",
+    "/app/tests/test_transcription_endpoints.py"
+  ],
+  "success_rate": {
+    "backend": "100% (13/13 tests passed)",
+    "frontend": "100% - All pages verified working"
+  },
+  "test_credentials": {
+    "email": "testuser123@test.com",
+    "password": "TestPass123!"
+  },
+  "seed_data_creation": "Created test user testuser123@test.com for UI testing",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Audio transcription endpoints fully tested and fixed. Two transcription endpoints exist: 1) /api/transcribe-audio (simple, expects 'file', returns {text, language}) - used by most frontend pages, 2) /api/speaking/transcribe (QB-specific, expects 'audio', 'question_id', 'part', returns {success, transcript}) - used by SpeakingPracticeQB.js. All frontend files now use correct endpoints.",
+  "features_tested": {
+    "transcribe_audio_endpoint": {
+      "status": "PASS",
+      "endpoint": "POST /api/transcribe-audio",
+      "details": "Simple transcription endpoint. Accepts 'file' parameter, returns {text, language}. Used by SpeakingPractice.js, ComprehensiveLevelTest.js, MasteryCourse.js, LevelTest.js, BeginnerCourse.js"
+    },
+    "speaking_transcribe_endpoint": {
+      "status": "PASS",
+      "endpoint": "POST /api/speaking/transcribe",
+      "details": "Question Bank specific endpoint. Requires 'audio', 'question_id', 'part' parameters. Returns {success, transcript}. Used by SpeakingPracticeQB.js"
+    },
+    "speaking_practice_page": {
+      "status": "PASS",
+      "url": "/speaking-practice",
+      "details": "Part 1, 2, 3 selection working. Topic selection working. Play & Record, Record Only buttons visible."
+    },
+    "question_bank_speaking": {
+      "status": "PASS",
+      "url": "/question-bank/speaking",
+      "details": "Academic Speaking topics displayed. Start button working. Part 1, 2, 3 tabs visible."
+    },
+    "beginner_course": {
+      "status": "PASS",
+      "url": "/beginner-course",
+      "details": "14 lessons displayed. Vocabulary section with Listen and Mic buttons working."
+    },
+    "pronunciation_endpoints": {
+      "status": "PASS",
+      "details": "/api/beginner/pronunciation/words/{topic} and /api/beginner/pronunciation/assess endpoints working"
+    }
+  },
+  "endpoint_mapping": {
+    "/api/transcribe-audio": {
+      "method": "POST",
+      "params": "file (UploadFile)",
+      "returns": "{text, language}",
+      "used_by": ["SpeakingPractice.js", "ComprehensiveLevelTest.js", "MasteryCourse.js", "LevelTest.js", "BeginnerCourse.js", "lib/api.js"]
+    },
+    "/api/speaking/transcribe": {
+      "method": "POST",
+      "params": "audio (UploadFile), question_id (Form), part (Form)",
+      "returns": "{success, question_id, part, transcript}",
+      "used_by": ["SpeakingPracticeQB.js"]
+    }
+  }
+}

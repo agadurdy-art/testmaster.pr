@@ -1,0 +1,294 @@
+{
+  "lesson_id": "stage_1_unit_03_lesson_01",
+  "lesson_title": "One to Five",
+  "mode": "current",
+  "words": [
+    {
+      "word": "one",
+      "ipa": "/wʌn/",
+      "definition": "The number 1",
+      "example": "It is one.",
+      "image_emoji": "1️⃣"
+    },
+    {
+      "word": "two",
+      "ipa": "/tuː/",
+      "definition": "The number 2",
+      "example": "It is two.",
+      "image_emoji": "2️⃣"
+    },
+    {
+      "word": "three",
+      "ipa": "/θriː/",
+      "definition": "The number 3",
+      "example": "It is three.",
+      "image_emoji": "3️⃣"
+    },
+    {
+      "word": "kite",
+      "ipa": "/kaɪt/",
+      "definition": "A flying toy (Sound K)",
+      "example": "I have one kite.",
+      "image_emoji": "🪁"
+    },
+    {
+      "word": "lion",
+      "ipa": "/ˈlaɪən/",
+      "definition": "A big cat (Sound L)",
+      "example": "It is a lion.",
+      "image_emoji": "🦁"
+    }
+  ],
+  "grammar_rules": [
+    {
+      "pattern": "It is ___.",
+      "explanation": "Use 'It is' to name a number or object.",
+      "examples": [
+        "It is one.",
+        "It is a kite."
+      ]
+    }
+  ],
+  "exercises": {
+    "vocabulary_section": {
+      "matching": [
+        {
+          "word": "one",
+          "definition": "The number after zero",
+          "distractor_definitions": [
+            "A large feline",
+            "An object that flies in the sky"
+          ]
+        },
+        {
+          "word": "two",
+          "definition": "The number after one",
+          "distractor_definitions": [
+            "An animal with a mane",
+            "An object with a tail"
+          ]
+        },
+        {
+          "word": "three",
+          "definition": "The number after two",
+          "distractor_definitions": [
+            "A roarable animal",
+            "A string flying object"
+          ]
+        },
+        {
+          "word": "kite",
+          "definition": "An object that flies in the sky",
+          "distractor_definitions": [
+            "A number",
+            "A large predatory cat"
+          ]
+        },
+        {
+          "word": "lion",
+          "definition": "A large feline",
+          "distractor_definitions": [
+            "A tool for flying",
+            "A numeral"
+          ]
+        }
+      ],
+      "fill_blank": [
+        {
+          "sentence": "I see a ___.",
+          "answer": "lion",
+          "hint": "an animal"
+        },
+        {
+          "sentence": "Let's fly a ___.",
+          "answer": "kite",
+          "hint": "something in the sky"
+        },
+        {
+          "sentence": "I can count to ___.",
+          "answer": "three",
+          "hint": "a number"
+        },
+        {
+          "sentence": "There are ___ apples.",
+          "answer": "two",
+          "hint": "more than one"
+        },
+        {
+          "sentence": "Here is ___ apple.",
+          "answer": "one",
+          "hint": "a single item"
+        }
+      ],
+      "true_false": [
+        {
+          "statement": "A 'lion' is an animal.",
+          "answer": true
+        },
+        {
+          "statement": "A 'kite' is a type of animal.",
+          "answer": false
+        },
+        {
+          "statement": "The number 'three' comes after 'one'.",
+          "answer": false
+        },
+        {
+          "statement": "The number 'two' comes before 'three'.",
+          "answer": true
+        },
+        {
+          "statement": "The word 'one' means a toy.",
+          "answer": false
+        }
+      ]
+    },
+    "grammar_section": {
+      "reorder": [
+        {
+          "scrambled": "It / is / one / kite",
+          "answer": "It is one kite."
+        },
+        {
+          "scrambled": "lion / It / a / is",
+          "answer": "It is a lion."
+        },
+        {
+          "scrambled": "two / kites / It / is",
+          "answer": "It is two kites."
+        },
+        {
+          "scrambled": "three / It / lions / is",
+          "answer": "It is three lions."
+        },
+        {
+          "scrambled": "is / it / a / kite",
+          "answer": "It is a kite."
+        }
+      ],
+      "correct_mistake": [
+        {
+          "sentence": "Is it two.",
+          "corrected": "It is two."
+        },
+        {
+          "sentence": "It is kite a.",
+          "corrected": "It is a kite."
+        },
+        {
+          "sentence": "A it lion is.",
+          "corrected": "It is a lion."
+        },
+        {
+          "sentence": "It three is.",
+          "corrected": "It is three."
+        },
+        {
+          "sentence": "One is it.",
+          "corrected": "It is one."
+        }
+      ],
+      "complete_pattern": [
+        {
+          "pattern": "It is a ___.",
+          "answer": "kite",
+          "options": [
+            "kite",
+            "is",
+            "lion"
+          ]
+        },
+        {
+          "pattern": "It is ___.",
+          "answer": "one",
+          "options": [
+            "one",
+            "two",
+            "three"
+          ]
+        },
+        {
+          "pattern": "It is ___.",
+          "answer": "two",
+          "options": [
+            "two",
+            "lion",
+            "kite"
+          ]
+        },
+        {
+          "pattern": "It is a ___.",
+          "answer": "lion",
+          "options": [
+            "lion",
+            "three",
+            "kite"
+          ]
+        },
+        {
+          "pattern": "It is ___.",
+          "answer": "three",
+          "options": [
+            "three",
+            "kite",
+            "is"
+          ]
+        }
+      ]
+    },
+    "mixed_review": [
+      {
+        "type": "multiple_choice",
+        "question": "What does 'two' mean?",
+        "options": [
+          "A number",
+          "An animal",
+          "A greeting"
+        ],
+        "answer": "A number"
+      },
+      {
+        "type": "multiple_choice",
+        "question": "What is a 'kite'?",
+        "options": [
+          "A flying object",
+          "A car",
+          "A food"
+        ],
+        "answer": "A flying object"
+      },
+      {
+        "type": "multiple_choice",
+        "question": "What kind of animal is a 'lion'?",
+        "options": [
+          "Feline",
+          "Bird",
+          "Fish"
+        ],
+        "answer": "Feline"
+      },
+      {
+        "type": "multiple_choice",
+        "question": "How many are 'one'?",
+        "options": [
+          "One",
+          "Three",
+          "Four"
+        ],
+        "answer": "One"
+      },
+      {
+        "type": "multiple_choice",
+        "question": "It is ___ kite.",
+        "options": [
+          "a",
+          "is",
+          "two"
+        ],
+        "answer": "a"
+      }
+    ]
+  },
+  "total_lessons": 1,
+  "word_count": 5
+}

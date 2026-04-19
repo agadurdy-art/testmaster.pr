@@ -1,0 +1,607 @@
+{
+  "stage": 1,
+  "stage_title": "Foundations",
+  "units": [
+    {
+      "unit_id": "stage_1_unit_03",
+      "unit_num": 3,
+      "title": "Numbers 1-10",
+      "subtitle": "Counting and Phonics K-O",
+      "phonics_focus": [
+        "K",
+        "L",
+        "M",
+        "N",
+        "O"
+      ],
+      "grammar_focus": [
+        "It is... (number)",
+        "How many?",
+        "Plural -s intro"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_1_unit_03_lesson_01",
+          "title": "One to Five",
+          "topic": "Counting to 5 and sounds of K and L",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://www.youtube.com/watch?v=dk9Yt1PqQiw",
+              "source_channel": "Super Simple Songs",
+              "question_text": "Which one is a number?",
+              "correct_answer": "one",
+              "options": [
+                "one",
+                "apple",
+                "fish",
+                "happy"
+              ],
+              "image_emoji": "🔢",
+              "hint": "Counting starts with this."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "one",
+                  "ipa": "/wʌn/",
+                  "definition": "The number 1",
+                  "example": "It is one.",
+                  "image_emoji": "1️⃣",
+                  "image_url": "/static/vocab_images/one.png"
+                },
+                {
+                  "word": "two",
+                  "ipa": "/tuː/",
+                  "definition": "The number 2",
+                  "example": "It is two.",
+                  "image_emoji": "2️⃣",
+                  "image_url": "/static/vocab_images/two.png"
+                },
+                {
+                  "word": "three",
+                  "ipa": "/θriː/",
+                  "definition": "The number 3",
+                  "example": "It is three.",
+                  "image_emoji": "3️⃣",
+                  "image_url": "/static/vocab_images/three.png"
+                },
+                {
+                  "word": "kite",
+                  "ipa": "/kaɪt/",
+                  "definition": "A flying toy (Sound K)",
+                  "example": "I have one kite.",
+                  "image_emoji": "🪁",
+                  "image_url": "/static/vocab_images/kite.png"
+                },
+                {
+                  "word": "lion",
+                  "ipa": "/ˈlaɪən/",
+                  "definition": "A big cat (Sound L)",
+                  "example": "It is a lion.",
+                  "image_emoji": "🦁",
+                  "image_url": "/static/vocab_images/lion.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match the number 3: 3️⃣",
+              "correct_answer": "three",
+              "options": [
+                "three",
+                "one",
+                "two",
+                "kite"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Look and Count",
+              "text": "Look! One kite. Two lions. It is one. It is two. I am happy!",
+              "questions": [
+                {
+                  "question": "How many kites?",
+                  "answer": "one",
+                  "options": [
+                    "one",
+                    "two"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "It is ___.",
+              "explanation": "Use 'It is' to name a number or object.",
+              "examples": [
+                "It is one.",
+                "It is a kite."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "fill_blank",
+              "sentence": "Look at the lion. ______ is one lion.",
+              "correct_answer": "It",
+              "options": [
+                "It",
+                "I",
+                "She"
+              ],
+              "hint": "Use it for animals."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "It is three. I have three kites.",
+              "questions": [
+                {
+                  "question": "How many kites?",
+                  "answer": "three"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: It is two.",
+              "expected_text": "It is two",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Sound for 🪁:",
+              "correct_answer": "K",
+              "options": [
+                "K",
+                "L",
+                "A"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "One Potato Song",
+              "url": "https://www.youtube.com/watch?v=dk9Yt1PqQiw",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics K",
+              "url": "https://www.youtube.com/watch?v=OEbRDtCAFdU",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics L",
+              "url": "https://www.youtube.com/watch?v=dv5C9WdFhBY",
+              "type": "youtube"
+            }
+          ]
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_1_unit_03_lesson_02",
+          "title": "Six to Ten",
+          "topic": "Counting to 10 and the sound of M",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "Recall Lesson 1: Match 🦁",
+              "correct_answer": "lion",
+              "options": [
+                "lion",
+                "kite",
+                "three"
+              ],
+              "hint": "A big yellow animal."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "six",
+                  "ipa": "/sɪks/",
+                  "definition": "Number 6",
+                  "example": "It is six.",
+                  "image_emoji": "6️⃣",
+                  "image_url": "/static/vocab_images/six.png"
+                },
+                {
+                  "word": "ten",
+                  "ipa": "/ten/",
+                  "definition": "Number 10",
+                  "example": "It is ten.",
+                  "image_emoji": "🔟",
+                  "image_url": "/static/vocab_images/ten.png"
+                },
+                {
+                  "word": "monkey",
+                  "ipa": "/ˈmʌŋki/",
+                  "definition": "An animal (Sound M)",
+                  "example": "It is a monkey.",
+                  "image_emoji": "🐒",
+                  "image_url": "/static/vocab_images/monkey.png"
+                },
+                {
+                  "word": "mouth",
+                  "ipa": "/maʊθ/",
+                  "definition": "Part of face (Sound M)",
+                  "example": "I have one mouth.",
+                  "image_emoji": "👄",
+                  "image_url": "/static/vocab_images/mouth.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match the monkey: 🐒",
+              "correct_answer": "monkey",
+              "options": [
+                "monkey",
+                "mouth",
+                "six",
+                "ten"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Numbers Everywhere",
+              "text": "I see six monkeys. I see ten fish. Look at my mouth! I am fine.",
+              "questions": [
+                {
+                  "question": "How many monkeys?",
+                  "answer": "six",
+                  "options": [
+                    "six",
+                    "ten"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I see ___.",
+              "explanation": "Use 'I see' to tell what is in front of you.",
+              "examples": [
+                "I see ten.",
+                "I see a monkey."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [
+                "I",
+                "see",
+                "ten",
+                "fish"
+              ],
+              "correct_sentence": "I see ten fish."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "One, two, three... ten! I see ten.",
+              "questions": [
+                {
+                  "question": "What number?",
+                  "answer": "ten"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: I see six.",
+              "expected_text": "I see six",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "It is 🔟:",
+              "correct_answer": "ten",
+              "options": [
+                "ten",
+                "six",
+                "one"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Phonics M",
+              "url": "https://www.youtube.com/watch?v=MRwCD01SEpA",
+              "type": "youtube"
+            }
+          ]
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_1_unit_03_lesson_03",
+          "title": "How Many?",
+          "topic": "Asking about quantity and sounds of N and O",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "Which word starts with 'M'?",
+              "correct_answer": "monkey",
+              "options": [
+                "monkey",
+                "lion",
+                "kite"
+              ],
+              "image_emoji": "🐒"
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "nose",
+                  "ipa": "/noʊz/",
+                  "definition": "Part of face (Sound N)",
+                  "example": "I have one nose.",
+                  "image_emoji": "👃",
+                  "image_url": "/static/vocab_images/nose.png"
+                },
+                {
+                  "word": "nine",
+                  "ipa": "/naɪn/",
+                  "definition": "Number 9 (Sound N)",
+                  "example": "It is nine.",
+                  "image_emoji": "9️⃣",
+                  "image_url": "/static/vocab_images/nine.png"
+                },
+                {
+                  "word": "octopus",
+                  "ipa": "/ˈɒktəpəs/",
+                  "definition": "Sea animal (Sound O)",
+                  "example": "It is an octopus.",
+                  "image_emoji": "🐙",
+                  "image_url": "/static/vocab_images/octopus.png"
+                },
+                {
+                  "word": "orange",
+                  "ipa": "/ˈɒrɪndʒ/",
+                  "definition": "A fruit/color (Sound O)",
+                  "example": "The apple is orange.",
+                  "image_emoji": "🍊",
+                  "image_url": "/static/vocab_images/orange.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match the octopus: 🐙",
+              "correct_answer": "octopus",
+              "options": [
+                "octopus",
+                "orange",
+                "nose",
+                "nine"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Count the Animals",
+              "text": "How many? One octopus. Nine monkeys. Look! My nose is big. I like orange.",
+              "questions": [
+                {
+                  "question": "How many octopuses?",
+                  "answer": "one",
+                  "options": [
+                    "one",
+                    "nine"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "How many ___?",
+              "explanation": "Use 'How many' to ask for a number.",
+              "examples": [
+                "How many monkeys?",
+                "How many fish?"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "error_hunter",
+              "sentence": "How many monkey?",
+              "has_error": true,
+              "correct_sentence": "How many monkeys?"
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "How many? Nine! I see nine oranges.",
+              "questions": [
+                {
+                  "question": "How many?",
+                  "answer": "nine"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Ask: How many octopuses?",
+              "expected_text": "How many octopuses",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Sound for 👃:",
+              "correct_answer": "N",
+              "options": [
+                "N",
+                "O",
+                "M"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Phonics N",
+              "url": "https://www.youtube.com/watch?v=bck1S86MQfE",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics O",
+              "url": "https://www.youtube.com/watch?v=Db7X1B1Gqpk",
+              "type": "youtube"
+            }
+          ]
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_1_unit_03_lesson_04",
+          "title": "Unit 3 Mastery Check",
+          "topic": "Cumulative Review (K-O & Numbers 1-10)",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "Phonics: Match 'L' to its picture.",
+              "correct_answer": "lion",
+              "options": [
+                "lion",
+                "monkey",
+                "octopus"
+              ],
+              "image_emoji": "🦁"
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "one",
+                "two",
+                "three",
+                "six",
+                "nine",
+                "ten",
+                "kite",
+                "lion",
+                "monkey",
+                "mouth",
+                "nose",
+                "octopus",
+                "orange"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match the number 10: 🔟",
+              "correct_answer": "ten",
+              "options": [
+                "ten",
+                "nine",
+                "six",
+                "one"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Leo's Numbers",
+              "text": "Hello! I am Leo. I see one lion and ten monkeys. How many? Ten! I have a kite. It is orange.",
+              "questions": [
+                {
+                  "question": "What color is the kite?",
+                  "answer": "orange",
+                  "options": [
+                    "orange",
+                    "apple"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "It is...",
+                "I see...",
+                "How many?"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [
+                "How",
+                "many",
+                "monkeys",
+                "?"
+              ],
+              "correct_sentence": "How many monkeys?"
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "I see one octopus and three fish.",
+              "questions": [
+                {
+                  "question": "How many octopuses?",
+                  "answer": "one"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Count: Say numbers from one to ten.",
+              "expected_text": "one two three four five six seven eight nine ten",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Final check: Choose the animal.",
+              "correct_answer": "monkey",
+              "options": [
+                "monkey",
+                "six",
+                "ten"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Numbers 1-10 Song",
+              "url": "https://www.youtube.com/watch?v=dk9Yt1PqQiw",
+              "type": "youtube"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

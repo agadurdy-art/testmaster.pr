@@ -1,0 +1,96 @@
+{
+  "iteration": 26,
+  "timestamp": "2026-02-12T07:10:00Z",
+  "test_type": "BUG_FIX_VERIFICATION",
+  "target": "Question Bank Stats - Dynamic Test Counting Fix",
+  "summary": "Bug fix verified successfully. Backend API /api/question-bank/stats now returns correct dynamic counts: total_questions=1420 (was 680), full_tests=20 (was 8), topics_count=47 (was 18). Frontend correctly displays these dynamic values in the header and Full Tests tab cards.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "features_tested": [
+    {
+      "feature": "GET /api/question-bank/stats returns total_questions > 680",
+      "status": "PASSED",
+      "details": "Returns 1420 (Cambridge + AI tests combined)"
+    },
+    {
+      "feature": "GET /api/question-bank/stats returns full_tests = 20",
+      "status": "PASSED",
+      "details": "8 Cambridge + 8 AI Academic + 4 AI General = 20"
+    },
+    {
+      "feature": "GET /api/question-bank/stats returns cambridge_tests = 8",
+      "status": "PASSED",
+      "details": "4 from IELTS 17 + 4 from IELTS 18"
+    },
+    {
+      "feature": "GET /api/question-bank/stats returns ai_academic_tests = 8",
+      "status": "PASSED",
+      "details": "Sets A through H"
+    },
+    {
+      "feature": "GET /api/question-bank/stats returns ai_general_tests = 4",
+      "status": "PASSED",
+      "details": "Sets A through D"
+    },
+    {
+      "feature": "GET /api/question-bank/stats returns topics_count = 47",
+      "status": "PASSED",
+      "details": "Dynamic count from lesson registry (was hardcoded 18)"
+    },
+    {
+      "feature": "GET /api/full-test/sets returns 8 academic and 4 general sets",
+      "status": "PASSED",
+      "details": "academic_sets=8, general_sets=4"
+    },
+    {
+      "feature": "Frontend QB header displays correct dynamic stats",
+      "status": "PASSED",
+      "details": "Shows 1420 questions, 20 tests, 4 skills, 47 topics (no fallback values)"
+    },
+    {
+      "feature": "Frontend Full Tests tab Cambridge card shows 8 tests",
+      "status": "PASSED",
+      "details": "Displays '8 Tests Available' dynamically from stats.cambridge_tests"
+    },
+    {
+      "feature": "Frontend Full Tests tab AI card shows 12 tests",
+      "status": "PASSED",
+      "details": "Displays '12 Tests Available' (8 academic + 4 general)"
+    }
+  ],
+  "test_report_links": [
+    "/app/backend/tests/test_qb_stats.py",
+    "/app/test_reports/pytest/qb_stats_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [
+    "/app/backend/tests/test_qb_stats.py"
+  ],
+  "success_rate": {
+    "backend": "100% (16/16 tests passed)",
+    "frontend": "100% (all features verified)"
+  },
+  "test_credentials": {
+    "email": "test@qbstats.com",
+    "password": "Test1234!"
+  },
+  "seed_data_creation": "N/A",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Question Bank stats bug is fixed. Backend correctly counts all tests dynamically (Cambridge + AI Academic + AI General). Frontend displays correct values. Test file created at /app/backend/tests/test_qb_stats.py for regression testing.",
+  "bug_fix_verification": {
+    "original_bug": "QB stats page showed static/incorrect numbers: 8 full tests, 680 questions, 18 topics",
+    "root_cause": "Backend endpoint only counted Cambridge tests, not AI full tests. Topics count was hardcoded.",
+    "fix_applied": "Backend now dynamically counts ALL tests using get_all_test_sets() and get_test_by_id() from full_test module, topics from lesson registry",
+    "verification_method": "API tests + Playwright UI verification",
+    "result": "FIXED - Now shows 1420 questions, 20 tests (8+8+4), 47 topics"
+  }
+}

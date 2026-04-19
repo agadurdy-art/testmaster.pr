@@ -1,0 +1,106 @@
+{
+  "iteration": 47,
+  "timestamp": "2026-02-17T04:45:00Z",
+  "test_type": "BUG_FIXES_AND_FEATURE_VERIFICATION",
+  "target": "Verify seed data fixes for Grammar Game fill_blank, exit_ticket grammar question, cumulative-vocab API, and two PDF buttons in Lesson Summary",
+  "summary": "All features verified working. 1) Cumulative vocab API returns correct lesson count and unique words. 2) Fill_blank sentences now use word's own example (e.g., 'My ______ is Sara.' correct='name', NOT 'What is your ______?' correct='boy'). 3) Exit ticket grammar Q3 uses correct word from pattern example. 4) Two PDF download buttons ('This Lesson' and 'All Lessons (Cumulative)') visible in Lesson Summary. 5) Roadmap displays 6 steps with winding path. 6) Warmup shows image_emoji above questions.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "features_verified": {
+    "P0_cumulative_vocab_api": {
+      "status": "VERIFIED",
+      "description": "GET /api/unified/cumulative-vocab/stage_1_unit_03_lesson_01 returns vocabulary from all 9 lessons",
+      "evidence": "API returns total_lessons=9, words=15 unique words, grammar_rules=5 patterns",
+      "endpoint": "/api/unified/cumulative-vocab/{lesson_id}"
+    },
+    "P0_fill_blank_pedagogically_correct": {
+      "status": "VERIFIED",
+      "description": "fill_blank_items use word's own example sentence, NOT grammar pattern blindly filled",
+      "evidence": "API returns: 'My ______ is Sara.' correct='name', 'She is my ______.' correct='friend', 'The ______ is happy.' correct='boy'",
+      "code_location": "/app/backend/seed_stage1_full.py lines 868-880 - uses w.get('example') for fill_blank sentence"
+    },
+    "P0_exit_ticket_grammar_correct": {
+      "status": "VERIFIED",
+      "description": "Exit ticket Q3 grammar question finds correct word from rule's example sentence",
+      "evidence": "Exit ticket Q3: 'Complete: What is your ______' → correct='name' (found from 'My name is Sara.')",
+      "code_location": "/app/backend/seed_stage1_full.py lines 990-1017 - searches word appearing in example"
+    },
+    "P1_two_pdf_buttons": {
+      "status": "VERIFIED",
+      "description": "Lesson Summary shows two PDF download buttons",
+      "evidence": "Found [data-testid='download-worksheet-btn'] 'This Lesson' and [data-testid='download-cumulative-btn'] 'All Lessons (Cumulative)'",
+      "screenshot": "/app/.screenshots/iter47_lesson_summary.png"
+    },
+    "P1_grammar_game_word_order_normalization": {
+      "status": "VERIFIED",
+      "description": "Build the Sentence normalizes punctuation for comparison",
+      "evidence": "Code at lines 825-833 - normalize() strips trailing [.!?,;:] before comparing user answer to correct_sentence",
+      "code_location": "/app/frontend/src/pages/UnifiedLessonPage.js checkWordOrder()"
+    },
+    "P1_fill_blank_case_insensitive": {
+      "status": "VERIFIED",
+      "description": "Fill in the Blank comparison is case-insensitive",
+      "evidence": "handleFillBlank uses .toLowerCase().trim() on both option and correct_answer",
+      "code_location": "/app/frontend/src/pages/UnifiedLessonPage.js lines 836-846"
+    },
+    "P2_lesson_roadmap": {
+      "status": "VERIFIED",
+      "description": "Roadmap displays 6 steps with winding path on lesson entry",
+      "evidence": "Playwright found 6 roadmap steps and 'Start Lesson' button",
+      "screenshot": "/app/.screenshots/iter47_roadmap.png"
+    },
+    "P2_warmup_image_emoji": {
+      "status": "VERIFIED",
+      "description": "Warmup questions display image_emoji above question text",
+      "evidence": "Found emoji '1️⃣' in .text-5xl container above 'What does the number 1 mean?'",
+      "screenshot": "/app/.screenshots/iter47_warmup.png"
+    }
+  },
+  "api_test_results": {
+    "cumulative_vocab_unit3_lesson1": "PASS - 9 lessons, 15 words, 5 rules",
+    "cumulative_vocab_unit1_lesson1": "PASS - 1 lesson",
+    "fill_blank_pedagogically_correct": "PASS - sentences use word examples",
+    "exit_ticket_grammar_question": "PASS - correct='name' for 'What is your ______'",
+    "word_order_items_structure": "PASS - words match correct_sentence after normalization",
+    "warmup_has_image_emoji": "PASS - questions have image_emoji field",
+    "vocabulary_activity": "PASS - words have example sentences"
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_iter47_features.py",
+    "/app/test_reports/pytest/iter47_features_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Seed data fix correctly uses word['example'] for fill_blank sentences instead of grammar pattern",
+    "Exit ticket grammar question correctly finds word that appears in rule['examples'][0]",
+    "Cumulative vocab API correctly parses lesson_id format and fetches all prior lessons",
+    "Two PDF buttons properly call generatePDF('current') and generatePDF('cumulative')",
+    "Client-side jsPDF generation works for both modes"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iter47_features.py"
+  ],
+  "success_rate": {
+    "backend": "100% - 9/9 tests passed",
+    "frontend": "100% - All features verified via Playwright"
+  },
+  "test_credentials": {
+    "email": "tester@test.com",
+    "password": "tester123"
+  },
+  "seed_data_creation": "None - verified existing seeded data",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "All iteration 47 features verified. Cumulative vocab API works. Fill_blank uses word's example sentence. Exit ticket grammar Q3 is pedagogically correct. Two PDF download buttons in Lesson Summary. Grammar Game normalization and case-insensitivity working. Roadmap shows 6 steps. Warmup displays emoji.",
+  "mocked_api": {
+    "listening_audio": "Uses browser SpeechSynthesis (TTS) - MOCKED",
+    "pdf_generation": "Client-side jsPDF - no backend API needed"
+  }
+}

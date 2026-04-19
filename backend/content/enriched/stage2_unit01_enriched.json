@@ -1,0 +1,2836 @@
+{
+  "stage": "stage_2",
+  "stage_title": "Starters (A1)",
+  "units": [
+    {
+      "unit_id": "stage_2_unit_01",
+      "unit_num": 1,
+      "title": "Say Hello!",
+      "subtitle": "Greetings, Friends & Alphabet",
+      "phonics_focus": [],
+      "grammar_focus": [
+        "Subject Pronouns (He/She/They)",
+        "Who is...?",
+        "Alphabet names"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_2_unit_01_lesson_01",
+          "title": "Greetings",
+          "topic": "greetings",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What do you say when you see your friend in the morning?",
+                  "correct_answer": "Hello!",
+                  "options": [
+                    "Hello!",
+                    "Goodbye!",
+                    "Good night!",
+                    "Thank you!"
+                  ],
+                  "image_emoji": "👋",
+                  "hint": "We say this when we meet someone."
+                },
+                {
+                  "question_text": "When do we say 'Goodbye'?",
+                  "correct_answer": "When we leave",
+                  "options": [
+                    "When we leave",
+                    "When we arrive",
+                    "When we eat",
+                    "When we play"
+                  ],
+                  "image_emoji": "👋",
+                  "hint": "We say it at the end, not at the start."
+                },
+                {
+                  "question_text": "What can you say to greet your teacher?",
+                  "correct_answer": "Good morning!",
+                  "options": [
+                    "Good morning!",
+                    "Good night!",
+                    "See you later!",
+                    "Excuse me!"
+                  ],
+                  "image_emoji": "☀️",
+                  "hint": "Think about the time when school starts."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "hello",
+                  "ipa": "/həˈloʊ/",
+                  "definition": "A greeting word",
+                  "example": "Hello, how are you?",
+                  "image_emoji": "👋",
+                  "image_url": "/static/vocab_images/hello.png"
+                },
+                {
+                  "word": "hi",
+                  "ipa": "/haɪ/",
+                  "definition": "A casual greeting",
+                  "example": "Hi, I'm Sam.",
+                  "image_emoji": "👋",
+                  "image_url": "/static/vocab_images/hi.png"
+                },
+                {
+                  "word": "answer",
+                  "ipa": "/ˈæn.sər/",
+                  "definition": "To reply to a question",
+                  "example": "I answer the question.",
+                  "image_emoji": "❓",
+                  "image_url": "/static/vocab_images/answer.png"
+                },
+                {
+                  "word": "listen",
+                  "ipa": "/ˈlɪs.ən/",
+                  "definition": "To hear attentively",
+                  "example": "Listen to the teacher.",
+                  "image_emoji": "👂",
+                  "image_url": "/static/vocab_images/listen.png"
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "emoji": "👋",
+                      "distractors": [
+                        {
+                          "word": "book",
+                          "emoji": "📚"
+                        },
+                        {
+                          "word": "apple",
+                          "emoji": "🍎"
+                        },
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hi",
+                      "emoji": "👋",
+                      "distractors": [
+                        {
+                          "word": "ball",
+                          "emoji": "⚽"
+                        },
+                        {
+                          "word": "sun",
+                          "emoji": "☀️"
+                        },
+                        {
+                          "word": "car",
+                          "emoji": "🚗"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "answer",
+                      "emoji": "❓",
+                      "distractors": [
+                        {
+                          "word": "house",
+                          "emoji": "🏠"
+                        },
+                        {
+                          "word": "dog",
+                          "emoji": "🐶"
+                        },
+                        {
+                          "word": "tree",
+                          "emoji": "🌳"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "listen",
+                      "emoji": "👂",
+                      "distractors": [
+                        {
+                          "word": "flower",
+                          "emoji": "🌸"
+                        },
+                        {
+                          "word": "star",
+                          "emoji": "⭐"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "emoji": "👋",
+                      "distractors": [
+                        {
+                          "word": "pizza",
+                          "emoji": "🍕"
+                        },
+                        {
+                          "word": "moon",
+                          "emoji": "🌙"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hi",
+                      "emoji": "👋",
+                      "distractors": [
+                        {
+                          "word": "bike",
+                          "emoji": "🚲"
+                        },
+                        {
+                          "word": "cup",
+                          "emoji": "☕"
+                        },
+                        {
+                          "word": "hat",
+                          "emoji": "🎩"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "answer",
+                      "emoji": "❓",
+                      "distractors": [
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "pencil",
+                          "emoji": "✏️"
+                        },
+                        {
+                          "word": "clock",
+                          "emoji": "⏰"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "listen",
+                      "emoji": "👂",
+                      "distractors": [
+                        {
+                          "word": "heart",
+                          "emoji": "❤️"
+                        },
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐰"
+                        },
+                        {
+                          "word": "bag",
+                          "emoji": "🎒"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "emoji": "👋"
+                    },
+                    {
+                      "word": "hi",
+                      "emoji": "👋"
+                    },
+                    {
+                      "word": "answer",
+                      "emoji": "❓"
+                    },
+                    {
+                      "word": "listen",
+                      "emoji": "👂"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "flashcard_match",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "emoji": "👋",
+                      "definition": "A greeting when you meet someone"
+                    },
+                    {
+                      "word": "hi",
+                      "emoji": "👋",
+                      "definition": "A friendly way to say hello"
+                    },
+                    {
+                      "word": "answer",
+                      "emoji": "❓",
+                      "definition": "What you say when someone asks a question"
+                    },
+                    {
+                      "word": "listen",
+                      "emoji": "👂",
+                      "definition": "Use your ears to hear carefully"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match the emoji to the word: 👋",
+              "correct_answer": "hello",
+              "options": [
+                "hello",
+                "answer",
+                "listen",
+                "goodbye"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Meet and Greet",
+              "text": "Emma sees Tom at school. She says, 'Hello, Tom!' He says, 'Hi, Emma!' The teacher asks a question. They listen carefully. Tom answers first.",
+              "scene_description": "two children greeting each other at school with teacher in background",
+              "questions": [
+                {
+                  "question": "Who says 'Hello, Tom'?",
+                  "answer": "Emma",
+                  "options": [
+                    "Emma",
+                    "Tom",
+                    "The teacher"
+                  ],
+                  "correct_answer": "Emma"
+                },
+                {
+                  "question": "What do the children do when the teacher asks a question?",
+                  "answer": "They listen",
+                  "options": [
+                    "They listen",
+                    "They run",
+                    "They sleep"
+                  ],
+                  "correct_answer": "They listen"
+                },
+                {
+                  "question": "Who answers the teacher first?",
+                  "answer": "Tom",
+                  "options": [
+                    "Tom",
+                    "Emma",
+                    "They both answer"
+                  ],
+                  "correct_answer": "Tom"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Who is ___?",
+              "explanation": "We use 'Who is' to ask about a person's name or identity.",
+              "examples": [
+                "Who is your teacher?",
+                "Who is that boy?",
+                "Who is she?"
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "Who",
+                        "is",
+                        "he",
+                        "?"
+                      ],
+                      "correctSentence": "Who is he?"
+                    },
+                    {
+                      "words": [
+                        "Who",
+                        "is",
+                        "she",
+                        "?"
+                      ],
+                      "correctSentence": "Who is she?"
+                    },
+                    {
+                      "words": [
+                        "Who",
+                        "is",
+                        "your",
+                        "teacher",
+                        "?"
+                      ],
+                      "correctSentence": "Who is your teacher?"
+                    },
+                    {
+                      "words": [
+                        "Who",
+                        "is",
+                        "that",
+                        "boy",
+                        "?"
+                      ],
+                      "correctSentence": "Who is that boy?"
+                    },
+                    {
+                      "words": [
+                        "Who",
+                        "is",
+                        "the",
+                        "girl",
+                        "?"
+                      ],
+                      "correctSentence": "Who is the girl?"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "Who ___ he?",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "Who ___ your friend?",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "Who ___ she?",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "do"
+                      ]
+                    },
+                    {
+                      "sentence": "Who ___ that girl?",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "does"
+                      ]
+                    },
+                    {
+                      "sentence": "Who ___ the teacher?",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "can"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "Who are he?",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with he, she, or it"
+                    },
+                    {
+                      "sentence": "Her is my teacher.",
+                      "errorWord": "Her",
+                      "correctWord": "She",
+                      "explanation": "Use 'She' as the subject pronoun"
+                    },
+                    {
+                      "sentence": "Who is they?",
+                      "errorWord": "is",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with they"
+                    },
+                    {
+                      "sentence": "He say hello every day.",
+                      "errorWord": "say",
+                      "correctWord": "says",
+                      "explanation": "Add 's' to verbs with he, she, or it"
+                    },
+                    {
+                      "sentence": "She have two book.",
+                      "errorWord": "book",
+                      "correctWord": "books",
+                      "explanation": "Use plural 's' with numbers greater than one"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "Who is she?",
+                      "is_correct": true,
+                      "corrected": "Who is she?",
+                      "explanation": "Correct! We use 'is' with she."
+                    },
+                    {
+                      "sentence": "Who are he?",
+                      "is_correct": false,
+                      "corrected": "Who is he?",
+                      "explanation": "Use 'is' with he, not 'are'"
+                    },
+                    {
+                      "sentence": "Who is your teacher?",
+                      "is_correct": true,
+                      "corrected": "Who is your teacher?",
+                      "explanation": "Correct! This question is right."
+                    },
+                    {
+                      "sentence": "Who is they?",
+                      "is_correct": false,
+                      "corrected": "Who are they?",
+                      "explanation": "Use 'are' with they"
+                    },
+                    {
+                      "sentence": "Who is that boy?",
+                      "is_correct": true,
+                      "corrected": "Who is that boy?",
+                      "explanation": "Correct! This is the right way to ask."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "Who ___ your friend?",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' when asking about one person"
+                    },
+                    {
+                      "question": "___ is that girl?",
+                      "answer": "Who",
+                      "options": [
+                        "Who",
+                        "What",
+                        "Where",
+                        "When"
+                      ],
+                      "explanation": "Use 'Who' to ask about people"
+                    },
+                    {
+                      "question": "Who ___ she?",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "do"
+                      ],
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "question": "Who ___ the teacher?",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "does"
+                      ],
+                      "explanation": "Use 'is' when asking about one person"
+                    },
+                    {
+                      "question": "___ is he?",
+                      "answer": "Who",
+                      "options": [
+                        "Who",
+                        "How",
+                        "What",
+                        "Which"
+                      ],
+                      "explanation": "Use 'Who' to ask about a person's identity"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [
+                "He",
+                "is",
+                "the",
+                "teacher"
+              ],
+              "correct_sentence": "He is the teacher."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Good morning, class! My name is Miss Brown. Please listen carefully. When I say hello, you answer 'Hi, Miss Brown!' Let's try it together. Hello, everyone!",
+              "questions": [
+                {
+                  "question": "What is the teacher's name?",
+                  "answer": "Miss Brown",
+                  "options": [
+                    "Miss Brown",
+                    "Miss Smith",
+                    "Miss Green",
+                    "Miss White"
+                  ]
+                },
+                {
+                  "question": "What should the children say when the teacher says hello?",
+                  "answer": "Hi, Miss Brown!",
+                  "options": [
+                    "Hi, Miss Brown!",
+                    "Goodbye!",
+                    "Thank you!",
+                    "Good night!"
+                  ]
+                },
+                {
+                  "question": "What does the teacher want the children to do?",
+                  "answer": "Listen carefully",
+                  "options": [
+                    "Listen carefully",
+                    "Stand up",
+                    "Sit down",
+                    "Close the book"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Practice saying these sentences. Listen and repeat!",
+              "expected_text": "Hello! My name is Emma.",
+              "prompts": [
+                {
+                  "prompt": "Say: Hello! My name is Emma.",
+                  "expected_text": "Hello! My name is Emma."
+                },
+                {
+                  "prompt": "Say: I listen to my teacher.",
+                  "expected_text": "I listen to my teacher."
+                },
+                {
+                  "prompt": "Say: Who is your friend?",
+                  "expected_text": "Who is your friend?"
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "What do you say when you meet someone?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Hello",
+                  "options": [
+                    "Hello",
+                    "Goodbye",
+                    "Thank you",
+                    "Please"
+                  ]
+                },
+                {
+                  "question_text": "Who ___ your teacher?",
+                  "question_type": "fill_blank",
+                  "correct_answer": "is",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "Which word means to use your ears carefully?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "listen",
+                  "options": [
+                    "listen",
+                    "answer",
+                    "hello",
+                    "hi"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'Hi' and 'Hello' are both greetings.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "When the teacher asks a question, you ___ .",
+                  "question_type": "fill_blank",
+                  "correct_answer": "answer",
+                  "options": [
+                    "answer",
+                    "hello",
+                    "listen",
+                    "goodbye"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 1
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_2_unit_01_lesson_02",
+          "title": "Friends",
+          "topic": "friends",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's meet some new friends! Answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What do you say when you meet a new friend?",
+                  "correct_answer": "Hello!",
+                  "options": [
+                    "Hello!",
+                    "Goodbye!",
+                    "Good night!",
+                    "Thank you!"
+                  ],
+                  "image_emoji": "👋",
+                  "hint": "We say this when we first see someone."
+                },
+                {
+                  "question_text": "How many new friends are in our story today?",
+                  "correct_answer": "Two friends",
+                  "options": [
+                    "Two friends",
+                    "One friend",
+                    "Three friends",
+                    "Four friends"
+                  ],
+                  "image_emoji": "👫",
+                  "hint": "Count the children in the picture."
+                },
+                {
+                  "question_text": "What are our new friends' names?",
+                  "correct_answer": "Ben and Kim",
+                  "options": [
+                    "Ben and Kim",
+                    "Anna and Tom",
+                    "Lucy and Jack",
+                    "Sam and Emma"
+                  ],
+                  "image_emoji": "😊",
+                  "hint": "Listen carefully to their names in the story."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "they",
+                  "ipa": "/ðeɪ/",
+                  "definition": "Used to refer to two or more people",
+                  "example": "They are new.",
+                  "image_emoji": "👥",
+                  "image_url": "/static/vocab_images/gpt_they.png"
+                },
+                {
+                  "word": "name",
+                  "ipa": "/neɪm/",
+                  "definition": "What someone is called",
+                  "example": "My name is Ben.",
+                  "image_emoji": "📛",
+                  "image_url": "/static/vocab_images/name.png"
+                },
+                {
+                  "word": "new",
+                  "ipa": "/njuː/",
+                  "definition": "Not old or not known before",
+                  "example": "Kim is new.",
+                  "image_emoji": "🆕",
+                  "image_url": "/static/vocab_images/new.png"
+                },
+                {
+                  "word": "old",
+                  "ipa": "/əʊld/",
+                  "definition": "Having existed for a long time",
+                  "example": "This book is old.",
+                  "image_emoji": "📚",
+                  "image_url": "/static/vocab_images/old.png"
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_write",
+                  "items": [
+                    {
+                      "word": "they",
+                      "emoji": "👥"
+                    },
+                    {
+                      "word": "name",
+                      "emoji": "📛"
+                    },
+                    {
+                      "word": "new",
+                      "emoji": "🆕",
+                      "image_url": "/static/vocab_images/new.png"
+                    },
+                    {
+                      "word": "old",
+                      "emoji": "📚"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "look_write",
+                  "items": [
+                    {
+                      "word": "they",
+                      "emoji": "👥",
+                      "hint": "More than one person"
+                    },
+                    {
+                      "word": "name",
+                      "emoji": "📛",
+                      "hint": "What we call you"
+                    },
+                    {
+                      "word": "new",
+                      "emoji": "🆕",
+                      "hint": "Not old, just got it",
+                      "image_url": "/static/vocab_images/new.png"
+                    },
+                    {
+                      "word": "old",
+                      "emoji": "📚",
+                      "hint": "Not new, had it a long time"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_gap",
+                  "items": [
+                    {
+                      "sentence": "___ are my friends.",
+                      "answer": "they",
+                      "options": [
+                        "they",
+                        "name",
+                        "new",
+                        "old"
+                      ],
+                      "emoji": "👥"
+                    },
+                    {
+                      "sentence": "What is your ___?",
+                      "answer": "name",
+                      "options": [
+                        "name",
+                        "they",
+                        "new",
+                        "old"
+                      ],
+                      "emoji": "📛"
+                    },
+                    {
+                      "sentence": "I have a ___ toy!",
+                      "answer": "new",
+                      "options": [
+                        "new",
+                        "old",
+                        "they",
+                        "name"
+                      ],
+                      "emoji": "🆕"
+                    },
+                    {
+                      "sentence": "This is my ___ book.",
+                      "answer": "old",
+                      "options": [
+                        "old",
+                        "new",
+                        "they",
+                        "name"
+                      ],
+                      "emoji": "📚"
+                    },
+                    {
+                      "sentence": "___ are playing together.",
+                      "answer": "they",
+                      "options": [
+                        "they",
+                        "name",
+                        "new",
+                        "old"
+                      ],
+                      "emoji": "👥"
+                    },
+                    {
+                      "sentence": "My ___ is Sam.",
+                      "answer": "name",
+                      "options": [
+                        "name",
+                        "they",
+                        "old",
+                        "new"
+                      ],
+                      "emoji": "📛"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match the emoji to the word: 👥",
+              "correct_answer": "they",
+              "options": [
+                "they",
+                "name",
+                "new",
+                "old"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "New Friends at School",
+              "text": "Ben and Kim are new in our class. They are friends. Ben says, 'My name is Ben.' Kim says, 'My name is Kim.' They are happy. Our old friends say hello!",
+              "scene_description": "Two young children smiling and waving in a bright classroom with other children in background",
+              "questions": [
+                {
+                  "question": "Who are new in the class?",
+                  "answer": "Ben and Kim",
+                  "options": [
+                    "Ben and Kim",
+                    "The old friends",
+                    "The teacher"
+                  ],
+                  "correct_answer": "Ben and Kim"
+                },
+                {
+                  "question": "Are Ben and Kim friends?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "correct_answer": "Yes"
+                },
+                {
+                  "question": "What do the old friends say?",
+                  "answer": "Hello",
+                  "options": [
+                    "Hello",
+                    "Goodbye",
+                    "My name is Ben"
+                  ],
+                  "correct_answer": "Hello"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "___ is my friend. ___ are my friends.",
+              "explanation": "Use 'He' or 'She' for one friend, and 'They' for two or more friends.",
+              "examples": [
+                "He is Ben.",
+                "She is Kim.",
+                "They are Ben and Kim."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "Ben"
+                      ],
+                      "correctSentence": "He is Ben"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "new"
+                      ],
+                      "correctSentence": "She is new"
+                    },
+                    {
+                      "words": [
+                        "They",
+                        "are",
+                        "friends"
+                      ],
+                      "correctSentence": "They are friends"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "happy"
+                      ],
+                      "correctSentence": "He is happy"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "Kim"
+                      ],
+                      "correctSentence": "She is Kim"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "He ___ my friend.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ new students.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ called Kim.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "___ is Ben.",
+                      "answer": "He",
+                      "options": [
+                        "He",
+                        "She",
+                        "They",
+                        "It"
+                      ]
+                    },
+                    {
+                      "sentence": "___ are my old friends.",
+                      "answer": "They",
+                      "options": [
+                        "He",
+                        "She",
+                        "They",
+                        "It"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "Him is my friend.",
+                      "errorWord": "Him",
+                      "correctWord": "He",
+                      "explanation": "Use 'He' as subject pronoun"
+                    },
+                    {
+                      "sentence": "They is new students.",
+                      "errorWord": "is",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with they"
+                    },
+                    {
+                      "sentence": "She have two friend.",
+                      "errorWord": "friend",
+                      "correctWord": "friends",
+                      "explanation": "Use 'friends' for two or more"
+                    },
+                    {
+                      "sentence": "He are called Ben.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with he"
+                    },
+                    {
+                      "sentence": "She like new toys.",
+                      "errorWord": "like",
+                      "correctWord": "likes",
+                      "explanation": "Use 'likes' with she/he"
+                    },
+                    {
+                      "sentence": "They am my friends.",
+                      "errorWord": "am",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with they"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "He is new.",
+                      "is_correct": true,
+                      "corrected": "He is new.",
+                      "explanation": "Correct! 'He is' is right."
+                    },
+                    {
+                      "sentence": "She are my friend.",
+                      "is_correct": false,
+                      "corrected": "She is my friend.",
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "sentence": "They are friends.",
+                      "is_correct": true,
+                      "corrected": "They are friends.",
+                      "explanation": "Correct! 'They are' is right."
+                    },
+                    {
+                      "sentence": "He are called Ben.",
+                      "is_correct": false,
+                      "corrected": "He is called Ben.",
+                      "explanation": "Use 'is' with he"
+                    },
+                    {
+                      "sentence": "They is new.",
+                      "is_correct": false,
+                      "corrected": "They are new.",
+                      "explanation": "Use 'are' with they"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "___ is my friend Ben.",
+                      "answer": "He",
+                      "options": [
+                        "He",
+                        "She",
+                        "They",
+                        "It"
+                      ],
+                      "explanation": "Use 'He' for one boy"
+                    },
+                    {
+                      "question": "___ is called Kim.",
+                      "answer": "She",
+                      "options": [
+                        "He",
+                        "She",
+                        "They",
+                        "It"
+                      ],
+                      "explanation": "Use 'She' for one girl"
+                    },
+                    {
+                      "question": "___ are new students.",
+                      "answer": "They",
+                      "options": [
+                        "He",
+                        "She",
+                        "They",
+                        "It"
+                      ],
+                      "explanation": "Use 'They' for two or more people"
+                    },
+                    {
+                      "question": "She ___ happy today.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "question": "They ___ my old friends.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with they"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [
+                "is",
+                "new",
+                "Kim"
+              ],
+              "correct_sentence": "Kim is new."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello, children! Today we have two new friends in our class. They are Ben and Kim. Ben says, 'My name is Ben.' Kim says, 'My name is Kim.' Let's say hello to our new friends!",
+              "questions": [
+                {
+                  "question": "How many new friends are in the class?",
+                  "answer": "Two",
+                  "options": [
+                    "One",
+                    "Two",
+                    "Three",
+                    "Four"
+                  ]
+                },
+                {
+                  "question": "What are the new friends' names?",
+                  "answer": "Ben and Kim",
+                  "options": [
+                    "Ben and Kim",
+                    "Tom and Lucy",
+                    "Sam and Anna",
+                    "Jack and Mia"
+                  ]
+                },
+                {
+                  "question": "Are Ben and Kim old students or new students?",
+                  "answer": "New students",
+                  "options": [
+                    "New students",
+                    "Old students",
+                    "Teachers"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Practice introducing yourself and your friends!",
+              "expected_text": "My name is Emma.",
+              "prompts": [
+                {
+                  "prompt": "Say: My name is [your name].",
+                  "expected_text": "My name is Emma."
+                },
+                {
+                  "prompt": "Say: He is my new friend.",
+                  "expected_text": "He is my new friend."
+                },
+                {
+                  "prompt": "Say: They are my friends.",
+                  "expected_text": "They are my friends."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Friends Lesson Review",
+              "questions": [
+                {
+                  "question_text": "What does 'new' mean?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "just arrived, not here before",
+                  "options": [
+                    "just arrived, not here before",
+                    "been here a long time",
+                    "very happy",
+                    "two people"
+                  ]
+                },
+                {
+                  "question_text": "He ___ my friend.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "is",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "They ___ new students.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "are",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "Read: 'Ben and Kim are friends. They are new.' Who is new?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Ben and Kim",
+                  "options": [
+                    "Only Ben",
+                    "Only Kim",
+                    "Ben and Kim",
+                    "The teacher"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'They' is used for two or more people.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 2
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_2_unit_01_lesson_03",
+          "title": "Alphabet",
+          "topic": "alphabet",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's sing and learn about letters! Answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Which letter comes after A in the alphabet?",
+                  "correct_answer": "B",
+                  "options": [
+                    "B",
+                    "C",
+                    "Z",
+                    "A"
+                  ],
+                  "image_emoji": "🔤",
+                  "hint": "It comes right after A, like 1, 2, 3!"
+                },
+                {
+                  "question_text": "What sound does the letter A make in 'apple'?",
+                  "correct_answer": "ah",
+                  "options": [
+                    "ah",
+                    "buh",
+                    "eh",
+                    "oh"
+                  ],
+                  "image_emoji": "🍎",
+                  "hint": "Say 'apple' - what sound do you hear at the start?"
+                },
+                {
+                  "question_text": "How many letters are in the alphabet?",
+                  "correct_answer": "26",
+                  "options": [
+                    "26",
+                    "10",
+                    "20",
+                    "100"
+                  ],
+                  "image_emoji": "🔢",
+                  "hint": "We sing all the letters from A to Z. There are quite a lot!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "alphabet",
+                  "ipa": "/ˈælfəˌbɛt/",
+                  "definition": "A set of letters",
+                  "example": "We learn the alphabet.",
+                  "image_emoji": "🔤",
+                  "image_url": "/static/vocab_images/alphabet.png"
+                },
+                {
+                  "word": "spell",
+                  "ipa": "/spɛl/",
+                  "definition": "Say letters in order",
+                  "example": "He can spell 'cat'.",
+                  "image_emoji": "🔠",
+                  "image_url": "/static/vocab_images/gpt_spell.png"
+                },
+                {
+                  "word": "letter",
+                  "ipa": "/ˈletər/",
+                  "definition": "A symbol in words",
+                  "example": "A is a letter.",
+                  "image_emoji": "✉️",
+                  "image_url": "/static/vocab_images/letter.png"
+                },
+                {
+                  "word": "word",
+                  "ipa": "/wɜrd/",
+                  "definition": "A group of letters",
+                  "example": "Dog is a word.",
+                  "image_emoji": "📝",
+                  "image_url": "/static/vocab_images/gpt_word.png"
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "memory_game",
+                  "items": [
+                    {
+                      "word": "alphabet",
+                      "emoji": "🔤"
+                    },
+                    {
+                      "word": "spell",
+                      "emoji": "🔠"
+                    },
+                    {
+                      "word": "letter",
+                      "emoji": "✉️"
+                    },
+                    {
+                      "word": "word",
+                      "emoji": "📝"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "listen_choose_word",
+                  "items": [
+                    {
+                      "word": "alphabet",
+                      "emoji": "🔤",
+                      "distractors": [
+                        "alfabet",
+                        "alphabit",
+                        "alphabat"
+                      ]
+                    },
+                    {
+                      "word": "spell",
+                      "emoji": "🔠",
+                      "distractors": [
+                        "spel",
+                        "spill",
+                        "spehl"
+                      ]
+                    },
+                    {
+                      "word": "letter",
+                      "emoji": "✉️",
+                      "distractors": [
+                        "leter",
+                        "lettar",
+                        "letr"
+                      ]
+                    },
+                    {
+                      "word": "word",
+                      "emoji": "📝",
+                      "distractors": [
+                        "wurd",
+                        "werd",
+                        "wored"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "alphabet",
+                      "emoji": "🔤",
+                      "distractors": [
+                        {
+                          "word": "book",
+                          "emoji": "📚"
+                        },
+                        {
+                          "word": "pencil",
+                          "emoji": "✏️"
+                        },
+                        {
+                          "word": "numbers",
+                          "emoji": "🔢"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "spell",
+                      "emoji": "🔠",
+                      "distractors": [
+                        {
+                          "word": "read",
+                          "emoji": "📖"
+                        },
+                        {
+                          "word": "write",
+                          "emoji": "✍️"
+                        },
+                        {
+                          "word": "sing",
+                          "emoji": "🎤"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "letter",
+                      "emoji": "✉️",
+                      "distractors": [
+                        {
+                          "word": "postcard",
+                          "emoji": "🏞️"
+                        },
+                        {
+                          "word": "stamp",
+                          "emoji": "💌"
+                        },
+                        {
+                          "word": "package",
+                          "emoji": "📦"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "word",
+                      "emoji": "📝",
+                      "distractors": [
+                        {
+                          "word": "paper",
+                          "emoji": "📄"
+                        },
+                        {
+                          "word": "notebook",
+                          "emoji": "📓"
+                        },
+                        {
+                          "word": "sentence",
+                          "emoji": "💬"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match the emoji to the word: 🔤",
+              "correct_answer": "alphabet",
+              "options": [
+                "alphabet",
+                "spell",
+                "letter",
+                "word"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Learning Letters",
+              "text": "Emma learns the alphabet at school. She points to each letter. The teacher helps her spell her name. Emma writes the word 'cat' in her book. She is happy!",
+              "scene_description": "young girl writing letters in notebook at classroom desk with teacher helping",
+              "questions": [
+                {
+                  "question": "Where does Emma learn the alphabet?",
+                  "answer": "at school",
+                  "options": [
+                    "at home",
+                    "at school",
+                    "at the park"
+                  ],
+                  "correct_answer": "at school"
+                },
+                {
+                  "question": "What word does Emma write?",
+                  "answer": "cat",
+                  "options": [
+                    "dog",
+                    "cat",
+                    "bird"
+                  ],
+                  "correct_answer": "cat"
+                },
+                {
+                  "question": "Who helps Emma spell her name?",
+                  "answer": "the teacher",
+                  "options": [
+                    "her friend",
+                    "the teacher",
+                    "her mother"
+                  ],
+                  "correct_answer": "the teacher"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "The letter ___ comes before ___.",
+              "explanation": "Letters have an order in the alphabet, from A to Z.",
+              "examples": [
+                "The letter A comes before B.",
+                "The letter M comes before N.",
+                "The letter X comes before Y."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "She",
+                        "spells",
+                        "words"
+                      ],
+                      "correctSentence": "She spells words"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "knows",
+                        "the",
+                        "alphabet"
+                      ],
+                      "correctSentence": "He knows the alphabet"
+                    },
+                    {
+                      "words": [
+                        "They",
+                        "are",
+                        "learning",
+                        "letters"
+                      ],
+                      "correctSentence": "They are learning letters"
+                    },
+                    {
+                      "words": [
+                        "Who",
+                        "is",
+                        "she"
+                      ],
+                      "correctSentence": "Who is she"
+                    },
+                    {
+                      "words": [
+                        "The",
+                        "letter",
+                        "is",
+                        "A"
+                      ],
+                      "correctSentence": "The letter is A"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "She ___ the alphabet.",
+                      "answer": "knows",
+                      "options": [
+                        "know",
+                        "knows",
+                        "knowing",
+                        "knew"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ learning letters.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ happy to spell.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "Who ___ spelling words?",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "The letter A ___ first.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She spell the word cat.",
+                      "errorWord": "spell",
+                      "correctWord": "spells",
+                      "explanation": "Use 'spells' with she/he"
+                    },
+                    {
+                      "sentence": "Them are learning letters.",
+                      "errorWord": "Them",
+                      "correctWord": "They",
+                      "explanation": "Use 'They' as subject pronoun"
+                    },
+                    {
+                      "sentence": "He can spells his name.",
+                      "errorWord": "spells",
+                      "correctWord": "spell",
+                      "explanation": "After 'can' use simple verb form"
+                    },
+                    {
+                      "sentence": "She have two letter.",
+                      "errorWord": "letter",
+                      "correctWord": "letters",
+                      "explanation": "Use plural 'letters' after 'two'"
+                    },
+                    {
+                      "sentence": "The alphabet have 26 letters.",
+                      "errorWord": "have",
+                      "correctWord": "has",
+                      "explanation": "Use 'has' with singular subject"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "She knows the alphabet.",
+                      "is_correct": true,
+                      "corrected": "She knows the alphabet.",
+                      "explanation": "This sentence is correct"
+                    },
+                    {
+                      "sentence": "He are spelling words.",
+                      "is_correct": false,
+                      "corrected": "He is spelling words.",
+                      "explanation": "Use 'is' with he/she"
+                    },
+                    {
+                      "sentence": "They spell letters.",
+                      "is_correct": true,
+                      "corrected": "They spell letters.",
+                      "explanation": "This sentence is correct"
+                    },
+                    {
+                      "sentence": "Who is they?",
+                      "is_correct": false,
+                      "corrected": "Who are they?",
+                      "explanation": "Use 'are' with they"
+                    },
+                    {
+                      "sentence": "The letter A is first.",
+                      "is_correct": true,
+                      "corrected": "The letter A is first.",
+                      "explanation": "This sentence is correct"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "She ___ her name every day.",
+                      "answer": "spells",
+                      "options": [
+                        "spell",
+                        "spells",
+                        "spelling",
+                        "spelled"
+                      ],
+                      "explanation": "Use 'spells' with she/he/it"
+                    },
+                    {
+                      "question": "___ is learning the alphabet?",
+                      "answer": "Who",
+                      "options": [
+                        "Who",
+                        "What",
+                        "Where",
+                        "When"
+                      ],
+                      "explanation": "Use 'Who' to ask about people"
+                    },
+                    {
+                      "question": "He ___ write letters.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "cans",
+                        "canning",
+                        "could"
+                      ],
+                      "explanation": "Use 'can' to show ability"
+                    },
+                    {
+                      "question": "They ___ learning new words.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with they/we/you"
+                    },
+                    {
+                      "question": "___ knows the alphabet.",
+                      "answer": "She",
+                      "options": [
+                        "Her",
+                        "She",
+                        "Hers",
+                        "Shes"
+                      ],
+                      "explanation": "Use 'She' as subject pronoun"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [
+                "is",
+                "playing",
+                "She",
+                "game",
+                "the"
+              ],
+              "correct_sentence": "She is playing the game."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Good morning, class! Today we're learning the alphabet. Let's practice spelling. Can you spell the word 'cat'? Yes! C-A-T. Now let's say all the letters from A to Z together.",
+              "questions": [
+                {
+                  "question": "What word does the teacher ask the children to spell?",
+                  "answer": "cat",
+                  "options": [
+                    "dog",
+                    "cat",
+                    "pen",
+                    "book"
+                  ]
+                },
+                {
+                  "question": "What are the children learning today?",
+                  "answer": "the alphabet",
+                  "options": [
+                    "numbers",
+                    "colors",
+                    "the alphabet",
+                    "animals"
+                  ]
+                },
+                {
+                  "question": "How does the teacher spell 'cat'?",
+                  "answer": "C-A-T",
+                  "options": [
+                    "C-A-T",
+                    "K-A-T",
+                    "C-A-P",
+                    "T-A-C"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Practice speaking! Listen and repeat these sentences.",
+              "expected_text": "She knows the alphabet.",
+              "prompts": [
+                {
+                  "prompt": "Say: She knows the alphabet.",
+                  "expected_text": "She knows the alphabet."
+                },
+                {
+                  "prompt": "Say: He spells the word cat.",
+                  "expected_text": "He spells the word cat."
+                },
+                {
+                  "prompt": "Say: They are learning letters.",
+                  "expected_text": "They are learning letters."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Alphabet Lesson Review",
+              "questions": [
+                {
+                  "question_text": "Which word means 'to write letters in order to make a word'?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "spell",
+                  "options": [
+                    "alphabet",
+                    "spell",
+                    "letter",
+                    "word"
+                  ]
+                },
+                {
+                  "question_text": "She ___ the alphabet every day.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "learns",
+                  "options": [
+                    "learn",
+                    "learns",
+                    "learning",
+                    "learned"
+                  ]
+                },
+                {
+                  "question_text": "Read: 'He knows all the letters from A to Z.' What does he know?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "the alphabet",
+                  "options": [
+                    "numbers",
+                    "colors",
+                    "the alphabet",
+                    "animals"
+                  ]
+                },
+                {
+                  "question_text": "True or False: The alphabet has letters in it.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "___ is spelling her name. Who is spelling?",
+                  "question_type": "fill_blank",
+                  "correct_answer": "She",
+                  "options": [
+                    "He",
+                    "She",
+                    "They",
+                    "It"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 3
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_2_unit_01_lesson_04",
+          "title": "Unit 1 Review",
+          "topic": "review",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's review! Answer these questions about saying hello!",
+              "questions": [
+                {
+                  "question_text": "When you meet someone for the first time, what do you say?",
+                  "correct_answer": "hello",
+                  "options": [
+                    "goodbye",
+                    "hello",
+                    "thank you",
+                    "sorry"
+                  ],
+                  "image_emoji": "👋",
+                  "hint": "We use this word when we meet people and start talking to them."
+                },
+                {
+                  "question_text": "What do you say when you want to know someone's name?",
+                  "correct_answer": "What's your name?",
+                  "options": [
+                    "How are you?",
+                    "What's your name?",
+                    "Where are you?",
+                    "What's this?"
+                  ],
+                  "image_emoji": "😊",
+                  "hint": "This question helps you learn what someone is called."
+                },
+                {
+                  "question_text": "When your teacher says 'Good morning!', what can you say back?",
+                  "correct_answer": "Good morning!",
+                  "options": [
+                    "Good morning!",
+                    "Good night!",
+                    "I'm fine.",
+                    "My name is Emma."
+                  ],
+                  "image_emoji": "🌞",
+                  "hint": "You can say the same greeting back to your teacher!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                {
+                  "word": "hello",
+                  "ipa": "",
+                  "definition": "A word to greet someone.",
+                  "example": "Say hello to mom.",
+                  "image_emoji": "👋",
+                  "image_url": "/static/vocab_images/hello.png"
+                },
+                {
+                  "word": "hi",
+                  "ipa": "",
+                  "definition": "A short way to say hello.",
+                  "example": "Hi, how are you?",
+                  "image_emoji": "🙋",
+                  "image_url": "/static/vocab_images/hi.png"
+                },
+                {
+                  "word": "answer",
+                  "ipa": "",
+                  "definition": "To say or write back.",
+                  "example": "Can you answer my question?",
+                  "image_emoji": "✋",
+                  "image_url": "/static/vocab_images/answer.png"
+                },
+                {
+                  "word": "listen",
+                  "ipa": "",
+                  "definition": "To hear what sounds are made.",
+                  "example": "Listen to the music.",
+                  "image_emoji": "👂",
+                  "image_url": "/static/vocab_images/listen.png"
+                },
+                {
+                  "word": "they",
+                  "ipa": "",
+                  "definition": "The word for more than one person or thing.",
+                  "example": "They are my friends.",
+                  "image_emoji": "👥",
+                  "image_url": "/static/vocab_images/gpt_they.png"
+                },
+                {
+                  "word": "name",
+                  "ipa": "",
+                  "definition": "What you are called.",
+                  "example": "My name is Lily.",
+                  "image_emoji": "📛",
+                  "image_url": "/static/vocab_images/name.png"
+                },
+                {
+                  "word": "new",
+                  "ipa": "",
+                  "definition": "Not old or used.",
+                  "example": "Look at my new toy!",
+                  "image_emoji": "✨",
+                  "image_url": "/static/vocab_images/new.png"
+                },
+                {
+                  "word": "old",
+                  "ipa": "",
+                  "definition": "Having lived for many years.",
+                  "example": "The turtle is old.",
+                  "image_emoji": "📅",
+                  "image_url": "/static/vocab_images/old.png"
+                },
+                {
+                  "word": "alphabet",
+                  "ipa": "",
+                  "definition": "Letters from A to Z.",
+                  "example": "He sings the alphabet song.",
+                  "image_emoji": "🔤",
+                  "image_url": "/static/vocab_images/alphabet.png"
+                },
+                {
+                  "word": "spell",
+                  "ipa": "",
+                  "definition": "To say or write letters in order.",
+                  "example": "Can you spell cat?",
+                  "image_emoji": "✏️",
+                  "image_url": "/static/vocab_images/gpt_spell.png"
+                },
+                {
+                  "word": "letter",
+                  "ipa": "",
+                  "definition": "A message you can send.",
+                  "example": "I wrote a letter.",
+                  "image_emoji": "📝",
+                  "image_url": "/static/vocab_images/letter.png"
+                },
+                {
+                  "word": "word",
+                  "ipa": "",
+                  "definition": "A group of letters.",
+                  "example": "Read this word.",
+                  "image_emoji": "💬",
+                  "image_url": "/static/vocab_images/gpt_word.png"
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "crossword",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "definition": "A friendly word we say when we meet someone",
+                      "emoji": "👋"
+                    },
+                    {
+                      "word": "listen",
+                      "definition": "What you do with your ears to hear sounds",
+                      "emoji": "👂"
+                    },
+                    {
+                      "word": "answer",
+                      "definition": "What you say when someone asks you a question",
+                      "emoji": "✋"
+                    },
+                    {
+                      "word": "name",
+                      "definition": "What people call you",
+                      "emoji": "📛"
+                    },
+                    {
+                      "word": "new",
+                      "definition": "Something you just got or just started",
+                      "emoji": "✨",
+                      "image_url": "/static/vocab_images/new.png"
+                    },
+                    {
+                      "word": "spell",
+                      "definition": "Say the letters of a word in order",
+                      "emoji": "✏️"
+                    },
+                    {
+                      "word": "letter",
+                      "definition": "One part of the alphabet like A, B, or C",
+                      "emoji": "📝"
+                    },
+                    {
+                      "word": "word",
+                      "definition": "A group of letters that means something",
+                      "emoji": "💬"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "word_search",
+                  "items": [
+                    {
+                      "word": "hi",
+                      "definition": "A short, friendly greeting",
+                      "emoji": "🙋"
+                    },
+                    {
+                      "word": "they",
+                      "definition": "A word for two or more people or things",
+                      "emoji": "👥"
+                    },
+                    {
+                      "word": "old",
+                      "definition": "Something from a long time ago, not new",
+                      "emoji": "📅"
+                    },
+                    {
+                      "word": "alphabet",
+                      "definition": "All the letters from A to Z",
+                      "emoji": "🔤"
+                    },
+                    {
+                      "word": "answer",
+                      "definition": "What you give when someone asks a question",
+                      "emoji": "✋"
+                    },
+                    {
+                      "word": "name",
+                      "definition": "What your family and friends call you",
+                      "emoji": "📛"
+                    },
+                    {
+                      "word": "spell",
+                      "definition": "To say each letter of a word",
+                      "emoji": "✏️"
+                    },
+                    {
+                      "word": "listen",
+                      "definition": "To use your ears carefully",
+                      "emoji": "👂"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "board_game",
+                  "items": [
+                    {
+                      "question": "When you meet a friend, what do you say?",
+                      "answer": "hello",
+                      "options": [
+                        "hello",
+                        "alphabet",
+                        "spell",
+                        "letter"
+                      ]
+                    },
+                    {
+                      "question": "What do you use to hear your teacher?",
+                      "answer": "listen",
+                      "options": [
+                        "spell",
+                        "listen",
+                        "word",
+                        "new"
+                      ]
+                    },
+                    {
+                      "question": "What word means more than one person?",
+                      "answer": "they",
+                      "options": [
+                        "name",
+                        "they",
+                        "hi",
+                        "old"
+                      ]
+                    },
+                    {
+                      "question": "What do you call the letters A, B, C, D... all together?",
+                      "answer": "alphabet",
+                      "options": [
+                        "word",
+                        "name",
+                        "alphabet",
+                        "answer"
+                      ]
+                    },
+                    {
+                      "question": "A toy you just got from the store is...",
+                      "answer": "new",
+                      "options": [
+                        "old",
+                        "new",
+                        "they",
+                        "spell"
+                      ]
+                    },
+                    {
+                      "question": "When you say H-E-L-L-O, you... the word",
+                      "answer": "spell",
+                      "options": [
+                        "listen",
+                        "answer",
+                        "spell",
+                        "hello"
+                      ]
+                    },
+                    {
+                      "question": "What is your mom and dad's special word for you?",
+                      "answer": "name",
+                      "options": [
+                        "letter",
+                        "word",
+                        "name",
+                        "alphabet"
+                      ]
+                    },
+                    {
+                      "question": "The letter 'B' is one...",
+                      "answer": "letter",
+                      "options": [
+                        "they",
+                        "new",
+                        "letter",
+                        "old"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match: 🐝",
+              "correct_answer": "spell",
+              "options": [
+                "spell",
+                "listen",
+                "new",
+                "word"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "At School",
+              "text": "Hello! My name is Sam. She is my new teacher. Her name is Ms. Lee. They are my old friends, Tom and Lily. We listen and answer questions together.",
+              "scene_description": "diverse children and teacher in bright elementary classroom, students raising hands",
+              "questions": [
+                {
+                  "question": "Who is Ms. Lee?",
+                  "answer": "She is the new teacher.",
+                  "options": [
+                    "She is the new teacher.",
+                    "She is Sam's old friend.",
+                    "She is Lily."
+                  ],
+                  "correct_answer": "She is the new teacher."
+                },
+                {
+                  "question": "Are Tom and Lily new friends?",
+                  "answer": "No, they are old friends.",
+                  "options": [
+                    "Yes, they are new friends.",
+                    "No, they are old friends.",
+                    "No, they are teachers."
+                  ],
+                  "correct_answer": "No, they are old friends."
+                },
+                {
+                  "question": "What do the children do together?",
+                  "answer": "They listen and answer questions.",
+                  "options": [
+                    "They spell the alphabet.",
+                    "They say hello to new people.",
+                    "They listen and answer questions."
+                  ],
+                  "correct_answer": "They listen and answer questions."
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "He/She/They + verb",
+              "explanation": "We use 'he' for one boy, 'she' for one girl, and 'they' for two or more people.",
+              "examples": [
+                "He is my friend Tom.",
+                "She is my teacher.",
+                "They are new students."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "They",
+                        "are",
+                        "new"
+                      ],
+                      "correctSentence": "They are new"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "old"
+                      ],
+                      "correctSentence": "She is old"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "can",
+                        "spell"
+                      ],
+                      "correctSentence": "He can spell"
+                    },
+                    {
+                      "words": [
+                        "Listen",
+                        "to",
+                        "me"
+                      ],
+                      "correctSentence": "Listen to me"
+                    },
+                    {
+                      "words": [
+                        "They",
+                        "say",
+                        "hello"
+                      ],
+                      "correctSentence": "They say hello"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "___ is my new friend.",
+                      "answer": "She",
+                      "options": [
+                        "She",
+                        "They",
+                        "Them",
+                        "Her"
+                      ]
+                    },
+                    {
+                      "sentence": "___ are old students.",
+                      "answer": "They",
+                      "options": [
+                        "He",
+                        "She",
+                        "They",
+                        "Them"
+                      ]
+                    },
+                    {
+                      "sentence": "___ can spell his name.",
+                      "answer": "He",
+                      "options": [
+                        "He",
+                        "Him",
+                        "They",
+                        "She"
+                      ]
+                    },
+                    {
+                      "sentence": "What is ___ name?",
+                      "answer": "his",
+                      "options": [
+                        "he",
+                        "his",
+                        "him",
+                        "they"
+                      ]
+                    },
+                    {
+                      "sentence": "___ listen to the teacher.",
+                      "answer": "They",
+                      "options": [
+                        "He",
+                        "She",
+                        "Them",
+                        "They"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "Them are new friends.",
+                      "errorWord": "Them",
+                      "correctWord": "They",
+                      "explanation": "Use 'They' as the subject pronoun"
+                    },
+                    {
+                      "sentence": "She can spells words.",
+                      "errorWord": "spells",
+                      "correctWord": "spell",
+                      "explanation": "After 'can' use the base verb without 's'"
+                    },
+                    {
+                      "sentence": "He have a new name.",
+                      "errorWord": "have",
+                      "correctWord": "has",
+                      "explanation": "Use 'has' with he/she/it"
+                    },
+                    {
+                      "sentence": "They is old students.",
+                      "errorWord": "is",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with they/we/you"
+                    },
+                    {
+                      "sentence": "She listen to the alphabet.",
+                      "errorWord": "listen",
+                      "correctWord": "listens",
+                      "explanation": "Add 's' to verbs with he/she/it"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "He is new.",
+                      "is_correct": true,
+                      "corrected": "He is new.",
+                      "explanation": "Correct! 'He' matches with 'is'"
+                    },
+                    {
+                      "sentence": "They is old.",
+                      "is_correct": false,
+                      "corrected": "They are old.",
+                      "explanation": "Use 'are' with 'they', not 'is'"
+                    },
+                    {
+                      "sentence": "She can spell her name.",
+                      "is_correct": true,
+                      "corrected": "She can spell her name.",
+                      "explanation": "Correct! Good sentence"
+                    },
+                    {
+                      "sentence": "Him say hello.",
+                      "is_correct": false,
+                      "corrected": "He says hello.",
+                      "explanation": "Use 'He' as subject and 'says' with he"
+                    },
+                    {
+                      "sentence": "They listen and answer.",
+                      "is_correct": true,
+                      "corrected": "They listen and answer.",
+                      "explanation": "Correct! Perfect grammar"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "___ is a new student.",
+                      "answer": "She",
+                      "options": [
+                        "She",
+                        "They",
+                        "Her",
+                        "Them"
+                      ],
+                      "explanation": "Use 'She' as the subject"
+                    },
+                    {
+                      "question": "They ___ the alphabet.",
+                      "answer": "spell",
+                      "options": [
+                        "spells",
+                        "spell",
+                        "spelling",
+                        "spelled"
+                      ],
+                      "explanation": "Use base verb 'spell' with 'they'"
+                    },
+                    {
+                      "question": "___ can listen well.",
+                      "answer": "He",
+                      "options": [
+                        "Him",
+                        "He",
+                        "His",
+                        "They"
+                      ],
+                      "explanation": "Use 'He' as the subject before 'can'"
+                    },
+                    {
+                      "question": "What is ___ name?",
+                      "answer": "her",
+                      "options": [
+                        "she",
+                        "her",
+                        "hers",
+                        "they"
+                      ],
+                      "explanation": "Use 'her' before a noun"
+                    },
+                    {
+                      "question": "They ___ old friends.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "am",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with 'they'"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [
+                "who",
+                "is",
+                "he"
+              ],
+              "correct_sentence": "Who is he?"
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello everyone! My name is Teacher Emma. Today we have two new students. They are Ben and Lucy. Let's all say hello to them. Now, can everyone listen carefully? I will spell a word from the alphabet. The word is H-E-L-L-O. Great job!",
+              "questions": [
+                {
+                  "question": "How many new students are there?",
+                  "answer": "two",
+                  "options": [
+                    "one",
+                    "two",
+                    "three",
+                    "four"
+                  ]
+                },
+                {
+                  "question": "What are the new students' names?",
+                  "answer": "Ben and Lucy",
+                  "options": [
+                    "Ben and Lucy",
+                    "Emma and Ben",
+                    "Lucy and Emma",
+                    "Tom and Lily"
+                  ]
+                },
+                {
+                  "question": "What word does the teacher spell?",
+                  "answer": "hello",
+                  "options": [
+                    "hello",
+                    "listen",
+                    "answer",
+                    "alphabet"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Let's practice speaking! Say these sentences about people.",
+              "expected_text": "He is my friend.",
+              "prompts": [
+                {
+                  "prompt": "Say: He is my friend.",
+                  "expected_text": "He is my friend."
+                },
+                {
+                  "prompt": "Say: She can spell her name.",
+                  "expected_text": "She can spell her name."
+                },
+                {
+                  "prompt": "Say: They are new students and they listen to the teacher.",
+                  "expected_text": "They are new students and they listen to the teacher."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Unit 1 Review Quiz",
+              "questions": [
+                {
+                  "question_text": "What do you do when your teacher asks a question?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "answer",
+                  "options": [
+                    "listen",
+                    "answer",
+                    "spell",
+                    "hello"
+                  ]
+                },
+                {
+                  "question_text": "___ are new students in our class.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "They",
+                  "options": [
+                    "He",
+                    "She",
+                    "They",
+                    "Them"
+                  ]
+                },
+                {
+                  "question_text": "When you say the letters H-E-L-L-O, you ___ the word.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "spell",
+                  "options": [
+                    "listen",
+                    "spell",
+                    "answer",
+                    "name"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'She' is used for one girl.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "The alphabet has all the ___ from A to Z.",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "letters",
+                  "options": [
+                    "words",
+                    "letters",
+                    "names",
+                    "answers"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 4
+        }
+      ]
+    }
+  ]
+}

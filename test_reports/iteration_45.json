@@ -1,0 +1,100 @@
+{
+  "iteration": 45,
+  "timestamp": "2026-02-15T17:30:00Z",
+  "test_type": "V3_SEED_DATA_UNIQUE_CONTENT_VERIFICATION",
+  "target": "Verify V3 seed update provides UNIQUE content per lesson (fixing boring identical content bug)",
+  "summary": "All V3 seed data verified. Each lesson in a unit now has DIFFERENT reading passages, listening scripts, warmup questions, vocabulary subsets, and proper grammar rule distribution.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "features_verified": {
+    "unique_reading_passages_unit1": {
+      "status": "VERIFIED",
+      "description": "All 4 lessons in Unit 1 have DIFFERENT reading passages",
+      "evidence": "API test: 4 unique passages returned. L1='Hello! I am Tom. I am a student...', L2='I have an apple. The apple is red...', L3='Hello! My name is Tom...', L4='I am Tom. Hello, everyone!...'"
+    },
+    "unique_listening_scripts_unit1": {
+      "status": "VERIFIED",
+      "description": "All 4 lessons in Unit 1 have DIFFERENT listening scripts",
+      "evidence": "API test: 4 unique scripts confirmed via /api/unified/lessons/{lesson_id}/activity/listening"
+    },
+    "unique_warmup_questions_unit1": {
+      "status": "VERIFIED",
+      "description": "All 4 lessons in Unit 1 have DIFFERENT warmup questions",
+      "evidence": "API test: 4 unique question sets. Each lesson asks about different vocabulary definitions."
+    },
+    "unique_vocabulary_subsets_unit1": {
+      "status": "VERIFIED",
+      "description": "L1/L2 have different word subsets (first 3 vs last 3)",
+      "evidence": "API test: L1 words=['apple','cat','hello'], L2 words=['ball','student','teacher']"
+    },
+    "reading_question_counts": {
+      "status": "VERIFIED",
+      "description": "L1/L2 have 2 questions, L3/L4 have 3 questions",
+      "evidence": "API test: L1=2, L2=2, L3=3, L4=3 comprehension questions per passage"
+    },
+    "grammar_rules_distribution": {
+      "status": "VERIFIED",
+      "description": "L1: 1 rule, L2: 1 different rule, L3/L4: both rules",
+      "evidence": "API test: L1=['I am + name'], L2=['Hello! / Hi!'], L3=['I am + name', 'Hello! / Hi!'], L4=['I am + name', 'Hello! / Hi!']. Frontend shows 'Rule 1/2' for L3"
+    },
+    "unit5_unique_content": {
+      "status": "VERIFIED",
+      "description": "Unit 5 (My Family) also has unique content per lesson",
+      "evidence": "API test: 4 unique reading passages, 4 unique listening scripts, 4 unique warmup question sets confirmed"
+    },
+    "cross_unit_unique_content": {
+      "status": "VERIFIED",
+      "description": "Units 1, 3, 5, 8, 10 all have unique reading per lesson",
+      "evidence": "API test: All tested units have 4/4 unique reading passages"
+    }
+  },
+  "api_test_results": {
+    "unit1_4_lessons": "PASS",
+    "unit1_reading_unique": "PASS - 4 different passages",
+    "unit1_listening_unique": "PASS - 4 different scripts",
+    "unit1_warmup_unique": "PASS - 4 different question sets",
+    "unit1_vocab_different": "PASS - L1/L2 have different word subsets",
+    "unit1_grammar_distribution": "PASS - L1:1 rule, L2:1 diff rule, L3/L4:2 rules",
+    "unit5_reading_unique": "PASS - 4 different passages",
+    "unit5_listening_unique": "PASS - 4 different scripts",
+    "unit5_warmup_unique": "PASS - 4 different question sets",
+    "l3_has_3_questions": "PASS",
+    "l4_has_3_questions": "PASS",
+    "cross_unit_verification": "PASS - Units 1,3,5,8,10 all unique"
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_v3_unique_content.py",
+    "/app/test_reports/pytest/v3_unique_content_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "V3 seed script correctly selects different reading[idx] for each lesson_num",
+    "Grammar rules properly split: L1 gets rules[0], L2 gets rules[1], L3/L4 get all rules",
+    "Warmup questions use different word subsets per lesson for variety",
+    "Frontend correctly displays 'Rule 1/2' indicator showing 2 rules for L3",
+    "Question count correctly shows 'Question 1/2' for L1/L2 and 'Question 1/3' for L3/L4"
+  ],
+  "updated_files": ["/app/backend/tests/test_v3_unique_content.py"],
+  "success_rate": {
+    "backend": "100% - All 12 tests passed",
+    "frontend": "100% - All UI elements displaying unique content correctly"
+  },
+  "test_credentials": {
+    "email": "tester@test.com",
+    "password": "tester123"
+  },
+  "seed_data_creation": "None - tested existing V3 seed data",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "V3 seed verified working. Each unit has 4 lessons with unique content. L1='Meet the Words' (first 3 vocab, rule 1, 2 reading questions), L2='Practice Time' (last 3 vocab, rule 2, 2 reading questions), L3='Read and Learn' (combined vocab, both rules, 3 reading questions), L4='Review and Speak' (all vocab, both rules, 3 reading questions). API endpoints: GET /api/unified/lessons/{lesson_id}/activity/{activity_type}. Activity types: micro_reading, listening, grammar_focus, vocabulary, retrieval_warmup.",
+  "mocked_api": {
+    "listening_audio": "Uses browser SpeechSynthesis (TTS) instead of actual audio files - this is MOCKED"
+  }
+}

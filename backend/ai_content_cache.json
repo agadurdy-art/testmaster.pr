@@ -1,0 +1,6964 @@
+{
+  "unit_01": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "Hello, ______!",
+            "correct_answer": "teacher",
+            "options": [
+              "teacher",
+              "apple",
+              "cat",
+              "ball"
+            ],
+            "hint": "This person helps you learn"
+          },
+          {
+            "sentence": "I am a ______.",
+            "correct_answer": "student",
+            "options": [
+              "student",
+              "teacher",
+              "apple",
+              "ball"
+            ],
+            "hint": "A person who learns at school"
+          },
+          {
+            "sentence": "Say ______ when you meet someone.",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "teacher",
+              "cat",
+              "apple"
+            ],
+            "hint": "A greeting word"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "Hello",
+              "teacher"
+            ],
+            "correct_sentence": "Hello, teacher!"
+          },
+          {
+            "words": [
+              "I",
+              "am",
+              "a",
+              "student"
+            ],
+            "correct_sentence": "I am a student."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a greeting when you meet someone'?",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "chair",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a person who teaches'?",
+            "correct_answer": "teacher",
+            "options": [
+              "teacher",
+              "apple",
+              "fast",
+              "green"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "Tom",
+            "options": [
+              "Tom",
+              "tables",
+              "songs",
+              "colors"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A name"
+          },
+          {
+            "question_text": "Write the missing word: Hello, ______!",
+            "correct_answer": "teacher",
+            "acceptable_answers": [
+              "teacher"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a greeting when you meet someone' mean?",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "dog",
+              "blue",
+              "run"
+            ],
+            "hint": "You say this when you meet someone",
+            "image_emoji": "👋"
+          },
+          {
+            "question_text": "What does 'a person who teaches students' mean?",
+            "correct_answer": "teacher",
+            "options": [
+              "teacher",
+              "book",
+              "happy",
+              "car"
+            ],
+            "hint": "This person helps you learn",
+            "image_emoji": "👨‍🏫"
+          },
+          {
+            "question_text": "What does 'a person who learns at school' mean?",
+            "correct_answer": "student",
+            "options": [
+              "student",
+              "chair",
+              "run",
+              "yellow"
+            ],
+            "hint": "This person studies in class",
+            "image_emoji": "🎒"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have an ______.",
+            "correct_answer": "apple",
+            "options": [
+              "apple",
+              "teacher",
+              "ball",
+              "student"
+            ],
+            "hint": "A round fruit you can eat"
+          },
+          {
+            "sentence": "The ______ is red.",
+            "correct_answer": "ball",
+            "options": [
+              "ball",
+              "cat",
+              "apple",
+              "teacher"
+            ],
+            "hint": "You can play catch with it"
+          },
+          {
+            "sentence": "The ______ is sleeping.",
+            "correct_answer": "cat",
+            "options": [
+              "cat",
+              "ball",
+              "student",
+              "apple"
+            ],
+            "hint": "A small furry pet"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "am",
+              "a",
+              "student"
+            ],
+            "correct_sentence": "I am a student."
+          },
+          {
+            "words": [
+              "Hello",
+              "teacher"
+            ],
+            "correct_sentence": "Hello, teacher!"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a round red or green fruit'?",
+            "correct_answer": "apple",
+            "options": [
+              "apple",
+              "ball",
+              "car",
+              "happy"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a round object used in games'?",
+            "correct_answer": "ball",
+            "options": [
+              "ball",
+              "book",
+              "tree",
+              "jump"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete the sentence: I am ______.",
+            "correct_answer": "Tom",
+            "options": [
+              "Tom",
+              "red",
+              "jump",
+              "apple"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Use a name here"
+          },
+          {
+            "question_text": "Write the missing word: Hello, ______!",
+            "correct_answer": "friend",
+            "acceptable_answers": [
+              "friend"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a round red fruit' mean?",
+            "correct_answer": "apple",
+            "options": [
+              "apple",
+              "chair",
+              "fast",
+              "blue"
+            ],
+            "hint": "You can eat this fruit",
+            "image_emoji": "🍎"
+          },
+          {
+            "question_text": "What does 'a round object used in games' mean?",
+            "correct_answer": "ball",
+            "options": [
+              "ball",
+              "tree",
+              "book",
+              "happy"
+            ],
+            "hint": "You can throw or kick this",
+            "image_emoji": "⚽"
+          },
+          {
+            "question_text": "What does 'a small furry pet animal' mean?",
+            "correct_answer": "cat",
+            "options": [
+              "cat",
+              "car",
+              "chair",
+              "blue"
+            ],
+            "hint": "This animal says 'meow'",
+            "image_emoji": "🐱"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "Hello, ______!",
+            "correct_answer": "teacher",
+            "options": [
+              "teacher",
+              "apple",
+              "cat",
+              "run"
+            ],
+            "hint": "You say this to a teacher"
+          },
+          {
+            "sentence": "I am a ______.",
+            "correct_answer": "student",
+            "options": [
+              "student",
+              "ball",
+              "cat",
+              "jump"
+            ],
+            "hint": "A person who learns at school"
+          },
+          {
+            "sentence": "The red ______ is round.",
+            "correct_answer": "ball",
+            "options": [
+              "ball",
+              "teacher",
+              "apple",
+              "book"
+            ],
+            "hint": "You can play games with this"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "Hello",
+              "student"
+            ],
+            "correct_sentence": "Hello, student!"
+          },
+          {
+            "words": [
+              "I",
+              "am",
+              "a",
+              "student"
+            ],
+            "correct_sentence": "I am a student."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a greeting when you meet someone'?",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "chair",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a small furry pet animal'?",
+            "correct_answer": "cat",
+            "options": [
+              "cat",
+              "book",
+              "happy",
+              "jump"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "Tom",
+            "options": [
+              "Tom",
+              "table",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A name of a person"
+          },
+          {
+            "question_text": "Write the missing word: Hello, ______!",
+            "correct_answer": "teacher",
+            "acceptable_answers": [
+              "teacher"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a greeting when you meet someone' mean?",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "run",
+              "blue",
+              "dog"
+            ],
+            "hint": "You say this to greet people",
+            "image_emoji": "👋"
+          },
+          {
+            "question_text": "What does 'a person who learns at school' mean?",
+            "correct_answer": "student",
+            "options": [
+              "student",
+              "table",
+              "fast",
+              "red"
+            ],
+            "hint": "This person studies at school",
+            "image_emoji": "🎒"
+          },
+          {
+            "question_text": "What does 'a round object used in games' mean?",
+            "correct_answer": "ball",
+            "options": [
+              "ball",
+              "chair",
+              "jump",
+              "hot"
+            ],
+            "hint": "You can throw or kick this",
+            "image_emoji": "⚽"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "Hello, ______!",
+            "correct_answer": "teacher",
+            "options": [
+              "teacher",
+              "apple",
+              "ball",
+              "cat"
+            ],
+            "hint": "A person who teaches"
+          },
+          {
+            "sentence": "I am a ______.",
+            "correct_answer": "student",
+            "options": [
+              "student",
+              "apple",
+              "ball",
+              "cat"
+            ],
+            "hint": "A person who learns at school"
+          },
+          {
+            "sentence": "______! How are you?",
+            "correct_answer": "Hello",
+            "options": [
+              "Hello",
+              "Teacher",
+              "Student",
+              "Apple"
+            ],
+            "hint": "A greeting word"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "Hello",
+              "teacher"
+            ],
+            "correct_sentence": "Hello teacher!"
+          },
+          {
+            "words": [
+              "I",
+              "am",
+              "a",
+              "student"
+            ],
+            "correct_sentence": "I am a student."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a person who learns at school'?",
+            "correct_answer": "student",
+            "options": [
+              "student",
+              "ball",
+              "teacher",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a round object used in games'?",
+            "correct_answer": "ball",
+            "options": [
+              "ball",
+              "apple",
+              "chair",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "a student",
+            "options": [
+              "a student",
+              "a teacher",
+              "a ball",
+              "fast"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Say who you are"
+          },
+          {
+            "question_text": "Write the missing word: Hello, ______!",
+            "correct_answer": "friend",
+            "acceptable_answers": [
+              "friend"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a person who teaches students' mean?",
+            "correct_answer": "teacher",
+            "options": [
+              "teacher",
+              "river",
+              "cloud",
+              "book"
+            ],
+            "hint": "This person helps you learn",
+            "image_emoji": "👨‍🏫"
+          },
+          {
+            "question_text": "What does 'a round red or green fruit' mean?",
+            "correct_answer": "apple",
+            "options": [
+              "apple",
+              "car",
+              "table",
+              "shoe"
+            ],
+            "hint": "You can eat this fruit",
+            "image_emoji": "🍎"
+          },
+          {
+            "question_text": "What does 'a small furry pet animal' mean?",
+            "correct_answer": "cat",
+            "options": [
+              "cat",
+              "pen",
+              "hat",
+              "door"
+            ],
+            "hint": "A pet that says meow",
+            "image_emoji": "🐱"
+          }
+        ]
+      }
+    }
+  },
+  "unit_02": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "What is your ______?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "book",
+              "tree",
+              "dog"
+            ],
+            "hint": "It is what you are called"
+          },
+          {
+            "sentence": "She is my ______.",
+            "correct_answer": "friend",
+            "options": [
+              "friend",
+              "car",
+              "apple",
+              "house"
+            ],
+            "hint": "A person you like and trust"
+          },
+          {
+            "sentence": "The ______ is happy.",
+            "correct_answer": "boy",
+            "options": [
+              "boy",
+              "desk",
+              "flower",
+              "ball"
+            ],
+            "hint": "A male child"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "My",
+              "name",
+              "is",
+              "Sara"
+            ],
+            "correct_sentence": "My name is Sara."
+          },
+          {
+            "words": [
+              "She",
+              "is",
+              "my",
+              "friend"
+            ],
+            "correct_sentence": "She is my friend."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the word we use to ask someone for their identity'?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "shoe",
+              "jump",
+              "red"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a person you like and trust'?",
+            "correct_answer": "friend",
+            "options": [
+              "friend",
+              "dog",
+              "run",
+              "yellow"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: What is your ______?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "apple",
+              "blue",
+              "car"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "You answer this question with 'My ____ is...'"
+          },
+          {
+            "question_text": "Write the missing word: She is my ______...",
+            "correct_answer": "friend",
+            "acceptable_answers": [
+              "friend"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'What someone is called' mean?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "run",
+              "blue",
+              "dog"
+            ],
+            "hint": "You use it to say who you are",
+            "image_emoji": "📛"
+          },
+          {
+            "question_text": "What does 'A person you like and trust' mean?",
+            "correct_answer": "friend",
+            "options": [
+              "friend",
+              "car",
+              "jump",
+              "happy"
+            ],
+            "hint": "Someone you enjoy spending time with",
+            "image_emoji": "🤝"
+          },
+          {
+            "question_text": "What does 'A male child' mean?",
+            "correct_answer": "boy",
+            "options": [
+              "boy",
+              "apple",
+              "run",
+              "chair"
+            ],
+            "hint": "A young male person",
+            "image_emoji": "👦"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "What is your ______?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "cat",
+              "run",
+              "blue"
+            ],
+            "hint": "You use this to introduce yourself"
+          },
+          {
+            "sentence": "The ______ is wearing a blue hat.",
+            "correct_answer": "girl",
+            "options": [
+              "girl",
+              "table",
+              "jump",
+              "star"
+            ],
+            "hint": "A female child"
+          },
+          {
+            "sentence": "I have a pet ______ in my tank.",
+            "correct_answer": "fish",
+            "options": [
+              "fish",
+              "car",
+              "book",
+              "tree"
+            ],
+            "hint": "An animal that swims"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "My",
+              "name",
+              "is",
+              "Ali"
+            ],
+            "correct_sentence": "My name is Ali."
+          },
+          {
+            "words": [
+              "The",
+              "girl",
+              "has",
+              "a",
+              "hat"
+            ],
+            "correct_sentence": "The girl has a hat."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a female child'?",
+            "correct_answer": "girl",
+            "options": [
+              "girl",
+              "car",
+              "happy",
+              "tree"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'an animal that lives in water'?",
+            "correct_answer": "fish",
+            "options": [
+              "fish",
+              "shoe",
+              "fast",
+              "chair"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: What is your ______?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "color",
+              "game",
+              "book"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "You ask this to know someone's identity"
+          },
+          {
+            "question_text": "Write the missing word: She is my ______.",
+            "correct_answer": "friend",
+            "acceptable_answers": [
+              "friend"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a female child' mean?",
+            "correct_answer": "girl",
+            "options": [
+              "girl",
+              "car",
+              "tree",
+              "run"
+            ],
+            "hint": "A young human who is feminine",
+            "image_emoji": "👧"
+          },
+          {
+            "question_text": "What does 'an animal that lives in water' mean?",
+            "correct_answer": "fish",
+            "options": [
+              "fish",
+              "table",
+              "cloud",
+              "happy"
+            ],
+            "hint": "This animal swims in water",
+            "image_emoji": "🐟"
+          },
+          {
+            "question_text": "What does 'something you wear on your head' mean?",
+            "correct_answer": "hat",
+            "options": [
+              "hat",
+              "pen",
+              "shoe",
+              "loud"
+            ],
+            "hint": "You put this on top of your head",
+            "image_emoji": "🎩"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "What is your ______?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "fish",
+              "hat",
+              "book"
+            ],
+            "hint": "You use this to tell someone who you are"
+          },
+          {
+            "sentence": "The ______ is playing.",
+            "correct_answer": "boy",
+            "options": [
+              "boy",
+              "hat",
+              "fish",
+              "apple"
+            ],
+            "hint": "A male child"
+          },
+          {
+            "sentence": "I see a colorful ______ in the water.",
+            "correct_answer": "fish",
+            "options": [
+              "fish",
+              "boy",
+              "girl",
+              "car"
+            ],
+            "hint": "An animal that lives in water"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "My",
+              "name",
+              "is",
+              "Tom"
+            ],
+            "correct_sentence": "My name is Tom."
+          },
+          {
+            "words": [
+              "What",
+              "is",
+              "your",
+              "name"
+            ],
+            "correct_sentence": "What is your name?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'what someone is called'?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "hat",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'something you wear on your head'?",
+            "correct_answer": "hat",
+            "options": [
+              "hat",
+              "book",
+              "apple",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: What is your ______?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "hat",
+              "dog",
+              "fish"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "You answer this when someone asks 'What is your ___?'"
+          },
+          {
+            "question_text": "Write the missing word: My _____ is Sara.",
+            "correct_answer": "name",
+            "acceptable_answers": [
+              "name"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'What someone is called' mean?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "run",
+              "table",
+              "blue"
+            ],
+            "hint": "It's how you identify a person",
+            "image_emoji": "📛"
+          },
+          {
+            "question_text": "What does 'A male child' mean?",
+            "correct_answer": "boy",
+            "options": [
+              "boy",
+              "cat",
+              "fast",
+              "yellow"
+            ],
+            "hint": "He is a young male person",
+            "image_emoji": "👦"
+          },
+          {
+            "question_text": "What does 'An animal that lives in water' mean?",
+            "correct_answer": "fish",
+            "options": [
+              "fish",
+              "book",
+              "run",
+              "hot"
+            ],
+            "hint": "It swims in the sea or a pond",
+            "image_emoji": "🐟"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "What is your ______?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "door",
+              "car",
+              "shoe"
+            ],
+            "hint": "You answer this when someone asks 'What is your ___?'"
+          },
+          {
+            "sentence": "She is my ______.",
+            "correct_answer": "friend",
+            "options": [
+              "friend",
+              "table",
+              "apple",
+              "cloud"
+            ],
+            "hint": "A person you like and trust"
+          },
+          {
+            "sentence": "The ______ is happy.",
+            "correct_answer": "boy",
+            "options": [
+              "boy",
+              "dog",
+              "tree",
+              "house"
+            ],
+            "hint": "A male child"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "My",
+              "name",
+              "is",
+              "Sara"
+            ],
+            "correct_sentence": "My name is Sara."
+          },
+          {
+            "words": [
+              "He",
+              "is",
+              "my",
+              "friend"
+            ],
+            "correct_sentence": "He is my friend."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a male child'?",
+            "correct_answer": "boy",
+            "options": [
+              "boy",
+              "cat",
+              "apple",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'an animal that lives in water'?",
+            "correct_answer": "fish",
+            "options": [
+              "fish",
+              "dog",
+              "car",
+              "chair"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: What is your ______?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "color",
+              "food",
+              "place"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "You tell this to introduce yourself"
+          },
+          {
+            "question_text": "Write the missing word: She is my ______...",
+            "correct_answer": "friend",
+            "acceptable_answers": [
+              "friend"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a person you like and trust' mean?",
+            "correct_answer": "friend",
+            "options": [
+              "friend",
+              "table",
+              "sleep",
+              "yellow"
+            ],
+            "hint": "This is someone you like to spend time with",
+            "image_emoji": "🤝"
+          },
+          {
+            "question_text": "What does 'a female child' mean?",
+            "correct_answer": "girl",
+            "options": [
+              "girl",
+              "car",
+              "run",
+              "green"
+            ],
+            "hint": "This is a young female person",
+            "image_emoji": "👧"
+          },
+          {
+            "question_text": "What does 'something you wear on your head' mean?",
+            "correct_answer": "hat",
+            "options": [
+              "hat",
+              "book",
+              "jump",
+              "red"
+            ],
+            "hint": "You put this on your head to keep warm or for style",
+            "image_emoji": "🎩"
+          }
+        ]
+      }
+    }
+  },
+  "unit_03": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "ears",
+            "options": [
+              "ears",
+              "books",
+              "cups",
+              "trees"
+            ],
+            "hint": "You listen with these"
+          },
+          {
+            "sentence": "It is ______.",
+            "correct_answer": "three",
+            "options": [
+              "three",
+              "apple",
+              "happy",
+              "run"
+            ],
+            "hint": "The number after two"
+          },
+          {
+            "sentence": "I have one ______.",
+            "correct_answer": "nose",
+            "options": [
+              "nose",
+              "chairs",
+              "dogs",
+              "balls"
+            ],
+            "hint": "You smell with this"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "It",
+              "is",
+              "three"
+            ],
+            "correct_sentence": "It is three."
+          },
+          {
+            "words": [
+              "I",
+              "have",
+              "one",
+              "apple"
+            ],
+            "correct_sentence": "I have one apple."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the number 1'?",
+            "correct_answer": "one",
+            "options": [
+              "one",
+              "apple",
+              "blue",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the number 2'?",
+            "correct_answer": "two",
+            "options": [
+              "two",
+              "dog",
+              "happy",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: It is ______.",
+            "correct_answer": "one",
+            "options": [
+              "one",
+              "book",
+              "run",
+              "happy"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A number between zero and two"
+          },
+          {
+            "question_text": "Write the missing word: I have two ______.",
+            "correct_answer": "hands",
+            "acceptable_answers": [
+              "hands"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What word means the number that comes after zero and before two?",
+            "correct_answer": "one",
+            "options": [
+              "one",
+              "cat",
+              "jump",
+              "blue"
+            ],
+            "hint": "It is the first number you count",
+            "image_emoji": "1️⃣"
+          },
+          {
+            "question_text": "What word means the number that comes after one and before three?",
+            "correct_answer": "two",
+            "options": [
+              "two",
+              "dog",
+              "run",
+              "yellow"
+            ],
+            "hint": "It is the number of shoes you wear",
+            "image_emoji": "2️⃣"
+          },
+          {
+            "question_text": "What word means the number that comes after two and before four?",
+            "correct_answer": "three",
+            "options": [
+              "three",
+              "bird",
+              "swim",
+              "red"
+            ],
+            "hint": "It is how many wheels a tricycle has",
+            "image_emoji": "3️⃣"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have five ______.",
+            "correct_answer": "fingers",
+            "options": [
+              "fingers",
+              "dogs",
+              "colors",
+              "trees"
+            ],
+            "hint": "You use these to hold things"
+          },
+          {
+            "sentence": "It is ______.",
+            "correct_answer": "four",
+            "options": [
+              "four",
+              "cat",
+              "blue",
+              "run"
+            ],
+            "hint": "The number after three"
+          },
+          {
+            "sentence": "I count to ______.",
+            "correct_answer": "ten",
+            "options": [
+              "ten",
+              "apple",
+              "happy",
+              "jump"
+            ],
+            "hint": "The number after nine"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "It",
+              "is",
+              "four"
+            ],
+            "correct_sentence": "It is four."
+          },
+          {
+            "words": [
+              "I",
+              "have",
+              "five",
+              "fingers"
+            ],
+            "correct_sentence": "I have five fingers."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the number 4'?",
+            "correct_answer": "four",
+            "options": [
+              "four",
+              "five",
+              "apple",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the number 5'?",
+            "correct_answer": "five",
+            "options": [
+              "five",
+              "table",
+              "blue",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: It is ______.",
+            "correct_answer": "five",
+            "options": [
+              "five",
+              "chair",
+              "play",
+              "fast"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A number after four"
+          },
+          {
+            "question_text": "Write the missing word: I have ______ fingers.",
+            "correct_answer": "five",
+            "acceptable_answers": [
+              "five"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What is the number that comes after three?",
+            "correct_answer": "four",
+            "options": [
+              "four",
+              "cat",
+              "blue",
+              "run"
+            ],
+            "hint": "It is one more than three",
+            "image_emoji": "4️⃣"
+          },
+          {
+            "question_text": "What is the number that comes after four?",
+            "correct_answer": "five",
+            "options": [
+              "five",
+              "dog",
+              "happy",
+              "tree"
+            ],
+            "hint": "It is one more than four",
+            "image_emoji": "5️⃣"
+          },
+          {
+            "question_text": "What is the number that is double five?",
+            "correct_answer": "ten",
+            "options": [
+              "ten",
+              "chair",
+              "cold",
+              "seven"
+            ],
+            "hint": "It is five plus five",
+            "image_emoji": "🔟"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "It is ______.",
+            "correct_answer": "three",
+            "options": [
+              "three",
+              "apple",
+              "blue",
+              "run"
+            ],
+            "hint": "The number 3"
+          },
+          {
+            "sentence": "I have five ______.",
+            "correct_answer": "fingers",
+            "options": [
+              "fingers",
+              "books",
+              "plants",
+              "dogs"
+            ],
+            "hint": "On your hand"
+          },
+          {
+            "sentence": "It is ______.",
+            "correct_answer": "one",
+            "options": [
+              "one",
+              "table",
+              "fast",
+              "jump"
+            ],
+            "hint": "The number 1"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "It",
+              "is",
+              "five"
+            ],
+            "correct_sentence": "It is five."
+          },
+          {
+            "words": [
+              "I",
+              "have",
+              "five",
+              "fingers"
+            ],
+            "correct_sentence": "I have five fingers."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the number one'?",
+            "correct_answer": "one",
+            "options": [
+              "one",
+              "blue",
+              "cat",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the number ten'?",
+            "correct_answer": "ten",
+            "options": [
+              "ten",
+              "dog",
+              "happy",
+              "jump"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: It is ______.",
+            "correct_answer": "one",
+            "options": [
+              "one",
+              "apple",
+              "fast",
+              "brown"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Number after zero"
+          },
+          {
+            "question_text": "Write the missing word: I have two ______.",
+            "correct_answer": "hands",
+            "acceptable_answers": [
+              "hands"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What is the word for the number 1?",
+            "correct_answer": "one",
+            "options": [
+              "one",
+              "blue",
+              "cat",
+              "run"
+            ],
+            "hint": "It comes before two",
+            "image_emoji": "1️⃣"
+          },
+          {
+            "question_text": "What is the word for the number 3?",
+            "correct_answer": "three",
+            "options": [
+              "three",
+              "happy",
+              "dog",
+              "jump"
+            ],
+            "hint": "It comes after two and before four",
+            "image_emoji": "3️⃣"
+          },
+          {
+            "question_text": "What is the word for the number 5?",
+            "correct_answer": "five",
+            "options": [
+              "five",
+              "green",
+              "ball",
+              "sing"
+            ],
+            "hint": "It is one more than four",
+            "image_emoji": "5️⃣"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "hands",
+            "options": [
+              "hands",
+              "dogs",
+              "books",
+              "cars"
+            ],
+            "hint": "You use them to hold things"
+          },
+          {
+            "sentence": "It is ______.",
+            "correct_answer": "three",
+            "options": [
+              "three",
+              "apple",
+              "blue",
+              "run"
+            ],
+            "hint": "A number after two"
+          },
+          {
+            "sentence": "I have one ______.",
+            "correct_answer": "nose",
+            "options": [
+              "nose",
+              "cats",
+              "trees",
+              "chairs"
+            ],
+            "hint": "You smell with this"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "It",
+              "is",
+              "three"
+            ],
+            "correct_sentence": "It is three."
+          },
+          {
+            "words": [
+              "I",
+              "have",
+              "one",
+              "apple"
+            ],
+            "correct_sentence": "I have one apple."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the number 3'?",
+            "correct_answer": "three",
+            "options": [
+              "three",
+              "green",
+              "apple",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the number 5'?",
+            "correct_answer": "five",
+            "options": [
+              "five",
+              "dog",
+              "happy",
+              "jump"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: It is ______.",
+            "correct_answer": "five",
+            "options": [
+              "five",
+              "blue",
+              "sing",
+              "table"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A number after four"
+          },
+          {
+            "question_text": "Write the missing word: I have ______ fingers.",
+            "correct_answer": "five",
+            "acceptable_answers": [
+              "five"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What word means the number 2?",
+            "correct_answer": "two",
+            "options": [
+              "two",
+              "cat",
+              "happy",
+              "blue"
+            ],
+            "hint": "It's the number after one",
+            "image_emoji": "2️⃣"
+          },
+          {
+            "question_text": "What word means the number 4?",
+            "correct_answer": "four",
+            "options": [
+              "four",
+              "dog",
+              "fast",
+              "green"
+            ],
+            "hint": "It's the number after three",
+            "image_emoji": "4️⃣"
+          },
+          {
+            "question_text": "What word means the number 10?",
+            "correct_answer": "ten",
+            "options": [
+              "ten",
+              "table",
+              "sleep",
+              "red"
+            ],
+            "hint": "It's the number after nine",
+            "image_emoji": "🔟"
+          }
+        ]
+      }
+    }
+  },
+  "unit_04": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "The apple is ______.",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "dog",
+              "tree",
+              "run"
+            ],
+            "hint": "It's the color of fire"
+          },
+          {
+            "sentence": "The sky is ______.",
+            "correct_answer": "blue",
+            "options": [
+              "blue",
+              "fast",
+              "book",
+              "happy"
+            ],
+            "hint": "The color of the sky"
+          },
+          {
+            "sentence": "The grass is ______.",
+            "correct_answer": "green",
+            "options": [
+              "green",
+              "blue",
+              "jump",
+              "cat"
+            ],
+            "hint": "The color of trees and grass"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "The",
+              "tree",
+              "is",
+              "green"
+            ],
+            "correct_sentence": "The tree is green."
+          },
+          {
+            "words": [
+              "What",
+              "color",
+              "is",
+              "it"
+            ],
+            "correct_sentence": "What color is it?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the color of an apple or fire'?",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "dog",
+              "quick",
+              "table"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the color of the sky'?",
+            "correct_answer": "blue",
+            "options": [
+              "blue",
+              "run",
+              "apple",
+              "cold"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete the sentence: The apple is ______.",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "jump",
+              "slow",
+              "book"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "It's the color of fire and apples"
+          },
+          {
+            "question_text": "Write the missing word: The sky is ______.",
+            "correct_answer": "blue",
+            "acceptable_answers": [
+              "blue"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What is the color of an apple or fire?",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "fast",
+              "tree",
+              "run"
+            ],
+            "hint": "It is a primary color and looks like a stop sign",
+            "image_emoji": "🔴"
+          },
+          {
+            "question_text": "What is the color of the sky?",
+            "correct_answer": "blue",
+            "options": [
+              "blue",
+              "chair",
+              "bright",
+              "jump"
+            ],
+            "hint": "It is often seen on a clear day above",
+            "image_emoji": "🔵"
+          },
+          {
+            "question_text": "What is the color of grass and trees?",
+            "correct_answer": "green",
+            "options": [
+              "green",
+              "door",
+              "fast",
+              "write"
+            ],
+            "hint": "This color is often seen in nature and means go in traffic lights",
+            "image_emoji": "🟢"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "The sun is ______.",
+            "correct_answer": "yellow",
+            "options": [
+              "yellow",
+              "fast",
+              "tall",
+              "loud"
+            ],
+            "hint": "The color of the sun"
+          },
+          {
+            "sentence": "The cloud is ______.",
+            "correct_answer": "white",
+            "options": [
+              "white",
+              "soft",
+              "heavy",
+              "round"
+            ],
+            "hint": "The color of snow"
+          },
+          {
+            "sentence": "The orange is ______.",
+            "correct_answer": "orange",
+            "options": [
+              "orange",
+              "sweet",
+              "cold",
+              "bright"
+            ],
+            "hint": "A color between red and yellow"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "The",
+              "sun",
+              "is",
+              "yellow"
+            ],
+            "correct_sentence": "The sun is yellow."
+          },
+          {
+            "words": [
+              "The",
+              "cloud",
+              "is",
+              "white"
+            ],
+            "correct_sentence": "The cloud is white."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What color is the sun?",
+            "correct_answer": "yellow",
+            "options": [
+              "yellow",
+              "orange",
+              "blue",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What color is between red and yellow?",
+            "correct_answer": "orange",
+            "options": [
+              "orange",
+              "green",
+              "circle",
+              "book"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: The sun is ______.",
+            "correct_answer": "yellow",
+            "options": [
+              "yellow",
+              "cat",
+              "blue",
+              "run"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "The color of the sun"
+          },
+          {
+            "question_text": "Write the missing word: The orange is ______.",
+            "correct_answer": "orange",
+            "acceptable_answers": [
+              "orange"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'The color of the sun' mean?",
+            "correct_answer": "yellow",
+            "options": [
+              "yellow",
+              "run",
+              "dog",
+              "chair"
+            ],
+            "hint": "It is a bright color often seen in sunlight",
+            "image_emoji": "🟡"
+          },
+          {
+            "question_text": "What does 'A color between red and yellow' mean?",
+            "correct_answer": "orange",
+            "options": [
+              "orange",
+              "happy",
+              "book",
+              "jump"
+            ],
+            "hint": "This color is also a fruit",
+            "image_emoji": "🟠"
+          },
+          {
+            "question_text": "What does 'The color of snow' mean?",
+            "correct_answer": "white",
+            "options": [
+              "white",
+              "cold",
+              "table",
+              "music"
+            ],
+            "hint": "It is the opposite of black",
+            "image_emoji": "⚪"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "The apple is ______.",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "run",
+              "big",
+              "fast"
+            ],
+            "hint": "The color of an apple"
+          },
+          {
+            "sentence": "The tree is ______.",
+            "correct_answer": "green",
+            "options": [
+              "green",
+              "jump",
+              "cold",
+              "soft"
+            ],
+            "hint": "The color of grass"
+          },
+          {
+            "sentence": "The orange is ______.",
+            "correct_answer": "orange",
+            "options": [
+              "orange",
+              "happy",
+              "three",
+              "blue"
+            ],
+            "hint": "A color between red and yellow"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "The",
+              "apple",
+              "is",
+              "red"
+            ],
+            "correct_sentence": "The apple is red."
+          },
+          {
+            "words": [
+              "The",
+              "tree",
+              "is",
+              "green"
+            ],
+            "correct_sentence": "The tree is green."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the color of an apple or fire'?",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "chair",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the color of snow'?",
+            "correct_answer": "white",
+            "options": [
+              "white",
+              "banana",
+              "happy",
+              "slow"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: The apple is ______.",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "cat",
+              "jump",
+              "table"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "The color of fire"
+          },
+          {
+            "question_text": "Write the missing word: The cloud is ______.",
+            "correct_answer": "white",
+            "acceptable_answers": [
+              "white"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'The color of an apple or fire' mean?",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "run",
+              "book",
+              "happy"
+            ],
+            "hint": "Look for the color associated with fire",
+            "image_emoji": "🔴"
+          },
+          {
+            "question_text": "What does 'The color of grass and trees' mean?",
+            "correct_answer": "green",
+            "options": [
+              "green",
+              "dog",
+              "jump",
+              "slow"
+            ],
+            "hint": "This color is often seen in nature and leaves",
+            "image_emoji": "🟢"
+          },
+          {
+            "question_text": "What does 'A color between red and yellow' mean?",
+            "correct_answer": "orange",
+            "options": [
+              "orange",
+              "table",
+              "fly",
+              "cold"
+            ],
+            "hint": "This color is named after a fruit",
+            "image_emoji": "🟠"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "The apple is ______.",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "happy",
+              "fast",
+              "cold"
+            ],
+            "hint": "The color of fire and apples"
+          },
+          {
+            "sentence": "The sky is ______.",
+            "correct_answer": "blue",
+            "options": [
+              "blue",
+              "loud",
+              "round",
+              "big"
+            ],
+            "hint": "The color of the sky on a clear day"
+          },
+          {
+            "sentence": "The tree is ______.",
+            "correct_answer": "green",
+            "options": [
+              "green",
+              "sweet",
+              "hot",
+              "soft"
+            ],
+            "hint": "The color of grass and leaves"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "The",
+              "apple",
+              "is",
+              "red"
+            ],
+            "correct_sentence": "The apple is red."
+          },
+          {
+            "words": [
+              "What",
+              "color",
+              "is",
+              "the",
+              "sky"
+            ],
+            "correct_sentence": "What color is the sky?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the color of grass and trees'?",
+            "correct_answer": "green",
+            "options": [
+              "green",
+              "orange",
+              "run",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a color between red and yellow'?",
+            "correct_answer": "orange",
+            "options": [
+              "orange",
+              "blue",
+              "sing",
+              "apple"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: The tree is ______.",
+            "correct_answer": "green",
+            "options": [
+              "green",
+              "orange",
+              "fast",
+              "chair"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "The color of grass"
+          },
+          {
+            "question_text": "Write the missing word: The orange is ______.",
+            "correct_answer": "orange",
+            "acceptable_answers": [
+              "orange"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'the color of the sky' mean?",
+            "correct_answer": "blue",
+            "options": [
+              "blue",
+              "car",
+              "tall",
+              "chair"
+            ],
+            "hint": "It is a primary color often seen on a clear day",
+            "image_emoji": "🔵"
+          },
+          {
+            "question_text": "What does 'the color of the sun' mean?",
+            "correct_answer": "yellow",
+            "options": [
+              "yellow",
+              "run",
+              "book",
+              "circle"
+            ],
+            "hint": "This color is bright and warm like sunlight",
+            "image_emoji": "🟡"
+          },
+          {
+            "question_text": "What does 'the color of snow' mean?",
+            "correct_answer": "white",
+            "options": [
+              "white",
+              "dog",
+              "happy",
+              "jump"
+            ],
+            "hint": "The color is the absence of dark; often means clean or pure",
+            "image_emoji": "⚪"
+          }
+        ]
+      }
+    }
+  },
+  "unit_05": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "This is my ______.",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "table",
+              "dog",
+              "car"
+            ],
+            "hint": "Your female parent"
+          },
+          {
+            "sentence": "He is my ______.",
+            "correct_answer": "father",
+            "options": [
+              "father",
+              "book",
+              "tree",
+              "chair"
+            ],
+            "hint": "Your male parent"
+          },
+          {
+            "sentence": "My ______ is tall.",
+            "correct_answer": "brother",
+            "options": [
+              "brother",
+              "apple",
+              "shoe",
+              "window"
+            ],
+            "hint": "A boy with the same parents as you"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "This",
+              "is",
+              "my",
+              "father"
+            ],
+            "correct_sentence": "This is my father."
+          },
+          {
+            "words": [
+              "He",
+              "is",
+              "my",
+              "brother"
+            ],
+            "correct_sentence": "He is my brother."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "Who is your female parent?",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "car",
+              "jump",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Who is your male parent?",
+            "correct_answer": "father",
+            "options": [
+              "father",
+              "table",
+              "run",
+              "green"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete the sentence: This is my ______.",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "apple",
+              "fast",
+              "sing"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A female parent"
+          },
+          {
+            "question_text": "Write the missing word: She is my ______.",
+            "correct_answer": "mother",
+            "acceptable_answers": [
+              "mother"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "Who is your female parent?",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "car",
+              "jump",
+              "yellow"
+            ],
+            "hint": "She takes care of you and loves you",
+            "image_emoji": "👩"
+          },
+          {
+            "question_text": "Who is your male parent?",
+            "correct_answer": "father",
+            "options": [
+              "father",
+              "apple",
+              "run",
+              "green"
+            ],
+            "hint": "He is a man who is also your parent",
+            "image_emoji": "👨"
+          },
+          {
+            "question_text": "What do you call a boy with the same parents as you?",
+            "correct_answer": "brother",
+            "options": [
+              "brother",
+              "book",
+              "sing",
+              "blue"
+            ],
+            "hint": "He is your male sibling",
+            "image_emoji": "👦"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "This is my ______.",
+            "correct_answer": "sister",
+            "options": [
+              "sister",
+              "table",
+              "run",
+              "apple"
+            ],
+            "hint": "A girl with the same parents as you"
+          },
+          {
+            "sentence": "The ______ is sleeping.",
+            "correct_answer": "baby",
+            "options": [
+              "baby",
+              "car",
+              "dog",
+              "book"
+            ],
+            "hint": "A very young child"
+          },
+          {
+            "sentence": "I love my ______.",
+            "correct_answer": "family",
+            "options": [
+              "family",
+              "chair",
+              "school",
+              "toy"
+            ],
+            "hint": "A group of related people"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "She",
+              "is",
+              "my",
+              "sister"
+            ],
+            "correct_sentence": "She is my sister."
+          },
+          {
+            "words": [
+              "This",
+              "is",
+              "my",
+              "baby"
+            ],
+            "correct_sentence": "This is my baby."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a girl with the same parents as you'?",
+            "correct_answer": "sister",
+            "options": [
+              "sister",
+              "baby",
+              "table",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a very young child'?",
+            "correct_answer": "baby",
+            "options": [
+              "baby",
+              "brother",
+              "book",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: This is my ______.",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "dog",
+              "chair",
+              "read"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "She is your female parent"
+          },
+          {
+            "question_text": "Write the missing word: He is my ______.",
+            "correct_answer": "brother",
+            "acceptable_answers": [
+              "brother"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a girl with the same parents as you' mean?",
+            "correct_answer": "sister",
+            "options": [
+              "sister",
+              "banana",
+              "car",
+              "happy"
+            ],
+            "hint": "She is your sibling",
+            "image_emoji": "👧"
+          },
+          {
+            "question_text": "What does 'a very young child' mean?",
+            "correct_answer": "baby",
+            "options": [
+              "baby",
+              "book",
+              "dog",
+              "run"
+            ],
+            "hint": "This child is just born or very small",
+            "image_emoji": "👶"
+          },
+          {
+            "question_text": "What does 'a group of related people' mean?",
+            "correct_answer": "family",
+            "options": [
+              "family",
+              "table",
+              "music",
+              "jump"
+            ],
+            "hint": "They live together or care for each other",
+            "image_emoji": "👨‍👩‍👧‍👦"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "This is my ______.",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "dog",
+              "car",
+              "book"
+            ],
+            "hint": "Your female parent"
+          },
+          {
+            "sentence": "He is my ______.",
+            "correct_answer": "brother",
+            "options": [
+              "brother",
+              "apple",
+              "pen",
+              "chair"
+            ],
+            "hint": "A boy with the same parents as you"
+          },
+          {
+            "sentence": "The ______ is sleeping.",
+            "correct_answer": "baby",
+            "options": [
+              "baby",
+              "tree",
+              "table",
+              "shoe"
+            ],
+            "hint": "A very young child"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "This",
+              "is",
+              "my",
+              "mother"
+            ],
+            "correct_sentence": "This is my mother."
+          },
+          {
+            "words": [
+              "He",
+              "is",
+              "my",
+              "brother"
+            ],
+            "correct_sentence": "He is my brother."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'your female parent'?",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "table",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a group of related people'?",
+            "correct_answer": "family",
+            "options": [
+              "family",
+              "car",
+              "happy",
+              "sing"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: This is my ______.",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "dog",
+              "jump",
+              "yellow"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A female parent"
+          },
+          {
+            "question_text": "Write the missing word: She is my ______.",
+            "correct_answer": "mother",
+            "acceptable_answers": [
+              "mother"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "Who is your female parent?",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "table",
+              "run",
+              "blue"
+            ],
+            "hint": "She takes care of you at home",
+            "image_emoji": "👩"
+          },
+          {
+            "question_text": "What do you call a boy with the same parents as you?",
+            "correct_answer": "brother",
+            "options": [
+              "brother",
+              "car",
+              "happy",
+              "tree"
+            ],
+            "hint": "He is your male sibling",
+            "image_emoji": "👦"
+          },
+          {
+            "question_text": "What is a very young child called?",
+            "correct_answer": "baby",
+            "options": [
+              "baby",
+              "dog",
+              "jump",
+              "chair"
+            ],
+            "hint": "They are very small and often cry",
+            "image_emoji": "👶"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "This is my ______.",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "table",
+              "apple",
+              "car"
+            ],
+            "hint": "She is your female parent"
+          },
+          {
+            "sentence": "He is my ______.",
+            "correct_answer": "father",
+            "options": [
+              "father",
+              "dog",
+              "book",
+              "chair"
+            ],
+            "hint": "He is your male parent"
+          },
+          {
+            "sentence": "My ______ is tall.",
+            "correct_answer": "brother",
+            "options": [
+              "brother",
+              "flower",
+              "toy",
+              "shoe"
+            ],
+            "hint": "A boy with the same parents as you"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "This",
+              "is",
+              "my",
+              "mother"
+            ],
+            "correct_sentence": "This is my mother."
+          },
+          {
+            "words": [
+              "He",
+              "is",
+              "my",
+              "father"
+            ],
+            "correct_sentence": "He is my father."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a boy with the same parents as you'?",
+            "correct_answer": "brother",
+            "options": [
+              "brother",
+              "baby",
+              "school",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a very young child'?",
+            "correct_answer": "baby",
+            "options": [
+              "baby",
+              "chair",
+              "jump",
+              "happy"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: This is my ______.",
+            "correct_answer": "brother",
+            "options": [
+              "brother",
+              "car",
+              "blue",
+              "read"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Used to show a family boy"
+          },
+          {
+            "question_text": "Write the missing word: He is my ______.",
+            "correct_answer": "brother",
+            "acceptable_answers": [
+              "brother"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'Your male parent' mean?",
+            "correct_answer": "father",
+            "options": [
+              "father",
+              "cat",
+              "run",
+              "table"
+            ],
+            "hint": "He is your dad",
+            "image_emoji": "👨"
+          },
+          {
+            "question_text": "What does 'A girl with the same parents as you' mean?",
+            "correct_answer": "sister",
+            "options": [
+              "sister",
+              "car",
+              "happy",
+              "tree"
+            ],
+            "hint": "She is your female sibling",
+            "image_emoji": "👧"
+          },
+          {
+            "question_text": "What does 'A group of related people' mean?",
+            "correct_answer": "family",
+            "options": [
+              "family",
+              "book",
+              "jump",
+              "cold"
+            ],
+            "hint": "They live together and love each other",
+            "image_emoji": "👨‍👩‍👧‍👦"
+          }
+        ]
+      }
+    }
+  },
+  "unit_06": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "eyes",
+            "options": [
+              "eyes",
+              "books",
+              "chairs",
+              "cats"
+            ],
+            "hint": "We see with these"
+          },
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "ears",
+            "options": [
+              "ears",
+              "tables",
+              "shoes",
+              "dogs"
+            ],
+            "hint": "We hear with these"
+          },
+          {
+            "sentence": "I have one ______.",
+            "correct_answer": "nose",
+            "options": [
+              "nose",
+              "ball",
+              "car",
+              "bird"
+            ],
+            "hint": "We smell with this"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "have",
+              "two",
+              "ears"
+            ],
+            "correct_sentence": "I have two ears."
+          },
+          {
+            "words": [
+              "My",
+              "nose",
+              "is",
+              "small"
+            ],
+            "correct_sentence": "My nose is small."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the part of your body used for seeing'?",
+            "correct_answer": "eye",
+            "options": [
+              "eye",
+              "car",
+              "run",
+              "apple"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the part of your body used for hearing'?",
+            "correct_answer": "ear",
+            "options": [
+              "ear",
+              "book",
+              "jump",
+              "red"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I have two ______.",
+            "correct_answer": "eyes",
+            "options": [
+              "eyes",
+              "chairs",
+              "songs",
+              "pants"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "We see with these"
+          },
+          {
+            "question_text": "Write the missing word: I have one ______.",
+            "correct_answer": "nose",
+            "acceptable_answers": [
+              "nose"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What is the part of your body used for seeing?",
+            "correct_answer": "eye",
+            "options": [
+              "eye",
+              "dog",
+              "run",
+              "blue"
+            ],
+            "hint": "You use this to look at things",
+            "image_emoji": "👁️"
+          },
+          {
+            "question_text": "What is the part of your body used for hearing?",
+            "correct_answer": "ear",
+            "options": [
+              "ear",
+              "book",
+              "jump",
+              "red"
+            ],
+            "hint": "You use this to listen to sounds",
+            "image_emoji": "👂"
+          },
+          {
+            "question_text": "What is the part of your face used for smelling?",
+            "correct_answer": "nose",
+            "options": [
+              "nose",
+              "car",
+              "dance",
+              "green"
+            ],
+            "hint": "You use this to smell flowers",
+            "image_emoji": "👃"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "eyes",
+            "options": [
+              "eyes",
+              "books",
+              "chairs",
+              "cats"
+            ],
+            "hint": "We see with these"
+          },
+          {
+            "sentence": "My ______ is long.",
+            "correct_answer": "hair",
+            "options": [
+              "hair",
+              "table",
+              "dog",
+              "shoe"
+            ],
+            "hint": "It grows on your head"
+          },
+          {
+            "sentence": "Open your ______.",
+            "correct_answer": "mouth",
+            "options": [
+              "mouth",
+              "window",
+              "door",
+              "box"
+            ],
+            "hint": "You eat and talk with this"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "My",
+              "hair",
+              "is",
+              "long"
+            ],
+            "correct_sentence": "My hair is long."
+          },
+          {
+            "words": [
+              "Wash",
+              "your",
+              "face"
+            ],
+            "correct_sentence": "Wash your face."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the part of your face used for eating and talking'?",
+            "correct_answer": "mouth",
+            "options": [
+              "mouth",
+              "chair",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the front part of your head'?",
+            "correct_answer": "face",
+            "options": [
+              "face",
+              "banana",
+              "jump",
+              "green"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I have two ______.",
+            "correct_answer": "eyes",
+            "options": [
+              "eyes",
+              "books",
+              "songs",
+              "shoes"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "We see with these"
+          },
+          {
+            "question_text": "Write the missing word: My ______ is brown.",
+            "correct_answer": "hair",
+            "acceptable_answers": [
+              "hair"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'The front part of your head' mean?",
+            "correct_answer": "face",
+            "options": [
+              "face",
+              "book",
+              "car",
+              "tree"
+            ],
+            "hint": "It shows your eyes and nose",
+            "image_emoji": "😊"
+          },
+          {
+            "question_text": "What does 'The part of your face used for eating and talking' mean?",
+            "correct_answer": "mouth",
+            "options": [
+              "mouth",
+              "phone",
+              "shoe",
+              "desk"
+            ],
+            "hint": "You use it to speak and eat",
+            "image_emoji": "👄"
+          },
+          {
+            "question_text": "What does 'The thin strands that grow on your head' mean?",
+            "correct_answer": "hair",
+            "options": [
+              "hair",
+              "water",
+              "bird",
+              "table"
+            ],
+            "hint": "You can comb and cut it",
+            "image_emoji": "💇"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "eyes",
+            "options": [
+              "eyes",
+              "books",
+              "chairs",
+              "cats"
+            ],
+            "hint": "We see with these"
+          },
+          {
+            "sentence": "I have one ______.",
+            "correct_answer": "nose",
+            "options": [
+              "nose",
+              "apples",
+              "shoes",
+              "cars"
+            ],
+            "hint": "You smell with this"
+          },
+          {
+            "sentence": "Wash your ______ every day.",
+            "correct_answer": "face",
+            "options": [
+              "face",
+              "table",
+              "pen",
+              "bag"
+            ],
+            "hint": "The front part of your head"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "My",
+              "eyes",
+              "are",
+              "brown"
+            ],
+            "correct_sentence": "My eyes are brown."
+          },
+          {
+            "words": [
+              "I",
+              "have",
+              "one",
+              "nose"
+            ],
+            "correct_sentence": "I have one nose."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the part of your body used for seeing'?",
+            "correct_answer": "eye",
+            "options": [
+              "eye",
+              "chair",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the thin strands that grow on your head'?",
+            "correct_answer": "hair",
+            "options": [
+              "hair",
+              "book",
+              "happy",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I have two ______.",
+            "correct_answer": "eyes",
+            "options": [
+              "eyes",
+              "tables",
+              "songs",
+              "colors"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "We see with these"
+          },
+          {
+            "question_text": "Write the missing word: My ______ is brown.",
+            "correct_answer": "hair",
+            "acceptable_answers": [
+              "hair"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'The part of your body used for seeing' mean?",
+            "correct_answer": "eye",
+            "options": [
+              "eye",
+              "dog",
+              "run",
+              "blue"
+            ],
+            "hint": "You use this to see things around you",
+            "image_emoji": "👁️"
+          },
+          {
+            "question_text": "What does 'The part of your face used for smelling' mean?",
+            "correct_answer": "nose",
+            "options": [
+              "nose",
+              "car",
+              "box",
+              "quick"
+            ],
+            "hint": "You use this to smell flowers",
+            "image_emoji": "👃"
+          },
+          {
+            "question_text": "What does 'The front part of your head' mean?",
+            "correct_answer": "face",
+            "options": [
+              "face",
+              "book",
+              "run",
+              "soft"
+            ],
+            "hint": "You show expressions with this part",
+            "image_emoji": "😊"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "eyes",
+            "options": [
+              "eyes",
+              "books",
+              "chairs",
+              "cats"
+            ],
+            "hint": "We see with these"
+          },
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "ears",
+            "options": [
+              "ears",
+              "shoes",
+              "stars",
+              "cars"
+            ],
+            "hint": "We hear with these"
+          },
+          {
+            "sentence": "I have one ______.",
+            "correct_answer": "nose",
+            "options": [
+              "nose",
+              "finger",
+              "hat",
+              "ball"
+            ],
+            "hint": "We smell with this"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "My",
+              "nose",
+              "is",
+              "small"
+            ],
+            "correct_sentence": "My nose is small."
+          },
+          {
+            "words": [
+              "I",
+              "have",
+              "one",
+              "nose"
+            ],
+            "correct_sentence": "I have one nose."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the part of your face used for smelling'?",
+            "correct_answer": "nose",
+            "options": [
+              "nose",
+              "tree",
+              "car",
+              "book"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the front part of your head'?",
+            "correct_answer": "face",
+            "options": [
+              "face",
+              "shoe",
+              "dog",
+              "chair"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I have one ______.",
+            "correct_answer": "nose",
+            "options": [
+              "nose",
+              "apple",
+              "chair",
+              "blue"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "You smell with this part"
+          },
+          {
+            "question_text": "Write the missing word: Wash your ______.",
+            "correct_answer": "face",
+            "acceptable_answers": [
+              "face"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'The part of your body used for hearing' mean?",
+            "correct_answer": "ear",
+            "options": [
+              "ear",
+              "table",
+              "happy",
+              "blue"
+            ],
+            "hint": "You use it to listen",
+            "image_emoji": "👂"
+          },
+          {
+            "question_text": "What does 'The part of your face used for eating and talking' mean?",
+            "correct_answer": "mouth",
+            "options": [
+              "mouth",
+              "car",
+              "green",
+              "tall"
+            ],
+            "hint": "You open it to eat",
+            "image_emoji": "👄"
+          },
+          {
+            "question_text": "What does 'The thin strands that grow on your head' mean?",
+            "correct_answer": "hair",
+            "options": [
+              "hair",
+              "book",
+              "slow",
+              "cold"
+            ],
+            "hint": "You can comb it",
+            "image_emoji": "💇"
+          }
+        ]
+      }
+    }
+  },
+  "unit_07": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "Raise your ______.",
+            "correct_answer": "arm",
+            "options": [
+              "arm",
+              "car",
+              "tree",
+              "book"
+            ],
+            "hint": "The long part between your shoulder and hand"
+          },
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "legs",
+            "options": [
+              "legs",
+              "dogs",
+              "balls",
+              "chairs"
+            ],
+            "hint": "You use these to walk"
+          },
+          {
+            "sentence": "Clap your ______.",
+            "correct_answer": "hands",
+            "options": [
+              "hands",
+              "feet",
+              "eyes",
+              "books"
+            ],
+            "hint": "The part at the end of your arm"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "Can",
+              "you",
+              "touch",
+              "your",
+              "arm"
+            ],
+            "correct_sentence": "Can you touch your arm?"
+          },
+          {
+            "words": [
+              "Touch",
+              "your",
+              "hands"
+            ],
+            "correct_sentence": "Touch your hands."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the long part of your body between shoulder and hand'?",
+            "correct_answer": "arm",
+            "options": [
+              "arm",
+              "car",
+              "apple",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the long part of your body used for walking'?",
+            "correct_answer": "leg",
+            "options": [
+              "leg",
+              "tree",
+              "book",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: Touch your ______.",
+            "correct_answer": "arm",
+            "options": [
+              "arm",
+              "run",
+              "jump",
+              "blue"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "part of your body between shoulder and hand"
+          },
+          {
+            "question_text": "Write the missing word: Can you ______?",
+            "correct_answer": "jump",
+            "acceptable_answers": [
+              "jump"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'The long part of your body between shoulder and hand' mean?",
+            "correct_answer": "arm",
+            "options": [
+              "arm",
+              "banana",
+              "car",
+              "blue"
+            ],
+            "hint": "You use this to lift or carry things",
+            "image_emoji": "💪"
+          },
+          {
+            "question_text": "What does 'The long part of your body used for walking' mean?",
+            "correct_answer": "leg",
+            "options": [
+              "leg",
+              "computer",
+              "happy",
+              "tree"
+            ],
+            "hint": "You use this to stand and walk",
+            "image_emoji": "🦵"
+          },
+          {
+            "question_text": "What does 'The part at the end of your arm' mean?",
+            "correct_answer": "hand",
+            "options": [
+              "hand",
+              "dog",
+              "fast",
+              "cloud"
+            ],
+            "hint": "You use this to grab and hold things",
+            "image_emoji": "✋"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have ten ______.",
+            "correct_answer": "fingers",
+            "options": [
+              "fingers",
+              "apples",
+              "cars",
+              "dogs"
+            ],
+            "hint": "You use these to hold things"
+          },
+          {
+            "sentence": "Touch your ______.",
+            "correct_answer": "shoulder",
+            "options": [
+              "shoulder",
+              "window",
+              "table",
+              "cloud"
+            ],
+            "hint": "It's where your arm connects to your body"
+          },
+          {
+            "sentence": "My ______ is small.",
+            "correct_answer": "foot",
+            "options": [
+              "foot",
+              "book",
+              "phone",
+              "chair"
+            ],
+            "hint": "The part at the end of your leg"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "Touch",
+              "your",
+              "foot"
+            ],
+            "correct_sentence": "Touch your foot."
+          },
+          {
+            "words": [
+              "Can",
+              "you",
+              "touch",
+              "your",
+              "shoulder"
+            ],
+            "correct_sentence": "Can you touch your shoulder?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the part at the end of your leg'?",
+            "correct_answer": "foot",
+            "options": [
+              "foot",
+              "finger",
+              "chair",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What are 'the thin parts at the end of your hand'?",
+            "correct_answer": "finger",
+            "options": [
+              "finger",
+              "nose",
+              "apple",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: Touch your ______.",
+            "correct_answer": "foot",
+            "options": [
+              "foot",
+              "jump",
+              "run",
+              "green"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Part used to walk and stand"
+          },
+          {
+            "question_text": "Write the missing word: Can you touch your ______?",
+            "correct_answer": "finger",
+            "acceptable_answers": [
+              "finger"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'the part at the end of your leg' mean?",
+            "correct_answer": "foot",
+            "options": [
+              "foot",
+              "book",
+              "happy",
+              "tree"
+            ],
+            "hint": "You use this to walk",
+            "image_emoji": "🦶"
+          },
+          {
+            "question_text": "What does 'the thin parts at the end of your hand' mean?",
+            "correct_answer": "finger",
+            "options": [
+              "finger",
+              "car",
+              "blue",
+              "run"
+            ],
+            "hint": "You use these to touch and grab things",
+            "image_emoji": "☝️"
+          },
+          {
+            "question_text": "What does 'the top part of your arm where it connects to your body' mean?",
+            "correct_answer": "shoulder",
+            "options": [
+              "shoulder",
+              "cat",
+              "jump",
+              "sun"
+            ],
+            "hint": "Your arm moves here at the body",
+            "image_emoji": "🤷"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "Raise your ______.",
+            "correct_answer": "arm",
+            "options": [
+              "arm",
+              "car",
+              "apple",
+              "tree"
+            ],
+            "hint": "It connects your shoulder and hand"
+          },
+          {
+            "sentence": "Touch your ______.",
+            "correct_answer": "hand",
+            "options": [
+              "hand",
+              "dog",
+              "book",
+              "shoe"
+            ],
+            "hint": "You use it to hold things"
+          },
+          {
+            "sentence": "I have ten ______.",
+            "correct_answer": "fingers",
+            "options": [
+              "fingers",
+              "chairs",
+              "clouds",
+              "animals"
+            ],
+            "hint": "These are on your hand"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "Touch",
+              "your",
+              "hand"
+            ],
+            "correct_sentence": "Touch your hand."
+          },
+          {
+            "words": [
+              "Can",
+              "you",
+              "clap",
+              "your",
+              "hands"
+            ],
+            "correct_sentence": "Can you clap your hands?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the long part of your body between shoulder and hand'?",
+            "correct_answer": "arm",
+            "options": [
+              "arm",
+              "table",
+              "dog",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the top part of your arm where it connects to your body'?",
+            "correct_answer": "shoulder",
+            "options": [
+              "shoulder",
+              "book",
+              "car",
+              "jump"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: Touch your ______.",
+            "correct_answer": "shoulder",
+            "options": [
+              "shoulder",
+              "hat",
+              "ball",
+              "sing"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Body part above your arm"
+          },
+          {
+            "question_text": "Write the missing word: Can you raise your ______?",
+            "correct_answer": "arm",
+            "acceptable_answers": [
+              "arm"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'The long part of your body between shoulder and hand' mean?",
+            "correct_answer": "arm",
+            "options": [
+              "arm",
+              "dog",
+              "book",
+              "happy"
+            ],
+            "hint": "You use this to lift things",
+            "image_emoji": "💪"
+          },
+          {
+            "question_text": "What does 'The part at the end of your arm' mean?",
+            "correct_answer": "hand",
+            "options": [
+              "hand",
+              "car",
+              "blue",
+              "fast"
+            ],
+            "hint": "You use this to hold or touch things",
+            "image_emoji": "✋"
+          },
+          {
+            "question_text": "What does 'The thin parts at the end of your hand' mean?",
+            "correct_answer": "finger",
+            "options": [
+              "finger",
+              "tree",
+              "run",
+              "hot"
+            ],
+            "hint": "You use these to point or pick up small things",
+            "image_emoji": "☝️"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "Raise your ______.",
+            "correct_answer": "arm",
+            "options": [
+              "arm",
+              "cat",
+              "book",
+              "apple"
+            ],
+            "hint": "The long part between shoulder and hand"
+          },
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "legs",
+            "options": [
+              "legs",
+              "shirts",
+              "balls",
+              "trees"
+            ],
+            "hint": "You use these to walk"
+          },
+          {
+            "sentence": "Clap your ______.",
+            "correct_answer": "hands",
+            "options": [
+              "hands",
+              "keys",
+              "shirts",
+              "cars"
+            ],
+            "hint": "At the end of your arm"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "Touch",
+              "your",
+              "arm"
+            ],
+            "correct_sentence": "Touch your arm."
+          },
+          {
+            "words": [
+              "Can",
+              "you",
+              "clap",
+              "your",
+              "hands"
+            ],
+            "correct_sentence": "Can you clap your hands?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the part at the end of your arm you use to hold things'?",
+            "correct_answer": "hand",
+            "options": [
+              "hand",
+              "foot",
+              "head",
+              "eye"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What are 'the thin parts at the end of your hand'?",
+            "correct_answer": "finger",
+            "options": [
+              "finger",
+              "toe",
+              "nose",
+              "ear"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: Touch your ______.",
+            "correct_answer": "hand",
+            "options": [
+              "hand",
+              "ball",
+              "cat",
+              "tree"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Part at end of your arm"
+          },
+          {
+            "question_text": "Write the missing word: Can you clap your ______",
+            "correct_answer": "hands",
+            "acceptable_answers": [
+              "hands"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What is the long part of your body used for walking?",
+            "correct_answer": "leg",
+            "options": [
+              "leg",
+              "book",
+              "sky",
+              "car"
+            ],
+            "hint": "You use it to move and stand",
+            "image_emoji": "🦵"
+          },
+          {
+            "question_text": "What do you call the part at the end of your leg?",
+            "correct_answer": "foot",
+            "options": [
+              "foot",
+              "tree",
+              "pen",
+              "hat"
+            ],
+            "hint": "It touches the ground when you stand",
+            "image_emoji": "🦶"
+          },
+          {
+            "question_text": "What is the top part of your arm where it connects to your body?",
+            "correct_answer": "shoulder",
+            "options": [
+              "shoulder",
+              "apple",
+              "computer",
+              "river"
+            ],
+            "hint": "You can shrug this part",
+            "image_emoji": "🤷"
+          }
+        ]
+      }
+    }
+  },
+  "unit_08": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "That is a ______.",
+            "correct_answer": "cow",
+            "options": [
+              "cow",
+              "apple",
+              "car",
+              "tree"
+            ],
+            "hint": "A large farm animal that gives milk"
+          },
+          {
+            "sentence": "The ______ runs fast.",
+            "correct_answer": "horse",
+            "options": [
+              "horse",
+              "book",
+              "phone",
+              "shoe"
+            ],
+            "hint": "A large animal you can ride"
+          },
+          {
+            "sentence": "The ______ has soft wool.",
+            "correct_answer": "sheep",
+            "options": [
+              "sheep",
+              "table",
+              "clock",
+              "cup"
+            ],
+            "hint": "A farm animal with soft wool"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "That",
+              "is",
+              "a",
+              "cow"
+            ],
+            "correct_sentence": "That is a cow."
+          },
+          {
+            "words": [
+              "The",
+              "sheep",
+              "is",
+              "white"
+            ],
+            "correct_sentence": "The sheep is white."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a large farm animal that gives milk'?",
+            "correct_answer": "cow",
+            "options": [
+              "cow",
+              "car",
+              "blue",
+              "sing"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a large animal you can ride'?",
+            "correct_answer": "horse",
+            "options": [
+              "horse",
+              "tree",
+              "eat",
+              "soft"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: That is a ______.",
+            "correct_answer": "horse",
+            "options": [
+              "horse",
+              "fast",
+              "moo",
+              "duck"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Used to say the animal you can ride"
+          },
+          {
+            "question_text": "Write the missing word: The cow says ______.",
+            "correct_answer": "moo",
+            "acceptable_answers": [
+              "moo"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a large farm animal that gives milk' mean?",
+            "correct_answer": "cow",
+            "options": [
+              "cow",
+              "car",
+              "table",
+              "run"
+            ],
+            "hint": "This animal produces milk",
+            "image_emoji": "🐄"
+          },
+          {
+            "question_text": "What does 'a large animal you can ride' mean?",
+            "correct_answer": "horse",
+            "options": [
+              "horse",
+              "shoe",
+              "river",
+              "jump"
+            ],
+            "hint": "You can ride this animal",
+            "image_emoji": "🐴"
+          },
+          {
+            "question_text": "What does 'a farm animal with soft wool' mean?",
+            "correct_answer": "sheep",
+            "options": [
+              "sheep",
+              "book",
+              "carrot",
+              "fast"
+            ],
+            "hint": "This animal has soft wool",
+            "image_emoji": "🐑"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "That is a ______.",
+            "correct_answer": "pig",
+            "options": [
+              "pig",
+              "run",
+              "blue",
+              "happy"
+            ],
+            "hint": "A pink farm animal"
+          },
+          {
+            "sentence": "The ______ swims in the pond.",
+            "correct_answer": "duck",
+            "options": [
+              "duck",
+              "table",
+              "car",
+              "cloud"
+            ],
+            "hint": "A bird that swims"
+          },
+          {
+            "sentence": "The ______ has eggs.",
+            "correct_answer": "chicken",
+            "options": [
+              "chicken",
+              "book",
+              "shoe",
+              "glass"
+            ],
+            "hint": "A farm bird for eggs"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "That",
+              "is",
+              "a",
+              "pig"
+            ],
+            "correct_sentence": "That is a pig."
+          },
+          {
+            "words": [
+              "The",
+              "duck",
+              "swims"
+            ],
+            "correct_sentence": "The duck swims."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a bird that swims in water'?",
+            "correct_answer": "duck",
+            "options": [
+              "duck",
+              "car",
+              "tree",
+              "book"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a pink farm animal'?",
+            "correct_answer": "pig",
+            "options": [
+              "pig",
+              "chair",
+              "rain",
+              "shoe"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: That is a ______.",
+            "correct_answer": "duck",
+            "options": [
+              "duck",
+              "fast",
+              "happy",
+              "run"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Used for the sentence 'That is a ___.'"
+          },
+          {
+            "question_text": "Write the missing word: The pig is ______.",
+            "correct_answer": "big",
+            "acceptable_answers": [
+              "big"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "A bird that swims in water is called a?",
+            "correct_answer": "duck",
+            "options": [
+              "duck",
+              "table",
+              "car",
+              "book"
+            ],
+            "hint": "It has webbed feet and quacks",
+            "image_emoji": "🦆"
+          },
+          {
+            "question_text": "A pink farm animal is called a?",
+            "correct_answer": "pig",
+            "options": [
+              "pig",
+              "river",
+              "computer",
+              "hat"
+            ],
+            "hint": "It likes to roll in mud",
+            "image_emoji": "🐷"
+          },
+          {
+            "question_text": "A bird kept on farms for eggs is called a?",
+            "correct_answer": "chicken",
+            "options": [
+              "chicken",
+              "phone",
+              "shoe",
+              "lamp"
+            ],
+            "hint": "It says 'cluck cluck'",
+            "image_emoji": "🐔"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "That is a ______.",
+            "correct_answer": "cow",
+            "options": [
+              "cow",
+              "table",
+              "blue",
+              "run"
+            ],
+            "hint": "A large farm animal that gives milk"
+          },
+          {
+            "sentence": "The ______ says oink.",
+            "correct_answer": "pig",
+            "options": [
+              "pig",
+              "car",
+              "shoe",
+              "happy"
+            ],
+            "hint": "A pink farm animal"
+          },
+          {
+            "sentence": "The ______ is white.",
+            "correct_answer": "sheep",
+            "options": [
+              "sheep",
+              "book",
+              "tree",
+              "fast"
+            ],
+            "hint": "A farm animal with soft wool"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "That",
+              "is",
+              "a",
+              "sheep"
+            ],
+            "correct_sentence": "That is a sheep."
+          },
+          {
+            "words": [
+              "The",
+              "cow",
+              "says",
+              "moo"
+            ],
+            "correct_sentence": "The cow says moo."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a large farm animal that gives milk'?",
+            "correct_answer": "cow",
+            "options": [
+              "cow",
+              "car",
+              "tree",
+              "book"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a bird kept on farms for eggs'?",
+            "correct_answer": "chicken",
+            "options": [
+              "chicken",
+              "ball",
+              "shirt",
+              "train"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: That is a ______.",
+            "correct_answer": "cow",
+            "options": [
+              "cow",
+              "fast",
+              "happy",
+              "chair"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "It is a farm animal that gives milk"
+          },
+          {
+            "question_text": "Complete: The chicken ______.",
+            "correct_answer": "has eggs",
+            "acceptable_answers": [
+              "has eggs"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a large farm animal that gives milk' mean?",
+            "correct_answer": "cow",
+            "options": [
+              "cow",
+              "car",
+              "book",
+              "fast"
+            ],
+            "hint": "This animal says 'moo' and gives us milk",
+            "image_emoji": "🐄"
+          },
+          {
+            "question_text": "What does 'a farm animal with soft wool' mean?",
+            "correct_answer": "sheep",
+            "options": [
+              "sheep",
+              "table",
+              "song",
+              "blue"
+            ],
+            "hint": "This animal says 'baa' and gives wool",
+            "image_emoji": "🐑"
+          },
+          {
+            "question_text": "What does 'a pink farm animal' mean?",
+            "correct_answer": "pig",
+            "options": [
+              "pig",
+              "shoe",
+              "tree",
+              "cold"
+            ],
+            "hint": "This animal loves mud and says 'oink'",
+            "image_emoji": "🐷"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "That is a ______.",
+            "correct_answer": "horse",
+            "options": [
+              "horse",
+              "apple",
+              "car",
+              "book"
+            ],
+            "hint": "A animal you can ride"
+          },
+          {
+            "sentence": "The ______ says moo.",
+            "correct_answer": "cow",
+            "options": [
+              "cow",
+              "pen",
+              "shoe",
+              "door"
+            ],
+            "hint": "A farm animal that gives milk"
+          },
+          {
+            "sentence": "The ______ is white.",
+            "correct_answer": "sheep",
+            "options": [
+              "sheep",
+              "tree",
+              "ball",
+              "hat"
+            ],
+            "hint": "A farm animal with soft wool"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "That",
+              "is",
+              "a",
+              "sheep"
+            ],
+            "correct_sentence": "That is a sheep."
+          },
+          {
+            "words": [
+              "The",
+              "cow",
+              "says",
+              "moo"
+            ],
+            "correct_sentence": "The cow says moo."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a farm animal with soft wool'?",
+            "correct_answer": "sheep",
+            "options": [
+              "sheep",
+              "pig",
+              "tree",
+              "car"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a pink farm animal'?",
+            "correct_answer": "pig",
+            "options": [
+              "pig",
+              "sheep",
+              "dog",
+              "book"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete the sentence: That is a ______.",
+            "correct_answer": "pig",
+            "options": [
+              "pig",
+              "run",
+              "blue",
+              "quick"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Used to name a farm animal"
+          },
+          {
+            "question_text": "Write the missing word: The ______ says baa.",
+            "correct_answer": "sheep",
+            "acceptable_answers": [
+              "sheep"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What is a large animal you can ride on a farm?",
+            "correct_answer": "horse",
+            "options": [
+              "horse",
+              "car",
+              "book",
+              "tree"
+            ],
+            "hint": "It has four legs and you can sit on it.",
+            "image_emoji": "🐴"
+          },
+          {
+            "question_text": "What is a bird that swims in water?",
+            "correct_answer": "duck",
+            "options": [
+              "duck",
+              "pen",
+              "shirt",
+              "banana"
+            ],
+            "hint": "It quacks and likes ponds.",
+            "image_emoji": "🦆"
+          },
+          {
+            "question_text": "What is a bird kept on farms for eggs?",
+            "correct_answer": "chicken",
+            "options": [
+              "chicken",
+              "carpet",
+              "phone",
+              "shoe"
+            ],
+            "hint": "It says 'cluck' and lays eggs.",
+            "image_emoji": "🐔"
+          }
+        ]
+      }
+    }
+  },
+  "unit_09": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I like my ______ because it barks.",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "car",
+              "tree",
+              "book"
+            ],
+            "hint": "It is a pet that barks"
+          },
+          {
+            "sentence": "The ______ has long ears and likes carrots.",
+            "correct_answer": "rabbit",
+            "options": [
+              "rabbit",
+              "chair",
+              "apple",
+              "phone"
+            ],
+            "hint": "A small animal with long ears"
+          },
+          {
+            "sentence": "I do not like the ______ in my house.",
+            "correct_answer": "mouse",
+            "options": [
+              "mouse",
+              "dog",
+              "bird",
+              "rabbit"
+            ],
+            "hint": "A small animal some people don’t like indoors"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "like",
+              "birds"
+            ],
+            "correct_sentence": "I like birds."
+          },
+          {
+            "words": [
+              "The",
+              "rabbit",
+              "is",
+              "soft"
+            ],
+            "correct_sentence": "The rabbit is soft."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a common pet animal that barks'?",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "car",
+              "tree",
+              "book"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a small animal with long ears'?",
+            "correct_answer": "rabbit",
+            "options": [
+              "rabbit",
+              "chair",
+              "cloud",
+              "shoe"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I like ______.",
+            "correct_answer": "dogs",
+            "options": [
+              "dogs",
+              "runs",
+              "blue",
+              "books"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A pet animal that barks"
+          },
+          {
+            "question_text": "Write the missing word: I do not like ______.",
+            "correct_answer": "spiders",
+            "acceptable_answers": [
+              "spiders"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a common pet animal that barks' mean?",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "car",
+              "book",
+              "fast"
+            ],
+            "hint": "This animal says 'woof'",
+            "image_emoji": "🐕"
+          },
+          {
+            "question_text": "What does 'a small animal with long ears' mean?",
+            "correct_answer": "rabbit",
+            "options": [
+              "rabbit",
+              "chair",
+              "tree",
+              "blue"
+            ],
+            "hint": "This animal hops and has big ears",
+            "image_emoji": "🐰"
+          },
+          {
+            "question_text": "What does 'an animal with wings that can fly' mean?",
+            "correct_answer": "bird",
+            "options": [
+              "bird",
+              "shoe",
+              "lamp",
+              "sweet"
+            ],
+            "hint": "This animal sings and flies",
+            "image_emoji": "🐦"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "The ______ has a hard shell.",
+            "correct_answer": "turtle",
+            "options": [
+              "turtle",
+              "apple",
+              "car",
+              "shoe"
+            ],
+            "hint": "A slow animal with a shell"
+          },
+          {
+            "sentence": "I like my little ______ in the tank.",
+            "correct_answer": "goldfish",
+            "options": [
+              "goldfish",
+              "table",
+              "cup",
+              "pencil"
+            ],
+            "hint": "A small orange fish"
+          },
+          {
+            "sentence": "The ______ is very small and has a long tail.",
+            "correct_answer": "mouse",
+            "options": [
+              "mouse",
+              "flower",
+              "book",
+              "hat"
+            ],
+            "hint": "A tiny animal that squeaks"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "like",
+              "the",
+              "turtle"
+            ],
+            "correct_sentence": "I like the turtle."
+          },
+          {
+            "words": [
+              "The",
+              "goldfish",
+              "is",
+              "small"
+            ],
+            "correct_sentence": "The goldfish is small."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a very small animal with a long tail'?",
+            "correct_answer": "mouse",
+            "options": [
+              "mouse",
+              "car",
+              "book",
+              "flower"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a slow animal with a hard shell'?",
+            "correct_answer": "turtle",
+            "options": [
+              "turtle",
+              "bird",
+              "computer",
+              "milk"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I like ______.",
+            "correct_answer": "mice",
+            "options": [
+              "mice",
+              "cars",
+              "trees",
+              "runs"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Plural of mouse, an animal"
+          },
+          {
+            "question_text": "Write the missing word: I do not like ______.",
+            "correct_answer": "spiders",
+            "acceptable_answers": [
+              "spiders"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a very small animal with a long tail' mean?",
+            "correct_answer": "mouse",
+            "options": [
+              "mouse",
+              "car",
+              "book",
+              "happy"
+            ],
+            "hint": "This small animal likes cheese 🧀",
+            "image_emoji": "🐭"
+          },
+          {
+            "question_text": "What does 'a slow animal with a hard shell' mean?",
+            "correct_answer": "turtle",
+            "options": [
+              "turtle",
+              "computer",
+              "dress",
+              "jump"
+            ],
+            "hint": "This animal carries its home on its back",
+            "image_emoji": "🐢"
+          },
+          {
+            "question_text": "What does 'a small orange fish kept as a pet' mean?",
+            "correct_answer": "goldfish",
+            "options": [
+              "goldfish",
+              "ball",
+              "chair",
+              "tree"
+            ],
+            "hint": "This pet swims in a bowl or tank",
+            "image_emoji": "🐠"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I like to play with my ______.",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "car",
+              "book",
+              "tree"
+            ],
+            "hint": "A pet that barks"
+          },
+          {
+            "sentence": "The ______ can fly high in the sky.",
+            "correct_answer": "bird",
+            "options": [
+              "bird",
+              "table",
+              "shoe",
+              "phone"
+            ],
+            "hint": "An animal with wings"
+          },
+          {
+            "sentence": "A ______ moves slowly and has a hard shell.",
+            "correct_answer": "turtle",
+            "options": [
+              "turtle",
+              "ball",
+              "hat",
+              "cup"
+            ],
+            "hint": "A slow animal with a shell"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "like",
+              "birds"
+            ],
+            "correct_sentence": "I like birds."
+          },
+          {
+            "words": [
+              "The",
+              "turtle",
+              "is",
+              "slow"
+            ],
+            "correct_sentence": "The turtle is slow."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a common pet animal that barks'?",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "car",
+              "apple",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a small orange fish kept as a pet'?",
+            "correct_answer": "goldfish",
+            "options": [
+              "goldfish",
+              "table",
+              "book",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I like ______.",
+            "correct_answer": "dogs",
+            "options": [
+              "dogs",
+              "books",
+              "chairs",
+              "rivers"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A plural form of a pet that barks"
+          },
+          {
+            "question_text": "Write the missing word: I do not like ______.",
+            "correct_answer": "mice",
+            "acceptable_answers": [
+              "mice"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a common pet animal that barks' mean?",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "car",
+              "red",
+              "chair"
+            ],
+            "hint": "This animal says 'woof'",
+            "image_emoji": "🐕"
+          },
+          {
+            "question_text": "What does 'an animal with wings that can fly' mean?",
+            "correct_answer": "bird",
+            "options": [
+              "bird",
+              "book",
+              "green",
+              "table"
+            ],
+            "hint": "This animal can sing and fly",
+            "image_emoji": "🐦"
+          },
+          {
+            "question_text": "What does 'a slow animal with a hard shell' mean?",
+            "correct_answer": "turtle",
+            "options": [
+              "turtle",
+              "phone",
+              "hot",
+              "chair"
+            ],
+            "hint": "This animal carries its home on its back",
+            "image_emoji": "🐢"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I like my pet ______.",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "car",
+              "apple",
+              "chair"
+            ],
+            "hint": "This animal barks"
+          },
+          {
+            "sentence": "The ______ has long ears.",
+            "correct_answer": "rabbit",
+            "options": [
+              "rabbit",
+              "table",
+              "shoe",
+              "book"
+            ],
+            "hint": "This pet hops"
+          },
+          {
+            "sentence": "I do not like ______ because it is small.",
+            "correct_answer": "mouse",
+            "options": [
+              "mouse",
+              "tree",
+              "phone",
+              "hat"
+            ],
+            "hint": "A tiny animal, often scared of cats"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "like",
+              "dogs"
+            ],
+            "correct_sentence": "I like dogs."
+          },
+          {
+            "words": [
+              "The",
+              "bird",
+              "can",
+              "fly"
+            ],
+            "correct_sentence": "The bird can fly."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'an animal with wings that can fly'?",
+            "correct_answer": "bird",
+            "options": [
+              "bird",
+              "car",
+              "desk",
+              "shoe"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a slow animal with a hard shell'?",
+            "correct_answer": "turtle",
+            "options": [
+              "turtle",
+              "tree",
+              "phone",
+              "shirt"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I like ______.",
+            "correct_answer": "birds",
+            "options": [
+              "birds",
+              "books",
+              "colors",
+              "cars"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Animals that can fly"
+          },
+          {
+            "question_text": "Write the missing word: I do not like ______.",
+            "correct_answer": "spiders",
+            "acceptable_answers": [
+              "spiders"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a small animal with long ears' mean?",
+            "correct_answer": "rabbit",
+            "options": [
+              "rabbit",
+              "guitar",
+              "mountain",
+              "flower"
+            ],
+            "hint": "This animal hops and has long ears",
+            "image_emoji": "🐰"
+          },
+          {
+            "question_text": "What does 'a very small animal with a long tail' mean?",
+            "correct_answer": "mouse",
+            "options": [
+              "mouse",
+              "car",
+              "cloud",
+              "pen"
+            ],
+            "hint": "This tiny animal likes cheese",
+            "image_emoji": "🐭"
+          },
+          {
+            "question_text": "What does 'a small orange fish kept as a pet' mean?",
+            "correct_answer": "goldfish",
+            "options": [
+              "goldfish",
+              "book",
+              "shirt",
+              "tree"
+            ],
+            "hint": "This pet swims in a bowl or aquarium",
+            "image_emoji": "🐠"
+          }
+        ]
+      }
+    }
+  },
+  "unit_10": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have a blue ______.",
+            "correct_answer": "bag",
+            "options": [
+              "bag",
+              "cat",
+              "tree",
+              "chair"
+            ],
+            "hint": "You carry your books in it"
+          },
+          {
+            "sentence": "Do you have a ______ to write with?",
+            "correct_answer": "pen",
+            "options": [
+              "pen",
+              "apple",
+              "door",
+              "shoe"
+            ],
+            "hint": "It uses ink and writes on paper"
+          },
+          {
+            "sentence": "She draws with a yellow ______.",
+            "correct_answer": "pencil",
+            "options": [
+              "pencil",
+              "car",
+              "ball",
+              "hat"
+            ],
+            "hint": "It can be erased and is used for drawing"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "have",
+              "a",
+              "bag"
+            ],
+            "correct_sentence": "I have a bag."
+          },
+          {
+            "words": [
+              "Do",
+              "you",
+              "have",
+              "a",
+              "pen"
+            ],
+            "correct_sentence": "Do you have a pen?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'something you carry your things in'?",
+            "correct_answer": "bag",
+            "options": [
+              "bag",
+              "pen",
+              "chair",
+              "tree"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a tool used for writing with ink'?",
+            "correct_answer": "pen",
+            "options": [
+              "pen",
+              "book",
+              "table",
+              "window"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I have a ______.",
+            "correct_answer": "pen",
+            "options": [
+              "pen",
+              "chair",
+              "dog",
+              "computer"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "You write with this"
+          },
+          {
+            "question_text": "Write the missing word: I have a ______.",
+            "correct_answer": "bag",
+            "acceptable_answers": [
+              "bag"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'Something you carry your things in' mean?",
+            "correct_answer": "bag",
+            "options": [
+              "bag",
+              "cat",
+              "run",
+              "blue"
+            ],
+            "hint": "You use this to hold books and lunch",
+            "image_emoji": "🎒"
+          },
+          {
+            "question_text": "What does 'A tool used for writing with ink' mean?",
+            "correct_answer": "pen",
+            "options": [
+              "pen",
+              "tree",
+              "happy",
+              "jump"
+            ],
+            "hint": "You use this to write letters or notes",
+            "image_emoji": "🖊️"
+          },
+          {
+            "question_text": "What does 'A tool used for writing and drawing' mean?",
+            "correct_answer": "pencil",
+            "options": [
+              "pencil",
+              "car",
+              "cold",
+              "swim"
+            ],
+            "hint": "You can erase your mistakes with this",
+            "image_emoji": "✏️"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have a ______ to erase my mistakes.",
+            "correct_answer": "eraser",
+            "options": [
+              "eraser",
+              "apple",
+              "car",
+              "tree"
+            ],
+            "hint": "This tool removes pencil marks"
+          },
+          {
+            "sentence": "Do you have a ______ to draw a straight line?",
+            "correct_answer": "ruler",
+            "options": [
+              "ruler",
+              "dog",
+              "shoe",
+              "hat"
+            ],
+            "hint": "You use this to draw straight lines"
+          },
+          {
+            "sentence": "I read a ______ every day.",
+            "correct_answer": "book",
+            "options": [
+              "book",
+              "ball",
+              "chair",
+              "window"
+            ],
+            "hint": "Pages with words to read"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "Do",
+              "you",
+              "have",
+              "a",
+              "ruler"
+            ],
+            "correct_sentence": "Do you have a ruler?"
+          },
+          {
+            "words": [
+              "I",
+              "have",
+              "a",
+              "book"
+            ],
+            "correct_sentence": "I have a book."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'pages with words to read'?",
+            "correct_answer": "book",
+            "options": [
+              "book",
+              "eraser",
+              "chair",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a tool used to remove pencil marks'?",
+            "correct_answer": "eraser",
+            "options": [
+              "eraser",
+              "pen",
+              "window",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I have a ______.",
+            "correct_answer": "book",
+            "options": [
+              "book",
+              "chair",
+              "run",
+              "apple"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "It's something you read"
+          },
+          {
+            "question_text": "Write the missing word: Do you have an ______?",
+            "correct_answer": "eraser",
+            "acceptable_answers": [
+              "eraser"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'Pages with words to read' mean?",
+            "correct_answer": "book",
+            "options": [
+              "book",
+              "table",
+              "jump",
+              "happy"
+            ],
+            "hint": "You read this to learn stories.",
+            "image_emoji": "📖"
+          },
+          {
+            "question_text": "What does 'A tool used to remove pencil marks' mean?",
+            "correct_answer": "eraser",
+            "options": [
+              "eraser",
+              "dog",
+              "car",
+              "smile"
+            ],
+            "hint": "You use this when you want to fix a mistake on paper.",
+            "image_emoji": "🧹"
+          },
+          {
+            "question_text": "What does 'A tool used to draw straight lines' mean?",
+            "correct_answer": "ruler",
+            "options": [
+              "ruler",
+              "flower",
+              "run",
+              "yellow"
+            ],
+            "hint": "You measure or draw straight lines with this.",
+            "image_emoji": "📏"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have a yellow ______.",
+            "correct_answer": "bag",
+            "options": [
+              "bag",
+              "chair",
+              "apple",
+              "sun"
+            ],
+            "hint": "You carry your books in it"
+          },
+          {
+            "sentence": "Do you have a blue ______?",
+            "correct_answer": "pencil",
+            "options": [
+              "pencil",
+              "table",
+              "dog",
+              "shoe"
+            ],
+            "hint": "You use it to write or draw"
+          },
+          {
+            "sentence": "I need an ______ to fix my mistake.",
+            "correct_answer": "eraser",
+            "options": [
+              "eraser",
+              "ball",
+              "hat",
+              "car"
+            ],
+            "hint": "It removes pencil marks"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "have",
+              "a",
+              "bag"
+            ],
+            "correct_sentence": "I have a bag."
+          },
+          {
+            "words": [
+              "Do",
+              "you",
+              "have",
+              "a",
+              "pencil"
+            ],
+            "correct_sentence": "Do you have a pencil?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'something you carry your things in'?",
+            "correct_answer": "bag",
+            "options": [
+              "bag",
+              "ruler",
+              "desk",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a tool used to draw straight lines'?",
+            "correct_answer": "ruler",
+            "options": [
+              "ruler",
+              "pen",
+              "apple",
+              "happy"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I have a ______.",
+            "correct_answer": "bag",
+            "options": [
+              "bag",
+              "fast",
+              "blue",
+              "cat"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "You carry your books in it"
+          },
+          {
+            "question_text": "Write the missing word: Do you have a ______?",
+            "correct_answer": "ruler",
+            "acceptable_answers": [
+              "ruler"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'Something you carry your things in' mean?",
+            "correct_answer": "bag",
+            "options": [
+              "bag",
+              "tree",
+              "fast",
+              "blue"
+            ],
+            "hint": "You use it to hold your books and supplies",
+            "image_emoji": "🎒"
+          },
+          {
+            "question_text": "What does 'A tool used for writing and drawing' mean?",
+            "correct_answer": "pencil",
+            "options": [
+              "pencil",
+              "car",
+              "soft",
+              "jump"
+            ],
+            "hint": "You use it to write on paper",
+            "image_emoji": "✏️"
+          },
+          {
+            "question_text": "What does 'A tool used to remove pencil marks' mean?",
+            "correct_answer": "eraser",
+            "options": [
+              "eraser",
+              "dog",
+              "run",
+              "cold"
+            ],
+            "hint": "You use it to fix mistakes on paper",
+            "image_emoji": "🧹"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have a ______ to write.",
+            "correct_answer": "pen",
+            "options": [
+              "pen",
+              "apple",
+              "car",
+              "dog"
+            ],
+            "hint": "You use it to write words"
+          },
+          {
+            "sentence": "My ______ is heavy with books.",
+            "correct_answer": "bag",
+            "options": [
+              "bag",
+              "shoe",
+              "tree",
+              "ball"
+            ],
+            "hint": "You carry this on your back"
+          },
+          {
+            "sentence": "I draw pictures with a ______.",
+            "correct_answer": "pencil",
+            "options": [
+              "pencil",
+              "hat",
+              "chair",
+              "clock"
+            ],
+            "hint": "You use this to draw and it can be erased"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "have",
+              "a",
+              "pen"
+            ],
+            "correct_sentence": "I have a pen."
+          },
+          {
+            "words": [
+              "Do",
+              "you",
+              "have",
+              "a",
+              "bag"
+            ],
+            "correct_sentence": "Do you have a bag?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a tool used for writing and drawing'?",
+            "correct_answer": "pencil",
+            "options": [
+              "pencil",
+              "eraser",
+              "chair",
+              "apple"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a tool used to remove pencil marks'?",
+            "correct_answer": "eraser",
+            "options": [
+              "eraser",
+              "ruler",
+              "book",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I have a ______.",
+            "correct_answer": "pencil",
+            "options": [
+              "pencil",
+              "dog",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "You write or draw with it"
+          },
+          {
+            "question_text": "Write the missing word: Do you have a ______?",
+            "correct_answer": "pencil",
+            "acceptable_answers": [
+              "pencil"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'A tool used for writing with ink' mean?",
+            "correct_answer": "pen",
+            "options": [
+              "pen",
+              "tree",
+              "dog",
+              "happy"
+            ],
+            "hint": "You use this to write on paper",
+            "image_emoji": "🖊️"
+          },
+          {
+            "question_text": "What does 'Pages with words to read' mean?",
+            "correct_answer": "book",
+            "options": [
+              "book",
+              "car",
+              "phone",
+              "big"
+            ],
+            "hint": "You read it for stories or information",
+            "image_emoji": "📖"
+          },
+          {
+            "question_text": "What does 'A tool used to draw straight lines' mean?",
+            "correct_answer": "ruler",
+            "options": [
+              "ruler",
+              "chair",
+              "apple",
+              "cold"
+            ],
+            "hint": "You use this to measure or draw lines",
+            "image_emoji": "📏"
+          }
+        ]
+      }
+    }
+  },
+  "unit_11": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I am ______ today!",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "table",
+              "blue",
+              "jump"
+            ],
+            "hint": "Feeling good and pleased"
+          },
+          {
+            "sentence": "She is ______ because she lost her toy.",
+            "correct_answer": "sad",
+            "options": [
+              "sad",
+              "car",
+              "fast",
+              "apple"
+            ],
+            "hint": "Feeling unhappy or upset"
+          },
+          {
+            "sentence": "He is ______ when he can't find his book.",
+            "correct_answer": "angry",
+            "options": [
+              "angry",
+              "yellow",
+              "run",
+              "chair"
+            ],
+            "hint": "Feeling very upset or mad"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "am",
+              "happy"
+            ],
+            "correct_sentence": "I am happy."
+          },
+          {
+            "words": [
+              "Are",
+              "you",
+              "sad"
+            ],
+            "correct_sentence": "Are you sad?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What word means 'feeling good and pleased'?",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "apple",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What word means 'feeling unhappy or upset'?",
+            "correct_answer": "sad",
+            "options": [
+              "sad",
+              "table",
+              "fast",
+              "green"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete the sentence: I am ______.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "eat",
+              "blue",
+              "apple"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A feeling when you smile"
+          },
+          {
+            "question_text": "Write the missing word: I am ______.",
+            "correct_answer": "sad",
+            "acceptable_answers": [
+              "sad"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'Feeling good and pleased' mean?",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "chair",
+              "run",
+              "blue"
+            ],
+            "hint": "You smile when you feel this way",
+            "image_emoji": "😊"
+          },
+          {
+            "question_text": "What does 'Feeling unhappy or upset' mean?",
+            "correct_answer": "sad",
+            "options": [
+              "sad",
+              "cat",
+              "jump",
+              "yellow"
+            ],
+            "hint": "You might cry when feeling this way",
+            "image_emoji": "😢"
+          },
+          {
+            "question_text": "What does 'Feeling very upset or mad' mean?",
+            "correct_answer": "angry",
+            "options": [
+              "angry",
+              "table",
+              "sing",
+              "green"
+            ],
+            "hint": "You might shout or frown when feeling this way",
+            "image_emoji": "😠"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I am very ______ because I want to eat.",
+            "correct_answer": "hungry",
+            "options": [
+              "hungry",
+              "blue",
+              "fast",
+              "tall"
+            ],
+            "hint": "You feel this when your stomach rumbles"
+          },
+          {
+            "sentence": "She is ______ because it is late and she wants to sleep.",
+            "correct_answer": "sleepy",
+            "options": [
+              "sleepy",
+              "cold",
+              "loud",
+              "happy"
+            ],
+            "hint": "You feel this when you want to rest your eyes"
+          },
+          {
+            "sentence": "The dog is ______; it hears a strange noise.",
+            "correct_answer": "scared",
+            "options": [
+              "scared",
+              "hungry",
+              "bright",
+              "slow"
+            ],
+            "hint": "You feel this when you are afraid"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "am",
+              "hungry"
+            ],
+            "correct_sentence": "I am hungry."
+          },
+          {
+            "words": [
+              "Are",
+              "you",
+              "sleepy"
+            ],
+            "correct_sentence": "Are you sleepy?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'feeling like you want to sleep'?",
+            "correct_answer": "sleepy",
+            "options": [
+              "sleepy",
+              "hungry",
+              "happy",
+              "cold"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'feeling like you want to eat'?",
+            "correct_answer": "hungry",
+            "options": [
+              "hungry",
+              "thirsty",
+              "tired",
+              "angry"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "sleepy",
+            "options": [
+              "sleepy",
+              "run",
+              "blue",
+              "table"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "You feel this when you want to sleep"
+          },
+          {
+            "question_text": "Write the missing word: I am ______.",
+            "correct_answer": "hungry",
+            "acceptable_answers": [
+              "hungry"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'Feeling like you want to sleep' mean?",
+            "correct_answer": "sleepy",
+            "options": [
+              "sleepy",
+              "blue",
+              "fast",
+              "chair"
+            ],
+            "hint": "You feel this when it's bedtime",
+            "image_emoji": "😴"
+          },
+          {
+            "question_text": "What does 'Feeling like you want to eat' mean?",
+            "correct_answer": "hungry",
+            "options": [
+              "hungry",
+              "loud",
+              "round",
+              "yellow"
+            ],
+            "hint": "You feel this before a meal",
+            "image_emoji": "🤤"
+          },
+          {
+            "question_text": "What does 'Feeling afraid' mean?",
+            "correct_answer": "scared",
+            "options": [
+              "scared",
+              "quiet",
+              "big",
+              "shiny"
+            ],
+            "hint": "You feel this when something frightens you",
+            "image_emoji": "😨"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I am feeling very ______ today.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "chair",
+              "blue",
+              "run"
+            ],
+            "hint": "Feeling good and pleased"
+          },
+          {
+            "sentence": "She is ______ because she lost her toy.",
+            "correct_answer": "angry",
+            "options": [
+              "angry",
+              "apple",
+              "book",
+              "car"
+            ],
+            "hint": "Feeling very upset or mad"
+          },
+          {
+            "sentence": "Are you ______? Let's eat some food.",
+            "correct_answer": "hungry",
+            "options": [
+              "hungry",
+              "green",
+              "jump",
+              "dog"
+            ],
+            "hint": "Feeling like you want to eat"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "am",
+              "happy"
+            ],
+            "correct_sentence": "I am happy."
+          },
+          {
+            "words": [
+              "Are",
+              "you",
+              "hungry"
+            ],
+            "correct_sentence": "Are you hungry?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What does 'happy' mean?",
+            "correct_answer": "feeling good and pleased",
+            "options": [
+              "feeling good and pleased",
+              "feeling afraid",
+              "a type of food",
+              "a place to sleep"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What does 'scared' mean?",
+            "correct_answer": "feeling afraid",
+            "options": [
+              "feeling afraid",
+              "feeling tired",
+              "a kind of animal",
+              "a color"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "run",
+              "blue",
+              "cat"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A feeling when you feel good"
+          },
+          {
+            "question_text": "Write the missing word: Are you ______?",
+            "correct_answer": "happy",
+            "acceptable_answers": [
+              "happy"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What word means 'feeling good and pleased'?",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "table",
+              "run",
+              "blue"
+            ],
+            "hint": "You smile when you feel this way",
+            "image_emoji": "😊"
+          },
+          {
+            "question_text": "What word means 'feeling very upset or mad'?",
+            "correct_answer": "angry",
+            "options": [
+              "angry",
+              "car",
+              "sing",
+              "green"
+            ],
+            "hint": "You might frown or shout when feeling this",
+            "image_emoji": "😠"
+          },
+          {
+            "question_text": "What word means 'feeling like you want to eat'?",
+            "correct_answer": "hungry",
+            "options": [
+              "hungry",
+              "book",
+              "jump",
+              "yellow"
+            ],
+            "hint": "You feel this before mealtime",
+            "image_emoji": "🤤"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I am feeling very ______ today.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "chair",
+              "pizza",
+              "car"
+            ],
+            "hint": "Feeling good and pleased"
+          },
+          {
+            "sentence": "She is ______ because her toy broke.",
+            "correct_answer": "sad",
+            "options": [
+              "sad",
+              "jump",
+              "blue",
+              "table"
+            ],
+            "hint": "Feeling unhappy or upset"
+          },
+          {
+            "sentence": "He is ______ when he loses a game.",
+            "correct_answer": "angry",
+            "options": [
+              "angry",
+              "soft",
+              "eat",
+              "fast"
+            ],
+            "hint": "Feeling very upset or mad"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "am",
+              "happy"
+            ],
+            "correct_sentence": "I am happy."
+          },
+          {
+            "words": [
+              "Are",
+              "you",
+              "sad"
+            ],
+            "correct_sentence": "Are you sad?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'feeling very upset or mad'?",
+            "correct_answer": "angry",
+            "options": [
+              "angry",
+              "blue",
+              "run",
+              "apple"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'feeling like you want to eat'?",
+            "correct_answer": "hungry",
+            "options": [
+              "hungry",
+              "fast",
+              "chair",
+              "cold"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "quickly",
+              "dog",
+              "red"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A feeling when you smile"
+          },
+          {
+            "question_text": "Write the missing word: Are you ______?",
+            "correct_answer": "angry",
+            "acceptable_answers": [
+              "angry",
+              "hungry"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'feeling unhappy or upset' mean?",
+            "correct_answer": "sad",
+            "options": [
+              "sad",
+              "table",
+              "run",
+              "yellow"
+            ],
+            "hint": "You feel this when something bad happens",
+            "image_emoji": "😢"
+          },
+          {
+            "question_text": "What does 'feeling like you want to sleep' mean?",
+            "correct_answer": "sleepy",
+            "options": [
+              "sleepy",
+              "book",
+              "quick",
+              "green"
+            ],
+            "hint": "You feel this when it is bedtime",
+            "image_emoji": "😴"
+          },
+          {
+            "question_text": "What does 'feeling afraid' mean?",
+            "correct_answer": "scared",
+            "options": [
+              "scared",
+              "car",
+              "jump",
+              "red"
+            ],
+            "hint": "You feel this when you see something frightening",
+            "image_emoji": "😨"
+          }
+        ]
+      }
+    }
+  },
+  "unit_12": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I say ______ when I meet my friend.",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "family",
+              "happy",
+              "dog"
+            ],
+            "hint": "A greeting word"
+          },
+          {
+            "sentence": "This is my ______.",
+            "correct_answer": "family",
+            "options": [
+              "family",
+              "red",
+              "book",
+              "hello"
+            ],
+            "hint": "A group of related people"
+          },
+          {
+            "sentence": "The apple is ______.",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "dog",
+              "happy",
+              "family"
+            ],
+            "hint": "Color of an apple"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "am",
+              "happy"
+            ],
+            "correct_sentence": "I am happy."
+          },
+          {
+            "words": [
+              "This",
+              "is",
+              "my",
+              "dog"
+            ],
+            "correct_sentence": "This is my dog."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a greeting when you meet someone'?",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "chair",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a group of related people'?",
+            "correct_answer": "family",
+            "options": [
+              "family",
+              "car",
+              "jump",
+              "red"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "table",
+              "dog",
+              "green"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "An emotion"
+          },
+          {
+            "question_text": "Write the missing word: This is my ______.",
+            "correct_answer": "family",
+            "acceptable_answers": [
+              "family"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What word means 'A greeting when you meet someone'?",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "run",
+              "dog",
+              "book"
+            ],
+            "hint": "You say this when you meet someone",
+            "image_emoji": "👋"
+          },
+          {
+            "question_text": "What word means 'A group of related people'?",
+            "correct_answer": "family",
+            "options": [
+              "family",
+              "car",
+              "jump",
+              "sky"
+            ],
+            "hint": "They live and love together",
+            "image_emoji": "👨‍👩‍👧‍👦"
+          },
+          {
+            "question_text": "What word means 'The color of an apple or fire'?",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "cold",
+              "fast",
+              "table"
+            ],
+            "hint": "It is a color you see in apples",
+            "image_emoji": "🔴"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "This is my ______.",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "happy",
+              "book",
+              "red"
+            ],
+            "hint": "A pet animal that barks"
+          },
+          {
+            "sentence": "I am very ______ today.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "dog",
+              "family",
+              "hello"
+            ],
+            "hint": "Feeling good and pleased"
+          },
+          {
+            "sentence": "I like to read a ______.",
+            "correct_answer": "book",
+            "options": [
+              "book",
+              "dog",
+              "red",
+              "happy"
+            ],
+            "hint": "Pages with words to read"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "am",
+              "happy"
+            ],
+            "correct_sentence": "I am happy."
+          },
+          {
+            "words": [
+              "This",
+              "is",
+              "my",
+              "dog"
+            ],
+            "correct_sentence": "This is my dog."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a common pet animal that barks'?",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "cat",
+              "car",
+              "tree"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What means 'feeling good and pleased'?",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "sad",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "dog",
+              "blue",
+              "jump"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "How you feel when you smile"
+          },
+          {
+            "question_text": "Write the missing word: This is my ______.",
+            "correct_answer": "dog",
+            "acceptable_answers": [
+              "dog"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a common pet animal that barks' mean?",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "book",
+              "chair",
+              "happy"
+            ],
+            "hint": "It is a pet and says 'woof'",
+            "image_emoji": "🐕"
+          },
+          {
+            "question_text": "What does 'feeling good and pleased' mean?",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "dog",
+              "table",
+              "run"
+            ],
+            "hint": "When you smile a lot",
+            "image_emoji": "😊"
+          },
+          {
+            "question_text": "What does 'pages with words to read' mean?",
+            "correct_answer": "book",
+            "options": [
+              "book",
+              "hat",
+              "jump",
+              "happy"
+            ],
+            "hint": "You read it",
+            "image_emoji": "📖"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "Say ______ when you meet a new friend.",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "run",
+              "blue",
+              "dog"
+            ],
+            "hint": "A greeting word"
+          },
+          {
+            "sentence": "The apple is ______.",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "happy",
+              "jump",
+              "book"
+            ],
+            "hint": "The color of fire"
+          },
+          {
+            "sentence": "I am ______ today because I got a new toy.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "green",
+              "talk",
+              "cat"
+            ],
+            "hint": "Feeling good and pleased"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "am",
+              "happy"
+            ],
+            "correct_sentence": "I am happy."
+          },
+          {
+            "words": [
+              "This",
+              "is",
+              "my",
+              "dog"
+            ],
+            "correct_sentence": "This is my dog."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a greeting when you meet someone'?",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "chair",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'pages with words to read'?",
+            "correct_answer": "book",
+            "options": [
+              "book",
+              "table",
+              "jump",
+              "red"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "apple",
+              "walk",
+              "yellow"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Feeling good and smile"
+          },
+          {
+            "question_text": "Write the missing word: This is my ______.",
+            "correct_answer": "dog",
+            "acceptable_answers": [
+              "dog"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'A greeting when you meet someone' mean?",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "table",
+              "run",
+              "yellow"
+            ],
+            "hint": "You say this when you see someone",
+            "image_emoji": "👋"
+          },
+          {
+            "question_text": "What does 'The color of an apple or fire' mean?",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "dog",
+              "cold",
+              "smile"
+            ],
+            "hint": "This color is bright and warm",
+            "image_emoji": "🔴"
+          },
+          {
+            "question_text": "What does 'Feeling good and pleased' mean?",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "tree",
+              "run",
+              "loud"
+            ],
+            "hint": "You feel this when you smile",
+            "image_emoji": "😊"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "______! How are you today?",
+            "correct_answer": "Hello",
+            "options": [
+              "Hello",
+              "Family",
+              "Red",
+              "Dog"
+            ],
+            "hint": "A greeting word"
+          },
+          {
+            "sentence": "This is my ______.",
+            "correct_answer": "family",
+            "options": [
+              "family",
+              "happy",
+              "book",
+              "red"
+            ],
+            "hint": "People related to you"
+          },
+          {
+            "sentence": "The apple is ______.",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "dog",
+              "hello",
+              "family"
+            ],
+            "hint": "The color of a fire"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "am",
+              "happy"
+            ],
+            "correct_sentence": "I am happy."
+          },
+          {
+            "words": [
+              "This",
+              "is",
+              "my",
+              "dog"
+            ],
+            "correct_sentence": "This is my dog."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the color of an apple or fire'?",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "dog",
+              "slow",
+              "book"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'feeling good and pleased'?",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "cat",
+              "jump",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "apple",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Use this word to say your feeling when you feel good"
+          },
+          {
+            "question_text": "Write the missing word: This is my ______.",
+            "correct_answer": "family",
+            "acceptable_answers": [
+              "family"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a group of related people' mean?",
+            "correct_answer": "family",
+            "options": [
+              "family",
+              "table",
+              "run",
+              "blue"
+            ],
+            "hint": "This is made up of parents and children",
+            "image_emoji": "👨‍👩‍👧‍👦"
+          },
+          {
+            "question_text": "What does 'a common pet animal that barks' mean?",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "car",
+              "happy",
+              "tree"
+            ],
+            "hint": "This animal says 'woof'",
+            "image_emoji": "🐕"
+          },
+          {
+            "question_text": "What does 'pages with words to read' mean?",
+            "correct_answer": "book",
+            "options": [
+              "book",
+              "red",
+              "jump",
+              "shoe"
+            ],
+            "hint": "You turn pages to read it",
+            "image_emoji": "📖"
+          }
+        ]
+      }
+    }
+  }
+}

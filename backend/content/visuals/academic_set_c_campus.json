@@ -1,0 +1,383 @@
+{
+  "name": "academic_set_c_campus",
+  "type": "campus_map",
+  "created_at": "2025-12-31T13:33:16.385150",
+  "png_file": "academic_set_c_campus.png",
+  "data": {
+    "type": "campus_map",
+    "width": 900,
+    "height": 700,
+    "title": "Westbrook University - South Campus",
+    "subtitle": "Map for Questions 1-7",
+    "showCompass": true,
+    "showScale": true,
+    "showKey": true,
+    "background": "#e8f4e8",
+    "roads": [
+      {
+        "id": "main_road",
+        "type": "main",
+        "points": [
+          [
+            50,
+            600
+          ],
+          [
+            850,
+            600
+          ]
+        ],
+        "name": "University Avenue",
+        "width": 25
+      },
+      {
+        "id": "campus_drive",
+        "type": "main",
+        "points": [
+          [
+            450,
+            600
+          ],
+          [
+            450,
+            100
+          ]
+        ],
+        "name": "Campus Drive",
+        "width": 20
+      },
+      {
+        "id": "east_path",
+        "type": "secondary",
+        "points": [
+          [
+            450,
+            350
+          ],
+          [
+            750,
+            350
+          ]
+        ],
+        "name": "",
+        "width": 12
+      },
+      {
+        "id": "west_path",
+        "type": "secondary",
+        "points": [
+          [
+            450,
+            350
+          ],
+          [
+            150,
+            350
+          ]
+        ],
+        "name": "",
+        "width": 12
+      },
+      {
+        "id": "north_loop",
+        "type": "path",
+        "points": [
+          [
+            200,
+            200
+          ],
+          [
+            350,
+            120
+          ],
+          [
+            550,
+            120
+          ],
+          [
+            700,
+            200
+          ]
+        ],
+        "name": "",
+        "width": 8
+      }
+    ],
+    "walkways": [
+      {
+        "from": [
+          450,
+          500
+        ],
+        "to": [
+          300,
+          450
+        ]
+      },
+      {
+        "from": [
+          450,
+          500
+        ],
+        "to": [
+          600,
+          450
+        ]
+      },
+      {
+        "from": [
+          300,
+          350
+        ],
+        "to": [
+          300,
+          250
+        ]
+      },
+      {
+        "from": [
+          600,
+          350
+        ],
+        "to": [
+          600,
+          250
+        ]
+      },
+      {
+        "from": [
+          450,
+          250
+        ],
+        "to": [
+          350,
+          180
+        ]
+      },
+      {
+        "from": [
+          450,
+          250
+        ],
+        "to": [
+          550,
+          180
+        ]
+      }
+    ],
+    "buildings": [
+      {
+        "id": "A",
+        "x": 380,
+        "y": 480,
+        "width": 140,
+        "height": 80,
+        "name": "Main Library",
+        "style": "classic",
+        "color": "#d4a574",
+        "given": false
+      },
+      {
+        "id": "B",
+        "x": 180,
+        "y": 400,
+        "width": 100,
+        "height": 70,
+        "name": "Science Block",
+        "style": "modern",
+        "color": "#87CEEB",
+        "given": false
+      },
+      {
+        "id": "C",
+        "x": 620,
+        "y": 400,
+        "width": 100,
+        "height": 70,
+        "name": "Engineering",
+        "style": "tower",
+        "color": "#b8860b",
+        "given": false
+      },
+      {
+        "id": "D",
+        "x": 220,
+        "y": 200,
+        "width": 120,
+        "height": 60,
+        "name": "Student Union",
+        "style": "classic",
+        "color": "#f4a460",
+        "given": false
+      },
+      {
+        "id": "E",
+        "x": 560,
+        "y": 200,
+        "width": 120,
+        "height": 60,
+        "name": "Admin Building",
+        "style": "classic",
+        "color": "#deb887",
+        "given": false
+      },
+      {
+        "id": "F",
+        "x": 380,
+        "y": 100,
+        "width": 140,
+        "height": 70,
+        "name": "Sports Centre",
+        "style": "dome",
+        "color": "#20B2AA",
+        "given": false
+      },
+      {
+        "id": "G",
+        "x": 720,
+        "y": 280,
+        "width": 80,
+        "height": 100,
+        "name": "Lecture Hall",
+        "style": "classic",
+        "color": "#d4a574",
+        "given": false
+      }
+    ],
+    "givenBuildings": [
+      {
+        "x": 80,
+        "y": 550,
+        "width": 80,
+        "height": 50,
+        "name": "Main Gate",
+        "style": "gate"
+      },
+      {
+        "x": 750,
+        "y": 550,
+        "width": 80,
+        "height": 50,
+        "name": "East Gate",
+        "style": "gate"
+      },
+      {
+        "x": 400,
+        "y": 300,
+        "width": 100,
+        "height": 60,
+        "name": "Central Plaza",
+        "style": "plaza"
+      }
+    ],
+    "greenAreas": [
+      {
+        "type": "lawn",
+        "x": 100,
+        "y": 250,
+        "width": 80,
+        "height": 100,
+        "name": "West Lawn"
+      },
+      {
+        "type": "lawn",
+        "x": 720,
+        "y": 400,
+        "width": 70,
+        "height": 80,
+        "name": "East Garden"
+      },
+      {
+        "type": "park",
+        "x": 500,
+        "y": 280,
+        "width": 50,
+        "height": 50
+      }
+    ],
+    "water": [
+      {
+        "type": "lake",
+        "x": 100,
+        "y": 120,
+        "width": 80,
+        "height": 50,
+        "name": "Campus Lake"
+      }
+    ],
+    "trees": [
+      [
+        150,
+        180
+      ],
+      [
+        170,
+        200
+      ],
+      [
+        130,
+        220
+      ],
+      [
+        750,
+        180
+      ],
+      [
+        770,
+        200
+      ],
+      [
+        730,
+        220
+      ],
+      [
+        320,
+        280
+      ],
+      [
+        340,
+        300
+      ],
+      [
+        580,
+        280
+      ],
+      [
+        560,
+        300
+      ],
+      [
+        200,
+        500
+      ],
+      [
+        220,
+        520
+      ],
+      [
+        680,
+        500
+      ],
+      [
+        700,
+        520
+      ]
+    ],
+    "parkingAreas": [
+      {
+        "x": 80,
+        "y": 450,
+        "width": 60,
+        "height": 80,
+        "name": "P1"
+      },
+      {
+        "x": 760,
+        "y": 450,
+        "width": 60,
+        "height": 80,
+        "name": "P2"
+      }
+    ]
+  }
+}

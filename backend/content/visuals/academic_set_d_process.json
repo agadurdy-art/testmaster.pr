@@ -1,0 +1,236 @@
+{
+  "name": "academic_set_d_process",
+  "type": "technical_diagram",
+  "created_at": "2025-12-31T22:49:11.688746",
+  "png_file": "academic_set_d_process.png",
+  "data": {
+    "type": "technical_diagram",
+    "width": 900,
+    "height": 600,
+    "title": "Coffee Bean Processing System",
+    "subtitle": "Label the parts numbered 1-8",
+    "showLabels": true,
+    "containers": [
+      {
+        "id": "1",
+        "type": "hopper",
+        "x": 100,
+        "y": 80,
+        "width": 80,
+        "height": 100,
+        "label": "Input Hopper"
+      },
+      {
+        "id": "2",
+        "type": "tank",
+        "x": 250,
+        "y": 150,
+        "width": 100,
+        "height": 120,
+        "label": "Washing Tank"
+      },
+      {
+        "id": "3",
+        "type": "cylinder",
+        "x": 420,
+        "y": 100,
+        "width": 120,
+        "height": 80,
+        "label": "Drying Drum"
+      },
+      {
+        "id": "4",
+        "type": "chamber",
+        "x": 600,
+        "y": 80,
+        "width": 100,
+        "height": 140,
+        "label": "Roasting Chamber"
+      },
+      {
+        "id": "5",
+        "type": "grinder",
+        "x": 750,
+        "y": 150,
+        "width": 80,
+        "height": 100,
+        "label": "Grinding Mill"
+      }
+    ],
+    "pipes": [
+      {
+        "from": [
+          140,
+          180
+        ],
+        "to": [
+          250,
+          200
+        ],
+        "type": "solid",
+        "flow": true
+      },
+      {
+        "from": [
+          350,
+          200
+        ],
+        "to": [
+          420,
+          140
+        ],
+        "type": "solid",
+        "flow": true
+      },
+      {
+        "from": [
+          540,
+          140
+        ],
+        "to": [
+          600,
+          150
+        ],
+        "type": "solid",
+        "flow": true
+      },
+      {
+        "from": [
+          700,
+          150
+        ],
+        "to": [
+          750,
+          180
+        ],
+        "type": "solid",
+        "flow": true
+      }
+    ],
+    "valves": [
+      {
+        "x": 195,
+        "y": 190,
+        "type": "gate"
+      },
+      {
+        "x": 385,
+        "y": 170,
+        "type": "control"
+      },
+      {
+        "x": 570,
+        "y": 145,
+        "type": "gate"
+      }
+    ],
+    "motors": [
+      {
+        "x": 480,
+        "y": 180,
+        "size": 30,
+        "label": "6"
+      },
+      {
+        "x": 790,
+        "y": 250,
+        "size": 30,
+        "label": "7"
+      }
+    ],
+    "sensors": [
+      {
+        "x": 300,
+        "y": 280,
+        "type": "temperature",
+        "label": "8"
+      }
+    ],
+    "conveyors": [
+      {
+        "x": 100,
+        "y": 350,
+        "width": 700,
+        "height": 30,
+        "direction": "right"
+      }
+    ],
+    "outputBins": [
+      {
+        "x": 150,
+        "y": 400,
+        "width": 60,
+        "height": 80,
+        "label": "Waste"
+      },
+      {
+        "x": 350,
+        "y": 400,
+        "width": 80,
+        "height": 80,
+        "label": "Grade A"
+      },
+      {
+        "x": 550,
+        "y": 400,
+        "width": 80,
+        "height": 80,
+        "label": "Grade B"
+      },
+      {
+        "x": 750,
+        "y": 400,
+        "width": 60,
+        "height": 80,
+        "label": "Final Product"
+      }
+    ],
+    "arrows": [
+      {
+        "from": [
+          180,
+          420
+        ],
+        "to": [
+          180,
+          380
+        ],
+        "label": "reject"
+      },
+      {
+        "from": [
+          390,
+          420
+        ],
+        "to": [
+          390,
+          380
+        ],
+        "label": "premium"
+      },
+      {
+        "from": [
+          590,
+          420
+        ],
+        "to": [
+          590,
+          380
+        ],
+        "label": "standard"
+      }
+    ],
+    "annotations": [
+      {
+        "x": 100,
+        "y": 50,
+        "text": "Raw beans input"
+      },
+      {
+        "x": 750,
+        "y": 50,
+        "text": "Ground coffee output"
+      }
+    ]
+  }
+}

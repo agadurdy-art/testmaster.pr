@@ -1,0 +1,477 @@
+{
+  "stage": "stage_2",
+  "stage_id": "stage_2_starters",
+  "stage_title": "Starters (A1)",
+  "units": [
+    {
+      "unit_id": "stage_2_unit_08",
+      "unit_num": 8,
+      "title": "My House",
+      "subtitle": "Rooms and objects at home",
+      "phonics_focus": [
+        "House words",
+        "Question forms"
+      ],
+      "grammar_focus": [
+        "Is there a...?",
+        "Are there any...?",
+        "There is / There are"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_2_unit_08_lesson_01",
+          "title": "Rooms",
+          "topic": "Describing the different parts of a house",
+          "context": "Describing the different parts of a house.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about describing the different parts of a house?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "kitchen",
+                  "ipa": "",
+                  "definition": "The room where we make food.",
+                  "example": "Mom cooks in the kitchen.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/kitchen.png"
+                },
+                {
+                  "word": "bathroom",
+                  "ipa": "",
+                  "definition": "A room to wash and use the toilet.",
+                  "example": "The bathroom is clean.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/bathroom.png"
+                },
+                {
+                  "word": "bedroom",
+                  "ipa": "",
+                  "definition": "A room where you sleep.",
+                  "example": "My bedroom is tidy.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/bedroom.png"
+                },
+                {
+                  "word": "living room",
+                  "ipa": "",
+                  "definition": "A room to sit and relax.",
+                  "example": "We play in the living room.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/living_room.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Rooms",
+              "text": "A short story about describing the different parts of a house.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Is there a...? / Are there any...? / There is / There are",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about describing the different parts of a house.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about describing the different parts of a house.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about describing the different parts of a house?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_2_unit_08_lesson_02",
+          "title": "Furniture",
+          "topic": "Finding objects while cleaning a room",
+          "context": "Finding objects while cleaning a room.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about finding objects while cleaning a room?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "mirror",
+                  "ipa": "",
+                  "definition": "Glass that reflects images.",
+                  "example": "Look in the mirror.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/mirror.png"
+                },
+                {
+                  "word": "clock",
+                  "ipa": "",
+                  "definition": "A tool that tells time.",
+                  "example": "The clock shows time.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/clock.png"
+                },
+                {
+                  "word": "phone",
+                  "ipa": "",
+                  "definition": "A tool to talk to people far away.",
+                  "example": "I call my friend on the phone.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_phone.png"
+                },
+                {
+                  "word": "stairs",
+                  "ipa": "",
+                  "definition": "Steps to go up or down.",
+                  "example": "Go up the stairs.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_stairs.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Furniture",
+              "text": "A short story about finding objects while cleaning a room.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Is there a...? / Are there any...? / There is / There are",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about finding objects while cleaning a room.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about finding objects while cleaning a room.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about finding objects while cleaning a room?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_2_unit_08_lesson_03",
+          "title": "Existence",
+          "topic": "Describing what is inside a dream house",
+          "context": "Describing what is inside a dream house.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about describing what is inside a dream house?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "there is",
+                  "ipa": "",
+                  "definition": "Words to show one thing exists.",
+                  "example": "There is a car.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_there_is.png"
+                },
+                {
+                  "word": "there are",
+                  "ipa": "",
+                  "definition": "Words to show more than one thing exists.",
+                  "example": "There are two cats.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_there_are.png"
+                },
+                {
+                  "word": "many",
+                  "ipa": "",
+                  "definition": "A lot of things.",
+                  "example": "There are many apples.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/many.png"
+                },
+                {
+                  "word": "some",
+                  "ipa": "",
+                  "definition": "A small amount or part of something.",
+                  "example": "I want some cake.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_some.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Existence",
+              "text": "A short story about describing what is inside a dream house.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Is there a...? / Are there any...? / There is / There are",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about describing what is inside a dream house.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about describing what is inside a dream house.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about describing what is inside a dream house?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_2_unit_08_lesson_04",
+          "title": "Unit Review",
+          "topic": "Matching furniture to the correct rooms",
+          "context": "Matching furniture to the correct rooms.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about matching furniture to the correct rooms?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "kitchen",
+                "bathroom",
+                "bedroom",
+                "living room",
+                "mirror",
+                "clock",
+                "phone",
+                "stairs",
+                "there is",
+                "there are",
+                "many",
+                "some"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Unit Review",
+              "text": "A short story about matching furniture to the correct rooms.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "rule_pattern": "Is there a...? / Are there any...? / There is / There are",
+              "explanation": "",
+              "examples": [],
+              "patterns": [
+                "Is there a...?",
+                "Are there any...?",
+                "There is / There are"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about matching furniture to the correct rooms.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about matching furniture to the correct rooms.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about matching furniture to the correct rooms?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

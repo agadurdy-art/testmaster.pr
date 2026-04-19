@@ -1,0 +1,463 @@
+{
+  "stage": "stage_2",
+  "stage_id": "stage_2_starters",
+  "stage_title": "Starters (A1)",
+  "units": [
+    {
+      "unit_id": "stage_2_unit_03",
+      "unit_num": 3,
+      "title": "What's in Your Classroom?",
+      "subtitle": "Classroom objects and positions",
+      "phonics_focus": [
+        "Object words",
+        "Position words"
+      ],
+      "grammar_focus": [
+        "Prepositions of Place (in, on, under, next to, behind)"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_2_unit_03_lesson_01",
+          "title": "Objects",
+          "topic": "A tour of the school computer room",
+          "context": "A tour of the school computer room.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about a tour of the school computer room?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "desk",
+                  "ipa": "",
+                  "definition": "A table you use for work or study.",
+                  "example": "My books are on the desk.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/desk.png"
+                },
+                {
+                  "word": "chair",
+                  "ipa": "",
+                  "definition": "A piece of furniture to sit on.",
+                  "example": "I sit on the chair.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/chair.png"
+                },
+                {
+                  "word": "board",
+                  "ipa": "",
+                  "definition": "A flat surface for writing or drawing.",
+                  "example": "The board is white.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/board.png"
+                },
+                {
+                  "word": "computer",
+                  "ipa": "",
+                  "definition": "A machine for playing games and more.",
+                  "example": "The computer is new.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/computer.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Objects",
+              "text": "A short story about a tour of the school computer room.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Prepositions of Place (in, on, under, next to, behind)",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about a tour of the school computer room.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about a tour of the school computer room.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about a tour of the school computer room?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_2_unit_03_lesson_02",
+          "title": "Positions 1",
+          "topic": "Finding a lost pencil in the classroom",
+          "context": "Finding a lost pencil in the classroom.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about finding a lost pencil in the classroom?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "in",
+                  "ipa": "",
+                  "definition": "When something is inside.",
+                  "example": "The cat is in the box.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/in.png"
+                },
+                {
+                  "word": "on",
+                  "ipa": "",
+                  "definition": "Touching and supported by something.",
+                  "example": "The book is on the table.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/on.png"
+                },
+                {
+                  "word": "under",
+                  "ipa": "",
+                  "definition": "Below something.",
+                  "example": "The cat is under the table.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/under.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Positions 1",
+              "text": "A short story about finding a lost pencil in the classroom.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Prepositions of Place (in, on, under, next to, behind)",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about finding a lost pencil in the classroom.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about finding a lost pencil in the classroom.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about finding a lost pencil in the classroom?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_2_unit_03_lesson_03",
+          "title": "Positions 2",
+          "topic": "Describing where pictures are hanging",
+          "context": "Describing where pictures are hanging in the room.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about describing where pictures are hanging?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "behind",
+                  "ipa": "",
+                  "definition": "At the back of something.",
+                  "example": "The ball is behind the chair.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/behind.png"
+                },
+                {
+                  "word": "next to",
+                  "ipa": "",
+                  "definition": "Very close or beside something.",
+                  "example": "The cat is next to me.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/next_to.png"
+                },
+                {
+                  "word": "wall",
+                  "ipa": "",
+                  "definition": "A side of a room.",
+                  "example": "The wall is white.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_wall.png"
+                },
+                {
+                  "word": "floor",
+                  "ipa": "",
+                  "definition": "The bottom part of a room.",
+                  "example": "The toy is on the floor.",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Positions 2",
+              "text": "A short story about describing where pictures are hanging.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Prepositions of Place (in, on, under, next to, behind)",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about describing where pictures are hanging.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about describing where pictures are hanging.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about describing where pictures are hanging?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_2_unit_03_lesson_04",
+          "title": "Unit Review",
+          "topic": "Find the object challenge using prepositions",
+          "context": "Find the object challenge using prepositions.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about find the object challenge using prepositions?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "desk",
+                "chair",
+                "board",
+                "computer",
+                "in",
+                "on",
+                "under",
+                "behind",
+                "next to",
+                "wall",
+                "floor"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Unit Review",
+              "text": "A short story about find the object challenge using prepositions.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "rule_pattern": "Prepositions of Place (in, on, under, next to, behind)",
+              "explanation": "",
+              "examples": [],
+              "patterns": [
+                "Prepositions of Place (in, on, under, next to, behind)"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about find the object challenge using prepositions.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about find the object challenge using prepositions.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about find the object challenge using prepositions?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

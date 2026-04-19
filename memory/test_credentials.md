@@ -1,0 +1,10 @@
+# Test Credentials
+- Email: tester@test.com
+- Password: tester123
+- Name: Tester
+- User ID: fc113759-b707-47a1-8705-b010368e0555
+
+## Admin Accounts
+- Email: aga.durdy@gmail.com (master plan)
+- Email: admin@ieltsace.com (master plan)
+- Email: stemhousebenluc@gmail.com (master plan)

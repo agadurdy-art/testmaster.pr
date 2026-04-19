@@ -1,0 +1,1784 @@
+{
+  "stage": 1,
+  "stage_title": "Foundations",
+  "units": [
+    {
+      "unit_id": "stage_1_unit_12",
+      "unit_num": 12,
+      "title": "Review & Final Gate",
+      "subtitle": "Cumulative Review & Stage 1 Certification",
+      "phonics_focus": [],
+      "grammar_focus": [
+        "All Stage 1 Grammar",
+        "am/is/are",
+        "have/has",
+        "like",
+        "in/on",
+        "a/an"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_1_unit_12_lesson_01",
+          "title": "Phonics & Numbers Review",
+          "topic": "Phonics A-Z, Greetings, and Numbers 1-10",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://www.youtube.com/watch?v=75p-N9YKqNo",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What letter does the word 'banana' start with?",
+                  "correct_answer": "B",
+                  "options": [
+                    "B",
+                    "N",
+                    "A",
+                    "D"
+                  ],
+                  "image_emoji": "🍌",
+                  "hint": "It's the same as the beginning of 'brown'."
+                },
+                {
+                  "question_text": "Which letter sounds like 'sss', like in 'snake'?",
+                  "correct_answer": "S",
+                  "options": [
+                    "S",
+                    "C",
+                    "T",
+                    "D"
+                  ],
+                  "image_emoji": "🐍",
+                  "hint": "Sounds like the air coming out of a balloon."
+                },
+                {
+                  "question_text": "What comes before the number 4?",
+                  "correct_answer": "3",
+                  "options": [
+                    "2",
+                    "3",
+                    "5",
+                    "6"
+                  ],
+                  "image_emoji": "3️⃣",
+                  "hint": "One less than four."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "apple",
+                "egg",
+                "igloo",
+                "octopus",
+                "umbrella",
+                "zebra",
+                "one",
+                "ten",
+                "hello",
+                "morning"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "sun",
+                      "emoji": "☀️",
+                      "distractors": [
+                        {
+                          "word": "moon",
+                          "emoji": "🌙"
+                        },
+                        {
+                          "word": "star",
+                          "emoji": "⭐"
+                        },
+                        {
+                          "word": "cloud",
+                          "emoji": "☁️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "apple",
+                      "emoji": "🍎",
+                      "distractors": [
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "grape",
+                          "emoji": "🍇"
+                        },
+                        {
+                          "word": "pear",
+                          "emoji": "🍐"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "dog",
+                      "emoji": "🐕",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "moon",
+                      "emoji": "🌙",
+                      "distractors": [
+                        {
+                          "word": "sun",
+                          "emoji": "☀️"
+                        },
+                        {
+                          "word": "star",
+                          "emoji": "⭐"
+                        },
+                        {
+                          "word": "cloud",
+                          "emoji": "☁️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "banana",
+                      "emoji": "🍌",
+                      "distractors": [
+                        {
+                          "word": "apple",
+                          "emoji": "🍎"
+                        },
+                        {
+                          "word": "grape",
+                          "emoji": "🍇"
+                        },
+                        {
+                          "word": "pear",
+                          "emoji": "🍐"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱"
+                    },
+                    {
+                      "word": "sun",
+                      "emoji": "☀️"
+                    },
+                    {
+                      "word": "apple",
+                      "emoji": "🍎"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 9
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Anna's Picnic",
+              "text": "Hello! I am Anna. I like apples. I have ten red apples in my bag. The sun is big and bright.",
+              "questions": [
+                {
+                  "question": "What color are Anna's apples?",
+                  "answer": "red",
+                  "options": [
+                    "red",
+                    "yellow",
+                    "green"
+                  ]
+                },
+                {
+                  "question": "Where are the apples?",
+                  "answer": "in the bag",
+                  "options": [
+                    "in the bag",
+                    "on the table",
+                    "under the tree"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "I am...",
+                "I have...",
+                "A/An usage"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "happy"
+                      ],
+                      "correctSentence": "He is happy"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "has",
+                        "a",
+                        "dog"
+                      ],
+                      "correctSentence": "She has a dog"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I ___ five books.",
+                      "answer": "have",
+                      "options": [
+                        "have",
+                        "has",
+                        "is",
+                        "am"
+                      ]
+                    },
+                    {
+                      "sentence": "It ___ a sunny day.",
+                      "answer": "is",
+                      "options": [
+                        "are",
+                        "is",
+                        "am",
+                        "has"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She like apples.",
+                      "errorWord": "like",
+                      "correctWord": "likes"
+                    },
+                    {
+                      "sentence": "They is happy.",
+                      "errorWord": "is",
+                      "correctWord": "are"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 7
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello! My name is Ben. I have a big green kite. My brother likes to fly it in the park.",
+              "questions": [
+                {
+                  "question": "What color is Ben's kite?",
+                  "answer": "green",
+                  "options": [
+                    "green",
+                    "red",
+                    "yellow"
+                  ]
+                },
+                {
+                  "question": "Where does Ben's brother like to fly the kite?",
+                  "answer": "in the park",
+                  "options": [
+                    "in the park",
+                    "in the house",
+                    "in the garden"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: I have a red apple.",
+              "expected_text": "i have a red apple",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "I ___ Ben. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "am",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "Which emoji shows 'teacher'? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "👩‍🏫",
+                  "options": [
+                    "👩‍🏫",
+                    "🍎",
+                    "👋",
+                    "🙋"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'Hello' is a greeting.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "How many letters are there in the word 'apple'?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "5",
+                  "options": [
+                    "4",
+                    "5",
+                    "6",
+                    "7"
+                  ]
+                },
+                {
+                  "question_text": "Fill in: The cat is ___ the table. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "on",
+                  "options": [
+                    "in",
+                    "on",
+                    "under",
+                    "near"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Alphabet Song",
+              "url": "https://www.youtube.com/watch?v=75p-N9YKqNo",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_1_unit_12_lesson_02",
+          "title": "My Family & My Body",
+          "topic": "Family, Body Parts, and Personal Descriptions",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/family_video",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Who loves to read you bedtime stories?",
+                  "correct_answer": "mom",
+                  "options": [
+                    "mom",
+                    "sister",
+                    "teacher",
+                    "neighbor"
+                  ],
+                  "image_emoji": "📚",
+                  "hint": "She tucks you in at night and reads with love."
+                },
+                {
+                  "question_text": "What helps you see things far away?",
+                  "correct_answer": "eyes",
+                  "options": [
+                    "eyes",
+                    "ears",
+                    "feet",
+                    "nose"
+                  ],
+                  "image_emoji": "👁",
+                  "hint": "You blink them every day."
+                },
+                {
+                  "question_text": "Who makes your favorite pancake breakfast?",
+                  "correct_answer": "grandma",
+                  "options": [
+                    "grandma",
+                    "dad",
+                    "cousin",
+                    "friend"
+                  ],
+                  "image_emoji": "🍳",
+                  "hint": "She loves baking and giving hugs."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "mother",
+                "father",
+                "sister",
+                "grandpa",
+                "eye",
+                "nose",
+                "hand",
+                "leg",
+                "hair",
+                "small",
+                "big"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "apple",
+                      "emoji": "🍎",
+                      "distractors": [
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "grape",
+                          "emoji": "🍇"
+                        },
+                        {
+                          "word": "pear",
+                          "emoji": "🍐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "car",
+                      "emoji": "🚗",
+                      "distractors": [
+                        {
+                          "word": "bus",
+                          "emoji": "🚌"
+                        },
+                        {
+                          "word": "bike",
+                          "emoji": "🚲"
+                        },
+                        {
+                          "word": "train",
+                          "emoji": "🚂"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "dog",
+                      "emoji": "🐕",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐇"
+                        },
+                        {
+                          "word": "cow",
+                          "emoji": "🐄"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "banana",
+                      "emoji": "🍌",
+                      "distractors": [
+                        {
+                          "word": "apple",
+                          "emoji": "🍎"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🍊"
+                        },
+                        {
+                          "word": "strawberry",
+                          "emoji": "🍓"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "bus",
+                      "emoji": "🚌",
+                      "distractors": [
+                        {
+                          "word": "car",
+                          "emoji": "🚗"
+                        },
+                        {
+                          "word": "train",
+                          "emoji": "🚂"
+                        },
+                        {
+                          "word": "plane",
+                          "emoji": "✈️"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱"
+                    },
+                    {
+                      "word": "apple",
+                      "emoji": "🍎"
+                    },
+                    {
+                      "word": "bus",
+                      "emoji": "🚌"
+                    },
+                    {
+                      "word": "dog",
+                      "emoji": "🐕"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "My Family",
+              "text": "This is my family. I have a brother. His name is Max. Max has a big smile and short hair. He likes to play in the park with me.",
+              "questions": [
+                {
+                  "question": "What does Max like to do?",
+                  "answer": "play in the park",
+                  "options": [
+                    "play in the park",
+                    "read books",
+                    "watch TV"
+                  ]
+                },
+                {
+                  "question": "Does Max have short hair?",
+                  "answer": "yes",
+                  "options": [
+                    "yes",
+                    "no"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "This is my...",
+                "He/She has...",
+                "Adjectives (Big/Small)"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "cats"
+                      ],
+                      "correctSentence": "I like cats"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "has",
+                        "a",
+                        "book"
+                      ],
+                      "correctSentence": "She has a book"
+                    },
+                    {
+                      "words": [
+                        "We",
+                        "are",
+                        "happy"
+                      ],
+                      "correctSentence": "We are happy"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "He ___ a cat.",
+                      "answer": "has",
+                      "options": [
+                        "has",
+                        "have",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ playing.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "has"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ an apple.",
+                      "answer": "have",
+                      "options": [
+                        "has",
+                        "is",
+                        "am",
+                        "have"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "He have a cat.",
+                      "errorWord": "have",
+                      "correctWord": "has"
+                    },
+                    {
+                      "sentence": "She are happy.",
+                      "errorWord": "are",
+                      "correctWord": "is"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "My brother has big brown eyes and a friendly smile. He loves to play with his toy car and build tall towers with blocks.",
+              "questions": [
+                {
+                  "question": "What does he like to play with?",
+                  "answer": "toy car",
+                  "options": [
+                    "toy car",
+                    "doll",
+                    "puzzle"
+                  ]
+                },
+                {
+                  "question": "What are the color of his eyes?",
+                  "answer": "brown",
+                  "options": [
+                    "brown",
+                    "blue",
+                    "green"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: 'I have a nose and two ears.'",
+              "expected_text": "i have a nose and two ears",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "I ___ a sister. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "have",
+                  "options": [
+                    "have",
+                    "am",
+                    "is",
+                    "are"
+                  ]
+                },
+                {
+                  "question_text": "Which emoji shows 'brother'? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "👦",
+                  "options": [
+                    "👦",
+                    "👧",
+                    "👶",
+                    "👩"
+                  ]
+                },
+                {
+                  "question_text": "My mom is ___ the kitchen. (Reading comprehension)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "in",
+                  "options": [
+                    "on",
+                    "in",
+                    "at",
+                    "by"
+                  ]
+                },
+                {
+                  "question_text": "True or False: Your nose helps you smell.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Which part of the body do you use to kick a ball?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "foot",
+                  "options": [
+                    "hand",
+                    "foot",
+                    "ear",
+                    "eye"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_1_unit_12_lesson_03",
+          "title": "Animals & School Review",
+          "topic": "Farm/Pets, School Bag, Colors, and Emotions",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/farm-animals-video",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What color is the cat in the video?",
+                  "correct_answer": "orange",
+                  "options": [
+                    "orange",
+                    "blue",
+                    "purple",
+                    "green"
+                  ],
+                  "image_emoji": "🐈",
+                  "hint": "This color is also the color of a carrot."
+                },
+                {
+                  "question_text": "Who is carrying a school bag in the video?",
+                  "correct_answer": "the boy",
+                  "options": [
+                    "the boy",
+                    "the farmer",
+                    "the horse",
+                    "the cat"
+                  ],
+                  "image_emoji": "💻",
+                  "hint": "This person is small and likes to play."
+                },
+                {
+                  "question_text": "How does the dog feel in the video?",
+                  "correct_answer": "happy",
+                  "options": [
+                    "happy",
+                    "sad",
+                    "angry",
+                    "scared"
+                  ],
+                  "image_emoji": "😊",
+                  "hint": "The dog is wagging its tail."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "cow",
+                "pig",
+                "duck",
+                "dog",
+                "cat",
+                "rabbit",
+                "bag",
+                "book",
+                "pencil",
+                "happy",
+                "hungry",
+                "thirsty",
+                "red",
+                "green"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "dog",
+                      "emoji": "🐕",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "horse",
+                          "emoji": "🐴"
+                        },
+                        {
+                          "word": "mouse",
+                          "emoji": "🐭"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "fish",
+                      "emoji": "🐟",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐇"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "bird",
+                      "emoji": "🐦",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        },
+                        {
+                          "word": "sheep",
+                          "emoji": "🐑"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "horse",
+                      "emoji": "🐴",
+                      "distractors": [
+                        {
+                          "word": "cow",
+                          "emoji": "🐄"
+                        },
+                        {
+                          "word": "sheep",
+                          "emoji": "🐑"
+                        },
+                        {
+                          "word": "chicken",
+                          "emoji": "🐔"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "mouse",
+                      "emoji": "🐭",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        },
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐇"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "rabbit",
+                      "emoji": "🐇",
+                      "distractors": [
+                        {
+                          "word": "mouse",
+                          "emoji": "🐭"
+                        },
+                        {
+                          "word": "cow",
+                          "emoji": "🐄"
+                        },
+                        {
+                          "word": "chicken",
+                          "emoji": "🐔"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "cow",
+                      "emoji": "🐄",
+                      "distractors": [
+                        {
+                          "word": "sheep",
+                          "emoji": "🐑"
+                        },
+                        {
+                          "word": "horse",
+                          "emoji": "🐴"
+                        },
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐇"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱"
+                    },
+                    {
+                      "word": "dog",
+                      "emoji": "🐕"
+                    },
+                    {
+                      "word": "fish",
+                      "emoji": "🐟"
+                    },
+                    {
+                      "word": "bird",
+                      "emoji": "🐦"
+                    },
+                    {
+                      "word": "horse",
+                      "emoji": "🐴"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 12
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Fun on the Farm",
+              "text": "I am on the farm. I see a brown horse and a yellow chicken. I have a blue school bag. There is an orange in my bag. I like the big red barn!",
+              "questions": [
+                {
+                  "question": "What color is the chicken?",
+                  "answer": "yellow",
+                  "options": [
+                    "yellow",
+                    "brown",
+                    "red"
+                  ]
+                },
+                {
+                  "question": "What is in the school bag?",
+                  "answer": "an orange",
+                  "options": [
+                    "an orange",
+                    "an apple",
+                    "a banana"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "I like...",
+                "Do you like...?",
+                "Prepositions (On/In)"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "happy"
+                      ],
+                      "correctSentence": "She is happy"
+                    },
+                    {
+                      "words": [
+                        "The",
+                        "dog",
+                        "is",
+                        "big"
+                      ],
+                      "correctSentence": "The dog is big"
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "pizza"
+                      ],
+                      "correctSentence": "I like pizza"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "They ___ playing.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "has",
+                        "have"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ a bike.",
+                      "answer": "has",
+                      "options": [
+                        "have",
+                        "has",
+                        "is",
+                        "are"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "They is running.",
+                      "errorWord": "is",
+                      "correctWord": "are"
+                    },
+                    {
+                      "sentence": "We likes apples.",
+                      "errorWord": "likes",
+                      "correctWord": "like"
+                    },
+                    {
+                      "sentence": "He have two dogs.",
+                      "errorWord": "have",
+                      "correctWord": "has"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "The farmer is feeding the animals. He has a big blue school bag with apples inside. The cat likes to sit near him while the dog runs around happily.",
+              "questions": [
+                {
+                  "question": "What color is the farmer's school bag?",
+                  "answer": "blue",
+                  "options": [
+                    "red",
+                    "blue",
+                    "green"
+                  ]
+                },
+                {
+                  "question": "What does the cat like to do?",
+                  "answer": "sit near the farmer",
+                  "options": [
+                    "sit near the farmer",
+                    "run around",
+                    "jump over the fence"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: What animal do you like? (Use 'I like ...')",
+              "expected_text": "i like cats",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "I ___ a dog. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "have",
+                  "options": [
+                    "am",
+                    "is",
+                    "have",
+                    "are"
+                  ]
+                },
+                {
+                  "question_text": "Which emoji shows 'school'? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "🏫",
+                  "options": [
+                    "🏫",
+                    "🐮",
+                    "🐶",
+                    "🎒"
+                  ]
+                },
+                {
+                  "question_text": "True or False: The farmer is always sad. (Reading comprehension question)",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "What color was the farmer's bag in the story?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "blue",
+                  "options": [
+                    "red",
+                    "yellow",
+                    "blue",
+                    "green"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_1_unit_12_lesson_04",
+          "title": "Stage 1 Final Gate",
+          "topic": "Comprehensive Final Exam - Stage 1 Certification",
+          "is_review": true,
+          "is_final_gate": true,
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/final_gate_video",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What do you open with a key?",
+                  "correct_answer": "A lock",
+                  "options": [
+                    "A lock",
+                    "A drawer",
+                    "A window",
+                    "A box"
+                  ],
+                  "image_emoji": "🔒",
+                  "hint": "It's something that keeps things safe."
+                },
+                {
+                  "question_text": "What do you use a doorknob for?",
+                  "correct_answer": "Open a door",
+                  "options": [
+                    "Open a door",
+                    "Cook food",
+                    "Write a letter",
+                    "Turn on a light"
+                  ],
+                  "image_emoji": "🚪",
+                  "hint": "You turn it to get inside."
+                },
+                {
+                  "question_text": "What can be locked with a key?",
+                  "correct_answer": "A safe",
+                  "options": [
+                    "A safe",
+                    "A table",
+                    "A lamp",
+                    "A phone"
+                  ],
+                  "image_emoji": "🔑",
+                  "hint": "It is used to store valuable things."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "hello",
+                "mother",
+                "father",
+                "eye",
+                "hand",
+                "red",
+                "blue",
+                "green",
+                "one",
+                "ten",
+                "cat",
+                "dog",
+                "cow",
+                "bag",
+                "book",
+                "pen",
+                "happy",
+                "sad",
+                "hungry",
+                "sleepy"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "apple",
+                      "emoji": "🍎",
+                      "distractors": [
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "grape",
+                          "emoji": "🍇"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🍊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "car",
+                      "emoji": "🚗",
+                      "distractors": [
+                        {
+                          "word": "bus",
+                          "emoji": "🚌"
+                        },
+                        {
+                          "word": "train",
+                          "emoji": "🚆"
+                        },
+                        {
+                          "word": "bicycle",
+                          "emoji": "🚲"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "dog",
+                      "emoji": "🐕",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "banana",
+                      "emoji": "🍌",
+                      "distractors": [
+                        {
+                          "word": "apple",
+                          "emoji": "🍎"
+                        },
+                        {
+                          "word": "grape",
+                          "emoji": "🍇"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🍊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "bus",
+                      "emoji": "🚌",
+                      "distractors": [
+                        {
+                          "word": "car",
+                          "emoji": "🚗"
+                        },
+                        {
+                          "word": "train",
+                          "emoji": "🚆"
+                        },
+                        {
+                          "word": "bicycle",
+                          "emoji": "🚲"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱"
+                    },
+                    {
+                      "word": "apple",
+                      "emoji": "🍎"
+                    },
+                    {
+                      "word": "car",
+                      "emoji": "🚗"
+                    },
+                    {
+                      "word": "dog",
+                      "emoji": "🐕"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Mia's Day",
+              "text": "Hi! I am Mia. I have a big yellow ball. I like to play in the park. My ball is on the grass. I have a friend. His name is Tom. We are happy!",
+              "questions": [
+                {
+                  "question": "What is the color of Mia's ball?",
+                  "answer": "yellow",
+                  "options": [
+                    "yellow",
+                    "red",
+                    "blue"
+                  ]
+                },
+                {
+                  "question": "Where does Mia like to play?",
+                  "answer": "in the park",
+                  "options": [
+                    "in the park",
+                    "at the beach",
+                    "in the school"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "am/is/are",
+                "have/has",
+                "like",
+                "in/on",
+                "a/an"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "cats"
+                      ],
+                      "correctSentence": "I like cats"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "has",
+                        "a",
+                        "dog"
+                      ],
+                      "correctSentence": "She has a dog"
+                    },
+                    {
+                      "words": [
+                        "We",
+                        "are",
+                        "happy"
+                      ],
+                      "correctSentence": "We are happy"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "He ___ a cat.",
+                      "answer": "has",
+                      "options": [
+                        "has",
+                        "have",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ friends.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "have"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ a red ball.",
+                      "answer": "have",
+                      "options": [
+                        "have",
+                        "has",
+                        "am",
+                        "are"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "He have a cat.",
+                      "errorWord": "have",
+                      "correctWord": "has"
+                    },
+                    {
+                      "sentence": "She are playing.",
+                      "errorWord": "are",
+                      "correctWord": "is"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hi, I'm Lily. I have a yellow cat. His name is Whiskers and he likes to sleep in my room.",
+              "questions": [
+                {
+                  "question": "What is the color of Lily's cat?",
+                  "answer": "Yellow",
+                  "options": [
+                    "Yellow",
+                    "Black",
+                    "Orange"
+                  ]
+                },
+                {
+                  "question": "Where does Whiskers like to sleep?",
+                  "answer": "In Lily's room",
+                  "options": [
+                    "In Lily's room",
+                    "In the garden",
+                    "On the sofa"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: Tell me your name, how you feel today, and what toy you like.",
+              "expected_text": "hello my name is emma i am excited i like my teddy bear",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "I ___ Ben. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "am",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "Which emoji shows 'teacher'? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "👩‍🏫",
+                  "options": [
+                    "👩‍🏫",
+                    "🍎",
+                    "👋",
+                    "🙋"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'Hello' is a greeting. (Reading comprehension question)",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Max has a dog. His dog likes to play ___. (Reading comprehension question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "in the park",
+                  "options": [
+                    "in the park",
+                    "at home",
+                    "on the beach",
+                    "in the garden"
+                  ]
+                },
+                {
+                  "question_text": "Which one is a place to sit? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "chair",
+                  "options": [
+                    "chair",
+                    "apple",
+                    "book",
+                    "pen"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Celebration!",
+              "url": "https://www.youtube.com/watch?v=75p-N9YKqNo",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        }
+      ]
+    }
+  ],
+  "ai_enriched": true,
+  "enriched_at": "2026-02-17T18:09:40.053476+00:00"
+}

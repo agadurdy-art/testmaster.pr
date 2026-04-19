@@ -1,0 +1,1847 @@
+{
+  "stage": 1,
+  "stage_title": "Foundations",
+  "units": [
+    {
+      "unit_id": "stage_1_unit_04",
+      "unit_num": 4,
+      "title": "Colors Everywhere",
+      "subtitle": "Her Yer Renk — Phonics P-T",
+      "phonics_focus": [
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T"
+      ],
+      "grammar_focus": [
+        "The [Object] is [Color].",
+        "I like [Color].",
+        "Is it [Color]?"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_1_unit_04_lesson_01",
+          "title": "Red, Blue and Pink",
+          "topic": "Basic colors and sounds of P and Q",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://www.youtube.com/watch?v=jYAWf8Y91hA",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What color do you see on a ripe strawberry?",
+                  "correct_answer": "red",
+                  "options": [
+                    "red",
+                    "yellow",
+                    "purple",
+                    "white"
+                  ],
+                  "image_emoji": "🍓",
+                  "hint": "It's the color of love."
+                },
+                {
+                  "question_text": "What color goes well with the night sky?",
+                  "correct_answer": "black",
+                  "options": [
+                    "black",
+                    "orange",
+                    "yellow",
+                    "green"
+                  ],
+                  "image_emoji": "🌙",
+                  "hint": "It's the color of a shadow."
+                },
+                {
+                  "question_text": "What is the beginning sound of the word 'quick'?",
+                  "correct_answer": "/kw/",
+                  "options": [
+                    "/kw/",
+                    "/g/",
+                    "/h/",
+                    "/t/"
+                  ],
+                  "image_emoji": "⏱️",
+                  "hint": "Think of a fast rabbit!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "red",
+                  "ipa": "/rɛd/",
+                  "definition": "Color of fire trucks.",
+                  "example": "The apple is red.",
+                  "image_emoji": "🍎",
+                  "image_url": "/static/vocab_images/red.png"
+                },
+                {
+                  "word": "blue",
+                  "ipa": "/bluː/",
+                  "definition": "Color of the sky.",
+                  "example": "The sky is blue.",
+                  "image_emoji": "🌅",
+                  "image_url": "/static/vocab_images/blue.png"
+                },
+                {
+                  "word": "pink",
+                  "ipa": "/pɪŋk/",
+                  "definition": "Light red color.",
+                  "example": "I like pink flowers.",
+                  "image_emoji": "🌸",
+                  "image_url": "/static/vocab_images/pink.png"
+                },
+                {
+                  "word": "pig",
+                  "ipa": "/pɪɡ/",
+                  "definition": "Farm animal that oinks.",
+                  "example": "The pig is pink.",
+                  "image_emoji": "🐷",
+                  "image_url": "/static/vocab_images/gpt_pig.png"
+                },
+                {
+                  "word": "queen",
+                  "ipa": "/kwiːn/",
+                  "definition": "A royal lady.",
+                  "example": "Is the queen wearing blue?",
+                  "image_emoji": "👑",
+                  "image_url": "/static/vocab_images/gpt_queen.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "red",
+                      "emoji": "🔴",
+                      "distractors": [
+                        {
+                          "word": "blue",
+                          "emoji": "🔵"
+                        },
+                        {
+                          "word": "pink",
+                          "emoji": "🩷"
+                        },
+                        {
+                          "word": "pig",
+                          "emoji": "🐷"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "blue",
+                      "emoji": "🔵",
+                      "distractors": [
+                        {
+                          "word": "red",
+                          "emoji": "🔴"
+                        },
+                        {
+                          "word": "pink",
+                          "emoji": "🩷"
+                        },
+                        {
+                          "word": "queen",
+                          "emoji": "👸"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "pink",
+                      "emoji": "🩷",
+                      "distractors": [
+                        {
+                          "word": "red",
+                          "emoji": "🔴"
+                        },
+                        {
+                          "word": "blue",
+                          "emoji": "🔵"
+                        },
+                        {
+                          "word": "pig",
+                          "emoji": "🐷"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "pig",
+                      "emoji": "🐷",
+                      "distractors": [
+                        {
+                          "word": "red",
+                          "emoji": "🔴"
+                        },
+                        {
+                          "word": "queen",
+                          "emoji": "👸"
+                        },
+                        {
+                          "word": "blue",
+                          "emoji": "🔵"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "queen",
+                      "emoji": "👸",
+                      "distractors": [
+                        {
+                          "word": "red",
+                          "emoji": "🔴"
+                        },
+                        {
+                          "word": "pink",
+                          "emoji": "🩷"
+                        },
+                        {
+                          "word": "pig",
+                          "emoji": "🐷"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "blue",
+                      "emoji": "🔵",
+                      "distractors": [
+                        {
+                          "word": "pink",
+                          "emoji": "🩷"
+                        },
+                        {
+                          "word": "pig",
+                          "emoji": "🐷"
+                        },
+                        {
+                          "word": "queen",
+                          "emoji": "👸"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "red",
+                      "emoji": "🔴"
+                    },
+                    {
+                      "word": "blue",
+                      "emoji": "🔵"
+                    },
+                    {
+                      "word": "pink",
+                      "emoji": "🩷"
+                    },
+                    {
+                      "word": "pig",
+                      "emoji": "🐷"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "The Colorful Garden",
+              "text": "Look at the garden! The pig is pink. The sky is blue. The queen has a red dress. I like blue.",
+              "questions": [
+                {
+                  "question": "What color is the sky?",
+                  "answer": "blue",
+                  "options": [
+                    "pink",
+                    "red",
+                    "blue"
+                  ]
+                },
+                {
+                  "question": "What is the color of the queen's dress?",
+                  "answer": "red",
+                  "options": [
+                    "red",
+                    "blue",
+                    "pink"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I like ___s.",
+              "explanation": "Use this to say what color you like.",
+              "examples": [
+                "I like red apples.",
+                "I like blue skies.",
+                "I like pink flowers."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "The",
+                        "sky",
+                        "is",
+                        "blue"
+                      ],
+                      "correctSentence": "The sky is blue."
+                    },
+                    {
+                      "words": [
+                        "The",
+                        "apple",
+                        "red",
+                        "is"
+                      ],
+                      "correctSentence": "The apple is red."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "The sun ___ yellow.",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "are",
+                        "were",
+                        "was"
+                      ]
+                    },
+                    {
+                      "sentence": "The dress ___ pink.",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "am",
+                        "be",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "The frog ___ green.",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "has",
+                        "it",
+                        "are"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "The bird are blue.",
+                      "errorWord": "are",
+                      "correctWord": "is"
+                    },
+                    {
+                      "sentence": "The flower is pinks.",
+                      "errorWord": "pinks",
+                      "correctWord": "pink"
+                    },
+                    {
+                      "sentence": "The trees is green.",
+                      "errorWord": "is",
+                      "correctWord": "are"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "The queen and the pig are in the garden. The queen smiles and says, 'What a lovely red flower you have, pig!'",
+              "questions": [
+                {
+                  "question": "What color is the flower?",
+                  "answer": "red",
+                  "options": [
+                    "red",
+                    "blue",
+                    "pink"
+                  ]
+                },
+                {
+                  "question": "Who is in the garden with the pig?",
+                  "answer": "The queen",
+                  "options": [
+                    "The queen",
+                    "The king",
+                    "The cat"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: The pig is pink.",
+              "expected_text": "the pig is pink",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Fill in the blank: The ___ is red. (Vocabulary question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "apple",
+                  "options": [
+                    "apple",
+                    "banana",
+                    "sun",
+                    "moon"
+                  ]
+                },
+                {
+                  "question_text": "Which word has the beginning sound /p/? (Phonics question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "pig",
+                  "options": [
+                    "queen",
+                    "blue",
+                    "pig",
+                    "cat"
+                  ]
+                },
+                {
+                  "question_text": "Read: The pig is pink. What color is the pig?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "pink",
+                  "options": [
+                    "blue",
+                    "red",
+                    "pink",
+                    "green"
+                  ]
+                },
+                {
+                  "question_text": "Fill in the blank: The ___ is blue. (Grammar pattern question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "sky",
+                  "options": [
+                    "sky",
+                    "sun",
+                    "queen",
+                    "tree"
+                  ]
+                },
+                {
+                  "question_text": "True or False: A queen is a person?",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "I See Something Blue",
+              "url": "https://www.youtube.com/watch?v=jYAWf8Y91hA",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics P",
+              "url": "https://www.youtube.com/watch?v=OEbRDtCAFdU",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics Q",
+              "url": "https://www.youtube.com/watch?v=dsEttQsXqXI",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_1_unit_04_lesson_02",
+          "title": "Green and Yellow",
+          "topic": "Nature colors and the sound of R",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://www.example.com/video",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What color is the grass in the park?",
+                  "correct_answer": "green",
+                  "options": [
+                    "green",
+                    "blue",
+                    "yellow",
+                    "red"
+                  ],
+                  "image_emoji": "🌿",
+                  "hint": "It is the color of leaves."
+                },
+                {
+                  "question_text": "Which fruit is yellow and has a peel?",
+                  "correct_answer": "banana",
+                  "options": [
+                    "banana",
+                    "apple",
+                    "grape",
+                    "orange"
+                  ],
+                  "image_emoji": "🍌",
+                  "hint": "Monkeys love eating this fruit."
+                },
+                {
+                  "question_text": "Which animal makes a buzzing sound in the garden?",
+                  "correct_answer": "bee",
+                  "options": [
+                    "bee",
+                    "butterfly",
+                    "bird",
+                    "squirrel"
+                  ],
+                  "image_emoji": "🐝",
+                  "hint": "It is a small insect that collects nectar."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "green",
+                  "ipa": "/ɡriːn/",
+                  "definition": "Color like leaves",
+                  "example": "The leaf is green.",
+                  "image_emoji": "💚",
+                  "image_url": "/static/vocab_images/green.png"
+                },
+                {
+                  "word": "yellow",
+                  "ipa": "/ˈjɛloʊ/",
+                  "definition": "Color like sunshine",
+                  "example": "I like yellow flowers.",
+                  "image_emoji": "💛",
+                  "image_url": "/static/vocab_images/yellow.png"
+                },
+                {
+                  "word": "rabbit",
+                  "ipa": "/ˈræbɪt/",
+                  "definition": "Animal with big ears",
+                  "example": "Is it a rabbit?",
+                  "image_emoji": "🐇",
+                  "image_url": "/static/vocab_images/gpt_rabbit.png"
+                },
+                {
+                  "word": "run",
+                  "ipa": "/rʌn/",
+                  "definition": "Move very fast",
+                  "example": "The rabbit can run fast.",
+                  "image_emoji": "🏃",
+                  "image_url": "/static/vocab_images/run.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "green",
+                      "emoji": "🟢",
+                      "distractors": [
+                        {
+                          "word": "yellow",
+                          "emoji": "🟡"
+                        },
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐇"
+                        },
+                        {
+                          "word": "run",
+                          "emoji": "🏃‍♂️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "yellow",
+                      "emoji": "🟡",
+                      "distractors": [
+                        {
+                          "word": "green",
+                          "emoji": "🟢"
+                        },
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐇"
+                        },
+                        {
+                          "word": "run",
+                          "emoji": "🏃‍♂️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "rabbit",
+                      "emoji": "🐇",
+                      "distractors": [
+                        {
+                          "word": "green",
+                          "emoji": "🟢"
+                        },
+                        {
+                          "word": "yellow",
+                          "emoji": "🟡"
+                        },
+                        {
+                          "word": "run",
+                          "emoji": "🏃‍♂️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "run",
+                      "emoji": "🏃‍♂️",
+                      "distractors": [
+                        {
+                          "word": "green",
+                          "emoji": "🟢"
+                        },
+                        {
+                          "word": "yellow",
+                          "emoji": "🟡"
+                        },
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐇"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "green",
+                      "emoji": "🟢",
+                      "distractors": [
+                        {
+                          "word": "yellow",
+                          "emoji": "🟡"
+                        },
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐇"
+                        },
+                        {
+                          "word": "run",
+                          "emoji": "🏃‍♂️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "yellow",
+                      "emoji": "🟡",
+                      "distractors": [
+                        {
+                          "word": "green",
+                          "emoji": "🟢"
+                        },
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐇"
+                        },
+                        {
+                          "word": "run",
+                          "emoji": "🏃‍♂️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "rabbit",
+                      "emoji": "🐇",
+                      "distractors": [
+                        {
+                          "word": "green",
+                          "emoji": "🟢"
+                        },
+                        {
+                          "word": "yellow",
+                          "emoji": "🟡"
+                        },
+                        {
+                          "word": "run",
+                          "emoji": "🏃‍♂️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "run",
+                      "emoji": "🏃‍♂️",
+                      "distractors": [
+                        {
+                          "word": "green",
+                          "emoji": "🟢"
+                        },
+                        {
+                          "word": "yellow",
+                          "emoji": "🟡"
+                        },
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐇"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "green",
+                      "emoji": "🟢"
+                    },
+                    {
+                      "word": "yellow",
+                      "emoji": "🟡"
+                    },
+                    {
+                      "word": "rabbit",
+                      "emoji": "🐇"
+                    },
+                    {
+                      "word": "run",
+                      "emoji": "🏃‍♂️"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 12
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Fun in the Green Park",
+              "text": "The grass is green. A rabbit runs fast. The sun is yellow. I like yellow flowers. Is it a rabbit?",
+              "questions": [
+                {
+                  "question": "What color is the sun?",
+                  "answer": "yellow",
+                  "options": [
+                    "green",
+                    "yellow",
+                    "blue"
+                  ]
+                },
+                {
+                  "question": "What animal runs fast?",
+                  "answer": "rabbit",
+                  "options": [
+                    "rabbit",
+                    "frog",
+                    "cat"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I like ___s.",
+              "explanation": "Use 'I like' to say what you enjoy.",
+              "examples": [
+                "I like rabbits.",
+                "I like green trees.",
+                "I like yellow stars."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "green"
+                      ],
+                      "correctSentence": "I like green."
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "yellow"
+                      ],
+                      "correctSentence": "I like yellow."
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "rabbits"
+                      ],
+                      "correctSentence": "I like rabbits."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I like ___ apples.",
+                      "answer": "green",
+                      "options": [
+                        "green",
+                        "blue",
+                        "red",
+                        "yellow"
+                      ]
+                    },
+                    {
+                      "sentence": "I like ___ stars.",
+                      "answer": "yellow",
+                      "options": [
+                        "green",
+                        "yellow",
+                        "red",
+                        "blue"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "I like the greens.",
+                      "errorWord": "greens",
+                      "correctWord": "green"
+                    },
+                    {
+                      "sentence": "I liking yellow flowers.",
+                      "errorWord": "liking",
+                      "correctWord": "like"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "The rabbit sees a green tree and a yellow butterfly. It runs happily around the garden.",
+              "questions": [
+                {
+                  "question": "What color is the butterfly?",
+                  "answer": "yellow",
+                  "options": [
+                    "green",
+                    "yellow",
+                    "red"
+                  ]
+                },
+                {
+                  "question": "Is the rabbit happy?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: I like green.",
+              "expected_text": "i like green",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which color do you see in the grass?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "green",
+                  "options": [
+                    "green",
+                    "yellow",
+                    "blue"
+                  ]
+                },
+                {
+                  "question_text": "The rabbit can ___. (Fill in the blank)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "run",
+                  "options": [
+                    "run",
+                    "fly",
+                    "swim",
+                    "jump"
+                  ]
+                },
+                {
+                  "question_text": "Complete the sentence: I like __.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "yellow",
+                  "options": [
+                    "yellow",
+                    "rabbit",
+                    "jump",
+                    "leaf"
+                  ]
+                },
+                {
+                  "question_text": "True or False: Rabbits are usually green.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "What is the sound of R in rabbit?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "r",
+                  "options": [
+                    "r",
+                    "b",
+                    "m",
+                    "t"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Phonics R",
+              "url": "https://www.youtube.com/watch?v=bck1S86MQfE",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_1_unit_04_lesson_03",
+          "title": "Black and Orange",
+          "topic": "Dark colors and sounds of S and T",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://www.example.com/colorful-animals",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What color is the sun?",
+                  "correct_answer": "yellow",
+                  "options": [
+                    "yellow",
+                    "orange",
+                    "red",
+                    "green"
+                  ],
+                  "image_emoji": "☀️",
+                  "hint": "It's the same color as a banana."
+                },
+                {
+                  "question_text": "Which animal is known for having a long neck?",
+                  "correct_answer": "giraffe",
+                  "options": [
+                    "giraffe",
+                    "elephant",
+                    "tiger",
+                    "lion"
+                  ],
+                  "image_emoji": "🐘",
+                  "hint": "It eats leaves from tall trees."
+                },
+                {
+                  "question_text": "What sound does a snake make?",
+                  "correct_answer": "hiss",
+                  "options": [
+                    "hiss",
+                    "roar",
+                    "buzz",
+                    "cluck"
+                  ],
+                  "image_emoji": "🐍",
+                  "hint": "It sounds like a whisper."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "black",
+                  "ipa": "/blæk/",
+                  "definition": "Like the dark night.",
+                  "example": "The cat is black.",
+                  "image_emoji": "⬛",
+                  "image_url": "/static/vocab_images/black.png"
+                },
+                {
+                  "word": "orange",
+                  "ipa": "/ˈɔːrɪndʒ/",
+                  "definition": "Like a bright fruit.",
+                  "example": "I like orange.",
+                  "image_emoji": "🍊",
+                  "image_url": "/static/vocab_images/orange.png"
+                },
+                {
+                  "word": "sun",
+                  "ipa": "/sʌn/",
+                  "definition": "Shines in the sky.",
+                  "example": "Is it yellow like the sun?",
+                  "image_emoji": "☀️",
+                  "image_url": "/static/vocab_images/sun.png"
+                },
+                {
+                  "word": "tiger",
+                  "ipa": "/ˈtaɪɡər/",
+                  "definition": "Orange with black stripes.",
+                  "example": "The tiger is orange.",
+                  "image_emoji": "🐯",
+                  "image_url": "/static/vocab_images/tiger.png"
+                },
+                {
+                  "word": "ten",
+                  "ipa": "/tɛn/",
+                  "definition": "A number to count.",
+                  "example": "I have ten oranges.",
+                  "image_emoji": "10⃣",
+                  "image_url": "/static/vocab_images/ten.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "black",
+                      "emoji": "⚫",
+                      "distractors": [
+                        {
+                          "word": "orange",
+                          "emoji": "🟠"
+                        },
+                        {
+                          "word": "sun",
+                          "emoji": "☀️"
+                        },
+                        {
+                          "word": "tiger",
+                          "emoji": "🐅"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "orange",
+                      "emoji": "🟠",
+                      "distractors": [
+                        {
+                          "word": "black",
+                          "emoji": "⚫"
+                        },
+                        {
+                          "word": "sun",
+                          "emoji": "☀️"
+                        },
+                        {
+                          "word": "ten",
+                          "emoji": "🔟"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "sun",
+                      "emoji": "☀️",
+                      "distractors": [
+                        {
+                          "word": "black",
+                          "emoji": "⚫"
+                        },
+                        {
+                          "word": "tiger",
+                          "emoji": "🐅"
+                        },
+                        {
+                          "word": "ten",
+                          "emoji": "🔟"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "tiger",
+                      "emoji": "🐅",
+                      "distractors": [
+                        {
+                          "word": "black",
+                          "emoji": "⚫"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🟠"
+                        },
+                        {
+                          "word": "sun",
+                          "emoji": "☀️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "ten",
+                      "emoji": "🔟",
+                      "distractors": [
+                        {
+                          "word": "black",
+                          "emoji": "⚫"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🟠"
+                        },
+                        {
+                          "word": "sun",
+                          "emoji": "☀️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "black",
+                      "emoji": "⚫",
+                      "distractors": [
+                        {
+                          "word": "tiger",
+                          "emoji": "🐅"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🟠"
+                        },
+                        {
+                          "word": "ten",
+                          "emoji": "🔟"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "black",
+                      "emoji": "⚫"
+                    },
+                    {
+                      "word": "orange",
+                      "emoji": "🟠"
+                    },
+                    {
+                      "word": "sun",
+                      "emoji": "☀️"
+                    },
+                    {
+                      "word": "tiger",
+                      "emoji": "🐅"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Colors Everywhere",
+              "text": "The sun is bright and yellow. I see a big orange tiger in the jungle. The tiger walks by and says hello. Look, there are ten oranges on the tree!",
+              "questions": [
+                {
+                  "question": "How many oranges are on the tree?",
+                  "answer": "ten",
+                  "options": [
+                    "ten",
+                    "two",
+                    "five"
+                  ]
+                },
+                {
+                  "question": "What color is the tiger?",
+                  "answer": "orange",
+                  "options": [
+                    "orange",
+                    "black",
+                    "yellow"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "The ___ is ___.",
+              "explanation": "Use this to say what color something is.",
+              "examples": [
+                "The apple is red.",
+                "The frog is green.",
+                "The sun is yellow."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "it",
+                        "red",
+                        "Is"
+                      ],
+                      "correctSentence": "Is it red?"
+                    },
+                    {
+                      "words": [
+                        "black",
+                        "Is",
+                        "it"
+                      ],
+                      "correctSentence": "Is it black?"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "Is it ___?",
+                      "answer": "blue",
+                      "options": [
+                        "blue",
+                        "jump",
+                        "big",
+                        "happy"
+                      ]
+                    },
+                    {
+                      "sentence": "Is it ___?",
+                      "answer": "green",
+                      "options": [
+                        "green",
+                        "run",
+                        "small",
+                        "sad"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "Is it blak?",
+                      "errorWord": "blak",
+                      "correctWord": "black"
+                    },
+                    {
+                      "sentence": "Is ti red?",
+                      "errorWord": "ti",
+                      "correctWord": "it"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "The little black tiger is playing under the sun. Do you see the ten orange balls around it? Listen to the tiger growling softly.",
+              "questions": [
+                {
+                  "question": "How many orange balls are there?",
+                  "answer": "ten",
+                  "options": [
+                    "ten",
+                    "five",
+                    "three"
+                  ]
+                },
+                {
+                  "question": "What is the tiger doing?",
+                  "answer": "growling softly",
+                  "options": [
+                    "growling softly",
+                    "purring loudly",
+                    "barking"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Ask: Is it orange?",
+              "expected_text": "is it orange",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "What color is the night sky? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "black",
+                  "options": [
+                    "black",
+                    "orange",
+                    "yellow",
+                    "blue"
+                  ]
+                },
+                {
+                  "question_text": "Is it ___? Fill in the blank. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "black",
+                  "options": [
+                    "black",
+                    "orange",
+                    "sun",
+                    "tiger"
+                  ]
+                },
+                {
+                  "question_text": "True or False: The tiger is a big, orange cat with stripes. (Reading comprehension)",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "How many orange balls did you see in the story? (Reading comprehension)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "ten",
+                  "options": [
+                    "ten",
+                    "five",
+                    "three",
+                    "seven"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Phonics S",
+              "url": "https://www.youtube.com/watch?v=MRwCD01SEpA",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics T",
+              "url": "https://www.youtube.com/watch?v=dv5C9WdFhBY",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_1_unit_04_lesson_04",
+          "title": "Unit 4 Mastery Check",
+          "topic": "Cumulative Review (P-T & All Colors)",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/video",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What color is the sky on a sunny day?",
+                  "correct_answer": "blue",
+                  "options": [
+                    "blue",
+                    "red",
+                    "purple",
+                    "brown"
+                  ],
+                  "image_emoji": "🌞",
+                  "hint": "This color is like the ocean."
+                },
+                {
+                  "question_text": "Which animal lives in the ocean and has many legs?",
+                  "correct_answer": "octopus",
+                  "options": [
+                    "octopus",
+                    "dolphin",
+                    "shark",
+                    "crab"
+                  ],
+                  "image_emoji": "🐙",
+                  "hint": "This animal has eight arms."
+                },
+                {
+                  "question_text": "What color are apples when they are ripe?",
+                  "correct_answer": "red",
+                  "options": [
+                    "red",
+                    "yellow",
+                    "blue",
+                    "pink"
+                  ],
+                  "image_emoji": "🍎",
+                  "hint": "Think of a juicy fruit!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "red",
+                "blue",
+                "pink",
+                "green",
+                "yellow",
+                "black",
+                "orange",
+                "pig",
+                "queen",
+                "rabbit",
+                "sun",
+                "tiger"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "apple",
+                      "emoji": "🍎",
+                      "distractors": [
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "grape",
+                          "emoji": "🍇"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🍊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "car",
+                      "emoji": "🚗",
+                      "distractors": [
+                        {
+                          "word": "train",
+                          "emoji": "🚆"
+                        },
+                        {
+                          "word": "bicycle",
+                          "emoji": "🚲"
+                        },
+                        {
+                          "word": "plane",
+                          "emoji": "✈️"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "apple",
+                      "emoji": "🍎",
+                      "distractors": [
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "grape",
+                          "emoji": "🍇"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🍊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "car",
+                      "emoji": "🚗",
+                      "distractors": [
+                        {
+                          "word": "train",
+                          "emoji": "🚆"
+                        },
+                        {
+                          "word": "bicycle",
+                          "emoji": "🚲"
+                        },
+                        {
+                          "word": "plane",
+                          "emoji": "✈️"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱"
+                    },
+                    {
+                      "word": "apple",
+                      "emoji": "🍎"
+                    },
+                    {
+                      "word": "car",
+                      "emoji": "🚗"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 9
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Colors in the Garden",
+              "text": "I am Mia. I like purple and green. The flower is purple. The leaf is green. Is it green? Yes, it is!",
+              "questions": [
+                {
+                  "question": "What color is the flower?",
+                  "answer": "purple",
+                  "options": [
+                    "purple",
+                    "blue",
+                    "red"
+                  ]
+                },
+                {
+                  "question": "Is the leaf green?",
+                  "answer": "Yes, it is!",
+                  "options": [
+                    "Yes, it is!",
+                    "No, it isn't",
+                    "I don't know"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "The ___ is ___.",
+                "I like ___.",
+                "Is it ___?"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "The",
+                        "sun",
+                        "is",
+                        "yellow"
+                      ],
+                      "correctSentence": "The sun is yellow"
+                    },
+                    {
+                      "words": [
+                        "It",
+                        "is",
+                        "sunny"
+                      ],
+                      "correctSentence": "It is sunny"
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "blue"
+                      ],
+                      "correctSentence": "I like blue"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "The tiger ___ orange.",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "are",
+                        "have",
+                        "has"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ a red hat.",
+                      "answer": "has",
+                      "options": [
+                        "has",
+                        "have",
+                        "is",
+                        "are"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "The flower are red.",
+                      "errorWord": "are",
+                      "correctWord": "is"
+                    },
+                    {
+                      "sentence": "We has a dog.",
+                      "errorWord": "has",
+                      "correctWord": "have"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Look at the bright green tree. It's tall and green. Do you like green trees? I think they're wonderful!",
+              "questions": [
+                {
+                  "question": "What color is the tree?",
+                  "answer": "green",
+                  "options": [
+                    "green",
+                    "brown",
+                    "yellow"
+                  ]
+                },
+                {
+                  "question": "Does the speaker think trees are wonderful?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: The [object] is [color].",
+              "expected_text": "the sun is yellow",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "The car __ red. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "is",
+                  "options": [
+                    "is",
+                    "are",
+                    "am",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "Which emoji shows 'apple'? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "🍎",
+                  "options": [
+                    "🍎",
+                    "🚗",
+                    "🚀",
+                    "✈️"
+                  ]
+                },
+                {
+                  "question_text": "Is 'The cat is black.' about an animal? (Reading comprehension question)",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "What color is the sky on a clear day? (Review question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "blue",
+                  "options": [
+                    "blue",
+                    "yellow",
+                    "red",
+                    "green"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Colors Song",
+              "url": "https://www.youtube.com/watch?v=jYAWf8Y91hA",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        }
+      ]
+    }
+  ],
+  "ai_enriched": true,
+  "enriched_at": "2026-02-17T17:55:32.048136+00:00"
+}

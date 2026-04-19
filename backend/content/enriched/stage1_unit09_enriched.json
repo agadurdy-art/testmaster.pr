@@ -1,0 +1,1790 @@
+{
+  "stage": 1,
+  "stage_title": "Foundations",
+  "units": [
+    {
+      "unit_id": "stage_1_unit_09",
+      "unit_num": 9,
+      "title": "Animals - Pets",
+      "subtitle": "Pets and Likes/Dislikes",
+      "phonics_focus": [],
+      "grammar_focus": [
+        "I like...",
+        "I don't like...",
+        "Do you like...?"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_1_unit_09_lesson_01",
+          "title": "I Have a Pet",
+          "topic": "Cat, Dog, Bird and the I like pattern",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://www.youtube.com/watch?v=pWepfJ-8XU0",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Which animal says 'meow' and loves to climb trees?",
+                  "correct_answer": "cat",
+                  "options": [
+                    "cat",
+                    "dog",
+                    "bird",
+                    "rabbit"
+                  ],
+                  "image_emoji": "🐈",
+                  "hint": "This animal purrs when happy."
+                },
+                {
+                  "question_text": "What animal enjoys wagging its tail and playing catch?",
+                  "correct_answer": "dog",
+                  "options": [
+                    "dog",
+                    "bird",
+                    "cat",
+                    "hamster"
+                  ],
+                  "image_emoji": "🐕",
+                  "hint": "This animal is very loyal and friendly."
+                },
+                {
+                  "question_text": "Which creature can flap its wings and twitters beautifully?",
+                  "correct_answer": "bird",
+                  "options": [
+                    "bird",
+                    "fish",
+                    "dog",
+                    "lizard"
+                  ],
+                  "image_emoji": "🐤",
+                  "hint": "This animal builds nests in trees."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "pet",
+                  "ipa": "/pɛt/",
+                  "definition": "Animal in your home",
+                  "example": "I like my pet.",
+                  "image_emoji": "🐱",
+                  "image_url": "/static/vocab_images/gpt_pet.png"
+                },
+                {
+                  "word": "cat",
+                  "ipa": "/kæt/",
+                  "definition": "Small pet says Meow",
+                  "example": "Do you like cats?",
+                  "image_emoji": "🐱",
+                  "image_url": "/static/vocab_images/cat.png"
+                },
+                {
+                  "word": "dog",
+                  "ipa": "/dɒɡ/",
+                  "definition": "Pet says Woof",
+                  "example": "I don't like dogs.",
+                  "image_emoji": "🐶",
+                  "image_url": "/static/vocab_images/dog.png"
+                },
+                {
+                  "word": "bird",
+                  "ipa": "/bɜːrd/",
+                  "definition": "Animal that flies",
+                  "example": "I like birds.",
+                  "image_emoji": "🐦",
+                  "image_url": "/static/vocab_images/bird.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐶"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "pet",
+                          "emoji": "🏠"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "dog",
+                      "emoji": "🐶",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "pet",
+                          "emoji": "🏠"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "bird",
+                      "emoji": "🐦",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐶"
+                        },
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "pet",
+                          "emoji": "🏠"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "pet",
+                      "emoji": "🏠",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "dog",
+                          "emoji": "🐶"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "cat",
+                      "emoji": "🐱",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐶"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "pet",
+                          "emoji": "🏠"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "dog",
+                      "emoji": "🐶",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "pet",
+                          "emoji": "🏠"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱"
+                    },
+                    {
+                      "word": "dog",
+                      "emoji": "🐶"
+                    },
+                    {
+                      "word": "bird",
+                      "emoji": "🐦"
+                    },
+                    {
+                      "word": "pet",
+                      "emoji": "🏠"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Tom's Pets",
+              "text": "Tom has a pet. It is a cat. Tom says, 'I like my cat.' The cat is with a bird. Do you like birds?",
+              "questions": [
+                {
+                  "question": "What animal does Tom have?",
+                  "answer": "cat",
+                  "options": [
+                    "cat",
+                    "dog",
+                    "bird"
+                  ]
+                },
+                {
+                  "question": "What does Tom say about his cat?",
+                  "answer": "I like my cat.",
+                  "options": [
+                    "I don't like cats.",
+                    "I like my cat.",
+                    "Do you like cats?"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I like ___s.",
+              "explanation": "Say 'I like' to talk about pets you love.",
+              "examples": [
+                "I like dogs.",
+                "I like cats.",
+                "I like birds."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "cats"
+                      ],
+                      "correctSentence": "I like cats."
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "birds"
+                      ],
+                      "correctSentence": "I like birds."
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "dogs"
+                      ],
+                      "correctSentence": "I like dogs."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I like ___s.",
+                      "answer": "cat",
+                      "options": [
+                        "cat",
+                        "dog",
+                        "bird",
+                        "fish"
+                      ]
+                    },
+                    {
+                      "sentence": "I like ___s.",
+                      "answer": "bird",
+                      "options": [
+                        "cat",
+                        "bird",
+                        "fish",
+                        "mouse"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "I likes cats.",
+                      "errorWord": "likes",
+                      "correctWord": "like"
+                    },
+                    {
+                      "sentence": "I like cat.",
+                      "errorWord": "cat",
+                      "correctWord": "cats"
+                    },
+                    {
+                      "sentence": "I like birds.",
+                      "errorWord": "",
+                      "correctWord": "I like birds."
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "I have a dog named Max. He loves to play in the park. Do you like dogs?",
+              "questions": [
+                {
+                  "question": "What does Max love to do?",
+                  "answer": "Play in the park",
+                  "options": [
+                    "Play in the park",
+                    "Swim in the pool",
+                    "Fly in the sky"
+                  ]
+                },
+                {
+                  "question": "Does he like dogs?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: I like birds.",
+              "expected_text": "i like birds",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "I like ___s. (Fill in the blank with a pet)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "dogs",
+                  "options": [
+                    "cats",
+                    "dogs",
+                    "birds",
+                    "fish"
+                  ]
+                },
+                {
+                  "question_text": "Which one is a pet? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "cat",
+                  "options": [
+                    "ball",
+                    "cat",
+                    "car",
+                    "tree"
+                  ]
+                },
+                {
+                  "question_text": "Where does a bird like to be? (Reading comprehension)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "In a tree",
+                  "options": [
+                    "In a tree",
+                    "Under the bed",
+                    "In the water",
+                    "In the car"
+                  ]
+                },
+                {
+                  "question_text": "True or False: A dog can swim.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "I Have A Pet Song",
+              "url": "https://www.youtube.com/watch?v=pWepfJ-8XU0",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_1_unit_09_lesson_02",
+          "title": "I Don't Like...",
+          "topic": "Rabbit, Mouse, Turtle and negative preference",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/pet_video.mp4",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Which pet hops and has long ears?",
+                  "correct_answer": "rabbit",
+                  "options": [
+                    "rabbit",
+                    "mouse",
+                    "parrot",
+                    "snail"
+                  ],
+                  "image_emoji": "🐇",
+                  "hint": "This pet likes to hop and nibble on carrots!"
+                },
+                {
+                  "question_text": "Which tiny pet is known for squeaking and running?",
+                  "correct_answer": "mouse",
+                  "options": [
+                    "mouse",
+                    "rabbit",
+                    "turtle",
+                    "parrot"
+                  ],
+                  "image_emoji": "🐁",
+                  "hint": "It's small and has a long tail!"
+                },
+                {
+                  "question_text": "Which pet carries its house on its back?",
+                  "correct_answer": "turtle",
+                  "options": [
+                    "turtle",
+                    "rabbit",
+                    "snail",
+                    "hamster"
+                  ],
+                  "image_emoji": "🐢",
+                  "hint": "This pet loves water and moves slowly!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "rabbit",
+                  "ipa": "/ˈræbɪt/",
+                  "definition": "Pet with long ears.",
+                  "example": "I like rabbits.",
+                  "image_emoji": "🐰",
+                  "image_url": "/static/vocab_images/gpt_rabbit.png"
+                },
+                {
+                  "word": "mouse",
+                  "ipa": "/maʊs/",
+                  "definition": "Very small animal.",
+                  "example": "I don't like mice.",
+                  "image_emoji": "🐭",
+                  "image_url": "/static/vocab_images/mouse.png"
+                },
+                {
+                  "word": "turtle",
+                  "ipa": "/ˈtɜːrtl/",
+                  "definition": "Slow, shelled animal.",
+                  "example": "Do you like turtles?",
+                  "image_emoji": "🐢",
+                  "image_url": "/static/vocab_images/gpt_turtle.png"
+                },
+                {
+                  "word": "no",
+                  "ipa": "/noʊ/",
+                  "definition": "Not yes.",
+                  "example": "I say no.",
+                  "image_emoji": "❌",
+                  "image_url": "/static/vocab_images/no.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "rabbit",
+                      "emoji": "🐰",
+                      "distractors": [
+                        {
+                          "word": "mouse",
+                          "emoji": "🐭"
+                        },
+                        {
+                          "word": "turtle",
+                          "emoji": "🐢"
+                        },
+                        {
+                          "word": "no",
+                          "emoji": "❌"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "mouse",
+                      "emoji": "🐭",
+                      "distractors": [
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐰"
+                        },
+                        {
+                          "word": "turtle",
+                          "emoji": "🐢"
+                        },
+                        {
+                          "word": "no",
+                          "emoji": "❌"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "turtle",
+                      "emoji": "🐢",
+                      "distractors": [
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐰"
+                        },
+                        {
+                          "word": "mouse",
+                          "emoji": "🐭"
+                        },
+                        {
+                          "word": "no",
+                          "emoji": "❌"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "rabbit",
+                      "emoji": "🐰",
+                      "distractors": [
+                        {
+                          "word": "mouse",
+                          "emoji": "🐭"
+                        },
+                        {
+                          "word": "turtle",
+                          "emoji": "🐢"
+                        },
+                        {
+                          "word": "no",
+                          "emoji": "❌"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "mouse",
+                      "emoji": "🐭",
+                      "distractors": [
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐰"
+                        },
+                        {
+                          "word": "turtle",
+                          "emoji": "🐢"
+                        },
+                        {
+                          "word": "no",
+                          "emoji": "❌"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "turtle",
+                      "emoji": "🐢",
+                      "distractors": [
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐰"
+                        },
+                        {
+                          "word": "mouse",
+                          "emoji": "🐭"
+                        },
+                        {
+                          "word": "no",
+                          "emoji": "❌"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "rabbit",
+                      "emoji": "🐰"
+                    },
+                    {
+                      "word": "mouse",
+                      "emoji": "🐭"
+                    },
+                    {
+                      "word": "turtle",
+                      "emoji": "🐢"
+                    },
+                    {
+                      "word": "no",
+                      "emoji": "❌"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Turtle's Friends",
+              "text": "Look! A turtle is slow. I don't like the mouse. I like the rabbit. The rabbit jumps high.",
+              "questions": [
+                {
+                  "question": "Does he like the rabbit?",
+                  "answer": "yes",
+                  "options": [
+                    "yes",
+                    "no"
+                  ]
+                },
+                {
+                  "question": "Is the turtle fast?",
+                  "answer": "no",
+                  "options": [
+                    "yes",
+                    "no",
+                    "maybe"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I like ___.",
+              "explanation": "Use 'I like' for things you enjoy.",
+              "examples": [
+                "I like turtles.",
+                "I like ice cream.",
+                "I like sunny days."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "don't",
+                        "like",
+                        "spiders"
+                      ],
+                      "correctSentence": "I don't like spiders"
+                    },
+                    {
+                      "words": [
+                        "like",
+                        "I",
+                        "don't",
+                        "rain"
+                      ],
+                      "correctSentence": "I don't like rain"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I don't like ___.",
+                      "answer": "green",
+                      "options": [
+                        "happy",
+                        "run",
+                        "green",
+                        "fast"
+                      ]
+                    },
+                    {
+                      "sentence": "I don't like ___.",
+                      "answer": "carrots",
+                      "options": [
+                        "carrots",
+                        "swim",
+                        "fast",
+                        "happy"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "I do not like cats.",
+                      "errorWord": "do not",
+                      "correctWord": "don't"
+                    },
+                    {
+                      "sentence": "I dont like rain.",
+                      "errorWord": "dont",
+                      "correctWord": "don't"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "I like rabbits, but I don't like mice. My friend thinks turtles are the best pets! Do you like turtles?",
+              "questions": [
+                {
+                  "question": "What animal does she not like?",
+                  "answer": "mice",
+                  "options": [
+                    "mice",
+                    "rabbits",
+                    "turtles"
+                  ]
+                },
+                {
+                  "question": "Does her friend like turtles?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: I don't like turtles.",
+              "expected_text": "i don't like turtles",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which pet has long ears and hops?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "rabbit",
+                  "options": [
+                    "rabbit",
+                    "mouse",
+                    "turtle",
+                    "dog"
+                  ]
+                },
+                {
+                  "question_text": "I don't like ___.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "mice",
+                  "options": [
+                    "mice",
+                    "likes",
+                    "like",
+                    "to"
+                  ]
+                },
+                {
+                  "question_text": "True or False: Turtles can fly.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "What can crawl into a small hole, a mouse or a turtle?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "mouse",
+                  "options": [
+                    "mouse",
+                    "turtle",
+                    "rabbit",
+                    "cat"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_1_unit_09_lesson_03",
+          "title": "Do you like pets?",
+          "topic": "Fish and Do you like...?",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/pets_video",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Which pet can swim but doesn't drink water?",
+                  "correct_answer": "fish",
+                  "options": [
+                    "dog",
+                    "cat",
+                    "rabbit",
+                    "fish"
+                  ],
+                  "image_emoji": "🐟",
+                  "hint": "This pet has a tail and lives in water."
+                },
+                {
+                  "question_text": "Which animal gets scared during thunderstorms?",
+                  "correct_answer": "dog",
+                  "options": [
+                    "fish",
+                    "rabbit",
+                    "cat",
+                    "dog"
+                  ],
+                  "image_emoji": "🐶",
+                  "hint": "It stays close to its owner when scared."
+                },
+                {
+                  "question_text": "Which pet has a collar with a bell?",
+                  "correct_answer": "cat",
+                  "options": [
+                    "dog",
+                    "rabbit",
+                    "cat",
+                    "fish"
+                  ],
+                  "image_emoji": "🐱",
+                  "hint": "This pet loves to purr and climb."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "fish",
+                  "ipa": "/fɪʃ/",
+                  "definition": "Animal in a pond.",
+                  "example": "Do you like fish?",
+                  "image_emoji": "🐟",
+                  "image_url": "/static/vocab_images/fish.png"
+                },
+                {
+                  "word": "water",
+                  "ipa": "/ˈwɔːtər/",
+                  "definition": "Where fish swim.",
+                  "example": "I like playing in water.",
+                  "image_emoji": "💧",
+                  "image_url": "/static/vocab_images/water.png"
+                },
+                {
+                  "word": "yes",
+                  "ipa": "/jɛs/",
+                  "definition": "Saying 'I like it'.",
+                  "example": "Do you like dogs? Yes!",
+                  "image_emoji": "👍",
+                  "image_url": "/static/vocab_images/gpt_yes.png"
+                },
+                {
+                  "word": "cute",
+                  "ipa": "/kjuːt/",
+                  "definition": "Looks very nice.",
+                  "example": "The puppy is cute.",
+                  "image_emoji": "😊",
+                  "image_url": "/static/vocab_images/cute.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "fish",
+                      "emoji": "🐠",
+                      "distractors": [
+                        {
+                          "word": "water",
+                          "emoji": "💧"
+                        },
+                        {
+                          "word": "yes",
+                          "emoji": "✅"
+                        },
+                        {
+                          "word": "cute",
+                          "emoji": "🥰"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "water",
+                      "emoji": "💧",
+                      "distractors": [
+                        {
+                          "word": "fish",
+                          "emoji": "🐠"
+                        },
+                        {
+                          "word": "yes",
+                          "emoji": "✅"
+                        },
+                        {
+                          "word": "cute",
+                          "emoji": "🥰"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "yes",
+                      "emoji": "✅",
+                      "distractors": [
+                        {
+                          "word": "fish",
+                          "emoji": "🐠"
+                        },
+                        {
+                          "word": "water",
+                          "emoji": "💧"
+                        },
+                        {
+                          "word": "cute",
+                          "emoji": "🥰"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "cute",
+                      "emoji": "🥰",
+                      "distractors": [
+                        {
+                          "word": "fish",
+                          "emoji": "🐠"
+                        },
+                        {
+                          "word": "water",
+                          "emoji": "💧"
+                        },
+                        {
+                          "word": "yes",
+                          "emoji": "✅"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "fish",
+                      "emoji": "🐠",
+                      "distractors": [
+                        {
+                          "word": "water",
+                          "emoji": "💧"
+                        },
+                        {
+                          "word": "yes",
+                          "emoji": "✅"
+                        },
+                        {
+                          "word": "cute",
+                          "emoji": "🥰"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "water",
+                      "emoji": "💧",
+                      "distractors": [
+                        {
+                          "word": "fish",
+                          "emoji": "🐠"
+                        },
+                        {
+                          "word": "yes",
+                          "emoji": "✅"
+                        },
+                        {
+                          "word": "cute",
+                          "emoji": "🥰"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "yes",
+                      "emoji": "✅",
+                      "distractors": [
+                        {
+                          "word": "fish",
+                          "emoji": "🐠"
+                        },
+                        {
+                          "word": "water",
+                          "emoji": "💧"
+                        },
+                        {
+                          "word": "cute",
+                          "emoji": "🥰"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "cute",
+                      "emoji": "🥰",
+                      "distractors": [
+                        {
+                          "word": "fish",
+                          "emoji": "🐠"
+                        },
+                        {
+                          "word": "water",
+                          "emoji": "💧"
+                        },
+                        {
+                          "word": "yes",
+                          "emoji": "✅"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "fish",
+                      "emoji": "🐠"
+                    },
+                    {
+                      "word": "water",
+                      "emoji": "💧"
+                    },
+                    {
+                      "word": "yes",
+                      "emoji": "✅"
+                    },
+                    {
+                      "word": "cute",
+                      "emoji": "🥰"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 12
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Splash the Fish",
+              "text": "Do you like water? Splash the fish does! Splash is in the pond. I like Splash because it is cute. Do you like Splash?",
+              "questions": [
+                {
+                  "question": "Where is Splash?",
+                  "answer": "in the pond",
+                  "options": [
+                    "in the pond",
+                    "in the box",
+                    "on the grass"
+                  ]
+                },
+                {
+                  "question": "Why do we like Splash?",
+                  "answer": "because it is cute",
+                  "options": [
+                    "because it is cute",
+                    "because it is big",
+                    "because it is fast"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I like ___s.",
+              "explanation": "Use this to say what you enjoy.",
+              "examples": [
+                "I like dogs.",
+                "I like apples.",
+                "I like games."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "Do",
+                        "like",
+                        "you",
+                        "fish?"
+                      ],
+                      "correctSentence": "Do you like fish?"
+                    },
+                    {
+                      "words": [
+                        "Do",
+                        "you",
+                        "like",
+                        "dogs?"
+                      ],
+                      "correctSentence": "Do you like dogs?"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "Do you like ___?",
+                      "answer": "cats",
+                      "options": [
+                        "dogs",
+                        "cats",
+                        "fish",
+                        "birds"
+                      ]
+                    },
+                    {
+                      "sentence": "Do you like ___?",
+                      "answer": "dogs",
+                      "options": [
+                        "cats",
+                        "dogs",
+                        "fish",
+                        "birds"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "Do you likes cats?",
+                      "errorWord": "likes",
+                      "correctWord": "like"
+                    },
+                    {
+                      "sentence": "Does you like dogs?",
+                      "errorWord": "Does",
+                      "correctWord": "Do"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 7
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Do you like fish? They swim in the water and are very colorful. I think fish are really cute!",
+              "questions": [
+                {
+                  "question": "What do fish do in the water?",
+                  "answer": "Swim",
+                  "options": [
+                    "Swim",
+                    "Fly",
+                    "Jump"
+                  ]
+                },
+                {
+                  "question": "Do you think fish are cute?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: Do you like fish?",
+              "expected_text": "do you like fish",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Do you like ___? (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "fish",
+                  "options": [
+                    "fish",
+                    "yes",
+                    "cute",
+                    "swim"
+                  ]
+                },
+                {
+                  "question_text": "Which word means 'beautiful and sweet'? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "cute",
+                  "options": [
+                    "fish",
+                    "yes",
+                    "cute",
+                    "water"
+                  ]
+                },
+                {
+                  "question_text": "True or False: Fish live on land.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Where do fish swim? (Reading comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "In the water",
+                  "options": [
+                    "In the water",
+                    "On the grass",
+                    "Under the bed",
+                    "In the tree"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_1_unit_09_lesson_04",
+          "title": "Pet Master",
+          "topic": "Mastery Check (All Pets & Preferences)",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/pet_video",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Which pet has feathers and can sing songs?",
+                  "correct_answer": "bird",
+                  "options": [
+                    "bird",
+                    "cat",
+                    "fish",
+                    "hamster"
+                  ],
+                  "image_emoji": "🐦",
+                  "hint": "This pet tweets and loves to fly!"
+                },
+                {
+                  "question_text": "Which pet loves to hop and eat carrots?",
+                  "correct_answer": "rabbit",
+                  "options": [
+                    "rabbit",
+                    "kitten",
+                    "parrot",
+                    "goldfish"
+                  ],
+                  "image_emoji": "🐇",
+                  "hint": "This pet has long ears and a fluffy tail!"
+                },
+                {
+                  "question_text": "Which pet is known for being a loyal friend and wagging its tail?",
+                  "correct_answer": "dog",
+                  "options": [
+                    "dog",
+                    "turtle",
+                    "cat",
+                    "fish"
+                  ],
+                  "image_emoji": "🐶",
+                  "hint": "This pet barks and loves to play fetch!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "pet",
+                "cat",
+                "dog",
+                "bird",
+                "rabbit",
+                "mouse",
+                "turtle",
+                "fish",
+                "water",
+                "cute",
+                "yes",
+                "no"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "dog",
+                      "emoji": "🐕",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐰"
+                        },
+                        {
+                          "word": "mouse",
+                          "emoji": "🐭"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "bird",
+                      "emoji": "🐦",
+                      "distractors": [
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        },
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        },
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "fish",
+                      "emoji": "🐟",
+                      "distractors": [
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "rabbit",
+                      "emoji": "🐰",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        },
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "mouse",
+                      "emoji": "🐭",
+                      "distractors": [
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐰"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱"
+                    },
+                    {
+                      "word": "dog",
+                      "emoji": "🐕"
+                    },
+                    {
+                      "word": "bird",
+                      "emoji": "🐦"
+                    },
+                    {
+                      "word": "fish",
+                      "emoji": "🐟"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Pets and Preferences",
+              "text": "My name is Mia. I like dogs and fish. I have one big dog. I don't like snakes. Do you like fish? Yes, I do!",
+              "questions": [
+                {
+                  "question": "Does Mia have a big dog?",
+                  "answer": "yes",
+                  "options": [
+                    "yes",
+                    "no"
+                  ]
+                },
+                {
+                  "question": "Does Mia like snakes?",
+                  "answer": "no",
+                  "options": [
+                    "yes",
+                    "no"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "I like...",
+                "I don't like...",
+                "Do you like...?"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "cats"
+                      ],
+                      "correctSentence": "I like cats"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "has",
+                        "a",
+                        "dog"
+                      ],
+                      "correctSentence": "She has a dog"
+                    },
+                    {
+                      "words": [
+                        "Do",
+                        "you",
+                        "like",
+                        "fish"
+                      ],
+                      "correctSentence": "Do you like fish"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "He ___ a cat.",
+                      "answer": "has",
+                      "options": [
+                        "has",
+                        "have",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ not like snakes.",
+                      "answer": "do",
+                      "options": [
+                        "do",
+                        "does",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ two dogs.",
+                      "answer": "have",
+                      "options": [
+                        "has",
+                        "have",
+                        "is",
+                        "are"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "He have a cat.",
+                      "errorWord": "have",
+                      "correctWord": "has"
+                    },
+                    {
+                      "sentence": "She do like fish.",
+                      "errorWord": "do",
+                      "correctWord": "does"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "My dog Max loves to play with his red ball. Every day we go to the park and have lots of fun!",
+              "questions": [
+                {
+                  "question": "What color is Max's ball?",
+                  "answer": "Red",
+                  "options": [
+                    "Red",
+                    "Blue",
+                    "Green"
+                  ]
+                },
+                {
+                  "question": "Do they go to the park every day?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Tell me one pet you like and one pet you don't like. You can say: I like cats, I don't like frogs.",
+              "expected_text": "i like cats i don't like frogs",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "I ___ cats because they are playful. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "like",
+                  "options": [
+                    "like",
+                    "likes",
+                    "liked",
+                    "liking"
+                  ]
+                },
+                {
+                  "question_text": "Which animal is known for swimming in water? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Fish",
+                  "options": [
+                    "Fish",
+                    "Bird",
+                    "Rabbit",
+                    "Dog"
+                  ]
+                },
+                {
+                  "question_text": "True or False: A hamster is larger than a dog.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "What does Max do every day? He goes to the ___. (Reading comprehension question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "park",
+                  "options": [
+                    "park",
+                    "school",
+                    "zoo",
+                    "market"
+                  ]
+                },
+                {
+                  "question_text": "Do you like to hop around? (Grammar question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Yes, I do",
+                  "options": [
+                    "Yes, I do",
+                    "No, I don't",
+                    "Maybe",
+                    "I jump"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "I Have A Pet Song",
+              "url": "https://www.youtube.com/watch?v=pWepfJ-8XU0",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        }
+      ]
+    }
+  ],
+  "ai_enriched": true,
+  "enriched_at": "2026-02-17T18:04:27.869374+00:00"
+}

@@ -1,0 +1,2777 @@
+{
+  "stage": "stage_2",
+  "stage_id": "stage_2_starters",
+  "stage_title": "Starters (A1)",
+  "units": [
+    {
+      "unit_id": "stage_2_unit_09",
+      "unit_num": 9,
+      "title": "What are we doing?",
+      "subtitle": "Actions happening right now",
+      "phonics_focus": [
+        "-ing endings",
+        "Verb sounds"
+      ],
+      "grammar_focus": [
+        "Present Continuous (am/is/are + verb-ing)"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_2_unit_09_lesson_01",
+          "title": "Current Actions",
+          "topic": "Describing a busy scene in a playground",
+          "context": "Describing a busy scene in a playground.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Where do children play outside at school?",
+                  "correct_answer": "playground",
+                  "options": [
+                    "classroom",
+                    "playground",
+                    "kitchen",
+                    "bedroom"
+                  ],
+                  "image_emoji": "🏞️",
+                  "hint": "It's a fun place outside with swings and slides!"
+                },
+                {
+                  "question_text": "What can you do on a playground?",
+                  "correct_answer": "swing and slide",
+                  "options": [
+                    "cook dinner",
+                    "swing and slide",
+                    "take a bath",
+                    "watch TV"
+                  ],
+                  "image_emoji": "🎢",
+                  "hint": "Think about the fun things you can do outside with your friends!"
+                },
+                {
+                  "question_text": "When is a playground busy?",
+                  "correct_answer": "when many children are playing",
+                  "options": [
+                    "when it's raining",
+                    "at night time",
+                    "when many children are playing",
+                    "when it's empty"
+                  ],
+                  "image_emoji": "👫",
+                  "hint": "Busy means lots of people doing things at the same time!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "eating",
+                  "ipa": "",
+                  "definition": "Taking in food.",
+                  "example": "She is eating an apple.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/eating.png"
+                },
+                {
+                  "word": "drinking",
+                  "ipa": "",
+                  "definition": "Taking in liquid.",
+                  "example": "He is drinking juice.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/drinking.png"
+                },
+                {
+                  "word": "playing",
+                  "ipa": "",
+                  "definition": "Having fun with toys or friends.",
+                  "example": "They are playing games.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_playing.png"
+                },
+                {
+                  "word": "wearing",
+                  "ipa": "",
+                  "definition": "Having clothes on.",
+                  "example": "She is wearing a dress.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_wearing.png"
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "eating",
+                      "emoji": "🍎",
+                      "distractors": [
+                        {
+                          "word": "sleeping",
+                          "emoji": "😴"
+                        },
+                        {
+                          "word": "reading",
+                          "emoji": "📖"
+                        },
+                        {
+                          "word": "dancing",
+                          "emoji": "💃",
+                          "image_url": "/static/vocab_images/dancing.png"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "drinking",
+                      "emoji": "🥤",
+                      "distractors": [
+                        {
+                          "word": "writing",
+                          "emoji": "✏️"
+                        },
+                        {
+                          "word": "running",
+                          "emoji": "🏃"
+                        },
+                        {
+                          "word": "singing",
+                          "emoji": "🎤"
+                        }
+                      ],
+                      "image_url": "/static/vocab_images/drinking.png"
+                    },
+                    {
+                      "word": "playing",
+                      "emoji": "⚽",
+                      "distractors": [
+                        {
+                          "word": "swimming",
+                          "emoji": "🏊"
+                        },
+                        {
+                          "word": "cooking",
+                          "emoji": "🍳"
+                        },
+                        {
+                          "word": "jumping",
+                          "emoji": "🦘"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "wearing",
+                      "emoji": "👕",
+                      "distractors": [
+                        {
+                          "word": "washing",
+                          "emoji": "🧼"
+                        },
+                        {
+                          "word": "sitting",
+                          "emoji": "🪑"
+                        },
+                        {
+                          "word": "talking",
+                          "emoji": "💬"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "eating",
+                      "emoji": "🍎",
+                      "distractors": [
+                        {
+                          "word": "climbing",
+                          "emoji": "🧗"
+                        },
+                        {
+                          "word": "drawing",
+                          "emoji": "🖍️",
+                          "image_url": "/static/vocab_images/drawing.png"
+                        },
+                        {
+                          "word": "smiling",
+                          "emoji": "😊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "drinking",
+                      "emoji": "🥤",
+                      "distractors": [
+                        {
+                          "word": "painting",
+                          "emoji": "🎨"
+                        },
+                        {
+                          "word": "listening",
+                          "emoji": "👂"
+                        },
+                        {
+                          "word": "walking",
+                          "emoji": "🚶"
+                        }
+                      ],
+                      "image_url": "/static/vocab_images/drinking.png"
+                    },
+                    {
+                      "word": "playing",
+                      "emoji": "⚽",
+                      "distractors": [
+                        {
+                          "word": "sleeping",
+                          "emoji": "😴"
+                        },
+                        {
+                          "word": "building",
+                          "emoji": "🧱"
+                        },
+                        {
+                          "word": "flying",
+                          "emoji": "✈️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "wearing",
+                      "emoji": "👕",
+                      "distractors": [
+                        {
+                          "word": "riding",
+                          "emoji": "🚲"
+                        },
+                        {
+                          "word": "throwing",
+                          "emoji": "🎯"
+                        },
+                        {
+                          "word": "clapping",
+                          "emoji": "👏"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "eating",
+                      "emoji": "🍎"
+                    },
+                    {
+                      "word": "drinking",
+                      "emoji": "🥤",
+                      "image_url": "/static/vocab_images/drinking.png"
+                    },
+                    {
+                      "word": "playing",
+                      "emoji": "⚽"
+                    },
+                    {
+                      "word": "wearing",
+                      "emoji": "👕"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "flashcard_match",
+                  "items": [
+                    {
+                      "word": "eating",
+                      "emoji": "🍎",
+                      "definition": "putting food in your mouth"
+                    },
+                    {
+                      "word": "drinking",
+                      "emoji": "🥤",
+                      "definition": "having water or juice",
+                      "image_url": "/static/vocab_images/drinking.png"
+                    },
+                    {
+                      "word": "playing",
+                      "emoji": "⚽",
+                      "definition": "having fun with toys or games"
+                    },
+                    {
+                      "word": "wearing",
+                      "emoji": "👕",
+                      "definition": "having clothes on your body"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "A Busy Playground",
+              "text": "It is a sunny day at the playground. Sam is playing on the swings. Emma is eating an apple under a tree. Tom is drinking juice on the bench. Lily is wearing her new red hat. Everyone is having fun!",
+              "scene_description": "children playing at outdoor playground on sunny day, kids on swings and benches",
+              "questions": [
+                {
+                  "question": "What is Sam doing?",
+                  "answer": "playing on the swings",
+                  "options": [
+                    "eating an apple",
+                    "playing on the swings",
+                    "drinking juice",
+                    "wearing a hat"
+                  ],
+                  "correct_answer": "playing on the swings"
+                },
+                {
+                  "question": "Where is Emma eating her apple?",
+                  "answer": "under a tree",
+                  "options": [
+                    "on the swings",
+                    "on the bench",
+                    "under a tree",
+                    "in the classroom"
+                  ],
+                  "correct_answer": "under a tree"
+                },
+                {
+                  "question": "What color is Lily's hat?",
+                  "answer": "red",
+                  "options": [
+                    "blue",
+                    "yellow",
+                    "red",
+                    "green"
+                  ],
+                  "correct_answer": "red"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I am/He is/She is/They are ___ + ing",
+              "explanation": "We use am, is, or are with an -ing verb to talk about what is happening right now!",
+              "examples": [
+                "I am playing on the slide.",
+                "She is eating a sandwich.",
+                "They are drinking water."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "am",
+                        "playing",
+                        "now"
+                      ],
+                      "correctSentence": "I am playing now"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "eating",
+                        "lunch"
+                      ],
+                      "correctSentence": "She is eating lunch"
+                    },
+                    {
+                      "words": [
+                        "They",
+                        "are",
+                        "drinking",
+                        "water"
+                      ],
+                      "correctSentence": "They are drinking water"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "wearing",
+                        "a",
+                        "hat"
+                      ],
+                      "correctSentence": "He is wearing a hat"
+                    },
+                    {
+                      "words": [
+                        "We",
+                        "are",
+                        "playing",
+                        "outside"
+                      ],
+                      "correctSentence": "We are playing outside"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I ___ eating an apple.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ drinking juice now.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "do"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ playing in the park.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "can"
+                      ]
+                    },
+                    {
+                      "sentence": "Tom ___ wearing a blue shirt.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "have"
+                      ]
+                    },
+                    {
+                      "sentence": "We ___ eating sandwiches together.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "does"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She are eating lunch now.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with she, not 'are'"
+                    },
+                    {
+                      "sentence": "Him is playing outside.",
+                      "errorWord": "Him",
+                      "correctWord": "He",
+                      "explanation": "Use 'He' as the subject"
+                    },
+                    {
+                      "sentence": "They is drinking water.",
+                      "errorWord": "is",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with they, not 'is'"
+                    },
+                    {
+                      "sentence": "I are wearing my shoes.",
+                      "errorWord": "are",
+                      "correctWord": "am",
+                      "explanation": "Use 'am' with I, not 'are'"
+                    },
+                    {
+                      "sentence": "The boy am playing football.",
+                      "errorWord": "am",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with he/she/it, not 'am'"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "I am playing on the slide.",
+                      "is_correct": true,
+                      "corrected": "I am playing on the slide.",
+                      "explanation": "Correct! Use 'am' with I"
+                    },
+                    {
+                      "sentence": "She are eating a banana.",
+                      "is_correct": false,
+                      "corrected": "She is eating a banana.",
+                      "explanation": "Use 'is' with she, not 'are'"
+                    },
+                    {
+                      "sentence": "They are drinking milk.",
+                      "is_correct": true,
+                      "corrected": "They are drinking milk.",
+                      "explanation": "Correct! Use 'are' with they"
+                    },
+                    {
+                      "sentence": "He am wearing a coat.",
+                      "is_correct": false,
+                      "corrected": "He is wearing a coat.",
+                      "explanation": "Use 'is' with he, not 'am'"
+                    },
+                    {
+                      "sentence": "We are playing together.",
+                      "is_correct": true,
+                      "corrected": "We are playing together.",
+                      "explanation": "Correct! Use 'are' with we"
+                    },
+                    {
+                      "sentence": "I is eating cookies.",
+                      "is_correct": false,
+                      "corrected": "I am eating cookies.",
+                      "explanation": "Use 'am' with I, not 'is'"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "I ___ eating breakfast right now.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'am' with I in present continuous"
+                    },
+                    {
+                      "question": "She ___ drinking orange juice.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "do"
+                      ],
+                      "explanation": "Use 'is' with she in present continuous"
+                    },
+                    {
+                      "question": "The children ___ playing outside.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "was"
+                      ],
+                      "explanation": "Use 'are' with plural nouns in present continuous"
+                    },
+                    {
+                      "question": "My friend ___ wearing red shoes.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "can"
+                      ],
+                      "explanation": "Use 'is' with he/she in present continuous"
+                    },
+                    {
+                      "question": "We ___ eating ice cream now.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "been"
+                      ],
+                      "explanation": "Use 'are' with we in present continuous"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello children! Look at the playground today. Can you see the boy? He is wearing a yellow t-shirt and he is playing on the swings. The girl with the pink hat is eating a sandwich. Two friends are sitting on the bench and they are drinking water together. Everyone is having a great time!",
+              "questions": [
+                {
+                  "question": "What color is the boy's t-shirt?",
+                  "answer": "yellow",
+                  "options": [
+                    "yellow",
+                    "blue",
+                    "green",
+                    "red"
+                  ]
+                },
+                {
+                  "question": "What is the girl with the pink hat doing?",
+                  "answer": "eating a sandwich",
+                  "options": [
+                    "eating a sandwich",
+                    "drinking water",
+                    "playing on the swings",
+                    "wearing a yellow shirt"
+                  ]
+                },
+                {
+                  "question": "How many friends are sitting on the bench?",
+                  "answer": "two",
+                  "options": [
+                    "one",
+                    "two",
+                    "three",
+                    "four"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Look at the playground picture and tell me what the children are doing!",
+              "expected_text": "The boy is playing.",
+              "prompts": [
+                {
+                  "prompt": "What is the boy doing on the swing?",
+                  "expected_text": "He is playing on the swing."
+                },
+                {
+                  "prompt": "What is the girl eating?",
+                  "expected_text": "She is eating a sandwich."
+                },
+                {
+                  "prompt": "Tell me about the children on the bench. What are they doing and what are they wearing?",
+                  "expected_text": "They are drinking water and wearing hats."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which word means 'putting food in your mouth'?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "eating",
+                  "options": [
+                    "eating",
+                    "drinking",
+                    "playing",
+                    "wearing"
+                  ]
+                },
+                {
+                  "question_text": "She ___ drinking juice right now.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "is",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "Read: 'The boy is playing on the slide.' What is the boy doing?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "playing on the slide",
+                  "options": [
+                    "eating lunch",
+                    "playing on the slide",
+                    "drinking water",
+                    "wearing a hat"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'They am playing' is correct.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "I ___ wearing my red shoes today.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "am",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "was"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 1
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_2_unit_09_lesson_02",
+          "title": "At Home Actions",
+          "topic": "A phone call asking family members what they are doing",
+          "context": "A phone call asking family members what they are doing.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What do you use to call your family?",
+                  "correct_answer": "A phone",
+                  "options": [
+                    "A phone",
+                    "A book",
+                    "A ball",
+                    "A spoon"
+                  ],
+                  "image_emoji": "📱",
+                  "hint": "You hold it in your hand and talk into it!"
+                },
+                {
+                  "question_text": "Who can you call at home?",
+                  "correct_answer": "Mom, Dad, or brother",
+                  "options": [
+                    "Mom, Dad, or brother",
+                    "A dog",
+                    "A teacher at school",
+                    "A toy"
+                  ],
+                  "image_emoji": "👨‍👩‍👦",
+                  "hint": "Think about the people in your family!"
+                },
+                {
+                  "question_text": "What can you ask your family on the phone?",
+                  "correct_answer": "What are you doing?",
+                  "options": [
+                    "What are you doing?",
+                    "What color is the sky?",
+                    "How old are you?",
+                    "What is your name?"
+                  ],
+                  "image_emoji": "❓",
+                  "hint": "You want to know about their action right now!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "sleeping",
+                  "ipa": "",
+                  "definition": "The time when you are not awake.",
+                  "example": "The cat is sleeping.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_sleeping.png"
+                },
+                {
+                  "word": "drawing",
+                  "ipa": "",
+                  "definition": "Making pictures with pencils or crayons.",
+                  "example": "She is drawing a house.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/drawing.png"
+                },
+                {
+                  "word": "watching TV",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_watching_tv.png"
+                },
+                {
+                  "word": "listening to music",
+                  "ipa": "",
+                  "definition": "Hearing songs or sound.",
+                  "example": "She is listening to music.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/listening to music.png"
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_write",
+                  "items": [
+                    {
+                      "word": "sleeping",
+                      "emoji": "😴"
+                    },
+                    {
+                      "word": "drawing",
+                      "emoji": "✏️",
+                      "image_url": "/static/vocab_images/drawing.png"
+                    },
+                    {
+                      "word": "watching TV",
+                      "emoji": "📺"
+                    },
+                    {
+                      "word": "listening to music",
+                      "emoji": "🎵",
+                      "image_url": "/static/vocab_images/listening to music.png"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "look_write",
+                  "items": [
+                    {
+                      "word": "sleeping",
+                      "emoji": "😴",
+                      "hint": "You do this in bed at night"
+                    },
+                    {
+                      "word": "drawing",
+                      "emoji": "✏️",
+                      "hint": "You make pictures with a pencil",
+                      "image_url": "/static/vocab_images/drawing.png"
+                    },
+                    {
+                      "word": "watching TV",
+                      "emoji": "📺",
+                      "hint": "You look at the screen"
+                    },
+                    {
+                      "word": "listening to music",
+                      "emoji": "🎵",
+                      "hint": "You hear songs",
+                      "image_url": "/static/vocab_images/listening to music.png"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_gap",
+                  "items": [
+                    {
+                      "sentence": "Shh! The baby is ___ in the bedroom.",
+                      "answer": "sleeping",
+                      "options": [
+                        "sleeping",
+                        "drawing",
+                        "watching TV",
+                        "listening to music"
+                      ],
+                      "emoji": "😴"
+                    },
+                    {
+                      "sentence": "Mom is ___ a beautiful picture.",
+                      "answer": "drawing",
+                      "options": [
+                        "drawing",
+                        "sleeping",
+                        "watching TV",
+                        "listening to music"
+                      ],
+                      "emoji": "✏️"
+                    },
+                    {
+                      "sentence": "Dad is ___ in the living room.",
+                      "answer": "watching TV",
+                      "options": [
+                        "watching TV",
+                        "sleeping",
+                        "drawing",
+                        "listening to music"
+                      ],
+                      "emoji": "📺"
+                    },
+                    {
+                      "sentence": "My sister is ___ with her headphones.",
+                      "answer": "listening to music",
+                      "options": [
+                        "listening to music",
+                        "sleeping",
+                        "drawing",
+                        "watching TV"
+                      ],
+                      "emoji": "🎵"
+                    },
+                    {
+                      "sentence": "I am ___ my favorite song.",
+                      "answer": "listening to music",
+                      "options": [
+                        "listening to music",
+                        "watching TV",
+                        "sleeping",
+                        "drawing"
+                      ],
+                      "emoji": "🎵"
+                    },
+                    {
+                      "sentence": "My brother is ___ a cartoon show.",
+                      "answer": "watching TV",
+                      "options": [
+                        "watching TV",
+                        "drawing",
+                        "sleeping",
+                        "listening to music"
+                      ],
+                      "emoji": "📺"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Family Phone Call",
+              "text": "Lucy calls home. Mom is drawing a picture. Dad is watching TV in the living room. Her brother Tom is listening to music. Grandma is sleeping in her bedroom. Everyone is busy!",
+              "scene_description": "young girl talking on phone at home with family members doing different activities",
+              "questions": [
+                {
+                  "question": "What is Mom doing?",
+                  "answer": "She is drawing a picture",
+                  "options": [
+                    "She is drawing a picture",
+                    "She is watching TV",
+                    "She is sleeping"
+                  ],
+                  "correct_answer": "She is drawing a picture"
+                },
+                {
+                  "question": "Is Grandma listening to music?",
+                  "answer": "No",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "correct_answer": "No"
+                },
+                {
+                  "question": "Where is Dad watching TV?",
+                  "answer": "In the living room",
+                  "options": [
+                    "In the living room",
+                    "In the bedroom",
+                    "In the kitchen"
+                  ],
+                  "correct_answer": "In the living room"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I am ___(verb)ing. / He/She is ___(verb)ing. / We/They are ___(verb)ing.",
+              "explanation": "We use am, is, or are with verb+ing to talk about what someone is doing right now.",
+              "examples": [
+                "I am drawing a cat.",
+                "Mom is watching TV now.",
+                "They are listening to music."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "am",
+                        "drawing"
+                      ],
+                      "correctSentence": "I am drawing"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "sleeping"
+                      ],
+                      "correctSentence": "She is sleeping"
+                    },
+                    {
+                      "words": [
+                        "They",
+                        "are",
+                        "watching",
+                        "TV"
+                      ],
+                      "correctSentence": "They are watching TV"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "listening",
+                        "to",
+                        "music"
+                      ],
+                      "correctSentence": "He is listening to music"
+                    },
+                    {
+                      "words": [
+                        "We",
+                        "are",
+                        "drawing",
+                        "pictures"
+                      ],
+                      "correctSentence": "We are drawing pictures"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I ___ sleeping now.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "Mom ___ watching TV.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ listening to music.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "Dad ___ drawing a picture.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "We ___ watching a movie.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She are drawing a cat.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "sentence": "I is listening to music.",
+                      "errorWord": "is",
+                      "correctWord": "am",
+                      "explanation": "Use 'am' with I"
+                    },
+                    {
+                      "sentence": "Him is watching TV now.",
+                      "errorWord": "Him",
+                      "correctWord": "He",
+                      "explanation": "Use 'He' as subject pronoun"
+                    },
+                    {
+                      "sentence": "They is sleeping in bed.",
+                      "errorWord": "is",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with they"
+                    },
+                    {
+                      "sentence": "My brother drawing a picture.",
+                      "errorWord": "drawing",
+                      "correctWord": "is drawing",
+                      "explanation": "Need 'is' before verb+ing"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "She is watching TV.",
+                      "is_correct": true,
+                      "corrected": "She is watching TV.",
+                      "explanation": "Correct! Use 'is' with she"
+                    },
+                    {
+                      "sentence": "I are drawing now.",
+                      "is_correct": false,
+                      "corrected": "I am drawing now.",
+                      "explanation": "Use 'am' with I"
+                    },
+                    {
+                      "sentence": "They are listening to music.",
+                      "is_correct": true,
+                      "corrected": "They are listening to music.",
+                      "explanation": "Correct! Use 'are' with they"
+                    },
+                    {
+                      "sentence": "He am sleeping.",
+                      "is_correct": false,
+                      "corrected": "He is sleeping.",
+                      "explanation": "Use 'is' with he"
+                    },
+                    {
+                      "sentence": "We are watching a movie.",
+                      "is_correct": true,
+                      "corrected": "We are watching a movie.",
+                      "explanation": "Correct! Use 'are' with we"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "Mom ___ drawing a picture now.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with Mom (she)"
+                    },
+                    {
+                      "question": "I ___ listening to music.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'am' with I"
+                    },
+                    {
+                      "question": "My friends ___ watching TV.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with plural (friends)"
+                    },
+                    {
+                      "question": "Dad ___ sleeping in the bedroom.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with Dad (he)"
+                    },
+                    {
+                      "question": "We ___ drawing pictures together.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with we"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello everyone! Let me tell you about my family right now. My mom is drawing a beautiful picture. My dad is watching TV in the living room. My little sister is sleeping in her bedroom. And my big brother? He is listening to music with his headphones!",
+              "questions": [
+                {
+                  "question": "What is Mom doing?",
+                  "answer": "Drawing a picture",
+                  "options": [
+                    "Drawing a picture",
+                    "Watching TV",
+                    "Sleeping",
+                    "Listening to music"
+                  ]
+                },
+                {
+                  "question": "Where is Dad?",
+                  "answer": "In the living room",
+                  "options": [
+                    "In the living room",
+                    "In the bedroom",
+                    "In the kitchen",
+                    "In the garden"
+                  ]
+                },
+                {
+                  "question": "Who is sleeping?",
+                  "answer": "Little sister",
+                  "options": [
+                    "Little sister",
+                    "Mom",
+                    "Dad",
+                    "Big brother"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Practice talking about what people are doing right now. Listen and repeat, then say your own sentence!",
+              "expected_text": "I am drawing",
+              "prompts": [
+                {
+                  "prompt": "Say: I am drawing",
+                  "expected_text": "I am drawing"
+                },
+                {
+                  "prompt": "Say: Mom is watching TV",
+                  "expected_text": "Mom is watching TV"
+                },
+                {
+                  "prompt": "Now tell me: What is Dad doing? (He is...)",
+                  "expected_text": "He is sleeping"
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "What does this emoji mean? 😴",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "sleeping",
+                  "options": [
+                    "sleeping",
+                    "drawing",
+                    "watching TV",
+                    "listening to music"
+                  ]
+                },
+                {
+                  "question_text": "Mom ___ drawing a picture now.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "is",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "Read: Dad is watching TV. Question: What is Dad doing?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Watching TV",
+                  "options": [
+                    "Watching TV",
+                    "Sleeping",
+                    "Drawing",
+                    "Listening to music"
+                  ]
+                },
+                {
+                  "question_text": "True or False: We say 'I am listening' not 'I is listening'.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Which sentence is correct?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "She is sleeping",
+                  "options": [
+                    "She is sleeping",
+                    "She are sleeping",
+                    "She am sleeping",
+                    "She sleeping"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 2
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_2_unit_09_lesson_03",
+          "title": "Grammar Focus",
+          "topic": "A Mime the action game",
+          "context": "Focus on -ing endings and subject-verb agreement.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's think about actions! Answer these questions!",
+              "questions": [
+                {
+                  "question_text": "When you mime, what do you do?",
+                  "correct_answer": "Show actions without talking",
+                  "options": [
+                    "Show actions without talking",
+                    "Sing a song",
+                    "Read a book",
+                    "Draw a picture"
+                  ],
+                  "image_emoji": "🤫",
+                  "hint": "Think about showing something with your body, not your voice!"
+                },
+                {
+                  "question_text": "Which action can you mime with your arms?",
+                  "correct_answer": "Flying like a bird",
+                  "options": [
+                    "Flying like a bird",
+                    "Thinking hard",
+                    "Being sleepy",
+                    "Feeling happy"
+                  ],
+                  "image_emoji": "🦅",
+                  "hint": "What can you do by moving your arms up and down?"
+                },
+                {
+                  "question_text": "In a mime game, how do friends guess your action?",
+                  "correct_answer": "They watch you move",
+                  "options": [
+                    "They watch you move",
+                    "They listen to you speak",
+                    "They read your mind",
+                    "They close their eyes"
+                  ],
+                  "image_emoji": "👀",
+                  "hint": "Your friends need to see what you're doing!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "running",
+                  "ipa": "",
+                  "definition": "Moving quickly on foot.",
+                  "example": "The dog is running fast.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_running.png"
+                },
+                {
+                  "word": "singing",
+                  "ipa": "",
+                  "definition": "Making music with your voice.",
+                  "example": "She is singing a song.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_singing.png"
+                },
+                {
+                  "word": "dancing",
+                  "ipa": "",
+                  "definition": "Moving your body to music.",
+                  "example": "She is dancing happily.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/dancing.png"
+                },
+                {
+                  "word": "reading",
+                  "ipa": "",
+                  "definition": "Looking at words and understanding them.",
+                  "example": "She is reading a book.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_reading.png"
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "memory_game",
+                  "items": [
+                    {
+                      "word": "running",
+                      "emoji": "🏃"
+                    },
+                    {
+                      "word": "singing",
+                      "emoji": "🎤"
+                    },
+                    {
+                      "word": "dancing",
+                      "emoji": "💃",
+                      "image_url": "/static/vocab_images/dancing.png"
+                    },
+                    {
+                      "word": "reading",
+                      "emoji": "📖"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "listen_choose_word",
+                  "items": [
+                    {
+                      "word": "running",
+                      "emoji": "🏃",
+                      "distractors": [
+                        "runing",
+                        "ranning",
+                        "runin"
+                      ]
+                    },
+                    {
+                      "word": "singing",
+                      "emoji": "🎤",
+                      "distractors": [
+                        "singng",
+                        "sining",
+                        "singging"
+                      ]
+                    },
+                    {
+                      "word": "dancing",
+                      "emoji": "💃",
+                      "distractors": [
+                        "danceing",
+                        "dansing",
+                        "danzing"
+                      ],
+                      "image_url": "/static/vocab_images/dancing.png"
+                    },
+                    {
+                      "word": "reading",
+                      "emoji": "📖",
+                      "distractors": [
+                        "reding",
+                        "readding",
+                        "reeding"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "running",
+                      "emoji": "🏃",
+                      "distractors": [
+                        {
+                          "word": "jumping",
+                          "emoji": "🦘"
+                        },
+                        {
+                          "word": "swimming",
+                          "emoji": "🏊"
+                        },
+                        {
+                          "word": "walking",
+                          "emoji": "🚶"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "singing",
+                      "emoji": "🎤",
+                      "distractors": [
+                        {
+                          "word": "talking",
+                          "emoji": "💬"
+                        },
+                        {
+                          "word": "eating",
+                          "emoji": "🍽️"
+                        },
+                        {
+                          "word": "sleeping",
+                          "emoji": "😴"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "dancing",
+                      "emoji": "💃",
+                      "distractors": [
+                        {
+                          "word": "clapping",
+                          "emoji": "👏"
+                        },
+                        {
+                          "word": "waving",
+                          "emoji": "👋"
+                        },
+                        {
+                          "word": "pointing",
+                          "emoji": "☝️"
+                        }
+                      ],
+                      "image_url": "/static/vocab_images/dancing.png"
+                    },
+                    {
+                      "word": "reading",
+                      "emoji": "📖",
+                      "distractors": [
+                        {
+                          "word": "writing",
+                          "emoji": "✍️"
+                        },
+                        {
+                          "word": "drawing",
+                          "emoji": "🎨",
+                          "image_url": "/static/vocab_images/drawing.png"
+                        },
+                        {
+                          "word": "cooking",
+                          "emoji": "🍳"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Our Fun Mime Game",
+              "text": "Today we are playing a mime game! Emma is running fast. Tom is singing a song. Lily is dancing with her arms up. Ben is reading a book quietly. We are guessing the actions!",
+              "scene_description": "diverse children playing mime game in classroom, acting out different actions, happy and engaged",
+              "questions": [
+                {
+                  "question": "What is Emma doing?",
+                  "answer": "She is running",
+                  "options": [
+                    "She is running",
+                    "She is singing",
+                    "She is dancing"
+                  ],
+                  "correct_answer": "She is running"
+                },
+                {
+                  "question": "Is Ben reading a book?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "correct_answer": "Yes"
+                },
+                {
+                  "question": "How many children are playing the mime game?",
+                  "answer": "Four children",
+                  "options": [
+                    "Two children",
+                    "Three children",
+                    "Four children"
+                  ],
+                  "correct_answer": "Four children"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I am ___ing. You are ___ing. He/She is ___ing.",
+              "explanation": "We use am, is, or are with -ing words to show what someone is doing RIGHT NOW!",
+              "examples": [
+                "I am running to school.",
+                "She is singing a happy song.",
+                "They are dancing in the park."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "am",
+                        "running"
+                      ],
+                      "correctSentence": "I am running"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "singing"
+                      ],
+                      "correctSentence": "She is singing"
+                    },
+                    {
+                      "words": [
+                        "They",
+                        "are",
+                        "dancing"
+                      ],
+                      "correctSentence": "They are dancing"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "reading",
+                        "a",
+                        "book"
+                      ],
+                      "correctSentence": "He is reading a book"
+                    },
+                    {
+                      "words": [
+                        "We",
+                        "are",
+                        "playing",
+                        "now"
+                      ],
+                      "correctSentence": "We are playing now"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I ___ running fast.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ singing a song.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ dancing together.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ reading now.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "We ___ playing a game.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She are dancing now.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "sentence": "I is reading a book.",
+                      "errorWord": "is",
+                      "correctWord": "am",
+                      "explanation": "Use 'am' with I"
+                    },
+                    {
+                      "sentence": "He am singing loudly.",
+                      "errorWord": "am",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with he"
+                    },
+                    {
+                      "sentence": "They is running fast.",
+                      "errorWord": "is",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with they"
+                    },
+                    {
+                      "sentence": "We am playing outside.",
+                      "errorWord": "am",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with we"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "I am running.",
+                      "is_correct": true,
+                      "corrected": "I am running.",
+                      "explanation": "Correct! Use 'am' with I"
+                    },
+                    {
+                      "sentence": "She are singing.",
+                      "is_correct": false,
+                      "corrected": "She is singing.",
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "sentence": "They are dancing.",
+                      "is_correct": true,
+                      "corrected": "They are dancing.",
+                      "explanation": "Correct! Use 'are' with they"
+                    },
+                    {
+                      "sentence": "He am reading.",
+                      "is_correct": false,
+                      "corrected": "He is reading.",
+                      "explanation": "Use 'is' with he"
+                    },
+                    {
+                      "sentence": "We are playing.",
+                      "is_correct": true,
+                      "corrected": "We are playing.",
+                      "explanation": "Correct! Use 'are' with we"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "I ___ running to school.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'am' with I"
+                    },
+                    {
+                      "question": "She ___ singing a song.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "question": "They ___ dancing now.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with they"
+                    },
+                    {
+                      "question": "He ___ reading a book.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with he"
+                    },
+                    {
+                      "question": "We ___ playing a game.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with we"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello everyone! Let's play our mime game now. I am thinking of an action. Watch me carefully. I am moving my arms up and down. I am going very fast. Can you guess? Yes! I am running!",
+              "questions": [
+                {
+                  "question": "What is the teacher doing?",
+                  "answer": "Running",
+                  "options": [
+                    "Running",
+                    "Singing",
+                    "Dancing",
+                    "Reading"
+                  ]
+                },
+                {
+                  "question": "What is the teacher moving?",
+                  "answer": "Her arms",
+                  "options": [
+                    "Her arms",
+                    "Her head",
+                    "Her legs",
+                    "Her book"
+                  ]
+                },
+                {
+                  "question": "How is the teacher moving?",
+                  "answer": "Very fast",
+                  "options": [
+                    "Very fast",
+                    "Very slowly",
+                    "Very quietly",
+                    "Very loudly"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Let's practice speaking! Say these sentences about what you are doing.",
+              "expected_text": "I am running",
+              "prompts": [
+                {
+                  "prompt": "Say: I am running",
+                  "expected_text": "I am running"
+                },
+                {
+                  "prompt": "Say: She is dancing",
+                  "expected_text": "She is dancing"
+                },
+                {
+                  "prompt": "Tell me what you are doing right now using 'I am...'",
+                  "expected_text": "I am sitting/I am listening/I am learning"
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which action uses your voice?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "singing",
+                  "options": [
+                    "running",
+                    "singing",
+                    "dancing",
+                    "reading"
+                  ]
+                },
+                {
+                  "question_text": "I ___ running to school now.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "am",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "She ___ dancing in the park.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "is",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "True or False: In a mime game, you talk a lot.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "What are the children doing? 'The children ___ reading books.'",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "are",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 3
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_2_unit_09_lesson_04",
+          "title": "Unit Review",
+          "topic": "Describing a picture of people doing various activities",
+          "context": "Describing a picture of people doing various activities.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What are you doing right now?",
+                  "correct_answer": "I am learning English",
+                  "options": [
+                    "I am learning English",
+                    "I am sleeping",
+                    "I am swimming",
+                    "I am flying"
+                  ],
+                  "image_emoji": "📚",
+                  "hint": "Look around you! You're sitting and studying with me!"
+                },
+                {
+                  "question_text": "If your friend is throwing a ball, what is your friend doing?",
+                  "correct_answer": "My friend is playing",
+                  "options": [
+                    "My friend is playing",
+                    "My friend is eating",
+                    "My friend is reading",
+                    "My friend is sleeping"
+                  ],
+                  "image_emoji": "⚽",
+                  "hint": "When you throw a ball, you are having fun! What do we call that?"
+                },
+                {
+                  "question_text": "Look at this picture: 🏃. What is this person doing?",
+                  "correct_answer": "The person is running",
+                  "options": [
+                    "The person is running",
+                    "The person is sitting",
+                    "The person is singing",
+                    "The person is drawing"
+                  ],
+                  "image_emoji": "🏃",
+                  "hint": "Look at the legs! They are moving very fast!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "eating",
+                "drinking",
+                "playing",
+                "wearing",
+                "sleeping",
+                "drawing",
+                "watching TV",
+                "listening to music",
+                "running",
+                "singing",
+                "dancing",
+                "reading"
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "crossword",
+                  "items": [
+                    {
+                      "word": "eating",
+                      "definition": "Putting food in your mouth and chewing it",
+                      "emoji": "🍽️"
+                    },
+                    {
+                      "word": "drinking",
+                      "definition": "Putting a liquid in your mouth and swallowing it",
+                      "emoji": "🥤",
+                      "image_url": "/static/vocab_images/drinking.png"
+                    },
+                    {
+                      "word": "playing",
+                      "definition": "Having fun with toys or games",
+                      "emoji": "🎮"
+                    },
+                    {
+                      "word": "sleeping",
+                      "definition": "Closing your eyes and resting in bed",
+                      "emoji": "😴"
+                    },
+                    {
+                      "word": "running",
+                      "definition": "Moving very fast with your legs",
+                      "emoji": "🏃"
+                    },
+                    {
+                      "word": "singing",
+                      "definition": "Making music with your voice",
+                      "emoji": "🎤"
+                    },
+                    {
+                      "word": "dancing",
+                      "definition": "Moving your body to music",
+                      "emoji": "💃",
+                      "image_url": "/static/vocab_images/dancing.png"
+                    },
+                    {
+                      "word": "reading",
+                      "definition": "Looking at words in a book",
+                      "emoji": "📖"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "word_search",
+                  "items": [
+                    {
+                      "word": "wearing",
+                      "definition": "Having clothes on your body",
+                      "emoji": "👕"
+                    },
+                    {
+                      "word": "drawing",
+                      "definition": "Making pictures with pencils or crayons",
+                      "emoji": "✏️",
+                      "image_url": "/static/vocab_images/drawing.png"
+                    },
+                    {
+                      "word": "watching TV",
+                      "definition": "Looking at shows on a screen",
+                      "emoji": "📺"
+                    },
+                    {
+                      "word": "listening to music",
+                      "definition": "Hearing songs with your ears",
+                      "emoji": "🎵",
+                      "image_url": "/static/vocab_images/listening to music.png"
+                    },
+                    {
+                      "word": "eating",
+                      "definition": "Putting food in your mouth",
+                      "emoji": "🍽️"
+                    },
+                    {
+                      "word": "playing",
+                      "definition": "Having fun with games",
+                      "emoji": "🎮"
+                    },
+                    {
+                      "word": "running",
+                      "definition": "Moving fast on your feet",
+                      "emoji": "🏃"
+                    },
+                    {
+                      "word": "sleeping",
+                      "definition": "Resting with your eyes closed",
+                      "emoji": "😴"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "board_game",
+                  "items": [
+                    {
+                      "question": "What is the girl doing? 🍕",
+                      "answer": "She is eating",
+                      "options": [
+                        "She is eating",
+                        "She is drinking",
+                        "She is sleeping",
+                        "She is running"
+                      ]
+                    },
+                    {
+                      "question": "What is the boy doing? 🥤",
+                      "answer": "He is drinking",
+                      "options": [
+                        "He is eating",
+                        "He is drinking",
+                        "He is singing",
+                        "He is drawing"
+                      ]
+                    },
+                    {
+                      "question": "What are the children doing? ⚽",
+                      "answer": "They are playing",
+                      "options": [
+                        "They are sleeping",
+                        "They are playing",
+                        "They are reading",
+                        "They are watching TV"
+                      ]
+                    },
+                    {
+                      "question": "What is she doing? 👗",
+                      "answer": "She is wearing a dress",
+                      "options": [
+                        "She is wearing a dress",
+                        "She is eating a dress",
+                        "She is reading a dress",
+                        "She is drinking a dress"
+                      ]
+                    },
+                    {
+                      "question": "What is he doing? 🎨",
+                      "answer": "He is drawing",
+                      "options": [
+                        "He is running",
+                        "He is eating",
+                        "He is drawing",
+                        "He is dancing"
+                      ]
+                    },
+                    {
+                      "question": "What are they doing? 📺",
+                      "answer": "They are watching TV",
+                      "options": [
+                        "They are listening to music",
+                        "They are watching TV",
+                        "They are sleeping",
+                        "They are eating"
+                      ]
+                    },
+                    {
+                      "question": "What is the baby doing? 😴",
+                      "answer": "The baby is sleeping",
+                      "options": [
+                        "The baby is running",
+                        "The baby is dancing",
+                        "The baby is sleeping",
+                        "The baby is playing"
+                      ]
+                    },
+                    {
+                      "question": "What is she doing? 🎵",
+                      "answer": "She is listening to music",
+                      "options": [
+                        "She is watching TV",
+                        "She is listening to music",
+                        "She is wearing music",
+                        "She is eating music"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "A Busy Day at Home",
+              "text": "It is Saturday morning. Mum is drinking coffee in the kitchen. Dad is reading a book on the sofa. Tom is playing with his toy cars. His sister Lucy is drawing a picture. The baby is sleeping in the bedroom. Everyone is doing something different!",
+              "scene_description": "happy family doing different activities at home, parents and children in living room",
+              "questions": [
+                {
+                  "question": "What is Mum doing?",
+                  "answer": "She is drinking coffee",
+                  "options": [
+                    "She is drinking coffee",
+                    "She is reading a book",
+                    "She is playing with cars"
+                  ],
+                  "correct_answer": "She is drinking coffee"
+                },
+                {
+                  "question": "Is Dad playing with toy cars?",
+                  "answer": "No",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "correct_answer": "No"
+                },
+                {
+                  "question": "Who is drawing a picture?",
+                  "answer": "Lucy",
+                  "options": [
+                    "Tom",
+                    "Lucy",
+                    "Dad",
+                    "Mum"
+                  ],
+                  "correct_answer": "Lucy"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I am/He is/She is/They are ___(verb)ing",
+              "explanation": "We use am, is, or are plus a verb with -ing to tell what someone is doing RIGHT NOW!",
+              "examples": [
+                "I am eating an apple right now.",
+                "She is playing with her doll.",
+                "They are running in the park."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "am",
+                        "eating",
+                        "pizza"
+                      ],
+                      "correctSentence": "I am eating pizza"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "drinking",
+                        "water"
+                      ],
+                      "correctSentence": "She is drinking water"
+                    },
+                    {
+                      "words": [
+                        "They",
+                        "are",
+                        "playing",
+                        "football"
+                      ],
+                      "correctSentence": "They are playing football"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "watching",
+                        "TV"
+                      ],
+                      "correctSentence": "He is watching TV"
+                    },
+                    {
+                      "words": [
+                        "We",
+                        "are",
+                        "dancing",
+                        "now"
+                      ],
+                      "correctSentence": "We are dancing now"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I ___ reading a book.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ wearing a dress.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ running fast.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ listening to music.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "We ___ drawing pictures.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "The cat ___ sleeping now.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She are eating ice cream.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with she, he, or it"
+                    },
+                    {
+                      "sentence": "I is playing with my toys.",
+                      "errorWord": "is",
+                      "correctWord": "am",
+                      "explanation": "Use 'am' with I"
+                    },
+                    {
+                      "sentence": "He am drinking juice.",
+                      "errorWord": "am",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with he, she, or it"
+                    },
+                    {
+                      "sentence": "They is running in the park.",
+                      "errorWord": "is",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with they, we, or you"
+                    },
+                    {
+                      "sentence": "The dog are sleeping.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with one animal or person"
+                    },
+                    {
+                      "sentence": "We is watching a movie.",
+                      "errorWord": "is",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with we, they, or you"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "I am singing a song.",
+                      "is_correct": true,
+                      "corrected": "I am singing a song.",
+                      "explanation": "Correct! Use 'am' with I"
+                    },
+                    {
+                      "sentence": "She are dancing.",
+                      "is_correct": false,
+                      "corrected": "She is dancing.",
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "sentence": "They are playing outside.",
+                      "is_correct": true,
+                      "corrected": "They are playing outside.",
+                      "explanation": "Correct! Use 'are' with they"
+                    },
+                    {
+                      "sentence": "He am reading a book.",
+                      "is_correct": false,
+                      "corrected": "He is reading a book.",
+                      "explanation": "Use 'is' with he"
+                    },
+                    {
+                      "sentence": "We are listening to music.",
+                      "is_correct": true,
+                      "corrected": "We are listening to music.",
+                      "explanation": "Correct! Use 'are' with we"
+                    },
+                    {
+                      "sentence": "The baby is sleeping.",
+                      "is_correct": true,
+                      "corrected": "The baby is sleeping.",
+                      "explanation": "Correct! Use 'is' with one person"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "I ___ eating breakfast now.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'am' with I"
+                    },
+                    {
+                      "question": "She ___ wearing a hat.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with she, he, or it"
+                    },
+                    {
+                      "question": "They ___ playing in the garden.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with they, we, or you"
+                    },
+                    {
+                      "question": "The cat ___ drinking milk.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with one animal"
+                    },
+                    {
+                      "question": "We ___ watching TV together.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with we"
+                    },
+                    {
+                      "question": "He ___ running very fast.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with he"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello children! Look at this picture. Can you see the family? The dad is reading a newspaper. The mum is drinking tea. The boy is playing with his toy car. The girl is drawing a picture of a house. What a busy family!",
+              "questions": [
+                {
+                  "question": "What is the dad doing?",
+                  "answer": "He is reading a newspaper",
+                  "options": [
+                    "He is reading a newspaper",
+                    "He is drinking tea",
+                    "He is playing with a toy car",
+                    "He is drawing a picture"
+                  ]
+                },
+                {
+                  "question": "Who is drinking tea?",
+                  "answer": "The mum",
+                  "options": [
+                    "The dad",
+                    "The mum",
+                    "The boy",
+                    "The girl"
+                  ]
+                },
+                {
+                  "question": "What is the girl drawing?",
+                  "answer": "A house",
+                  "options": [
+                    "A car",
+                    "A house",
+                    "A tree",
+                    "A cat"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Look at the picture and tell me what the people are doing!",
+              "expected_text": "I am playing",
+              "prompts": [
+                {
+                  "prompt": "What are you doing right now?",
+                  "expected_text": "I am learning English"
+                },
+                {
+                  "prompt": "Look at this picture. What is the boy doing?",
+                  "expected_text": "He is playing football"
+                },
+                {
+                  "prompt": "Tell me about this family. What are they doing?",
+                  "expected_text": "The mum is cooking and the dad is reading"
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "What is the boy doing? 🏃",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "He is running",
+                  "options": [
+                    "He is running",
+                    "He is sleeping",
+                    "He is eating",
+                    "He is reading"
+                  ]
+                },
+                {
+                  "question_text": "I ___ eating an apple right now.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "am",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "She ___ listening to music.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "is",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'They are playing' is correct grammar.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Read: 'The girl is drawing a picture.' What is the girl doing?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "She is drawing",
+                  "options": [
+                    "She is drawing",
+                    "She is singing",
+                    "She is dancing",
+                    "She is watching TV"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 4
+        }
+      ]
+    }
+  ]
+}

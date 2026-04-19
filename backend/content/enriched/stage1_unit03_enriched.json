@@ -1,0 +1,1886 @@
+{
+  "stage": 1,
+  "stage_title": "Foundations",
+  "units": [
+    {
+      "unit_id": "stage_1_unit_03",
+      "unit_num": 3,
+      "title": "Numbers 1-10",
+      "subtitle": "Counting and Phonics K-O",
+      "phonics_focus": [
+        "K",
+        "L",
+        "M",
+        "N",
+        "O"
+      ],
+      "grammar_focus": [
+        "It is... (number)",
+        "How many?",
+        "Plural -s intro"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_1_unit_03_lesson_01",
+          "title": "One to Five",
+          "topic": "Counting to 5 and sounds of K and L",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://www.youtube.com/watch?v=dk9Yt1PqQiw",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "If you have one apple and get one more, how many do you have?",
+                  "correct_answer": "two",
+                  "options": [
+                    "three",
+                    "five",
+                    "two",
+                    "one"
+                  ],
+                  "image_emoji": "🍎",
+                  "hint": "Two is a small number, right after one."
+                },
+                {
+                  "question_text": "What is the first sound in 'lion'?",
+                  "correct_answer": "L",
+                  "options": [
+                    "K",
+                    "M",
+                    "L",
+                    "P"
+                  ],
+                  "image_emoji": "🦁",
+                  "hint": "Think of a roaring animal in the jungle. It starts with 'L'."
+                },
+                {
+                  "question_text": "What’s the sound a dog makes?",
+                  "correct_answer": "woof",
+                  "options": [
+                    "meow",
+                    "bark",
+                    "woof",
+                    "quack"
+                  ],
+                  "image_emoji": "🐶",
+                  "hint": "It's a friendly, barking noise dogs make."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "one",
+                  "ipa": "/wʌn/",
+                  "definition": "The number 1",
+                  "example": "It is one.",
+                  "image_emoji": "1️⃣",
+                  "image_url": "/static/vocab_images/one.png"
+                },
+                {
+                  "word": "two",
+                  "ipa": "/tuː/",
+                  "definition": "The number 2",
+                  "example": "It is two.",
+                  "image_emoji": "2️⃣",
+                  "image_url": "/static/vocab_images/two.png"
+                },
+                {
+                  "word": "three",
+                  "ipa": "/θriː/",
+                  "definition": "The number 3",
+                  "example": "It is three.",
+                  "image_emoji": "3️⃣",
+                  "image_url": "/static/vocab_images/three.png"
+                },
+                {
+                  "word": "kite",
+                  "ipa": "/kaɪt/",
+                  "definition": "A flying toy (Sound K)",
+                  "example": "I have one kite.",
+                  "image_emoji": "🪁",
+                  "image_url": "/static/vocab_images/kite.png"
+                },
+                {
+                  "word": "lion",
+                  "ipa": "/ˈlaɪən/",
+                  "definition": "A big cat (Sound L)",
+                  "example": "It is a lion.",
+                  "image_emoji": "🦁",
+                  "image_url": "/static/vocab_images/lion.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "one",
+                      "emoji": "1️⃣",
+                      "distractors": [
+                        {
+                          "word": "two",
+                          "emoji": "2️⃣"
+                        },
+                        {
+                          "word": "three",
+                          "emoji": "3️⃣"
+                        },
+                        {
+                          "word": "lion",
+                          "emoji": "🦁"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "kite",
+                      "emoji": "🪁",
+                      "distractors": [
+                        {
+                          "word": "lion",
+                          "emoji": "🦁"
+                        },
+                        {
+                          "word": "one",
+                          "emoji": "1️⃣"
+                        },
+                        {
+                          "word": "two",
+                          "emoji": "2️⃣"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "lion",
+                      "emoji": "🦁",
+                      "distractors": [
+                        {
+                          "word": "three",
+                          "emoji": "3️⃣"
+                        },
+                        {
+                          "word": "kite",
+                          "emoji": "🪁"
+                        },
+                        {
+                          "word": "one",
+                          "emoji": "1️⃣"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "two",
+                      "emoji": "2️⃣",
+                      "distractors": [
+                        {
+                          "word": "kite",
+                          "emoji": "🪁"
+                        },
+                        {
+                          "word": "lion",
+                          "emoji": "🦁"
+                        },
+                        {
+                          "word": "three",
+                          "emoji": "3️⃣"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "three",
+                      "emoji": "3️⃣",
+                      "distractors": [
+                        {
+                          "word": "one",
+                          "emoji": "1️⃣"
+                        },
+                        {
+                          "word": "kite",
+                          "emoji": "🪁"
+                        },
+                        {
+                          "word": "two",
+                          "emoji": "2️⃣"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "kite",
+                      "emoji": "🪁",
+                      "distractors": [
+                        {
+                          "word": "two",
+                          "emoji": "2️⃣"
+                        },
+                        {
+                          "word": "three",
+                          "emoji": "3️⃣"
+                        },
+                        {
+                          "word": "one",
+                          "emoji": "1️⃣"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "one",
+                      "emoji": "1️⃣"
+                    },
+                    {
+                      "word": "lion",
+                      "emoji": "🦁"
+                    },
+                    {
+                      "word": "two",
+                      "emoji": "2️⃣"
+                    },
+                    {
+                      "word": "kite",
+                      "emoji": "🪁"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "The Kite and the Lions",
+              "text": "Look! One bright kite flies. Two lions play under it. It is one kite. It is two lions. They are happy!",
+              "questions": [
+                {
+                  "question": "How many lions are there?",
+                  "answer": "two",
+                  "options": [
+                    "one",
+                    "two",
+                    "three"
+                  ]
+                },
+                {
+                  "question": "What is flying?",
+                  "answer": "kite",
+                  "options": [
+                    "lion",
+                    "kite",
+                    "ball"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "It is ___",
+              "explanation": "We use 'It is' to say what something is.",
+              "examples": [
+                "It is one lion.",
+                "It is a kite.",
+                "It is two cats."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "is",
+                        "It",
+                        "a",
+                        "kite"
+                      ],
+                      "correctSentence": "It is a kite."
+                    },
+                    {
+                      "words": [
+                        "It",
+                        "is",
+                        "one"
+                      ],
+                      "correctSentence": "It is one."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "___ is a lion.",
+                      "answer": "It",
+                      "options": [
+                        "This",
+                        "He",
+                        "It",
+                        "She"
+                      ]
+                    },
+                    {
+                      "sentence": "It is ___ kite.",
+                      "answer": "a",
+                      "options": [
+                        "an",
+                        "a",
+                        "the",
+                        "in"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "It are a kite.",
+                      "errorWord": "are",
+                      "correctWord": "is"
+                    },
+                    {
+                      "sentence": "Is it one.",
+                      "errorWord": "Is",
+                      "correctWord": "It"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Look over there! One kite is flying high in the sky. Two lions are watching it go up and down.",
+              "questions": [
+                {
+                  "question": "How many lions are watching the kite?",
+                  "answer": "two",
+                  "options": [
+                    "one",
+                    "two",
+                    "three"
+                  ]
+                },
+                {
+                  "question": "How many kites are flying?",
+                  "answer": "one",
+                  "options": [
+                    "one",
+                    "two",
+                    "three"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: It is one kite.",
+              "expected_text": "it is one kite",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "What comes after two? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "three",
+                  "options": [
+                    "one",
+                    "two",
+                    "three",
+                    "four"
+                  ]
+                },
+                {
+                  "question_text": "It is a ___. (Fill in with the right word: lion or kite)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "lion",
+                  "options": [
+                    "kite",
+                    "lion"
+                  ]
+                },
+                {
+                  "question_text": "True or False: A kite can fly.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "How many items are there? 🦁🦁🪁 (Reading comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "three",
+                  "options": [
+                    "one",
+                    "two",
+                    "three",
+                    "four"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "One Potato Song",
+              "url": "https://www.youtube.com/watch?v=dk9Yt1PqQiw",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics K",
+              "url": "https://www.youtube.com/watch?v=OEbRDtCAFdU",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics L",
+              "url": "https://www.youtube.com/watch?v=dv5C9WdFhBY",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_1_unit_03_lesson_02",
+          "title": "Six to Ten",
+          "topic": "Counting to 10 and the sound of M",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/counting_lions_video",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "How do the lions move in the video?",
+                  "correct_answer": "running",
+                  "options": [
+                    "sleeping",
+                    "running",
+                    "flying",
+                    "jumping"
+                  ],
+                  "image_emoji": "🦁",
+                  "hint": "Think about how fast lions can be."
+                },
+                {
+                  "question_text": "What sound does a lion make?",
+                  "correct_answer": "roar",
+                  "options": [
+                    "meow",
+                    "bark",
+                    "roar",
+                    "chirp"
+                  ],
+                  "image_emoji": "👑",
+                  "hint": "It's a loud sound like a king!"
+                },
+                {
+                  "question_text": "How many times do you hear the lion roar in the video?",
+                  "correct_answer": "three",
+                  "options": [
+                    "one",
+                    "two",
+                    "three",
+                    "four"
+                  ],
+                  "image_emoji": "🦁",
+                  "hint": "Listen carefully to the sounds."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "six",
+                  "ipa": "/sɪks/",
+                  "definition": "Number after five.",
+                  "example": "It is six balloons.",
+                  "image_emoji": "6️⃣",
+                  "image_url": "/static/vocab_images/six.png"
+                },
+                {
+                  "word": "ten",
+                  "ipa": "/tɛn/",
+                  "definition": "Number after nine.",
+                  "example": "It is ten apples.",
+                  "image_emoji": "🍎",
+                  "image_url": "/static/vocab_images/ten.png"
+                },
+                {
+                  "word": "monkey",
+                  "ipa": "/ˈmʌŋ.ki/",
+                  "definition": "Animal that climbs trees.",
+                  "example": "It is a monkey.",
+                  "image_emoji": "🐒",
+                  "image_url": "/static/vocab_images/monkey.png"
+                },
+                {
+                  "word": "mouth",
+                  "ipa": "/maʊθ/",
+                  "definition": "Used for eating and talking.",
+                  "example": "How many mouths do you have?",
+                  "image_emoji": "👄",
+                  "image_url": "/static/vocab_images/mouth.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "six",
+                      "emoji": "6️⃣",
+                      "distractors": [
+                        {
+                          "word": "ten",
+                          "emoji": "🔟"
+                        },
+                        {
+                          "word": "monkey",
+                          "emoji": "🐒"
+                        },
+                        {
+                          "word": "mouth",
+                          "emoji": "👄"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "ten",
+                      "emoji": "🔟",
+                      "distractors": [
+                        {
+                          "word": "six",
+                          "emoji": "6️⃣"
+                        },
+                        {
+                          "word": "monkey",
+                          "emoji": "🐒"
+                        },
+                        {
+                          "word": "mouth",
+                          "emoji": "👄"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "monkey",
+                      "emoji": "🐒",
+                      "distractors": [
+                        {
+                          "word": "six",
+                          "emoji": "6️⃣"
+                        },
+                        {
+                          "word": "ten",
+                          "emoji": "🔟"
+                        },
+                        {
+                          "word": "mouth",
+                          "emoji": "👄"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "mouth",
+                      "emoji": "👄",
+                      "distractors": [
+                        {
+                          "word": "six",
+                          "emoji": "6️⃣"
+                        },
+                        {
+                          "word": "ten",
+                          "emoji": "🔟"
+                        },
+                        {
+                          "word": "monkey",
+                          "emoji": "🐒"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "six",
+                      "emoji": "6️⃣",
+                      "distractors": [
+                        {
+                          "word": "ten",
+                          "emoji": "🔟"
+                        },
+                        {
+                          "word": "monkey",
+                          "emoji": "🐒"
+                        },
+                        {
+                          "word": "mouth",
+                          "emoji": "👄"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "ten",
+                      "emoji": "🔟",
+                      "distractors": [
+                        {
+                          "word": "six",
+                          "emoji": "6️⃣"
+                        },
+                        {
+                          "word": "monkey",
+                          "emoji": "🐒"
+                        },
+                        {
+                          "word": "mouth",
+                          "emoji": "👄"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "monkey",
+                      "emoji": "🐒",
+                      "distractors": [
+                        {
+                          "word": "six",
+                          "emoji": "6️⃣"
+                        },
+                        {
+                          "word": "ten",
+                          "emoji": "🔟"
+                        },
+                        {
+                          "word": "mouth",
+                          "emoji": "👄"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "mouth",
+                      "emoji": "👄",
+                      "distractors": [
+                        {
+                          "word": "six",
+                          "emoji": "6️⃣"
+                        },
+                        {
+                          "word": "ten",
+                          "emoji": "🔟"
+                        },
+                        {
+                          "word": "monkey",
+                          "emoji": "🐒"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "six",
+                      "emoji": "6️⃣"
+                    },
+                    {
+                      "word": "ten",
+                      "emoji": "🔟"
+                    },
+                    {
+                      "word": "monkey",
+                      "emoji": "🐒"
+                    },
+                    {
+                      "word": "mouth",
+                      "emoji": "👄"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 12
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Monkeys and Mouths",
+              "text": "It is morning in the jungle. I see six monkeys swinging in the trees. Look! It is a mouth of a big monkey. There are ten bananas on the ground. How many monkeys? Let's count them.",
+              "questions": [
+                {
+                  "question": "How many monkeys are there?",
+                  "answer": "six",
+                  "options": [
+                    "six",
+                    "ten",
+                    "five"
+                  ]
+                },
+                {
+                  "question": "What is on the ground?",
+                  "answer": "bananas",
+                  "options": [
+                    "apples",
+                    "monkeys",
+                    "bananas"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I see ___s.",
+              "explanation": "Use 'I see' to say what you look at.",
+              "examples": [
+                "I see six monkeys.",
+                "I see ten cats.",
+                "I see my toys."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "see",
+                        "ten"
+                      ],
+                      "correctSentence": "I see ten"
+                    },
+                    {
+                      "words": [
+                        "see",
+                        "I",
+                        "a",
+                        "monkey"
+                      ],
+                      "correctSentence": "I see a monkey"
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "see",
+                        "my",
+                        "sister"
+                      ],
+                      "correctSentence": "I see my sister"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I see ___ monkey.",
+                      "answer": "a",
+                      "options": [
+                        "a",
+                        "an",
+                        "the",
+                        "my"
+                      ]
+                    },
+                    {
+                      "sentence": "I see ___ children.",
+                      "answer": "ten",
+                      "options": [
+                        "a",
+                        "ten",
+                        "an",
+                        "one"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "I sees a monkey.",
+                      "errorWord": "sees",
+                      "correctWord": "see"
+                    },
+                    {
+                      "sentence": "He see ten dogs.",
+                      "errorWord": "see",
+                      "correctWord": "sees"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen closely! There are six monkeys swinging and playing. One monkey has a smile on its mouth!",
+              "questions": [
+                {
+                  "question": "How many monkeys are playing?",
+                  "answer": "six",
+                  "options": [
+                    "four",
+                    "six",
+                    "nine"
+                  ]
+                },
+                {
+                  "question": "What is one monkey doing with its mouth?",
+                  "answer": "smile",
+                  "options": [
+                    "yawning",
+                    "smile",
+                    "eating"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: I see a monkey.",
+              "expected_text": "i see a monkey",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "What is the number after six?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "seven",
+                  "options": [
+                    "five",
+                    "seven",
+                    "eight",
+                    "ten"
+                  ]
+                },
+                {
+                  "question_text": "I see a ___. (Use a lesson word)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "monkey",
+                  "options": [
+                    "monkey",
+                    "chair",
+                    "ball",
+                    "tree"
+                  ]
+                },
+                {
+                  "question_text": "What sound does 'mouth' start with?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "M",
+                  "options": [
+                    "M",
+                    "T",
+                    "N",
+                    "S"
+                  ]
+                },
+                {
+                  "question_text": "True or False: Six is more than ten.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Which word rhymes with 'hen'?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "ten",
+                  "options": [
+                    "six",
+                    "ten",
+                    "monkey",
+                    "moth"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Phonics M",
+              "url": "https://www.youtube.com/watch?v=MRwCD01SEpA",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_1_unit_03_lesson_03",
+          "title": "How Many?",
+          "topic": "Asking about quantity and sounds of N and O",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/video.mp4",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Which animal starts with the letter 'O' and lives in the sea?",
+                  "correct_answer": "Octopus",
+                  "options": [
+                    "Octopus",
+                    "Orangutan",
+                    "Owl",
+                    "Ostrich"
+                  ],
+                  "image_emoji": "🐙",
+                  "hint": "This animal has eight arms and loves the ocean."
+                },
+                {
+                  "question_text": "How does the octopus move in the water?",
+                  "correct_answer": "Swims",
+                  "options": [
+                    "Swims",
+                    "Jumps",
+                    "Walks",
+                    "Flies"
+                  ],
+                  "image_emoji": "🚶",
+                  "hint": "Think about how fish move in the water."
+                },
+                {
+                  "question_text": "N is the sound of a letter. What sound does 'N' make in 'nose'?",
+                  "correct_answer": "Nnnn",
+                  "options": [
+                    "Nnnn",
+                    "Mmmm",
+                    "Eeee",
+                    "Oooo"
+                  ],
+                  "image_emoji": "👃",
+                  "hint": "Listen to the first sound in 'nose'."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "nose",
+                  "ipa": "/noʊz/",
+                  "definition": "Smells and breathes air.",
+                  "example": "It is 1 nose.",
+                  "image_emoji": "👃",
+                  "image_url": "/static/vocab_images/nose.png"
+                },
+                {
+                  "word": "nine",
+                  "ipa": "/naɪn/",
+                  "definition": "After eight, before ten.",
+                  "example": "How many? It is nine.",
+                  "image_emoji": "9️⃣",
+                  "image_url": "/static/vocab_images/nine.png"
+                },
+                {
+                  "word": "octopus",
+                  "ipa": "/ˈɑːk.tə.pəs/",
+                  "definition": "Animal with eight arms.",
+                  "example": "How many arms? It is eight.",
+                  "image_emoji": "🐙",
+                  "image_url": "/static/vocab_images/octopus.png"
+                },
+                {
+                  "word": "orange",
+                  "ipa": "/ˈɔːr.ɪndʒ/",
+                  "definition": "Round fruit or color.",
+                  "example": "There are five oranges.",
+                  "image_emoji": "🍊",
+                  "image_url": "/static/vocab_images/orange.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "nose",
+                      "emoji": "👃",
+                      "distractors": [
+                        {
+                          "word": "nine",
+                          "emoji": "9️⃣"
+                        },
+                        {
+                          "word": "octopus",
+                          "emoji": "🐙"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🍊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "nine",
+                      "emoji": "9️⃣",
+                      "distractors": [
+                        {
+                          "word": "nose",
+                          "emoji": "👃"
+                        },
+                        {
+                          "word": "octopus",
+                          "emoji": "🐙"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🍊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "octopus",
+                      "emoji": "🐙",
+                      "distractors": [
+                        {
+                          "word": "nose",
+                          "emoji": "👃"
+                        },
+                        {
+                          "word": "nine",
+                          "emoji": "9️⃣"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🍊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "orange",
+                      "emoji": "🍊",
+                      "distractors": [
+                        {
+                          "word": "nose",
+                          "emoji": "👃"
+                        },
+                        {
+                          "word": "nine",
+                          "emoji": "9️⃣"
+                        },
+                        {
+                          "word": "octopus",
+                          "emoji": "🐙"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "nose",
+                      "emoji": "👃",
+                      "distractors": [
+                        {
+                          "word": "nine",
+                          "emoji": "9️⃣"
+                        },
+                        {
+                          "word": "octopus",
+                          "emoji": "🐙"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🍊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "nine",
+                      "emoji": "9️⃣",
+                      "distractors": [
+                        {
+                          "word": "nose",
+                          "emoji": "👃"
+                        },
+                        {
+                          "word": "octopus",
+                          "emoji": "🐙"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🍊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "octopus",
+                      "emoji": "🐙",
+                      "distractors": [
+                        {
+                          "word": "nose",
+                          "emoji": "👃"
+                        },
+                        {
+                          "word": "nine",
+                          "emoji": "9️⃣"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🍊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "orange",
+                      "emoji": "🍊",
+                      "distractors": [
+                        {
+                          "word": "nose",
+                          "emoji": "👃"
+                        },
+                        {
+                          "word": "nine",
+                          "emoji": "9️⃣"
+                        },
+                        {
+                          "word": "octopus",
+                          "emoji": "🐙"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "nose",
+                      "emoji": "👃"
+                    },
+                    {
+                      "word": "nine",
+                      "emoji": "9️⃣"
+                    },
+                    {
+                      "word": "octopus",
+                      "emoji": "🐙"
+                    },
+                    {
+                      "word": "orange",
+                      "emoji": "🍊"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 12
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Animal Adventure",
+              "text": "Look at the sea. It is one octopus. How many monkeys? It is nine. My nose smells the sea. I see a big orange fish!",
+              "questions": [
+                {
+                  "question": "How many monkeys are there?",
+                  "answer": "nine",
+                  "options": [
+                    "one",
+                    "eight",
+                    "nine"
+                  ]
+                },
+                {
+                  "question": "What color is the fish?",
+                  "answer": "orange",
+                  "options": [
+                    "orange",
+                    "blue",
+                    "green"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "How many ___?",
+              "explanation": "Use 'How many' to ask about numbers.",
+              "examples": [
+                "How many oranges?",
+                "How many toys?",
+                "How many stars?"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "many",
+                        "How",
+                        "birds"
+                      ],
+                      "correctSentence": "How many birds?"
+                    },
+                    {
+                      "words": [
+                        "How",
+                        "monkeys",
+                        "many"
+                      ],
+                      "correctSentence": "How many monkeys?"
+                    },
+                    {
+                      "words": [
+                        "fish",
+                        "How",
+                        "many"
+                      ],
+                      "correctSentence": "How many fish?"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "How many ___ are there?",
+                      "answer": "balls",
+                      "options": [
+                        "balls",
+                        "is",
+                        "was",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "How many ___ do you see?",
+                      "answer": "stars",
+                      "options": [
+                        "star",
+                        "stars",
+                        "are",
+                        "was"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "How many cat are there?",
+                      "errorWord": "cat",
+                      "correctWord": "cats"
+                    },
+                    {
+                      "sentence": "How many apple do you see?",
+                      "errorWord": "apple",
+                      "correctWord": "apples"
+                    },
+                    {
+                      "sentence": "How many book on the table?",
+                      "errorWord": "book",
+                      "correctWord": "books"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "I have nine noses drawn on my paper and an octopus with orange spots is next to them. Do you like octopuses?",
+              "questions": [
+                {
+                  "question": "How many noses are drawn on the paper?",
+                  "answer": "nine",
+                  "options": [
+                    "nine",
+                    "five",
+                    "eight"
+                  ]
+                },
+                {
+                  "question": "What spots does the octopus have?",
+                  "answer": "orange",
+                  "options": [
+                    "orange",
+                    "green",
+                    "blue"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: How many oranges?",
+              "expected_text": "how many oranges",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "How many legs does an octopus have?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "eight",
+                  "options": [
+                    "eight",
+                    "six",
+                    "four",
+                    "ten"
+                  ]
+                },
+                {
+                  "question_text": "The letter 'N' sounds like ___ in 'nine'.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "nnnn",
+                  "options": [
+                    "nnnn",
+                    "oooo",
+                    "mmmm"
+                  ]
+                },
+                {
+                  "question_text": "True or False: An orange is a fruit.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "What word starts with 'N' and is on your face?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "nose",
+                  "options": [
+                    "nose",
+                    "knee",
+                    "foot",
+                    "ear"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Phonics N",
+              "url": "https://www.youtube.com/watch?v=bck1S86MQfE",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics O",
+              "url": "https://www.youtube.com/watch?v=Db7X1B1Gqpk",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_1_unit_03_lesson_04",
+          "title": "Unit 3 Mastery Check",
+          "topic": "Cumulative Review (K-O & Numbers 1-10)",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/phonics_video",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What sound does the letter 'O' make?",
+                  "correct_answer": "Oh",
+                  "options": [
+                    "Uh",
+                    "Ah",
+                    "Oh",
+                    "Eh"
+                  ],
+                  "image_emoji": "🍊",
+                  "hint": "Think of the sound in 'orange'."
+                },
+                {
+                  "question_text": "Which number comes after 3?",
+                  "correct_answer": "4",
+                  "options": [
+                    "2",
+                    "4",
+                    "5",
+                    "3"
+                  ],
+                  "image_emoji": "4️⃣",
+                  "hint": "Count up one after three."
+                },
+                {
+                  "question_text": "Which fruit is red and starts with 'A'?",
+                  "correct_answer": "Apple",
+                  "options": [
+                    "Apple",
+                    "Banana",
+                    "Grapes",
+                    "Lemon"
+                  ],
+                  "image_emoji": "🍎",
+                  "hint": "This fruit is crunchy and starts with 'A'."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "one",
+                "two",
+                "three",
+                "six",
+                "nine",
+                "ten",
+                "kite",
+                "lion",
+                "monkey",
+                "mouth",
+                "nose",
+                "octopus",
+                "orange"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "apple",
+                      "emoji": "🍎",
+                      "distractors": [
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "grape",
+                          "emoji": "🍇"
+                        },
+                        {
+                          "word": "pear",
+                          "emoji": "🍐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "car",
+                      "emoji": "🚗",
+                      "distractors": [
+                        {
+                          "word": "bus",
+                          "emoji": "🚌"
+                        },
+                        {
+                          "word": "train",
+                          "emoji": "🚆"
+                        },
+                        {
+                          "word": "bicycle",
+                          "emoji": "🚲"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "dog",
+                      "emoji": "🐕",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "hamster",
+                          "emoji": "🐹"
+                        },
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐇"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "banana",
+                      "emoji": "🍌",
+                      "distractors": [
+                        {
+                          "word": "apple",
+                          "emoji": "🍎"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🍊"
+                        },
+                        {
+                          "word": "kiwi",
+                          "emoji": "🥝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "bus",
+                      "emoji": "🚌",
+                      "distractors": [
+                        {
+                          "word": "car",
+                          "emoji": "🚗"
+                        },
+                        {
+                          "word": "train",
+                          "emoji": "🚆"
+                        },
+                        {
+                          "word": "airplane",
+                          "emoji": "✈️"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "fish",
+                      "emoji": "🐟"
+                    },
+                    {
+                      "word": "grape",
+                      "emoji": "🍇"
+                    },
+                    {
+                      "word": "train",
+                      "emoji": "🚆"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Sam's Playground",
+              "text": "Hi! I am Sam. I see two slides and five swings. It is fun! I have a red ball. How many swings? Five!",
+              "questions": [
+                {
+                  "question": "What color is the ball?",
+                  "answer": "red",
+                  "options": [
+                    "red",
+                    "blue",
+                    "green"
+                  ]
+                },
+                {
+                  "question": "How many swings does Sam see?",
+                  "answer": "five",
+                  "options": [
+                    "five",
+                    "two",
+                    "ten"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "It is...",
+                "I see...",
+                "How many?"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "He",
+                        "has",
+                        "a",
+                        "dog"
+                      ],
+                      "correctSentence": "He has a dog"
+                    },
+                    {
+                      "words": [
+                        "We",
+                        "are",
+                        "happy"
+                      ],
+                      "correctSentence": "We are happy"
+                    },
+                    {
+                      "words": [
+                        "They",
+                        "have",
+                        "two",
+                        "cars"
+                      ],
+                      "correctSentence": "They have two cars"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "She ___ a bike.",
+                      "answer": "has",
+                      "options": [
+                        "has",
+                        "have",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ playing.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "has",
+                        "have"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ a hat.",
+                      "answer": "have",
+                      "options": [
+                        "has",
+                        "have",
+                        "are",
+                        "is"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She have a pink dress.",
+                      "errorWord": "have",
+                      "correctWord": "has"
+                    },
+                    {
+                      "sentence": "They is happy.",
+                      "errorWord": "is",
+                      "correctWord": "are"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "I have four blue blocks and three green cars. My sister asked, 'How many cars do we have?' I said, 'We have three!'",
+              "questions": [
+                {
+                  "question": "How many cars do we have?",
+                  "answer": "3",
+                  "options": [
+                    "2",
+                    "5",
+                    "3"
+                  ]
+                },
+                {
+                  "question": "What color are the blocks?",
+                  "answer": "blue",
+                  "options": [
+                    "yellow",
+                    "blue",
+                    "red"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: How many cats do you see?",
+              "expected_text": "i see three cats",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "It ___ four. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "is",
+                  "options": [
+                    "is",
+                    "are",
+                    "am",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "Which number is in between 6 and 8? (Reading comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "7",
+                  "options": [
+                    "6",
+                    "7",
+                    "8",
+                    "9"
+                  ]
+                },
+                {
+                  "question_text": "How many oranges are there if you see three? (Grammar question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "3",
+                  "options": [
+                    "1",
+                    "2",
+                    "3",
+                    "4"
+                  ]
+                },
+                {
+                  "question_text": "True or False: A lemon is yellow.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Which word begins with 'K'? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Kite",
+                  "options": [
+                    "Apple",
+                    "Orange",
+                    "Grapes",
+                    "Kite"
+                  ]
+                }
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Numbers 1-10 Song",
+              "url": "https://www.youtube.com/watch?v=dk9Yt1PqQiw",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        }
+      ]
+    }
+  ],
+  "ai_enriched": true,
+  "enriched_at": "2026-02-17T17:53:53.563987+00:00"
+}
