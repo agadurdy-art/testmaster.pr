@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { getRecommendedLessonPath } from '../lib/recommendationRouting';
+import { useI18n } from '../lib/i18n';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -30,6 +31,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function WritingTask1Practice() {
   const navigate = useNavigate();
+  const { language } = useI18n();
   const [searchParams] = useSearchParams();
   const topic = searchParams.get('topic') || 'participation';
   const bandLevel = searchParams.get('band') || '5.5-6.5';
@@ -167,7 +169,7 @@ export default function WritingTask1Practice() {
       }
     } catch (error) {
       console.error('Error generating visual:', error);
-      toast.error('Görsel oluşturulamadı');
+      toast.error('Could not generate visual');
       
       // Fallback to old endpoint for generated chart types only
       if (!['process', 'map'].includes(visualType)) {
@@ -227,7 +229,8 @@ export default function WritingTask1Practice() {
           visual_type: visualType,
           topic: topic,
           band_level: bandLevel,
-          task_description: taskData?.task_description || ''
+          task_description: taskData?.task_description || '',
+          user_language: language
         })
       });
       

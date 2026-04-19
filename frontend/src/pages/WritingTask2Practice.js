@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { getRecommendedLessonPath } from '../lib/recommendationRouting';
+import { useI18n } from '../lib/i18n';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -28,6 +29,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function WritingTask2Practice() {
   const navigate = useNavigate();
+  const { language } = useI18n();
   const [searchParams] = useSearchParams();
   const examType = searchParams.get('type') || 'academic'; // academic or general
   const urlTopic = searchParams.get('topic');
@@ -148,13 +150,13 @@ export default function WritingTask2Practice() {
 
   const submitForEvaluation = async () => {
     if (wordCount < 200) {
-      toast.error('En az 200 kelime yazmalısınız');
+      toast.error('Please write at least 200 words');
       return;
     }
-    
+
     setEvaluating(true);
-    toast.info('AI değerlendirmesi yapılıyor...');
-    
+    toast.info('AI evaluation in progress...');
+
     try {
       const response = await fetch(`${API_URL}/api/question-bank/writing/evaluate`, {
         method: 'POST',
@@ -164,7 +166,8 @@ export default function WritingTask2Practice() {
           task_type: 'task2',
           topic: selectedPrompt?.topic,
           band_level: selectedPrompt?.band_level || '5.5-6.5',
-          task_description: selectedPrompt?.prompt || ''
+          task_description: selectedPrompt?.prompt || '',
+          user_language: language
         })
       });
       

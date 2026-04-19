@@ -56,6 +56,7 @@ const CONSOLE_IGNORE = [
   /ws:\/\/.*connection establishment/i, // variant of above
   /🚨 LANGUAGE LEAK DETECTED/i,         // dev-only watcher, not a user-facing error
   /Failed to load resource.*status of 403/i, // accompanied 403 already surfaced via networkErrors
+  /emergent-main\.js|rrweb-recorder/i,       // Emergent preview-harness injected scripts, absent in prod
 ];
 
 // Network requests we can ignore (telemetry, 3rd-party probes)
@@ -121,10 +122,14 @@ async function probe(page, targetUrl, { label, auth, note } = {}) {
   };
 
   try {
-    const resp = await page.goto(targetUrl, { waitUntil: "networkidle", timeout: TIMEOUT_MS });
+    // Use 'load' rather than 'networkidle' — long-running background fetches
+    // (e.g. LLM-backed visual generators on the writing-task pages) keep the
+    // network busy indefinitely and would time out a networkidle wait even
+    // though the page is fully usable.
+    const resp = await page.goto(targetUrl, { waitUntil: "load", timeout: TIMEOUT_MS });
     result.httpStatus = resp ? resp.status() : null;
-    // give SPA a moment to render after networkidle
-    await page.waitForTimeout(400);
+    // give the SPA a moment to render and fire its initial effects
+    await page.waitForTimeout(1200);
     result.finalUrl = shortUrl(page.url());
     const body = (await page.evaluate(() => document.body?.innerText || "")).trim();
     result.bodyLen = body.length;

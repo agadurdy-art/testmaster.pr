@@ -1,32 +1,34 @@
 import React from 'react';
+import { useI18n } from '../../../lib/i18n';
 import ArrowRightIcon from './ArrowRightIcon';
 
 export default function LandingHero() {
+  const { t } = useI18n();
+
   return (
     <section className="hero">
       <div className="container hero-grid">
         <div>
           <div className="eyebrow">
             <span className="dot" aria-hidden="true" />
-            Backed by a real IELTS teacher
+            {t('landingV2HeroEyebrow')}
             <span className="sep">·</span>
-            <span>500+ students</span>
+            <span>{t('landingV2HeroEyebrowStudents')}</span>
           </div>
           <h1 className="headline">
-            Score your IELTS essay in <span className="under">12 seconds</span> —{' '}
-            <span className="ital">in your language.</span>
+            {t('landingV2HeroTitleA')} <span className="under">{t('landingV2HeroTitleTime')}</span> —{' '}
+            <span className="ital">{t('landingV2HeroTitleB')}</span>
           </h1>
           <p className="sub">
-            Inline feedback on all four IELTS criteria. A band-level rewrite included.
-            Used by students in Vietnam, Turkey, and 30+ countries.
+            {t('landingV2HeroSub')}
           </p>
           <div className="cta-row">
             <a href="/samples/writing/band-6-5-task2" className="btn btn-primary btn-xl">
-              See a sample evaluation
+              {t('landingV2HeroCtaPrimary')}
               <ArrowRightIcon size={16} />
             </a>
             <a href="#samples" className="btn btn-outline btn-xl">
-              Band 5, 6.5, 8 reports
+              {t('landingV2HeroCtaSecondary')}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M7 17L17 7M9 7h8v8" />
               </svg>
@@ -34,7 +36,7 @@ export default function LandingHero() {
           </div>
           <div className="micro">
             <span className="chk">✓</span>
-            Real student essay · Full band-level report.
+            {t('landingV2HeroMicro')}
           </div>
         </div>
 

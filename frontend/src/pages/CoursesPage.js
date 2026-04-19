@@ -75,19 +75,21 @@ export default function CoursesPage({ user, onLogout }) {
                 </div>
 
                 <Accordion type="single" collapsible className="w-full">
-                  {(course.modules || []).map((module) => (
+                  {(Array.isArray(course.modules) ? course.modules : []).map((module) => {
+                    const lessons = Array.isArray(module?.lessons) ? module.lessons : [];
+                    return (
                     <AccordionItem key={module.id} value={`module-${module.id}`}>
                       <AccordionTrigger className="text-left">
                         <div className="flex items-center space-x-3">
                           <span className="text-lg font-semibold">{module.title}</span>
                           <span className="text-sm text-gray-600">
-                            ({(module.lessons || []).length} lessons)
+                            ({lessons.length} lessons)
                           </span>
                         </div>
                       </AccordionTrigger>
                       <AccordionContent>
                         <div className="space-y-2 pl-4">
-                          {(module.lessons || []).map((lesson) => (
+                          {lessons.map((lesson) => (
                             <div key={lesson.id} className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors">
                               <div className="flex items-center space-x-3">
                                 <ChevronRight className="w-4 h-4 text-gray-400" />
@@ -102,7 +104,8 @@ export default function CoursesPage({ user, onLogout }) {
                         </div>
                       </AccordionContent>
                     </AccordionItem>
-                  ))}
+                    );
+                  })}
                 </Accordion>
 
                 <Button
