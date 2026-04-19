@@ -51,7 +51,7 @@ export default function WritingTask2Practice() {
   const [recommendedLessons, setRecommendedLessons] = useState([]);
 
   const essayTypes = [
-    { id: 'all', name: 'Tümü', icon: BookOpen },
+    { id: 'all', name: 'All', icon: BookOpen },
     { id: 'opinion', name: 'Opinion', icon: MessageSquare },
     { id: 'discussion', name: 'Discussion', icon: Scale },
     { id: 'advantage_disadvantage', name: 'Advantage/Disadvantage', icon: Scale },
@@ -316,7 +316,7 @@ export default function WritingTask2Practice() {
 
               {/* Prompt Selection */}
               <Card className="p-4">
-                <h3 className="font-semibold text-gray-900 mb-3 text-sm">Soru Seçin</h3>
+                <h3 className="font-semibold text-gray-900 mb-3 text-sm">Select Question</h3>
                 <div className="space-y-2 max-h-40 overflow-y-auto">
                   {prompts.map(prompt => (
                     <div

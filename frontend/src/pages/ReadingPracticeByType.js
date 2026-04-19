@@ -169,7 +169,7 @@ export default function ReadingPracticeByType({ user }) {
     return true;
   });
 
-  const currentTypeName = selectedType ? questionTypes[selectedType]?.name : 'Tüm Tipler';
+  const currentTypeName = selectedType ? questionTypes[selectedType]?.name : 'All Types';
 
   if (loading && !moduleContent) {
     return (
@@ -253,7 +253,7 @@ export default function ReadingPracticeByType({ user }) {
                   onClick={() => setSelectedTrack(track)}
                   className={selectedTrack === track ? 'bg-gray-700' : ''}
                 >
-                  {track === 'all' ? 'Tümü' : track === 'academic' ? 'Academic' : 'General'}
+                  {track === 'all' ? 'All' : track === 'academic' ? 'Academic' : 'General'}
                 </Button>
               ))}
             </div>

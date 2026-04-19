@@ -42,7 +42,7 @@ export default function GeneralTask2Practice() {
   const [modelAnswers, setModelAnswers] = useState(null);
 
   const essayTypes = [
-    { id: 'all', name: 'Tümü', color: 'gray' },
+    { id: 'all', name: 'All', color: 'gray' },
     { id: 'opinion', name: 'Opinion', color: 'blue', description: 'Agree/Disagree essays' },
     { id: 'discussion', name: 'Discussion', color: 'green', description: 'Discuss both views' },
     { id: 'problem_solution', name: 'Problem-Solution', color: 'orange', description: 'Problems and solutions' },

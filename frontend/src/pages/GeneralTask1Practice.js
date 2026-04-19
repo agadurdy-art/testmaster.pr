@@ -47,10 +47,10 @@ export default function GeneralTask1Practice() {
   const [modelAnswers, setModelAnswers] = useState(null);
 
   const letterTypes = [
-    { id: 'all', name: 'Tümü', icon: FileText },
-    { id: 'formal', name: 'Formal', icon: User, description: 'İş, şikayet, başvuru' },
-    { id: 'semi_formal', name: 'Semi-Formal', icon: Users, description: 'Tanıdık ama resmi' },
-    { id: 'informal', name: 'Informal', icon: Heart, description: 'Arkadaş, aile' },
+    { id: 'all', name: 'All', icon: FileText },
+    { id: 'formal', name: 'Formal', icon: User, description: 'Work, complaint, application' },
+    { id: 'semi_formal', name: 'Semi-Formal', icon: Users, description: 'Acquaintance, somewhat formal' },
+    { id: 'informal', name: 'Informal', icon: Heart, description: 'Friend, family' },
   ];
 
   const tips = {
@@ -309,9 +309,9 @@ export default function GeneralTask1Practice() {
                   })}
                 </div>
                 <div className="mt-2 grid grid-cols-3 gap-2 text-xs text-gray-500">
-                  <div className="flex items-center gap-1"><User className="w-3 h-3" /> İş/Şikayet</div>
-                  <div className="flex items-center gap-1"><Users className="w-3 h-3" /> Komşu/Kulüp</div>
-                  <div className="flex items-center gap-1"><Heart className="w-3 h-3" /> Arkadaş</div>
+                  <div className="flex items-center gap-1"><User className="w-3 h-3" /> Work / Complaint</div>
+                  <div className="flex items-center gap-1"><Users className="w-3 h-3" /> Neighbor / Club</div>
+                  <div className="flex items-center gap-1"><Heart className="w-3 h-3" /> Friend</div>
                 </div>
               </Card>
 
