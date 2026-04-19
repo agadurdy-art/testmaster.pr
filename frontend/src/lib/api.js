@@ -9,6 +9,27 @@ const api = axios.create({
   }
 });
 
+// Global 402 handler: when the backend rejects an evaluation / mock with
+// quota_exceeded, broadcast a window event so any mounted page can surface
+// an upgrade modal without each call site duplicating the check.
+api.interceptors.response.use(
+  (resp) => resp,
+  (error) => {
+    const status = error?.response?.status;
+    const detail = error?.response?.data?.detail;
+    if (status === 402 && detail && detail.code === 'quota_exceeded') {
+      try {
+        window.dispatchEvent(
+          new CustomEvent('testmaster:quota-exceeded', { detail })
+        );
+      } catch (_) {
+        /* non-browser environment */
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 // Deprecated: createUser (old flow). Use registerUser/loginUser instead.
 export const createUser = async (userData) => {
   const response = await api.post('/auth/register', userData);
@@ -54,6 +75,11 @@ export const resetPassword = async (token, newPassword) => {
 
 export const getUser = async (userId) => {
   const response = await api.get(`/users/${userId}`);
+  return response.data;
+};
+
+export const getUserUsage = async (userId) => {
+  const response = await api.get(`/users/${userId}/usage`);
   return response.data;
 };
 
@@ -162,6 +188,24 @@ export const capturePaypalOrder = async ({ orderId, planId, email }) => {
 
 
 export default api;
+
+export const initiateSepayPayment = async ({ planId, email, currency = 'VND' }) => {
+  const response = await api.post('/payments/sepay/initiate', { planId, email, currency });
+  return response.data;
+};
+
+export const getSepayStatus = async (referenceCode) => {
+  const response = await api.get(`/payments/sepay/status/${referenceCode}`);
+  return response.data;
+};
+
+export const cancelPaypalSubscription = async ({ email, reason }) => {
+  const response = await api.post('/payments/paypal/cancel-subscription', {
+    email,
+    reason: reason || '',
+  });
+  return response.data;
+};
 
 export const uploadBankPayment = async (formData) => {
   const response = await api.post('/payments/bank/upload', formData, {
