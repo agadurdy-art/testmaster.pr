@@ -89,7 +89,7 @@ function HeroDemo() {
               <div className="crit" data-w="62"><span className="name">Lexical Resource</span><span className="val">6.0</span><span className="bar" /></div>
               <div className="crit" data-w="70"><span className="name">Grammar &amp; Accuracy</span><span className="val">6.5</span><span className="bar" /></div>
             </div>
-            <div className="lang-note">
+            <div className="lang-note" data-lang-sample="vi">
               <b>Tiếng Việt</b> · Bản giải thích được dịch tự động · <b>12s</b>
             </div>
           </div>
