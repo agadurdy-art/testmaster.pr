@@ -21,12 +21,12 @@ export default function LandingHero() {
             Used by students in Vietnam, Turkey, and 30+ countries.
           </p>
           <div className="cta-row">
-            <a href="/evaluate/sample" className="btn btn-primary btn-xl">
-              Try with a sample essay
+            <a href="/samples/writing/band-6-5-task2" className="btn btn-primary btn-xl">
+              See a sample evaluation
               <ArrowRightIcon size={16} />
             </a>
-            <a href="/samples/writing/band-6-5-task2" className="btn btn-outline btn-xl">
-              See a Band 6.5 report
+            <a href="#samples" className="btn btn-outline btn-xl">
+              Band 5, 6.5, 8 reports
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M7 17L17 7M9 7h8v8" />
               </svg>
@@ -34,7 +34,7 @@ export default function LandingHero() {
           </div>
           <div className="micro">
             <span className="chk">✓</span>
-            No signup required. 1 free evaluation.
+            Real student essay · Full band-level report.
           </div>
         </div>
 

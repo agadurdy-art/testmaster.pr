@@ -38,6 +38,14 @@ const AdminOnboardingAnalytics = lazy(() => import('./pages/AdminOnboardingAnaly
 const AdminLearningMode = lazy(() => import('./pages/AdminLearningMode'));
 const AdminTestimonials = lazy(() => import('./pages/AdminTestimonials'));
 const ShareYourStoryPage = lazy(() => import('./pages/ShareYourStoryPage'));
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
+const TermsPage = lazy(() => import('./pages/TermsPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const BlogPage = lazy(() => import('./pages/BlogPage'));
+const StatusPage = lazy(() => import('./pages/StatusPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 const VocabularyImageManager = lazy(() => import('./pages/VocabularyImageManager'));
 const LevelTest = lazy(() => import('./pages/LevelTest'));
 const ComprehensiveLevelTest = lazy(() => import('./pages/ComprehensiveLevelTest'));
@@ -329,8 +337,14 @@ function AppWithSessionHandler() {
       <Routes>
         <Route path="/" element={<LandingPageV2 onLogin={handleLogin} user={user} />} />
         <Route path="/landing/v1" element={<LandingPage onLogin={handleLogin} user={user} />} />
-        <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <LandingPage onLogin={handleLogin} user={user} showLogin={true} />} />
+        <Route path="/login" element={<LoginPage user={user} onLogin={handleLogin} />} />
         <Route path="/signup" element={<SignupBridge user={user} />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/status" element={<StatusPage />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/admin/credits" element={<AdminCreditsPage user={user} />} />
@@ -672,10 +686,12 @@ function AppWithSessionHandler() {
           element={user ? <FocusPlan /> : <Navigate to="/" />} 
         />
         {/* Admin Tools */}
-        <Route 
-          path="/admin/visual-generator" 
-          element={user ? <VisualGenerator /> : <Navigate to="/" />} 
+        <Route
+          path="/admin/visual-generator"
+          element={user ? <VisualGenerator /> : <Navigate to="/" />}
         />
+        {/* Catch-all 404 — must be last */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       </Suspense>
       {user && !location.pathname.startsWith('/liz') && (

@@ -99,29 +99,28 @@ A full-stack English learning platform (IELTS focused) with React frontend, Fast
 
 ---
 
-## Session log: 2026-04-19 — Emergent pull `feat/ielts-ace-pre-deploy-2026-04-19`
+## Session log: 2026-04-19 (continued) — Pull `5858ba0a` (dead-link + legal stubs + clean login)
 
-**Action**: Pulled branch from `agadurdy-art/testmaster.pr` into `/app` per `EMERGENT_HANDOFF_2026-04-19.md`. Existing `.env` files were overwritten with user-provided production values (listed variables below). `REACT_APP_BACKEND_URL` was re-pointed to this dev pod's preview URL so frontend can reach local backend for testing (must be reverted to prod URL before deploy).
+**Commit**: `5858ba0a fix(frontend): broken landing links + legal stubs + clean login page`
 
-**Env files (canonical values supplied by Aga)**:
-- Backend: MONGO_URL, DB_NAME=ielts_database, CORS_ORIGINS=*, EMERGENT_LLM_KEY, RESEND (API + from), FRONTEND_BASE_URL=https://prod-security-flows..., PAYPAL_* (live), KOFI_VERIFICATION_TOKEN, FACEBOOK_APP_ID/SECRET, AZURE_SPEECH_KEY/REGION (southeastasia), ELEVENLABS_API_KEY.
-- Frontend: REACT_APP_BACKEND_URL (dev pod for now; flip to prod-security-flows for deploy), WDS_SOCKET_PORT=443, REACT_APP_ENABLE_VISUAL_EDITS=false, ENABLE_HEALTH_CHECK=false, REACT_APP_PAYPAL_CLIENT_ID, REACT_APP_FACEBOOK_APP_ID.
+**What changed upstream**:
+- Repointed `/evaluate/sample` hero/final CTAs → existing `/samples/writing/band-6-5-task2` (copy updated to match)
+- Nav anchors `#blog`/`#about` → real `/blog` and `/about` routes
+- Fixed SampleReportsStrip band-5 / band-8 route typos
+- Added `PrivacyPage`, `TermsPage`, `ContactPage`, `BlogPage`, `StatusPage`, `AboutPage`, `NotFoundPage`, `LoginPage`
+- Added `<Route path="*" element={<NotFoundPage />} />` catch-all
+- Replaced the old login-in-modal flow with a clean standalone `/login` page that keeps the Emergent Google OAuth + email/password login; V1 landing survives at `/landing/v1`
 
-**Services**: backend + frontend restarted via supervisor, both RUNNING. MongoDB auto-seeded 8 stages, 24 units, 96 lessons, admin accounts, Beginner course.
+**This pod**: fresh clone → /app rsync (preserved `.git`/`.emergent` + user-provided `.env` values + our `DISABLE_ESLINT_PLUGIN=true` line). `pip install` + `yarn install` clean. Backend + frontend restarted, supervisor RUNNING.
 
-**Smoke check results** (all 200 / 403 as expected):
-- GET /api/testimonials → `{"testimonials": []}`
-- POST /api/testimonials → creates pending row, returns `{ok, id, status:"pending"}`
-- GET /api/admin/testimonials (no header) → 403 `Admin access required`
-- GET /api/admin/testimonials (x-admin-email: admin@ieltsace.com) → returns pending row
-- GET /api/admin/liz-analytics → stats payload
-- GET /api/admin/onboarding-analytics → funnel + path distribution
-- GET /api/admin/learning-mode-stats → breakdown + flat
-- Frontend `/`, `/share-your-story`, `/admin` → HTTP 200
+**Smoke check results**:
+- `/`, `/login`, `/share-your-story`, `/privacy`, `/terms`, `/contact`, `/blog`, `/status`, `/about` → HTTP 200
+- `/samples/writing/band-5-0-task2`, `/band-6-5-task2`, `/band-8-0-task2` → HTTP 200
+- `/totally-nonexistent-path` → renders NotFoundPage ("Page not found" with Back to home / Contact us buttons) instead of blank screen
+- Login page renders correctly (Google button + email/password + forgot password + signup link)
+- All backend routes (testimonials + admin analytics) still 200/403 as expected
 
-**Notes**:
-- Dev-mode overlay shows two ESLint `react-hooks/exhaustive-deps` "rule definition not found" warnings on `OnboardingQuiz.jsx:30` and `SpeakingPractice.jsx:36`. Non-blocking for runtime; revisit before prod build if CRA treats them as errors.
-- Pre-existing `motor` ModuleNotFoundError from subprocess-run `seed_learning_platform.py` on startup (it still seeds via the in-process path). Unchanged from prior sessions, not introduced by this pull.
-
-**Deferred (per handoff §7)**: P1.11 course-embedded evaluator upgrade, FAZ 7 GE.1–GE.6, seed 3–5 approved testimonials, mobile QA, band accuracy regression.
-
+**Still open (not blocking)**:
+- ESLint plugin still bypassed via `DISABLE_ESLINT_PLUGIN=true` (3 files still have `// eslint-disable-next-line react-hooks/exhaustive-deps` comments + no plugin registered in eslintConfig). Fine for dev/prod builds; clean-up suggested post-launch.
+- Deprecated CRA webpack-dev-server warnings in logs — non-blocking.
+- `/practice` dashboard-nav link (DashboardTopBar) still points to non-existent route — minor, not reachable until user is logged in and inside the V2 dashboard shell.

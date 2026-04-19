@@ -9,9 +9,9 @@ export default function FinalCTA() {
           Your IELTS band is <span className="em">0.5–1.0 lower</span> than it could be.
           Let's fix that.
         </h2>
-        <p>One free evaluation. No signup. No credit card. Just your essay and an honest, band-level response.</p>
-        <a href="/evaluate/sample" className="btn btn-primary btn-xl">
-          Try free
+        <p>See three real student essays evaluated at band 5, 6.5, and 8 — every comment, every rewrite, exactly what students receive.</p>
+        <a href="/samples/writing/band-6-5-task2" className="btn btn-primary btn-xl">
+          See a sample evaluation
           <ArrowRightIcon size={16} />
         </a>
       </div>
