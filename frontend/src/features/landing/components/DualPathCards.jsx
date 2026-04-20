@@ -28,10 +28,10 @@ export default function DualPathCards() {
             title={t('landingV2PathATitle')}
             desc={t('landingV2PathADesc')}
             features={[
-              '4-criterion AI feedback per essay',
-              '1,420+ question bank (Task 1 & 2)',
-              'Full-length mock tests with timing',
-              'Speaking practice with examiner follow-ups',
+              t('landingV2PathAFeat1'),
+              t('landingV2PathAFeat2'),
+              t('landingV2PathAFeat3'),
+              t('landingV2PathAFeat4'),
             ]}
             ctaLabel={t('landingV2PathACta')}
             ctaClass="btn btn-primary btn-lg"

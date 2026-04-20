@@ -1,4 +1,13 @@
 import React from 'react';
+import { useI18n } from '../../../lib/i18n';
+
+// Parse "**bold**" segments in the meta-row string so `+1.3 bands`, `45-day`,
+// `A1 → C2`, `No exam` stay emphasised after translation.
+function withBold(str) {
+  if (!str) return null;
+  const parts = String(str).split(/\*\*(.*?)\*\*/g);
+  return parts.map((p, i) => (i % 2 === 1 ? <b key={i}>{p}</b> : p));
+}
 
 const CHECK_ICON = (
   <svg
@@ -17,15 +26,15 @@ const CHECK_ICON = (
 );
 
 export default function Step1Path({ direction, path, onSelect }) {
+  const { t } = useI18n();
   return (
     <section className={`step${direction === 'rev' ? ' rev' : ''}`}>
       <h1 className="step-title">
-        Let's personalize your plan.{' '}
-        <span className="ital">What's your goal?</span>
+        {t('onbStep1Title')}{' '}
+        <span className="ital">{t('onbStep1TitleItal')}</span>
       </h1>
       <p className="step-sub">
-        Pick the track that matches where you're headed. You can always switch
-        later — we'll bring your progress with you.
+        {t('onbStep1Sub')}
       </p>
 
       <div className="path-grid">
@@ -51,16 +60,12 @@ export default function Step1Path({ direction, path, onSelect }) {
               <path d="M6 12v5c3 3 9 3 12 0v-5" />
             </svg>
           </div>
-          <h3>I'm preparing for IELTS</h3>
+          <h3>{t('onbStep1PathAName')}</h3>
           <p className="desc">
-            Band-calibrated feedback on all four skills. Mock tests, speaking
-            practice with follow-ups, and a dated study plan built around your
-            exam.
+            {t('onbStep1PathADesc')}
           </p>
           <div className="meta-row">
-            <span>Avg. gain <b>+1.3 bands</b></span>
-            <span className="dot"></span>
-            <span><b>45-day</b> plan included</span>
+            <span>{withBold(t('onbStep1PathAMeta'))}</span>
           </div>
         </button>
 
@@ -86,16 +91,12 @@ export default function Step1Path({ direction, path, onSelect }) {
               <path d="M22 3h-7a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h8z" />
             </svg>
           </div>
-          <h3>I want to improve my General English</h3>
+          <h3>{t('onbStep1PathBName')}</h3>
           <p className="desc">
-            Cambridge-pathway lessons at your pace. Vocabulary games,
-            pronunciation coaching, and a weekly focus — no test calendar
-            required.
+            {t('onbStep1PathBDesc')}
           </p>
           <div className="meta-row">
-            <span>Levels <b>A1 → C2</b></span>
-            <span className="dot"></span>
-            <span><b>No exam</b> pressure</span>
+            <span>{withBold(t('onbStep1PathBMeta'))}</span>
           </div>
         </button>
       </div>
