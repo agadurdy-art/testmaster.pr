@@ -357,7 +357,9 @@
 }
 .landing-scope .fix-tooltip {
   position: absolute;
-  top: 108px; left: 32px;
+  top: calc(100% + 10px);
+  left: -4px;
+  z-index: 4;
   background: hsl(var(--foreground));
   color: hsl(var(--background));
   border-radius: 10px;
@@ -365,16 +367,20 @@
   font-size: 12px;
   box-shadow: 0 10px 24px -8px hsl(222 47% 11% / 0.45);
   animation: tipfloat 3s ease-in-out infinite;
+  width: max-content;
   max-width: 260px;
+  white-space: normal;
+  text-align: left;
+  pointer-events: none;
 }
 .landing-scope .fix-tooltip::before {
-  content: ''; position: absolute; top: -5px; left: 30px;
+  content: ''; position: absolute; top: -5px; left: 16px;
   width: 10px; height: 10px; background: hsl(var(--foreground));
   transform: rotate(45deg);
 }
-.landing-scope .fix-tooltip .t { font-weight: 600; color: hsl(var(--accent)); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 3px; }
-.landing-scope .fix-tooltip .s { opacity: 0.5; text-decoration: line-through; }
-.landing-scope .fix-tooltip .e { color: hsl(160 60% 70%); font-weight: 500; }
+.landing-scope .fix-tooltip .t { display: block; font-weight: 600; color: hsl(var(--accent)); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 3px; }
+.landing-scope .fix-tooltip .s { display: block; opacity: 0.5; text-decoration: line-through; }
+.landing-scope .fix-tooltip .e { display: block; color: hsl(160 60% 70%); font-weight: 500; }
 @keyframes tipfloat {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-3px); }
@@ -902,7 +908,7 @@
   .landing-scope .foot-links { flex-wrap: wrap; }
   .landing-scope .section-title { font-size: clamp(28px, 6vw, 36px); }
   .landing-scope .float-tag { display: none; }
-  .landing-scope .fix-tooltip { top: 100px; left: 20px; font-size: 11px; }
+  .landing-scope .fix-tooltip { font-size: 11px; max-width: 220px; }
   .landing-scope .mobile-cta {
     display: flex;
     position: fixed; bottom: 0; left: 0; right: 0;

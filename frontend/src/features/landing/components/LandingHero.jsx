@@ -63,20 +63,22 @@ function HeroDemo({ t, language, nativeLangName }) {
             <div className="essay-label">Task 2 · Writing · Draft 1</div>
             <div className="essay-title">Do social media platforms improve communication?</div>
             <p>
-              Nowadays, many <span className="err">peoples thinks that</span> social media has
-              made communication easier than before. However, it is worth asking whether this
-              convenience has also reduced the depth of our conversations.
+              Nowadays, many{' '}
+              <span className="err">
+                peoples thinks that
+                <span className="fix-tooltip" role="tooltip">
+                  <span className="t">Grammar · Fix</span>
+                  <span className="s">peoples thinks that</span>
+                  <span className="e">people think that</span>
+                </span>
+              </span>{' '}
+              social media has made communication easier than before. However, it is worth
+              asking whether this convenience has also reduced the depth of our conversations.
             </p>
             <p>
               In my opinion, while platforms such as Facebook are useful for keeping in touch,
               they often encourage shorter, more superficial exchanges…
             </p>
-
-            <div className="fix-tooltip">
-              <div className="t">Grammar · Fix</div>
-              <div><span className="s">peoples thinks that</span></div>
-              <div className="e">people think that</div>
-            </div>
           </div>
           <div className="score-panel">
             <div className="band-pill">
