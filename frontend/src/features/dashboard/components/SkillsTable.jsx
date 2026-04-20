@@ -1,4 +1,5 @@
 import React from "react";
+import { useI18n } from "../../../lib/i18n";
 
 /**
  * Table-style list of the four IELTS skills with current band, progress bar,
@@ -9,24 +10,27 @@ import React from "react";
  */
 export default function SkillsTable({
   skills = [],
-  eyebrow = "The four bands",
-  title = "Where you stand.",
+  eyebrow,
+  title,
   fullReportHref = "#",
   onSkillClick,
 }) {
+  const { t } = useI18n();
   return (
     <div>
       <div className="flex items-end justify-between mb-7">
         <div>
-          <div className="label mb-3">{eyebrow}</div>
-          <h3 className="display-l text-[30px] md:text-[36px]">{title}</h3>
+          <div className="label mb-3">{eyebrow ?? t("dashboardV2SkillsEyebrow")}</div>
+          <h3 className="display-l text-[30px] md:text-[36px]">
+            {title ?? t("dashboardV2SkillsTitle")}
+          </h3>
         </div>
         <a
           href={fullReportHref}
           className="text-sm text-muted hover:text-fg underline underline-offset-4 shrink-0"
           style={{ textDecorationColor: "hsl(var(--rule))" }}
         >
-          Full report
+          {t("dashboardV2FullReport")}
         </a>
       </div>
       <div
@@ -34,21 +38,21 @@ export default function SkillsTable({
         style={{ borderColor: "hsl(var(--rule))" }}
       >
         {skills.map((skill) => (
-          <SkillRow key={skill.name} skill={skill} onClick={onSkillClick} />
+          <SkillRow key={skill.name} skill={skill} onClick={onSkillClick} t={t} />
         ))}
       </div>
     </div>
   );
 }
 
-function SkillRow({ skill, onClick }) {
+function SkillRow({ skill, onClick, t }) {
   const { name, band, pctOfTarget, trend, isWeakest } = skill;
   const fillColor = isWeakest ? "hsl(var(--destruct))" : "hsl(var(--primary))";
   const pctLabel =
     pctOfTarget >= 100
-      ? "At target"
+      ? t("dashboardV2AtTarget")
       : pctOfTarget != null
-      ? `${pctOfTarget}% of target`
+      ? t("dashboardV2PctOfTarget", { pct: pctOfTarget })
       : null;
   return (
     <button
@@ -64,7 +68,7 @@ function SkillRow({ skill, onClick }) {
           {name}
           {isWeakest && (
             <span className="warn-ink text-[11px] tracking-[0.12em] uppercase font-sans font-medium">
-              Weakest
+              {t("dashboardV2Weakest")}
             </span>
           )}
         </div>

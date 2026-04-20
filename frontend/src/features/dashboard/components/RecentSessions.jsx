@@ -1,4 +1,5 @@
 import React from "react";
+import { useI18n } from "../../../lib/i18n";
 
 /**
  * "The last three sessions." — editorial table of recent practice.
@@ -6,23 +7,28 @@ import React from "react";
  */
 export default function RecentSessions({
   sessions = [],
-  eyebrow = "Recent",
-  title = "The last three sessions.",
+  eyebrow,
+  title,
   viewAllHref = "#",
+  viewAllLabel,
+  bandLabel,
 }) {
+  const { t } = useI18n();
   return (
     <div>
       <div className="flex items-end justify-between mb-7">
         <div>
-          <div className="label mb-3">{eyebrow}</div>
-          <h2 className="display-l text-[30px] md:text-[36px]">{title}</h2>
+          <div className="label mb-3">{eyebrow ?? t("dashboardV2RecentEyebrow")}</div>
+          <h2 className="display-l text-[30px] md:text-[36px]">
+            {title ?? t("dashboardV2RecentTitle")}
+          </h2>
         </div>
         <a
           href={viewAllHref}
           className="text-sm text-muted hover:text-fg underline underline-offset-4 shrink-0"
           style={{ textDecorationColor: "hsl(var(--rule))" }}
         >
-          View all
+          {viewAllLabel ?? t("dashboardV2ViewAll")}
         </a>
       </div>
       <ul
@@ -37,7 +43,9 @@ export default function RecentSessions({
             </div>
             <div className="text-right tabular-nums">
               <div className="font-display text-[24px]">{s.band.toFixed(1)}</div>
-              <div className="label text-[10px] mt-0.5">band</div>
+              <div className="label text-[10px] mt-0.5">
+                {bandLabel ?? t("dashboardV2BandLabel")}
+              </div>
             </div>
           </li>
         ))}

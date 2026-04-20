@@ -1,69 +1,10 @@
 import React, { useState } from 'react';
+import { useI18n } from '../../../lib/i18n';
 
 // Cell helpers for compact row authoring
-const chk = (gold) => (gold ? 'chk-gold' : 'chk');
 const N = (text, dim) => ({ type: 'num', text, dim });
 const C = (gold) => ({ type: 'check', gold });
 const X = () => ({ type: 'x' });
-
-/**
- * Order: [Free, Weekly, Monthly (pop), Exam Pack]
- */
-const GROUPS = [
-  {
-    name: 'Evaluation',
-    rows: [
-      { label: 'Writing evaluations / day', cells: [N('1', true), N('∞'), N('∞'), N('∞')] },
-      { label: 'Speaking evaluations / day', cells: [N('1', true), N('∞'), N('∞'), N('∞')] },
-      { label: 'Task 1 & Task 2 (Academic)', cells: [C(), C(), C(), C()] },
-      { label: 'General Training writing', cells: [X(), C(), C(), C()] },
-      { label: 'Inline corrections & band-level rewrite', cells: [X(), C(), C(), C()] },
-      {
-        label: (
-          <>
-            Translations{' '}
-            <span style={{ color: 'hsl(var(--muted-foreground))', fontWeight: 400 }}>
-              · VI, TR, ZH, +8
-            </span>
-          </>
-        ),
-        cells: [C(), C(), C(), C()],
-      },
-    ],
-  },
-  {
-    name: 'Mock tests',
-    rows: [
-      { label: 'Full mock tests', cells: [X(), N('Writing only', true), N('All 4 sections'), N('All 4 sections')] },
-      { label: 'Timed exam conditions', cells: [X(), C(), C(), C(true)] },
-      { label: 'Past-paper library', cells: [X(), N('Limited', true), C(), C()] },
-    ],
-  },
-  {
-    name: 'Speaking',
-    rows: [
-      { label: 'AI speaking practice', cells: [X(), C(), C(), C()] },
-      { label: 'Examiner-style follow-up questions', cells: [X(), X(), C(), C()] },
-    ],
-  },
-  {
-    name: 'Liz coaching',
-    rows: [
-      { label: 'AI Tutor (Liz) unlimited', cells: [X(), X(), C(), C()] },
-      { label: 'Weekly focus plan', cells: [X(), X(), C(), C()] },
-      { label: 'Rewrites on demand', cells: [X(), N('5 / month', true), N('Unlimited'), N('Unlimited')] },
-      { label: 'Progress charts & history', cells: [X(), C(), C(), C()] },
-    ],
-  },
-  {
-    name: 'Support',
-    rows: [
-      { label: 'Email support', cells: [C(), C(), C(), C()] },
-      { label: 'Priority AI queue', cells: [X(), X(), C(), C()] },
-      { label: 'PDF progress report (share with a teacher)', cells: [X(), X(), C(), C()] },
-    ],
-  },
-];
 
 function renderCell(c) {
   if (c.type === 'num') {
@@ -75,8 +16,69 @@ function renderCell(c) {
   return <span className="cmp-x">—</span>;
 }
 
+/**
+ * Order: [Free, Weekly, Monthly (pop), Exam Pack]
+ * Labels are resolved at render time so i18n can swap them.
+ */
 export default function CompareTable() {
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
+
+  const GROUPS = [
+    {
+      name: t('pricingV2CompareGroupEvaluation'),
+      rows: [
+        { label: t('pricingV2CompareRowWritingEvals'), cells: [N('1', true), N('∞'), N('∞'), N('∞')] },
+        { label: t('pricingV2CompareRowSpeakingEvals'), cells: [N('1', true), N('∞'), N('∞'), N('∞')] },
+        { label: t('pricingV2CompareRowTask12'), cells: [C(), C(), C(), C()] },
+        { label: t('pricingV2CompareRowGT'), cells: [X(), C(), C(), C()] },
+        { label: t('pricingV2CompareRowInlineCorrect'), cells: [X(), C(), C(), C()] },
+        {
+          label: (
+            <>
+              {t('pricingV2CompareRowTranslations')}{' '}
+              <span style={{ color: 'hsl(var(--muted-foreground))', fontWeight: 400 }}>
+                · {t('pricingV2CompareRowTranslationsNote')}
+              </span>
+            </>
+          ),
+          cells: [C(), C(), C(), C()],
+        },
+      ],
+    },
+    {
+      name: t('pricingV2CompareGroupMocks'),
+      rows: [
+        { label: t('pricingV2CompareRowFullMocks'), cells: [X(), N(t('pricingV2CompareCellWritingOnly'), true), N(t('pricingV2CompareCellAll4')), N(t('pricingV2CompareCellAll4'))] },
+        { label: t('pricingV2CompareRowTimed'), cells: [X(), C(), C(), C(true)] },
+        { label: t('pricingV2CompareRowPastPapers'), cells: [X(), N(t('pricingV2CompareCellLimited'), true), C(), C()] },
+      ],
+    },
+    {
+      name: t('pricingV2CompareGroupSpeaking'),
+      rows: [
+        { label: t('pricingV2CompareRowAISpeaking'), cells: [X(), C(), C(), C()] },
+        { label: t('pricingV2CompareRowExaminerFollowup'), cells: [X(), X(), C(), C()] },
+      ],
+    },
+    {
+      name: t('pricingV2CompareGroupLiz'),
+      rows: [
+        { label: t('pricingV2CompareRowAITutor'), cells: [X(), X(), C(), C()] },
+        { label: t('pricingV2CompareRowWeeklyFocus'), cells: [X(), X(), C(), C()] },
+        { label: t('pricingV2CompareRowRewrites'), cells: [X(), N(t('pricingV2CompareCell5Month'), true), N(t('pricingV2CompareCellUnlimited')), N(t('pricingV2CompareCellUnlimited'))] },
+        { label: t('pricingV2CompareRowCharts'), cells: [X(), C(), C(), C()] },
+      ],
+    },
+    {
+      name: t('pricingV2CompareGroupSupport'),
+      rows: [
+        { label: t('pricingV2CompareRowEmailSupport'), cells: [C(), C(), C(), C()] },
+        { label: t('pricingV2CompareRowPriority'), cells: [X(), X(), C(), C()] },
+        { label: t('pricingV2CompareRowPdfReport'), cells: [X(), X(), C(), C()] },
+      ],
+    },
+  ];
 
   const totalRows = GROUPS.reduce((sum, g) => sum + g.rows.length, 0);
 
@@ -91,9 +93,9 @@ export default function CompareTable() {
             onClick={() => setOpen((v) => !v)}
           >
             <span className="lbl">
-              Compare every feature
+              {t('pricingV2CompareToggle')}
               <span className="tag">
-                {GROUPS.length} groups · {totalRows} rows
+                {t('pricingV2CompareRowsTag', { groups: GROUPS.length, rows: totalRows })}
               </span>
             </span>
             <svg
@@ -116,10 +118,10 @@ export default function CompareTable() {
               <thead>
                 <tr>
                   <th></th>
-                  <th>Free</th>
-                  <th>Weekly</th>
-                  <th className="pop">Monthly</th>
-                  <th>Exam Pack</th>
+                  <th>{t('pricingV2CompareColFree')}</th>
+                  <th>{t('pricingV2CompareColWeekly')}</th>
+                  <th className="pop">{t('pricingV2CompareColMonthly')}</th>
+                  <th>{t('pricingV2CompareColExam')}</th>
                 </tr>
               </thead>
               <tbody>

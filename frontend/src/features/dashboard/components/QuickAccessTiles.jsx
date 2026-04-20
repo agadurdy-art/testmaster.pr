@@ -1,4 +1,5 @@
 import React from "react";
+import { useI18n } from "../../../lib/i18n";
 
 /**
  * "Elsewhere" quick-access grid — 4-column on desktop. Each item is an icon
@@ -7,10 +8,11 @@ import React from "react";
  *
  * items: [{ label, href, icon, tint? ("default"|"sky"|"gold"|"liz") }]
  */
-export default function QuickAccessTiles({ items = [], eyebrow = "Elsewhere" }) {
+export default function QuickAccessTiles({ items = [], eyebrow }) {
+  const { t } = useI18n();
   return (
     <section className="mb-14">
-      <div className="label mb-6">{eyebrow}</div>
+      <div className="label mb-6">{eyebrow ?? t("dashboardV2ElsewhereEyebrow")}</div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-6 gap-y-5">
         {items.map((item) => (
           <a

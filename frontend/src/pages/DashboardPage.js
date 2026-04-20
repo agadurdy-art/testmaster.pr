@@ -1,4 +1,5 @@
 import React from "react";
+import { useI18n } from "../lib/i18n";
 import {
   DashboardLayout,
   DashboardFooter,
@@ -23,45 +24,62 @@ import {
  * (/dashboard/summary), this page becomes the place to fetch + render it.
  */
 export default function DashboardPage() {
+  const { t, languageWireCode } = useI18n();
   const today = new Date();
-  const dateLabel = today.toLocaleDateString("en-US", {
+  // Localized weekday + month via browser locale (honors user's i18n pick).
+  const dateLabel = today.toLocaleDateString(languageWireCode || "en-US", {
     weekday: "long",
     month: "long",
     day: "numeric",
   });
 
+  const hour = today.getHours();
+  const greetingKey =
+    hour < 12
+      ? "dashboardV2GreetingMorning"
+      : hour < 18
+      ? "dashboardV2GreetingAfternoon"
+      : "dashboardV2GreetingEvening";
+
+  const skillsSource = [
+    { key: "Listening", band: 6.5, pctOfTarget: 65, trend: "up" },
+    { key: "Reading", band: 7.0, pctOfTarget: 100, trend: "flat" },
+    { key: "Writing", band: 5.5, pctOfTarget: 50, trend: "down", isWeakest: true },
+    { key: "Speaking", band: 6.5, pctOfTarget: 60, trend: "up" },
+  ];
+  const skills = skillsSource.map((s) => ({
+    ...s,
+    name: t(`dashboardV2Skill${s.key}`),
+  }));
+
   return (
     <DashboardLayout activeSection="dashboard" activeMobileTab="home">
       <EditorialMasthead
         dateLabel={dateLabel}
-        daysToExamLabel="45 days to exam"
-        greeting="Good morning, Aga."
-        subhead="A quiet ten minutes today keeps your streak alive — and your writing moving in the right direction."
+        daysToExamLabel={t("dashboardV2DaysToExam", { n: 45 })}
+        greeting={t(greetingKey, { name: "Aga" })}
+        subhead={t("dashboardV2Subhead")}
       />
 
-      <LizMessage
-        message={
-          <>
-            Yesterday you tackled Task 1. Today let's work on{" "}
-            <em className="italic">coherence</em> — the quiet skill that lifts
-            a 6 toward a 7.
-          </>
-        }
-      />
+      <LizMessage message={t("dashboardV2LizCoherenceMsg")} />
 
       <MetricsTriptych
         currentBand={"6.0"}
-        currentBandTrend={{ label: "Up from 5.5 in March", direction: "up" }}
+        currentBandTrend={{
+          label: t("dashboardV2MetricsTrendUpMarch"),
+          direction: "up",
+        }}
         targetBand={"7.0"}
         targetProgressPct={86}
-        targetProgressLabel="86% of the way there"
+        targetProgressLabel={t("dashboardV2MetricsTargetProgress", { pct: 86 })}
         daysRemaining={45}
-        examDateLabel="Saturday, June 2"
+        examDateLabel={t("dashboardV2ExamDate")}
       />
 
       <StreakStrip
-        title="Seven days, unbroken."
-        subtitle="One more keeps you at your best-ever run of eight."
+        eyebrow={t("dashboardV2StreakEyebrow")}
+        title={t("dashboardV2StreakTitle")}
+        subtitle={t("dashboardV2StreakSub")}
         days={[
           { label: "F", tooltip: "Fri Apr 12", state: "on" },
           { label: "S", tooltip: "Sat Apr 13", state: "on" },
@@ -78,24 +96,23 @@ export default function DashboardPage() {
         <TodaysTask
           eyebrow={
             <>
-              Today <span className="divider-dot" /> 10 minutes
+              {t("dashboardV2TodayEyebrow")} <span className="divider-dot" />{" "}
+              {t("dashboardV2MinutesLabel", { n: 10 })}
             </>
           }
-          title="Coherence drill"
-          description="Connecting ideas in Task 2 body paragraphs — cohesive devices, topic sentences, and the quiet rhythm of a well-built argument."
+          title={t("dashboardV2TodaysTaskTitle")}
+          description={t("dashboardV2TodaysTaskDesc")}
           steps={[
-            "Identify weak transitions in a sample essay.",
-            "Rewrite three body paragraphs with Liz's feedback.",
-            "A short reflection: what changed and why.",
+            t("dashboardV2TodaysTaskStep1"),
+            t("dashboardV2TodaysTaskStep2"),
+            t("dashboardV2TodaysTaskStep3"),
           ]}
+          ctaLabel={t("dashboardV2BeginDrill")}
         />
         <SkillsTable
-          skills={[
-            { name: "Listening", band: 6.5, pctOfTarget: 65, trend: "up" },
-            { name: "Reading", band: 7.0, pctOfTarget: 100, trend: "flat" },
-            { name: "Writing", band: 5.5, pctOfTarget: 50, trend: "down", isWeakest: true },
-            { name: "Speaking", band: 6.5, pctOfTarget: 60, trend: "up" },
-          ]}
+          eyebrow={t("dashboardV2SkillsEyebrow")}
+          title={t("dashboardV2SkillsTitle")}
+          skills={skills}
         />
       </section>
 
@@ -103,7 +120,7 @@ export default function DashboardPage() {
         tiles={[
           {
             status: "In progress",
-            title: "Writing",
+            title: t("dashboardV2SkillWriting"),
             subtitle: "Task 2 essay · 40 min",
             progressLabel: "Draft 2 of 4",
             ctaLabel: "Continue",
@@ -111,7 +128,7 @@ export default function DashboardPage() {
           },
           {
             status: "New",
-            title: "Speaking",
+            title: t("dashboardV2SkillSpeaking"),
             subtitle: "Part 2 cue card · 3–4 min",
             progressLabel: "Fresh prompt",
             ctaLabel: "Try now",
@@ -119,7 +136,7 @@ export default function DashboardPage() {
           },
           {
             status: "Daily",
-            title: "Reading",
+            title: t("dashboardV2SkillReading"),
             subtitle: "Academic passage · 20 min",
             progressLabel: "Passage 7 of 40",
             ctaLabel: "Continue",
@@ -127,7 +144,7 @@ export default function DashboardPage() {
           },
           {
             status: "Section 3",
-            title: "Listening",
+            title: t("dashboardV2SkillListening"),
             subtitle: "Lecture excerpt · 15 min",
             progressLabel: "Set 12 of 30",
             ctaLabel: "Try new",
@@ -137,23 +154,51 @@ export default function DashboardPage() {
       />
 
       <MockTestFrame
-        description="All four skills, exam conditions, officially-weighted scoring. Best once every two weeks — close enough to the real thing that Liz can calibrate your study plan."
-        lastMock="Band 5.5, April 6"
-        nextRecommended="this weekend"
+        eyebrow={t("dashboardV2MockEyebrow")}
+        title={t("dashboardV2MockTitle")}
+        description={t("dashboardV2MockDesc")}
+        durationLabel={t("dashboardV2MockDuration")}
+        lastMockLabel={t("dashboardV2MockLastLabel")}
+        lastMock={t("dashboardV2MockLastValue")}
+        nextRecommendedLabel={t("dashboardV2MockNextLabel")}
+        nextRecommended={t("dashboardV2MockNextValue")}
+        ctaLabel={t("dashboardV2MockCta")}
+        scheduleLabel={t("dashboardV2MockSchedule")}
       />
 
       <section className="grid grid-cols-1 lg:grid-cols-[7fr_5fr] gap-10 md:gap-16 mb-14 md:mb-20">
         <RecentSessions
+          eyebrow={t("dashboardV2RecentEyebrow")}
+          title={t("dashboardV2RecentTitle")}
+          viewAllLabel={t("dashboardV2ViewAll")}
+          bandLabel={t("dashboardV2BandLabel")}
           sessions={[
             { title: "Writing Task 1 — Line graph", subtitle: "Yesterday · 38 min", band: 6.0 },
             { title: 'Speaking Part 2 — "A place you visited"', subtitle: "Apr 16 · 4 min", band: 6.5 },
             { title: "Reading — Academic Passage 6", subtitle: "Apr 15 · 22 min", band: 7.0 },
           ]}
         />
-        <LizNote message="Your Writing band dipped last week. Shall I build a seven-day recovery plan?" />
+        <LizNote
+          eyebrow={t("dashboardV2LizNoteEyebrow")}
+          message={t("dashboardV2LizNoteMsg")}
+          primaryCtaLabel={t("dashboardV2LizNoteYes")}
+          secondaryCtaLabel={t("dashboardV2LizNoteNo")}
+        />
       </section>
 
-      <QuickAccessTiles items={DEFAULT_QUICK_ACCESS} />
+      <QuickAccessTiles
+        eyebrow={t("dashboardV2ElsewhereEyebrow")}
+        items={[
+          { ...DEFAULT_QUICK_ACCESS[0], label: t("dashboardV2QaBeginnerCourse") },
+          { ...DEFAULT_QUICK_ACCESS[1], label: t("dashboardV2QaMasteryCourse") },
+          { ...DEFAULT_QUICK_ACCESS[2], label: t("dashboardV2QaAdvanced") },
+          { ...DEFAULT_QUICK_ACCESS[3], label: t("dashboardV2QaLearningTools") },
+          { ...DEFAULT_QUICK_ACCESS[4], label: t("dashboardV2QaQuestionBank") },
+          { ...DEFAULT_QUICK_ACCESS[5], label: t("dashboardV2QaVocabulary") },
+          { ...DEFAULT_QUICK_ACCESS[6], label: t("dashboardV2QaGrammar") },
+          { ...DEFAULT_QUICK_ACCESS[7], label: t("dashboardV2QaSpeakingTopics") },
+        ]}
+      />
 
       <DashboardFooter />
     </DashboardLayout>

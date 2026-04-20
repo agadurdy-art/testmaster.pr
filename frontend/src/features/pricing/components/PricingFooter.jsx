@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useI18n } from '../../../lib/i18n';
 
 const LANGS = ['EN', 'VI', 'TR', 'ZH'];
 
 export default function PricingFooter() {
+  const { t } = useI18n();
   const [lang, setLang] = useState('EN');
   return (
     <footer>
@@ -12,11 +14,11 @@ export default function PricingFooter() {
             testmaster<span className="pro">.pro</span>
           </a>
           <ul className="foot-links">
-            <li><a href="/privacy">Privacy</a></li>
-            <li><a href="/terms">Terms</a></li>
-            <li><a href="/blog">Teacher Blog</a></li>
-            <li><a href="/contact">Contact</a></li>
-            <li><a href="/status">Status</a></li>
+            <li><a href="/privacy">{t('pricingV2FooterPrivacy')}</a></li>
+            <li><a href="/terms">{t('pricingV2FooterTerms')}</a></li>
+            <li><a href="/blog">{t('pricingV2FooterBlog')}</a></li>
+            <li><a href="/contact">{t('pricingV2FooterContact')}</a></li>
+            <li><a href="/status">{t('pricingV2FooterStatus')}</a></li>
           </ul>
           <div className="lang-switch" role="tablist" aria-label="Language">
             {LANGS.map((l) => (
@@ -34,7 +36,7 @@ export default function PricingFooter() {
           </div>
         </div>
         <div className="foot-copy">
-          © 2026 testmaster.pro · Made by a teacher, powered by students.
+          {t('pricingV2FooterCopy')}
         </div>
       </div>
     </footer>
