@@ -30,9 +30,10 @@ const PLANS_STATIC = [
     ctaKey: 'pricingV2PlanWeeklyCta',
     ctaCls: 'btn-outline',
     price: {
-      USD: { amt: '2.99', unit: '/wk' },
-      VND: { amt: '73.000', unit: '/tuần' },
+      USD: { amt: '2.99' },
+      VND: { amt: '73.000' },
     },
+    unitKey: 'pricingV2PlanWeeklyUnit',
     subKey: { USD: 'pricingV2PlanWeeklySubUSD', VND: 'pricingV2PlanWeeklySubVND' },
     featKeys: [
       'pricingV2PlanWeeklyFeat1',
@@ -49,9 +50,10 @@ const PLANS_STATIC = [
     ctaKey: 'pricingV2PlanMonthlyCta',
     ctaCls: 'btn-primary',
     price: {
-      USD: { amt: '8.99', unit: '/mo' },
-      VND: { amt: '219.000', unit: '/tháng' },
+      USD: { amt: '8.99' },
+      VND: { amt: '219.000' },
     },
+    unitKey: 'pricingV2PlanMonthlyUnit',
     subKey: { USD: 'pricingV2PlanMonthlySubUSD', VND: 'pricingV2PlanMonthlySubVND' },
     featKeys: [
       'pricingV2PlanMonthlyFeat1',
@@ -70,9 +72,10 @@ const PLANS_STATIC = [
     ctaKey: 'pricingV2PlanExamCta',
     ctaCls: 'btn-dark',
     price: {
-      USD: { amt: '14.99', unit: 'once' },
-      VND: { amt: '365.000', unit: 'một lần' },
+      USD: { amt: '14.99' },
+      VND: { amt: '365.000' },
     },
+    unitKey: 'pricingV2PlanExamUnit',
     subKey: { USD: 'pricingV2PlanExamSubUSD', VND: 'pricingV2PlanExamSubVND' },
     featKeys: [
       'pricingV2PlanExamFeat1',
@@ -158,7 +161,7 @@ export default function PlanCards({ user }) {
                 <div className="plan-price">
                   <span className="cur">{CURRENCY_SYMBOL[currency]}</span>
                   <span className="amt">{price.amt}</span>
-                  {price.unit && <span className="unit">{price.unit}</span>}
+                  {p.unitKey && <span className="unit">{t(p.unitKey)}</span>}
                 </div>
                 <div className="plan-price-sub">{sub}</div>
                 <div className="plan-divider"></div>
