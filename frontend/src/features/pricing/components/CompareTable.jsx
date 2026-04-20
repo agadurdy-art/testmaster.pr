@@ -60,7 +60,7 @@ const GROUPS = [
     rows: [
       { label: 'Email support', cells: [C(), C(), C(), C()] },
       { label: 'Priority AI queue', cells: [X(), X(), C(), C()] },
-      { label: 'Teacher & student reports', cells: [X(), X(), C(), C()] },
+      { label: 'PDF progress report (share with a teacher)', cells: [X(), X(), C(), C()] },
     ],
   },
 ];

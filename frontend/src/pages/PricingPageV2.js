@@ -10,6 +10,7 @@ import {
   PricingFinalBanner,
   PricingFooter,
   useLiquidGlass,
+  usePricingSlider,
 } from '../features/pricing';
 import '../features/pricing/pricing.css';
 // Testimonials live in the landing feature (styles keyed to .landing-scope);
@@ -32,12 +33,15 @@ import '../features/landing/landing.css';
 export default function PricingPageV2({ user }) {
   const rootRef = useRef(null);
   useLiquidGlass(rootRef);
+  // Lifted so PricingHero + DaySlider share the same `days` value — the hero's
+  // "Your exam is in N days" copy tracks the slider in real time.
+  const slider = usePricingSlider(30);
 
   return (
     <div ref={rootRef} className="pricing-scope">
       <PricingNav />
-      <PricingHero />
-      <DaySlider />
+      <PricingHero days={slider.days} />
+      <DaySlider slider={slider} />
       <PlanCards user={user} />
       <CompareTable />
       {/* Social proof — wrapped in .landing-scope so the landing CSS tokens apply. */}

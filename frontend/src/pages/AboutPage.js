@@ -1,14 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import LandingNav from '../features/landing/components/LandingNav';
+import '../features/landing/landing.css';
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white text-gray-900">
+      <div className="landing-scope">
+        <LandingNav />
+      </div>
       <div className="max-w-2xl mx-auto px-6 py-12">
-        <Link to="/" className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-8">
-          <ArrowLeft className="w-4 h-4" /> Back to home
-        </Link>
         <h1 className="text-3xl font-bold mb-2">About IELTS Ace</h1>
         <p className="text-sm text-gray-500 mb-8">Made by a teacher, powered by students.</p>
 
@@ -29,6 +30,12 @@ export default function AboutPage() {
             If you hit a rough edge, <a href="mailto:support@testmaster.pro" className="text-violet-600 hover:underline">tell us</a> —
             a real person reads every email.
           </p>
+        </div>
+
+        <div className="mt-10">
+          <Link to="/" className="text-sm text-gray-600 hover:text-gray-900">
+            ← Back to home
+          </Link>
         </div>
       </div>
     </div>

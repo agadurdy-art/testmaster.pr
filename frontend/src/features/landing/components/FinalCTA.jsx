@@ -13,10 +13,16 @@ export default function FinalCTA() {
           {t('landingV2FinalTitleB')}
         </h2>
         <p>{t('landingV2FinalSub')}</p>
-        <a href="/samples/writing/band-6-5-task2" className="btn btn-primary btn-xl">
-          {t('landingV2FinalCta')}
-          <ArrowRightIcon size={16} />
-        </a>
+        <div className="final-cta-row">
+          <a href="/samples/writing/band-6-5-task2" className="btn btn-primary btn-xl">
+            {t('landingV2FinalCta')}
+            <ArrowRightIcon size={16} />
+          </a>
+          <a href="/signup" className="btn btn-outline btn-xl">
+            {t('landingV2FinalCtaFree')}
+          </a>
+        </div>
+        <div className="final-cta-note">{t('landingV2FinalCtaNote')}</div>
       </div>
     </section>
   );

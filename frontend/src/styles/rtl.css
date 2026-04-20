@@ -1,0 +1,58 @@
+/*
+ * Global RTL support.
+ *
+ * Loaded at app root; only active when <html dir="rtl"> (currently set for
+ * Arabic). Flex-rows and text naturally mirror under `dir=rtl`, so these
+ * rules only patch the handful of directional properties used in feature
+ * stylesheets (padding-left/right, margin-left/right, explicit text-align,
+ * arrow icons). More comprehensive mirroring lives inside the feature CSS
+ * itself (see landing.css / pricing.css for mobile-drawer RTL blocks).
+ */
+
+html[dir="rtl"] body,
+html[dir="rtl"] .landing-scope,
+html[dir="rtl"] .pricing-scope {
+  text-align: right;
+}
+
+/* Arrow icons that encode direction should mirror in RTL. */
+html[dir="rtl"] .btn svg,
+html[dir="rtl"] .icon-arrow,
+html[dir="rtl"] [data-mirror-rtl="true"] {
+  transform: scaleX(-1);
+}
+
+/* LanguageSwitcher (native select) — keep chevron on the correct side. */
+html[dir="rtl"] .lang-switcher select {
+  background-position: left 8px center;
+  padding-inline-start: 12px;
+  padding-inline-end: 32px;
+}
+
+/* Language dropdown inside V2 navs should anchor to the leading edge. */
+html[dir="rtl"] .landing-scope .nav-right,
+html[dir="rtl"] .pricing-scope .nav-right {
+  flex-direction: row-reverse;
+}
+
+/* Hero copy and section titles — lift text alignment to start. */
+html[dir="rtl"] .landing-scope .hero-inner,
+html[dir="rtl"] .landing-scope .section-title,
+html[dir="rtl"] .pricing-scope .hero-inner,
+html[dir="rtl"] .pricing-scope .section-title {
+  text-align: start;
+}
+
+/* Inline markup that carries LTR content (URLs, English IELTS terminology)
+   can opt out with .bidi-ltr — renders as LTR even inside an RTL block. */
+html[dir="rtl"] .bidi-ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* Currency + latin numeric strings inside Arabic blocks stay LTR. */
+html[dir="rtl"] .price-main,
+html[dir="rtl"] .days-readout .n {
+  direction: ltr;
+  unicode-bidi: isolate;
+}

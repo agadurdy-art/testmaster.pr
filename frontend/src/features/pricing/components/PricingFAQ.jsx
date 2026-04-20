@@ -1,71 +1,59 @@
 import React, { useState } from 'react';
+import { useI18n } from '../../../lib/i18n';
 
-const ITEMS = [
-  {
-    q: 'Can I switch plans later?',
-    a: (
-      <>
-        Yes — switch or cancel any time from your dashboard. If you upgrade
-        mid-cycle, we <b>pro-rate the difference</b> so you never pay twice for
-        the same day. Downgrades take effect at the end of your current period.
-      </>
-    ),
-  },
-  {
-    q: 'What happens after my exam pack ends?',
-    a: (
-      <>
-        Your pack simply stops — <b>no auto-renewal, no surprise charge</b>.
-        You'll keep read-only access to every report you generated, so you can
-        review your feedback history even after the pack expires. Need more
-        days? Buy another pack or switch to Weekly.
-      </>
-    ),
-  },
-  {
-    q: 'Do you offer teacher discounts?',
-    a: (
-      <>
-        We do. Teachers managing <b>5+ students</b> get a classroom dashboard,
-        bulk evaluations, and 30% off Monthly. Email{' '}
-        <span
-          className="mono"
-          style={{ color: 'hsl(var(--primary))' }}
-        >
-          teachers@testmaster.pro
-        </span>{' '}
-        with your school or center and we'll set you up within 24 hours.
-      </>
-    ),
-  },
-  {
-    q: 'Is my essay data private?',
-    a: (
-      <>
-        Your essays are <b>yours</b>. We never train on student submissions.
-        Evaluation happens in a short-lived context and is deleted once your
-        report is generated. You can export or wipe your full history from
-        Settings → Data at any time.
-      </>
-    ),
-  },
-];
+// Split a translated string on **markdown bold** markers and wrap odd indexes
+// in <b>. Keeps copy translatable without shipping rich JSX per locale.
+function withBold(str) {
+  if (!str) return null;
+  const parts = String(str).split(/\*\*(.*?)\*\*/g);
+  return parts.map((p, i) => (i % 2 === 1 ? <b key={i}>{p}</b> : p));
+}
+
+const TEACHER_EMAIL = 'teachers@testmaster.pro';
 
 export default function PricingFAQ() {
   const [openIdx, setOpenIdx] = useState(-1);
+  const { t } = useI18n();
+
+  const items = [
+    {
+      q: t('pricingV2FaqQ1'),
+      a: <>{withBold(t('pricingV2FaqA1'))}</>,
+    },
+    {
+      q: t('pricingV2FaqQ2'),
+      a: <>{withBold(t('pricingV2FaqA2'))}</>,
+    },
+    {
+      q: t('pricingV2FaqQ3'),
+      a: (
+        <>
+          {withBold(t('pricingV2FaqA3Pre'))}
+          <span className="mono" style={{ color: 'hsl(var(--primary))' }}>
+            {TEACHER_EMAIL}
+          </span>
+          {withBold(t('pricingV2FaqA3Post'))}
+        </>
+      ),
+    },
+    {
+      q: t('pricingV2FaqQ4'),
+      a: <>{withBold(t('pricingV2FaqA4'))}</>,
+    },
+  ];
 
   return (
     <section>
       <div className="container">
         <div className="section-head center">
-          <div className="section-eyebrow">FAQ</div>
-          <h2 className="section-title">Still wondering?</h2>
+          <div className="section-eyebrow">{t('pricingV2FaqEyebrow')}</div>
+          <h2 className="section-title">{t('pricingV2FaqTitle')}</h2>
           <p className="section-sub">
-            The four things most students ask before paying.
+            {t('pricingV2FaqSub')}
           </p>
         </div>
         <div className="faq">
-          {ITEMS.map((item, idx) => {
+          {items.map((item, idx) => {
             const open = openIdx === idx;
             return (
               <div key={idx} className={`faq-item${open ? ' open' : ''}`}>

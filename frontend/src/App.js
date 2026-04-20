@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
+import './styles/rtl.css';
 import LandingPage from './pages/LandingPage';
 import { loginWithEmergentSession } from './lib/api';
 import { toast } from 'sonner';
@@ -114,13 +115,23 @@ const UnifiedLessonPage = lazy(() => import('./pages/UnifiedLessonPage'));
 const DailyHabitPage = lazy(() => import('./pages/DailyHabitPage'));
 const GameDemo = lazy(() => import('./pages/GameDemo'));
 
-// Page loading spinner
+// Page loading fallback — skeleton-based to avoid empty-screen flash during
+// lazy route chunks. Neutral layout that reads as "something is coming" on
+// any page, not a specific one.
 function PageLoader() {
+  const { t } = useI18n();
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="flex flex-col items-center gap-3">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-violet-600"></div>
-        <p className="text-sm text-muted-foreground">Loading...</p>
+    <div className="min-h-screen bg-background px-4 py-10" role="status" aria-live="polite" aria-label={t('loadingLabel')}>
+      <div className="max-w-4xl mx-auto space-y-6">
+        <div className="animate-pulse rounded-lg bg-primary/10 h-8 w-2/3" />
+        <div className="animate-pulse rounded-lg bg-primary/10 h-4 w-5/6" />
+        <div className="animate-pulse rounded-lg bg-primary/10 h-4 w-4/6" />
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+          <div className="animate-pulse rounded-xl bg-primary/10 h-28" />
+          <div className="animate-pulse rounded-xl bg-primary/10 h-28" />
+          <div className="animate-pulse rounded-xl bg-primary/10 h-28" />
+        </div>
+        <span className="sr-only">{t('loadingLabel')}</span>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { useI18n } from '../../../lib/i18n';
 import { LANGUAGES } from '../constants';
 
 const PATH_STORAGE_KEY = 'testmaster_onboarding_path';
@@ -51,6 +52,7 @@ function isStepComplete(state) {
 }
 
 export default function useOnboardingState() {
+  const { t } = useI18n();
   const [state, setState] = useState(() => {
     const initialPath = readInitialPath();
     return initialPath ? { ...INITIAL_STATE, path: initialPath } : INITIAL_STATE;
@@ -94,9 +96,7 @@ export default function useOnboardingState() {
 
   const skip = useCallback(() => {
     if (typeof window === 'undefined') return;
-    const ok = window.confirm(
-      "Skip onboarding? We'll default you to IELTS, Band 6→7, exam TBD, English. You can change anytime in Settings.",
-    );
+    const ok = window.confirm(t('onboardingSkipConfirm'));
     if (!ok) return;
     setState((s) => ({
       ...s,
@@ -108,7 +108,7 @@ export default function useOnboardingState() {
       step: 5,
       direction: 'fwd',
     }));
-  }, []);
+  }, [t]);
 
   return {
     state,
