@@ -1,14 +1,16 @@
 import React from 'react';
+import { useI18n } from '../../../lib/i18n';
 
 export default function StickyActions({ step, canContinue, onContinue }) {
-  const label = step === 5 ? 'Meet my dashboard' : 'Continue';
+  const { t } = useI18n();
+  const label = step === 5 ? t('onbMeetDashboard') : t('onbContinue');
   return (
     <div className="actions">
       <div className="actions-inner">
         <div className="hint">
-          <span className="kbd">Tab</span> to move
-          <span className="kbd">Enter</span> to continue
-          <span className="kbd">Esc</span> to back out
+          <span className="kbd">Tab</span> {t('onbKbdMove')}
+          <span className="kbd">Enter</span> {t('onbKbdContinue')}
+          <span className="kbd">Esc</span> {t('onbKbdBack')}
         </div>
         <button
           type="button"

@@ -1,7 +1,10 @@
 import React from 'react';
-import { STEP_NAMES } from '../constants';
+import { useI18n } from '../../../lib/i18n';
 
 export default function TopBar({ step }) {
+  const { t } = useI18n();
+  const progress = t('onbStepProgress', { step: String(step) });
+  const stepName = t(`onbStepName${step}`);
   return (
     <header className="topbar">
       <div className="topbar-row">
@@ -9,7 +12,7 @@ export default function TopBar({ step }) {
           testmaster<span className="pro">.pro</span>
         </a>
         <div className="step-label">
-          Step <b>{step}</b> of <b>5</b> · <span>{STEP_NAMES[step]}</span>
+          {progress} · <span>{stepName}</span>
         </div>
       </div>
       <div className="progress-track">

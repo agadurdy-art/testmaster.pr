@@ -14,7 +14,7 @@ const PLANS_STATIC = [
     ctaKey: 'pricingV2PlanFreeCta',
     ctaCls: 'btn-outline',
     price: { USD: { amt: '0' }, VND: { amt: '0' } },
-    sub: { USD: 'Always free. No card.', VND: 'Luôn miễn phí. Không cần thẻ.' },
+    subKey: { USD: 'pricingV2PlanFreeSub', VND: 'pricingV2PlanFreeSub' },
     featKeys: [
       'pricingV2PlanFreeFeat1',
       'pricingV2PlanFreeFeat2',
@@ -33,7 +33,7 @@ const PLANS_STATIC = [
       USD: { amt: '2.99', unit: '/wk' },
       VND: { amt: '73.000', unit: '/tuần' },
     },
-    sub: { USD: '≈ $0.43/day', VND: '≈ 10.000đ/ngày' },
+    subKey: { USD: 'pricingV2PlanWeeklySubUSD', VND: 'pricingV2PlanWeeklySubVND' },
     featKeys: [
       'pricingV2PlanWeeklyFeat1',
       'pricingV2PlanWeeklyFeat2',
@@ -52,7 +52,7 @@ const PLANS_STATIC = [
       USD: { amt: '8.99', unit: '/mo' },
       VND: { amt: '219.000', unit: '/tháng' },
     },
-    sub: { USD: '≈ $0.30/day', VND: '≈ 7.300đ/ngày' },
+    subKey: { USD: 'pricingV2PlanMonthlySubUSD', VND: 'pricingV2PlanMonthlySubVND' },
     featKeys: [
       'pricingV2PlanMonthlyFeat1',
       'pricingV2PlanMonthlyFeat2',
@@ -73,7 +73,7 @@ const PLANS_STATIC = [
       USD: { amt: '14.99', unit: 'once' },
       VND: { amt: '365.000', unit: 'một lần' },
     },
-    sub: { USD: '30 days · no renewal', VND: '30 ngày · không gia hạn' },
+    subKey: { USD: 'pricingV2PlanExamSubUSD', VND: 'pricingV2PlanExamSubVND' },
     featKeys: [
       'pricingV2PlanExamFeat1',
       'pricingV2PlanExamFeat2',
@@ -149,7 +149,7 @@ export default function PlanCards({ user }) {
         <div className="plans">
           {PLANS_STATIC.map((p) => {
             const price = p.price[currency] || p.price.USD;
-            const sub = p.sub[currency] || p.sub.USD;
+            const sub = t(p.subKey[currency] || p.subKey.USD);
             return (
               <div key={p.key} className={`plan ${p.className}`}>
                 {p.ribbonKey && <div className="ribbon">{t(p.ribbonKey)}</div>}
