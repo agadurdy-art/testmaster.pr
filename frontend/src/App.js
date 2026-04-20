@@ -235,6 +235,12 @@ function MobileNavWrapper({ user }) {
   ) {
     return null;
   }
+  // Dashboard V2 ships its own DashboardBottomNav inside DashboardLayout.
+  // Suppress the legacy MobileBottomNav on those routes so we don't stack
+  // two bars on mobile (bug report 2026-04-20).
+  if (location.pathname.startsWith('/dashboard')) {
+    return null;
+  }
 
   return <MobileBottomNav currentPath={location.pathname} />;
 }

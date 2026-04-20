@@ -46,6 +46,13 @@ MONTHLY_QUOTAS: Dict[str, Dict[str, Optional[int]]] = {
     "learner":  {"evaluations": 100,  "mocks": 4,  "speaking_minutes": 45},
     "achiever": {"evaluations": None, "mocks": None, "speaking_minutes": None},
     "master":   {"evaluations": None, "mocks": None, "speaking_minutes": None},
+    # IELTS-Ace tiers (pricing page promises "unlimited evaluations"). Without
+    # these entries the .get() fallback below dropped paid users onto `free`
+    # and raised 402 "Monthly quota reached" on the second eval — directly
+    # contradicting marketing copy (bug report 2026-04-20).
+    "weekly":   {"evaluations": None, "mocks": 1,  "speaking_minutes": None},
+    "monthly":  {"evaluations": None, "mocks": None, "speaking_minutes": None},
+    "exam":     {"evaluations": None, "mocks": None, "speaking_minutes": None},
 }
 
 # Human-readable reset label for the meter UI. Pure cosmetic — the boundary
