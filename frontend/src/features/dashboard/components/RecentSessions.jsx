@@ -12,6 +12,7 @@ export default function RecentSessions({
   viewAllHref = "#",
   viewAllLabel,
   bandLabel,
+  emptyMessage,
 }) {
   const { t } = useI18n();
   return (
@@ -31,25 +32,36 @@ export default function RecentSessions({
           {viewAllLabel ?? t("dashboardV2ViewAll")}
         </a>
       </div>
-      <ul
-        className="divide-y border-t border-b hairline"
-        style={{ borderColor: "hsl(var(--rule))" }}
-      >
-        {sessions.map((s, i) => (
-          <li key={i} className="grid grid-cols-[1fr_auto] items-center gap-6 py-5 px-1">
-            <div>
-              <div className="font-display text-[19px]">{s.title}</div>
-              <div className="text-sm text-muted mt-1">{s.subtitle}</div>
-            </div>
-            <div className="text-right tabular-nums">
-              <div className="font-display text-[24px]">{s.band.toFixed(1)}</div>
-              <div className="label text-[10px] mt-0.5">
-                {bandLabel ?? t("dashboardV2BandLabel")}
+      {sessions.length === 0 ? (
+        <div
+          className="border-t border-b hairline py-8 px-1 text-sm text-muted italic"
+          style={{ borderColor: "hsl(var(--rule))" }}
+        >
+          {emptyMessage ?? t("dashboardV2EmptySessionsMsg")}
+        </div>
+      ) : (
+        <ul
+          className="divide-y border-t border-b hairline"
+          style={{ borderColor: "hsl(var(--rule))" }}
+        >
+          {sessions.map((s, i) => (
+            <li key={i} className="grid grid-cols-[1fr_auto] items-center gap-6 py-5 px-1">
+              <div>
+                <div className="font-display text-[19px]">{s.title}</div>
+                <div className="text-sm text-muted mt-1">{s.subtitle}</div>
               </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+              <div className="text-right tabular-nums">
+                <div className="font-display text-[24px]">
+                  {typeof s.band === "number" ? s.band.toFixed(1) : "—"}
+                </div>
+                <div className="label text-[10px] mt-0.5">
+                  {bandLabel ?? t("dashboardV2BandLabel")}
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
