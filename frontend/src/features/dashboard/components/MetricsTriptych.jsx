@@ -1,4 +1,5 @@
 import React from "react";
+import { useI18n } from "../../../lib/i18n";
 
 /**
  * Editorial metrics triptych — current band / target / days remaining.
@@ -13,6 +14,7 @@ export default function MetricsTriptych({
   daysRemaining,
   examDateLabel,
 }) {
+  const { t } = useI18n();
   const clampedPct = Math.max(0, Math.min(100, targetProgressPct ?? 0));
   return (
     <section className="mb-14 md:mb-20">
@@ -21,7 +23,7 @@ export default function MetricsTriptych({
         style={{ borderColor: "hsl(var(--rule))" }}
       >
         <div className="md:pr-10">
-          <div className="label mb-5">Current band</div>
+          <div className="label mb-5">{t("dashboardV2MetricsCurrentBand")}</div>
           <div className="display-xxl text-[68px] md:text-[84px]">{currentBand}</div>
           {currentBandTrend && (
             <div className="mt-3 text-sm text-muted">
@@ -33,7 +35,7 @@ export default function MetricsTriptych({
           )}
         </div>
         <div className="md:px-10">
-          <div className="label mb-5">Target</div>
+          <div className="label mb-5">{t("dashboardV2MetricsTarget")}</div>
           <div className="display-xxl text-[68px] md:text-[84px]">{targetBand}</div>
           <div className="mt-4 progress max-w-[220px]">
             <div style={{ width: `${clampedPct}%`, background: "hsl(var(--primary))" }} />
@@ -43,7 +45,7 @@ export default function MetricsTriptych({
           )}
         </div>
         <div className="md:pl-10">
-          <div className="label mb-5">Days remaining</div>
+          <div className="label mb-5">{t("dashboardV2MetricsDaysRemaining")}</div>
           <div className="display-xxl text-[68px] md:text-[84px]">{daysRemaining}</div>
           {examDateLabel && <div className="mt-3 text-sm text-muted">{examDateLabel}</div>}
         </div>

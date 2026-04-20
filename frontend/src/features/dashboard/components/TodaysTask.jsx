@@ -1,4 +1,5 @@
 import React from "react";
+import { useI18n } from "../../../lib/i18n";
 
 /**
  * "Today's task" editorial column — left side of the 5/7 split with SkillsTable.
@@ -10,9 +11,10 @@ export default function TodaysTask({
   title,
   description,
   steps = [],
-  ctaLabel = "Begin drill",
+  ctaLabel,
   onStart,
 }) {
+  const { t } = useI18n();
   return (
     <div>
       <div className="label mb-5">{eyebrow}</div>
@@ -29,7 +31,7 @@ export default function TodaysTask({
         </ol>
       )}
       <button type="button" className="btn btn-primary mt-9" onClick={onStart}>
-        {ctaLabel}
+        {ctaLabel ?? t("dashboardV2BeginDrill")}
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round">
           <path d="M5 12h14M13 5l7 7-7 7" />
         </svg>

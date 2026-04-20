@@ -1,6 +1,8 @@
 import React from 'react';
+import { useI18n } from '../../../lib/i18n';
 
 export default function PaymentRow() {
+  const { t } = useI18n();
   return (
     <section style={{ paddingTop: 16 }}>
       <div className="container">
@@ -14,7 +16,7 @@ export default function PaymentRow() {
             </div>
             <div className="pay-method">
               <span className="pm-logo pm-sepay">SE</span>
-              SEPay · Vietnam bank transfer
+              {t('pricingV2PaymentSepayLabel')}
             </div>
           </div>
           <div className="pay-note">
@@ -35,18 +37,16 @@ export default function PaymentRow() {
               </svg>
             </span>
             <span>
-              Secure checkout. Cancel anytime.
+              {t('pricingV2PaymentSecureLine')}
               <br />
-              7-day money-back guarantee.
+              {t('pricingV2PaymentMoneyBack')}
             </span>
           </div>
         </div>
         <div className="region-callout">
           <span className="flag">★</span>
           <span className="txt">
-            <b>Paying from Vietnam?</b> Use SEPay to transfer directly from
-            Vietcombank, Techcombank, MB Bank, and 30+ more — no FX fee, no card
-            needed.
+            <b>{t('pricingV2PaymentRegionTitle')}</b> {t('pricingV2PaymentRegionBody')}
           </span>
         </div>
       </div>
