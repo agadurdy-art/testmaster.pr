@@ -4,7 +4,7 @@ import {
   ArrowLeft, ChevronRight, CheckCircle, Clock, Zap, X,
   RefreshCw, RotateCcw, BookOpen, Gamepad2, FileText, Edit3, Headphones, 
   Mic, MicOff, Repeat, Play, Star, Lock, Volume2, AlertCircle, ThumbsUp, ThumbsDown, Square, Trophy,
-  Download, Map, Award, Sparkles, ArrowRight
+  Download, Map, Award, Sparkles, ArrowRight, ExternalLink
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { Button } from '../components/ui/button';
@@ -2974,7 +2974,7 @@ function LessonSummary({ lesson, activityScores, summaryData, completedActivitie
                 data-testid={`extra-link-${i}`}>
                 {link.type === 'youtube' ? <Play className="w-5 h-5 text-red-500 shrink-0" /> : <BookOpen className="w-5 h-5 text-blue-500 shrink-0" />}
                 <span className="text-sm font-medium text-gray-700">{link.label}</span>
-                <ChevronRight className="w-4 h-4 text-gray-400 ml-auto" />
+                <ExternalLink className="w-4 h-4 text-gray-400 ml-auto" aria-label="Opens in a new tab" />
               </a>
             ))}
           </div>

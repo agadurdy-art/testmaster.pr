@@ -1,9 +1,10 @@
 import React from 'react';
-import { useI18n } from '../../../lib/i18n';
+import { useI18n, LANGUAGES } from '../../../lib/i18n';
 import ArrowRightIcon from './ArrowRightIcon';
 
 export default function LandingHero() {
-  const { t } = useI18n();
+  const { t, language } = useI18n();
+  const nativeLangName = LANGUAGES[language] || LANGUAGES.en;
 
   return (
     <section className="hero">
@@ -40,13 +41,13 @@ export default function LandingHero() {
           </div>
         </div>
 
-        <HeroDemo />
+        <HeroDemo t={t} language={language} nativeLangName={nativeLangName} />
       </div>
     </section>
   );
 }
 
-function HeroDemo() {
+function HeroDemo({ t, language, nativeLangName }) {
   return (
     <div className="demo-wrap">
       <div className="float-tag a"><span className="k" />Task Response · 6.5</div>
@@ -91,8 +92,8 @@ function HeroDemo() {
               <div className="crit" data-w="62"><span className="name">Lexical Resource</span><span className="val">6.0</span><span className="bar" /></div>
               <div className="crit" data-w="70"><span className="name">Grammar &amp; Accuracy</span><span className="val">6.5</span><span className="bar" /></div>
             </div>
-            <div className="lang-note" data-lang-sample="vi">
-              <b>Tiếng Việt</b> · Bản giải thích được dịch tự động · <b>12s</b>
+            <div className="lang-note" data-lang-sample={language}>
+              <b>{nativeLangName}</b> · {t('landingV2HeroLangNote')} · <b>12s</b>
             </div>
           </div>
         </div>

@@ -1,6 +1,8 @@
 import React from 'react';
+import { useI18n } from '../../../lib/i18n';
 
 export default function NavRow({ step, onBack, onSkip }) {
+  const { t } = useI18n();
   return (
     <div className="nav-row">
       <button
@@ -22,10 +24,10 @@ export default function NavRow({ step, onBack, onSkip }) {
         >
           <path d="M19 12H5M11 18l-6-6 6-6" />
         </svg>
-        Back
+        {t('onboardingBack')}
       </button>
       <button type="button" className="skip-link" onClick={onSkip}>
-        Skip onboarding (not recommended)
+        {t('onboardingSkip')} <span className="skip-hint">{t('onboardingSkipHint')}</span>
       </button>
     </div>
   );

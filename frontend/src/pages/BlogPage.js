@@ -1,14 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, BookOpen } from 'lucide-react';
+import { BookOpen } from 'lucide-react';
+import LandingNav from '../features/landing/components/LandingNav';
+import '../features/landing/landing.css';
 
 export default function BlogPage() {
   return (
     <div className="min-h-screen bg-white text-gray-900">
+      <div className="landing-scope">
+        <LandingNav />
+      </div>
       <div className="max-w-2xl mx-auto px-6 py-20 text-center">
-        <Link to="/" className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-10 self-start">
-          <ArrowLeft className="w-4 h-4" /> Back to home
-        </Link>
         <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-violet-100 text-violet-600 mb-4">
           <BookOpen className="w-7 h-7" />
         </div>
@@ -22,6 +24,11 @@ export default function BlogPage() {
             Drop us a line
           </a>.
         </p>
+        <div className="mt-10">
+          <Link to="/" className="text-sm text-gray-600 hover:text-gray-900">
+            ← Back to home
+          </Link>
+        </div>
       </div>
     </div>
   );

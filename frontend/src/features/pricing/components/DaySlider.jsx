@@ -1,10 +1,15 @@
 import React from 'react';
+import { useI18n } from '../../../lib/i18n';
 import ArrowRightIcon from './ArrowRightIcon';
 import usePricingSlider from '../hooks/usePricingSlider';
 
 const PRESET_CHIPS = [7, 14, 30, 60, 90, 180, 365];
 
-export default function DaySlider() {
+export default function DaySlider({ slider }) {
+  const { t } = useI18n();
+  // Fall back to an internal hook instance so the component still works
+  // standalone (e.g. if mounted outside PricingPageV2).
+  const fallback = usePricingSlider(30);
   const {
     days,
     setDays,
@@ -15,7 +20,7 @@ export default function DaySlider() {
     leadingText,
     MIN_DAYS,
     MAX_DAYS,
-  } = usePricingSlider(30);
+  } = slider || fallback;
 
   return (
     <section style={{ paddingTop: 16 }}>
@@ -23,22 +28,22 @@ export default function DaySlider() {
         <div className="slider-card">
           <div className="slider-head">
             <div className="slider-question">
-              How many days until <span className="hl">your IELTS exam?</span>
+              {t('pricingV2SliderQuestionA')} <span className="hl">{t('pricingV2SliderQuestionB')}</span>
             </div>
             <div className="price-display">
               <div className="days-readout">
-                For <span className="n">{days}</span> days
+                {t('pricingV2SliderForDays', { days })}
               </div>
               <div className="price-main">
                 <span className="cur">$</span>
                 <span>{totalText}</span>
               </div>
               <div className="per-day">
-                That's <b>{perDayText}</b>/day · pay once
+                {t('pricingV2SliderPerDayA')} <b>{perDayText}</b>{t('pricingV2SliderPerDayB')}
               </div>
               <div className="save-badge">
                 <span className="spark"></span>
-                Save <span>{savingsPct}%</span> vs leading AI IELTS platforms
+                {t('pricingV2SliderSaveA')} <span>{savingsPct}%</span> {t('pricingV2SliderSaveB')}
               </div>
             </div>
           </div>
@@ -61,12 +66,12 @@ export default function DaySlider() {
                 max={MAX_DAYS}
                 value={days}
                 step={1}
-                aria-label="Days until exam"
+                aria-label={t('pricingV2SliderAriaDays')}
                 onChange={(e) => setDays(parseInt(e.target.value, 10))}
               />
             </div>
             <div className="slider-preset-row">
-              <span className="slider-preset-label">Quick picks</span>
+              <span className="slider-preset-label">{t('pricingV2SliderQuickPicks')}</span>
               <div className="preset-chips">
                 {PRESET_CHIPS.map((d) => (
                   <button
@@ -84,21 +89,20 @@ export default function DaySlider() {
 
           <div className="slider-cta-row">
             <div className="slider-cta-text">
-              <b>Pay once</b>, practice unlimited for <b>{days}</b> days. No
-              auto-renewal.
+              {t('pricingV2SliderCtaText', { days })}
             </div>
             <a href="/signup" className="btn btn-primary btn-xl">
-              Start <span>{days}</span>-day pack
+              {t('pricingV2SliderCtaButton', { days })}
               <ArrowRightIcon />
             </a>
           </div>
 
           <div className="compare-strip">
-            <span>Less than half the price of</span>
-            <span className="name">leading AI IELTS platforms</span>
+            <span>{t('pricingV2CompareStripA')}</span>
+            <span className="name">{t('pricingV2CompareStripName')}</span>
             <span className="theirs">${leadingText}</span>
             <span>→</span>
-            <span className="ours">our pack ${totalText}</span>
+            <span className="ours">{t('pricingV2CompareStripOurs', { totalText })}</span>
             <span
               style={{
                 marginLeft: 'auto',
@@ -106,7 +110,7 @@ export default function DaySlider() {
                 fontSize: 11.5,
               }}
             >
-              same {days} days
+              {t('pricingV2CompareStripSame', { days })}
             </span>
           </div>
         </div>

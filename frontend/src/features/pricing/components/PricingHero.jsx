@@ -1,22 +1,23 @@
 import React from 'react';
+import { useI18n } from '../../../lib/i18n';
 
-export default function PricingHero() {
+export default function PricingHero({ days }) {
+  const { t } = useI18n();
+  const dayCount = typeof days === 'number' ? days : 30;
   return (
     <section className="hero">
       <div className="container hero-inner">
         <div className="eyebrow">
           <span className="dot"></span>
-          Honest pricing
+          {t('pricingV2HeroEyebrowA')}
           <span className="sep">·</span>
-          <span>No subscriptions locked to you</span>
+          <span>{t('pricingV2HeroEyebrowB')}</span>
         </div>
         <h1 className="headline">
-          Pay for exactly the <span className="under">days you need.</span>
+          {t('pricingV2HeroTitleA')} <span className="under">{t('pricingV2HeroTitleB')}</span>
         </h1>
         <p className="hero-sub">
-          Your exam is in <span className="days">X days</span>? Pay for X days.
-          That's it — no annual contracts, no surprise renewals, no
-          gym-membership energy.
+          {t('pricingV2HeroSubA')} <span className="days">{t('pricingV2HeroSubDays', { days: dayCount })}</span>{t('pricingV2HeroSubB', { days: dayCount })}
         </p>
       </div>
     </section>

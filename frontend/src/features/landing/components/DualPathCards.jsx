@@ -1,20 +1,23 @@
 import React from 'react';
+import { useI18n } from '../../../lib/i18n';
 import ArrowRightIcon from './ArrowRightIcon';
 
 export default function DualPathCards() {
+  const { t } = useI18n();
   return (
     <section>
       <div className="container">
         <div className="section-head">
-          <div className="section-eyebrow">Choose your path</div>
-          <h2 className="section-title">Which path fits you?</h2>
+          <div className="section-eyebrow">{t('landingV2PathsEyebrow')}</div>
+          <h2 className="section-title">{t('landingV2PathsTitle')}</h2>
           <p className="section-sub">
-            Two programs, one platform. Start where you are — switch whenever you're ready.
+            {t('landingV2PathsSub')}
           </p>
         </div>
         <div className="paths">
           <PathCard
             variant="a"
+            hint={t('landingV2PathAHint')}
             badge="IELTS Ace"
             icon={
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -22,21 +25,22 @@ export default function DualPathCards() {
                 <path d="M6 12v5c3 3 9 3 12 0v-5" />
               </svg>
             }
-            title="For IELTS & Cambridge prep"
-            desc="Master all four skills with band-level scoring, detailed rewrites, and mock tests calibrated to real examiner rubrics."
+            title={t('landingV2PathATitle')}
+            desc={t('landingV2PathADesc')}
             features={[
               '4-criterion AI feedback per essay',
               '1,420+ question bank (Task 1 & 2)',
               'Full-length mock tests with timing',
               'Speaking practice with examiner follow-ups',
             ]}
-            ctaLabel="Start IELTS prep"
+            ctaLabel={t('landingV2PathACta')}
             ctaClass="btn btn-primary btn-lg"
             ctaHref="/signup?path=ielts"
-            lizBubble="I'll guide you through it →"
+            lizBubble={t('landingV2PathALiz')}
           />
           <PathCard
             variant="b"
+            hint={t('landingV2PathBHint')}
             badge="General English"
             icon={
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -44,18 +48,18 @@ export default function DualPathCards() {
                 <path d="M22 3h-7a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h8z" />
               </svg>
             }
-            title="For everyday improvement"
-            desc="Cambridge-pathway lessons, interactive games, and speaking practice — paced for your level, not the test calendar."
+            title={t('landingV2PathBTitle')}
+            desc={t('landingV2PathBDesc')}
             features={[
-              'Beginner to advanced tracks (A1 → C2)',
-              'Interactive lessons & vocabulary games',
-              'Teacher-guided weekly focus',
-              'Speaking & pronunciation coach',
+              t('landingV2PathBFeat1'),
+              t('landingV2PathBFeat2'),
+              t('landingV2PathBFeat3'),
+              t('landingV2PathBFeat4'),
             ]}
-            ctaLabel="Start learning"
+            ctaLabel={t('landingV2PathBCta')}
             ctaClass="btn btn-secondary btn-lg"
             ctaHref="/signup?path=general"
-            lizBubble="I'll pick your first lesson →"
+            lizBubble={t('landingV2PathBLiz')}
           />
         </div>
       </div>
@@ -63,7 +67,7 @@ export default function DualPathCards() {
   );
 }
 
-function PathCard({ variant, badge, icon, title, desc, features, ctaLabel, ctaClass, ctaHref, lizBubble }) {
+function PathCard({ variant, hint, badge, icon, title, desc, features, ctaLabel, ctaClass, ctaHref, lizBubble }) {
   return (
     <div className={`path-card ${variant}`}>
       <div className="badge">
@@ -72,6 +76,7 @@ function PathCard({ variant, badge, icon, title, desc, features, ctaLabel, ctaCl
         </svg>
         {badge}
       </div>
+      {hint && <div className="path-hint">{hint}</div>}
       <div className="path-icon">{icon}</div>
       <h3>{title}</h3>
       <p className="desc">{desc}</p>

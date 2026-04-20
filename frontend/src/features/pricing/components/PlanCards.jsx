@@ -1,78 +1,85 @@
 import React, { useState } from 'react';
+import { useI18n } from '../../../lib/i18n';
 import PlanCheckoutButton from './PlanCheckoutButton';
 
 // Prices are keyed by currency so the toggle can swap both amount+unit display
 // without touching layout. VND is rounded to friendly thousands (no cents).
-const PLANS = [
+// Display strings (tag/feats/cta/ribbon) come from i18n via the `key` — built
+// inside the component so t() is available at render time.
+const PLANS_STATIC = [
   {
     key: 'free',
     name: 'Free',
-    tag: 'Dip your toe. Forever.',
+    tagKey: 'pricingV2PlanFreeTag',
+    ctaKey: 'pricingV2PlanFreeCta',
+    ctaCls: 'btn-outline',
     price: { USD: { amt: '0' }, VND: { amt: '0' } },
     sub: { USD: 'Always free. No card.', VND: 'Luôn miễn phí. Không cần thẻ.' },
-    feats: [
-      '1 Writing evaluation / day',
-      '1 Speaking evaluation / day',
-      'Unlimited Reading & Listening',
-      'Vietnamese translations',
+    featKeys: [
+      'pricingV2PlanFreeFeat1',
+      'pricingV2PlanFreeFeat2',
+      'pricingV2PlanFreeFeat3',
+      'pricingV2PlanFreeFeat4',
     ],
-    cta: { label: 'Start free', cls: 'btn-outline' },
     className: 'free',
   },
   {
     key: 'weekly',
     name: 'Weekly',
-    tag: 'For the steady learner.',
+    tagKey: 'pricingV2PlanWeeklyTag',
+    ctaKey: 'pricingV2PlanWeeklyCta',
+    ctaCls: 'btn-outline',
     price: {
       USD: { amt: '2.99', unit: '/wk' },
       VND: { amt: '73.000', unit: '/tuần' },
     },
     sub: { USD: '≈ $0.43/day', VND: '≈ 10.000đ/ngày' },
-    feats: [
-      'Unlimited evaluations',
-      'Progress charts & history',
-      'Band rewrite on every essay',
-      'Email reminders',
+    featKeys: [
+      'pricingV2PlanWeeklyFeat1',
+      'pricingV2PlanWeeklyFeat2',
+      'pricingV2PlanWeeklyFeat3',
+      'pricingV2PlanWeeklyFeat4',
     ],
-    cta: { label: 'Start weekly', cls: 'btn-outline' },
     className: 'weekly',
   },
   {
     key: 'monthly',
     name: 'Monthly',
-    tag: 'Everything, including Liz.',
+    tagKey: 'pricingV2PlanMonthlyTag',
+    ctaKey: 'pricingV2PlanMonthlyCta',
+    ctaCls: 'btn-primary',
     price: {
       USD: { amt: '8.99', unit: '/mo' },
       VND: { amt: '219.000', unit: '/tháng' },
     },
     sub: { USD: '≈ $0.30/day', VND: '≈ 7.300đ/ngày' },
-    feats: [
-      'Everything in Weekly',
-      'AI Tutor (Liz) unlimited',
-      'Sample library & past papers',
-      'Priority evaluation queue',
-      'Teacher & student reports',
+    featKeys: [
+      'pricingV2PlanMonthlyFeat1',
+      'pricingV2PlanMonthlyFeat2',
+      'pricingV2PlanMonthlyFeat3',
+      'pricingV2PlanMonthlyFeat4',
+      'pricingV2PlanMonthlyFeat5',
     ],
-    cta: { label: 'Choose monthly', cls: 'btn-primary' },
     className: 'popular',
-    ribbon: 'Most popular',
+    ribbonKey: 'pricingV2PlanMonthlyRibbon',
   },
   {
     key: 'exam',
     name: 'Exam Pack',
-    tag: 'One-time. Test-day focus.',
+    tagKey: 'pricingV2PlanExamTag',
+    ctaKey: 'pricingV2PlanExamCta',
+    ctaCls: 'btn-dark',
     price: {
       USD: { amt: '14.99', unit: 'once' },
       VND: { amt: '365.000', unit: 'một lần' },
     },
     sub: { USD: '30 days · no renewal', VND: '30 ngày · không gia hạn' },
-    feats: [
-      '30 days unlimited access',
-      'Full mock tests with timing',
-      'All four skills covered',
-      'Expires automatically',
+    featKeys: [
+      'pricingV2PlanExamFeat1',
+      'pricingV2PlanExamFeat2',
+      'pricingV2PlanExamFeat3',
+      'pricingV2PlanExamFeat4',
     ],
-    cta: { label: 'Buy exam pack', cls: 'btn-dark' },
     className: 'exam',
   },
 ];
@@ -89,15 +96,15 @@ function detectInitialCurrency() {
 
 export default function PlanCards({ user }) {
   const [currency, setCurrency] = useState(detectInitialCurrency);
+  const { t } = useI18n();
   return (
     <section>
       <div className="container">
         <div className="section-head center">
-          <div className="section-eyebrow">Or choose a plan</div>
-          <h2 className="section-title">Not racing a test? Pick a rhythm.</h2>
+          <div className="section-eyebrow">{t('pricingV2PlansEyebrow')}</div>
+          <h2 className="section-title">{t('pricingV2PlansTitle')}</h2>
           <p className="section-sub">
-            Four ways to use testmaster — from free daily practice to full-feature
-            monthly coaching.
+            {t('pricingV2PlansSub')}
           </p>
           <div
             role="tablist"
@@ -140,14 +147,14 @@ export default function PlanCards({ user }) {
           </div>
         </div>
         <div className="plans">
-          {PLANS.map((p) => {
+          {PLANS_STATIC.map((p) => {
             const price = p.price[currency] || p.price.USD;
             const sub = p.sub[currency] || p.sub.USD;
             return (
               <div key={p.key} className={`plan ${p.className}`}>
-                {p.ribbon && <div className="ribbon">{p.ribbon}</div>}
+                {p.ribbonKey && <div className="ribbon">{t(p.ribbonKey)}</div>}
                 <div className="plan-name">{p.name}</div>
-                <div className="plan-tag">{p.tag}</div>
+                <div className="plan-tag">{t(p.tagKey)}</div>
                 <div className="plan-price">
                   <span className="cur">{CURRENCY_SYMBOL[currency]}</span>
                   <span className="amt">{price.amt}</span>
@@ -156,17 +163,17 @@ export default function PlanCards({ user }) {
                 <div className="plan-price-sub">{sub}</div>
                 <div className="plan-divider"></div>
                 <ul className="plan-feats">
-                  {p.feats.map((f) => (
-                    <li key={f}>
+                  {p.featKeys.map((fk) => (
+                    <li key={fk}>
                       <span className="fcheck">✓</span>
-                      {f}
+                      {t(fk)}
                     </li>
                   ))}
                 </ul>
                 <PlanCheckoutButton
                   planKey={p.key}
-                  ctaLabel={p.cta.label}
-                  ctaClass={p.cta.cls}
+                  ctaLabel={t(p.ctaKey)}
+                  ctaClass={p.ctaCls}
                   currency={currency}
                   user={user}
                 />
