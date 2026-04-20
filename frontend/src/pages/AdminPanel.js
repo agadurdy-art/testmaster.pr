@@ -12,6 +12,11 @@ import api from '../lib/api';
 import { toast } from 'sonner';
 
 const PLAN_STYLES = {
+  // IELTS-Ace (current) tiers
+  monthly: 'bg-purple-100 text-purple-700',
+  exam: 'bg-rose-100 text-rose-700',
+  weekly: 'bg-blue-100 text-blue-700',
+  // Legacy General English tiers — still present in DB for existing users
   master: 'bg-purple-100 text-purple-700',
   achiever: 'bg-amber-100 text-amber-700',
   learner: 'bg-blue-100 text-blue-700',
@@ -604,10 +609,17 @@ export default function AdminPanel({ user }) {
                   data-testid="plan-select"
                 >
                   <option value="free">Free</option>
-                  <option value="explorer">Explorer ($4.99/mo)</option>
-                  <option value="learner">Learner ($9/mo)</option>
-                  <option value="achiever">Achiever ($19/mo)</option>
-                  <option value="master">Master ($29/mo)</option>
+                  <optgroup label="IELTS-Ace (current)">
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="exam">Exam Pack</option>
+                  </optgroup>
+                  <optgroup label="Legacy General English">
+                    <option value="explorer">Explorer ($4.99/mo)</option>
+                    <option value="learner">Learner ($9/mo)</option>
+                    <option value="achiever">Achiever ($19/mo)</option>
+                    <option value="master">Master ($29/mo)</option>
+                  </optgroup>
                 </select>
               </div>
               

@@ -1,12 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GraduationCap, Lock } from 'lucide-react';
+import { isAdminUser, normalizePlanName } from '../lib/planAccess';
 
 // Plans that have Liz unlocked. Kept in sync with plan_access.py — any plan
 // where `max_liz_messages > 0` should be listed here.
 //   Legacy GE: learner / achiever / master
-//   IELTS    : monthly (weekly + exam have Liz locked, free has a 5-msg preview)
-const ALLOWED_PLANS = ['learner', 'achiever', 'master', 'monthly', 'free'];
+//   IELTS    : monthly + exam (weekly has Liz locked, free has a 5-msg preview)
+const ALLOWED_PLANS = ['learner', 'achiever', 'master', 'monthly', 'exam', 'free'];
 
 /**
  * Persistent Liz CTA, positioned bottom-center on every page (per 2026-04-19
@@ -15,7 +16,8 @@ const ALLOWED_PLANS = ['learner', 'achiever', 'master', 'monthly', 'free'];
  */
 export default function LizFloatingButton({ user }) {
   const navigate = useNavigate();
-  const hasAccess = user && ALLOWED_PLANS.includes(user.plan);
+  const hasAccess =
+    !!user && (isAdminUser(user) || ALLOWED_PLANS.includes(normalizePlanName(user.plan)));
 
   return (
     <button

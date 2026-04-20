@@ -1,4 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
+// Tab key -> route. Keep in sync with App.js routes. If a parent supplies its
+// own `onNavigate`, we prefer that — otherwise fall back to this map so taps
+// always go somewhere on mobile.
+const ROUTE_MAP = {
+  home: "/dashboard",
+  practice: "/question-bank",
+  liz: "/liz",
+  courses: "/courses",
+  profile: "/profile",
+};
 
 /**
  * Fixed mobile bottom nav. Hidden above 768px via the .dashboard-bottom-nav
@@ -6,6 +18,15 @@ import React from "react";
  * filled with the primary color — it's the one-tap coach entry point.
  */
 export default function DashboardBottomNav({ active = "home", onNavigate }) {
+  const navigate = useNavigate();
+  const go = (key) => {
+    if (onNavigate) {
+      onNavigate(key);
+      return;
+    }
+    const target = ROUTE_MAP[key];
+    if (target) navigate(target);
+  };
   return (
     <nav
       className="dashboard-bottom-nav fixed bottom-0 left-0 right-0 z-40 border-t hairline"
@@ -19,7 +40,7 @@ export default function DashboardBottomNav({ active = "home", onNavigate }) {
         <BottomItem
           label="Home"
           active={active === "home"}
-          onClick={() => onNavigate?.("home")}
+          onClick={() => go("home")}
           icon={
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -30,7 +51,7 @@ export default function DashboardBottomNav({ active = "home", onNavigate }) {
         <BottomItem
           label="Practice"
           active={active === "practice"}
-          onClick={() => onNavigate?.("practice")}
+          onClick={() => go("practice")}
           icon={
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 20h9M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4z" />
@@ -39,7 +60,7 @@ export default function DashboardBottomNav({ active = "home", onNavigate }) {
         />
         <button
           type="button"
-          onClick={() => onNavigate?.("liz")}
+          onClick={() => go("liz")}
           className="relative -mt-5 w-14 h-14 rounded-full flex items-center justify-center text-white"
           style={{ background: "hsl(var(--primary))" }}
           aria-label="Ask Liz"
@@ -51,7 +72,7 @@ export default function DashboardBottomNav({ active = "home", onNavigate }) {
         <BottomItem
           label="Courses"
           active={active === "courses"}
-          onClick={() => onNavigate?.("courses")}
+          onClick={() => go("courses")}
           icon={
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
@@ -61,7 +82,7 @@ export default function DashboardBottomNav({ active = "home", onNavigate }) {
         <BottomItem
           label="Profile"
           active={active === "profile"}
-          onClick={() => onNavigate?.("profile")}
+          onClick={() => go("profile")}
           icon={
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="8" r="4" />
