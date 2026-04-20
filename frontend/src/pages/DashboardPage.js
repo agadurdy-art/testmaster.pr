@@ -1,5 +1,6 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../lib/api";
 import { useI18n } from "../lib/i18n";
 import {
   DashboardLayout,
@@ -24,14 +25,34 @@ const SKILL_KEYS = ["Listening", "Reading", "Writing", "Speaking"];
 /**
  * Authenticated home.
  *
- * Reads state from the `user` doc (current_band, target_band, exam_date,
- * streak, recent_sessions, skill_bands). Anything missing renders as an
- * empty-state / placeholder rather than a mock number — dashboards shown to
- * real students must not invent data.
+ * On mount we fetch /api/dashboard/summary for the signed-in user and render
+ * every section from that payload (skill bands, streak, recent sessions,
+ * Today's Task, Liz nudge, Mock pick — all derived from real test_attempts).
+ * If the request fails we fall back to an honest empty-state so the UI never
+ * invents numbers.
  */
 export default function DashboardPage({ user, onLogout }) {
   const { t, languageWireCode } = useI18n();
   const navigate = useNavigate();
+
+  const [summary, setSummary] = useState(null);
+  const [summaryError, setSummaryError] = useState(null);
+
+  useEffect(() => {
+    if (!user?.id) return;
+    let cancelled = false;
+    api
+      .get("/dashboard/summary", { params: { user_id: user.id } })
+      .then((resp) => {
+        if (!cancelled) setSummary(resp.data);
+      })
+      .catch((err) => {
+        if (!cancelled) setSummaryError(err);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [user?.id]);
 
   const today = new Date();
   const dateLabel = today.toLocaleDateString(languageWireCode || "en-US", {
@@ -49,6 +70,7 @@ export default function DashboardPage({ user, onLogout }) {
       : "dashboardV2GreetingEvening";
 
   const firstName =
+    summary?.user?.first_name ||
     user?.firstName ||
     user?.first_name ||
     (user?.name ? user.name.split(" ")[0] : null) ||
@@ -56,9 +78,12 @@ export default function DashboardPage({ user, onLogout }) {
     "";
 
   // ---- Exam countdown ----
-  const examDate = user?.exam_date ? new Date(user.exam_date) : null;
+  const examDateRaw = summary?.user?.exam_date || user?.exam_date;
+  const examDate = examDateRaw ? new Date(examDateRaw) : null;
   const daysRemaining =
-    examDate && !Number.isNaN(examDate.getTime())
+    summary?.user?.days_remaining != null
+      ? summary.user.days_remaining
+      : examDate && !Number.isNaN(examDate.getTime())
       ? Math.max(0, Math.ceil((examDate - today) / DAY_MS))
       : null;
   const daysToExamLabel =
@@ -74,16 +99,19 @@ export default function DashboardPage({ user, onLogout }) {
         })
       : t("dashboardV2SetExamDate");
 
-  // ---- Metrics (no fake fallback) ----
+  // ---- Metrics ----
   const currentBand =
-    user?.current_band != null ? String(user.current_band) : "—";
+    summary?.current_band != null ? String(summary.current_band) : "—";
   const targetBand =
-    user?.target_band != null ? String(user.target_band) : "—";
+    summary?.target_band != null ? String(summary.target_band) : "—";
   const targetProgressPct =
-    user?.current_band != null && user?.target_band
+    summary?.current_band != null && summary?.target_band
       ? Math.max(
           0,
-          Math.min(100, Math.round((user.current_band / user.target_band) * 100))
+          Math.min(
+            100,
+            Math.round((summary.current_band / summary.target_band) * 100)
+          )
         )
       : null;
   const targetProgressLabel =
@@ -91,20 +119,11 @@ export default function DashboardPage({ user, onLogout }) {
       ? t("dashboardV2SetTargetBand")
       : t("dashboardV2MetricsTargetProgress", { pct: targetProgressPct });
 
-  // ---- Skills table: empty until backend supplies per-skill bands ----
+  // ---- Skills table ----
   const skills = useMemo(() => {
-    const source = user?.skill_bands;
-    if (!source || typeof source !== "object") {
-      return SKILL_KEYS.map((key) => ({
-        key,
-        name: t(`dashboardV2Skill${key}`),
-        band: null,
-        pctOfTarget: 0,
-        trend: "flat",
-      }));
-    }
+    const source = summary?.skill_bands;
     return SKILL_KEYS.map((key) => {
-      const entry = source[key.toLowerCase()] || {};
+      const entry = (source && source[key.toLowerCase()]) || {};
       return {
         key,
         name: t(`dashboardV2Skill${key}`),
@@ -114,12 +133,11 @@ export default function DashboardPage({ user, onLogout }) {
         isWeakest: !!entry.isWeakest,
       };
     });
-  }, [user?.skill_bands, t]);
+  }, [summary?.skill_bands, t]);
 
-  // ---- Streak: render the last 7 days + today relative to *now*.
-  // States come from user.streak (array of ISO dates). Missing → all "off".
+  // ---- Streak: last 7 days + today, ON when in summary.streak ISO list ----
   const streakDates = useMemo(() => {
-    const daysBack = 7; // show 7 prior days + today = 8 dots
+    const daysBack = 7;
     const fmtLetter = (d) =>
       d.toLocaleDateString("en-US", { weekday: "narrow" });
     const fmtTip = (d) =>
@@ -130,8 +148,8 @@ export default function DashboardPage({ user, onLogout }) {
       });
 
     const completedSet = new Set(
-      Array.isArray(user?.streak)
-        ? user.streak.map((iso) => new Date(iso).toDateString())
+      Array.isArray(summary?.streak)
+        ? summary.streak.map((iso) => new Date(iso).toDateString())
         : []
     );
 
@@ -144,21 +162,25 @@ export default function DashboardPage({ user, onLogout }) {
       out.push({
         label: fmtLetter(d),
         tooltip: isToday ? `Today — ${fmtTip(d)}` : fmtTip(d),
-        state: isToday ? (completed ? "today" : "today") : completed ? "on" : "off",
+        state: isToday ? "today" : completed ? "on" : "off",
       });
     }
     return out;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.streak, languageWireCode]);
+  }, [summary?.streak, languageWireCode]);
 
   const hasCompletedStreakDay = streakDates.some((d) => d.state === "on");
 
-  // ---- Recent sessions (empty until backend supplies) ----
-  const recentSessions = Array.isArray(user?.recent_sessions)
-    ? user.recent_sessions
+  const recentSessions = Array.isArray(summary?.recent_sessions)
+    ? summary.recent_sessions
     : [];
 
-  // ---- Button handlers ----
+  // Today's task + Liz message + mock rec — all come from the summary if
+  // present, else fall back to the editorial copy held in i18n.
+  const todayTask = summary?.today_task || null;
+  const lizMsg = summary?.liz_message || t("dashboardV2LizCoherenceMsg");
+  const mockRec = summary?.mock_recommendation || null;
+
   const goto = (path) => () => navigate(path);
 
   return (
@@ -176,22 +198,14 @@ export default function DashboardPage({ user, onLogout }) {
       />
 
       <LizMessage
-        message={t("dashboardV2LizCoherenceMsg")}
-        onPrimary={goto("/question-bank/writing/task2")}
+        message={lizMsg}
+        onPrimary={goto(todayTask?.cta_href || "/question-bank/writing/task2")}
         onSecondary={goto("/liz")}
       />
 
       <MetricsTriptych
         currentBand={currentBand}
-        // Only show the "Up from…" trend once we actually have history.
-        currentBandTrend={
-          user?.current_band_trend
-            ? {
-                label: user.current_band_trend.label,
-                direction: user.current_band_trend.direction || "up",
-              }
-            : null
-        }
+        currentBandTrend={null /* only render once we have real trend history */}
         targetBand={targetBand}
         targetProgressPct={targetProgressPct ?? 0}
         targetProgressLabel={targetProgressLabel}
@@ -215,18 +229,26 @@ export default function DashboardPage({ user, onLogout }) {
           eyebrow={
             <>
               {t("dashboardV2TodayEyebrow")} <span className="divider-dot" />{" "}
-              {t("dashboardV2MinutesLabel", { n: 10 })}
+              {t("dashboardV2MinutesLabel", {
+                n: todayTask?.duration_minutes ?? 10,
+              })}
             </>
           }
-          title={t("dashboardV2TodaysTaskTitle")}
-          description={t("dashboardV2TodaysTaskDesc")}
-          steps={[
-            t("dashboardV2TodaysTaskStep1"),
-            t("dashboardV2TodaysTaskStep2"),
-            t("dashboardV2TodaysTaskStep3"),
-          ]}
+          title={todayTask?.title || t("dashboardV2TodaysTaskTitle")}
+          description={
+            todayTask?.description || t("dashboardV2TodaysTaskDesc")
+          }
+          steps={
+            Array.isArray(todayTask?.steps) && todayTask.steps.length > 0
+              ? todayTask.steps
+              : [
+                  t("dashboardV2TodaysTaskStep1"),
+                  t("dashboardV2TodaysTaskStep2"),
+                  t("dashboardV2TodaysTaskStep3"),
+                ]
+          }
           ctaLabel={t("dashboardV2BeginDrill")}
-          onStart={goto("/question-bank/writing/task2")}
+          onStart={goto(todayTask?.cta_href || "/question-bank/writing/task2")}
         />
         <SkillsTable
           eyebrow={t("dashboardV2SkillsEyebrow")}
@@ -245,36 +267,25 @@ export default function DashboardPage({ user, onLogout }) {
       </section>
 
       <PracticeIndex
-        tiles={[
-          {
-            status: t("dashboardV2SkillWriting"),
-            title: t("dashboardV2SkillWriting"),
-            subtitle: "Task 2 · 40 min",
+        tiles={SKILL_KEYS.map((key) => {
+          const pathKey = key.toLowerCase();
+          const skill = (summary?.skill_bands || {})[pathKey] || {};
+          return {
+            status:
+              skill.band != null
+                ? `${t(`dashboardV2Skill${key}`)} · ${skill.band.toFixed(1)}`
+                : t(`dashboardV2Skill${key}`),
+            title: t(`dashboardV2Skill${key}`),
+            subtitle:
+              skill.attempts > 0
+                ? `${skill.attempts} recent ${
+                    skill.attempts === 1 ? "attempt" : "attempts"
+                  }`
+                : "Fresh prompt",
             ctaLabel: t("dashboardV2BeginDrill"),
-            href: "/question-bank/writing/task2",
-          },
-          {
-            status: t("dashboardV2SkillSpeaking"),
-            title: t("dashboardV2SkillSpeaking"),
-            subtitle: "Part 2 · 3–4 min",
-            ctaLabel: t("dashboardV2BeginDrill"),
-            href: "/question-bank/speaking",
-          },
-          {
-            status: t("dashboardV2SkillReading"),
-            title: t("dashboardV2SkillReading"),
-            subtitle: "Academic · 20 min",
-            ctaLabel: t("dashboardV2BeginDrill"),
-            href: "/question-bank/reading",
-          },
-          {
-            status: t("dashboardV2SkillListening"),
-            title: t("dashboardV2SkillListening"),
-            subtitle: "Section · 15 min",
-            ctaLabel: t("dashboardV2BeginDrill"),
-            href: "/question-bank/listening",
-          },
-        ]}
+            href: `/question-bank/${pathKey}`,
+          };
+        })}
       />
 
       <MockTestFrame
@@ -283,12 +294,12 @@ export default function DashboardPage({ user, onLogout }) {
         description={t("dashboardV2MockDesc")}
         durationLabel={t("dashboardV2MockDuration")}
         lastMockLabel={t("dashboardV2MockLastLabel")}
-        lastMock={user?.last_mock_label || "—"}
+        lastMock={summary?.user?.last_mock_label || "—"}
         nextRecommendedLabel={t("dashboardV2MockNextLabel")}
-        nextRecommended={user?.next_mock_label || t("dashboardV2MockNextValue")}
+        nextRecommended={mockRec?.label || t("dashboardV2MockNextValue")}
         ctaLabel={t("dashboardV2MockCta")}
         scheduleLabel={t("dashboardV2MockSchedule")}
-        onStart={goto("/practice-test")}
+        onStart={goto(mockRec?.href || "/practice-test")}
         onSchedule={goto("/profile")}
       />
 
@@ -304,7 +315,7 @@ export default function DashboardPage({ user, onLogout }) {
         />
         <LizNote
           eyebrow={t("dashboardV2LizNoteEyebrow")}
-          message={t("dashboardV2LizNoteMsg")}
+          message={lizMsg}
           primaryCtaLabel={t("dashboardV2LizNoteYes")}
           secondaryCtaLabel={t("dashboardV2LizNoteNo")}
           onAccept={goto("/liz")}
