@@ -44,10 +44,10 @@ export default function PublicFooter({ className, currentSampleSlug }) {
         <div>
           <div className="font-semibold mb-2">Practice</div>
           <ul className="space-y-1.5 text-slate-500">
-            <li><a className="hover:text-slate-900" href="/question-bank/writing/task1">Writing Task 1</a></li>
-            <li><a className="hover:text-slate-900" href="/question-bank/writing/task2">Writing Task 2</a></li>
-            <li><a className="hover:text-slate-900" href="/speaking-practice">Speaking</a></li>
-            <li><a className="hover:text-slate-900" href="/question-bank/reading/practice">Reading</a></li>
+            <li><a className="hover:text-slate-900" href="/samples/writing/band-6-5-task2">Writing sample</a></li>
+            <li><a className="hover:text-slate-900" href="/samples/speaking/band-6-5-part2">Speaking sample</a></li>
+            <li><a className="hover:text-slate-900" href="/signup?intent=writing&path=ielts">Try your own essay</a></li>
+            <li><a className="hover:text-slate-900" href="/signup">Start free</a></li>
           </ul>
         </div>
         <div>

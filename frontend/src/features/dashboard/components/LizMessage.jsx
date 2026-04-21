@@ -1,4 +1,5 @@
 import React from "react";
+import LizAvatar from "../../landing/components/LizAvatar";
 
 /**
  * Liz's daily message — editorial block-quote on violet liz-surface.
@@ -15,7 +16,7 @@ export default function LizMessage({
     <section className="liz-surface px-6 md:px-10 py-8 md:py-10 mb-14 md:mb-20">
       <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 md:gap-10 items-start">
         <div className="flex items-center gap-3 md:block">
-          <div className="liz-avatar w-12 h-12 md:w-14 md:h-14 rounded-full" aria-hidden="true" />
+          <LizAvatar size={56} className="liz-avatar shrink-0" />
           <div className="md:mt-3 md:text-center">
             <div className="liz-ink text-[11px] font-medium tracking-[0.18em] uppercase">Liz</div>
             <div className="text-muted text-[11px] mt-0.5 hidden md:block">your coach</div>

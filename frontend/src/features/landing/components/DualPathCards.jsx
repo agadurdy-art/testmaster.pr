@@ -37,6 +37,10 @@ export default function DualPathCards() {
             ctaClass="btn btn-primary btn-lg"
             ctaHref="/signup?path=ielts"
             lizBubble={t('landingV2PathALiz')}
+            miniFlow={{
+              label: 'From lesson to band',
+              steps: ['Pick skill', 'Short lesson', 'Practice + feedback'],
+            }}
           />
           <PathCard
             variant="b"
@@ -67,7 +71,7 @@ export default function DualPathCards() {
   );
 }
 
-function PathCard({ variant, hint, badge, icon, title, desc, features, ctaLabel, ctaClass, ctaHref, lizBubble }) {
+function PathCard({ variant, hint, badge, icon, title, desc, features, ctaLabel, ctaClass, ctaHref, lizBubble, miniFlow }) {
   return (
     <div className={`path-card ${variant}`}>
       <div className="badge">
@@ -85,6 +89,19 @@ function PathCard({ variant, hint, badge, icon, title, desc, features, ctaLabel,
           <li key={f}><span className="fcheck">✓</span>{f}</li>
         ))}
       </ul>
+      {miniFlow && (
+        <div className="mini-flow" aria-label={miniFlow.label}>
+          <span className="mini-flow-label">{miniFlow.label}:</span>
+          <ol className="mini-flow-steps">
+            {miniFlow.steps.map((step, i) => (
+              <li key={step}>
+                <span className="mini-flow-num">{i + 1}</span>
+                {step}
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
       <a href={ctaHref} className={ctaClass}>
         {ctaLabel}
         <ArrowRightIcon size={14} />

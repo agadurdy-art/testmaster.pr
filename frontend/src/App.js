@@ -13,7 +13,10 @@ import { scanDomForLanguageLeaks } from './lib/leakDetection';
 import { isEnglishLockedRoute, getEffectiveLanguage } from './lib/languageLock';
 import ErrorBoundary from './components/ErrorBoundary';
 import QuotaExceededModal from './components/QuotaExceededModal';
-import { stashPendingPlan, consumePendingPlan, pendingPlanRedirect } from './lib/pendingPlan';
+import {
+  stashPendingPlan, consumePendingPlan, pendingPlanRedirect,
+  stashPendingIntent, consumePendingIntent, pendingIntentRedirect,
+} from './lib/pendingPlan';
 import { isIeltsMode } from './lib/learningMode';
 
 // Critical pages - loaded immediately
@@ -58,8 +61,10 @@ const EvaluatorResultPreview = lazy(() => import('./pages/EvaluatorResultPreview
 const SampleReportBand65Task2 = lazy(() => import('./pages/SampleReportBand65Task2'));
 const SampleReportBand50Task2 = lazy(() => import('./pages/SampleReportBand50Task2'));
 const SampleReportBand80Task2 = lazy(() => import('./pages/SampleReportBand80Task2'));
+const SampleReportSpeakingPart2 = lazy(() => import('./pages/SampleReportSpeakingPart2'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage'));
 const LandingPageV2 = lazy(() => import('./pages/LandingPageV2'));
+const LandingPageDemo = lazy(() => import('./pages/LandingPageDemo'));
 const PricingPageV2 = lazy(() => import('./pages/PricingPageV2'));
 const BankTransferCheckout = lazy(() => import('./pages/BankTransferCheckout'));
 const OnboardingPageV2 = lazy(() => import('./pages/OnboardingPageV2'));
@@ -258,6 +263,7 @@ function SignupBridge({ user }) {
   const params = new URLSearchParams(location.search);
   const path = (params.get('path') || '').trim().toLowerCase();
   const plan = (params.get('plan') || '').trim().toLowerCase();
+  const intent = (params.get('intent') || '').trim().toLowerCase();
   if (path === 'ielts' || path === 'general' || path === 'general_english' || path === 'general-english' || path === 'ge') {
     try {
       window.localStorage.setItem('testmaster_onboarding_path', path);
@@ -266,14 +272,17 @@ function SignupBridge({ user }) {
     }
   }
   stashPendingPlan(plan);
+  stashPendingIntent(intent);
   if (user) {
-    // Already logged in — honor the pending plan immediately.
+    // Already logged in — honor the pending plan / intent immediately.
     if (!user.onboarding_complete) {
       return <Navigate to="/onboarding" replace />;
     }
-    const pending = consumePendingPlan();
-    const target = pendingPlanRedirect(pending) || '/dashboard';
-    return <Navigate to={target} replace />;
+    const pendingPlan = consumePendingPlan();
+    const planTarget = pendingPlanRedirect(pendingPlan);
+    if (planTarget) return <Navigate to={planTarget} replace />;
+    const intentTarget = pendingIntentRedirect(consumePendingIntent());
+    return <Navigate to={intentTarget || '/dashboard'} replace />;
   }
   return <Navigate to="/login?action=signup" replace />;
 }
@@ -329,9 +338,14 @@ function AppWithSessionHandler() {
       navigate('/onboarding');
       return;
     }
-    // Already-onboarded user came in via /signup?plan=X — honor the plan.
-    const target = pendingPlanRedirect(consumePendingPlan());
-    if (target) navigate(target);
+    // Already-onboarded user came in via /signup?plan=X or ?intent=Y —
+    // honor the plan first (checkout is priority), then the intent
+    // (lands them on the evaluator they were promised). Without this,
+    // "Try your own essay" signups stranded users on /dashboard.
+    const planTarget = pendingPlanRedirect(consumePendingPlan());
+    if (planTarget) { navigate(planTarget); return; }
+    const intentTarget = pendingIntentRedirect(consumePendingIntent());
+    if (intentTarget) navigate(intentTarget);
   };
 
   const handleLogout = () => {
@@ -352,7 +366,7 @@ function AppWithSessionHandler() {
     <>
       <Suspense fallback={<PageLoader />}>
       <Routes>
-        <Route path="/" element={<LandingPageV2 onLogin={handleLogin} user={user} />} />
+        <Route path="/" element={<LandingPageDemo />} />
         <Route path="/landing/v1" element={<LandingPage onLogin={handleLogin} user={user} />} />
         <Route path="/login" element={<LoginPage user={user} onLogin={handleLogin} />} />
         <Route path="/signup" element={<SignupBridge user={user} />} />
@@ -489,10 +503,20 @@ function AppWithSessionHandler() {
           element={<SampleReportBand80Task2 />}
         />
         <Route
+          path="/samples/speaking/band-6-5-part2"
+          element={<SampleReportSpeakingPart2 />}
+        />
+        {/* Legacy URL — Claude Design fixtures are Band 6.5; keep old route as alias */}
+        <Route
+          path="/samples/speaking/band-7-0-part2"
+          element={<SampleReportSpeakingPart2 />}
+        />
+        <Route
           path="/dashboard/v2"
           element={user ? <DashboardPage /> : <Navigate to="/" />}
         />
         <Route path="/landing/v2" element={<LandingPageV2 />} />
+        <Route path="/landing/demo" element={<LandingPageDemo />} />
         <Route path="/pricing/v2" element={<PricingPageV2 user={user} />} />
         <Route path="/onboarding/v2" element={<OnboardingPageV2 user={user} />} />
         <Route path="/speaking/v2" element={<SpeakingPracticeV2 />} />
@@ -718,7 +742,7 @@ function AppWithSessionHandler() {
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       </Suspense>
-      {user && !location.pathname.startsWith('/liz') && (
+      {user && location.pathname.startsWith('/dashboard') && (
         <Suspense fallback={null}><LizFloatingButton user={user} /></Suspense>
       )}
       <EmergentBadgeWrapper />

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function ErrorState({ onRetry, onBack }) {
+export default function ErrorState({ onRetry, onBack, errorMessage }) {
   return (
     <section style={{ maxWidth: 1320, margin: '0 auto', padding: '56px 32px 80px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
@@ -76,7 +76,8 @@ export default function ErrorState({ onRetry, onBack }) {
             We couldn't hear you well.
           </h3>
           <p style={{ color: 'var(--sp-muted-fg)', marginTop: 8, maxWidth: 520 }}>
-            Your audio came through very quiet — about ‑42 dB average. Check your microphone is selected and not muted, then try again. Your cue card is saved.
+            {errorMessage
+              || 'Your audio came through very quiet. Check your microphone is selected and not muted, then try again. Your cue card is saved.'}
           </p>
           <div
             style={{
@@ -94,7 +95,13 @@ export default function ErrorState({ onRetry, onBack }) {
               </svg>
               Try again
             </button>
-            <button className="sp-btn-secondary">Check mic settings</button>
+            <a
+              href="/samples/speaking/band-6-5-part2"
+              className="sp-btn-secondary"
+              style={{ textDecoration: 'none' }}
+            >
+              View sample result
+            </a>
             <button className="sp-btn-ghost" onClick={onBack}>
               Switch to text practice instead
             </button>

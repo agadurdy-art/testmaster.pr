@@ -351,13 +351,17 @@
 /* ---------- RANGE SLIDER ---------- */
 .pricing-scope .slider-wrap { position: relative; padding: 28px 0 8px; }
 .pricing-scope .slider-scale {
-  display: flex; justify-content: space-between;
+  position: relative;
+  height: 18px;
   margin-bottom: 14px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px; color: hsl(var(--muted-foreground));
   font-weight: 500;
 }
-.pricing-scope .slider-scale span { position: relative; }
+.pricing-scope .slider-scale span {
+  position: absolute;
+  top: 0;
+}
 .pricing-scope .slider-scale span::before {
   content: ''; position: absolute;
   left: 50%; top: 14px;

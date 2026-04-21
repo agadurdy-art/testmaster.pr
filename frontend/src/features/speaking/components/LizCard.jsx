@@ -1,4 +1,5 @@
 import React from 'react';
+import LizAvatar from '../../landing/components/LizAvatar';
 
 /**
  * Reusable violet Liz card. Three variants:
@@ -18,9 +19,8 @@ export default function LizCard({ variant = 'suggestion', children, actions }) {
           maxWidth: 360,
         }}
       >
-        <div className="sp-liz-avatar" style={{ width: 36, height: 36, fontSize: 16, flexShrink: 0 }}>
-          L
-        </div>
+        <LizAvatar size={36} className="sp-liz-avatar" />
+
         <div style={{ fontSize: 13.5, lineHeight: 1.4, color: 'var(--sp-liz-700)' }}>
           <span className="sp-liz-meta">Liz · suggestion</span>
           <br />
@@ -41,12 +41,7 @@ export default function LizCard({ variant = 'suggestion', children, actions }) {
         gap: 20,
       }}
     >
-      <div
-        className="sp-liz-avatar"
-        style={{ width: 48, height: 48, fontSize: 22, flexShrink: 0 }}
-      >
-        L
-      </div>
+      <LizAvatar size={48} className="sp-liz-avatar" />
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <span className="sp-liz-meta">Liz · your AI IELTS coach</span>

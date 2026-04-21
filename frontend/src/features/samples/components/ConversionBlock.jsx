@@ -15,6 +15,17 @@ export default function ConversionBlock({ onSubmitEmail, className }) {
     if (!email) return;
     setSubmitted(true);
     onSubmitEmail?.(email);
+    // Carry the intent into the signup flow so the CTA actually delivers
+    // on its promise: sign up → land straight on /writing-practice (the
+    // paste-and-evaluate UI). Without this wire the user saw a fake
+    // "Check your inbox" confirmation and nothing happened. App.js's
+    // SignupBridge + handleLogin now consume `intent=writing` via
+    // lib/pendingPlan's intent helpers.
+    const q = new URLSearchParams({
+      intent: "writing",
+      path: "ielts",
+    });
+    window.location.href = `/signup?${q.toString()}`;
   };
 
   return (
@@ -101,9 +112,7 @@ export default function ConversionBlock({ onSubmitEmail, className }) {
                 )}
               >
                 {submitted ? (
-                  <>
-                    Check your inbox <ArrowRight className="w-3.5 h-3.5" />
-                  </>
+                  <>Starting…</>
                 ) : (
                   <>
                     Start free <ArrowRight className="w-3.5 h-3.5" />

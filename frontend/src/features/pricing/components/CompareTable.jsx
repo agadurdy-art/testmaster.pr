@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useI18n } from '../../../lib/i18n';
 
 // Cell helpers for compact row authoring
@@ -23,6 +23,16 @@ function renderCell(c) {
 export default function CompareTable() {
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    const checkHash = () => {
+      if (window.location.hash === '#compare') setOpen(true);
+    };
+    checkHash();
+    window.addEventListener('hashchange', checkHash);
+    return () => window.removeEventListener('hashchange', checkHash);
+  }, []);
 
   const GROUPS = [
     {
@@ -83,7 +93,7 @@ export default function CompareTable() {
   const totalRows = GROUPS.reduce((sum, g) => sum + g.rows.length, 0);
 
   return (
-    <section style={{ paddingTop: 16 }}>
+    <section id="compare" style={{ paddingTop: 16, scrollMarginTop: 80 }}>
       <div className="container">
         <div className={`compare-wrap${open ? ' open' : ''}`}>
           <button

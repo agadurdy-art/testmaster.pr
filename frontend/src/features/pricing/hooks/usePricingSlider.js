@@ -39,15 +39,12 @@ export default function usePricingSlider(initialDays = 30) {
     const leadingPrice = days * LEADING_PER_DAY;
     const savings = leadingPrice - total;
     const savingsPct = Math.round((savings / leadingPrice) * 100);
-    // Bar fill percent on a log scale (feels nicer for 3–365 range)
+    // Bar fill must match the native <input type="range"> thumb position,
+    // which is linear. Using a log scale here (old behavior) desynced the
+    // fill from the thumb — thumb at 30 with fill reaching ~170.
     const fillPct = Math.min(
       100,
-      Math.max(
-        2,
-        ((Math.log(days) - Math.log(MIN_DAYS)) /
-          (Math.log(MAX_DAYS) - Math.log(MIN_DAYS))) *
-          100,
-      ),
+      Math.max(0, ((days - MIN_DAYS) / (MAX_DAYS - MIN_DAYS)) * 100),
     );
     return {
       total,

@@ -4,6 +4,9 @@ import ArrowRightIcon from './ArrowRightIcon';
 import usePricingSlider from '../hooks/usePricingSlider';
 
 const PRESET_CHIPS = [7, 14, 30, 60, 90, 180, 365];
+// Labels on the scale — rendered at their real linear positions so they
+// line up with the range-input thumb (which is linear).
+const SCALE_LABELS = [3, 30, 90, 180, 365];
 
 export default function DaySlider({ slider }) {
   const { t } = useI18n();
@@ -23,7 +26,7 @@ export default function DaySlider({ slider }) {
   } = slider || fallback;
 
   return (
-    <section style={{ paddingTop: 16 }}>
+    <section id="custom" style={{ paddingTop: 16, scrollMarginTop: 80 }}>
       <div className="container">
         <div className="slider-card">
           <div className="slider-head">
@@ -50,7 +53,25 @@ export default function DaySlider({ slider }) {
 
           <div className="slider-wrap">
             <div className="slider-scale">
-              <span>3</span><span>30</span><span>90</span><span>180</span><span>365</span>
+              {SCALE_LABELS.map((v) => {
+                const pct = ((v - MIN_DAYS) / (MAX_DAYS - MIN_DAYS)) * 100;
+                return (
+                  <span
+                    key={v}
+                    style={{
+                      left: `${pct}%`,
+                      transform:
+                        v === MIN_DAYS
+                          ? 'translateX(0)'
+                          : v === MAX_DAYS
+                            ? 'translateX(-100%)'
+                            : 'translateX(-50%)',
+                    }}
+                  >
+                    {v}
+                  </span>
+                );
+              })}
             </div>
             <div className="slider-track">
               <div className="slider-bar">
