@@ -23,12 +23,12 @@ export default function PricingNav() {
   return (
     <header className="nav">
       <div className="container nav-inner">
-        <a href="/landing/v2" className="logo">
+        <a href="/" className="logo">
           testmaster<span className="pro">.pro</span>
         </a>
         <nav aria-label="Primary">
           <ul className="nav-links">
-            <li><a href="/landing/v2#samples">{t('pricingV2NavSamples')}</a></li>
+            <li><a href="/#samples">{t('pricingV2NavSamples')}</a></li>
             <li><a href="/pricing" aria-current="page">{t('pricingV2NavPricing')}</a></li>
             <li><a href="/blog">{t('pricingV2NavBlog')}</a></li>
             <li><a href="/about">{t('pricingV2NavAbout')}</a></li>
@@ -78,7 +78,7 @@ export default function PricingNav() {
               </button>
             </div>
             <ul className="mobile-drawer-links">
-              <li><a href="/landing/v2#samples" onClick={close}>{t('pricingV2NavSamples')}</a></li>
+              <li><a href="/#samples" onClick={close}>{t('pricingV2NavSamples')}</a></li>
               <li><a href="/pricing" onClick={close}>{t('pricingV2NavPricing')}</a></li>
               <li><a href="/blog" onClick={close}>{t('pricingV2NavBlog')}</a></li>
               <li><a href="/about" onClick={close}>{t('pricingV2NavAbout')}</a></li>

@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { cn } from "../../../lib/utils";
+import CanonicalLizAvatar from "../../landing/components/LizAvatar";
 
 /**
  * Violet "Liz take" summary card — the AI coach's short message and a
@@ -26,7 +27,7 @@ export default function LizTakeCard({
       )}
       aria-label="Liz AI coach summary"
     >
-      <LizAvatar />
+      <CanonicalLizAvatar size={48} ring className="shrink-0" />
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 text-[11px] font-semibold tracking-widest text-violet-700 uppercase">
@@ -75,20 +76,3 @@ export default function LizTakeCard({
   );
 }
 
-function LizAvatar() {
-  return (
-    <div
-      className={cn(
-        "shrink-0 w-12 h-12 rounded-2xl",
-        "bg-gradient-to-br from-violet-500 to-indigo-600",
-        "flex items-center justify-center",
-        "text-white font-bold text-lg shadow-sm",
-        "ring-2 ring-white"
-      )}
-      aria-hidden
-      style={{ fontFamily: "'Playfair Display', serif" }}
-    >
-      L
-    </div>
-  );
-}

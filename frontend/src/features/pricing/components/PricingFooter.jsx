@@ -10,7 +10,7 @@ export default function PricingFooter() {
     <footer>
       <div className="container">
         <div className="foot">
-          <a href="/landing/v2" className="logo">
+          <a href="/" className="logo">
             testmaster<span className="pro">.pro</span>
           </a>
           <ul className="foot-links">

@@ -365,7 +365,7 @@ export default function ResultsState({ data, onRetryCard, onNewCard }) {
                   position: 'absolute',
                   inset: 0,
                   pointerEvents: 'none',
-                  background: 'radial-gradient(500px 200px at 50% -20%, hsl(160 60% 92% / 0.6), transparent 60%)',
+                  background: 'radial-gradient(600px 240px at 50% -20%, hsl(160 60% 92% / 0.8), transparent 60%)',
                 }}
               />
               <div style={{ position: 'relative' }}>

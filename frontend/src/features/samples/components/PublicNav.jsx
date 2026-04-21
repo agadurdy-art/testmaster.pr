@@ -1,5 +1,5 @@
 import React from "react";
-import { Globe, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { cn } from "../../../lib/utils";
 
 /**
@@ -41,14 +41,11 @@ export default function PublicNav({ className, ctaHref = "/signup" }) {
         </a>
 
         <nav className="hidden md:flex items-center gap-7 text-[14px] text-slate-700">
-          <a href="/writing-practice" className="hover:text-slate-900">
+          <a href="/samples/writing/band-6-5-task2" className="hover:text-slate-900">
             Writing
           </a>
-          <a href="/speaking-practice" className="hover:text-slate-900">
+          <a href="/samples/speaking/band-6-5-part2" className="hover:text-slate-900">
             Speaking
-          </a>
-          <a href="/question-bank/reading/practice" className="hover:text-slate-900">
-            Reading
           </a>
           <a href="/samples/writing/band-6-5-task2" className="hover:text-slate-900">
             Samples
@@ -59,13 +56,6 @@ export default function PublicNav({ className, ctaHref = "/signup" }) {
         </nav>
 
         <div className="flex items-center gap-2.5">
-          <a
-            href="#"
-            className="hidden sm:inline-flex items-center gap-1.5 text-[14px] text-slate-700 hover:text-slate-900 px-3 py-2 rounded-lg"
-          >
-            <Globe className="w-4 h-4" />
-            EN
-          </a>
           <a
             href="/login"
             className="hidden sm:inline-flex items-center text-[14px] text-slate-700 hover:text-slate-900 px-3 py-2 rounded-lg"

@@ -1,5 +1,6 @@
 import React from "react";
 import { useI18n } from "../../../lib/i18n";
+import LizAvatar from "../../landing/components/LizAvatar";
 
 /**
  * Compact Liz note surface — pairs with RecentSessions in the 7/5 split.
@@ -17,7 +18,7 @@ export default function LizNote({
   return (
     <aside className="liz-surface p-8 md:p-10 self-start">
       <div className="flex items-center gap-3 mb-5">
-        <div className="liz-avatar w-9 h-9 rounded-full" aria-hidden="true" />
+        <LizAvatar size={36} className="liz-avatar shrink-0" />
         <span className="liz-ink text-[11px] font-medium tracking-[0.18em] uppercase">
           {eyebrow ?? t("dashboardV2LizNoteEyebrow")}
         </span>

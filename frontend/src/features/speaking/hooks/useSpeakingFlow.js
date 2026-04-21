@@ -196,7 +196,17 @@ export function useSpeakingFlow({ prepSeconds = 60, recordSeconds = 120 } = {}) 
         };
         rec.start();
       } catch (err) {
-        if (!cancelled) setAudioError(err?.message || String(err));
+        if (!cancelled) {
+          const msg = err?.name === 'NotAllowedError'
+            ? 'Microphone access was denied. Enable it in your browser settings to record a real answer — or view the sample result below.'
+            : (err?.message || String(err));
+          setAudioError(msg);
+          // Transition out of the recording countdown so the user sees the
+          // error immediately, instead of a silent 2-minute fake recording.
+          clearInterval(recordTimerRef.current);
+          recordTimerRef.current = null;
+          setState('error');
+        }
       }
     })();
 

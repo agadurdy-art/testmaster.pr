@@ -1,7 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { OnboardingQuiz } from '../features/onboarding';
-import { consumePendingPlan, pendingPlanRedirect } from '../lib/pendingPlan';
+import {
+  consumePendingPlan, pendingPlanRedirect,
+  consumePendingIntent, pendingIntentRedirect,
+} from '../lib/pendingPlan';
 import '../features/onboarding/onboarding.css';
 
 /**
@@ -54,8 +57,11 @@ export default function OnboardingPageV2({ user }) {
     }
     // Honor a pending plan from /signup?plan=X if the user picked a tier
     // before signing up — send them to pricing (paid) or dashboard (free).
-    const target = pendingPlanRedirect(consumePendingPlan()) || '/dashboard/v2';
-    navigate(target);
+    // Plan takes priority; fall back to a pending intent (e.g. ?intent=writing
+    // from "Try your own essay") so users land on the evaluator they clicked.
+    const planTarget = pendingPlanRedirect(consumePendingPlan());
+    const intentTarget = pendingIntentRedirect(consumePendingIntent());
+    navigate(planTarget || intentTarget || '/dashboard/v2');
   };
 
   return (

@@ -5,10 +5,10 @@ import React, { useMemo } from 'react';
  * Mirrors the HTML prototype: 44 bars, random heights 8-34px, random delays 0-900ms.
  * Seeded by a stable array to avoid re-renders jittering.
  */
-const BARS = Array.from({ length: 44 }, (_, i) => ({
+const BARS = Array.from({ length: 36 }, (_, i) => ({
   h: 8 + Math.round(Math.random() * 26),
   delay: Math.round(Math.random() * 900),
-  angle: (i / 44) * 360,
+  angle: (i / 36) * 360,
 }));
 
 export default function AmpRing({ radius = 130 }) {

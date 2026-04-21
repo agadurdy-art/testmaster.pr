@@ -8,7 +8,7 @@ export default function TopBar({ step }) {
   return (
     <header className="topbar">
       <div className="topbar-row">
-        <a href="/landing/v2" className="logo">
+        <a href="/" className="logo">
           testmaster<span className="pro">.pro</span>
         </a>
         <div className="step-label">

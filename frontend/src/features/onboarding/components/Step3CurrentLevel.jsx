@@ -43,9 +43,14 @@ export default function Step3CurrentLevel({ direction, currentBand, onChange }) 
               no commitment.
             </div>
           </div>
-          <button type="button" className="btn btn-outline">
+          <a
+            href="/comprehensive-level-test"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-outline"
+          >
             Take level test →
-          </button>
+          </a>
         </div>
       </div>
     </section>
