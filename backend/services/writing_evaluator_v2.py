@@ -127,6 +127,86 @@ def _extract_json(text: str) -> str:
     return (match.group(0) if match else stripped).strip()
 
 
+# ─── Annotation realignment ──────────────────────────────────────────────────
+
+
+def _utf16_len(s: str) -> int:
+    """Length in UTF-16 code units (matches JS string indexing + frontend)."""
+    return len(s.encode("utf-16-le")) // 2
+
+
+def _utf16_slice(essay: str, start: int, end: int) -> str:
+    """Slice an essay by UTF-16 code-unit offsets."""
+    buf = essay.encode("utf-16-le")
+    return buf[start * 2 : end * 2].decode("utf-16-le", errors="replace")
+
+
+def _utf16_index(essay: str, needle: str, start_hint: int = 0) -> int:
+    """Find `needle` in `essay` and return its start offset in UTF-16 code
+    units, preferring the occurrence closest to `start_hint`. Returns -1 if
+    not found."""
+    if not needle:
+        return -1
+    # Naive linear scan on the Python string, then convert the match offset
+    # into UTF-16 code units. Good enough for essay-sized inputs.
+    best = -1
+    best_distance = 10**9
+    search_from = 0
+    while True:
+        idx = essay.find(needle, search_from)
+        if idx < 0:
+            break
+        u16_idx = _utf16_len(essay[:idx])
+        distance = abs(u16_idx - start_hint)
+        if distance < best_distance:
+            best = u16_idx
+            best_distance = distance
+        search_from = idx + 1
+    return best
+
+
+def _realign_annotations(result, essay_text: str) -> Tuple[list, list]:
+    """For each annotation, make sure UTF-16[start:end] == original_text.
+
+    If it doesn't match, try to find `original_text` in the essay (preferring
+    the occurrence closest to the model's claimed offset) and rewrite the
+    offsets. If we still can't line it up, drop the annotation.
+
+    Returns (kept_annotations, dropped_ids) for logging.
+    """
+    kept = []
+    dropped: list = []
+    essay_u16_len = _utf16_len(essay_text)
+
+    for ann in result.inline_annotations:
+        # Fast path: offsets already land on original_text.
+        if ann.end_offset <= essay_u16_len:
+            sliced = _utf16_slice(essay_text, ann.start_offset, ann.end_offset)
+            if sliced == ann.original_text:
+                kept.append(ann)
+                continue
+
+        # Try to re-find original_text in the essay.
+        found = _utf16_index(essay_text, ann.original_text, start_hint=ann.start_offset)
+        if found >= 0:
+            new_end = found + _utf16_len(ann.original_text)
+            if new_end <= essay_u16_len:
+                ann.start_offset = found
+                ann.end_offset = new_end
+                kept.append(ann)
+                continue
+
+        # Unrecoverable — drop it rather than fail the whole evaluation.
+        dropped.append(ann.id)
+
+    # Renumber ids so the UI's ann_1, ann_2, ... stays contiguous after drops.
+    for i, ann in enumerate(kept, start=1):
+        ann.id = f"ann_{i}"
+
+    result.inline_annotations = kept
+    return kept, dropped
+
+
 # ─── Public entry point ──────────────────────────────────────────────────────
 
 
@@ -190,14 +270,25 @@ async def evaluate_writing(req: WritingEvaluationRequest) -> WritingEvaluationRe
                     last_error = f"schema: {exc.errors()[:3]}"
                     logger.warning("Evaluator attempt %d failed schema: %s", attempt, last_error)
                 else:
+                    # Repair model-side offset drift (UTF-16 vs grapheme counts,
+                    # smart quotes, CRLF, …) before the strict verifier runs.
+                    _, dropped = _realign_annotations(result, req.essay_text)
+                    if dropped:
+                        logger.info(
+                            "Evaluator attempt %d dropped %d unalignable annotations: %s",
+                            attempt, len(dropped), dropped[:5],
+                        )
                     offset_errors = verify_annotation_offsets(result, req.essay_text)
                     if offset_errors:
+                        # Should be empty after realignment. If any survive,
+                        # something is very wrong with this attempt — retry.
                         last_error = "offsets: " + "; ".join(offset_errors[:3])
-                        logger.warning("Evaluator attempt %d offset errors: %s", attempt, last_error)
+                        logger.warning("Evaluator attempt %d offset errors after realign: %s", attempt, last_error)
                     else:
                         logger.info(
-                            "Evaluator succeeded on attempt %d (latency %.1fs, band %s)",
+                            "Evaluator succeeded on attempt %d (latency %.1fs, band %s, %d annotations, %d dropped)",
                             attempt, latency, result.overall_band,
+                            len(result.inline_annotations), len(dropped),
                         )
                         return result
 

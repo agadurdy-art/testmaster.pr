@@ -48,8 +48,9 @@ export const BandScore = z
 export const CriterionScore = z.object({
   band: BandScore,
   explanation: z.string().min(1).max(500),
-  strengths: z.array(z.string().min(1)).min(1).max(5),
-  weaknesses: z.array(z.string().min(1)).min(1).max(5),
+  // Allow empty arrays; see backend/schemas/writing_evaluator.py for the rationale.
+  strengths: z.array(z.string().min(1)).max(5).default([]),
+  weaknesses: z.array(z.string().min(1)).max(5).default([]),
 });
 
 export const Criteria = z.object({
@@ -75,11 +76,13 @@ export const InlineAnnotation = z
   .refine((a) => a.end_offset > a.start_offset, {
     message: "end_offset must be strictly greater than start_offset",
     path: ["end_offset"],
-  })
-  .refine((a) => a.original_text.length === a.end_offset - a.start_offset, {
-    message: "original_text length must equal end_offset - start_offset",
-    path: ["original_text"],
   });
+  // NOTE: we deliberately do NOT enforce
+  //   original_text.length === end_offset - start_offset
+  // here. The backend realigns offsets (see services/writing_evaluator_v2.py
+  // `_realign_annotations`) before returning; by the time the client sees the
+  // payload, offsets should line up. The verifyAnnotationOffsets() helper
+  // below logs any residual mismatches instead of hard-failing validation.
 
 // ---------- Top-level result ----------
 
