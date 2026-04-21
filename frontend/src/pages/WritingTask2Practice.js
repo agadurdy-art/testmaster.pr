@@ -13,6 +13,11 @@ import {
 import { toast } from 'sonner';
 import { getRecommendedLessonPath } from '../lib/recommendationRouting';
 import { useI18n } from '../lib/i18n';
+import WritingEvaluatorResult from '../features/evaluator/components/WritingEvaluatorResult';
+import {
+  WritingEvaluationResult,
+  verifyAnnotationOffsets,
+} from '../features/evaluator/schemas/writingResult';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -158,48 +163,39 @@ export default function WritingTask2Practice() {
     toast.info('AI evaluation in progress...');
 
     try {
-      const response = await fetch(`${API_URL}/api/question-bank/writing/evaluate`, {
+      const response = await fetch(`${API_URL}/api/writing-practice/evaluate/v2`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          response: userResponse,
           task_type: 'task2',
-          topic: selectedPrompt?.topic,
-          band_level: selectedPrompt?.band_level || '5.5-6.5',
-          task_description: selectedPrompt?.prompt || '',
-          user_language: languageWireCode
-        })
+          prompt: selectedPrompt?.prompt || '',
+          essay: userResponse,
+          user_language: languageWireCode || 'en',
+        }),
       });
-      
-      const data = await response.json();
-      
-      if (data.success) {
-        setEvaluation({
-          overall_band: data.evaluation.overall_band,
-          task_achievement: data.evaluation.task_achievement,
-          coherence_cohesion: data.evaluation.coherence_cohesion,
-          lexical_resource: data.evaluation.lexical_resource,
-          grammatical_range: data.evaluation.grammatical_range,
-          strengths: data.evaluation.strengths || [],
-          weaknesses: data.evaluation.weaknesses || [],
-          suggestions: data.evaluation.improvement_suggestions || [],
-          high_priority_fixes: data.evaluation.high_priority_fixes || [],
-          response_diagnosis: data.evaluation.response_diagnosis || {},
-          band_justification: data.evaluation.band_justification || '',
-          line_by_line_corrections: data.evaluation.line_by_line_corrections || [],
-          rewrite_guidance: data.evaluation.rewrite_guidance || {},
-          vocabulary_to_use: data.evaluation.vocabulary_to_use || [],
-          grammar_corrections: data.evaluation.grammar_corrections || [],
-          examiner_comment: data.evaluation.examiner_comment || ''
-        });
-        // Store recommended lessons from ULTRA MASTER PROMPT
-        if (data.recommended_lessons && data.recommended_lessons.length > 0) {
-          setRecommendedLessons(data.recommended_lessons);
-        }
-        toast.success('Evaluation complete!');
-      } else {
-        toast.error(data.error || 'Evaluation failed');
+
+      if (!response.ok) {
+        const errText = await response.text().catch(() => '');
+        console.error('Evaluation HTTP error:', response.status, errText);
+        toast.error('Evaluation failed — please try again');
+        return;
       }
+
+      const data = await response.json();
+      const parsed = WritingEvaluationResult.safeParse(data);
+      if (!parsed.success) {
+        console.error('Evaluation schema validation failed:', parsed.error);
+        toast.error('Evaluation response was malformed');
+        return;
+      }
+
+      const offsetErrors = verifyAnnotationOffsets(parsed.data, userResponse);
+      if (offsetErrors.length > 0) {
+        console.warn('Annotation offset mismatch:', offsetErrors);
+      }
+
+      setEvaluation(parsed.data);
+      toast.success('Evaluation complete!');
     } catch (error) {
       console.error('Evaluation error:', error);
       toast.error('Error during evaluation');
@@ -236,6 +232,25 @@ export default function WritingTask2Practice() {
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
+    );
+  }
+
+  if (evaluation) {
+    return (
+      <WritingEvaluatorResult
+        result={evaluation}
+        essayText={userResponse}
+        prompt={selectedPrompt?.prompt || ''}
+        onRewrite={() => {
+          setEvaluation(null);
+          setUserResponse(evaluation.improved_version || userResponse);
+        }}
+        onPracticeMore={() => navigate('/question-bank/writing/task2')}
+        onViewRewrite={() => {
+          setUserResponse(evaluation.improved_version || userResponse);
+          setEvaluation(null);
+        }}
+      />
     );
   }
 
@@ -473,169 +488,6 @@ export default function WritingTask2Practice() {
                   </Button>
                 </div>
               </Card>
-
-              {/* Evaluation Results */}
-              {evaluation && (
-                <Card className="p-5 border-2 border-blue-200 bg-blue-50/50">
-                  <div className="text-center mb-4">
-                    <div className="inline-flex items-center justify-center w-14 h-14 bg-blue-100 rounded-full mb-2">
-                      <Award className="w-7 h-7 text-blue-600" />
-                    </div>
-                    <div className="text-3xl font-bold text-blue-600">
-                      Band {evaluation.overall_band}
-                    </div>
-                    <p className="text-xs text-gray-500 mt-1">Overall Band Score</p>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3 mb-4">
-                    {[
-                      { name: 'Task Response', data: evaluation.task_achievement },
-                      { name: 'Coherence', data: evaluation.coherence_cohesion },
-                      { name: 'Lexical', data: evaluation.lexical_resource },
-                      { name: 'Grammar', data: evaluation.grammatical_range },
-                    ].map(criterion => (
-                      <div key={criterion.name} className="bg-white p-2 rounded-lg">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-xs text-gray-600">{criterion.name}</span>
-                          <Badge variant="outline" className="text-xs">{criterion.data?.score}</Badge>
-                        </div>
-                        <p className="text-xs text-gray-500 line-clamp-2">{criterion.data?.feedback}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Suggestions & Feedback */}
-                  <div className="grid grid-cols-2 gap-3">
-                    {evaluation.strengths?.length > 0 && (
-                      <div className="bg-green-50 p-3 rounded-lg">
-                        <h4 className="font-semibold text-green-800 mb-2 text-xs">✅ Güçlü Yönler</h4>
-                        <ul className="space-y-1">
-                          {evaluation.strengths.slice(0, 3).map((s, idx) => (
-                            <li key={idx} className="text-xs text-green-700">• {s}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {evaluation.weaknesses?.length > 0 && (
-                      <div className="bg-amber-50 p-3 rounded-lg">
-                        <h4 className="font-semibold text-amber-800 mb-2 text-xs">⚠️ Geliştirilecek</h4>
-                        <ul className="space-y-1">
-                          {evaluation.weaknesses.slice(0, 3).map((w, idx) => (
-                            <li key={idx} className="text-xs text-amber-700">• {w}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {/* ULTRA MASTER PROMPT: Recommended Lessons */}
-                    {recommendedLessons.length > 0 && (
-                      <div className="bg-purple-50 p-3 rounded-lg border border-purple-200 col-span-2">
-                        <h4 className="font-semibold text-purple-800 mb-2 text-xs flex items-center gap-2">
-                          Recommended Lessons
-                          <Badge className="bg-purple-100 text-purple-600 text-xs">Kurs Odaklı</Badge>
-                        </h4>
-                        <p className="text-xs text-purple-600 mb-2">
-                          Zayıf noktalarınızı geliştirmek için bu dersleri çalışın:
-                        </p>
-                        <div className="space-y-2">
-                          {recommendedLessons.map((lesson, idx) => (
-                            <div 
-                              key={idx}
-                              className="p-2 bg-white rounded-lg border border-purple-100 cursor-pointer hover:border-purple-300 transition-colors"
-                              onClick={() => navigate(getRecommendedLessonPath(lesson))}
-                            >
-                              <div className="flex items-center justify-between">
-                                <div className="flex-1">
-                                  <p className="text-sm font-medium text-gray-800">{lesson.title}</p>
-                                  <p className="text-xs text-gray-500">{lesson.reason}</p>
-                                </div>
-                                <Badge 
-                                  className={`text-xs ${
-                                    lesson.stage === 'beginner' ? 'bg-green-100 text-green-700' :
-                                    lesson.stage === 'mastery' ? 'bg-blue-100 text-blue-700' :
-                                    'bg-amber-100 text-amber-700'
-                                  }`}
-                                >
-                                  {lesson.band_level}
-                                </Badge>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {evaluation.band_justification && (
-                    <div className="mt-4 p-3 bg-slate-50 rounded-lg border">
-                      <h4 className="font-semibold text-slate-800 mb-2 text-xs">📏 Band Justification</h4>
-                      <p className="text-xs text-gray-700">{evaluation.band_justification}</p>
-                    </div>
-                  )}
-
-                  {evaluation.high_priority_fixes?.length > 0 && (
-                    <div className="mt-4 p-3 bg-rose-50 rounded-lg">
-                      <h4 className="font-semibold text-rose-800 mb-2 text-xs">🚨 Highest-Priority Fixes</h4>
-                      <ul className="space-y-1">
-                        {evaluation.high_priority_fixes.map((fix, idx) => (
-                          <li key={idx} className="text-xs text-rose-700">• {fix}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {evaluation.response_diagnosis && Object.keys(evaluation.response_diagnosis).length > 0 && (
-                    <div className="mt-4 p-3 bg-indigo-50 rounded-lg border border-indigo-100">
-                      <h4 className="font-semibold text-indigo-800 mb-2 text-xs">🧭 Response Diagnosis</h4>
-                      <div className="space-y-2">
-                        {Object.entries(evaluation.response_diagnosis).map(([key, value]) => (
-                          <div key={key} className="bg-white rounded border p-2">
-                            <p className="text-[11px] font-semibold text-gray-600 uppercase tracking-wide">{key.replace(/_/g, ' ')}</p>
-                            <p className="text-xs text-gray-700 mt-1">{value}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {evaluation.line_by_line_corrections?.length > 0 && (
-                    <div className="mt-4 p-3 bg-white rounded-lg border">
-                      <h4 className="font-semibold text-gray-900 mb-2 text-xs">✍️ Line-by-Line Corrections</h4>
-                      <div className="space-y-2">
-                        {evaluation.line_by_line_corrections.map((item, idx) => (
-                          <div key={idx} className="rounded border p-2 bg-gray-50">
-                            <p className="text-xs text-red-700"><strong>Original:</strong> {item.original_line || item.original}</p>
-                            <p className="text-xs text-amber-700 mt-1"><strong>Issue:</strong> {item.issue}</p>
-                            <p className="text-xs text-green-700 mt-1"><strong>Corrected:</strong> {item.corrected_line || item.improved}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {evaluation.rewrite_guidance && Object.keys(evaluation.rewrite_guidance).length > 0 && (
-                    <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-100">
-                      <h4 className="font-semibold text-green-800 mb-2 text-xs">🔁 Rewrite Guidance</h4>
-                      <div className="space-y-2">
-                        {Object.entries(evaluation.rewrite_guidance).map(([key, value]) => (
-                          Array.isArray(value) ? (
-                            <div key={key}>
-                              <p className="text-[11px] font-semibold text-gray-600 uppercase tracking-wide mb-1">{key.replace(/_/g, ' ')}</p>
-                              <ul className="space-y-1">
-                                {value.map((item, idx) => <li key={idx} className="text-xs text-gray-700">• {item}</li>)}
-                              </ul>
-                            </div>
-                          ) : (
-                            <div key={key} className="bg-white rounded border p-2">
-                              <p className="text-[11px] font-semibold text-gray-600 uppercase tracking-wide">{key.replace(/_/g, ' ')}</p>
-                              <p className="text-xs text-gray-700 mt-1">{value}</p>
-                            </div>
-                          )
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </Card>
-              )}
 
               {/* Model Answers - Band 6 & Band 8.5 */}
               {showModelAnswer && modelAnswers && (

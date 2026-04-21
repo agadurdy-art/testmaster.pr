@@ -1,5 +1,6 @@
 import React from 'react';
 import { useI18n } from '../../../lib/i18n';
+import ArrowRightIcon from './ArrowRightIcon';
 
 export default function HowItWorks() {
   const { t } = useI18n();
@@ -48,6 +49,13 @@ export default function HowItWorks() {
             <p>{t('landingV2HowStep3Body')}</p>
             <div className="liz-tag"><span className="liz-avatar">L</span>{t('landingV2HowLizTag')}</div>
           </div>
+        </div>
+        <div className="how-cta-row">
+          <a href="/signup" className="btn btn-primary btn-xl">
+            {t('landingV2HowCta')}
+            <ArrowRightIcon size={16} />
+          </a>
+          <span className="how-cta-note">{t('landingV2HowCtaNote')}</span>
         </div>
       </div>
     </section>

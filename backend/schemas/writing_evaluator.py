@@ -66,8 +66,12 @@ def _validate_band(value: float) -> float:
 class CriterionScore(BaseModel):
     band: float = Field(..., ge=0, le=9, description="IELTS band 0-9, 0.5 increments")
     explanation: str = Field(..., min_length=1, max_length=500)
-    strengths: List[str] = Field(..., min_length=1, max_length=5)
-    weaknesses: List[str] = Field(..., min_length=1, max_length=5)
+    # Allow empty arrays: Sonnet sometimes returns [] for a criterion with no
+    # clear strengths or weaknesses at the candidate's band. Forcing min_length=1
+    # just pushes the model to hallucinate filler — better to let it be honest
+    # and let the UI render "None observed" on an empty list.
+    strengths: List[str] = Field(default_factory=list, max_length=5)
+    weaknesses: List[str] = Field(default_factory=list, max_length=5)
 
     @field_validator("band")
     @classmethod
@@ -99,11 +103,14 @@ class InlineAnnotation(BaseModel):
     def end_after_start(self) -> "InlineAnnotation":
         if self.end_offset <= self.start_offset:
             raise ValueError("end_offset must be strictly greater than start_offset")
-        if len(self.original_text) != self.end_offset - self.start_offset:
-            raise ValueError(
-                "original_text length must equal end_offset - start_offset "
-                f"(got {len(self.original_text)} vs {self.end_offset - self.start_offset})"
-            )
+        # NOTE: we deliberately do NOT require
+        #   len(original_text) == end_offset - start_offset
+        # here. Models count characters in grapheme clusters while the
+        # frontend uses UTF-16 code units — smart quotes, em dashes, CRLF and
+        # the occasional emoji all produce off-by-one/two drift. The service
+        # layer (writing_evaluator_v2._realign_annotations) repositions these
+        # against the source essay before returning the result, so a slightly
+        # wrong span here is recoverable instead of fatal.
         return self
 
 

@@ -42,7 +42,9 @@ export default function WritingEvaluatorResult({
       <div
         className={cn(
           "min-h-screen bg-slate-50",
-          "px-4 py-6 lg:px-8 lg:py-8",
+          // Extra bottom padding on mobile so the final card isn't
+          // hidden behind MobileBottomNav (the raised Liz tab).
+          "px-4 pt-6 pb-24 lg:px-8 lg:py-8",
           className
         )}
       >

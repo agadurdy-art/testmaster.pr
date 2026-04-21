@@ -82,7 +82,9 @@ function SkillRow({ skill, onClick, t }) {
         </div>
       )}
       <div className="flex items-baseline gap-2 tabular-nums">
-        <span className="font-display text-[28px]">{band.toFixed(1)}</span>
+        <span className="font-display text-[28px]">
+          {typeof band === "number" ? band.toFixed(1) : "—"}
+        </span>
         <span className={`text-sm ${trendClass(trend)}`}>{trendGlyph(trend)}</span>
       </div>
     </button>

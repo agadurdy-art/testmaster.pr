@@ -20,9 +20,13 @@ export default function LizFloatingButton({ user }) {
     !!user && (isAdminUser(user) || ALLOWED_PLANS.includes(normalizePlanName(user.plan)));
 
   return (
+    // Hidden on mobile: MobileBottomNav / DashboardBottomNav already surface
+    // Liz as the raised center tab, so rendering this FAB too would stack two
+    // Liz entry points on top of each other. Desktop keeps the FAB — no
+    // bottom nav there.
     <button
       onClick={() => navigate(hasAccess ? '/liz' : '/pricing')}
-      className="fixed left-1/2 -translate-x-1/2 bottom-20 md:bottom-6 z-50 group"
+      className="hidden md:block fixed left-1/2 -translate-x-1/2 md:bottom-6 z-50 group"
       data-testid="liz-floating-btn"
       aria-label={hasAccess ? 'Ask Liz' : 'Upgrade to unlock Liz'}
     >

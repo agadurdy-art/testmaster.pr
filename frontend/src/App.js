@@ -426,7 +426,14 @@ function AppWithSessionHandler() {
         />
         <Route
           path="/pricing"
-          element={isIeltsMode(user) ? <PricingPageV2 user={user} /> : <PricingPage user={user} />}
+          element={<PricingPageV2 user={user} />}
+        />
+        {/* Legacy General English pricing (Explorer/Learner/Achiever/Master)
+           kept accessible for existing GE customers who still need it, but
+           no longer the default — every upgrade prompt routes to /pricing. */}
+        <Route
+          path="/pricing/ge"
+          element={<PricingPage user={user} />}
         />
         <Route
           path="/checkout/bank/:plan"
