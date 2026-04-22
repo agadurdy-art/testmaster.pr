@@ -3332,6 +3332,38 @@ async def public_evaluate_essay(request: PublicEvaluateEssayRequest):
     return result_dict
 
 
+# ---------------------------------------------------------------------------
+# Evaluator rating capture — anonymous 1-5 star + optional comment. Drives
+# the "Rate this evaluator" action in PublicScoreCard (sample pages +
+# /score-my-essay). Best-effort storage: no auth, no rate limit beyond
+# client-side localStorage gate. If abuse shows up, add IP throttle.
+# ---------------------------------------------------------------------------
+
+class EvaluatorRatingRequest(BaseModel):
+    stars: int
+    comment: Optional[str] = None
+    page_url: Optional[str] = None
+
+
+@api_router.post("/public/evaluator-rating")
+async def public_evaluator_rating(request: EvaluatorRatingRequest, http_request: Request):
+    if not isinstance(request.stars, int) or not (1 <= request.stars <= 5):
+        raise HTTPException(status_code=400, detail="stars must be an integer between 1 and 5")
+    comment = (request.comment or "").strip()
+    if len(comment) > 2000:
+        comment = comment[:2000]
+    page_url = (request.page_url or "").strip()[:500] or None
+    ua = (http_request.headers.get("user-agent") or "")[:300]
+    await db.evaluator_ratings.insert_one({
+        "stars": request.stars,
+        "comment": comment or None,
+        "page_url": page_url,
+        "created_at": datetime.now(timezone.utc),
+        "user_agent": ua,
+    })
+    return {"ok": True}
+
+
 @api_router.post("/writing-practice/evaluate")
 async def evaluate_writing_practice(request: WritingPracticeRequest):
     """Evaluate IELTS writing practice submission with detailed teacher-style feedback"""

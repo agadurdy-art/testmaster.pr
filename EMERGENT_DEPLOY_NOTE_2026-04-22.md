@@ -190,6 +190,27 @@ Paid users inside `/question-bank/writing/task2` can now submit their own task p
 - **Writing sample → "Score my own essay" button**: visit `/samples/writing/band-6-5-task2` → right-sidebar "Score my own essay" button now navigates to `/score-my-essay` (not `/signup` anymore).
 - **Mongo verification** (Emergent side): `db.anonymous_evaluations.getIndexes()` should list a unique index on `email`. Successful submissions create one doc with `status: "complete"` and a `result` field.
 
+### Rate + Share — PublicScoreCard sidebar actions
+
+**Change:** `frontend/src/features/samples/components/PublicScoreCard.jsx` — the two sidebar secondary buttons were "PDF report" and "Share", both dead-wired (no parent ever passed `onDownloadPdf` / `onShare`). Replaced with:
+
+- **Rate this evaluator** — inline 1-5 star form with optional ≤500-char comment. Opens below the action pair on click, POSTs to `/api/public/evaluator-rating`, flips to a disabled "Thanks!" pill after submit. `localStorage.evaluatorRated_v1` prevents re-rating on the same device.
+- **Share** — calls `navigator.share()` when available (iOS Safari, Android Chrome) with `{title, text, url}`; falls back to `navigator.clipboard.writeText(url)` and briefly shows "Link copied". Shares the current page URL so sample pages and `/score-my-essay` both share themselves.
+
+**Backend:** new `POST /api/public/evaluator-rating` route (server.py, next to `/public/evaluate-essay`) — validates stars 1–5, stores `{stars, comment, page_url, created_at, user_agent}` in a new `evaluator_ratings` collection. No auth; client-side localStorage gate is the only dedupe.
+
+**Prop cleanup:** removed `onDownloadPdf` and `onShare` from `PublicScoreCard` signature (neither was ever passed). Nothing else was using them.
+
+### Smoke tests for Rate + Share
+
+- On any sample writing page (`/samples/writing/band-6-5-task2`) right sidebar: click **Rate this evaluator** → inline form appears. Pick 3 stars, type a short comment, Submit → spinner → button flips to green "Thanks!" pill, disabled.
+- Refresh the same page → button stays "Thanks!" (localStorage persisted). Clear site data → button comes back as "Rate this evaluator".
+- Without picking any stars, Submit button stays disabled.
+- Click **Share** on desktop Chrome → URL copied to clipboard, button says "Link copied" briefly.
+- Click **Share** on iOS Safari or Android Chrome → native share sheet opens; cancel → no state change; confirm → button says "Shared" briefly.
+- Mongo check: `db.evaluator_ratings.find().sort({created_at: -1}).limit(5)` shows submitted ratings with correct stars/comment/page_url.
+- Repeat the rate test on `/score-my-essay` after running a real evaluation — same behavior, same localStorage gate.
+
 ### Smoke tests for Writing Practice custom mode
 
 - Visit `/question-bank/writing/task2` as a logged-in user → new tab-bar pair "Preset Questions | My Own Question" visible at the top of the left panel.
