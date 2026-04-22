@@ -1,5 +1,15 @@
-import React from "react";
-import { Star, Download, Share2, Edit3, ShieldCheck } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import {
+  Star,
+  Share2,
+  Edit3,
+  ShieldCheck,
+  ThumbsUp,
+  Check,
+  X,
+  Link as LinkIcon,
+  Loader2,
+} from "lucide-react";
 import { cn } from "../../../lib/utils";
 import { CATEGORY_TOKENS } from "../../evaluator/schemas/writingResult";
 import {
@@ -9,29 +19,112 @@ import {
 import BandRadarChart from "../../evaluator/components/BandRadarChart";
 import LizTakeCard from "../../evaluator/components/LizTakeCard";
 
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+const RATED_KEY = "evaluatorRated_v1";
+
 /**
  * Right sidebar of the Sample Report. Contains:
  *   - Overall band hero (with gap-to-target chip)
  *   - Criteria bars
  *   - Radar chart (with Band 7 benchmark)
- *   - Primary action + PDF / Share
+ *   - Primary action + "Rate this evaluator" (inline 1–5 star form) + Share
+ *     (native share sheet with clipboard fallback)
  *   - Liz take
  *   - Cambridge trust micro-card
  *
- * Sticky on large screens.
+ * Sticky on large screens. Rating + share are self-contained — no parent
+ * handlers needed. localStorage key `evaluatorRated_v1` gates re-rates
+ * on the same device.
  */
 export default function PublicScoreCard({
   result,
   targetBand = 7.0,
   lizMessage,
   onScoreMyEssay,
-  onDownloadPdf,
-  onShare,
   onShowRewrite,
   className,
 }) {
   const { overall_band, criteria } = result;
   const gap = Math.max(0, Math.round((targetBand - overall_band) * 2) / 2);
+
+  // ---- Rate this evaluator ----
+  const [ratingOpen, setRatingOpen] = useState(false);
+  const [ratingStars, setRatingStars] = useState(0);
+  const [hoverStars, setHoverStars] = useState(0);
+  const [ratingComment, setRatingComment] = useState("");
+  const [ratingSubmitting, setRatingSubmitting] = useState(false);
+  const [hasRated, setHasRated] = useState(false);
+
+  useEffect(() => {
+    try {
+      if (localStorage.getItem(RATED_KEY) === "1") setHasRated(true);
+    } catch {
+      /* localStorage disabled — user can still rate, just no memory of it */
+    }
+  }, []);
+
+  const submitRating = async () => {
+    if (!ratingStars) return;
+    setRatingSubmitting(true);
+    try {
+      await fetch(`${API_URL}/api/public/evaluator-rating`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          stars: ratingStars,
+          comment: ratingComment.trim() || null,
+          page_url:
+            typeof window !== "undefined"
+              ? window.location.pathname + window.location.search
+              : null,
+        }),
+      });
+    } catch {
+      /* Best-effort — UX shouldn't hang on network. Still mark as rated. */
+    } finally {
+      try {
+        localStorage.setItem(RATED_KEY, "1");
+      } catch {
+        /* ignore */
+      }
+      setHasRated(true);
+      setRatingOpen(false);
+      setRatingSubmitting(false);
+    }
+  };
+
+  // ---- Share ----
+  const [shareState, setShareState] = useState("idle"); // idle | copied | shared
+  useEffect(() => {
+    if (shareState === "idle") return;
+    const t = setTimeout(() => setShareState("idle"), 2200);
+    return () => clearTimeout(t);
+  }, [shareState]);
+
+  const handleShare = async () => {
+    const url =
+      typeof window !== "undefined" ? window.location.href : "";
+    const shareData = {
+      title: "IELTS Ace — writing evaluator",
+      text: "Free inline IELTS writing feedback, rubric-aligned.",
+      url,
+    };
+    if (typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share(shareData);
+        setShareState("shared");
+        return;
+      } catch {
+        // User cancelled or share failed — fall through to clipboard
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      setShareState("copied");
+    } catch {
+      if (typeof window !== "undefined") window.prompt("Copy this link:", url);
+    }
+  };
 
   const criteriaBars = [
     { key: "task_achievement", crit: criteria.task_achievement },
@@ -150,34 +243,154 @@ export default function PublicScoreCard({
             <Edit3 className="w-4 h-4" />
             Score my own essay
           </button>
+
           <div className="grid grid-cols-2 gap-2">
+            {/* Rate this evaluator (replaces the old dead PDF-report button). */}
             <button
               type="button"
-              onClick={onDownloadPdf}
+              onClick={() => !hasRated && setRatingOpen((v) => !v)}
+              disabled={hasRated}
               className={cn(
                 "inline-flex items-center justify-center gap-1.5",
-                "border border-slate-200 bg-white hover:bg-slate-50",
-                "text-slate-700 text-[13.5px] px-3 py-2.5 rounded-xl",
-                "transition-colors"
+                "border rounded-xl px-3 py-2.5 text-[13.5px] transition-colors",
+                hasRated
+                  ? "border-emerald-200 bg-emerald-50 text-emerald-800 cursor-default"
+                  : ratingOpen
+                    ? "border-emerald-300 bg-emerald-50 text-emerald-800"
+                    : "border-slate-200 bg-white hover:bg-slate-50 text-slate-700"
               )}
             >
-              <Download className="w-3.5 h-3.5" />
-              PDF report
+              {hasRated ? (
+                <>
+                  <Check className="w-3.5 h-3.5" />
+                  Thanks!
+                </>
+              ) : (
+                <>
+                  <ThumbsUp className="w-3.5 h-3.5" />
+                  Rate this evaluator
+                </>
+              )}
             </button>
+
+            {/* Share — native share sheet if available, clipboard fallback. */}
             <button
               type="button"
-              onClick={onShare}
+              onClick={handleShare}
               className={cn(
                 "inline-flex items-center justify-center gap-1.5",
-                "border border-slate-200 bg-white hover:bg-slate-50",
-                "text-slate-700 text-[13.5px] px-3 py-2.5 rounded-xl",
-                "transition-colors"
+                "border rounded-xl px-3 py-2.5 text-[13.5px] transition-colors",
+                shareState !== "idle"
+                  ? "border-emerald-300 bg-emerald-50 text-emerald-800"
+                  : "border-slate-200 bg-white hover:bg-slate-50 text-slate-700"
               )}
             >
-              <Share2 className="w-3.5 h-3.5" />
-              Share
+              {shareState === "copied" ? (
+                <>
+                  <LinkIcon className="w-3.5 h-3.5" />
+                  Link copied
+                </>
+              ) : shareState === "shared" ? (
+                <>
+                  <Check className="w-3.5 h-3.5" />
+                  Shared
+                </>
+              ) : (
+                <>
+                  <Share2 className="w-3.5 h-3.5" />
+                  Share
+                </>
+              )}
             </button>
           </div>
+
+          {/* Inline rating form — slides in under the action pair. */}
+          {ratingOpen && !hasRated && (
+            <div className="mt-1 rounded-xl border border-slate-200 bg-slate-50 p-3">
+              <div className="flex items-start justify-between gap-2 mb-2">
+                <div className="text-[12.5px] font-medium text-slate-900">
+                  How accurate did this feel?
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setRatingOpen(false)}
+                  className="text-slate-400 hover:text-slate-600"
+                  aria-label="Close rating"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              <div
+                className="flex items-center gap-1"
+                onMouseLeave={() => setHoverStars(0)}
+              >
+                {[1, 2, 3, 4, 5].map((n) => {
+                  const active = (hoverStars || ratingStars) >= n;
+                  return (
+                    <button
+                      key={n}
+                      type="button"
+                      onMouseEnter={() => setHoverStars(n)}
+                      onClick={() => setRatingStars(n)}
+                      className="p-0.5"
+                      aria-label={`${n} star${n > 1 ? "s" : ""}`}
+                    >
+                      <Star
+                        className={cn(
+                          "w-5 h-5 transition-colors",
+                          active
+                            ? "fill-amber-400 stroke-amber-500"
+                            : "stroke-slate-300"
+                        )}
+                      />
+                    </button>
+                  );
+                })}
+                {ratingStars > 0 && (
+                  <span className="ml-1.5 text-[12px] text-slate-500">
+                    {ratingStars}/5
+                  </span>
+                )}
+              </div>
+              <textarea
+                value={ratingComment}
+                onChange={(e) => setRatingComment(e.target.value)}
+                maxLength={500}
+                rows={2}
+                placeholder="Anything specific? (optional)"
+                className="mt-2 w-full text-[12.5px] px-2.5 py-2 rounded-lg border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-400 resize-none"
+              />
+              <div className="mt-2 flex items-center justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => setRatingOpen(false)}
+                  className="text-[12px] text-slate-500 hover:text-slate-700 px-2 py-1"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={submitRating}
+                  disabled={!ratingStars || ratingSubmitting}
+                  className={cn(
+                    "inline-flex items-center gap-1 text-[12.5px] font-medium px-3 py-1.5 rounded-lg transition-colors",
+                    !ratingStars || ratingSubmitting
+                      ? "bg-slate-200 text-slate-400 cursor-not-allowed"
+                      : "bg-emerald-600 hover:bg-emerald-700 text-white"
+                  )}
+                >
+                  {ratingSubmitting ? (
+                    <>
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                      Sending…
+                    </>
+                  ) : (
+                    "Submit"
+                  )}
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
