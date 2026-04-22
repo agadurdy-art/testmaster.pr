@@ -1,9 +1,39 @@
 # Emergent Deploy Note — 2026-04-22
 
 **Branch:** `feat/ielts-ace-pre-deploy-2026-04-19`
-**Head commit:** `7f6fe2d4` — `feat(pre-deploy): landing redesign + sample flows + onboarding/pricing fixes`
 **Repo:** https://github.com/agadurdy-art/testmaster.pr
-**Scope:** Frontend-only. No backend/DB/schema changes. No new env vars. No dependency changes.
+**Scope:** Frontend + one-shot backend migration script. No new backend routes, no env vars, no dependency changes.
+
+---
+
+## READ-BEFORE-DEPLOY — action checklist for Emergent
+
+Three separate pushes landed on this branch on 2026-04-22. The **third push** (post-deploy audit fixes) adds a **one-shot Mongo migration** that MUST be run on the server after the code deploy, or legacy users will continue to see the wrong dashboard. Please do not skip it.
+
+**Step 1 — Pull & build as usual.**
+- Frontend: standard `yarn build` / `npm run build` with the env you already use. No new env vars. No new deps.
+- Backend: no code changes to `server.py` in the third push — only the startup index creation added in the second push (`anonymous_evaluations.email` unique, `evaluator_ratings` collection is auto-created on first write). Still no migrations baked into startup.
+
+**Step 2 — Run the user-mode migration (REQUIRED, one-time).**
+```sh
+cd backend
+python scripts/migrate_users_to_ielts_mode.py
+```
+- Flips every existing user's `learning_mode` to `"ielts"` so they land on the Claude Design IELTS dashboard at `/dashboard` instead of the old `Dashboard.js`.
+- Idempotent — safe to run multiple times; a second run reports `To migrate: 0`.
+- Does NOT touch onboarding logic: new users who pick General English during `/onboarding/v2` will still be stored as `learning_mode="general_english"` and correctly land on the old Dashboard.
+- Prints a 5-user sample + before/after counts for audit.
+
+**Step 3 — Smoke test the three audit fixes** (detailed steps in the "Third follow-up push" section below):
+- Turkish locale: no dotted-İ, missing keys render in TR.
+- `/dashboard` renders the Claude Design dashboard for existing users.
+- New-user onboarding GE path still lands on the old Dashboard (proof that the routing split still works — migration didn't break future GE users).
+
+**Step 4 — If you run into anything unexpected**, the third-push changes are isolated to:
+- `frontend/src/lib/i18n.js` (TR dictionary additions — no logic change)
+- `frontend/src/index.css` (single `html[lang="tr"] *` override at EOF)
+- `backend/scripts/migrate_users_to_ielts_mode.py` (new, not imported by any runtime code)
+All three are independently revertible without affecting the first two pushes.
 
 ---
 
@@ -219,3 +249,78 @@ Paid users inside `/question-bank/writing/task2` can now submit their own task p
 - Switch back to "Preset Questions" → the preset prompt selection UI returns intact, no state leak.
 - Edge: empty custom prompt + full essay → Submit stays disabled. Essay <200 words → disabled in both modes.
 - Model Answers button is hidden in custom mode (no model answers exist for user-supplied prompts).
+
+---
+
+## Third follow-up push — post-deploy audit fixes (2026-04-22)
+
+### Issue A: 41 missing Turkish i18n keys
+
+`frontend/src/lib/i18n.js` — added 41 Turkish translations that existed in EN (and all 10 other languages) but were missing from the `tr` block, silently falling back to English in production. Inserted before the closing `},` of the `tr` block.
+
+Keys covered: dashboard nav/metrics (`navDashboard`, `welcomeBack`, `readyToContinue`, `currentPlan`, `speakingCredits`, `viewUpgradePlan`, `adminTopUpCredits`, `practiceTests`, `learningTools`, `recentActivity`, `noRecentActivity`, `startFirstTest`, `testsCompleted`, `avgBand`, `streak`, `days`), task-type descriptions (`taskTrueFalseNotGivenDesc`, `taskYesNoNotGiven*`, `taskMultipleChoiceDesc`, `taskSentenceCompletionDesc`, `taskSummaryCompletionDesc`, `taskMatchingHeadingsDesc`, `taskMatchingInfoDesc`, `taskNoteCompletion*`, `taskFormCompletion*`, `taskMapLabeling*`, `taskMatching*`), writing task descriptions (`writingTask1AcademicDesc`, `writingTask1GeneralDesc`, `writingTask2EssayDesc`), and speaking/paywall messages (`sessionActive`, `paywallNeedProOrCredits`, `paywallSpeakingNoCredits`, `speakingFreeTrialAvailable`, `speakingFreeTrialStarted`, `speakingSessionStarted`).
+
+Verification: `node` script walking the `tr` vs `en` key sets now reports `Missing in TR: 0`.
+
+### Issue B: Turkish `text-transform: uppercase` producing dotted-İ
+
+`frontend/src/index.css` — added a single global override at the end of the file:
+
+```css
+html[lang="tr"] * {
+  text-transform: none !important;
+}
+```
+
+**Why:** browsers use the document's `lang` attribute to pick Unicode casing rules. When `html lang="tr"`, `text-transform: uppercase` maps the Latin letter `i` to `İ` (dotted capital I — correct Turkish rule but visually wrong on English labels like "PRACTİCE", "WRİTİNG"). This is the only reliable CSS-only fix that doesn't require touching 30+ individual `text-transform: uppercase` rules across 6 feature CSS files.
+
+**Effect:** Turkish users see labels in their natural case as stored in the i18n dictionary (no forced uppercase), dotted-İ-free. Other 11 locales unaffected.
+
+**Safety check:** grep confirms zero `text-transform: lowercase` / `capitalize` uses in the codebase, so the `!important` override doesn't clobber any other transform.
+
+### Smoke tests for post-deploy fixes
+
+- Switch language to Turkish (`TR` in language picker) → Dashboard V2 card labels ("Mevcut band", "Hedef", "Kalan gün") remain Turkish; nav labels like "Panel", "Deneme Sınavları", "Öğrenme Araçları" render (not their English fallbacks).
+- On any page that previously showed "PRACTİCE" / "WRİTİNG" (uppercased English label in Turkish locale) → label now renders in sentence/title case from the TR dictionary, no dotted-İ.
+- Switch to EN / ZH / AR → uppercase labels still render as uppercase (scoped fix doesn't affect non-TR).
+- Speaking session entry flow in Turkish → "Ücretsiz deneme konuşma oturumu başladı…" / "Konuşma oturumu başladı. Kalan kredi: N" render from TR dictionary (previously English).
+
+### Issue E: /dashboard showing old `Dashboard.js` instead of Claude Design `DashboardPage.js`
+
+**Symptom:** Aga's own account (and likely other legacy accounts) hit `/dashboard` and saw the old General-English-flavoured dashboard (5 stat cards, "Continue building your English", "Complete Learning Path Pre-A1 → A1 → ...") instead of the Claude Design IELTS dashboard (EditorialMasthead, LizMessage, MetricsTriptych, TodaysTask, SkillsTable, MockTestFrame).
+
+**Root cause:** `App.js:392-401` routes `user ? (isIeltsMode(user) ? <DashboardPage/> : <Dashboard/>) : ...`. Users whose `learning_mode` was missing or set to `general_english` / `general` / `ge` fell through to the old `Dashboard`. IELTS Ace is the primary product, so legacy users with non-IELTS modes were getting the wrong experience.
+
+**Fix:** one-shot Mongo migration — every existing user is flipped to `learning_mode="ielts"`. Routing code is unchanged; new users who explicitly pick "General English" during onboarding (`/users/{id}/onboarding` with `path="general_english"`) will still get `learning_mode="general_english"` and land on the old Dashboard as designed.
+
+**Script:** `backend/scripts/migrate_users_to_ielts_mode.py` — idempotent, uses single `updateMany`, prints before/after counts and a 5-user sample.
+
+### How to run the user-mode migration on Emergent
+
+```sh
+cd backend
+python scripts/migrate_users_to_ielts_mode.py
+```
+
+Expected output shape:
+```
+Database: ielts_database
+Total users:        N
+Already IELTS mode: M
+To migrate:         N-M
+Sample of users being migrated: ...
+Updated K user(s) to learning_mode='ielts'.
+Post-migration counts:
+  learning_mode=ielts           : N
+  learning_mode=general_english : 0
+  learning_mode unset           : 0
+```
+
+Second run on same DB reports `To migrate: 0` and exits without writes.
+
+### Smoke tests for /dashboard restoration
+
+- After migration: log in as Aga → `/dashboard` now renders the Claude Design `DashboardPage` (Liz welcome card, band/target/days triptych, Today's Task, Skills table, Mock Test frame, Recent Sessions, Quick Access tiles).
+- Create a new test account → onboarding → pick **General English** path → `/dashboard` correctly shows the old `Dashboard.js` (Lessons & Courses, Learning Tools, Quick Games, etc.).
+- Create a new test account → onboarding → pick **IELTS** path → `/dashboard` shows Claude Design `DashboardPage`.
+- Admin analytics at `/admin/learning-mode-stats` reflects the migration (GE count → 0 for pre-migration users).
