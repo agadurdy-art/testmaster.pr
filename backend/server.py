@@ -20,6 +20,7 @@ from emergentintegrations.llm.chat import LlmChat, UserMessage
 import json
 from emergentintegrations.llm.openai import OpenAISpeechToText
 import resend
+import re
 import io
 import httpx
 
@@ -3208,6 +3209,127 @@ async def evaluate_writing_practice_v2(request: WritingPracticeV2Request):
             },
         )
     return result.model_dump()
+
+
+# ---------------------------------------------------------------------------
+# Public (anonymous) essay evaluation — one evaluation per email, ever.
+# Drives the "Score my own essay" lead magnet on sample writing pages.
+# No email is sent; result is viewable in-browser only. See project memory
+# project_anonymous_essay_evaluation.md for the product rationale.
+# ---------------------------------------------------------------------------
+
+_PUBLIC_EVAL_EMAIL_RE = re.compile(r"^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$")
+
+
+class PublicEvaluateEssayRequest(BaseModel):
+    email: str
+    task_type: str = "task2"
+    prompt: str
+    essay: str
+    user_language: Optional[str] = "en"
+
+
+@api_router.post("/public/evaluate-essay")
+async def public_evaluate_essay(request: PublicEvaluateEssayRequest):
+    """Anonymous one-per-email writing evaluation.
+
+    Same evaluator as /writing-practice/evaluate/v2, gated on a unique email
+    so each visitor can claim a single free report. Reservation is inserted
+    atomically *before* the LLM call; the Mongo unique index on `email`
+    blocks races. If the evaluator fails, the reservation is rolled back so
+    the visitor can retry.
+    """
+    from services.writing_evaluator_v2 import evaluate_writing, EvaluatorFailure
+    from schemas.writing_evaluator import WritingEvaluationRequest, TaskType
+    from security_utils import sanitize_ai_input
+    from pymongo.errors import DuplicateKeyError
+
+    email = (request.email or "").strip().lower()
+    if not _PUBLIC_EVAL_EMAIL_RE.match(email) or len(email) > 254:
+        raise HTTPException(status_code=400, detail="Please enter a valid email address.")
+
+    essay = sanitize_ai_input(request.essay or "")
+    prompt = sanitize_ai_input(request.prompt or "")
+    if not essay.strip():
+        raise HTTPException(status_code=400, detail="Essay is empty.")
+    if len(essay) > 20000:
+        raise HTTPException(status_code=400, detail="Essay is too long (max 20,000 chars).")
+    if not prompt.strip():
+        raise HTTPException(status_code=400, detail="Task prompt is required.")
+    if len(prompt) > 4000:
+        raise HTTPException(status_code=400, detail="Task prompt is too long.")
+
+    essay_hash = hashlib.sha256(essay.encode("utf-8")).hexdigest()
+    now = datetime.now(timezone.utc)
+
+    # Reserve the email slot. Unique index catches dupes & races.
+    try:
+        await db.anonymous_evaluations.insert_one({
+            "email": email,
+            "status": "pending",
+            "created_at": now,
+            "essay_hash": essay_hash,
+            "task_type": request.task_type,
+            "user_language": request.user_language or "en",
+            "prompt": prompt,
+        })
+    except DuplicateKeyError:
+        existing = await db.anonymous_evaluations.find_one({"email": email})
+        if existing and existing.get("status") == "complete" and existing.get("result"):
+            # Return the previously generated report so an honest refresh
+            # still shows the same answer instead of an error.
+            return existing["result"]
+        raise HTTPException(
+            status_code=409,
+            detail="This email has already been used. Each email may claim only one free evaluation.",
+        )
+
+    hint = _map_task_type_hint(request.task_type)
+    try:
+        task_hint_enum = TaskType(hint)
+    except ValueError:
+        task_hint_enum = TaskType.task2_opinion
+
+    try:
+        eval_req = WritingEvaluationRequest(
+            essay_text=essay,
+            task_type_hint=task_hint_enum,
+            task_prompt=prompt,
+            user_language=(request.user_language or "en"),
+        )
+    except Exception as exc:
+        # Roll back reservation so the visitor can fix and resubmit.
+        await db.anonymous_evaluations.delete_one({"email": email, "status": "pending"})
+        raise HTTPException(status_code=400, detail=f"Invalid request: {exc}")
+
+    try:
+        result = await evaluate_writing(eval_req)
+    except EvaluatorFailure as exc:
+        await db.anonymous_evaluations.delete_one({"email": email, "status": "pending"})
+        logging.getLogger(__name__).error(
+            "Public essay evaluator failed after %d attempts: %s",
+            exc.attempts, exc.last_error,
+        )
+        raise HTTPException(
+            status_code=502,
+            detail={
+                "message": "Evaluator unavailable. Please try again in a moment.",
+                "attempts": exc.attempts,
+                "last_error": exc.last_error,
+            },
+        )
+
+    result_dict = result.model_dump()
+    await db.anonymous_evaluations.update_one(
+        {"email": email},
+        {"$set": {
+            "status": "complete",
+            "completed_at": datetime.now(timezone.utc),
+            "result": result_dict,
+            "essay": essay,
+        }},
+    )
+    return result_dict
 
 
 @api_router.post("/writing-practice/evaluate")
@@ -6440,6 +6562,12 @@ async def seed_reading_test_2_inline():
 @app.on_event("startup")
 async def startup_event():
     """Seed vocab grammar lessons and beginner english lessons if they don't exist"""
+    # Public essay-evaluation lead magnet — one-per-email uniqueness.
+    # Safe to run on every startup (idempotent).
+    try:
+        await db.anonymous_evaluations.create_index("email", unique=True)
+    except Exception as e:
+        logger.warning(f"anonymous_evaluations index create failed: {e}")
     try:
         # Seed vocab grammar lessons
         count = await db.vocab_grammar_lessons.count_documents({})

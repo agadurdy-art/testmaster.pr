@@ -139,3 +139,62 @@ Additional fixes pushed on top of `7f6fe2d4`:
 - **Landing mobile nav (<900px)**: no language `<select>` in the top bar. Open hamburger drawer → language selector visible inside drawer, full-width.
 - **Dashboard visual**: background is tinted (not pure white), cards have visible glass depth, icon tiles have gradient fill + slight glow. Layout/content identical to previous push.
 - **Samples footer**: "All samples" → `/#samples`. Writing/Speaking sample links still functional. No email-capture block at the bottom of any sample page.
+
+---
+
+## Second follow-up push — same day (2026-04-22 evening)
+
+### New feature — anonymous essay evaluator (MVP)
+
+Public "Score my own essay" lead magnet. Sample page visitors paste their own IELTS writing and get the same evaluator output logged-in users get, gated on a unique email (one evaluation per email, ever). View-only — no PDF, no download. sessionStorage keeps the report alive for 10 minutes so accidental refreshes don't discard it.
+
+**Route:** `/score-my-essay`
+
+**Backend changes (`backend/server.py`):**
+- New `POST /api/public/evaluate-essay` route (next to the v2 writing evaluator). Email regex validation → atomic reservation insert into `anonymous_evaluations` with unique index on `email` → calls existing `evaluate_writing()` service → stores the result on the reservation doc. Race-safe: DuplicateKeyError returns the stored result; evaluator failures roll back the reservation so visitors can retry.
+- Mongo unique index on `anonymous_evaluations.email` created in `startup_event`.
+- Added `import re` (used by the email regex).
+- Limits: essay 20k chars, prompt 4k chars, min 200 words for Task 2 (client-side, server only checks non-empty).
+
+**Frontend changes:**
+- New page `frontend/src/pages/PublicEssayEvaluator.js` — email + task-type dropdown + prompt + essay form → on submit renders the same `AnnotatedEssayPanel + PublicScoreCard` layout the sample pages use, but fed by the visitor's data.
+- Route + lazy import in `App.js`.
+- `SampleReportPage.jsx`'s `onScoreMyEssay` now routes to `/score-my-essay` (previously wired to `/signup` as an interim fix earlier today).
+
+**What's intentionally NOT built (future work — see memory `project_anonymous_essay_evaluation.md`):**
+- No transactional email — Aga's spec was "view-only, let it fade". Resend is already wired; can layer on a "we've saved your report, click to revisit" mail later.
+- No CAPTCHA / IP rate limit — only email uniqueness. If abuse shows up, add disposable-email domain blocklist + IP throttle.
+- No marketing drip — emails land in `anonymous_evaluations` collection; a welcome/discount sequence can be scheduled on top of this without schema changes.
+
+### Writing Practice — "Custom question" mode for paid users
+
+Paid users inside `/question-bank/writing/task2` can now submit their own task prompt instead of picking from the question bank.
+
+**Change:** `frontend/src/pages/WritingTask2Practice.js` — new mode toggle at the top of the left panel: "Preset Questions" (existing flow) vs "My Own Question" (new). In custom mode:
+- Left panel shows a single 4000-char Textarea for the user's own prompt (preset filters, prompt list, tips, model-answer toggle all hidden — they don't apply).
+- Submit still uses the same `POST /api/writing-practice/evaluate/v2` endpoint the preset flow uses, sending the typed prompt instead of `selectedPrompt.prompt`.
+- Submit button is disabled until both the custom prompt and ≥200-word essay are present.
+- Evaluation result view reads the custom prompt correctly (no more empty string when the evaluator needs to echo the prompt).
+
+**No backend changes** for this part — the v2 endpoint already accepted arbitrary prompts. Access control is by virtue of the route gating (`/question-bank/writing/task2` requires `user` in `App.js`). If stricter paid-tier gating is needed later, the existing `usage_tracking` service (server.py ~1717) is the place to hook it.
+
+### Smoke tests for evaluator MVP
+
+- **`/score-my-essay`** loads the input form. No PublicScoreCard/result view visible initially.
+- Submit with bad email → inline error "Please enter a valid email address."
+- Submit with a <200-word essay → inline error with the real word count.
+- Submit a valid full-length Task 2 essay → loading spinner → `AnnotatedEssayPanel + PublicScoreCard` appear, page scrolls to the report. Inline highlights clickable, bands rendered, Liz card omitted (no lizMessage in public mode), radar chart visible.
+- **One-per-email gate**: refresh the page (same tab) → sessionStorage restores the report. Close tab, reopen, submit the same email → 409 response in Network tab, friendly UI message.
+- **Cache expiry**: wait 10+ minutes with the page open, refresh → cache cleared, form shown again.
+- **Race / refresh during pending**: submit, immediately refresh before response returns → no duplicate LLM call (reservation row prevents it); second submit attempt with same email shows the completed result from the reservation.
+- **Writing sample → "Score my own essay" button**: visit `/samples/writing/band-6-5-task2` → right-sidebar "Score my own essay" button now navigates to `/score-my-essay` (not `/signup` anymore).
+- **Mongo verification** (Emergent side): `db.anonymous_evaluations.getIndexes()` should list a unique index on `email`. Successful submissions create one doc with `status: "complete"` and a `result` field.
+
+### Smoke tests for Writing Practice custom mode
+
+- Visit `/question-bank/writing/task2` as a logged-in user → new tab-bar pair "Preset Questions | My Own Question" visible at the top of the left panel.
+- Click "My Own Question" → essay type filter / prompt list / selected prompt detail / tips all disappear, replaced by a single prompt Textarea + char counter.
+- Paste a real Task 2 prompt + write 250+ words on the right → Submit enables. Click → evaluator runs, Results screen shows the custom prompt (not empty) in the header.
+- Switch back to "Preset Questions" → the preset prompt selection UI returns intact, no state leak.
+- Edge: empty custom prompt + full essay → Submit stays disabled. Essay <200 words → disabled in both modes.
+- Model Answers button is hidden in custom mode (no model answers exist for user-supplied prompts).
