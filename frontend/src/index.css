@@ -242,3 +242,22 @@
     50% { box-shadow: 0 0 20px 5px rgba(16, 185, 129, 0.2); }
   }
 }
+
+/* -----------------------------------------------------------------------------
+ * Turkish locale uppercase fix (added 2026-04-22 — post-deploy audit Issue B)
+ *
+ * Problem: Browsers use the document's `lang` attribute to pick Unicode casing
+ * rules. When lang="tr", `text-transform: uppercase` maps the Latin letter 'i'
+ * to 'İ' (dotted capital I — correct for Turkish). But many of our CSS-
+ * uppercased labels ("Practice", "Writing", etc.) are English strings or
+ * untranslated fallbacks, producing visual artifacts like "PRACTİCE", "WRİTİNG".
+ *
+ * Fix: for Turkish locale only, disable CSS `text-transform: uppercase`. Labels
+ * render in their natural case as stored in the i18n dictionary — readable,
+ * locale-correct, and dotted-İ-free. Other locales are unaffected.
+ *
+ * Scoped to elements (not *::before/after) to avoid touching icon/pseudo content.
+ * ----------------------------------------------------------------------------- */
+html[lang="tr"] * {
+  text-transform: none !important;
+}
