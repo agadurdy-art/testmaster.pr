@@ -1,33 +1,16 @@
-import React, { useState } from "react";
-import { ArrowRight, Mail, Star, Lock, ShieldCheck } from "lucide-react";
+import React from "react";
+import { ArrowRight, Star, Lock, ShieldCheck } from "lucide-react";
 import { cn } from "../../../lib/utils";
 
 /**
- * Bottom-of-page conversion block: email capture + social proof on the left,
- * mini "your report" mock card on the right.
+ * Bottom-of-page conversion block: headline + social proof on the left,
+ * mini "your report" mock card on the right. The email capture that used
+ * to sit here was dead wiring — no parent passed `onSubmitEmail`, so the
+ * typed address was dropped and the user had to re-enter it on /signup.
+ * Replaced with a single "Start free" CTA that carries the writing intent
+ * into the signup flow (App.js's SignupBridge + handleLogin consume it).
  */
-export default function ConversionBlock({ onSubmitEmail, className }) {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!email) return;
-    setSubmitted(true);
-    onSubmitEmail?.(email);
-    // Carry the intent into the signup flow so the CTA actually delivers
-    // on its promise: sign up → land straight on /writing-practice (the
-    // paste-and-evaluate UI). Without this wire the user saw a fake
-    // "Check your inbox" confirmation and nothing happened. App.js's
-    // SignupBridge + handleLogin now consume `intent=writing` via
-    // lib/pendingPlan's intent helpers.
-    const q = new URLSearchParams({
-      intent: "writing",
-      path: "ielts",
-    });
-    window.location.href = `/signup?${q.toString()}`;
-  };
-
+export default function ConversionBlock({ className }) {
   return (
     <section id="cta" className={cn("print:hidden relative mx-auto max-w-7xl px-5 sm:px-8 pb-14", className)}>
       <div
@@ -72,59 +55,23 @@ export default function ConversionBlock({ onSubmitEmail, className }) {
               and you'll see your report in under a minute.
             </p>
 
-            {/* Email form */}
-            <form
-              onSubmit={handleSubmit}
-              className="mt-6 flex flex-col sm:flex-row gap-2.5 max-w-lg"
-            >
-              <label className="sr-only" htmlFor="cta-email">
-                Email
-              </label>
-              <div className="relative flex-1">
-                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <input
-                  id="cta-email"
-                  type="email"
-                  required
-                  disabled={submitted}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@email.com"
-                  className={cn(
-                    "w-full pl-10 pr-4 py-3.5 rounded-xl",
-                    "border border-slate-200 bg-white/80 backdrop-blur",
-                    "placeholder:text-slate-400 text-[15px]",
-                    "focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500",
-                    "disabled:opacity-60"
-                  )}
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={submitted}
+            {/* Single CTA — the global "Try free" button already appears in
+                the top nav + hero, so there's no reason to demand an email
+                here before the real signup form. */}
+            <div className="mt-6">
+              <a
+                href="/signup?intent=writing&path=ielts"
                 className={cn(
                   "inline-flex items-center justify-center gap-1.5",
                   "bg-emerald-600 hover:bg-emerald-700 text-white",
-                  "font-semibold text-[15px] px-5 py-3.5 rounded-xl",
+                  "font-semibold text-[15px] px-6 py-3.5 rounded-xl",
                   "shadow-[0_6px_22px_-8px_hsl(160_84%_39%/_0.55)]",
-                  "transition-colors whitespace-nowrap",
-                  "disabled:bg-emerald-700 disabled:cursor-default"
+                  "transition-colors whitespace-nowrap"
                 )}
               >
-                {submitted ? (
-                  <>Starting…</>
-                ) : (
-                  <>
-                    Start free <ArrowRight className="w-3.5 h-3.5" />
-                  </>
-                )}
-              </button>
-            </form>
-
-            <p className="mt-2 text-[12px] text-slate-500 flex items-center gap-1.5">
-              <Lock className="w-3 h-3" />
-              We'll never share your email. Unsubscribe anytime.
-            </p>
+                Start free <ArrowRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
 
             {/* Social proof */}
             <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-[13px] text-slate-700">

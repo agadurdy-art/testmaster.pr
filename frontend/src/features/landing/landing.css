@@ -999,6 +999,17 @@
 .landing-scope .mobile-drawer-links a:hover {
   background: hsl(var(--muted));
 }
+.landing-scope .mobile-drawer-lang {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 2px 4px;
+  border-top: 1px solid hsl(var(--border));
+}
+.landing-scope .mobile-drawer-lang select {
+  flex: 1;
+  width: 100%;
+}
 .landing-scope .mobile-drawer-cta {
   display: flex;
   flex-direction: column;

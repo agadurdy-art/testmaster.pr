@@ -35,7 +35,12 @@ export default function LandingNav() {
           </ul>
         </nav>
         <div className="nav-right">
-          <LanguageSwitcher compact />
+          {/* Desktop shows the language picker inline. On mobile (<900px)
+              the select + CTA + hamburger triangle can push the Start
+              button off-screen — see the drawer below for the mobile copy. */}
+          <span className="desktop-only">
+            <LanguageSwitcher compact />
+          </span>
           <a href="/login" className="btn btn-ghost desktop-only">{t('landingV2NavLogin')}</a>
           <a href="/signup" className="btn btn-primary">{t('landingV2NavStart')}</a>
           <button
@@ -83,6 +88,9 @@ export default function LandingNav() {
               <li><a href="/blog" onClick={close}>{t('landingV2NavBlog')}</a></li>
               <li><a href="/about" onClick={close}>{t('landingV2NavAbout')}</a></li>
             </ul>
+            <div className="mobile-drawer-lang">
+              <LanguageSwitcher />
+            </div>
             <div className="mobile-drawer-cta">
               <a href="/login" className="btn btn-ghost" onClick={close}>{t('landingV2NavLogin')}</a>
               <a href="/signup" className="btn btn-primary" onClick={close}>{t('landingV2NavStart')}</a>

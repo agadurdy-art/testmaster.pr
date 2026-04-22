@@ -198,17 +198,38 @@ function AnnotationPill({ annotation, isOpen, onToggle }) {
   const spanRef = useRef(null);
   const popRef = useRef(null);
   const [flipRight, setFlipRight] = useState(false);
+  // translateX nudge used to keep the popover inside the viewport on narrow
+  // screens. On mobile the 280–320px popover often renders with its left
+  // anchored to a highlighted word that is itself near the left edge — so
+  // the pop would spill past x=0. We measure after paint and shift it right.
+  const [shiftX, setShiftX] = useState(0);
   const tokens = CATEGORY_TOKENS[annotation.category];
   const color = tokens.swatchHex;
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) {
+      setShiftX(0);
+      return;
+    }
     const pop = popRef.current;
     if (!pop) return;
-    // Flip popover if it would overflow the viewport right edge.
+    // First pass: decide whether to flip to the right edge of the anchor.
     const r = pop.getBoundingClientRect();
-    if (r.right > window.innerWidth - 12) setFlipRight(true);
-    else setFlipRight(false);
+    const overflowRight = r.right > window.innerWidth - 12;
+    setFlipRight(overflowRight);
+    // Second pass (next frame) — after any flip, re-measure and clamp the
+    // horizontal position so it stays inside [12, innerWidth - 12]. Covers
+    // both edges: words near the left AND right edges on mobile.
+    const rAF = requestAnimationFrame(() => {
+      const p = popRef.current;
+      if (!p) return;
+      const rect = p.getBoundingClientRect();
+      let delta = 0;
+      if (rect.left < 12) delta = 12 - rect.left;
+      else if (rect.right > window.innerWidth - 12) delta = window.innerWidth - 12 - rect.right;
+      setShiftX(delta);
+    });
+    return () => cancelAnimationFrame(rAF);
   }, [isOpen]);
 
   return (
@@ -255,14 +276,21 @@ function AnnotationPill({ annotation, isOpen, onToggle }) {
           role="dialog"
           className={cn(
             "absolute z-40 block text-left",
-            "min-w-[280px] max-w-[320px]",
+            // Shrink the min/max on mobile so the popover can actually fit a
+            // 360–390px viewport (minus 24px of safe padding), then expand
+            // again on sm+.
+            "min-w-[min(280px,calc(100vw-24px))] max-w-[min(320px,calc(100vw-24px))]",
+            "sm:min-w-[280px] sm:max-w-[320px]",
             "bg-white border border-slate-200 rounded-xl",
             "shadow-[0_12px_32px_-8px_rgba(15,23,42,0.18)]",
             "px-3.5 py-3"
           )}
           style={{
+            // Use margin-left for the horizontal nudge instead of transform,
+            // since transform is owned by the annFadeIn keyframe animation.
             left: flipRight ? "auto" : 0,
             right: flipRight ? 0 : "auto",
+            marginLeft: shiftX ? `${shiftX}px` : undefined,
             top: "calc(100% + 8px)",
             animation: "annFadeIn 180ms ease-out both",
           }}

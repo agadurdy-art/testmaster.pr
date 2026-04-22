@@ -5,7 +5,6 @@ import SampleBanner from "./SampleBanner";
 import SampleReportHero from "./SampleReportHero";
 import AnnotatedEssayPanel from "./AnnotatedEssayPanel";
 import PublicScoreCard from "./PublicScoreCard";
-import ConversionBlock from "./ConversionBlock";
 import SampleFAQ, { DEFAULT_SAMPLE_FAQ } from "./SampleFAQ";
 import OgPreviewCard from "./OgPreviewCard";
 import PublicFooter from "./PublicFooter";
@@ -63,7 +62,9 @@ export default function SampleReportPage({
         </div>
       </section>
 
-      <ConversionBlock />
+      {/* ConversionBlock removed — the global "Try free" CTA in PublicNav +
+          MobileStickyCTA already covers conversion. A discount-code email
+          capture may replace this later; see backlog memory. */}
 
       <SampleFAQ items={faqItems} />
 
