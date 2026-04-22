@@ -47,7 +47,11 @@ export default function PublicNav({ className, ctaHref = "/signup" }) {
           <a href="/samples/speaking/band-6-5-part2" className="hover:text-slate-900">
             Speaking
           </a>
-          <a href="/samples/writing/band-6-5-task2" className="hover:text-slate-900">
+          {/* "Samples" is the hub/switcher — sends users to the carousel on
+              the landing page where they can pick any writing or speaking
+              sample. Previously this linked to a specific writing sample,
+              which broke when users were already on that page. */}
+          <a href="/#samples" className="hover:text-slate-900">
             Samples
           </a>
           <a href="/pricing" className="hover:text-slate-900">

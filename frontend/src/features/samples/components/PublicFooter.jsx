@@ -66,7 +66,7 @@ export default function PublicFooter({ className, currentSampleSlug }) {
                 </a>
               </li>
             ))}
-            <li><a className="hover:text-slate-900" href="/samples/writing/band-6-5-task2">All samples</a></li>
+            <li><a className="hover:text-slate-900" href="/#samples">All samples</a></li>
           </ul>
         </div>
         <div>

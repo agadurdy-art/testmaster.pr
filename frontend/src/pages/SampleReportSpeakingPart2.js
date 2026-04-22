@@ -3,7 +3,6 @@ import { ArrowRight, Mic, Play, Square } from "lucide-react";
 import PublicNav from "../features/samples/components/PublicNav";
 import SampleBanner from "../features/samples/components/SampleBanner";
 import PublicFooter from "../features/samples/components/PublicFooter";
-import ConversionBlock from "../features/samples/components/ConversionBlock";
 import SampleFAQ, {
   DEFAULT_SAMPLE_FAQ,
 } from "../features/samples/components/SampleFAQ";
@@ -242,7 +241,7 @@ export default function SampleReportSpeakingPart2() {
         </div>
       </section>
 
-      <ConversionBlock />
+      {/* ConversionBlock removed — see project_discount_email_capture.md */}
       <SampleFAQ items={DEFAULT_SAMPLE_FAQ} />
       <PublicFooter />
       <MobileStickyCTA />

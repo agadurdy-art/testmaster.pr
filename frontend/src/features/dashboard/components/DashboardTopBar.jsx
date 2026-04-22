@@ -10,7 +10,6 @@ export default function DashboardTopBar({
   activeSection = "dashboard",
   user,
   onOpenMenu,
-  onOpenNotifications,
 }) {
   return (
     <header
@@ -52,14 +51,9 @@ export default function DashboardTopBar({
           </nav>
         </div>
         <div className="flex items-center gap-4">
-          <button
-            type="button"
-            aria-label="Notifications"
-            onClick={onOpenNotifications}
-            className="p-2 rounded-lg hover:bg-black/5 text-muted"
-          >
-            <BellIcon />
-          </button>
+          {/* Notifications bell removed — the feature doesn't exist yet and a
+              dead button looks broken. Add back as a dropdown or /notifications
+              route when the feature ships. */}
           <button
             type="button"
             aria-label="Menu"
@@ -68,9 +62,13 @@ export default function DashboardTopBar({
           >
             <MenuIcon />
           </button>
-          <button
-            type="button"
-            className="hidden md:flex items-center gap-2.5 pl-1 pr-3 py-1 rounded-full hover:bg-black/5"
+          {/* Avatar chip → profile. Previously a bare <button> with no onClick,
+              so clicking did nothing ("tepki vermiyor"). Anchor keeps native
+              nav + middle-click + right-click "Open in new tab" behavior. */}
+          <a
+            href="/profile"
+            className="hidden md:flex items-center gap-2.5 pl-1 pr-3 py-1 rounded-full hover:bg-black/5 no-underline"
+            aria-label="Open profile"
           >
             <div
               className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-medium"
@@ -83,7 +81,7 @@ export default function DashboardTopBar({
               {user?.initials || "AG"}
             </div>
             <span className="text-sm font-medium">{user?.firstName || "Aga"}</span>
-          </button>
+          </a>
         </div>
       </div>
     </header>
@@ -95,15 +93,6 @@ function NavLink({ href, active, children }) {
     <a className={`nav-link ${active ? "active" : "muted"}`} href={href}>
       {children}
     </a>
-  );
-}
-
-function BellIcon() {
-  return (
-    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-    </svg>
   );
 }
 

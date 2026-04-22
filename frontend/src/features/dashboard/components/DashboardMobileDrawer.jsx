@@ -41,6 +41,8 @@ export default function DashboardMobileDrawer({
     navigate(path);
   };
 
+  // Note: there is no /settings route — account settings live inside /profile.
+  // Keeping a separate "Settings" entry would 404 on tap.
   const LINKS = [
     { label: "Dashboard", path: "/dashboard" },
     { label: "Practice", path: "/question-bank" },
@@ -49,7 +51,6 @@ export default function DashboardMobileDrawer({
     { label: "Progress", path: "/progress" },
     { label: "Pricing", path: "/pricing" },
     { label: "Profile", path: "/profile" },
-    { label: "Settings", path: "/settings" },
   ];
 
   return (

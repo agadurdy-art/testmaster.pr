@@ -11,12 +11,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=JetBrains+Mono:wght@400;500&display=swap');
 
 .dashboard-scope {
-  --bg: 210 40% 98%;
-  --surface: 0 0% 100%;
+  /* iOS 26 tint tweak — the old palette was near-pure white, which the
+     user described as "aşırı beyaz". Warmer background + tinted surface
+     gives glass cards something to read against without changing layout. */
+  --bg: 214 45% 96.5%;
+  --bg-tint-a: 200 70% 94%;   /* cool wash top-left */
+  --bg-tint-b: 160 45% 94%;   /* emerald wash bottom-right */
+  --surface: 210 50% 99.5%;
   --fg: 222 47% 11%;
   --muted-fg: 215 16% 47%;
-  --border: 214 32% 91%;
-  --rule: 214 25% 88%;
+  --border: 214 32% 88%;
+  --rule: 214 25% 86%;
   --primary: 160 84% 39%;
   --primary-ink: 160 84% 22%;
   --sky: 199 89% 60%;
@@ -27,7 +32,11 @@
   --liz-bg: 268 100% 98%;
   --liz-ink: 268 55% 30%;
 
-  background: hsl(var(--bg));
+  background:
+    radial-gradient(1200px 620px at 0% 0%, hsl(var(--bg-tint-a) / .55), transparent 60%),
+    radial-gradient(1000px 540px at 100% 100%, hsl(var(--bg-tint-b) / .45), transparent 62%),
+    hsl(var(--bg));
+  background-attachment: fixed;
   color: hsl(var(--fg));
   font-family: Inter, system-ui, sans-serif;
   font-feature-settings: "cv11", "ss01", "ss03";
@@ -84,17 +93,19 @@
   color: hsl(var(--muted-fg));
 }
 
-/* Liquid-glass card */
+/* Liquid-glass card — iOS 26 tint: slightly denser surface + 2-stop gradient
+   so the glass actually reads against the now-tinted background. */
 .dashboard-scope .card {
-  background: hsl(var(--surface) / .72);
-  border: 1px solid hsl(var(--fg) / .06);
+  background:
+    linear-gradient(180deg, hsl(var(--surface) / .88) 0%, hsl(var(--surface) / .72) 100%);
+  border: 1px solid hsl(var(--fg) / .08);
   border-radius: 1.5rem;
-  backdrop-filter: blur(22px) saturate(160%);
-  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  backdrop-filter: blur(22px) saturate(170%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
   box-shadow:
-    inset 0 1px 0 hsl(0 0% 100% / .6),
+    inset 0 1px 0 hsl(0 0% 100% / .7),
     0 1px 2px hsl(var(--fg) / .04),
-    0 14px 32px -14px hsl(var(--fg) / .1);
+    0 18px 40px -18px hsl(var(--fg) / .14);
 }
 .dashboard-scope.theme-dark .card,
 .dashboard-scope.theme-night .card {
@@ -111,24 +122,54 @@
   box-shadow: inset 0 1px 0 hsl(0 0% 100% / .5);
 }
 
-/* Icon tile */
+/* Icon tile — iOS 26 squircle with tinted gradient fill and a soft rim.
+   Keeps the same footprint (40×40) but reads as a "chip" instead of a flat
+   swatch, which is what the user asked for ("icon çerçeveleri"). */
 .dashboard-scope .icon-tile {
-  width: 38px; height: 38px; border-radius: 11px;
+  width: 40px; height: 40px; border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
-  background: hsl(var(--primary) / .1);
+  background:
+    linear-gradient(180deg, hsl(var(--primary) / .22) 0%, hsl(var(--primary) / .12) 100%);
   color: hsl(var(--primary-ink));
-  border: 1px solid hsl(var(--primary) / .16);
-  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+  border: 1px solid hsl(var(--primary) / .24);
+  transition: transform .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
   flex-shrink: 0;
-  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .5);
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / .7),
+    0 1px 2px hsl(var(--primary) / .18);
 }
-.dashboard-scope .icon-tile.sky  { background: hsl(var(--sky) / .14);  color: hsl(199 60% 32%);       border-color: hsl(var(--sky) / .22); }
-.dashboard-scope .icon-tile.gold { background: hsl(var(--gold) / .18); color: hsl(var(--gold-ink));  border-color: hsl(var(--gold) / .3); }
-.dashboard-scope .icon-tile.liz  { background: hsl(var(--liz) / .14);  color: hsl(var(--liz-ink));   border-color: hsl(var(--liz) / .25); }
-.dashboard-scope .elsewhere-item:hover .icon-tile       { transform: translateY(-1px); background: hsl(var(--primary) / .16); border-color: hsl(var(--primary) / .3); }
-.dashboard-scope .elsewhere-item:hover .icon-tile.sky   { background: hsl(var(--sky) / .22); border-color: hsl(var(--sky) / .35); }
-.dashboard-scope .elsewhere-item:hover .icon-tile.gold  { background: hsl(var(--gold) / .28); border-color: hsl(var(--gold) / .4); }
-.dashboard-scope .elsewhere-item:hover .icon-tile.liz   { background: hsl(var(--liz) / .2);  border-color: hsl(var(--liz) / .35); }
+.dashboard-scope .icon-tile.sky  {
+  background: linear-gradient(180deg, hsl(var(--sky) / .26) 0%, hsl(var(--sky) / .14) 100%);
+  color: hsl(199 60% 32%); border-color: hsl(var(--sky) / .32);
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .7), 0 1px 2px hsl(var(--sky) / .2);
+}
+.dashboard-scope .icon-tile.gold {
+  background: linear-gradient(180deg, hsl(var(--gold) / .32) 0%, hsl(var(--gold) / .18) 100%);
+  color: hsl(var(--gold-ink)); border-color: hsl(var(--gold) / .38);
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .7), 0 1px 2px hsl(var(--gold) / .22);
+}
+.dashboard-scope .icon-tile.liz  {
+  background: linear-gradient(180deg, hsl(var(--liz) / .24) 0%, hsl(var(--liz) / .14) 100%);
+  color: hsl(var(--liz-ink)); border-color: hsl(var(--liz) / .32);
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .7), 0 1px 2px hsl(var(--liz) / .2);
+}
+.dashboard-scope .elsewhere-item:hover .icon-tile {
+  transform: translateY(-1px);
+  background: linear-gradient(180deg, hsl(var(--primary) / .32) 0%, hsl(var(--primary) / .18) 100%);
+  border-color: hsl(var(--primary) / .38);
+}
+.dashboard-scope .elsewhere-item:hover .icon-tile.sky {
+  background: linear-gradient(180deg, hsl(var(--sky) / .36) 0%, hsl(var(--sky) / .2) 100%);
+  border-color: hsl(var(--sky) / .42);
+}
+.dashboard-scope .elsewhere-item:hover .icon-tile.gold {
+  background: linear-gradient(180deg, hsl(var(--gold) / .42) 0%, hsl(var(--gold) / .26) 100%);
+  border-color: hsl(var(--gold) / .5);
+}
+.dashboard-scope .elsewhere-item:hover .icon-tile.liz {
+  background: linear-gradient(180deg, hsl(var(--liz) / .34) 0%, hsl(var(--liz) / .18) 100%);
+  border-color: hsl(var(--liz) / .42);
+}
 
 .dashboard-scope .hairline { border-color: hsl(var(--rule)); }
 .dashboard-scope .text-muted { color: hsl(var(--muted-fg)); }

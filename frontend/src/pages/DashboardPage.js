@@ -299,7 +299,7 @@ export default function DashboardPage({ user, onLogout }) {
         nextRecommended={mockRec?.label || t("dashboardV2MockNextValue")}
         ctaLabel={t("dashboardV2MockCta")}
         scheduleLabel={t("dashboardV2MockSchedule")}
-        onStart={goto(mockRec?.href || "/practice-test")}
+        onStart={goto(mockRec?.href || "/full-test")}
         onSchedule={goto("/profile")}
       />
 
