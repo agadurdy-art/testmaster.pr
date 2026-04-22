@@ -4,11 +4,12 @@ import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Textarea } from '../components/ui/textarea';
-import { 
-  ArrowLeft, PenTool, Clock, RefreshCw, Send, 
+import {
+  ArrowLeft, PenTool, Clock, RefreshCw, Send,
   MessageSquare, HelpCircle, Scale, AlertTriangle,
-  Lightbulb, CheckCircle, ChevronDown, ChevronUp, 
-  Eye, EyeOff, BookOpen, Award, Layers, Star
+  Lightbulb, CheckCircle, ChevronDown, ChevronUp,
+  Eye, EyeOff, BookOpen, Award, Layers, Star,
+  Edit3, ListFilter
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { getRecommendedLessonPath } from '../lib/recommendationRouting';
@@ -56,6 +57,11 @@ export default function WritingTask2Practice() {
   const [targetBand, setTargetBand] = useState(urlBand);
   const [modelAnswers, setModelAnswers] = useState(null);
   const [recommendedLessons, setRecommendedLessons] = useState([]);
+  // Custom prompt mode — paid practice users can paste their own task prompt
+  // and get the same v2 evaluation without being restricted to our question
+  // bank. Gated only by being on this authenticated route.
+  const [isCustomMode, setIsCustomMode] = useState(false);
+  const [customPrompt, setCustomPrompt] = useState('');
 
   const essayTypes = [
     { id: 'all', name: 'All', icon: BookOpen },
@@ -159,6 +165,17 @@ export default function WritingTask2Practice() {
       return;
     }
 
+    const effectivePrompt = isCustomMode
+      ? customPrompt.trim()
+      : (selectedPrompt?.prompt || '');
+
+    if (!effectivePrompt) {
+      toast.error(isCustomMode
+        ? 'Paste your own task prompt first'
+        : 'Please select a prompt first');
+      return;
+    }
+
     setEvaluating(true);
     toast.info('AI evaluation in progress...');
 
@@ -168,7 +185,7 @@ export default function WritingTask2Practice() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           task_type: 'task2',
-          prompt: selectedPrompt?.prompt || '',
+          prompt: effectivePrompt,
           essay: userResponse,
           user_language: languageWireCode || 'en',
         }),
@@ -240,7 +257,7 @@ export default function WritingTask2Practice() {
       <WritingEvaluatorResult
         result={evaluation}
         essayText={userResponse}
-        prompt={selectedPrompt?.prompt || ''}
+        prompt={isCustomMode ? customPrompt : (selectedPrompt?.prompt || '')}
         onRewrite={() => {
           setEvaluation(null);
           setUserResponse(evaluation.improved_version || userResponse);
@@ -310,9 +327,74 @@ export default function WritingTask2Practice() {
           {/* LEFT PANEL - Prompt Selection (40%) */}
           <div className="lg:w-[40%] lg:border-r border-gray-200 lg:sticky lg:top-[80px] lg:h-[calc(100vh-80px)] lg:overflow-y-auto">
             <div className="p-4 md:p-6 space-y-4">
-              
-              {/* Essay Type Filter */}
-              <Card className="p-4">
+
+              {/* Mode toggle — Preset questions vs Custom (bring-your-own) */}
+              <Card className="p-1.5 bg-gray-50 border-gray-200">
+                <div className="grid grid-cols-2 gap-1">
+                  <button
+                    type="button"
+                    onClick={() => setIsCustomMode(false)}
+                    className={`flex items-center justify-center gap-1.5 px-3 py-2 rounded-md text-xs font-medium transition-colors ${
+                      !isCustomMode
+                        ? 'bg-white text-blue-700 shadow-sm border border-blue-100'
+                        : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                  >
+                    <ListFilter className="w-3.5 h-3.5" />
+                    Preset Questions
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setIsCustomMode(true)}
+                    className={`flex items-center justify-center gap-1.5 px-3 py-2 rounded-md text-xs font-medium transition-colors ${
+                      isCustomMode
+                        ? 'bg-white text-blue-700 shadow-sm border border-blue-100'
+                        : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                  >
+                    <Edit3 className="w-3.5 h-3.5" />
+                    My Own Question
+                  </button>
+                </div>
+              </Card>
+
+              {/* ===== Custom-mode panel ===== */}
+              {isCustomMode && (
+                <Card className="p-4 border-2 border-blue-100">
+                  <h3 className="font-semibold text-gray-900 mb-1 text-sm flex items-center gap-1.5">
+                    <Edit3 className="w-4 h-4 text-blue-600" />
+                    Your own Task 2 prompt
+                  </h3>
+                  <p className="text-xs text-gray-500 mb-3">
+                    Paste the exact question you were given. The evaluator
+                    will grade your essay against this prompt, same rubric as
+                    the preset questions.
+                  </p>
+                  <Textarea
+                    value={customPrompt}
+                    onChange={(e) => setCustomPrompt(e.target.value)}
+                    placeholder="e.g. Some people think modern technology has made our lives more convenient; others say it has created new problems. Discuss both views and give your own opinion."
+                    className="min-h-[160px] text-sm leading-relaxed resize-none"
+                    maxLength={4000}
+                  />
+                  <div className="mt-2 flex items-center justify-between text-[11px] text-gray-500">
+                    <span>{customPrompt.length} / 4000 characters</span>
+                    {customPrompt.trim() && (
+                      <button
+                        type="button"
+                        onClick={() => setCustomPrompt('')}
+                        className="text-gray-500 hover:text-gray-700"
+                      >
+                        Clear
+                      </button>
+                    )}
+                  </div>
+                </Card>
+              )}
+
+              {/* ===== Preset-mode panels (hidden in custom mode) ===== */}
+              {!isCustomMode && (
+                <Card className="p-4">
                 <h3 className="font-semibold text-gray-900 mb-3 text-sm">Essay Tipi</h3>
                 <div className="flex flex-wrap gap-2">
                   {essayTypes.map(type => {
@@ -331,8 +413,10 @@ export default function WritingTask2Practice() {
                   })}
                 </div>
               </Card>
+              )}
 
               {/* Prompt Selection */}
+              {!isCustomMode && (
               <Card className="p-4">
                 <h3 className="font-semibold text-gray-900 mb-3 text-sm">Select Question</h3>
                 <div className="space-y-2 max-h-40 overflow-y-auto">
@@ -354,9 +438,10 @@ export default function WritingTask2Practice() {
                   ))}
                 </div>
               </Card>
+              )}
 
               {/* Selected Prompt Display */}
-              {selectedPrompt && (
+              {!isCustomMode && selectedPrompt && (
                 <Card className="p-4 bg-white border-2 border-blue-100">
                   <div className="flex items-center gap-2 mb-3">
                     <Badge className={getTypeColor(selectedPrompt.type)}>{selectedPrompt.type}</Badge>
@@ -407,7 +492,7 @@ export default function WritingTask2Practice() {
               )}
 
               {/* Tips - Collapsible */}
-              {selectedPrompt && (
+              {!isCustomMode && selectedPrompt && (
                 <Card className="overflow-hidden">
                   <button
                     className="w-full p-3 flex items-center justify-between text-left"
@@ -466,7 +551,11 @@ export default function WritingTask2Practice() {
                 <div className="mt-4 flex flex-col sm:flex-row gap-3">
                   <Button
                     onClick={submitForEvaluation}
-                    disabled={evaluating || wordCount < 200}
+                    disabled={
+                      evaluating ||
+                      wordCount < 200 ||
+                      (isCustomMode ? !customPrompt.trim() : !selectedPrompt)
+                    }
                     className="flex-1 bg-blue-600 hover:bg-blue-700"
                   >
                     {evaluating ? (
@@ -479,18 +568,21 @@ export default function WritingTask2Practice() {
                       </>
                     )}
                   </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => setShowModelAnswer(!showModelAnswer)}
-                  >
-                    {showModelAnswer ? <EyeOff className="w-4 h-4 mr-1" /> : <Eye className="w-4 h-4 mr-1" />}
-                    Model Yanıtlar
-                  </Button>
+                  {/* Model answers only exist for preset prompts */}
+                  {!isCustomMode && (
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowModelAnswer(!showModelAnswer)}
+                    >
+                      {showModelAnswer ? <EyeOff className="w-4 h-4 mr-1" /> : <Eye className="w-4 h-4 mr-1" />}
+                      Model Yanıtlar
+                    </Button>
+                  )}
                 </div>
               </Card>
 
-              {/* Model Answers - Band 6 & Band 8.5 */}
-              {showModelAnswer && modelAnswers && (
+              {/* Model Answers - Band 6 & Band 8.5 (preset prompts only) */}
+              {!isCustomMode && showModelAnswer && modelAnswers && (
                 <Card className="p-5 border-2 border-indigo-200 bg-indigo-50/30">
                   <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
                     <Layers className="w-5 h-5 text-indigo-600" /> Model Yanıtlar
@@ -566,7 +658,7 @@ export default function WritingTask2Practice() {
               )}
 
               {/* Show generic model if no specific model answers loaded */}
-              {showModelAnswer && !modelAnswers && selectedPrompt && (
+              {!isCustomMode && showModelAnswer && !modelAnswers && selectedPrompt && (
                 <Card className="p-5 border-2 border-indigo-200 bg-indigo-50/30">
                   <h3 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
                     <Eye className="w-5 h-5 text-indigo-600" /> Model Answer Structure

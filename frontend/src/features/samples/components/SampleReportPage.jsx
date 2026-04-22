@@ -58,6 +58,9 @@ export default function SampleReportPage({
             result={result}
             targetBand={7.0}
             lizMessage={lizMessage}
+            onScoreMyEssay={() => {
+              window.location.href = "/score-my-essay";
+            }}
           />
         </div>
       </section>
