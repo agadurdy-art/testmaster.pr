@@ -114,6 +114,44 @@ class InlineAnnotation(BaseModel):
         return self
 
 
+# ---------- Extended coaching fields (optional) ----------
+
+
+class ResponseDiagnosis(BaseModel):
+    """
+    High-level "what's holding this essay back" summary. Exists in the legacy
+    evaluator; carried over so the UI can show a one-glance diagnosis.
+    """
+
+    main_issue: str = Field(..., min_length=1, max_length=300)
+    band_ceiling_reason: str = Field(..., min_length=1, max_length=300)
+    quick_win: str = Field(..., min_length=1, max_length=300)
+
+
+class RewriteGuidance(BaseModel):
+    """
+    Paragraph-level rewrite coaching — names the weakest paragraph and offers
+    a concrete opening + linking phrases the student can lift.
+    """
+
+    weakest_paragraph: str = Field(..., min_length=1, max_length=400)
+    suggested_opening: str = Field(..., min_length=1, max_length=400)
+    key_linking_phrases: str = Field(..., min_length=1, max_length=400)
+
+
+class RecommendedLesson(BaseModel):
+    """
+    One targeted lesson recommendation based on the essay's weakest criterion.
+    `lesson_id` / `stage` stay optional so the model can recommend a lesson it
+    knows about without needing the routing table.
+    """
+
+    title: str = Field(..., min_length=1, max_length=200)
+    reason: str = Field(..., min_length=1, max_length=300)
+    lesson_id: Optional[str] = Field(default=None, max_length=100)
+    stage: Optional[str] = Field(default=None, max_length=50)
+
+
 # ---------- Top-level result ----------
 
 
@@ -126,6 +164,15 @@ class WritingEvaluationResult(BaseModel):
     inline_annotations: List[InlineAnnotation] = Field(default_factory=list)
     improved_version: str = Field(..., min_length=0)
     feedback_language: str = Field(..., min_length=2, max_length=5)
+    # --- Legacy coaching fields, restored 2026-04-23 ---
+    # These were present in the v1 evaluator, dropped in the v2 rewrite, and
+    # re-added because the UI used to surface them and teachers rely on them.
+    # All four are optional: if Sonnet omits them, the UI simply skips the
+    # corresponding panel rather than erroring out.
+    response_diagnosis: Optional[ResponseDiagnosis] = None
+    highest_priority_fixes: List[str] = Field(default_factory=list, max_length=5)
+    rewrite_guidance: Optional[RewriteGuidance] = None
+    recommended_lesson: Optional[RecommendedLesson] = None
 
     @field_validator("overall_band")
     @classmethod

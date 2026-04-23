@@ -324,3 +324,61 @@ Second run on same DB reports `To migrate: 0` and exits without writes.
 - Create a new test account → onboarding → pick **General English** path → `/dashboard` correctly shows the old `Dashboard.js` (Lessons & Courses, Learning Tools, Quick Games, etc.).
 - Create a new test account → onboarding → pick **IELTS** path → `/dashboard` shows Claude Design `DashboardPage`.
 - Admin analytics at `/admin/learning-mode-stats` reflects the migration (GE count → 0 for pre-migration users).
+
+---
+
+## Addendum — 2026-04-23 · Grammar Blueprint + Vocabulary nav (no-migration push)
+
+Greenfield addition. No DB migration required, no env vars, no new dependencies. The retired band-tiered Vocab/Grammar course has been removed in favour of:
+- **Grammar** → new hand-curated *IELTS 8 Grammar Blueprint* (17 topics × 3 modules + cross-cutting Common Errors), at `/grammar`.
+- **Vocabulary** → navigation layer at `/vocabulary` that deep-links into the existing 20 Advanced Mastery themes (no new vocabulary content — reuses the curated terms already inside Advanced Mastery).
+
+### What's new
+- `backend/content/grammar/blueprint_seed.json` + `backend/content/grammar/topics/*.json` — 18 static JSON files. Loaded in-memory at startup; read-only.
+- `backend/routes/grammar_blueprint.py` — FastAPI router mounted under `/api/grammar-blueprint`:
+  - `GET /modules` course meta + module list
+  - `GET /topics` compact list for landing
+  - `GET /topics/{slug}` full topic detail
+  - `POST /topics/{slug}/practice/score` stateless scoring (no DB write)
+  - `POST /_internal/reload` dev-only reload from disk
+- `frontend/src/pages/GrammarBlueprint.js` — single-file landing + topic detail + stateless practice runner (modes: `error_detection`, `gap_fill`, `mcq`, `sentence_transformation`, `band8_ranking`).
+- `frontend/src/pages/VocabularyBrowse.js` — 20-theme grid linking to `/advanced-mastery?lesson=N&focus=vocabulary`.
+- `frontend/src/pages/AdvancedMasteryCourse.js` — reads `?focus=vocabulary`, auto-scrolls to the vocabulary card (new `id="vocabulary-section"` anchor + `scroll-mt-24`).
+- `frontend/src/App.js` — lazy imports + routes: `/grammar`, `/grammar/:slug`, `/vocabulary`. Engine routes (`/grammar/learn/:moduleId`, etc.) precede `/grammar/:slug`, so React Router matches specific paths first.
+- `QuickAccessTiles.jsx`, `Dashboard.js`, `LearningToolsIndex.js`, `QuestionBank.js`, `LandingPage.js` — now point at `/vocabulary` and `/grammar`. QuestionBank `grammar_vocab` filter redirects to `/grammar`.
+
+### What's removed
+- `frontend/src/pages/VocabGrammarCourse.js` and `frontend/src/pages/VocabGrammarQuiz.js` — deleted.
+- `App.js` routes `/vocab-grammar` and `/vocab-grammar/quiz` — removed.
+- `server.py` routes: `GET /api/vocab-grammar/lessons`, `GET /api/vocab-grammar/lessons/{lesson_id}`, `POST /api/vocab-grammar/progress`, `GET /api/vocab-grammar/progress/{user_id}`, and the four `/api/question-bank/grammar-vocab/*` endpoints — all removed.
+- Startup seed call `seed_vocab_grammar_v2.py` — removed from `server.py` lifespan block. Seed scripts themselves remain in `backend/` but are no longer auto-invoked.
+- MongoDB collections `vocab_grammar_lessons`, `vocab_grammar_progress`, `vocab_grammar_quizzes`, `vocab_grammar_quiz_progress` — no longer written or read by the app. **You may leave them in place** — nothing references them at runtime. Drop them manually if you want a tidy DB.
+
+### Endpoint rename — generic TTS
+- `POST /api/vocab-grammar/tts` → **`POST /api/speech/tts`**. Callers updated: `BeginnerCourse.js`, `MasteryCourse.js`, `PracticeMode.js`, plus the `backend/tests/test_bug_fixes_iter29.py` smoke test. The request/response contract is unchanged (`{ text, voice?, speed? }` → `{ audio, format }`).
+- `POST /api/vocab-grammar/evaluate-pronunciation` — **deleted**. No frontend caller existed; it was dead code.
+
+### Question Bank — grammar_vocab skill removed
+- `GET /api/question-bank/skills` no longer returns `grammar_vocab`. `by_skill` stats in `GET /api/question-bank/stats` drop the `grammar_vocab` key.
+- Frontend `QuestionBank.js`: selector icon, color, tile, and `grammar_vocab` branch removed. The four remaining skills (reading, listening, writing, speaking) are the only practice paths.
+- Quick Practice (`/quick-practice`) continues to serve reading + listening via `PracticeMode.js`; writing and speaking redirect to their dedicated pages. Grammar/Vocabulary practice is exclusively reached via `/grammar` and `/vocabulary`.
+- `backend/models/question_bank.py`: `Skill.GRAMMAR_VOCAB` enum value and `UserAnalytics.grammar_vocab_stats` field removed.
+
+### Liz Teacher profile — one less signal
+- `backend/routes/liz_teacher.py` previously read `vocab_grammar_quiz_progress` to surface `grammar_quizzes_completed` + `avg_grammar_score` in Liz's student profile. That section is now a no-op — Grammar Blueprint practice is stateless, so there is no per-user quiz history to aggregate. All other signals (scores, skill averages, days_inactive, completed_lessons, etc.) unchanged.
+
+### Admin Panel cleanup
+- The "Vocabulary & Grammar Course" stats card in `/admin/users/:userId` was removed (it showed `lessons_started`, `quiz_progress.accuracy`, weak units, recent_lessons — all sourced from the retired collections). The "Vocabulary & Grammar Engines" card for the real engines stays.
+
+### Smoke tests
+1. `GET /api/grammar-blueprint/modules` returns 3 modules + `cross_cutting`.
+2. `GET /api/grammar-blueprint/topics` returns 19 summaries (17 module topics + common-errors + any future additions).
+3. `GET /api/grammar-blueprint/topics/tenses-overview` returns full topic JSON.
+4. Visit `/grammar` (logged in or out) — renders 3-module landing + Common Errors card.
+5. Click a topic → `/grammar/:slug` renders intro/rules/examples/practice tiles. Start a practice → submit → per-item feedback + aggregate score.
+6. Visit `/vocabulary` → 20-theme grid. Click theme 1 → `/advanced-mastery?lesson=1&focus=vocabulary` → auto-scrolls to the Advanced Vocabulary card inside Advanced Mastery Lesson 1.
+7. Dashboard → Quick Access tiles "Vocabulary" and "Grammar" open `/vocabulary` and `/grammar` respectively.
+8. QuestionBank → pick "Grammar & Vocabulary" skill → redirects to `/grammar` (no longer to the removed `/vocab-grammar/quiz`).
+
+### No migration required
+Content is file-backed (JSON on disk, loaded at import). No writes, no indexes, no env vars. If Emergent picks the branch up on a read-only FS, the app will still serve Grammar Blueprint content — only the `/_internal/reload` dev endpoint touches disk, and it only reads.

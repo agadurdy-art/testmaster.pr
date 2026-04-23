@@ -1,0 +1,76 @@
+{
+  "slug": "emphasis",
+  "module": 3,
+  "order": 6,
+  "title": "Emphasis & Intensifiers",
+  "subtitle": "How to stress the idea that matters without sounding loud",
+  "target_band": "8 \u2192 9",
+  "intro": "Emphasis is about controlled loudness. A Band 6 writer reaches for 'very', 'really', and 'a lot' \u2014 the blunt instruments of English. Band 8 writers use a richer toolkit: precise intensifiers, rhetorical repetition, do-auxiliary stress, and fronted adverbials. Emphasis done well signals conviction; overdone, it signals desperation.",
+  "rules": [
+    {"heading": "Gradable vs. ungradable intensifiers", "body": "Gradable adjectives (big, difficult, important) \u2192 very, extremely, highly, profoundly, considerably. Ungradable/absolute adjectives (impossible, essential, crucial, vital) \u2192 absolutely, utterly, completely, entirely. Don't write 'very essential' \u2014 write 'absolutely essential' or just 'essential'."},
+    {"heading": "Do / does / did for verb emphasis", "body": "'Governments do recognise the problem, even if they are slow to act.' The auxiliary carries stress and often signals a contrast with an earlier claim."},
+    {"heading": "Fronted emphasis and restrictive adverbs", "body": "'Only in exceptional circumstances should this approach be considered.' 'Particularly concerning is the lack of transparency.' These shift weight to the fronted element."},
+    {"heading": "Emphatic vocabulary upgrades", "body": "'important' \u2192 pivotal, decisive, instrumental, of paramount importance. 'bad' \u2192 detrimental, deleterious, pernicious. 'big' \u2192 substantial, considerable, profound, far-reaching. Precision is emphasis."}
+  ],
+  "examples": [
+    {"context": "Writing Task 2", "sentence": "It is absolutely essential \u2014 not merely desirable \u2014 that regulators keep pace with technological change.", "note": "'Absolutely essential' + em-dashes for stress."},
+    {"context": "Writing Task 2", "sentence": "The findings do, however, cast doubt on the prevailing orthodoxy.", "note": "'Do' carries emphatic stress; mid-sentence 'however' softens."},
+    {"context": "Writing Task 2", "sentence": "Particularly striking is the speed with which public opinion has shifted.", "note": "Fronted adjective phrase \u2014 inversion-style emphasis."},
+    {"context": "Writing Task 2", "sentence": "Renewable energy is not just cheaper \u2014 it is strategically indispensable.", "note": "Parallel contrast + upgraded lexis."},
+    {"context": "Writing Task 2", "sentence": "Of paramount importance is the principle that no policy should exacerbate existing inequalities.", "note": "Fronted noun phrase + formal register."}
+  ],
+  "band8_marker": "Band 8 writers match intensifier to adjective: 'profoundly influential', 'starkly illustrated', 'markedly different', 'decidedly inadequate'. They avoid the lazy 'very' and 'really'. They also use 'indeed' and 'in fact' to confirm and extend a point ('The reform was controversial; indeed, it sparked the largest protests in a decade') \u2014 a small move that subtly lifts register.",
+  "common_errors": [
+    {"error": "'Very essential' / 'very perfect' / 'very unique'", "fix": "Absolute adjectives take 'absolutely' or no intensifier \u2192 'absolutely essential' / 'perfect' / 'unique'."},
+    {"error": "Over-reliance on 'very', 'really', 'a lot'", "fix": "Replace with precise alternatives: 'very important' \u2192 'crucial'; 'really difficult' \u2192 'formidable'."},
+    {"error": "Piling intensifiers: 'really, very, extremely important'", "fix": "One precise intensifier or a stronger adjective."},
+    {"error": "Emphatic 'do' where the original is already strong: 'I do believe strongly that\u2026'", "fix": "Pick one emphatic device; 'do' is for contrastive emphasis."}
+  ],
+  "practice": [
+    {
+      "mode": "sentence_transformation",
+      "title": "Upgrade the emphasis",
+      "instruction": "Rewrite to make the emphasis more academic.",
+      "items": [
+        {"prompt": "This is a very important issue.", "answer": "This is an issue of considerable importance. / This is a pivotal issue.", "explanation": "Upgrade 'very important'."},
+        {"prompt": "Young people are really affected by social media.", "answer": "Young people are profoundly affected by social media. / Social media has a profound impact on young people.", "explanation": "'Really' \u2192 'profoundly'."},
+        {"prompt": "The results were very different from what we expected.", "answer": "The results differed markedly from expectations. / The results were strikingly different from what had been anticipated.", "explanation": "'Markedly' / 'strikingly' replace 'very'."},
+        {"prompt": "It is very essential to act now.", "answer": "It is absolutely essential to act now. / Urgent action is indispensable.", "explanation": "Absolute adjective takes 'absolutely'."},
+        {"prompt": "Governments really need to invest in education. (Use emphatic 'do')", "answer": "Governments do need to invest in education.", "explanation": "'Do' for verb stress."},
+        {"prompt": "The shift in public opinion has been very fast. (Front the striking adjective)", "answer": "Particularly striking is the speed of the shift in public opinion.", "explanation": "Fronted emphasis."},
+        {"prompt": "Transparency is the only thing that can restore trust. (Use cleft + emphasis)", "answer": "It is transparency, and transparency alone, that can restore trust.", "explanation": "Cleft + rhetorical repetition."},
+        {"prompt": "This approach is very wrong. (Upgrade 'wrong')", "answer": "This approach is fundamentally flawed. / \u2026 deeply misguided.", "explanation": "Precise replacement."}
+      ]
+    },
+    {
+      "mode": "band8_ranking",
+      "title": "Which emphasis lands harder?",
+      "instruction": "Pick the more effective phrasing.",
+      "items": [
+        {"prompt": "A) 'Climate change is a really big problem.' B) 'Climate change is one of the defining challenges of our era.'", "options": ["A", "B"], "answer": 1, "explanation": "Upgraded lexis + precision."},
+        {"prompt": "A) 'Reforms do matter, especially when resources are scarce.' B) 'Reforms matter a lot, especially when resources are scarce.'", "options": ["A", "B"], "answer": 0, "explanation": "Emphatic 'do' plus measured prose."},
+        {"prompt": "A) 'It is very difficult to predict the outcome.' B) 'Predicting the outcome is notoriously difficult.'", "options": ["A", "B"], "answer": 1, "explanation": "'Notoriously' is more vivid and academic."},
+        {"prompt": "A) 'Particularly concerning is the decline in biodiversity.' B) 'The decline in biodiversity is very concerning.'", "options": ["A", "B"], "answer": 0, "explanation": "Fronted emphasis signals considered writing."},
+        {"prompt": "A) 'The minister said strongly that the policy would not change.' B) 'The minister was categorical that the policy would not change.'", "options": ["A", "B"], "answer": 1, "explanation": "'Categorical' captures strength in one word."},
+        {"prompt": "A) 'The impact is very significant.' B) 'The impact is far-reaching.'", "options": ["A", "B"], "answer": 1, "explanation": "Richer adjective without intensifier."},
+        {"prompt": "A) 'It is incredibly rare to find consensus on this issue.' B) 'Consensus on this issue is exceedingly rare.'", "options": ["A", "B"], "answer": 1, "explanation": "'Exceedingly' is a register upgrade."},
+        {"prompt": "A) 'The result was not bad.' B) 'The result was, in fact, quite encouraging.'", "options": ["A", "B"], "answer": 1, "explanation": "Understatement + 'in fact' adds weight."}
+      ]
+    },
+    {
+      "mode": "gap_fill",
+      "title": "Pick the precise intensifier",
+      "instruction": "Fill in with a single intensifier or emphatic marker.",
+      "items": [
+        {"prompt": "The reform was ___ influential, reshaping every subsequent policy in the sector.", "answer": "profoundly / deeply / decisively", "explanation": "Upgrade 'very'."},
+        {"prompt": "Such an approach is ___ inadequate in a crisis of this scale.", "answer": "woefully / patently / decidedly", "explanation": "Strong negative intensifier."},
+        {"prompt": "Timely intervention is ___ essential.", "answer": "absolutely", "explanation": "Absolute adjective."},
+        {"prompt": "The findings were ___ different from earlier studies.", "answer": "markedly / strikingly / substantially", "explanation": "Gradable upgrade."},
+        {"prompt": "Public trust ___ matters in the delivery of vaccination programmes. (emphatic auxiliary)", "answer": "does", "explanation": "Emphatic 'do'."},
+        {"prompt": "The proposal is ___ of paramount importance to future generations.", "answer": "a matter of / quite / indeed", "explanation": "Collocation or emphatic adverb."},
+        {"prompt": "The policy has proven ___ successful in reducing unemployment.", "answer": "remarkably / resoundingly / conspicuously", "explanation": "High-register intensifier."},
+        {"prompt": "The link between income and health is ___ well documented.", "answer": "extensively / thoroughly / abundantly", "explanation": "Academic adverbs."}
+      ]
+    }
+  ]
+}

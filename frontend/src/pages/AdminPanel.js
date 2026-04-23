@@ -444,44 +444,7 @@ export default function AdminPanel({ user }) {
                   </Card>
                 </div>
 
-                <div className="grid xl:grid-cols-2 gap-6">
-                  <Card className="bg-white border-0 shadow-lg rounded-2xl p-6">
-                    <h3 className="font-semibold text-gray-900 mb-4">Vocabulary & Grammar Course</h3>
-                    <div className="grid grid-cols-2 gap-3 mb-4">
-                      <div className="p-3 bg-gray-50 rounded-xl">
-                        <p className="text-xs text-gray-500">Lessons started</p>
-                        <p className="font-semibold text-gray-900">{userDetail.vocab_grammar?.lessons_started || 0}</p>
-                      </div>
-                      <div className="p-3 bg-gray-50 rounded-xl">
-                        <p className="text-xs text-gray-500">Quiz accuracy</p>
-                        <p className="font-semibold text-gray-900">{userDetail.vocab_grammar?.quiz_progress?.accuracy || 0}%</p>
-                      </div>
-                    </div>
-                    {userDetail.vocab_grammar?.quiz_progress?.weak_units?.length > 0 && (
-                      <div className="mb-4">
-                        <p className="text-xs font-medium text-gray-500 mb-2">Weak units</p>
-                        <div className="flex flex-wrap gap-2">
-                          {userDetail.vocab_grammar.quiz_progress.weak_units.map((unit) => (
-                            <span key={unit} className="px-2 py-1 text-xs rounded-full bg-amber-100 text-amber-700">{unit}</span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    <div className="space-y-3 max-h-[260px] overflow-y-auto">
-                      {userDetail.vocab_grammar?.recent_lessons?.length > 0 ? (
-                        userDetail.vocab_grammar.recent_lessons.map((lesson) => (
-                          <div key={lesson.lesson_id} className="p-3 border rounded-xl">
-                            <p className="font-medium text-gray-900">{lesson.lesson_id}</p>
-                            <p className="text-sm text-gray-500">{lesson.completed_items?.length || 0} completed items</p>
-                            <p className="text-xs text-gray-400 mt-1">{formatAdminDate(lesson.updated_at)}</p>
-                          </div>
-                        ))
-                      ) : (
-                        <p className="text-center text-gray-500 py-4">No saved vocab/grammar activity</p>
-                      )}
-                    </div>
-                  </Card>
-
+                <div>
                   <Card className="bg-white border-0 shadow-lg rounded-2xl p-6">
                     <h3 className="font-semibold text-gray-900 mb-4">Vocabulary & Grammar Engines</h3>
                     <div className="space-y-4">

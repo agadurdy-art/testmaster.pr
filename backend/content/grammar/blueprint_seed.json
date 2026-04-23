@@ -1,0 +1,42 @@
+{
+  "course_title": "The IELTS 8 Grammar Blueprint",
+  "course_subtitle": "From Band 4 Accuracy to Band 9 Sophistication",
+  "pedagogical_note": "Three modules ordered by the Grammatical Range & Accuracy rubric. Topic 22 (Common Errors) is a cross-cutting bug-report surfaced inside every topic's 'common_errors' block.",
+  "modules": [
+    {
+      "id": "accuracy-foundation",
+      "number": 1,
+      "title": "The Accuracy Foundation",
+      "band_target": "Band 4 \u2192 6",
+      "focus": "Eliminate fossilized errors. Zero-tolerance for basic mistakes.",
+      "topics": ["tenses-overview", "articles", "countable-uncountable", "prepositions", "subject-verb-agreement"]
+    },
+    {
+      "id": "complexity-bridge",
+      "number": 2,
+      "title": "The Complexity Bridge",
+      "band_target": "Band 6 \u2192 7.5",
+      "focus": "Transition from simple sentences to complex, connected structures.",
+      "topics": ["conditionals", "passive-voice", "reported-speech", "relative-clauses", "gerunds-infinitives", "modals", "cohesion"]
+    },
+    {
+      "id": "academic-sophistication",
+      "number": 3,
+      "title": "The Academic Sophistication",
+      "band_target": "Band 8 \u2192 9",
+      "focus": "Professionalism, nuance, Academic Charisma. The 'secret sauce' for high bands.",
+      "topics": ["participle-clauses", "inversion", "cleft-sentences", "nominalisation", "hedging", "emphasis"]
+    }
+  ],
+  "cross_cutting": {
+    "slug": "common-errors",
+    "title": "Common Errors \u2014 The Bug Report",
+    "note": "Pre-submission checklist surfaced alongside every module."
+  },
+  "topic_slugs": [
+    "tenses-overview", "articles", "countable-uncountable", "prepositions", "subject-verb-agreement",
+    "conditionals", "passive-voice", "reported-speech", "relative-clauses", "gerunds-infinitives", "modals", "cohesion",
+    "participle-clauses", "inversion", "cleft-sentences", "nominalisation", "hedging", "emphasis",
+    "common-errors"
+  ]
+}

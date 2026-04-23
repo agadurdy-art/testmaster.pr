@@ -1,10 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { cn } from "../../../lib/utils";
 import { AnnotationSyncProvider } from "./AnnotationSyncContext";
 import ScoreStrip from "./ScoreStrip";
 import AnnotatedEssayWithNumbers from "./AnnotatedEssayWithNumbers";
 import MarginNotesList from "./MarginNotesList";
 import LizTakeCard from "./LizTakeCard";
+import CoachingPanel from "./CoachingPanel";
 
 /**
  * V4 "Teacher's Margin" — the full Writing Evaluator Result screen.
@@ -37,6 +39,19 @@ export default function WritingEvaluatorResult({
   onViewRewrite,
   className,
 }) {
+  const navigate = useNavigate();
+  const handleOpenLesson = (lesson) => {
+    if (!lesson?.lesson_id) return;
+    // Route by stage when provided; fall back to the mastery course surface.
+    const stage = (lesson.stage || "").toLowerCase();
+    if (stage === "beginner") {
+      navigate(`/beginner-course?lesson=${lesson.lesson_id}`);
+    } else if (stage === "advanced") {
+      navigate(`/advanced-mastery?lesson=${lesson.lesson_id}`);
+    } else {
+      navigate(`/mastery-course?lesson=${lesson.lesson_id}`);
+    }
+  };
   return (
     <AnnotationSyncProvider>
       <div
@@ -59,6 +74,8 @@ export default function WritingEvaluatorResult({
             />
             <MarginNotesList annotations={result.inline_annotations} />
           </div>
+
+          <CoachingPanel result={result} onOpenLesson={handleOpenLesson} />
 
           {lizMessage && (
             <LizTakeCard

@@ -84,6 +84,27 @@ export const InlineAnnotation = z
   // payload, offsets should line up. The verifyAnnotationOffsets() helper
   // below logs any residual mismatches instead of hard-failing validation.
 
+// ---------- Extended coaching fields (optional) ----------
+
+export const ResponseDiagnosis = z.object({
+  main_issue: z.string().min(1).max(300),
+  band_ceiling_reason: z.string().min(1).max(300),
+  quick_win: z.string().min(1).max(300),
+});
+
+export const RewriteGuidance = z.object({
+  weakest_paragraph: z.string().min(1).max(400),
+  suggested_opening: z.string().min(1).max(400),
+  key_linking_phrases: z.string().min(1).max(400),
+});
+
+export const RecommendedLesson = z.object({
+  title: z.string().min(1).max(200),
+  reason: z.string().min(1).max(300),
+  lesson_id: z.string().max(100).nullish(),
+  stage: z.string().max(50).nullish(),
+});
+
 // ---------- Top-level result ----------
 
 const baseResultShape = z.object({
@@ -95,6 +116,11 @@ const baseResultShape = z.object({
   inline_annotations: z.array(InlineAnnotation).default([]),
   improved_version: z.string(),
   feedback_language: z.string().min(2).max(5),
+  // Optional legacy coaching fields — restored 2026-04-23.
+  response_diagnosis: ResponseDiagnosis.nullish(),
+  highest_priority_fixes: z.array(z.string().min(1)).max(5).default([]),
+  rewrite_guidance: RewriteGuidance.nullish(),
+  recommended_lesson: RecommendedLesson.nullish(),
 });
 
 export const WritingEvaluationResult = baseResultShape.refine(

@@ -39,6 +39,7 @@ export default function AdvancedMasteryCourse({ user }) {
   // Check for preview mode and lesson from URL
   const isPreviewMode = searchParams.get('preview') === 'true';
   const lessonIdFromUrl = searchParams.get('lesson');
+  const focusFromUrl = searchParams.get('focus'); // e.g., 'vocabulary' (from /vocabulary browse deep-link)
   
   // English-only notice for this IELTS-level module
   const englishNotice = getEnglishOnlyNotice(language);
@@ -128,9 +129,16 @@ export default function AdvancedMasteryCourse({ user }) {
         }
         setSelectedModule(targetModule);
         setView('module-detail');
+        if (focusFromUrl === 'vocabulary') {
+          setCurrentSection('vocabulary');
+          // Scroll after render so the vocabulary card is centred without the header overlap.
+          setTimeout(() => {
+            document.getElementById('vocabulary-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 250);
+        }
       }
     }
-  }, [lessonIdFromUrl, modules]);
+  }, [lessonIdFromUrl, focusFromUrl, modules]);
 
   const loadModules = async () => {
     try {
@@ -737,7 +745,7 @@ export default function AdvancedMasteryCourse({ user }) {
 
   // Render vocabulary section - Updated to handle nouns/verbs/adjectives/adverbs structure
   const renderVocabulary = () => (
-    <Card className="p-6 bg-white border-0 shadow-lg">
+    <Card id="vocabulary-section" className="p-6 bg-white border-0 shadow-lg scroll-mt-24">
       <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
         <BookOpen className="w-5 h-5 text-amber-600" /> Advanced Vocabulary
       </h3>

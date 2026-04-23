@@ -54,8 +54,6 @@ const VocabularyImageManager = lazy(() => import('./pages/VocabularyImageManager
 const LevelTest = lazy(() => import('./pages/LevelTest'));
 const ComprehensiveLevelTest = lazy(() => import('./pages/ComprehensiveLevelTest'));
 const AdaptiveLevelTest = lazy(() => import('./pages/AdaptiveLevelTest'));
-const VocabGrammarCourse = lazy(() => import('./pages/VocabGrammarCourse'));
-const VocabGrammarQuiz = lazy(() => import('./pages/VocabGrammarQuiz'));
 const WritingPractice = lazy(() => import('./pages/WritingPractice'));
 const EvaluatorResultPreview = lazy(() => import('./pages/EvaluatorResultPreview'));
 const SampleReportBand65Task2 = lazy(() => import('./pages/SampleReportBand65Task2'));
@@ -114,6 +112,8 @@ const GrammarPracticeMode = lazy(() => import('./pages/GrammarPracticeMode'));
 const GrammarQuizMode = lazy(() => import('./pages/GrammarQuizMode'));
 const GrammarProductionMode = lazy(() => import('./pages/GrammarProductionMode'));
 const GrammarSmartReview = lazy(() => import('./pages/GrammarSmartReview'));
+const GrammarBlueprint = lazy(() => import('./pages/GrammarBlueprint'));
+const VocabularyBrowse = lazy(() => import('./pages/VocabularyBrowse'));
 const ReviewBank = lazy(() => import('./pages/ReviewBank'));
 const UnifiedCoursePage = lazy(() => import('./pages/UnifiedCoursePage'));
 const UnifiedStagePage = lazy(() => import('./pages/UnifiedStagePage'));
@@ -475,14 +475,6 @@ function AppWithSessionHandler() {
           path="/adaptive-level-test" 
           element={<AdaptiveLevelTest user={user} />} 
         />
-        <Route 
-          path="/vocab-grammar" 
-          element={<VocabGrammarCourse user={user} />} 
-        />
-        <Route 
-          path="/vocab-grammar/quiz" 
-          element={<VocabGrammarQuiz user={user} />} 
-        />
         <Route
           path="/writing-practice"
           element={user ? <WritingPractice user={user} /> : <Navigate to="/" />}
@@ -548,9 +540,11 @@ function AppWithSessionHandler() {
           path="/advanced-mastery" 
           element={<AdvancedMasteryCourse user={user} />} 
         />
-        <Route 
-          path="/vocabulary/learn/:moduleId" 
-          element={user ? <VocabularyLearnMode user={user} /> : <Navigate to="/" />} 
+        {/* Vocabulary theme browser — deep-links into Advanced Mastery */}
+        <Route path="/vocabulary" element={<VocabularyBrowse />} />
+        <Route
+          path="/vocabulary/learn/:moduleId"
+          element={user ? <VocabularyLearnMode user={user} /> : <Navigate to="/" />}
         />
         <Route 
           path="/vocabulary/practice/:moduleId" 
@@ -590,11 +584,15 @@ function AppWithSessionHandler() {
           path="/grammar/free/:moduleId" 
           element={user ? <GrammarProductionMode user={user} stage="free" /> : <Navigate to="/" />} 
         />
-        <Route 
-          path="/grammar/smart-review/:moduleId" 
-          element={user ? <GrammarSmartReview user={user} /> : <Navigate to="/" />} 
+        <Route
+          path="/grammar/smart-review/:moduleId"
+          element={user ? <GrammarSmartReview user={user} /> : <Navigate to="/" />}
         />
-        
+
+        {/* Grammar Blueprint — curated IELTS 8 curriculum */}
+        <Route path="/grammar" element={<GrammarBlueprint user={user} />} />
+        <Route path="/grammar/:slug" element={<GrammarBlueprint user={user} />} />
+
         {/* Unified Learning System Routes */}
         <Route 
           path="/unified" 

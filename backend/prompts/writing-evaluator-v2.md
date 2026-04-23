@@ -68,6 +68,26 @@ EVALUATION RULES
 
 10. feedback_language: ISO 639-1 code of the provided {{user_language}} (e.g., "en", "vi", "tr", "zh", "ar", "ko", "th"). All human-readable strings (explanation, strengths, weaknesses, annotation.explanation) MUST be in this language. JSON keys and category codes stay in English.
 
+11. Extended coaching fields — include ALL of the following so the UI can surface teacher-grade feedback. All human-readable strings MUST be in the feedback_language:
+
+   - response_diagnosis: object with
+     * main_issue — the single biggest problem holding this essay back (one sentence)
+     * band_ceiling_reason — why the essay can't score higher right now (one sentence)
+     * quick_win — the one change that would most raise the band (one sentence)
+
+   - highest_priority_fixes: array of 3-5 short, imperative bullet points the student should fix FIRST (ordered by impact, most impactful first). Each item is one short sentence, grounded in the essay.
+
+   - rewrite_guidance: object with
+     * weakest_paragraph — name the weakest paragraph and say what fails (one sentence)
+     * suggested_opening — a concrete opening sentence the student could use to rewrite that paragraph
+     * key_linking_phrases — 2-4 linking phrases (semicolon-separated) that would strengthen cohesion in the rewrite
+
+   - recommended_lesson: object with
+     * title — one lesson title targeting the weakest criterion (e.g., "Task 2: Opinion Essay Structure", "Cohesion: Referencing and Substitution")
+     * reason — one sentence tying the lesson to a specific weakness in this essay
+     * lesson_id — optional, omit or null if unknown
+     * stage — optional, one of "beginner", "mastery", "advanced", omit or null if unknown
+
 OUTPUT FORMAT
 
 Return ONLY a single valid JSON object. No prose, no code fences, no markdown, no comments outside JSON. The JSON must conform to this schema:
@@ -101,7 +121,24 @@ Return ONLY a single valid JSON object. No prose, no code fences, no markdown, n
     }
   ],
   "improved_version": string,
-  "feedback_language": string
+  "feedback_language": string,
+  "response_diagnosis": {
+    "main_issue": string,
+    "band_ceiling_reason": string,
+    "quick_win": string
+  },
+  "highest_priority_fixes": [string, ...],
+  "rewrite_guidance": {
+    "weakest_paragraph": string,
+    "suggested_opening": string,
+    "key_linking_phrases": string
+  },
+  "recommended_lesson": {
+    "title": string,
+    "reason": string,
+    "lesson_id": string | null,
+    "stage": string | null
+  }
 }
 
 If the essay is less than 50 words, return a stub evaluation with overall_band 0, empty annotations, and explanation "Essay too short to evaluate — minimum 50 words required." in the user's language.

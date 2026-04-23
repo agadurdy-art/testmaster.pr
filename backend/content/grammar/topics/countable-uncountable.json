@@ -1,0 +1,76 @@
+{
+  "slug": "countable-uncountable",
+  "module": 1,
+  "order": 3,
+  "title": "Countable & Uncountable Nouns",
+  "subtitle": "Mass, count, and the quantifiers that police them",
+  "target_band": "4 \u2192 6",
+  "intro": "Some nouns can be pluralised and counted (a policy, two policies). Others are treated as a single mass (information, research, advice). The distinction is not logical \u2014 it is grammatical convention \u2014 and it controls which quantifiers, articles and verb forms are legal. A confident Band 6.5+ writer never writes 'informations', 'many research', or 'advices'.",
+  "rules": [
+    {"heading": "Common IELTS uncountables", "body": "information, research, evidence, knowledge, advice, equipment, machinery, furniture, traffic, pollution, progress, behaviour. All take singular verbs and no -s."},
+    {"heading": "Count-only quantifiers", "body": "many / (a) few / several / a number of / every \u2192 countables only: 'many students', 'a few errors'."},
+    {"heading": "Uncount-only quantifiers", "body": "much / (a) little / a great deal of / a large amount of \u2192 uncountables only: 'much research', 'a great deal of progress'."},
+    {"heading": "Quantifiers that work with both", "body": "some, any, plenty of, lots of, most, all, a lot of: 'a lot of students' and 'a lot of information' are both fine."}
+  ],
+  "examples": [
+    {"context": "Writing Task 2", "sentence": "Recent research suggests that a small amount of daily exercise yields substantial health benefits.", "note": "'Research' uncountable \u2192 singular verb and 'a small amount of'."},
+    {"context": "Writing Task 2", "sentence": "Policymakers have introduced several measures to curb traffic congestion.", "note": "'Measures' countable; 'traffic' uncountable."},
+    {"context": "Writing Task 1", "sentence": "The chart provides information on the number of international students in four countries.", "note": "'Information' uncountable; 'number of students' countable."},
+    {"context": "Speaking Part 3", "sentence": "Young people tend to give too much weight to online advice.", "note": "'Advice' uncountable; 'weight' here is also uncountable."},
+    {"context": "Writing Task 2", "sentence": "There is ample evidence that air pollution accelerates cognitive decline.", "note": "'Evidence' uncountable \u2192 'is', 'ample'."}
+  ],
+  "band8_marker": "Band 8 writers use hybrid countability well: 'a body of evidence', 'a piece of advice', 'an item of clothing', 'three pieces of luggage'. These unitisers promote an uncountable noun into an idea the reader can enumerate \u2014 a hallmark of academic register.",
+  "common_errors": [
+    {"error": "'Many informations' / 'advices' / 'researches'", "fix": "These are uncountable \u2192 'much information', 'a piece of advice', 'research' (no -s)."},
+    {"error": "'A great deal of students'", "fix": "'A great deal of' is for uncountables \u2192 'a large number of students'."},
+    {"error": "'The furnitures are old'", "fix": "\u2192 'The furniture is old'."},
+    {"error": "'Few pollution'", "fix": "'Pollution' uncountable \u2192 'little pollution'."}
+  ],
+  "practice": [
+    {
+      "mode": "error_detection",
+      "title": "Count or not?",
+      "instruction": "Click the error in each sentence.",
+      "items": [
+        {"prompt": "The report contains [A:useful informations] about [B:recent trends].", "answer": "A", "explanation": "'Information' is uncountable \u2192 'useful information'."},
+        {"prompt": "[A:Many research] has been published [B:on this issue].", "answer": "A", "explanation": "'Research' uncountable \u2192 'much research' or 'many studies'."},
+        {"prompt": "She gave me [A:a very good advice] about [B:my application].", "answer": "A", "explanation": "\u2192 'a very good piece of advice' or 'very good advice'."},
+        {"prompt": "The [A:furnitures] in the office [B:need] replacing.", "answer": "A", "explanation": "\u2192 'furniture' (and verb 'needs')."},
+        {"prompt": "[A:Plenty of] students complained about [B:the few equipment] available.", "answer": "B", "explanation": "'Equipment' uncountable \u2192 'the limited equipment'."},
+        {"prompt": "Traffic [A:are] becoming [B:a major concern] in most capitals.", "answer": "A", "explanation": "'Traffic' uncountable \u2192 'is'."},
+        {"prompt": "We [A:made] significant [B:progresses] this quarter.", "answer": "B", "explanation": "'Progress' uncountable \u2192 'progress'."},
+        {"prompt": "[A:Few] pollution [B:can be eliminated] without structural change.", "answer": "A", "explanation": "'Pollution' uncountable \u2192 'Little pollution'."}
+      ]
+    },
+    {
+      "mode": "gap_fill",
+      "title": "Choose the quantifier",
+      "instruction": "Fill in with many / much / few / little / a number of / an amount of.",
+      "items": [
+        {"prompt": "Only ___ progress has been made on reducing emissions.", "answer": "a little / little", "explanation": "'Progress' uncountable."},
+        {"prompt": "___ students struggle with the IELTS Writing task.", "answer": "Many / A number of", "explanation": "'Students' countable."},
+        {"prompt": "The survey generated ___ valuable information.", "answer": "a great deal of / a lot of", "explanation": "Uncountable \u2192 mass quantifier."},
+        {"prompt": "Very ___ evidence supports that claim.", "answer": "little", "explanation": "Uncountable."},
+        {"prompt": "He gave me ___ pieces of advice before my interview.", "answer": "several / three / a few", "explanation": "Unitised uncountable \u2192 countable."},
+        {"prompt": "There are ___ reasons to reconsider the policy.", "answer": "many / a number of", "explanation": "'Reasons' countable."},
+        {"prompt": "After the storm, there was ___ damage to the harbour.", "answer": "a lot of / considerable", "explanation": "'Damage' uncountable."},
+        {"prompt": "We received ___ feedback from participants.", "answer": "a great deal of / a lot of", "explanation": "'Feedback' uncountable."}
+      ]
+    },
+    {
+      "mode": "mcq",
+      "title": "Quantifier accuracy",
+      "instruction": "Pick the natural form.",
+      "items": [
+        {"prompt": "There is ___ that remote work increases productivity.", "options": ["many evidence", "many evidences", "much evidence", "much evidences"], "answer": 2, "explanation": "'Evidence' uncountable; 'much evidence'."},
+        {"prompt": "The researcher interviewed ___ for the study.", "options": ["a large amount of participants", "a large number of participants", "a few of participant", "much participants"], "answer": 1, "explanation": "'Participants' countable \u2192 'a large number of'."},
+        {"prompt": "The office has ___ in the storage room.", "options": ["few equipments", "a little equipments", "a lot of equipment", "many equipments"], "answer": 2, "explanation": "'Equipment' uncountable."},
+        {"prompt": "___ people attended the protest.", "options": ["Much", "A great deal of", "Several thousand", "A little"], "answer": 2, "explanation": "'People' countable."},
+        {"prompt": "Her report provided ___ we needed.", "options": ["all the information", "all the informations", "all informations", "all of informations"], "answer": 0, "explanation": "Uncountable \u2192 'all the information'."},
+        {"prompt": "There has been ___ this year compared to last.", "options": ["less traffic accidents", "fewer traffic accidents", "less traffic accident", "lesser traffic accidents"], "answer": 1, "explanation": "Countable plural \u2192 'fewer'."},
+        {"prompt": "I have ___ for the task.", "options": ["enough time", "enough of times", "enoughs time", "enough times"], "answer": 0, "explanation": "'Time' uncountable here."},
+        {"prompt": "Only ___ were aware of the change.", "options": ["a few employees", "a little employees", "a bit of employees", "a few employee"], "answer": 0, "explanation": "Countable plural \u2192 'a few employees'."}
+      ]
+    }
+  ]
+}

@@ -196,7 +196,6 @@ export default function QuestionBank({ user }) {
     listening: Headphones,
     writing: PenTool,
     speaking: Mic,
-    grammar_vocab: BookMarked
   };
 
   // Start Full Test
@@ -242,7 +241,6 @@ export default function QuestionBank({ user }) {
     listening: 'from-purple-500 to-purple-600',
     writing: 'from-green-500 to-green-600',
     speaking: 'from-orange-500 to-orange-600',
-    grammar_vocab: 'from-pink-500 to-pink-600'
   };
 
   const practiceModesConfig = [
@@ -259,12 +257,6 @@ export default function QuestionBank({ user }) {
   const startPractice = (mode, skill) => {
     if (!skill) {
       toast.error('Please select a skill first');
-      return;
-    }
-    
-    // Special handling for Grammar & Vocabulary - redirect to dedicated quiz page
-    if (skill === 'grammar_vocab') {
-      navigate(`/vocab-grammar/quiz${selectedBand ? `?band=${selectedBand}` : ''}`);
       return;
     }
     
@@ -516,7 +508,6 @@ export default function QuestionBank({ user }) {
                   listening: { bg: 'bg-purple-500', light: 'bg-purple-50 hover:bg-purple-100 border-purple-200', text: 'text-purple-600' },
                   writing: { bg: 'bg-emerald-500', light: 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200', text: 'text-emerald-600' },
                   speaking: { bg: 'bg-orange-500', light: 'bg-orange-50 hover:bg-orange-100 border-orange-200', text: 'text-orange-600' },
-                  grammar_vocab: { bg: 'bg-pink-500', light: 'bg-pink-50 hover:bg-pink-100 border-pink-200', text: 'text-pink-600' }
                 };
                 const c = colors[skill.id] || colors.reading;
                 return (

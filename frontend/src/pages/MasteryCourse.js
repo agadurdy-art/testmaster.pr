@@ -312,7 +312,7 @@ export default function MasteryCourse({ user }) {
   const playPronunciation = async (text) => {
     setPlayingAudio(text);
     try {
-      const response = await fetch(`${API_URL}/api/vocab-grammar/tts`, {
+      const response = await fetch(`${API_URL}/api/speech/tts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text })

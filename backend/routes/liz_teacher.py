@@ -536,14 +536,8 @@ async def get_user_context(user_id: str) -> str:
     if learning_progress:
         profile["completed_lessons"] = len(learning_progress)
 
-    # 7. Vocab/grammar quiz progress
-    quiz_progress = await db.vocab_grammar_quiz_progress.find(
-        {"user_id": user_id}, {"_id": 0, "score": 1, "topic": 1}
-    ).to_list(20)
-    if quiz_progress:
-        profile["grammar_quizzes_completed"] = len(quiz_progress)
-        avg_quiz = sum(q.get("score", 0) for q in quiz_progress) / len(quiz_progress)
-        profile["avg_grammar_score"] = round(avg_quiz, 1)
+    # 7. Grammar Blueprint practice is stateless — no per-user quiz progress stored.
+    #    The old `vocab_grammar_quiz_progress` signal was retired 2026-04-23.
 
     # 8. Build recommended next step
     if weak_skills:

@@ -100,7 +100,7 @@ export const DEFAULT_QUICK_ACCESS = [
   { label: "Advanced",        href: "/advanced-mastery",      tint: "default", icon: QuickAccessIcons.Zap },
   { label: "Learning Tools",  href: "/learning-tools",        tint: "sky",     icon: QuickAccessIcons.Settings },
   { label: "Question Bank",   href: "/question-bank",         tint: "default", icon: QuickAccessIcons.SearchPlus },
-  { label: "Vocabulary",      href: "/vocab-grammar",         tint: "liz",     icon: QuickAccessIcons.Book },
-  { label: "Grammar",         href: "/vocab-grammar",         tint: "sky",     icon: QuickAccessIcons.Brackets },
+  { label: "Vocabulary",      href: "/vocabulary",            tint: "liz",     icon: QuickAccessIcons.Book },
+  { label: "Grammar",         href: "/grammar",               tint: "sky",     icon: QuickAccessIcons.Brackets },
   { label: "Speaking Topics", href: "/question-bank/speaking",tint: "gold",    icon: QuickAccessIcons.Mic },
 ];
