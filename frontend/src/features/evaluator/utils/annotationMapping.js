@@ -1,6 +1,6 @@
 /**
  * Helpers that turn a WritingEvaluationResult into the shapes the V4
- * "Teacher's Margin" view needs: numbered annotations aligned to the essay
+ * "Liz's Margin" view needs: numbered annotations aligned to the essay
  * text, and a mapping from criterion key → short code (TA/CC/LR/GRA).
  */
 

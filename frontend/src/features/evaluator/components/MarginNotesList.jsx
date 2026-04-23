@@ -6,9 +6,9 @@ import { buildNumberedAnnotations } from "../utils/annotationMapping";
 import { useAnnotationSync } from "./AnnotationSyncContext";
 
 /**
- * V4 right panel: scrollable list of "teacher's margin" note cards.
+ * V4 right panel: scrollable list of "Liz's margin" note cards.
  * Each card mirrors one annotation in the essay and is lightly rotated to
- * give the teacher's-notes feel. Hover/focus syncs with the essay panel.
+ * give the handwritten-notes feel. Hover/focus syncs with the essay panel.
  */
 export default function MarginNotesList({ annotations, className }) {
   const numbered = useMemo(
@@ -26,7 +26,7 @@ export default function MarginNotesList({ annotations, className }) {
         "lg:max-h-[calc(100vh-220px)] lg:overflow-y-auto lg:pr-2",
         className
       )}
-      aria-label="Teacher's margin notes"
+      aria-label="Liz's margin notes"
     >
       <div className="text-[11px] font-semibold tracking-widest text-slate-400 uppercase px-1 lg:sticky lg:top-0 bg-slate-50 py-2 -mt-2 -mx-1 z-10">
         Notes · {numbered.length} suggestions

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GraduationCap, Lock } from 'lucide-react';
+import { Lock } from 'lucide-react';
+import LizAvatar from '../features/landing/components/LizAvatar';
 import { isAdminUser, normalizePlanName } from '../lib/planAccess';
 
 // Plans that have Liz unlocked. Kept in sync with plan_access.py — any plan
@@ -36,7 +37,7 @@ export default function LizFloatingButton({ user }) {
             ? 'bg-gradient-to-br from-teal-500 to-emerald-600 shadow-teal-200/50 group-hover:shadow-xl group-hover:shadow-teal-300/50 border-teal-400/30'
             : 'bg-gradient-to-br from-slate-400 to-slate-500 shadow-slate-200/50 border-slate-300/30'
         }`}>
-          <GraduationCap className="w-7 h-7 text-white" />
+          <LizAvatar size={44} alt={hasAccess ? 'Ask Liz' : 'Upgrade to unlock Liz'} />
         </div>
         {hasAccess ? (
           <div className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-400 rounded-full border-2 border-white animate-pulse" />
