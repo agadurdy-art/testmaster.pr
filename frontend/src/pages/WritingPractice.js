@@ -261,7 +261,7 @@ export default function WritingPractice({ user }) {
     );
   }
 
-  // Feedback View — V4 Teacher's Margin UI, wired to the v2 evaluator
+  // Feedback View — V4 Liz's Margin UI, wired to the v2 evaluator
   if (view === 'feedback' && feedback) {
     return (
       <div>

@@ -9,7 +9,7 @@ import LizTakeCard from "./LizTakeCard";
 import CoachingPanel from "./CoachingPanel";
 
 /**
- * V4 "Teacher's Margin" — the full Writing Evaluator Result screen.
+ * V4 "Liz's Margin" — the full Writing Evaluator Result screen.
  *
  * Layout:
  *   ┌──────────────────────────────────────────────┐

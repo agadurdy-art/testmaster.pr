@@ -272,7 +272,7 @@ export default function WritingTask1Practice() {
     setMobileView(prev => prev === 'visual' ? 'write' : 'visual');
   };
 
-  // Once evaluation comes back, swap to the V4 "Teacher's Margin" result screen.
+  // Once evaluation comes back, swap to the V4 "Liz's Margin" result screen.
   if (evaluation) {
     return (
       <WritingEvaluatorResult
