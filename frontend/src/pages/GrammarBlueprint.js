@@ -54,6 +54,56 @@ const MODE_LABEL = {
   band8_ranking: 'Which is Band 8?',
 };
 
+// Per-topic visual identity so each topic page feels distinct instead of
+// inheriting a generic module tint. `emoji` = hero glyph, `gradient` = hero
+// background. Keys match the slugs in /backend/content/grammar/topics/*.json.
+const TOPIC_VISUAL = {
+  'articles':                { emoji: '📘', gradient: 'from-sky-100 via-sky-50 to-white', ring: 'border-sky-200', accent: 'text-sky-800' },
+  'cleft-sentences':         { emoji: '🎯', gradient: 'from-violet-100 via-violet-50 to-white', ring: 'border-violet-200', accent: 'text-violet-800' },
+  'cohesion':                { emoji: '🔗', gradient: 'from-indigo-100 via-indigo-50 to-white', ring: 'border-indigo-200', accent: 'text-indigo-800' },
+  'common-errors':           { emoji: '🐛', gradient: 'from-amber-100 via-amber-50 to-white', ring: 'border-amber-200', accent: 'text-amber-800' },
+  'conditionals':            { emoji: '🔀', gradient: 'from-sky-100 via-sky-50 to-white', ring: 'border-sky-200', accent: 'text-sky-800' },
+  'countable-uncountable':   { emoji: '🧮', gradient: 'from-emerald-100 via-emerald-50 to-white', ring: 'border-emerald-200', accent: 'text-emerald-800' },
+  'emphasis':                { emoji: '✨', gradient: 'from-fuchsia-100 via-fuchsia-50 to-white', ring: 'border-fuchsia-200', accent: 'text-fuchsia-800' },
+  'gerunds-infinitives':     { emoji: '🧩', gradient: 'from-emerald-100 via-emerald-50 to-white', ring: 'border-emerald-200', accent: 'text-emerald-800' },
+  'hedging':                 { emoji: '🛡️', gradient: 'from-violet-100 via-violet-50 to-white', ring: 'border-violet-200', accent: 'text-violet-800' },
+  'inversion':               { emoji: '🔄', gradient: 'from-violet-100 via-violet-50 to-white', ring: 'border-violet-200', accent: 'text-violet-800' },
+  'modals':                  { emoji: '🎛️', gradient: 'from-sky-100 via-sky-50 to-white', ring: 'border-sky-200', accent: 'text-sky-800' },
+  'nominalisation':          { emoji: '📝', gradient: 'from-violet-100 via-violet-50 to-white', ring: 'border-violet-200', accent: 'text-violet-800' },
+  'participle-clauses':      { emoji: '🧵', gradient: 'from-sky-100 via-sky-50 to-white', ring: 'border-sky-200', accent: 'text-sky-800' },
+  'passive-voice':           { emoji: '🎭', gradient: 'from-sky-100 via-sky-50 to-white', ring: 'border-sky-200', accent: 'text-sky-800' },
+  'prepositions':            { emoji: '📍', gradient: 'from-emerald-100 via-emerald-50 to-white', ring: 'border-emerald-200', accent: 'text-emerald-800' },
+  'relative-clauses':        { emoji: '🪢', gradient: 'from-sky-100 via-sky-50 to-white', ring: 'border-sky-200', accent: 'text-sky-800' },
+  'reported-speech':         { emoji: '💬', gradient: 'from-sky-100 via-sky-50 to-white', ring: 'border-sky-200', accent: 'text-sky-800' },
+  'subject-verb-agreement':  { emoji: '⚖️', gradient: 'from-emerald-100 via-emerald-50 to-white', ring: 'border-emerald-200', accent: 'text-emerald-800' },
+  'tenses-overview':         { emoji: '⏱️', gradient: 'from-emerald-100 via-emerald-50 to-white', ring: 'border-emerald-200', accent: 'text-emerald-800' },
+};
+
+// Cycling palette for Core rule mind-map branches. Each rule gets a distinct
+// color so the block reads as a 4-way concept split, not a repeating list.
+const RULE_PALETTE = [
+  { dot: 'bg-emerald-500', border: 'border-l-emerald-400', badge: 'bg-emerald-50 text-emerald-800 ring-emerald-200' },
+  { dot: 'bg-sky-500',     border: 'border-l-sky-400',     badge: 'bg-sky-50 text-sky-800 ring-sky-200' },
+  { dot: 'bg-violet-500',  border: 'border-l-violet-400',  badge: 'bg-violet-50 text-violet-800 ring-violet-200' },
+  { dot: 'bg-amber-500',   border: 'border-l-amber-400',   badge: 'bg-amber-50 text-amber-800 ring-amber-200' },
+  { dot: 'bg-rose-500',    border: 'border-l-rose-400',    badge: 'bg-rose-50 text-rose-800 ring-rose-200' },
+  { dot: 'bg-teal-500',    border: 'border-l-teal-400',    badge: 'bg-teal-50 text-teal-800 ring-teal-200' },
+];
+
+// Map example `context` strings to a skin so IELTS section is recognisable at
+// a glance. The lookup is loose (substring) because fixtures occasionally
+// vary ("Speaking Part 3" vs "Speaking · Part 3").
+function exampleContextSkin(context = '') {
+  const c = context.toLowerCase();
+  if (c.includes('task 2')) return { border: 'border-l-emerald-400', badge: 'bg-emerald-100 text-emerald-800', label: 'Writing · Task 2' };
+  if (c.includes('task 1') && c.includes('general')) return { border: 'border-l-amber-400', badge: 'bg-amber-100 text-amber-800', label: 'General · Task 1' };
+  if (c.includes('task 1')) return { border: 'border-l-amber-400', badge: 'bg-amber-100 text-amber-800', label: 'Writing · Task 1' };
+  if (c.includes('speaking')) return { border: 'border-l-sky-400', badge: 'bg-sky-100 text-sky-800', label: context };
+  if (c.includes('reading')) return { border: 'border-l-indigo-400', badge: 'bg-indigo-100 text-indigo-800', label: context };
+  if (c.includes('listening')) return { border: 'border-l-fuchsia-400', badge: 'bg-fuchsia-100 text-fuchsia-800', label: context };
+  return { border: 'border-l-slate-300', badge: 'bg-slate-100 text-slate-700', label: context || 'Example' };
+}
+
 // ---------------------------------------------------------------------------
 // Landing \u2014 3-module overview + topic grid
 // ---------------------------------------------------------------------------
@@ -280,6 +330,12 @@ function TopicView({ slug }) {
   }
 
   const accent = MODULE_ACCENTS[topic.module] || MODULE_ACCENTS[1];
+  const visual = TOPIC_VISUAL[topic.slug] || {
+    emoji: '📚',
+    gradient: 'from-slate-100 via-slate-50 to-white',
+    ring: 'border-slate-200',
+    accent: 'text-slate-800',
+  };
 
   if (activePractice) {
     const block = (topic.practice || []).find((b) => b.mode === activePractice);
@@ -297,7 +353,7 @@ function TopicView({ slug }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-      <div className="max-w-3xl mx-auto px-6 py-10">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
         <button
           onClick={() => navigate('/grammar')}
           className="text-sm text-slate-500 hover:text-slate-800 flex items-center gap-1 mb-6"
@@ -305,79 +361,189 @@ function TopicView({ slug }) {
           <ArrowLeft className="w-4 h-4" /> Back to Grammar Blueprint
         </button>
 
-        <div className={`mb-8 p-5 rounded-2xl bg-gradient-to-br ${accent.tint} border ${accent.ring}`}>
-          <div className="flex items-center gap-2 mb-2">
-            {accent.icon}
-            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${accent.badge}`}>
-              Target: {topic.target_band}
-            </span>
-          </div>
-          <h1 className="text-3xl font-serif font-semibold text-slate-900">{topic.title}</h1>
-          <p className="text-sm text-slate-600 mt-1">{topic.subtitle}</p>
-        </div>
-
-        {/* Intro */}
-        <Section title="Why this matters">
-          <p className="text-slate-700 leading-relaxed">{topic.intro}</p>
-        </Section>
-
-        {/* Rules */}
-        <Section title="Core rules">
-          <div className="space-y-3">
-            {(topic.rules || []).map((rule, i) => (
-              <div key={i} className="p-4 bg-white rounded-xl border border-slate-200">
-                <div className="font-semibold text-slate-900 mb-1">{rule.heading}</div>
-                <div className="text-sm text-slate-700 leading-relaxed">{rule.body}</div>
+        {/* ---- Hero ---- */}
+        <div
+          className={`relative overflow-hidden mb-10 rounded-3xl bg-gradient-to-br ${visual.gradient} border ${visual.ring} shadow-sm`}
+        >
+          {/* Soft decorative glow — pure CSS, no asset */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -top-16 -right-16 w-64 h-64 rounded-full opacity-40 blur-3xl"
+            style={{ background: 'radial-gradient(closest-side, rgba(255,255,255,0.9), transparent)' }}
+          />
+          <div className="relative p-6 sm:p-8">
+            <div className="flex items-center gap-2 mb-3 flex-wrap">
+              <span className={`text-[11px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-full bg-white/70 backdrop-blur ${visual.accent} ring-1 ring-inset ring-white/60`}>
+                Module {topic.module} · {accent.tint?.includes('emerald') ? 'Foundations' : accent.tint?.includes('sky') ? 'Intermediate' : accent.tint?.includes('violet') ? 'Advanced' : 'Reference'}
+              </span>
+              <span className="inline-flex items-center gap-1 text-[11px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-full bg-white text-slate-700 ring-1 ring-inset ring-slate-200">
+                <Target className="w-3 h-3" /> Target: {topic.target_band}
+              </span>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="text-5xl sm:text-6xl leading-none select-none" aria-hidden>
+                {visual.emoji}
               </div>
-            ))}
-          </div>
-        </Section>
-
-        {/* Examples */}
-        <Section title="IELTS-contextual examples">
-          <div className="space-y-2">
-            {(topic.examples || []).map((ex, i) => (
-              <div key={i} className="p-3 bg-white rounded-xl border border-slate-200">
-                <div className="text-[11px] uppercase tracking-wide text-slate-500 mb-1">
-                  {ex.context}
-                </div>
-                <div className="text-slate-900 italic">\u201c{ex.sentence}\u201d</div>
-                {ex.note && (
-                  <div className="text-xs text-slate-500 mt-1">{ex.note}</div>
+              <div className="min-w-0">
+                <h1 className="text-3xl sm:text-4xl font-serif font-semibold text-slate-900 tracking-tight">
+                  {topic.title}
+                </h1>
+                {topic.subtitle && (
+                  <p className="text-sm sm:text-base text-slate-600 mt-1.5 leading-relaxed">
+                    {topic.subtitle}
+                  </p>
                 )}
               </div>
-            ))}
+            </div>
           </div>
-        </Section>
+        </div>
 
-        {/* Band 8 marker */}
-        {topic.band8_marker && (
-          <Section title="The Band 8 Marker" tint="violet">
-            <div className="p-4 bg-violet-50 border border-violet-200 rounded-xl text-slate-800 leading-relaxed text-sm">
-              <div className="flex items-center gap-2 mb-2">
-                <Target className="w-4 h-4 text-violet-700" />
-                <span className="font-semibold text-violet-900">What examiners notice</span>
-              </div>
-              {topic.band8_marker}
+        {/* ---- Why this matters (pull-quote intro) ---- */}
+        {topic.intro && (
+          <Section
+            title="Why this matters"
+            icon={<BookOpen className={`w-4 h-4 ${visual.accent}`} />}
+          >
+            <div className="relative pl-5 border-l-4 border-slate-200">
+              <span
+                aria-hidden
+                className="absolute -left-[3px] top-0 bottom-0 w-[4px] rounded"
+                style={{ background: 'linear-gradient(180deg, rgb(16 185 129), rgb(56 189 248), rgb(139 92 246))' }}
+              />
+              <p className="text-[15px] text-slate-800 leading-relaxed">{topic.intro}</p>
             </div>
           </Section>
         )}
 
-        {/* Common Errors */}
-        {topic.common_errors && topic.common_errors.length > 0 && (
-          <Section title="Bug Report \u2014 errors to eliminate" tint="amber">
-            <div className="space-y-2">
-              {topic.common_errors.map((err, i) => (
-                <div key={i} className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-sm">
-                  <div className="flex items-start gap-2">
-                    <XCircle className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <div className="text-slate-900">{err.error}</div>
-                      <div className="text-emerald-800 mt-1 flex items-start gap-1">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
-                        <span>{err.fix}</span>
-                      </div>
+        {/* ---- Core rules as mind-map branches ---- */}
+        {topic.rules && topic.rules.length > 0 && (
+          <Section title="Core rules" icon={<Layers className={`w-4 h-4 ${visual.accent}`} />}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {topic.rules.map((rule, i) => {
+                const palette = RULE_PALETTE[i % RULE_PALETTE.length];
+                return (
+                  <div
+                    key={i}
+                    className={`relative p-4 pl-5 bg-white rounded-2xl border border-slate-200 border-l-4 ${palette.border} shadow-sm hover:shadow-md transition-shadow`}
+                  >
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span
+                        className={`inline-flex items-center justify-center w-6 h-6 rounded-full text-[11px] font-bold text-white ${palette.dot}`}
+                      >
+                        {i + 1}
+                      </span>
+                      <h3 className="font-semibold text-slate-900 leading-tight">
+                        {rule.heading}
+                      </h3>
                     </div>
+                    <p className="text-[13.5px] text-slate-700 leading-relaxed">
+                      {rule.body}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </Section>
+        )}
+
+        {/* ---- Examples with context colour-coding ---- */}
+        {topic.examples && topic.examples.length > 0 && (
+          <Section
+            title="IELTS-contextual examples"
+            icon={<Sparkles className={`w-4 h-4 ${visual.accent}`} />}
+          >
+            <div className="space-y-2.5">
+              {topic.examples.map((ex, i) => {
+                const skin = exampleContextSkin(ex.context);
+                return (
+                  <div
+                    key={i}
+                    className={`p-4 bg-white rounded-xl border border-slate-200 border-l-4 ${skin.border} shadow-sm`}
+                  >
+                    <span className={`inline-block text-[10px] font-semibold tracking-wider uppercase px-2 py-0.5 rounded-full ${skin.badge} mb-2`}>
+                      {skin.label}
+                    </span>
+                    <p className="text-slate-900 italic leading-snug">
+                      &ldquo;{ex.sentence}&rdquo;
+                    </p>
+                    {ex.note && (
+                      <p className="text-[12.5px] text-slate-500 mt-2 leading-relaxed">
+                        {ex.note}
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </Section>
+        )}
+
+        {/* ---- Band 8 marker — premium violet card ---- */}
+        {topic.band8_marker && (
+          <Section
+            title="The Band 8 Marker"
+            icon={<Target className="w-4 h-4 text-violet-700" />}
+            tint="violet"
+          >
+            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white shadow-lg">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -top-12 -right-12 w-48 h-48 rounded-full opacity-30 blur-2xl"
+                style={{ background: 'radial-gradient(closest-side, rgba(255,255,255,0.9), transparent)' }}
+              />
+              <div className="relative p-5 sm:p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur grid place-items-center ring-1 ring-inset ring-white/30">
+                    <Sparkles className="w-4 h-4" />
+                  </div>
+                  <span className="text-[11px] font-semibold tracking-wider uppercase text-violet-50/90">
+                    What examiners notice
+                  </span>
+                </div>
+                <p className="text-[14px] sm:text-[15px] leading-relaxed text-white/95">
+                  {topic.band8_marker}
+                </p>
+              </div>
+            </div>
+          </Section>
+        )}
+
+        {/* ---- Common Errors as ❌ | ✅ side-by-side ---- */}
+        {topic.common_errors && topic.common_errors.length > 0 && (
+          <Section
+            title="Bug Report — errors to eliminate"
+            icon={<AlertTriangle className="w-4 h-4 text-amber-700" />}
+            tint="amber"
+          >
+            <div className="space-y-3">
+              {topic.common_errors.map((err, i) => (
+                <div
+                  key={i}
+                  className="grid grid-cols-1 sm:grid-cols-2 gap-0 sm:gap-0 rounded-2xl border border-slate-200 overflow-hidden bg-white shadow-sm"
+                >
+                  {/* ❌ error side */}
+                  <div className="relative p-4 bg-rose-50/70 border-b sm:border-b-0 sm:border-r border-rose-100">
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <XCircle className="w-4 h-4 text-rose-600 flex-shrink-0" />
+                      <span className="text-[10px] font-semibold tracking-wider uppercase text-rose-700">
+                        Don&rsquo;t write
+                      </span>
+                    </div>
+                    <p className="text-[13.5px] text-slate-800 leading-snug">
+                      {err.error}
+                    </p>
+                  </div>
+                  {/* ✅ fix side */}
+                  <div className="relative p-4 bg-emerald-50/70">
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                      <span className="text-[10px] font-semibold tracking-wider uppercase text-emerald-700">
+                        Write this instead
+                      </span>
+                    </div>
+                    <p className="text-[13.5px] text-slate-800 leading-snug">
+                      {err.fix}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -385,20 +551,20 @@ function TopicView({ slug }) {
           </Section>
         )}
 
-        {/* Practice */}
+        {/* ---- Practice ---- */}
         {topic.practice && topic.practice.length > 0 && (
-          <Section title="Practice">
+          <Section title="Practice" icon={<Wrench className={`w-4 h-4 ${visual.accent}`} />}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {topic.practice.map((block) => (
                 <button
                   key={block.mode}
                   onClick={() => setActivePractice(block.mode)}
-                  className="p-4 bg-white border border-slate-200 rounded-xl text-left hover:shadow-md transition-shadow group"
+                  className="p-4 bg-white border border-slate-200 rounded-xl text-left hover:shadow-md hover:border-emerald-300 transition-all group"
                 >
-                  <div className="text-xs uppercase tracking-wide text-slate-500 mb-1">
+                  <div className="text-[11px] uppercase tracking-wider font-semibold text-slate-500 mb-1">
                     {MODE_LABEL[block.mode] || block.mode}
                   </div>
-                  <div className="font-semibold text-slate-900">{block.title}</div>
+                  <div className="font-semibold text-slate-900 leading-snug">{block.title}</div>
                   <div className="text-xs text-slate-600 mt-1">
                     {(block.items || []).length} items
                   </div>
@@ -415,12 +581,19 @@ function TopicView({ slug }) {
   );
 }
 
-function Section({ title, children, tint }) {
+function Section({ title, children, tint, icon }) {
+  const titleColor =
+    tint === 'violet'
+      ? 'text-violet-800'
+      : tint === 'amber'
+      ? 'text-amber-800'
+      : 'text-slate-600';
   return (
     <section className="mb-8">
-      <h2 className={`text-xs uppercase tracking-wide font-semibold mb-3 ${
-        tint === 'violet' ? 'text-violet-800' : tint === 'amber' ? 'text-amber-800' : 'text-slate-600'
-      }`}>
+      <h2
+        className={`flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] font-semibold mb-3 ${titleColor}`}
+      >
+        {icon}
         {title}
       </h2>
       {children}

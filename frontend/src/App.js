@@ -232,22 +232,36 @@ function EmergentBadgeWrapper() {
 function MobileNavWrapper({ user }) {
   const location = useLocation();
 
-  // Only show bottom nav when logged in and not on landing/auth-only pages
-  if (!user) return null;
-  if (
+  // Decide visibility first so we can mirror the decision on <body> for
+  // CSS-driven bottom padding (see App.css `.has-mobile-bottom-nav`). Without
+  // that padding, the last line of long pages (quiz submit, evaluator CTAs)
+  // gets trapped behind the fixed bar on mobile.
+  let visible = true;
+  if (!user) visible = false;
+  else if (
     location.pathname === '/' ||
     location.pathname === '/verify-email' ||
     location.pathname === '/reset-password'
   ) {
-    return null;
-  }
-  // Dashboard V2 ships its own DashboardBottomNav inside DashboardLayout.
-  // Suppress the legacy MobileBottomNav on those routes so we don't stack
-  // two bars on mobile (bug report 2026-04-20).
-  if (location.pathname.startsWith('/dashboard')) {
-    return null;
+    visible = false;
+  } else if (location.pathname.startsWith('/dashboard')) {
+    // Dashboard V2 ships its own DashboardBottomNav inside DashboardLayout;
+    // the dashboard scope handles its own reserved footer space.
+    visible = false;
   }
 
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const cls = 'has-mobile-bottom-nav';
+    if (visible) {
+      document.body.classList.add(cls);
+    } else {
+      document.body.classList.remove(cls);
+    }
+    return () => document.body.classList.remove(cls);
+  }, [visible]);
+
+  if (!visible) return null;
   return <MobileBottomNav currentPath={location.pathname} />;
 }
 // Landing CTAs point here with `?path=ielts|general`. We stash the choice in

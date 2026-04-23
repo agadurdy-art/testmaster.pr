@@ -79,6 +79,17 @@ code {
   }
 }
 
+/* When the app-level MobileBottomNav is visible (< md breakpoint), reserve
+   scroll room so that the last line of any page — quiz submit buttons,
+   evaluator CTAs, etc. — isn't trapped behind the fixed bar. The nav itself
+   is ~72px tall + raised Liz tab, so we reserve 88px plus any iOS safe-area
+   inset. Desktop has no fixed bar, so the rule is mobile-only. */
+@media (max-width: 767px) {
+  body.has-mobile-bottom-nav {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
 /* Scrollbar styles */
 ::-webkit-scrollbar {
   width: 8px;
