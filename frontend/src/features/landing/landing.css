@@ -896,7 +896,11 @@
     cursor: pointer;
   }
   .landing-scope .hero { padding: 40px 0 48px; }
-  .landing-scope .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  /* minmax(0, 1fr) allows the column to shrink below its content's min-content width.
+     Without this, children like .skill-tabs (nowrap tabs with overflow-x: auto) force
+     the column to their min-content width (~505px), causing horizontal overflow on
+     narrow viewports even though the tabs themselves scroll internally. */
+  .landing-scope .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 48px; }
   .landing-scope h1.headline { font-size: clamp(36px, 9vw, 48px); }
   .landing-scope .sub { font-size: 17px; }
   .landing-scope section { padding: 64px 0; }
