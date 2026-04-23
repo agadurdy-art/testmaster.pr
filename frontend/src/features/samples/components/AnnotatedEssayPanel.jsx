@@ -209,27 +209,35 @@ function AnnotationPill({ annotation, isOpen, onToggle }) {
   useEffect(() => {
     if (!isOpen) {
       setShiftX(0);
+      setFlipRight(false);
       return;
     }
     const pop = popRef.current;
     if (!pop) return;
-    // First pass: decide whether to flip to the right edge of the anchor.
+    // Pass 1: decide flipRight from the initial (left: 0) measurement.
     const r = pop.getBoundingClientRect();
-    const overflowRight = r.right > window.innerWidth - 12;
-    setFlipRight(overflowRight);
-    // Second pass (next frame) — after any flip, re-measure and clamp the
-    // horizontal position so it stays inside [12, innerWidth - 12]. Covers
-    // both edges: words near the left AND right edges on mobile.
-    const rAF = requestAnimationFrame(() => {
-      const p = popRef.current;
-      if (!p) return;
-      const rect = p.getBoundingClientRect();
-      let delta = 0;
-      if (rect.left < 12) delta = 12 - rect.left;
-      else if (rect.right > window.innerWidth - 12) delta = window.innerWidth - 12 - rect.right;
-      setShiftX(delta);
+    setFlipRight(r.right > window.innerWidth - 12);
+    // Pass 2: after React commits the flip AND the browser paints it, clamp
+    // the popover to [12, innerWidth - 12]. We use a double-rAF to reliably
+    // wait for the flipRight paint — a single rAF was executing before the
+    // new `left`/`right` anchor had committed, causing short anchors near
+    // the right edge to spill past the left edge on narrow viewports.
+    let rAF2 = 0;
+    const rAF1 = requestAnimationFrame(() => {
+      rAF2 = requestAnimationFrame(() => {
+        const p = popRef.current;
+        if (!p) return;
+        const rect = p.getBoundingClientRect();
+        let delta = 0;
+        if (rect.left < 12) delta = 12 - rect.left;
+        else if (rect.right > window.innerWidth - 12) delta = window.innerWidth - 12 - rect.right;
+        setShiftX(delta);
+      });
     });
-    return () => cancelAnimationFrame(rAF);
+    return () => {
+      cancelAnimationFrame(rAF1);
+      if (rAF2) cancelAnimationFrame(rAF2);
+    };
   }, [isOpen]);
 
   return (
@@ -286,11 +294,17 @@ function AnnotationPill({ annotation, isOpen, onToggle }) {
             "px-3.5 py-3"
           )}
           style={{
-            // Use margin-left for the horizontal nudge instead of transform,
-            // since transform is owned by the annFadeIn keyframe animation.
+            // Use margin for the horizontal nudge instead of transform, since
+            // transform is owned by the annFadeIn keyframe animation. Note:
+            // on a right-anchored absolute element (flipRight=true, right:0,
+            // left:auto), `margin-left` actually shifts the element further
+            // LEFT because the browser computes `left = cb.width - width -
+            // margin-left`. To shift such an element right we instead use
+            // negative `margin-right` (which reduces the right gap).
             left: flipRight ? "auto" : 0,
             right: flipRight ? 0 : "auto",
-            marginLeft: shiftX ? `${shiftX}px` : undefined,
+            marginLeft: !flipRight && shiftX ? `${shiftX}px` : undefined,
+            marginRight: flipRight && shiftX ? `${-shiftX}px` : undefined,
             top: "calc(100% + 8px)",
             animation: "annFadeIn 180ms ease-out both",
           }}
