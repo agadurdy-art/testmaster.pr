@@ -3,28 +3,117 @@
   "module": 3,
   "order": 5,
   "title": "Hedging",
-  "subtitle": "Sound certain of the uncertain \u2014 the language of careful claims",
-  "target_band": "8 \u2192 9",
-  "intro": "Hedging is the language of critical thinking. It lets you advance a claim while signalling the strength of the evidence behind it \u2014 'This may indicate\u2026' / 'It appears that\u2026' / 'The findings tend to suggest\u2026'. Band 6 writers over-generalise ('Everyone knows that\u2026', 'It is obvious that\u2026'); Band 8 writers calibrate. Hedging is one of the fastest ways to sound academically mature.",
+  "subtitle": "Sound certain of the uncertain — the language of careful claims",
+  "target_band": "8 → 9",
+  "intro": "Hedging is the language of critical thinking. It lets you advance a claim while signalling the strength of the evidence behind it — 'This may indicate…' / 'It appears that…' / 'The findings tend to suggest…'. Band 6 writers over-generalise ('Everyone knows that…', 'It is obvious that…'); Band 8 writers calibrate. Hedging is one of the fastest ways to sound academically mature.",
+  "mind_map": {
+    "center": "Calibrated certainty",
+    "branches": [
+      {
+        "label": "Modal verbs",
+        "children": [
+          "may, might, could (tentative)",
+          "would, should (likely)",
+          "must (near-certain)"
+        ]
+      },
+      {
+        "label": "Hedging adverbs",
+        "children": [
+          "arguably, possibly, seemingly",
+          "largely, broadly, generally"
+        ]
+      },
+      {
+        "label": "Tentative reporting",
+        "children": [
+          "'It is often argued that…'",
+          "'Evidence suggests…'",
+          "'Some commentators have claimed…'"
+        ]
+      },
+      {
+        "label": "Quantifier softening",
+        "children": [
+          "'a substantial proportion', not 'everyone'",
+          "'tends to', not 'always'"
+        ]
+      }
+    ]
+  },
   "rules": [
-    {"heading": "Modal hedges", "body": "may, might, could, would, should. 'Early intervention may reduce long-term costs.' Weaker than 'will', stronger than 'possibly'."},
-    {"heading": "Lexical verb hedges", "body": "appear, seem, tend to, suggest, indicate, point to. 'The data appear to suggest a seasonal pattern.'"},
-    {"heading": "Adverbial hedges", "body": "possibly, probably, arguably, apparently, largely, broadly, in many cases, to some extent, perhaps. 'The policy is arguably the most effective of its kind.'"},
-    {"heading": "Noun hedges and approximators", "body": "likelihood, possibility, tendency, assumption, evidence. 'There is growing evidence that screen time impairs sleep.' Also 'a certain amount of', 'a tendency towards', 'something of a\u2026'."}
+    {
+      "heading": "Modal hedges",
+      "body": "may, might, could, would, should. 'Early intervention may reduce long-term costs.' Weaker than 'will', stronger than 'possibly'."
+    },
+    {
+      "heading": "Lexical verb hedges",
+      "body": "appear, seem, tend to, suggest, indicate, point to. 'The data appear to suggest a seasonal pattern.'"
+    },
+    {
+      "heading": "Adverbial hedges",
+      "body": "possibly, probably, arguably, apparently, largely, broadly, in many cases, to some extent, perhaps. 'The policy is arguably the most effective of its kind.'"
+    },
+    {
+      "heading": "Noun hedges and approximators",
+      "body": "likelihood, possibility, tendency, assumption, evidence. 'There is growing evidence that screen time impairs sleep.' Also 'a certain amount of', 'a tendency towards', 'something of a…'."
+    }
   ],
   "examples": [
-    {"context": "Writing Task 2", "sentence": "Early exposure to foreign languages appears to correlate with stronger cognitive flexibility in later life.", "note": "Verb hedge 'appears to' + noun hedge 'correlate with'."},
-    {"context": "Writing Task 2", "sentence": "Although the evidence is largely anecdotal, there is a growing suspicion that social media platforms contribute to adolescent anxiety.", "note": "Stacked hedges: 'largely', 'growing suspicion', 'contribute to'."},
-    {"context": "Writing Task 2", "sentence": "It would be premature to conclude that automation alone is responsible for rising inequality.", "note": "'It would be premature\u2026' \u2014 elegant caution."},
-    {"context": "Writing Task 2", "sentence": "Such measures tend to succeed where public trust is already high.", "note": "'Tend to' + qualification."},
-    {"context": "Writing Task 2", "sentence": "One could argue that the policy has achieved its short-term goals, though its long-term impact remains unclear.", "note": "'One could argue\u2026 though\u2026' \u2014 classic academic balance."}
+    {
+      "context": "Writing Task 2",
+      "sentence": "Early exposure to foreign languages appears to correlate with stronger cognitive flexibility in later life.",
+      "note": "Verb hedge 'appears to' + noun hedge 'correlate with'."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "Although the evidence is largely anecdotal, there is a growing suspicion that social media platforms contribute to adolescent anxiety.",
+      "note": "Stacked hedges: 'largely', 'growing suspicion', 'contribute to'."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "It would be premature to conclude that automation alone is responsible for rising inequality.",
+      "note": "'It would be premature…' — elegant caution."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "Such measures tend to succeed where public trust is already high.",
+      "note": "'Tend to' + qualification."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "One could argue that the policy has achieved its short-term goals, though its long-term impact remains unclear.",
+      "note": "'One could argue… though…' — classic academic balance."
+    }
   ],
-  "band8_marker": "Band 8 writers never write 'Everyone agrees\u2026' or 'It is a well-known fact that\u2026'. They replace these with calibrated claims: 'There is broad consensus that\u2026', 'The prevailing view holds that\u2026', 'While the evidence is not conclusive, most analysts accept that\u2026'. This vocabulary of careful attribution \u2014 not mere politeness \u2014 is the voice examiners associate with C1/C2 proficiency.",
+  "band_comparison": {
+    "band6": {
+      "text": "All students hate homework and it is completely useless for their future.",
+      "issue": "Absolute claims ('all', 'completely useless') destroy credibility — classic Band 6 overreach."
+    },
+    "band8": {
+      "text": "A substantial proportion of students report finding homework burdensome, and its long-term educational value is arguably overstated.",
+      "why": "'substantial proportion' + 'arguably overstated' signal academic caution while still taking a position — the Task 2 sweet spot."
+    }
+  },
+  "band8_marker": "Band 8 writers never write 'Everyone agrees…' or 'It is a well-known fact that…'. They replace these with calibrated claims: 'There is broad consensus that…', 'The prevailing view holds that…', 'While the evidence is not conclusive, most analysts accept that…'. This vocabulary of careful attribution — not mere politeness — is the voice examiners associate with C1/C2 proficiency.",
   "common_errors": [
-    {"error": "Over-confident claims: 'It is obvious that pollution causes cancer.'", "fix": "Hedge: 'A growing body of evidence suggests a link between pollution and cancer.'"},
-    {"error": "Double modal: 'It may could happen.'", "fix": "\u2192 'It may happen' or 'It could happen.'"},
-    {"error": "Hedging and then contradicting: 'It is certainly possible that\u2026'", "fix": "Pick a stance: 'It is certain that\u2026' (strong) OR 'It is possible that\u2026' (hedged)."},
-    {"error": "Over-hedging to the point of evasion: 'It might perhaps possibly be somewhat true that\u2026'", "fix": "One hedge per claim is enough."}
+    {
+      "error": "Over-confident claims: 'It is obvious that pollution causes cancer.'",
+      "fix": "Hedge: 'A growing body of evidence suggests a link between pollution and cancer.'"
+    },
+    {
+      "error": "Double modal: 'It may could happen.'",
+      "fix": "→ 'It may happen' or 'It could happen.'"
+    },
+    {
+      "error": "Hedging and then contradicting: 'It is certainly possible that…'",
+      "fix": "Pick a stance: 'It is certain that…' (strong) OR 'It is possible that…' (hedged)."
+    },
+    {
+      "error": "Over-hedging to the point of evasion: 'It might perhaps possibly be somewhat true that…'",
+      "fix": "One hedge per claim is enough."
+    }
   ],
   "practice": [
     {
@@ -32,14 +121,46 @@
       "title": "Hedge the claim",
       "instruction": "Rewrite each over-confident claim with appropriate hedging.",
       "items": [
-        {"prompt": "Everyone knows that technology makes children lazy.", "answer": "It has been argued that technology may reduce children\u2019s physical activity, although the evidence is not conclusive.", "explanation": "Three hedges replace a sweeping claim."},
-        {"prompt": "This proves that the policy failed.", "answer": "This suggests that the policy may not have achieved its intended goals.", "explanation": "'Prove' \u2192 'suggest' + modal hedge."},
-        {"prompt": "All young people today are addicted to their phones.", "answer": "A significant proportion of young people appear to exhibit signs of phone dependence.", "explanation": "Quantity hedge + verb hedge."},
-        {"prompt": "The tax definitely helped the economy.", "answer": "The tax appears to have contributed to economic improvement, though other factors may also be relevant.", "explanation": "Multiple hedges."},
-        {"prompt": "It is a fact that air pollution kills people.", "answer": "A considerable body of evidence indicates that air pollution is associated with premature mortality.", "explanation": "Academic attribution."},
-        {"prompt": "Obviously, remote work reduces productivity.", "answer": "Some studies suggest that remote work may, in certain contexts, reduce productivity.", "explanation": "Stacked hedges."},
-        {"prompt": "Parents always want the best for their children.", "answer": "Most parents tend to prioritise their children\u2019s welfare.", "explanation": "'Always' \u2192 'most' + 'tend to'."},
-        {"prompt": "Climate change is 100% caused by humans.", "answer": "The overwhelming scientific consensus attributes recent climate change largely to human activity.", "explanation": "Replace 'fact' with expert attribution."}
+        {
+          "prompt": "Everyone knows that technology makes children lazy.",
+          "answer": "It has been argued that technology may reduce children’s physical activity, although the evidence is not conclusive.",
+          "explanation": "Three hedges replace a sweeping claim."
+        },
+        {
+          "prompt": "This proves that the policy failed.",
+          "answer": "This suggests that the policy may not have achieved its intended goals.",
+          "explanation": "'Prove' → 'suggest' + modal hedge."
+        },
+        {
+          "prompt": "All young people today are addicted to their phones.",
+          "answer": "A significant proportion of young people appear to exhibit signs of phone dependence.",
+          "explanation": "Quantity hedge + verb hedge."
+        },
+        {
+          "prompt": "The tax definitely helped the economy.",
+          "answer": "The tax appears to have contributed to economic improvement, though other factors may also be relevant.",
+          "explanation": "Multiple hedges."
+        },
+        {
+          "prompt": "It is a fact that air pollution kills people.",
+          "answer": "A considerable body of evidence indicates that air pollution is associated with premature mortality.",
+          "explanation": "Academic attribution."
+        },
+        {
+          "prompt": "Obviously, remote work reduces productivity.",
+          "answer": "Some studies suggest that remote work may, in certain contexts, reduce productivity.",
+          "explanation": "Stacked hedges."
+        },
+        {
+          "prompt": "Parents always want the best for their children.",
+          "answer": "Most parents tend to prioritise their children’s welfare.",
+          "explanation": "'Always' → 'most' + 'tend to'."
+        },
+        {
+          "prompt": "Climate change is 100% caused by humans.",
+          "answer": "The overwhelming scientific consensus attributes recent climate change largely to human activity.",
+          "explanation": "Replace 'fact' with expert attribution."
+        }
       ]
     },
     {
@@ -47,14 +168,78 @@
       "title": "Which hedge sounds more professional?",
       "instruction": "Pick the better-calibrated version.",
       "items": [
-        {"prompt": "A) 'Maybe vaccines work.' B) 'Vaccination has been shown to reduce the incidence of infectious disease.'", "options": ["A", "B"], "answer": 1, "explanation": "Professional hedging + evidence-based phrasing."},
-        {"prompt": "A) 'Some people say that AI will take all jobs.' B) 'It has been speculated that AI could displace a substantial proportion of existing jobs.'", "options": ["A", "B"], "answer": 1, "explanation": "Academic passive + modal hedge."},
-        {"prompt": "A) 'This is probably good.' B) 'This approach appears to offer several advantages.'", "options": ["A", "B"], "answer": 1, "explanation": "'Appears to' + noun hedge = academic tone."},
-        {"prompt": "A) 'It is obvious that smoking is dangerous.' B) 'There is overwhelming evidence that smoking is harmful to health.'", "options": ["A", "B"], "answer": 1, "explanation": "Evidence-anchored claim."},
-        {"prompt": "A) 'We think this is a better solution.' B) 'This approach may well prove more effective.'", "options": ["A", "B"], "answer": 1, "explanation": "'May well' is a finely tuned probability hedge."},
-        {"prompt": "A) 'No one knows what will happen next.' B) 'The long-term consequences remain uncertain.'", "options": ["A", "B"], "answer": 1, "explanation": "Formal register without absolute claim."},
-        {"prompt": "A) 'Definitely, social media causes anxiety.' B) 'A growing body of research links heavy social-media use to elevated anxiety.'", "options": ["A", "B"], "answer": 1, "explanation": "Evidence + controlled verb."},
-        {"prompt": "A) 'It\u2019s true that cities are overcrowded.' B) 'Many major cities exhibit symptoms of overcrowding.'", "options": ["A", "B"], "answer": 1, "explanation": "'Many\u2026 exhibit symptoms of\u2026' \u2014 academic hedge."}
+        {
+          "prompt": "A) 'Maybe vaccines work.' B) 'Vaccination has been shown to reduce the incidence of infectious disease.'",
+          "options": [
+            "A",
+            "B"
+          ],
+          "answer": 1,
+          "explanation": "Professional hedging + evidence-based phrasing."
+        },
+        {
+          "prompt": "A) 'Some people say that AI will take all jobs.' B) 'It has been speculated that AI could displace a substantial proportion of existing jobs.'",
+          "options": [
+            "A",
+            "B"
+          ],
+          "answer": 1,
+          "explanation": "Academic passive + modal hedge."
+        },
+        {
+          "prompt": "A) 'This is probably good.' B) 'This approach appears to offer several advantages.'",
+          "options": [
+            "A",
+            "B"
+          ],
+          "answer": 1,
+          "explanation": "'Appears to' + noun hedge = academic tone."
+        },
+        {
+          "prompt": "A) 'It is obvious that smoking is dangerous.' B) 'There is overwhelming evidence that smoking is harmful to health.'",
+          "options": [
+            "A",
+            "B"
+          ],
+          "answer": 1,
+          "explanation": "Evidence-anchored claim."
+        },
+        {
+          "prompt": "A) 'We think this is a better solution.' B) 'This approach may well prove more effective.'",
+          "options": [
+            "A",
+            "B"
+          ],
+          "answer": 1,
+          "explanation": "'May well' is a finely tuned probability hedge."
+        },
+        {
+          "prompt": "A) 'No one knows what will happen next.' B) 'The long-term consequences remain uncertain.'",
+          "options": [
+            "A",
+            "B"
+          ],
+          "answer": 1,
+          "explanation": "Formal register without absolute claim."
+        },
+        {
+          "prompt": "A) 'Definitely, social media causes anxiety.' B) 'A growing body of research links heavy social-media use to elevated anxiety.'",
+          "options": [
+            "A",
+            "B"
+          ],
+          "answer": 1,
+          "explanation": "Evidence + controlled verb."
+        },
+        {
+          "prompt": "A) 'It’s true that cities are overcrowded.' B) 'Many major cities exhibit symptoms of overcrowding.'",
+          "options": [
+            "A",
+            "B"
+          ],
+          "answer": 1,
+          "explanation": "'Many… exhibit symptoms of…' — academic hedge."
+        }
       ]
     },
     {
@@ -62,14 +247,46 @@
       "title": "Supply a hedge",
       "instruction": "Fill in with a hedge word or phrase.",
       "items": [
-        {"prompt": "The data ___ to suggest a correlation between diet and mental health.", "answer": "appear / seem / tend", "explanation": "Verb hedge."},
-        {"prompt": "It is ___ the case that urbanisation exacerbates inequality.", "answer": "arguably / often / frequently", "explanation": "Adverbial hedge."},
-        {"prompt": "There is ___ evidence that commuting time affects life satisfaction.", "answer": "growing / some / emerging", "explanation": "Noun hedge."},
-        {"prompt": "Policy-makers ___ wish to consider the long-term implications before acting.", "answer": "may / might / would", "explanation": "Modal hedge."},
-        {"prompt": "The effect of the reform ___ be limited in scope.", "answer": "may / might / could / appears to", "explanation": "Multiple acceptable modals."},
-        {"prompt": "Such claims ___ be supported by the available evidence.", "answer": "cannot always / may not / do not necessarily", "explanation": "Negative hedge."},
-        {"prompt": "It would be ___ to conclude that the policy has failed entirely.", "answer": "premature / unwise / hasty", "explanation": "Adjective hedge."},
-        {"prompt": "In ___ cases, early intervention proves decisive.", "answer": "many / most / certain / a number of", "explanation": "Quantity hedge."}
+        {
+          "prompt": "The data ___ to suggest a correlation between diet and mental health.",
+          "answer": "appear / seem / tend",
+          "explanation": "Verb hedge."
+        },
+        {
+          "prompt": "It is ___ the case that urbanisation exacerbates inequality.",
+          "answer": "arguably / often / frequently",
+          "explanation": "Adverbial hedge."
+        },
+        {
+          "prompt": "There is ___ evidence that commuting time affects life satisfaction.",
+          "answer": "growing / some / emerging",
+          "explanation": "Noun hedge."
+        },
+        {
+          "prompt": "Policy-makers ___ wish to consider the long-term implications before acting.",
+          "answer": "may / might / would",
+          "explanation": "Modal hedge."
+        },
+        {
+          "prompt": "The effect of the reform ___ be limited in scope.",
+          "answer": "may / might / could / appears to",
+          "explanation": "Multiple acceptable modals."
+        },
+        {
+          "prompt": "Such claims ___ be supported by the available evidence.",
+          "answer": "cannot always / may not / do not necessarily",
+          "explanation": "Negative hedge."
+        },
+        {
+          "prompt": "It would be ___ to conclude that the policy has failed entirely.",
+          "answer": "premature / unwise / hasty",
+          "explanation": "Adjective hedge."
+        },
+        {
+          "prompt": "In ___ cases, early intervention proves decisive.",
+          "answer": "many / most / certain / a number of",
+          "explanation": "Quantity hedge."
+        }
       ]
     }
   ]
