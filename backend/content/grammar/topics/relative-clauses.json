@@ -3,28 +3,110 @@
   "module": 2,
   "order": 4,
   "title": "Relative Clauses",
-  "subtitle": "Defining vs. non-defining \u2014 and why punctuation changes meaning",
-  "target_band": "6 \u2192 7.5",
-  "intro": "Relative clauses let you pack two ideas into one sentence without repetition. A writer who cannot combine 'I have a friend. My friend speaks five languages.' into 'I have a friend who speaks five languages.' is stuck at Band 5. The Band 7+ writer distinguishes defining (which restricts meaning, no commas) from non-defining (which adds information, commas) \u2014 a comma here literally changes what the sentence means.",
+  "subtitle": "Defining vs. non-defining — and why punctuation changes meaning",
+  "target_band": "6 → 7.5",
+  "intro": "Relative clauses let you pack two ideas into one sentence without repetition. A writer who cannot combine 'I have a friend. My friend speaks five languages.' into 'I have a friend who speaks five languages.' is stuck at Band 5. The Band 7+ writer distinguishes defining (which restricts meaning, no commas) from non-defining (which adds information, commas) — a comma here literally changes what the sentence means.",
+  "mind_map": {
+    "center": "Defining vs non-defining",
+    "branches": [
+      {
+        "label": "Defining (no commas)",
+        "children": [
+          "Essential to identify the noun",
+          "'Students who study daily succeed.'",
+          "'that' allowed for things, often people"
+        ]
+      },
+      {
+        "label": "Non-defining (commas)",
+        "children": [
+          "Extra, removable information",
+          "'My brother, who lives in Berlin, is a doctor.'",
+          "Never use 'that' here"
+        ]
+      },
+      {
+        "label": "Prep + which/whom",
+        "children": [
+          "Formal: 'the policy to which we refer'",
+          "Avoid stranding prepositions in academic writing"
+        ]
+      }
+    ]
+  },
   "rules": [
-    {"heading": "Relative pronouns", "body": "who (people), which (things), that (people or things, defining only), whose (possession), whom (formal object), where (place), when (time), why (reason)."},
-    {"heading": "Defining: no commas, no 'which' substitute for 'that'", "body": "'The students who attended the seminar passed the exam.' (Only those students.) Pronoun cannot be dropped if it is the subject."},
-    {"heading": "Non-defining: commas, not 'that'", "body": "'The students, who had all attended the seminar, passed the exam.' (All students, and incidentally they all attended.) Cannot omit the pronoun."},
-    {"heading": "Prepositions and reduced forms", "body": "Formal: 'the topic about which she spoke'; informal: 'the topic that she spoke about' / 'the topic she spoke about'. Object relatives can drop 'that/which' in defining clauses."}
+    {
+      "heading": "Relative pronouns",
+      "body": "who (people), which (things), that (people or things, defining only), whose (possession), whom (formal object), where (place), when (time), why (reason)."
+    },
+    {
+      "heading": "Defining: no commas, no 'which' substitute for 'that'",
+      "body": "'The students who attended the seminar passed the exam.' (Only those students.) Pronoun cannot be dropped if it is the subject."
+    },
+    {
+      "heading": "Non-defining: commas, not 'that'",
+      "body": "'The students, who had all attended the seminar, passed the exam.' (All students, and incidentally they all attended.) Cannot omit the pronoun."
+    },
+    {
+      "heading": "Prepositions and reduced forms",
+      "body": "Formal: 'the topic about which she spoke'; informal: 'the topic that she spoke about' / 'the topic she spoke about'. Object relatives can drop 'that/which' in defining clauses."
+    }
   ],
   "examples": [
-    {"context": "Writing Task 2", "sentence": "Policies that address root causes, rather than symptoms, tend to have lasting impact.", "note": "Defining \u2014 restricts 'policies' to a subset."},
-    {"context": "Writing Task 2", "sentence": "The Kyoto Protocol, which was signed in 1997, marked a turning point in climate diplomacy.", "note": "Non-defining \u2014 extra information."},
-    {"context": "Writing Task 1", "sentence": "The country whose emissions grew the most between 2000 and 2010 was China.", "note": "'Whose' for inanimate possession."},
-    {"context": "Speaking Part 2", "sentence": "I remember the moment when I first realised I wanted to teach.", "note": "'When' as relative pronoun of time."},
-    {"context": "Writing Task 2", "sentence": "Cities in which public transport is cheap and reliable see fewer cars on the road.", "note": "Preposition + which; more formal than 'that\u2026in'."}
+    {
+      "context": "Writing Task 2",
+      "sentence": "Policies that address root causes, rather than symptoms, tend to have lasting impact.",
+      "note": "Defining — restricts 'policies' to a subset."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "The Kyoto Protocol, which was signed in 1997, marked a turning point in climate diplomacy.",
+      "note": "Non-defining — extra information."
+    },
+    {
+      "context": "Writing Task 1",
+      "sentence": "The country whose emissions grew the most between 2000 and 2010 was China.",
+      "note": "'Whose' for inanimate possession."
+    },
+    {
+      "context": "Speaking Part 2",
+      "sentence": "I remember the moment when I first realised I wanted to teach.",
+      "note": "'When' as relative pronoun of time."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "Cities in which public transport is cheap and reliable see fewer cars on the road.",
+      "note": "Preposition + which; more formal than 'that…in'."
+    }
   ],
-  "band8_marker": "Band 8 writers deploy non-defining clauses to add qualifying information without breaking flow: 'The policy, which has been widely criticised, is unlikely to survive the next election.' They also use participle-reduction: 'Students attending the seminar' instead of 'Students who attended the seminar' \u2014 more compact and academically fluent (this leads naturally into Module 3's participle clauses).",
+  "band_comparison": {
+    "band6": {
+      "text": "Students that study daily, they get better grades than the students who don't.",
+      "issue": "Redundant resumptive pronoun 'they'; also reads as run-on."
+    },
+    "band8": {
+      "text": "Students who study daily — particularly those whose routines include active recall — consistently outperform their less disciplined peers.",
+      "why": "Tight defining clause + inserted non-defining clause 'particularly those whose…' layers information without losing grammaticality."
+    }
+  },
+  "band8_marker": "Band 8 writers deploy non-defining clauses to add qualifying information without breaking flow: 'The policy, which has been widely criticised, is unlikely to survive the next election.' They also use participle-reduction: 'Students attending the seminar' instead of 'Students who attended the seminar' — more compact and academically fluent (this leads naturally into Module 3's participle clauses).",
   "common_errors": [
-    {"error": "'The book what I read was excellent.'", "fix": "'What' is not a relative pronoun for objects \u2192 'The book that/which I read was excellent.'"},
-    {"error": "Using 'that' in non-defining clauses: 'My sister, that lives in Paris\u2026'", "fix": "\u2192 'My sister, who lives in Paris,\u2026'"},
-    {"error": "Doubling the object: 'The report that I read it was outdated.'", "fix": "Drop the object pronoun \u2192 'The report that I read was outdated.'"},
-    {"error": "Missing comma where needed: 'My father who is a doctor told me.'", "fix": "If you have only one father \u2192 add commas: 'My father, who is a doctor, told me.'"}
+    {
+      "error": "'The book what I read was excellent.'",
+      "fix": "'What' is not a relative pronoun for objects → 'The book that/which I read was excellent.'"
+    },
+    {
+      "error": "Using 'that' in non-defining clauses: 'My sister, that lives in Paris…'",
+      "fix": "→ 'My sister, who lives in Paris,…'"
+    },
+    {
+      "error": "Doubling the object: 'The report that I read it was outdated.'",
+      "fix": "Drop the object pronoun → 'The report that I read was outdated.'"
+    },
+    {
+      "error": "Missing comma where needed: 'My father who is a doctor told me.'",
+      "fix": "If you have only one father → add commas: 'My father, who is a doctor, told me.'"
+    }
   ],
   "practice": [
     {
@@ -32,14 +114,46 @@
       "title": "Combine with a relative clause",
       "instruction": "Merge the two sentences using a relative clause. Decide whether it is defining or non-defining.",
       "items": [
-        {"prompt": "The museum reopened last month. It had been closed for renovation.", "answer": "The museum, which had been closed for renovation, reopened last month.", "explanation": "One museum, extra info \u2192 non-defining with commas."},
-        {"prompt": "Candidates have a second language. They are usually prioritised by employers.", "answer": "Candidates who have a second language are usually prioritised by employers.", "explanation": "Defines which candidates."},
-        {"prompt": "Shanghai is a mega-city. Its population has tripled since 1990.", "answer": "Shanghai, whose population has tripled since 1990, is a mega-city.", "explanation": "Inanimate possession \u2192 'whose'."},
-        {"prompt": "There are some issues. The committee must address these issues today.", "answer": "There are some issues (that/which) the committee must address today.", "explanation": "Object relative pronoun can be omitted."},
-        {"prompt": "The report criticised the policy. It was published in The Guardian.", "answer": "The report, which was published in The Guardian, criticised the policy.", "explanation": "Non-defining."},
-        {"prompt": "I still remember the day. I arrived in this country on that day.", "answer": "I still remember the day (when) I arrived in this country.", "explanation": "'When' for time."},
-        {"prompt": "The main reason is cost. Public transport has not expanded for that reason.", "answer": "The main reason (why) public transport has not expanded is cost.", "explanation": "'Why' for reason."},
-        {"prompt": "The professor is my supervisor. I collaborated with her on the paper.", "answer": "The professor with whom I collaborated on the paper is my supervisor. / The professor (who/that) I collaborated with on the paper is my supervisor.", "explanation": "Formal vs. informal preposition placement."}
+        {
+          "prompt": "The museum reopened last month. It had been closed for renovation.",
+          "answer": "The museum, which had been closed for renovation, reopened last month.",
+          "explanation": "One museum, extra info → non-defining with commas."
+        },
+        {
+          "prompt": "Candidates have a second language. They are usually prioritised by employers.",
+          "answer": "Candidates who have a second language are usually prioritised by employers.",
+          "explanation": "Defines which candidates."
+        },
+        {
+          "prompt": "Shanghai is a mega-city. Its population has tripled since 1990.",
+          "answer": "Shanghai, whose population has tripled since 1990, is a mega-city.",
+          "explanation": "Inanimate possession → 'whose'."
+        },
+        {
+          "prompt": "There are some issues. The committee must address these issues today.",
+          "answer": "There are some issues (that/which) the committee must address today.",
+          "explanation": "Object relative pronoun can be omitted."
+        },
+        {
+          "prompt": "The report criticised the policy. It was published in The Guardian.",
+          "answer": "The report, which was published in The Guardian, criticised the policy.",
+          "explanation": "Non-defining."
+        },
+        {
+          "prompt": "I still remember the day. I arrived in this country on that day.",
+          "answer": "I still remember the day (when) I arrived in this country.",
+          "explanation": "'When' for time."
+        },
+        {
+          "prompt": "The main reason is cost. Public transport has not expanded for that reason.",
+          "answer": "The main reason (why) public transport has not expanded is cost.",
+          "explanation": "'Why' for reason."
+        },
+        {
+          "prompt": "The professor is my supervisor. I collaborated with her on the paper.",
+          "answer": "The professor with whom I collaborated on the paper is my supervisor. / The professor (who/that) I collaborated with on the paper is my supervisor.",
+          "explanation": "Formal vs. informal preposition placement."
+        }
       ]
     },
     {
@@ -47,14 +161,46 @@
       "title": "Choose the relative pronoun",
       "instruction": "Fill in with who / which / that / whose / where / when.",
       "items": [
-        {"prompt": "The factory ___ was built in 1920 is now a museum.", "answer": "which / that", "explanation": "Thing; defining."},
-        {"prompt": "Einstein, ___ theories revolutionised physics, was a patent clerk.", "answer": "whose", "explanation": "Possession."},
-        {"prompt": "This is the village ___ I grew up.", "answer": "where", "explanation": "Place."},
-        {"prompt": "Employees ___ skills become outdated are often reassigned.", "answer": "whose", "explanation": "Possession."},
-        {"prompt": "The 1960s was a decade ___ civil rights movements gathered pace.", "answer": "when", "explanation": "Time."},
-        {"prompt": "Candidates ___ submit late applications will be disqualified.", "answer": "who / that", "explanation": "People; defining."},
-        {"prompt": "Solar energy, ___ costs have fallen dramatically, now rivals fossil fuels.", "answer": "whose", "explanation": "Inanimate possession."},
-        {"prompt": "That is the reason ___ the project was cancelled.", "answer": "why", "explanation": "Reason."}
+        {
+          "prompt": "The factory ___ was built in 1920 is now a museum.",
+          "answer": "which / that",
+          "explanation": "Thing; defining."
+        },
+        {
+          "prompt": "Einstein, ___ theories revolutionised physics, was a patent clerk.",
+          "answer": "whose",
+          "explanation": "Possession."
+        },
+        {
+          "prompt": "This is the village ___ I grew up.",
+          "answer": "where",
+          "explanation": "Place."
+        },
+        {
+          "prompt": "Employees ___ skills become outdated are often reassigned.",
+          "answer": "whose",
+          "explanation": "Possession."
+        },
+        {
+          "prompt": "The 1960s was a decade ___ civil rights movements gathered pace.",
+          "answer": "when",
+          "explanation": "Time."
+        },
+        {
+          "prompt": "Candidates ___ submit late applications will be disqualified.",
+          "answer": "who / that",
+          "explanation": "People; defining."
+        },
+        {
+          "prompt": "Solar energy, ___ costs have fallen dramatically, now rivals fossil fuels.",
+          "answer": "whose",
+          "explanation": "Inanimate possession."
+        },
+        {
+          "prompt": "That is the reason ___ the project was cancelled.",
+          "answer": "why",
+          "explanation": "Reason."
+        }
       ]
     },
     {
@@ -62,14 +208,94 @@
       "title": "Defining or non-defining?",
       "instruction": "Pick the option with correct punctuation and pronoun.",
       "items": [
-        {"prompt": "My sister ___ a surgeon in Singapore.", "options": ["which is", "who is", ", who is,", "that is"], "answer": 2, "explanation": "Assuming one sister, non-defining with commas."},
-        {"prompt": "Students ___ the lecture reported higher test scores.", "options": ["who attended", ", who attended,", "which attended", "what attended"], "answer": 0, "explanation": "Defining (only those who attended)."},
-        {"prompt": "The documentary ___ on Sunday won three awards.", "options": ["that aired", "who aired", "where aired", "whom aired"], "answer": 0, "explanation": "'That' for things in defining clauses."},
-        {"prompt": "Paris ___ I spent my twenties, remains my favourite city.", "options": ["which", ", that", ", where", "when"], "answer": 2, "explanation": "Non-defining place clause."},
-        {"prompt": "The applicant ___ I interviewed last week was the strongest candidate.", "options": ["that", "who", "whom", "whose"], "answer": 2, "explanation": "Object pronoun, formal \u2192 'whom'; 'who' also acceptable."},
-        {"prompt": "There are several factors ___ influence academic performance.", "options": ["who", "that", "whose", "when"], "answer": 1, "explanation": "'That' or 'which' for things; subject relative cannot be dropped."},
-        {"prompt": "The method ___ she described is widely used today.", "options": ["that", "what", "who", "when"], "answer": 0, "explanation": "'What' is never a relative pronoun in standard English."},
-        {"prompt": "The city, ___ a population of 12 million, is the economic hub of the region.", "options": ["that has", "which has", "who has", "whose has"], "answer": 1, "explanation": "Non-defining relative clause with 'which'."}
+        {
+          "prompt": "My sister ___ a surgeon in Singapore.",
+          "options": [
+            "which is",
+            "who is",
+            ", who is,",
+            "that is"
+          ],
+          "answer": 2,
+          "explanation": "Assuming one sister, non-defining with commas."
+        },
+        {
+          "prompt": "Students ___ the lecture reported higher test scores.",
+          "options": [
+            "who attended",
+            ", who attended,",
+            "which attended",
+            "what attended"
+          ],
+          "answer": 0,
+          "explanation": "Defining (only those who attended)."
+        },
+        {
+          "prompt": "The documentary ___ on Sunday won three awards.",
+          "options": [
+            "that aired",
+            "who aired",
+            "where aired",
+            "whom aired"
+          ],
+          "answer": 0,
+          "explanation": "'That' for things in defining clauses."
+        },
+        {
+          "prompt": "Paris ___ I spent my twenties, remains my favourite city.",
+          "options": [
+            "which",
+            ", that",
+            ", where",
+            "when"
+          ],
+          "answer": 2,
+          "explanation": "Non-defining place clause."
+        },
+        {
+          "prompt": "The applicant ___ I interviewed last week was the strongest candidate.",
+          "options": [
+            "that",
+            "who",
+            "whom",
+            "whose"
+          ],
+          "answer": 2,
+          "explanation": "Object pronoun, formal → 'whom'; 'who' also acceptable."
+        },
+        {
+          "prompt": "There are several factors ___ influence academic performance.",
+          "options": [
+            "who",
+            "that",
+            "whose",
+            "when"
+          ],
+          "answer": 1,
+          "explanation": "'That' or 'which' for things; subject relative cannot be dropped."
+        },
+        {
+          "prompt": "The method ___ she described is widely used today.",
+          "options": [
+            "that",
+            "what",
+            "who",
+            "when"
+          ],
+          "answer": 0,
+          "explanation": "'What' is never a relative pronoun in standard English."
+        },
+        {
+          "prompt": "The city, ___ a population of 12 million, is the economic hub of the region.",
+          "options": [
+            "that has",
+            "which has",
+            "who has",
+            "whose has"
+          ],
+          "answer": 1,
+          "explanation": "Non-defining relative clause with 'which'."
+        }
       ]
     }
   ]

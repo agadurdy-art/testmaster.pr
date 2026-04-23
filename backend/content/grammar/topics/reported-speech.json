@@ -4,27 +4,109 @@
   "order": 3,
   "title": "Reported Speech",
   "subtitle": "Backshifting, reporting verbs, and the grammar of attribution",
-  "target_band": "6 \u2192 7.5",
+  "target_band": "6 → 7.5",
   "intro": "Reported speech is how you attribute ideas without quoting them. Direct quotation is rare in academic writing; paraphrased attribution is the norm. The classic mistake is to copy the speaker's tense: 'The minister said he will resign' instead of 'The minister said he would resign.' The rule is to backshift when the reporting verb is past.",
+  "mind_map": {
+    "center": "Backshift + deixis",
+    "branches": [
+      {
+        "label": "Tense backshift",
+        "children": [
+          "present → past, will → would",
+          "must (obligation) → had to",
+          "Don't backshift general truths"
+        ]
+      },
+      {
+        "label": "Pronoun / time shift",
+        "children": [
+          "'I' → 'he/she'",
+          "'tomorrow' → 'the next day'",
+          "'here' → 'there'"
+        ]
+      },
+      {
+        "label": "Reporting verbs",
+        "children": [
+          "argue, claim, suggest, acknowledge, concede",
+          "Choose verb that colours the stance"
+        ]
+      }
+    ]
+  },
   "rules": [
-    {"heading": "Backshift by one step when reporting in the past", "body": "Present \u2192 past; past \u2192 past perfect; will \u2192 would; can \u2192 could; must \u2192 had to. 'I am leaving' \u2192 'She said she was leaving.'"},
-    {"heading": "No backshift for timeless truths", "body": "'The earth orbits the sun' \u2192 'She said (that) the earth orbits the sun' \u2014 still present."},
-    {"heading": "Reporting verbs carry meaning", "body": "'Say' is neutral; 'claim' signals doubt; 'argue' signals position; 'admit' signals concession; 'announce' signals formal public statement; 'suggest' signals proposal."},
-    {"heading": "Questions and commands", "body": "Questions: if/whether + statement order: 'He asked whether I had finished.' Commands: tell + object + to + V: 'The teacher told us to rewrite the essay.'"}
+    {
+      "heading": "Backshift by one step when reporting in the past",
+      "body": "Present → past; past → past perfect; will → would; can → could; must → had to. 'I am leaving' → 'She said she was leaving.'"
+    },
+    {
+      "heading": "No backshift for timeless truths",
+      "body": "'The earth orbits the sun' → 'She said (that) the earth orbits the sun' — still present."
+    },
+    {
+      "heading": "Reporting verbs carry meaning",
+      "body": "'Say' is neutral; 'claim' signals doubt; 'argue' signals position; 'admit' signals concession; 'announce' signals formal public statement; 'suggest' signals proposal."
+    },
+    {
+      "heading": "Questions and commands",
+      "body": "Questions: if/whether + statement order: 'He asked whether I had finished.' Commands: tell + object + to + V: 'The teacher told us to rewrite the essay.'"
+    }
   ],
   "examples": [
-    {"context": "Writing Task 2", "sentence": "Researchers have argued that social mobility in many developed countries has stagnated since the 1980s.", "note": "'Argued that' \u2014 academic attribution."},
-    {"context": "Writing Task 2", "sentence": "The report warned that failure to invest in infrastructure would have long-term consequences.", "note": "Backshift: 'will' \u2192 'would'."},
-    {"context": "Writing Task 2", "sentence": "Economists maintain that moderate inflation is healthy for a growing economy.", "note": "Timeless view \u2192 no backshift."},
-    {"context": "Speaking Part 3", "sentence": "My professor once told me that learning a language requires forgetting your fear of mistakes.", "note": "Past reporting with no backshift on the general truth."},
-    {"context": "Writing Task 2", "sentence": "The committee recommended that the bill be amended before its second reading.", "note": "'Recommend that' + bare infinitive \u2014 subjunctive form popular in formal register."}
+    {
+      "context": "Writing Task 2",
+      "sentence": "Researchers have argued that social mobility in many developed countries has stagnated since the 1980s.",
+      "note": "'Argued that' — academic attribution."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "The report warned that failure to invest in infrastructure would have long-term consequences.",
+      "note": "Backshift: 'will' → 'would'."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "Economists maintain that moderate inflation is healthy for a growing economy.",
+      "note": "Timeless view → no backshift."
+    },
+    {
+      "context": "Speaking Part 3",
+      "sentence": "My professor once told me that learning a language requires forgetting your fear of mistakes.",
+      "note": "Past reporting with no backshift on the general truth."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "The committee recommended that the bill be amended before its second reading.",
+      "note": "'Recommend that' + bare infinitive — subjunctive form popular in formal register."
+    }
   ],
-  "band8_marker": "Band 8 writers vary reporting verbs to encode attitude and authority: 'contend', 'maintain', 'posit', 'caution', 'concede', 'assert', 'demonstrate'. They also use noun-phrase attribution ('The rationale behind the policy is\u2026', 'According to the latest OECD report\u2026') to avoid repetitive 'says' / 'said' structures.",
+  "band_comparison": {
+    "band6": {
+      "text": "The researcher said that 'technology is the future'.",
+      "issue": "Uses quotation marks + 'said' — feels like direct-speech copy-paste, no reporting frame."
+    },
+    "band8": {
+      "text": "The researcher argued that technology would play a decisive role in the coming decades.",
+      "why": "'argued' colours stance, 'would play' backshifts future accurately, and 'decisive role' replaces flat 'is the future'."
+    }
+  },
+  "band8_marker": "Band 8 writers vary reporting verbs to encode attitude and authority: 'contend', 'maintain', 'posit', 'caution', 'concede', 'assert', 'demonstrate'. They also use noun-phrase attribution ('The rationale behind the policy is…', 'According to the latest OECD report…') to avoid repetitive 'says' / 'said' structures.",
   "common_errors": [
-    {"error": "'He said me' / 'He told that'", "fix": "'Say' never takes an indirect object without 'to'; 'tell' requires an object: 'He said to me / He told me that\u2026'"},
-    {"error": "Forgetting to backshift: 'She said she is tired.'", "fix": "\u2192 'She said she was tired.'"},
-    {"error": "Question-form word order: 'He asked me where was I.'", "fix": "\u2192 'He asked me where I was.' (Statement order after a reporting verb.)"},
-    {"error": "'Insisted on that'", "fix": "'Insist that\u2026' or 'insist on + gerund / noun'."}
+    {
+      "error": "'He said me' / 'He told that'",
+      "fix": "'Say' never takes an indirect object without 'to'; 'tell' requires an object: 'He said to me / He told me that…'"
+    },
+    {
+      "error": "Forgetting to backshift: 'She said she is tired.'",
+      "fix": "→ 'She said she was tired.'"
+    },
+    {
+      "error": "Question-form word order: 'He asked me where was I.'",
+      "fix": "→ 'He asked me where I was.' (Statement order after a reporting verb.)"
+    },
+    {
+      "error": "'Insisted on that'",
+      "fix": "'Insist that…' or 'insist on + gerund / noun'."
+    }
   ],
   "practice": [
     {
@@ -32,14 +114,46 @@
       "title": "Direct to reported",
       "instruction": "Rewrite as reported speech, backshifting tenses where needed.",
       "items": [
-        {"prompt": "'I have never smoked,' he claimed. \u2014 He claimed __________.", "answer": "that he had never smoked", "explanation": "Present Perfect \u2192 Past Perfect."},
-        {"prompt": "'We will review the decision,' the board announced. \u2014 The board announced __________.", "answer": "that they would review the decision", "explanation": "'Will' \u2192 'would'."},
-        {"prompt": "'Are you attending the conference?' she asked me. \u2014 She asked me __________.", "answer": "whether I was attending the conference", "explanation": "Yes/no question \u2192 'whether' + statement order + backshift."},
-        {"prompt": "'Submit your essays by Friday,' the tutor said. \u2014 The tutor told us __________.", "answer": "to submit our essays by Friday", "explanation": "Command \u2192 tell + object + to + V."},
-        {"prompt": "'I cannot confirm that yet,' the spokesperson admitted. \u2014 The spokesperson admitted __________.", "answer": "that she / he could not confirm that yet", "explanation": "'Can' \u2192 'could'."},
-        {"prompt": "'Plastic waste is polluting the oceans,' the scientist warned. \u2014 The scientist warned __________.", "answer": "that plastic waste was polluting the oceans", "explanation": "Present Continuous \u2192 Past Continuous."},
-        {"prompt": "'Why did the policy fail?' the journalist asked. \u2014 The journalist asked __________.", "answer": "why the policy had failed", "explanation": "Past Simple \u2192 Past Perfect; question \u2192 statement order."},
-        {"prompt": "'Water freezes at zero degrees,' the teacher explained. \u2014 The teacher explained __________.", "answer": "that water freezes at zero degrees", "explanation": "Scientific truth \u2192 no backshift."}
+        {
+          "prompt": "'I have never smoked,' he claimed. — He claimed __________.",
+          "answer": "that he had never smoked",
+          "explanation": "Present Perfect → Past Perfect."
+        },
+        {
+          "prompt": "'We will review the decision,' the board announced. — The board announced __________.",
+          "answer": "that they would review the decision",
+          "explanation": "'Will' → 'would'."
+        },
+        {
+          "prompt": "'Are you attending the conference?' she asked me. — She asked me __________.",
+          "answer": "whether I was attending the conference",
+          "explanation": "Yes/no question → 'whether' + statement order + backshift."
+        },
+        {
+          "prompt": "'Submit your essays by Friday,' the tutor said. — The tutor told us __________.",
+          "answer": "to submit our essays by Friday",
+          "explanation": "Command → tell + object + to + V."
+        },
+        {
+          "prompt": "'I cannot confirm that yet,' the spokesperson admitted. — The spokesperson admitted __________.",
+          "answer": "that she / he could not confirm that yet",
+          "explanation": "'Can' → 'could'."
+        },
+        {
+          "prompt": "'Plastic waste is polluting the oceans,' the scientist warned. — The scientist warned __________.",
+          "answer": "that plastic waste was polluting the oceans",
+          "explanation": "Present Continuous → Past Continuous."
+        },
+        {
+          "prompt": "'Why did the policy fail?' the journalist asked. — The journalist asked __________.",
+          "answer": "why the policy had failed",
+          "explanation": "Past Simple → Past Perfect; question → statement order."
+        },
+        {
+          "prompt": "'Water freezes at zero degrees,' the teacher explained. — The teacher explained __________.",
+          "answer": "that water freezes at zero degrees",
+          "explanation": "Scientific truth → no backshift."
+        }
       ]
     },
     {
@@ -47,14 +161,46 @@
       "title": "Pick the reporting verb and form",
       "instruction": "Type the verb in brackets in the correct reported-speech form.",
       "items": [
-        {"prompt": "The minister (deny) ___ any wrongdoing when questioned by reporters.", "answer": "denied", "explanation": "Simple past reporting."},
-        {"prompt": "Witnesses (claim) ___ that they had seen the suspect near the scene.", "answer": "claimed", "explanation": "Past reporting with Past Perfect in the reported clause."},
-        {"prompt": "She (insist) ___ that she had paid the bill in full.", "answer": "insisted", "explanation": "'Insist that' + clause."},
-        {"prompt": "The director (announce) ___ that a new branch (open) ___ next year.", "answer": "announced / would open", "explanation": "Future \u2192 conditional 'would'."},
-        {"prompt": "Experts (caution) ___ that the proposal (risk) ___ unintended consequences.", "answer": "cautioned / risked (or 'would risk')", "explanation": "Backshift acceptable; timeless risk analysis can stay present."},
-        {"prompt": "He (suggest) ___ that we (postpone) ___ the meeting.", "answer": "suggested / (should) postpone", "explanation": "'Suggest that' + subjunctive/bare infinitive."},
-        {"prompt": "The researchers (demonstrate) ___ that the drug (reduce) ___ symptoms by 40%.", "answer": "demonstrated / reduced (or 'reduces')", "explanation": "Backshift optional for established scientific finding."},
-        {"prompt": "She (ask) ___ me how long I (wait) ___ .", "answer": "asked / had been waiting", "explanation": "Past Continuous \u2192 Past Perfect Continuous."}
+        {
+          "prompt": "The minister (deny) ___ any wrongdoing when questioned by reporters.",
+          "answer": "denied",
+          "explanation": "Simple past reporting."
+        },
+        {
+          "prompt": "Witnesses (claim) ___ that they had seen the suspect near the scene.",
+          "answer": "claimed",
+          "explanation": "Past reporting with Past Perfect in the reported clause."
+        },
+        {
+          "prompt": "She (insist) ___ that she had paid the bill in full.",
+          "answer": "insisted",
+          "explanation": "'Insist that' + clause."
+        },
+        {
+          "prompt": "The director (announce) ___ that a new branch (open) ___ next year.",
+          "answer": "announced / would open",
+          "explanation": "Future → conditional 'would'."
+        },
+        {
+          "prompt": "Experts (caution) ___ that the proposal (risk) ___ unintended consequences.",
+          "answer": "cautioned / risked (or 'would risk')",
+          "explanation": "Backshift acceptable; timeless risk analysis can stay present."
+        },
+        {
+          "prompt": "He (suggest) ___ that we (postpone) ___ the meeting.",
+          "answer": "suggested / (should) postpone",
+          "explanation": "'Suggest that' + subjunctive/bare infinitive."
+        },
+        {
+          "prompt": "The researchers (demonstrate) ___ that the drug (reduce) ___ symptoms by 40%.",
+          "answer": "demonstrated / reduced (or 'reduces')",
+          "explanation": "Backshift optional for established scientific finding."
+        },
+        {
+          "prompt": "She (ask) ___ me how long I (wait) ___ .",
+          "answer": "asked / had been waiting",
+          "explanation": "Past Continuous → Past Perfect Continuous."
+        }
       ]
     },
     {
@@ -62,14 +208,94 @@
       "title": "Report accurately",
       "instruction": "Pick the best reported-speech version.",
       "items": [
-        {"prompt": "Direct: 'I am going to resign.' Reported:", "options": ["He said he is going to resign.", "He said he was going to resign.", "He said that he resign.", "He told that he was going to resign."], "answer": 1, "explanation": "Backshift + 'say that'."},
-        {"prompt": "Direct: 'Can you help me?' Reported:", "options": ["She asked me can I help her.", "She asked me that I could help her.", "She asked if I could help her.", "She asked to me if I can help."], "answer": 2, "explanation": "'Ask if/whether' + backshift."},
-        {"prompt": "Direct: 'The earth is round.' Reported (teacher's lesson):", "options": ["The teacher said the earth was round.", "The teacher said that the earth is round.", "The teacher told the earth is round.", "The teacher explained the earth being round."], "answer": 1, "explanation": "Timeless truth \u2192 no backshift (either is accepted, present is preferred for truths)."},
-        {"prompt": "Direct: 'Don\u2019t touch that,' the guard said. Reported:", "options": ["The guard told not to touch that.", "The guard said me don\u2019t touch that.", "The guard told me not to touch that.", "The guard said that I don\u2019t touch that."], "answer": 2, "explanation": "Negative command \u2192 'told + object + not to'."},
-        {"prompt": "Which verb best conveys reluctant acknowledgement?", "options": ["claimed", "admitted", "announced", "argued"], "answer": 1, "explanation": "'Admit' signals concession of a fact the speaker would prefer to deny."},
-        {"prompt": "Which verb best introduces a formal public statement?", "options": ["whispered", "announced", "muttered", "admitted"], "answer": 1, "explanation": "'Announce' = formal public communication."},
-        {"prompt": "Direct: 'We have been working on this for years.' Reported:", "options": ["They said they are working on it for years.", "They said they had been working on it for years.", "They said they worked on it for years.", "They told they have been working on it."], "answer": 1, "explanation": "Present Perfect Continuous \u2192 Past Perfect Continuous."},
-        {"prompt": "Which is correct?", "options": ["He said me that he would come.", "He told that he would come.", "He said that he would come.", "He told to me he would come."], "answer": 2, "explanation": "'Say' does not take an indirect object without 'to'."}
+        {
+          "prompt": "Direct: 'I am going to resign.' Reported:",
+          "options": [
+            "He said he is going to resign.",
+            "He said he was going to resign.",
+            "He said that he resign.",
+            "He told that he was going to resign."
+          ],
+          "answer": 1,
+          "explanation": "Backshift + 'say that'."
+        },
+        {
+          "prompt": "Direct: 'Can you help me?' Reported:",
+          "options": [
+            "She asked me can I help her.",
+            "She asked me that I could help her.",
+            "She asked if I could help her.",
+            "She asked to me if I can help."
+          ],
+          "answer": 2,
+          "explanation": "'Ask if/whether' + backshift."
+        },
+        {
+          "prompt": "Direct: 'The earth is round.' Reported (teacher's lesson):",
+          "options": [
+            "The teacher said the earth was round.",
+            "The teacher said that the earth is round.",
+            "The teacher told the earth is round.",
+            "The teacher explained the earth being round."
+          ],
+          "answer": 1,
+          "explanation": "Timeless truth → no backshift (either is accepted, present is preferred for truths)."
+        },
+        {
+          "prompt": "Direct: 'Don’t touch that,' the guard said. Reported:",
+          "options": [
+            "The guard told not to touch that.",
+            "The guard said me don’t touch that.",
+            "The guard told me not to touch that.",
+            "The guard said that I don’t touch that."
+          ],
+          "answer": 2,
+          "explanation": "Negative command → 'told + object + not to'."
+        },
+        {
+          "prompt": "Which verb best conveys reluctant acknowledgement?",
+          "options": [
+            "claimed",
+            "admitted",
+            "announced",
+            "argued"
+          ],
+          "answer": 1,
+          "explanation": "'Admit' signals concession of a fact the speaker would prefer to deny."
+        },
+        {
+          "prompt": "Which verb best introduces a formal public statement?",
+          "options": [
+            "whispered",
+            "announced",
+            "muttered",
+            "admitted"
+          ],
+          "answer": 1,
+          "explanation": "'Announce' = formal public communication."
+        },
+        {
+          "prompt": "Direct: 'We have been working on this for years.' Reported:",
+          "options": [
+            "They said they are working on it for years.",
+            "They said they had been working on it for years.",
+            "They said they worked on it for years.",
+            "They told they have been working on it."
+          ],
+          "answer": 1,
+          "explanation": "Present Perfect Continuous → Past Perfect Continuous."
+        },
+        {
+          "prompt": "Which is correct?",
+          "options": [
+            "He said me that he would come.",
+            "He told that he would come.",
+            "He said that he would come.",
+            "He told to me he would come."
+          ],
+          "answer": 2,
+          "explanation": "'Say' does not take an indirect object without 'to'."
+        }
       ]
     }
   ]

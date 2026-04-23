@@ -3,28 +3,111 @@
   "module": 3,
   "order": 4,
   "title": "Nominalisation",
-  "subtitle": "Turn verbs and adjectives into nouns \u2014 the defining move of academic prose",
-  "target_band": "8 \u2192 9",
-  "intro": "Nominalisation is the process of converting verbs and adjectives into nouns: 'decide' \u2192 'decision', 'produce' \u2192 'production', 'different' \u2192 'difference'. The effect is profound: sentences become dense, objective and abstract \u2014 exactly the register of academic writing. A Band 6 writer says 'people use more cars and this makes cities polluted'; a Band 8 writer writes 'rising car ownership has caused a deterioration in urban air quality.'",
+  "subtitle": "Turn verbs and adjectives into nouns — the defining move of academic prose",
+  "target_band": "8 → 9",
+  "intro": "Nominalisation is the process of converting verbs and adjectives into nouns: 'decide' → 'decision', 'produce' → 'production', 'different' → 'difference'. The effect is profound: sentences become dense, objective and abstract — exactly the register of academic writing. A Band 6 writer says 'people use more cars and this makes cities polluted'; a Band 8 writer writes 'rising car ownership has caused a deterioration in urban air quality.'",
+  "mind_map": {
+    "center": "Verb ➜ noun ➜ dense clause",
+    "branches": [
+      {
+        "label": "Typical suffixes",
+        "children": [
+          "-tion (implement → implementation)",
+          "-ment (develop → development)",
+          "-ance/-ence (rely → reliance)"
+        ]
+      },
+      {
+        "label": "What it buys you",
+        "children": [
+          "Packaging whole ideas as sentence subjects",
+          "Abstract, academic tone",
+          "Shorter, denser sentences"
+        ]
+      },
+      {
+        "label": "Watch out for",
+        "children": [
+          "Over-nominalisation kills verbs",
+          "Mix dense nouns with vivid verbs for balance",
+          "Don't sacrifice clarity for register"
+        ]
+      }
+    ]
+  },
   "rules": [
-    {"heading": "Verbs \u2192 nouns", "body": "arrive \u2192 arrival, decide \u2192 decision, discover \u2192 discovery, increase \u2192 an increase, fail \u2192 failure, reduce \u2192 reduction, pollute \u2192 pollution."},
-    {"heading": "Adjectives \u2192 nouns", "body": "difficult \u2192 difficulty, important \u2192 importance, accurate \u2192 accuracy, diverse \u2192 diversity, efficient \u2192 efficiency."},
-    {"heading": "Typical sentence pattern", "body": "Subject (nominalised process) + verb (often 'cause', 'lead to', 'result in', 'be associated with') + object (another nominalised process). 'The introduction of the policy led to a decline in emissions.'"},
-    {"heading": "Pair with a weak general verb", "body": "Nominalisations often attach to low-information verbs (make, have, carry out, undertake): 'conduct an investigation', 'make a recommendation', 'undertake a review'. This is formal but can become wordy \u2014 use deliberately."}
+    {
+      "heading": "Verbs → nouns",
+      "body": "arrive → arrival, decide → decision, discover → discovery, increase → an increase, fail → failure, reduce → reduction, pollute → pollution."
+    },
+    {
+      "heading": "Adjectives → nouns",
+      "body": "difficult → difficulty, important → importance, accurate → accuracy, diverse → diversity, efficient → efficiency."
+    },
+    {
+      "heading": "Typical sentence pattern",
+      "body": "Subject (nominalised process) + verb (often 'cause', 'lead to', 'result in', 'be associated with') + object (another nominalised process). 'The introduction of the policy led to a decline in emissions.'"
+    },
+    {
+      "heading": "Pair with a weak general verb",
+      "body": "Nominalisations often attach to low-information verbs (make, have, carry out, undertake): 'conduct an investigation', 'make a recommendation', 'undertake a review'. This is formal but can become wordy — use deliberately."
+    }
   ],
   "examples": [
-    {"context": "Writing Task 2", "sentence": "The implementation of a carbon tax has resulted in a measurable reduction in industrial emissions.", "note": "Two nominalisations ('implementation', 'reduction') + 'result in'."},
-    {"context": "Writing Task 2", "sentence": "Increasing urbanisation has led to a sharp rise in demand for affordable housing.", "note": "Nominal subject and object; active verb 'led to'."},
-    {"context": "Writing Task 2", "sentence": "The failure to anticipate long-term consequences undermined public confidence in the reform.", "note": "'The failure to\u2026' \u2014 a high-band noun phrase."},
-    {"context": "Writing Task 1", "sentence": "Between 2010 and 2020, there was a gradual decline in oil consumption across OECD countries.", "note": "'There was + a + nominalisation' \u2014 classic Task 1 move."},
-    {"context": "Writing Task 2", "sentence": "The introduction of digital learning platforms has enabled a significant expansion of educational access in remote regions.", "note": "Three nominal nouns create a compact academic sentence."}
+    {
+      "context": "Writing Task 2",
+      "sentence": "The implementation of a carbon tax has resulted in a measurable reduction in industrial emissions.",
+      "note": "Two nominalisations ('implementation', 'reduction') + 'result in'."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "Increasing urbanisation has led to a sharp rise in demand for affordable housing.",
+      "note": "Nominal subject and object; active verb 'led to'."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "The failure to anticipate long-term consequences undermined public confidence in the reform.",
+      "note": "'The failure to…' — a high-band noun phrase."
+    },
+    {
+      "context": "Writing Task 1",
+      "sentence": "Between 2010 and 2020, there was a gradual decline in oil consumption across OECD countries.",
+      "note": "'There was + a + nominalisation' — classic Task 1 move."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "The introduction of digital learning platforms has enabled a significant expansion of educational access in remote regions.",
+      "note": "Three nominal nouns create a compact academic sentence."
+    }
   ],
-  "band8_marker": "Band 8 writers know when not to nominalise. Over-nominalised prose becomes lifeless and hard to read: 'The performance of an evaluation of the effectiveness of the intervention\u2026' is weaker than 'We evaluated how effective the intervention was.' Mature writers balance nominal density with active verbs, reserving nominalisation for the topic sentences and abstracted discussion, and using verbs in the examples and narratives.",
+  "band_comparison": {
+    "band6": {
+      "text": "If you implement this policy, it will reduce poverty and the country will develop.",
+      "issue": "Two separate clauses; verbs do all the work; sentence-level abstraction is low."
+    },
+    "band8": {
+      "text": "Implementation of this policy would accelerate poverty reduction and stimulate national development.",
+      "why": "Three nominalisations ('implementation', 'reduction', 'development') compress two clauses into one dense, report-style statement."
+    }
+  },
+  "band8_marker": "Band 8 writers know when not to nominalise. Over-nominalised prose becomes lifeless and hard to read: 'The performance of an evaluation of the effectiveness of the intervention…' is weaker than 'We evaluated how effective the intervention was.' Mature writers balance nominal density with active verbs, reserving nominalisation for the topic sentences and abstracted discussion, and using verbs in the examples and narratives.",
   "common_errors": [
-    {"error": "Double nominalisation: 'The occurrence of the happening of the event'", "fix": "Cut to one: 'The occurrence of the event' or simply 'the event'."},
-    {"error": "Wrong noun form: 'the produce of cars' (= vegetables!)", "fix": "\u2192 'the production of cars'."},
-    {"error": "Nominalising and then repeating as a verb", "fix": "'The decision was decided by\u2026' \u2192 'The decision was taken by\u2026'"},
-    {"error": "Over-nominalising a simple claim", "fix": "'The existence of a need for the completion of the task' \u2192 'The task needs to be completed.'"}
+    {
+      "error": "Double nominalisation: 'The occurrence of the happening of the event'",
+      "fix": "Cut to one: 'The occurrence of the event' or simply 'the event'."
+    },
+    {
+      "error": "Wrong noun form: 'the produce of cars' (= vegetables!)",
+      "fix": "→ 'the production of cars'."
+    },
+    {
+      "error": "Nominalising and then repeating as a verb",
+      "fix": "'The decision was decided by…' → 'The decision was taken by…'"
+    },
+    {
+      "error": "Over-nominalising a simple claim",
+      "fix": "'The existence of a need for the completion of the task' → 'The task needs to be completed.'"
+    }
   ],
   "practice": [
     {
@@ -32,14 +115,46 @@
       "title": "Nominalise for academic tone",
       "instruction": "Rewrite each sentence using nominalisation. The meaning stays the same; the register rises.",
       "items": [
-        {"prompt": "People use AI more, and this makes jobs disappear.", "answer": "The increasing use of AI has led to the disappearance of certain jobs.", "explanation": "'Use', 'increase', 'disappear' all nominalised."},
-        {"prompt": "Cities are expanding rapidly, so housing is becoming unaffordable.", "answer": "The rapid expansion of cities has resulted in the unaffordability of housing.", "explanation": "Dense academic recasting."},
-        {"prompt": "Governments fail to enforce the law and this damages public trust.", "answer": "The failure of governments to enforce the law has damaged public trust.", "explanation": "'Fail' \u2192 'failure'."},
-        {"prompt": "The population grew, and this caused pressure on water supplies.", "answer": "The growth of the population has caused pressure on water supplies.", "explanation": "'Grew' \u2192 'growth'."},
-        {"prompt": "Teachers are training less, so the quality of education is declining.", "answer": "The reduction in teacher training has led to a decline in the quality of education.", "explanation": "Two nominal nouns + formal verb."},
-        {"prompt": "People drive more and this makes the air dirty.", "answer": "An increase in driving has resulted in a deterioration of air quality.", "explanation": "Upgrade register: 'dirty' \u2192 'deterioration'."},
-        {"prompt": "The government decided to cut subsidies, which was controversial.", "answer": "The government\u2019s decision to cut subsidies proved controversial.", "explanation": "Possessive + nominalisation."},
-        {"prompt": "Children are learning languages early, so they speak more fluently later.", "answer": "Early language acquisition correlates with greater fluency later in life.", "explanation": "'Acquisition' + 'fluency'."}
+        {
+          "prompt": "People use AI more, and this makes jobs disappear.",
+          "answer": "The increasing use of AI has led to the disappearance of certain jobs.",
+          "explanation": "'Use', 'increase', 'disappear' all nominalised."
+        },
+        {
+          "prompt": "Cities are expanding rapidly, so housing is becoming unaffordable.",
+          "answer": "The rapid expansion of cities has resulted in the unaffordability of housing.",
+          "explanation": "Dense academic recasting."
+        },
+        {
+          "prompt": "Governments fail to enforce the law and this damages public trust.",
+          "answer": "The failure of governments to enforce the law has damaged public trust.",
+          "explanation": "'Fail' → 'failure'."
+        },
+        {
+          "prompt": "The population grew, and this caused pressure on water supplies.",
+          "answer": "The growth of the population has caused pressure on water supplies.",
+          "explanation": "'Grew' → 'growth'."
+        },
+        {
+          "prompt": "Teachers are training less, so the quality of education is declining.",
+          "answer": "The reduction in teacher training has led to a decline in the quality of education.",
+          "explanation": "Two nominal nouns + formal verb."
+        },
+        {
+          "prompt": "People drive more and this makes the air dirty.",
+          "answer": "An increase in driving has resulted in a deterioration of air quality.",
+          "explanation": "Upgrade register: 'dirty' → 'deterioration'."
+        },
+        {
+          "prompt": "The government decided to cut subsidies, which was controversial.",
+          "answer": "The government’s decision to cut subsidies proved controversial.",
+          "explanation": "Possessive + nominalisation."
+        },
+        {
+          "prompt": "Children are learning languages early, so they speak more fluently later.",
+          "answer": "Early language acquisition correlates with greater fluency later in life.",
+          "explanation": "'Acquisition' + 'fluency'."
+        }
       ]
     },
     {
@@ -47,14 +162,78 @@
       "title": "Which sounds more Band 8?",
       "instruction": "Pick the more academically mature version.",
       "items": [
-        {"prompt": "A) 'The government decided to close the scheme.' B) 'The government\u2019s decision to close the scheme drew widespread criticism.'", "options": ["A", "B"], "answer": 1, "explanation": "Nominalised subject allows further comment."},
-        {"prompt": "A) 'Because populations are ageing, healthcare costs are rising.' B) 'Population ageing has driven rising healthcare costs.'", "options": ["A", "B"], "answer": 1, "explanation": "Compact nominal subject and object."},
-        {"prompt": "A) 'Air pollution has dropped because traffic was restricted.' B) 'Traffic restrictions have produced a drop in air pollution.'", "options": ["A", "B"], "answer": 1, "explanation": "Two nominal nouns; tighter cause-effect."},
-        {"prompt": "A) 'There has been a significant improvement in literacy rates.' B) 'Literacy rates have improved significantly.'", "options": ["A", "B"], "answer": 0, "explanation": "In Task 1, nominalised 'There has been\u2026' is the preferred register."},
-        {"prompt": "A) 'The performance of an assessment of the risks was carried out by the team.' B) 'The team assessed the risks.'", "options": ["A", "B"], "answer": 1, "explanation": "Active verb beats over-nominalised paraphrase."},
-        {"prompt": "A) 'People behave badly online because there is anonymity.' B) 'The anonymity of online platforms encourages aberrant behaviour.'", "options": ["A", "B"], "answer": 1, "explanation": "Nominalisation + upgraded lexis."},
-        {"prompt": "A) 'Because schools fail to teach financial skills, young adults accumulate debt.' B) 'The failure of schools to teach financial skills has led to the accumulation of debt among young adults.'", "options": ["A", "B"], "answer": 1, "explanation": "Pure nominal construction."},
-        {"prompt": "A) 'There was a delay in the delivery of the goods, which caused complaints.' B) 'The delayed delivery caused complaints.'", "options": ["A", "B"], "answer": 1, "explanation": "Participle + nominalisation are tighter than a full clause."}
+        {
+          "prompt": "A) 'The government decided to close the scheme.' B) 'The government’s decision to close the scheme drew widespread criticism.'",
+          "options": [
+            "A",
+            "B"
+          ],
+          "answer": 1,
+          "explanation": "Nominalised subject allows further comment."
+        },
+        {
+          "prompt": "A) 'Because populations are ageing, healthcare costs are rising.' B) 'Population ageing has driven rising healthcare costs.'",
+          "options": [
+            "A",
+            "B"
+          ],
+          "answer": 1,
+          "explanation": "Compact nominal subject and object."
+        },
+        {
+          "prompt": "A) 'Air pollution has dropped because traffic was restricted.' B) 'Traffic restrictions have produced a drop in air pollution.'",
+          "options": [
+            "A",
+            "B"
+          ],
+          "answer": 1,
+          "explanation": "Two nominal nouns; tighter cause-effect."
+        },
+        {
+          "prompt": "A) 'There has been a significant improvement in literacy rates.' B) 'Literacy rates have improved significantly.'",
+          "options": [
+            "A",
+            "B"
+          ],
+          "answer": 0,
+          "explanation": "In Task 1, nominalised 'There has been…' is the preferred register."
+        },
+        {
+          "prompt": "A) 'The performance of an assessment of the risks was carried out by the team.' B) 'The team assessed the risks.'",
+          "options": [
+            "A",
+            "B"
+          ],
+          "answer": 1,
+          "explanation": "Active verb beats over-nominalised paraphrase."
+        },
+        {
+          "prompt": "A) 'People behave badly online because there is anonymity.' B) 'The anonymity of online platforms encourages aberrant behaviour.'",
+          "options": [
+            "A",
+            "B"
+          ],
+          "answer": 1,
+          "explanation": "Nominalisation + upgraded lexis."
+        },
+        {
+          "prompt": "A) 'Because schools fail to teach financial skills, young adults accumulate debt.' B) 'The failure of schools to teach financial skills has led to the accumulation of debt among young adults.'",
+          "options": [
+            "A",
+            "B"
+          ],
+          "answer": 1,
+          "explanation": "Pure nominal construction."
+        },
+        {
+          "prompt": "A) 'There was a delay in the delivery of the goods, which caused complaints.' B) 'The delayed delivery caused complaints.'",
+          "options": [
+            "A",
+            "B"
+          ],
+          "answer": 1,
+          "explanation": "Participle + nominalisation are tighter than a full clause."
+        }
       ]
     },
     {
@@ -62,14 +241,46 @@
       "title": "Supply the nominalised form",
       "instruction": "Type the noun derived from the verb/adjective in brackets.",
       "items": [
-        {"prompt": "The (arrive) ___ of the delegation was delayed by the storm.", "answer": "arrival", "explanation": "Verb \u2192 noun."},
-        {"prompt": "Public (aware) ___ of the issue has grown in recent years.", "answer": "awareness", "explanation": "Adjective \u2192 noun."},
-        {"prompt": "The (reduce) ___ in plastic use is encouraging.", "answer": "reduction", "explanation": "Latin-origin suffix."},
-        {"prompt": "The (diverse) ___ of the workforce is widely seen as a strength.", "answer": "diversity", "explanation": "Adjective \u2192 noun."},
-        {"prompt": "The (produce) ___ of electric vehicles has tripled since 2018.", "answer": "production", "explanation": "Not 'produce'."},
-        {"prompt": "His (know) ___ of the subject was exceptional.", "answer": "knowledge", "explanation": "Irregular nominalisation."},
-        {"prompt": "The (apply) ___ process is now fully online.", "answer": "application", "explanation": "Verb \u2192 noun."},
-        {"prompt": "The (efficient) ___ of modern solar panels has doubled in a decade.", "answer": "efficiency", "explanation": "Adjective \u2192 noun."}
+        {
+          "prompt": "The (arrive) ___ of the delegation was delayed by the storm.",
+          "answer": "arrival",
+          "explanation": "Verb → noun."
+        },
+        {
+          "prompt": "Public (aware) ___ of the issue has grown in recent years.",
+          "answer": "awareness",
+          "explanation": "Adjective → noun."
+        },
+        {
+          "prompt": "The (reduce) ___ in plastic use is encouraging.",
+          "answer": "reduction",
+          "explanation": "Latin-origin suffix."
+        },
+        {
+          "prompt": "The (diverse) ___ of the workforce is widely seen as a strength.",
+          "answer": "diversity",
+          "explanation": "Adjective → noun."
+        },
+        {
+          "prompt": "The (produce) ___ of electric vehicles has tripled since 2018.",
+          "answer": "production",
+          "explanation": "Not 'produce'."
+        },
+        {
+          "prompt": "His (know) ___ of the subject was exceptional.",
+          "answer": "knowledge",
+          "explanation": "Irregular nominalisation."
+        },
+        {
+          "prompt": "The (apply) ___ process is now fully online.",
+          "answer": "application",
+          "explanation": "Verb → noun."
+        },
+        {
+          "prompt": "The (efficient) ___ of modern solar panels has doubled in a decade.",
+          "answer": "efficiency",
+          "explanation": "Adjective → noun."
+        }
       ]
     }
   ]

@@ -3,28 +3,119 @@
   "module": 2,
   "order": 7,
   "title": "Cohesion & Linking",
-  "subtitle": "How ideas travel between sentences \u2014 without a traffic jam of 'however's",
-  "target_band": "6 \u2192 7.5",
+  "subtitle": "How ideas travel between sentences — without a traffic jam of 'however's",
+  "target_band": "6 → 7.5",
   "intro": "Cohesion is how a paragraph hangs together. IELTS examiners reward variety and accuracy, not density: an essay packed with 'Moreover' and 'Firstly, Secondly, Thirdly' sounds memorised. Band 7+ writers use a balanced mix of sentence-initial connectors, mid-sentence conjunctions, and reference devices (pronouns, demonstratives, synonym chains) to thread ideas naturally.",
+  "mind_map": {
+    "center": "Cohesion toolkit",
+    "branches": [
+      {
+        "label": "Reference",
+        "children": [
+          "Pronouns: it/they/this/these",
+          "Demonstratives: this issue, such measures",
+          "Avoid ambiguous 'it' across sentences"
+        ]
+      },
+      {
+        "label": "Substitution & ellipsis",
+        "children": [
+          "'Some argue X; others disagree.' (subject ellipsis)",
+          "'one' substitutes a noun",
+          "Tightens prose, avoids repetition"
+        ]
+      },
+      {
+        "label": "Conjunction",
+        "children": [
+          "Additive: moreover, furthermore",
+          "Adversative: however, nevertheless",
+          "Causal: therefore, consequently"
+        ]
+      },
+      {
+        "label": "Lexical chains",
+        "children": [
+          "Repeat key topic word in varied forms",
+          "Use synonyms sparingly — precision > variety",
+          "Thesaurus abuse hurts Band 7+"
+        ]
+      }
+    ]
+  },
   "rules": [
-    {"heading": "Contrast vs. concession", "body": "Contrast: however, on the other hand, whereas, while. Concession: although, even though, despite + noun/gerund, nevertheless, nonetheless. 'Despite the risks' (preposition) vs. 'Although there were risks' (conjunction)."},
-    {"heading": "Cause and result", "body": "Cause: because / since / as + clause; due to / owing to + noun. Result: therefore, consequently, as a result, hence, thus. 'The data were inconclusive; consequently, the experiment was repeated.'"},
-    {"heading": "Addition and exemplification", "body": "Addition: moreover, furthermore, in addition, additionally. Exemplification: for instance, for example, such as, namely, that is. Reserve 'Firstly/Secondly/Finally' for explicit enumeration \u2014 overuse looks mechanical."},
-    {"heading": "Reference chains for cohesion", "body": "Beyond connectors: use pronouns (this, these, such, it), demonstratives (this phenomenon, such measures), and lexical repetition with synonyms (the policy \u2192 the initiative \u2192 the reform) to tie sentences without adding connectors."}
+    {
+      "heading": "Contrast vs. concession",
+      "body": "Contrast: however, on the other hand, whereas, while. Concession: although, even though, despite + noun/gerund, nevertheless, nonetheless. 'Despite the risks' (preposition) vs. 'Although there were risks' (conjunction)."
+    },
+    {
+      "heading": "Cause and result",
+      "body": "Cause: because / since / as + clause; due to / owing to + noun. Result: therefore, consequently, as a result, hence, thus. 'The data were inconclusive; consequently, the experiment was repeated.'"
+    },
+    {
+      "heading": "Addition and exemplification",
+      "body": "Addition: moreover, furthermore, in addition, additionally. Exemplification: for instance, for example, such as, namely, that is. Reserve 'Firstly/Secondly/Finally' for explicit enumeration — overuse looks mechanical."
+    },
+    {
+      "heading": "Reference chains for cohesion",
+      "body": "Beyond connectors: use pronouns (this, these, such, it), demonstratives (this phenomenon, such measures), and lexical repetition with synonyms (the policy → the initiative → the reform) to tie sentences without adding connectors."
+    }
   ],
   "examples": [
-    {"context": "Writing Task 2", "sentence": "Although public transport has expanded significantly, car ownership in most cities continues to rise.", "note": "Concession with 'although'."},
-    {"context": "Writing Task 2", "sentence": "The reform reduced waiting times. It also cut costs by fifteen per cent. Such outcomes are rare in large-scale healthcare projects.", "note": "Reference chain: it \u2192 such outcomes."},
-    {"context": "Writing Task 2", "sentence": "Air pollution has intensified in recent decades; consequently, respiratory illness has become the leading cause of urban hospital admissions.", "note": "Semi-colon + result connector."},
-    {"context": "Writing Task 2", "sentence": "Despite repeated warnings from scientists, governments have been slow to act.", "note": "'Despite' + noun phrase."},
-    {"context": "Writing Task 2", "sentence": "Renewable energy is now cost-competitive. Moreover, battery storage has advanced dramatically in the past five years.", "note": "'Moreover' adds information of the same type."}
+    {
+      "context": "Writing Task 2",
+      "sentence": "Although public transport has expanded significantly, car ownership in most cities continues to rise.",
+      "note": "Concession with 'although'."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "The reform reduced waiting times. It also cut costs by fifteen per cent. Such outcomes are rare in large-scale healthcare projects.",
+      "note": "Reference chain: it → such outcomes."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "Air pollution has intensified in recent decades; consequently, respiratory illness has become the leading cause of urban hospital admissions.",
+      "note": "Semi-colon + result connector."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "Despite repeated warnings from scientists, governments have been slow to act.",
+      "note": "'Despite' + noun phrase."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "Renewable energy is now cost-competitive. Moreover, battery storage has advanced dramatically in the past five years.",
+      "note": "'Moreover' adds information of the same type."
+    }
   ],
-  "band8_marker": "Band 8 writers use less visible cohesion. Instead of opening every sentence with a connector, they rely on thematic progression \u2014 one sentence's rheme (new info) becomes the next sentence's theme (starting point): 'The government introduced a carbon tax. The tax generated resistance from industry. Industry lobbying, in turn, led to a series of exemptions.' No explicit connector \u2014 the cohesion is built into the noun phrases.",
+  "band_comparison": {
+    "band6": {
+      "text": "Fast food is unhealthy. Also fast food causes obesity. Moreover, fast food is cheap. In conclusion fast food is bad.",
+      "issue": "Repetitive subject, bolt-on connectors ('Also', 'Moreover'), no true lexical chain."
+    },
+    "band8": {
+      "text": "Although fast food is inexpensive, its nutritional profile is poor; consequently, widespread consumption has been linked to rising obesity rates.",
+      "why": "Subordination ('Although'), semicolon linkage, and a causal chain ('consequently…linked to') create tight cohesion without connector spam."
+    }
+  },
+  "band8_marker": "Band 8 writers use less visible cohesion. Instead of opening every sentence with a connector, they rely on thematic progression — one sentence's rheme (new info) becomes the next sentence's theme (starting point): 'The government introduced a carbon tax. The tax generated resistance from industry. Industry lobbying, in turn, led to a series of exemptions.' No explicit connector — the cohesion is built into the noun phrases.",
   "common_errors": [
-    {"error": "'Despite of the warnings' / 'Although of the risks'", "fix": "'Despite' takes no 'of' \u2192 'Despite the warnings'. 'Although' takes a clause \u2192 'Although there were risks'."},
-    {"error": "Starting every sentence with 'Moreover' / 'Besides'", "fix": "Rotate connectors; use reference devices; let some sentences flow without an explicit connector."},
-    {"error": "Comma-splice: 'Air quality is poor, therefore respiratory illness is common.'", "fix": "Use a semi-colon or full stop \u2192 'Air quality is poor; therefore, respiratory illness is common.'"},
-    {"error": "'According to me'", "fix": "Not standard English \u2192 'In my view' / 'I would contend that\u2026'"}
+    {
+      "error": "'Despite of the warnings' / 'Although of the risks'",
+      "fix": "'Despite' takes no 'of' → 'Despite the warnings'. 'Although' takes a clause → 'Although there were risks'."
+    },
+    {
+      "error": "Starting every sentence with 'Moreover' / 'Besides'",
+      "fix": "Rotate connectors; use reference devices; let some sentences flow without an explicit connector."
+    },
+    {
+      "error": "Comma-splice: 'Air quality is poor, therefore respiratory illness is common.'",
+      "fix": "Use a semi-colon or full stop → 'Air quality is poor; therefore, respiratory illness is common.'"
+    },
+    {
+      "error": "'According to me'",
+      "fix": "Not standard English → 'In my view' / 'I would contend that…'"
+    }
   ],
   "practice": [
     {
@@ -32,14 +123,46 @@
       "title": "Rewrite with the target connector",
       "instruction": "Rewrite the sentence using the connector in brackets, changing structure as needed.",
       "items": [
-        {"prompt": "The factory was closed. It had been losing money for years. (as)", "answer": "The factory was closed as it had been losing money for years.", "explanation": "'As' introduces the cause."},
-        {"prompt": "She studied hard. She did not pass the exam. (despite)", "answer": "Despite studying hard, she did not pass the exam.", "explanation": "'Despite' + gerund."},
-        {"prompt": "Emissions are rising. The government has not introduced new taxes. (even though)", "answer": "Emissions are rising, even though the government has not introduced new taxes.", "explanation": "Concession clause."},
-        {"prompt": "The team worked overtime. They finished the report on time. (consequently)", "answer": "The team worked overtime; consequently, they finished the report on time.", "explanation": "Semi-colon + result connector."},
-        {"prompt": "Public transport is cheap. Public transport is reliable. Many people use it. (because)", "answer": "Many people use public transport because it is cheap and reliable.", "explanation": "Causal clause + ellipsis."},
-        {"prompt": "Electric vehicles are gaining popularity. Charging infrastructure remains limited. (whereas)", "answer": "Electric vehicles are gaining popularity, whereas charging infrastructure remains limited.", "explanation": "Contrast between parallel clauses."},
-        {"prompt": "The policy was controversial. It was eventually adopted. (nevertheless)", "answer": "The policy was controversial; nevertheless, it was eventually adopted.", "explanation": "Strong concession connector."},
-        {"prompt": "Heavy rain delayed construction. The project ran over budget. (as a result)", "answer": "Heavy rain delayed construction; as a result, the project ran over budget.", "explanation": "Effect connector."}
+        {
+          "prompt": "The factory was closed. It had been losing money for years. (as)",
+          "answer": "The factory was closed as it had been losing money for years.",
+          "explanation": "'As' introduces the cause."
+        },
+        {
+          "prompt": "She studied hard. She did not pass the exam. (despite)",
+          "answer": "Despite studying hard, she did not pass the exam.",
+          "explanation": "'Despite' + gerund."
+        },
+        {
+          "prompt": "Emissions are rising. The government has not introduced new taxes. (even though)",
+          "answer": "Emissions are rising, even though the government has not introduced new taxes.",
+          "explanation": "Concession clause."
+        },
+        {
+          "prompt": "The team worked overtime. They finished the report on time. (consequently)",
+          "answer": "The team worked overtime; consequently, they finished the report on time.",
+          "explanation": "Semi-colon + result connector."
+        },
+        {
+          "prompt": "Public transport is cheap. Public transport is reliable. Many people use it. (because)",
+          "answer": "Many people use public transport because it is cheap and reliable.",
+          "explanation": "Causal clause + ellipsis."
+        },
+        {
+          "prompt": "Electric vehicles are gaining popularity. Charging infrastructure remains limited. (whereas)",
+          "answer": "Electric vehicles are gaining popularity, whereas charging infrastructure remains limited.",
+          "explanation": "Contrast between parallel clauses."
+        },
+        {
+          "prompt": "The policy was controversial. It was eventually adopted. (nevertheless)",
+          "answer": "The policy was controversial; nevertheless, it was eventually adopted.",
+          "explanation": "Strong concession connector."
+        },
+        {
+          "prompt": "Heavy rain delayed construction. The project ran over budget. (as a result)",
+          "answer": "Heavy rain delayed construction; as a result, the project ran over budget.",
+          "explanation": "Effect connector."
+        }
       ]
     },
     {
@@ -47,14 +170,46 @@
       "title": "Choose a fitting connector",
       "instruction": "Fill in the blank with a single word or short phrase.",
       "items": [
-        {"prompt": "___ the heavy rain, the match went ahead as scheduled.", "answer": "Despite / In spite of", "explanation": "Concession + noun phrase."},
-        {"prompt": "The proposal was rejected ___ the committee felt it was too expensive.", "answer": "because / as / since", "explanation": "Cause + clause."},
-        {"prompt": "The data were limited; ___ , the team decided to repeat the experiment.", "answer": "therefore / consequently", "explanation": "Result connector."},
-        {"prompt": "___ his qualifications, he struggled to find a job.", "answer": "Despite / In spite of", "explanation": "Concession + noun."},
-        {"prompt": "Global trade has expanded dramatically; ___ , inequality between nations has widened.", "answer": "however / nevertheless", "explanation": "Contrast between two facts."},
-        {"prompt": "Children who read regularly develop stronger vocabulary. ___ , they perform better in academic tests.", "answer": "Moreover / Furthermore / In addition", "explanation": "Adding parallel information."},
-        {"prompt": "The law was passed quickly, ___ the opposition was severe.", "answer": "even though / although", "explanation": "Concession clause."},
-        {"prompt": "___ the rise of streaming services, cinema attendance has declined.", "answer": "Due to / Because of / Owing to", "explanation": "Cause + noun phrase."}
+        {
+          "prompt": "___ the heavy rain, the match went ahead as scheduled.",
+          "answer": "Despite / In spite of",
+          "explanation": "Concession + noun phrase."
+        },
+        {
+          "prompt": "The proposal was rejected ___ the committee felt it was too expensive.",
+          "answer": "because / as / since",
+          "explanation": "Cause + clause."
+        },
+        {
+          "prompt": "The data were limited; ___ , the team decided to repeat the experiment.",
+          "answer": "therefore / consequently",
+          "explanation": "Result connector."
+        },
+        {
+          "prompt": "___ his qualifications, he struggled to find a job.",
+          "answer": "Despite / In spite of",
+          "explanation": "Concession + noun."
+        },
+        {
+          "prompt": "Global trade has expanded dramatically; ___ , inequality between nations has widened.",
+          "answer": "however / nevertheless",
+          "explanation": "Contrast between two facts."
+        },
+        {
+          "prompt": "Children who read regularly develop stronger vocabulary. ___ , they perform better in academic tests.",
+          "answer": "Moreover / Furthermore / In addition",
+          "explanation": "Adding parallel information."
+        },
+        {
+          "prompt": "The law was passed quickly, ___ the opposition was severe.",
+          "answer": "even though / although",
+          "explanation": "Concession clause."
+        },
+        {
+          "prompt": "___ the rise of streaming services, cinema attendance has declined.",
+          "answer": "Due to / Because of / Owing to",
+          "explanation": "Cause + noun phrase."
+        }
       ]
     },
     {
@@ -62,14 +217,94 @@
       "title": "Which connector fits the logic?",
       "instruction": "Pick the most appropriate option.",
       "items": [
-        {"prompt": "Working from home has become common. ___ , it presents unique challenges for mental health.", "options": ["Furthermore", "However", "Therefore", "Namely"], "answer": 1, "explanation": "Contrast \u2013 pros vs. cons."},
-        {"prompt": "The survey sample was small. ___ , the findings should be interpreted cautiously.", "options": ["Consequently", "In contrast", "For example", "Moreover"], "answer": 0, "explanation": "Cause \u2192 effect."},
-        {"prompt": "Young people are increasingly politically engaged, ___ previous generations at the same age.", "options": ["unlike", "likewise", "such as", "nonetheless"], "answer": 0, "explanation": "Comparison."},
-        {"prompt": "Inflation has slowed ___ the central bank raised interest rates.", "options": ["although", "because", "despite", "nevertheless"], "answer": 1, "explanation": "Cause."},
-        {"prompt": "Air pollution damages lungs; ___ , it also impairs cognitive development.", "options": ["however", "on the other hand", "similarly", "indeed"], "answer": 2, "explanation": "Adds a parallel harm."},
-        {"prompt": "The ancient manuscripts were damaged. ___ , conservators were able to restore most of them.", "options": ["Moreover", "Thus", "Nevertheless", "Hence"], "answer": 2, "explanation": "Strong concession."},
-        {"prompt": "Several species are under threat, ___ the snow leopard and the Amur tiger.", "options": ["however", "such as", "whereas", "in contrast"], "answer": 1, "explanation": "Exemplification."},
-        {"prompt": "Screen time has risen sharply. ___ , face-to-face interaction has declined by a third.", "options": ["Meanwhile", "Despite this", "Otherwise", "For example"], "answer": 0, "explanation": "Parallel trend \u2014 'meanwhile' links simultaneous developments."}
+        {
+          "prompt": "Working from home has become common. ___ , it presents unique challenges for mental health.",
+          "options": [
+            "Furthermore",
+            "However",
+            "Therefore",
+            "Namely"
+          ],
+          "answer": 1,
+          "explanation": "Contrast – pros vs. cons."
+        },
+        {
+          "prompt": "The survey sample was small. ___ , the findings should be interpreted cautiously.",
+          "options": [
+            "Consequently",
+            "In contrast",
+            "For example",
+            "Moreover"
+          ],
+          "answer": 0,
+          "explanation": "Cause → effect."
+        },
+        {
+          "prompt": "Young people are increasingly politically engaged, ___ previous generations at the same age.",
+          "options": [
+            "unlike",
+            "likewise",
+            "such as",
+            "nonetheless"
+          ],
+          "answer": 0,
+          "explanation": "Comparison."
+        },
+        {
+          "prompt": "Inflation has slowed ___ the central bank raised interest rates.",
+          "options": [
+            "although",
+            "because",
+            "despite",
+            "nevertheless"
+          ],
+          "answer": 1,
+          "explanation": "Cause."
+        },
+        {
+          "prompt": "Air pollution damages lungs; ___ , it also impairs cognitive development.",
+          "options": [
+            "however",
+            "on the other hand",
+            "similarly",
+            "indeed"
+          ],
+          "answer": 2,
+          "explanation": "Adds a parallel harm."
+        },
+        {
+          "prompt": "The ancient manuscripts were damaged. ___ , conservators were able to restore most of them.",
+          "options": [
+            "Moreover",
+            "Thus",
+            "Nevertheless",
+            "Hence"
+          ],
+          "answer": 2,
+          "explanation": "Strong concession."
+        },
+        {
+          "prompt": "Several species are under threat, ___ the snow leopard and the Amur tiger.",
+          "options": [
+            "however",
+            "such as",
+            "whereas",
+            "in contrast"
+          ],
+          "answer": 1,
+          "explanation": "Exemplification."
+        },
+        {
+          "prompt": "Screen time has risen sharply. ___ , face-to-face interaction has declined by a third.",
+          "options": [
+            "Meanwhile",
+            "Despite this",
+            "Otherwise",
+            "For example"
+          ],
+          "answer": 0,
+          "explanation": "Parallel trend — 'meanwhile' links simultaneous developments."
+        }
       ]
     }
   ]

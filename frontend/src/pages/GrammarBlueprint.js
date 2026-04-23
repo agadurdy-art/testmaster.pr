@@ -415,6 +415,16 @@ function TopicView({ slug }) {
           </Section>
         )}
 
+        {/* ---- Mind map — center concept + branches visual (optional) ---- */}
+        {topic.mind_map && topic.mind_map.branches && topic.mind_map.branches.length > 0 && (
+          <Section
+            title="Mind map"
+            icon={<Layers className={`w-4 h-4 ${visual.accent}`} />}
+          >
+            <MindMap mindMap={topic.mind_map} visual={visual} />
+          </Section>
+        )}
+
         {/* ---- Core rules as mind-map branches ---- */}
         {topic.rules && topic.rules.length > 0 && (
           <Section title="Core rules" icon={<Layers className={`w-4 h-4 ${visual.accent}`} />}>
@@ -475,6 +485,16 @@ function TopicView({ slug }) {
                 );
               })}
             </div>
+          </Section>
+        )}
+
+        {/* ---- Band comparison — same idea at Band 6 vs Band 8 (optional) ---- */}
+        {topic.band_comparison && topic.band_comparison.band6 && topic.band_comparison.band8 && (
+          <Section
+            title="Same idea, two bands"
+            icon={<ChevronRight className={`w-4 h-4 ${visual.accent}`} />}
+          >
+            <BandComparison comparison={topic.band_comparison} />
           </Section>
         )}
 
@@ -598,6 +618,106 @@ function Section({ title, children, tint, icon }) {
       </h2>
       {children}
     </section>
+  );
+}
+
+// Center concept + radial-looking branch grid. We keep it pure-CSS so no SVG
+// asset is needed. The center sits on top and branches fan out beneath it
+// with short vertical connectors drawn as a border segment on the card.
+function MindMap({ mindMap, visual }) {
+  const branches = mindMap.branches || [];
+  return (
+    <div className="relative rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm">
+      {/* Center concept */}
+      <div className="flex justify-center mb-4">
+        <div
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-br ${visual.gradient} border ${visual.ring} shadow-sm`}
+        >
+          <span className={`text-[11px] font-semibold uppercase tracking-wider ${visual.accent}`}>
+            Core concept
+          </span>
+          <span className="text-slate-900 font-semibold">{mindMap.center}</span>
+        </div>
+      </div>
+      {/* Vertical connector */}
+      <div aria-hidden className="flex justify-center">
+        <span className="block w-px h-4 bg-slate-300" />
+      </div>
+      {/* Branches */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-1">
+        {branches.map((b, i) => {
+          const palette = RULE_PALETTE[i % RULE_PALETTE.length];
+          return (
+            <div
+              key={i}
+              className={`relative p-3 pl-4 bg-slate-50 rounded-xl border border-slate-200 border-l-4 ${palette.border}`}
+            >
+              <div className="flex items-center gap-1.5 mb-1">
+                <span className={`w-2 h-2 rounded-full ${palette.dot}`} />
+                <div className="font-semibold text-[13px] text-slate-900">{b.label}</div>
+              </div>
+              {b.children && b.children.length > 0 && (
+                <ul className="mt-1 space-y-0.5 text-[12.5px] text-slate-700">
+                  {b.children.map((c, j) => (
+                    <li key={j} className="flex gap-1.5">
+                      <span className="text-slate-400 flex-shrink-0">→</span>
+                      <span className="leading-snug">{c}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// Two-card Band 6 vs Band 8 comparison. Same prompt/idea, two different
+// executions. Rose tint on the Band 6 side = "what to move away from",
+// emerald tint on Band 8 side = "what to move toward".
+function BandComparison({ comparison }) {
+  const { band6, band8 } = comparison;
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div className="rounded-2xl border border-rose-200 bg-rose-50/50 p-4 sm:p-5">
+        <div className="flex items-center gap-2 mb-2">
+          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-rose-100 text-rose-800 font-serif font-bold text-[15px] ring-1 ring-inset ring-rose-200">
+            6
+          </span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-rose-700">
+            Band 6 attempt
+          </span>
+        </div>
+        <p className="text-[14px] italic text-slate-800 leading-snug mb-2">
+          &ldquo;{band6.text}&rdquo;
+        </p>
+        {band6.issue && (
+          <p className="text-[12.5px] text-rose-800 leading-relaxed">
+            <span className="font-semibold">Issue:</span> {band6.issue}
+          </p>
+        )}
+      </div>
+      <div className="rounded-2xl border border-emerald-200 bg-emerald-50/50 p-4 sm:p-5">
+        <div className="flex items-center gap-2 mb-2">
+          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 font-serif font-bold text-[15px] ring-1 ring-inset ring-emerald-200">
+            8
+          </span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-700">
+            Band 8 upgrade
+          </span>
+        </div>
+        <p className="text-[14px] italic text-slate-800 leading-snug mb-2">
+          &ldquo;{band8.text}&rdquo;
+        </p>
+        {band8.why && (
+          <p className="text-[12.5px] text-emerald-800 leading-relaxed">
+            <span className="font-semibold">Why it works:</span> {band8.why}
+          </p>
+        )}
+      </div>
+    </div>
   );
 }
 

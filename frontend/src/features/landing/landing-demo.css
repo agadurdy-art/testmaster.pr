@@ -631,7 +631,9 @@
 }
 .landing-scope.landing-demo .sample-preview-body {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* minmax(0,1fr) so annotated essay or margin notes can't push the row
+     past its own container on tablets. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 16px;
 }
 @media (max-width: 699px) {

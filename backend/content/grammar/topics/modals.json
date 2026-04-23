@@ -3,28 +3,117 @@
   "module": 2,
   "order": 6,
   "title": "Modal Verbs",
-  "subtitle": "Ability, possibility, obligation, deduction \u2014 present and past",
-  "target_band": "6 \u2192 7.5",
-  "intro": "Modal verbs encode the writer's stance. 'Governments should invest' is a recommendation; 'Governments must invest' is an obligation; 'Governments may invest' is a possibility. Using the wrong modal sends the wrong message. In Task 2, modal precision is how you sound persuasive without overreaching \u2014 and 'must have' vs. 'may have' vs. 'should have' for past deduction is a hallmark of Band 7+ control.",
+  "subtitle": "Ability, possibility, obligation, deduction — present and past",
+  "target_band": "6 → 7.5",
+  "intro": "Modal verbs encode the writer's stance. 'Governments should invest' is a recommendation; 'Governments must invest' is an obligation; 'Governments may invest' is a possibility. Using the wrong modal sends the wrong message. In Task 2, modal precision is how you sound persuasive without overreaching — and 'must have' vs. 'may have' vs. 'should have' for past deduction is a hallmark of Band 7+ control.",
+  "mind_map": {
+    "center": "Modality scale",
+    "branches": [
+      {
+        "label": "Obligation",
+        "children": [
+          "must (strong)",
+          "should/ought to (advice)",
+          "have to (external)"
+        ]
+      },
+      {
+        "label": "Possibility",
+        "children": [
+          "may, might, could",
+          "'may have + V3' (past possibility)"
+        ]
+      },
+      {
+        "label": "Ability",
+        "children": [
+          "can (present), could (past/hypothetical)",
+          "'be able to' for completed ability"
+        ]
+      },
+      {
+        "label": "Deduction",
+        "children": [
+          "must be = I'm sure it is",
+          "can't be = I'm sure it isn't",
+          "must have / can't have + V3"
+        ]
+      }
+    ]
+  },
   "rules": [
-    {"heading": "Present modals by function", "body": "Ability: can, be able to. Possibility: may, might, could. Obligation: must, have to, should, ought to. Deduction: must (certain), can\u2019t (impossible), might/could/may (possible)."},
-    {"heading": "Past modals: modal + have + V3", "body": "'must have done' = logical certainty about the past; 'might/may/could have done' = past possibility; 'should have done' = past advice / regret; 'can\u2019t have done' = past impossibility."},
-    {"heading": "Must vs. have to", "body": "'Must' = internal/author-driven obligation ('Applicants must submit\u2026'); 'have to' = external rule ('I have to submit it by Friday'). 'Mustn\u2019t' = prohibition; 'don\u2019t have to' = no obligation."},
-    {"heading": "Should vs. ought to vs. had better", "body": "'Should' is the everyday advice word; 'ought to' is slightly more formal and moral; 'had better' carries urgency or warning ('You had better leave now')."}
+    {
+      "heading": "Present modals by function",
+      "body": "Ability: can, be able to. Possibility: may, might, could. Obligation: must, have to, should, ought to. Deduction: must (certain), can’t (impossible), might/could/may (possible)."
+    },
+    {
+      "heading": "Past modals: modal + have + V3",
+      "body": "'must have done' = logical certainty about the past; 'might/may/could have done' = past possibility; 'should have done' = past advice / regret; 'can’t have done' = past impossibility."
+    },
+    {
+      "heading": "Must vs. have to",
+      "body": "'Must' = internal/author-driven obligation ('Applicants must submit…'); 'have to' = external rule ('I have to submit it by Friday'). 'Mustn’t' = prohibition; 'don’t have to' = no obligation."
+    },
+    {
+      "heading": "Should vs. ought to vs. had better",
+      "body": "'Should' is the everyday advice word; 'ought to' is slightly more formal and moral; 'had better' carries urgency or warning ('You had better leave now')."
+    }
   ],
   "examples": [
-    {"context": "Writing Task 2", "sentence": "Governments must prioritise renewable energy if climate targets are to be met.", "note": "'Must' for strong obligation in author's voice."},
-    {"context": "Writing Task 2", "sentence": "Unregulated algorithms could entrench existing biases if left unchecked.", "note": "'Could' for cautious prediction."},
-    {"context": "Writing Task 2", "sentence": "Policymakers should have anticipated the social cost of automation.", "note": "Past modal \u2014 criticism with hindsight."},
-    {"context": "Speaking Part 3", "sentence": "That claim can\u2019t be true \u2014 the data clearly contradict it.", "note": "'Can\u2019t' for confident negative deduction."},
-    {"context": "Writing Task 2", "sentence": "Children who are read to regularly may develop stronger verbal skills.", "note": "'May' for academic hedge."}
+    {
+      "context": "Writing Task 2",
+      "sentence": "Governments must prioritise renewable energy if climate targets are to be met.",
+      "note": "'Must' for strong obligation in author's voice."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "Unregulated algorithms could entrench existing biases if left unchecked.",
+      "note": "'Could' for cautious prediction."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "Policymakers should have anticipated the social cost of automation.",
+      "note": "Past modal — criticism with hindsight."
+    },
+    {
+      "context": "Speaking Part 3",
+      "sentence": "That claim can’t be true — the data clearly contradict it.",
+      "note": "'Can’t' for confident negative deduction."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "Children who are read to regularly may develop stronger verbal skills.",
+      "note": "'May' for academic hedge."
+    }
   ],
-  "band8_marker": "Band 8 writers stack modals with adverbs for finely-calibrated certainty: 'might conceivably', 'could plausibly', 'may well', 'must undoubtedly'. They also use modal passives to sound authoritative without being strident: 'It could be argued that\u2026', 'The findings should be interpreted with caution.' This modal hedging is exactly the register examiners associate with academic maturity.",
+  "band_comparison": {
+    "band6": {
+      "text": "The government must to solve this problem because poor people can not survive.",
+      "issue": "'must to' is incorrect, and blunt 'must' sounds commanding rather than analytical."
+    },
+    "band8": {
+      "text": "The government ought to intervene, as low-income households may otherwise struggle to meet basic needs.",
+      "why": "'ought to' softens the obligation to expert-advisory register, 'may otherwise struggle' hedges prediction appropriately."
+    }
+  },
+  "band8_marker": "Band 8 writers stack modals with adverbs for finely-calibrated certainty: 'might conceivably', 'could plausibly', 'may well', 'must undoubtedly'. They also use modal passives to sound authoritative without being strident: 'It could be argued that…', 'The findings should be interpreted with caution.' This modal hedging is exactly the register examiners associate with academic maturity.",
   "common_errors": [
-    {"error": "'You must to arrive on time.'", "fix": "Modals take bare infinitive \u2192 'You must arrive on time.'"},
-    {"error": "'He mustn\u2019t be the thief.'", "fix": "For negative deduction, use 'can\u2019t' \u2192 'He can\u2019t be the thief.'"},
-    {"error": "'She should to apologise.'", "fix": "\u2192 'She should apologise.'"},
-    {"error": "Using 'may' in questions ('May it rain tomorrow?')", "fix": "Use 'might' or 'is it likely' for questions: 'Might it rain tomorrow?'"}
+    {
+      "error": "'You must to arrive on time.'",
+      "fix": "Modals take bare infinitive → 'You must arrive on time.'"
+    },
+    {
+      "error": "'He mustn’t be the thief.'",
+      "fix": "For negative deduction, use 'can’t' → 'He can’t be the thief.'"
+    },
+    {
+      "error": "'She should to apologise.'",
+      "fix": "→ 'She should apologise.'"
+    },
+    {
+      "error": "Using 'may' in questions ('May it rain tomorrow?')",
+      "fix": "Use 'might' or 'is it likely' for questions: 'Might it rain tomorrow?'"
+    }
   ],
   "practice": [
     {
@@ -32,14 +121,46 @@
       "title": "Rewrite using the modal in brackets",
       "instruction": "Change the sentence using the target modal, keeping the meaning.",
       "items": [
-        {"prompt": "It is necessary that all applicants submit proof of identity. (must)", "answer": "All applicants must submit proof of identity.", "explanation": "Strong obligation."},
-        {"prompt": "Perhaps he forgot the meeting. (might have)", "answer": "He might have forgotten the meeting.", "explanation": "Past possibility."},
-        {"prompt": "It was a mistake not to invest in vaccination earlier. (should have)", "answer": "Governments / we should have invested in vaccination earlier.", "explanation": "Past regret / criticism."},
-        {"prompt": "I am certain she is lying. (must)", "answer": "She must be lying.", "explanation": "Present logical deduction."},
-        {"prompt": "It is possible that the data were manipulated. (may)", "answer": "The data may have been manipulated.", "explanation": "Past possibility in the passive."},
-        {"prompt": "It is impossible that he remembered the password. (can\u2019t have)", "answer": "He can\u2019t have remembered the password.", "explanation": "Past impossibility."},
-        {"prompt": "I recommend that you rewrite the introduction. (should)", "answer": "You should rewrite the introduction.", "explanation": "Recommendation."},
-        {"prompt": "It is not necessary to attend every session. (don\u2019t have to)", "answer": "You don\u2019t have to attend every session.", "explanation": "Absence of obligation."}
+        {
+          "prompt": "It is necessary that all applicants submit proof of identity. (must)",
+          "answer": "All applicants must submit proof of identity.",
+          "explanation": "Strong obligation."
+        },
+        {
+          "prompt": "Perhaps he forgot the meeting. (might have)",
+          "answer": "He might have forgotten the meeting.",
+          "explanation": "Past possibility."
+        },
+        {
+          "prompt": "It was a mistake not to invest in vaccination earlier. (should have)",
+          "answer": "Governments / we should have invested in vaccination earlier.",
+          "explanation": "Past regret / criticism."
+        },
+        {
+          "prompt": "I am certain she is lying. (must)",
+          "answer": "She must be lying.",
+          "explanation": "Present logical deduction."
+        },
+        {
+          "prompt": "It is possible that the data were manipulated. (may)",
+          "answer": "The data may have been manipulated.",
+          "explanation": "Past possibility in the passive."
+        },
+        {
+          "prompt": "It is impossible that he remembered the password. (can’t have)",
+          "answer": "He can’t have remembered the password.",
+          "explanation": "Past impossibility."
+        },
+        {
+          "prompt": "I recommend that you rewrite the introduction. (should)",
+          "answer": "You should rewrite the introduction.",
+          "explanation": "Recommendation."
+        },
+        {
+          "prompt": "It is not necessary to attend every session. (don’t have to)",
+          "answer": "You don’t have to attend every session.",
+          "explanation": "Absence of obligation."
+        }
       ]
     },
     {
@@ -47,14 +168,46 @@
       "title": "Pick the modal",
       "instruction": "Type the correct modal or modal + have + V3.",
       "items": [
-        {"prompt": "The report is dated 2019, so the data ___ (be) more recent than that.", "answer": "can\u2019t", "explanation": "Negative present deduction."},
-        {"prompt": "She ___ (leave) already \u2014 her bag is gone.", "answer": "must have left", "explanation": "Past certainty."},
-        {"prompt": "Students ___ (submit) their essays by Friday or they will lose marks.", "answer": "must / have to", "explanation": "External rule."},
-        {"prompt": "The minister denies any wrongdoing but ___ (know) about the scheme.", "answer": "may have known / might have known", "explanation": "Past possibility."},
-        {"prompt": "You ___ (not tell) him the whole story; it would only have worried him.", "answer": "shouldn\u2019t have told", "explanation": "Past criticism / advice."},
-        {"prompt": "Even experienced drivers ___ (make) mistakes in heavy rain.", "answer": "can / could", "explanation": "General possibility."},
-        {"prompt": "Visitors ___ (not smoke) anywhere on the premises.", "answer": "must not / may not", "explanation": "Prohibition."},
-        {"prompt": "I ___ (not find) my keys anywhere; I ___ (leave) them at the office.", "answer": "can\u2019t / must have left", "explanation": "Inability + deduction."}
+        {
+          "prompt": "The report is dated 2019, so the data ___ (be) more recent than that.",
+          "answer": "can’t",
+          "explanation": "Negative present deduction."
+        },
+        {
+          "prompt": "She ___ (leave) already — her bag is gone.",
+          "answer": "must have left",
+          "explanation": "Past certainty."
+        },
+        {
+          "prompt": "Students ___ (submit) their essays by Friday or they will lose marks.",
+          "answer": "must / have to",
+          "explanation": "External rule."
+        },
+        {
+          "prompt": "The minister denies any wrongdoing but ___ (know) about the scheme.",
+          "answer": "may have known / might have known",
+          "explanation": "Past possibility."
+        },
+        {
+          "prompt": "You ___ (not tell) him the whole story; it would only have worried him.",
+          "answer": "shouldn’t have told",
+          "explanation": "Past criticism / advice."
+        },
+        {
+          "prompt": "Even experienced drivers ___ (make) mistakes in heavy rain.",
+          "answer": "can / could",
+          "explanation": "General possibility."
+        },
+        {
+          "prompt": "Visitors ___ (not smoke) anywhere on the premises.",
+          "answer": "must not / may not",
+          "explanation": "Prohibition."
+        },
+        {
+          "prompt": "I ___ (not find) my keys anywhere; I ___ (leave) them at the office.",
+          "answer": "can’t / must have left",
+          "explanation": "Inability + deduction."
+        }
       ]
     },
     {
@@ -62,14 +215,94 @@
       "title": "Modal nuance",
       "instruction": "Pick the modal that best fits the context.",
       "items": [
-        {"prompt": "The government ___ take action on housing; the crisis is deepening.", "options": ["might", "must", "could", "may"], "answer": 1, "explanation": "Strong obligation / urgency."},
-        {"prompt": "He is nowhere to be seen. He ___ gone home early.", "options": ["should have", "must have", "would have", "can have"], "answer": 1, "explanation": "Past deduction based on evidence."},
-        {"prompt": "Children ___ exposed to multiple languages acquire them more easily.", "options": ["can", "must", "should", "ought"], "answer": 0, "explanation": "'Can' = general ability/possibility."},
-        {"prompt": "The bridge ___ collapsed because of a structural flaw, but investigators have not ruled out sabotage.", "options": ["must have", "may have", "can\u2019t have", "had to have"], "answer": 1, "explanation": "Past possibility \u2014 not certainty."},
-        {"prompt": "Students ___ prepare thoroughly; otherwise they risk low scores.", "options": ["must not", "had better", "might not", "would"], "answer": 1, "explanation": "Urgent advice."},
-        {"prompt": "Passengers ___ use mobile phones during take-off.", "options": ["may not", "wouldn\u2019t", "can\u2019t be", "mustn\u2019t be"], "answer": 0, "explanation": "'May not' = formal prohibition."},
-        {"prompt": "The findings ___ to generalise to other populations.", "options": ["may not", "might not be able", "should not", "mustn\u2019t"], "answer": 1, "explanation": "Hedged possibility."},
-        {"prompt": "That can\u2019t be John \u2014 he ___ in Tokyo.", "options": ["must be", "should be", "might be", "could be"], "answer": 0, "explanation": "Present certainty about alternative location."}
+        {
+          "prompt": "The government ___ take action on housing; the crisis is deepening.",
+          "options": [
+            "might",
+            "must",
+            "could",
+            "may"
+          ],
+          "answer": 1,
+          "explanation": "Strong obligation / urgency."
+        },
+        {
+          "prompt": "He is nowhere to be seen. He ___ gone home early.",
+          "options": [
+            "should have",
+            "must have",
+            "would have",
+            "can have"
+          ],
+          "answer": 1,
+          "explanation": "Past deduction based on evidence."
+        },
+        {
+          "prompt": "Children ___ exposed to multiple languages acquire them more easily.",
+          "options": [
+            "can",
+            "must",
+            "should",
+            "ought"
+          ],
+          "answer": 0,
+          "explanation": "'Can' = general ability/possibility."
+        },
+        {
+          "prompt": "The bridge ___ collapsed because of a structural flaw, but investigators have not ruled out sabotage.",
+          "options": [
+            "must have",
+            "may have",
+            "can’t have",
+            "had to have"
+          ],
+          "answer": 1,
+          "explanation": "Past possibility — not certainty."
+        },
+        {
+          "prompt": "Students ___ prepare thoroughly; otherwise they risk low scores.",
+          "options": [
+            "must not",
+            "had better",
+            "might not",
+            "would"
+          ],
+          "answer": 1,
+          "explanation": "Urgent advice."
+        },
+        {
+          "prompt": "Passengers ___ use mobile phones during take-off.",
+          "options": [
+            "may not",
+            "wouldn’t",
+            "can’t be",
+            "mustn’t be"
+          ],
+          "answer": 0,
+          "explanation": "'May not' = formal prohibition."
+        },
+        {
+          "prompt": "The findings ___ to generalise to other populations.",
+          "options": [
+            "may not",
+            "might not be able",
+            "should not",
+            "mustn’t"
+          ],
+          "answer": 1,
+          "explanation": "Hedged possibility."
+        },
+        {
+          "prompt": "That can’t be John — he ___ in Tokyo.",
+          "options": [
+            "must be",
+            "should be",
+            "might be",
+            "could be"
+          ],
+          "answer": 0,
+          "explanation": "Present certainty about alternative location."
+        }
       ]
     }
   ]

@@ -4,27 +4,109 @@
   "order": 5,
   "title": "Gerunds & Infinitives",
   "subtitle": "-ing vs. to-V: the verb decides",
-  "target_band": "6 \u2192 7.5",
-  "intro": "Many verbs insist on a specific complement form \u2014 gerund (-ing) or infinitive (to + V) \u2014 and others switch meaning depending on which you choose. 'I stopped smoking' and 'I stopped to smoke' are almost opposites. Getting this right signals exactly the kind of lexical-grammatical control that Band 7+ writing requires.",
+  "target_band": "6 → 7.5",
+  "intro": "Many verbs insist on a specific complement form — gerund (-ing) or infinitive (to + V) — and others switch meaning depending on which you choose. 'I stopped smoking' and 'I stopped to smoke' are almost opposites. Getting this right signals exactly the kind of lexical-grammatical control that Band 7+ writing requires.",
+  "mind_map": {
+    "center": "Verb-pattern rules",
+    "branches": [
+      {
+        "label": "Gerund (-ing) after",
+        "children": [
+          "enjoy, avoid, suggest, recommend, consider",
+          "All prepositions: 'interested in working'",
+          "'worth / no use' + gerund"
+        ]
+      },
+      {
+        "label": "Infinitive (to + base) after",
+        "children": [
+          "want, decide, hope, refuse, afford",
+          "Adjectives: 'eager to learn'",
+          "Purpose: 'to reduce emissions'"
+        ]
+      },
+      {
+        "label": "Both (meaning shifts)",
+        "children": [
+          "'stop smoking' (quit) ≠ 'stop to smoke' (pause in order to smoke)",
+          "'remember doing' (memory) vs 'remember to do' (obligation)"
+        ]
+      }
+    ]
+  },
   "rules": [
-    {"heading": "Gerund-only verbs", "body": "avoid, consider, deny, enjoy, finish, involve, keep, mind, postpone, practise, recommend, risk, suggest. 'The committee recommended postponing the decision.'"},
-    {"heading": "Infinitive-only verbs", "body": "agree, decide, fail, hope, intend, manage, offer, plan, promise, refuse, seem, tend, threaten, wish. 'Governments tend to underestimate long-term costs.'"},
-    {"heading": "Both forms, different meaning", "body": "stop (stop doing = quit; stop to do = pause in order to); remember (remember doing = recall memory; remember to do = don\u2019t forget); try (try doing = experiment; try to do = attempt); forget, regret similar pattern."},
-    {"heading": "Gerund after prepositions", "body": "Any verb following a preposition takes -ing: 'interested in learning', 'instead of complaining', 'look forward to hearing', 'accustomed to working'."}
+    {
+      "heading": "Gerund-only verbs",
+      "body": "avoid, consider, deny, enjoy, finish, involve, keep, mind, postpone, practise, recommend, risk, suggest. 'The committee recommended postponing the decision.'"
+    },
+    {
+      "heading": "Infinitive-only verbs",
+      "body": "agree, decide, fail, hope, intend, manage, offer, plan, promise, refuse, seem, tend, threaten, wish. 'Governments tend to underestimate long-term costs.'"
+    },
+    {
+      "heading": "Both forms, different meaning",
+      "body": "stop (stop doing = quit; stop to do = pause in order to); remember (remember doing = recall memory; remember to do = don’t forget); try (try doing = experiment; try to do = attempt); forget, regret similar pattern."
+    },
+    {
+      "heading": "Gerund after prepositions",
+      "body": "Any verb following a preposition takes -ing: 'interested in learning', 'instead of complaining', 'look forward to hearing', 'accustomed to working'."
+    }
   ],
   "examples": [
-    {"context": "Writing Task 2", "sentence": "Many governments have promised to reduce plastic waste but have failed to enforce meaningful regulation.", "note": "'Promise' and 'fail' both take infinitive."},
-    {"context": "Writing Task 2", "sentence": "Educators should consider integrating financial literacy into the school curriculum.", "note": "'Consider' \u2192 gerund."},
-    {"context": "Writing Task 2", "sentence": "Instead of banning single-use plastics outright, some cities have succeeded in reducing their use through taxation.", "note": "Preposition 'instead of' + gerund; 'succeed in' + gerund."},
-    {"context": "Speaking Part 3", "sentence": "I remember being told as a child that hard work always pays off.", "note": "'Remember doing' = recall."},
-    {"context": "Writing Task 2", "sentence": "Companies that stop investing in research risk falling behind their competitors.", "note": "'Stop doing' (cease); 'risk' + gerund."}
+    {
+      "context": "Writing Task 2",
+      "sentence": "Many governments have promised to reduce plastic waste but have failed to enforce meaningful regulation.",
+      "note": "'Promise' and 'fail' both take infinitive."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "Educators should consider integrating financial literacy into the school curriculum.",
+      "note": "'Consider' → gerund."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "Instead of banning single-use plastics outright, some cities have succeeded in reducing their use through taxation.",
+      "note": "Preposition 'instead of' + gerund; 'succeed in' + gerund."
+    },
+    {
+      "context": "Speaking Part 3",
+      "sentence": "I remember being told as a child that hard work always pays off.",
+      "note": "'Remember doing' = recall."
+    },
+    {
+      "context": "Writing Task 2",
+      "sentence": "Companies that stop investing in research risk falling behind their competitors.",
+      "note": "'Stop doing' (cease); 'risk' + gerund."
+    }
   ],
+  "band_comparison": {
+    "band6": {
+      "text": "I suggest to reduce pollution by stop driving cars.",
+      "issue": "'suggest' takes -ing, and 'by' takes -ing — two pattern errors in one sentence."
+    },
+    "band8": {
+      "text": "I suggest reducing pollution by discouraging private car use in city centres.",
+      "why": "Correct gerund after 'suggest' and 'by'; also upgrades vague 'stop driving' to precise 'discouraging private car use'."
+    }
+  },
   "band8_marker": "Band 8 writers use complex gerund phrases as nominal subjects: 'Investing in early-childhood education yields the highest social return of any public spending.' They also wield causative 'have/get someone to do' and 'make someone do' constructions with precision: 'Policy-makers cannot make citizens change behaviour overnight, but they can get them to consider alternatives.'",
   "common_errors": [
-    {"error": "'I look forward to meet you.'", "fix": "'Look forward to' \u2192 preposition + gerund \u2192 'to meeting you'."},
-    {"error": "'I enjoy to swim.'", "fix": "'Enjoy' + gerund \u2192 'I enjoy swimming.'"},
-    {"error": "'He suggested me to go.'", "fix": "'Suggest' takes gerund or that-clause \u2192 'He suggested going' or 'He suggested that I go.'"},
-    {"error": "Confusing 'stop doing' and 'stop to do'", "fix": "'Stop smoking' = quit; 'Stop to smoke' = pause in order to smoke."}
+    {
+      "error": "'I look forward to meet you.'",
+      "fix": "'Look forward to' → preposition + gerund → 'to meeting you'."
+    },
+    {
+      "error": "'I enjoy to swim.'",
+      "fix": "'Enjoy' + gerund → 'I enjoy swimming.'"
+    },
+    {
+      "error": "'He suggested me to go.'",
+      "fix": "'Suggest' takes gerund or that-clause → 'He suggested going' or 'He suggested that I go.'"
+    },
+    {
+      "error": "Confusing 'stop doing' and 'stop to do'",
+      "fix": "'Stop smoking' = quit; 'Stop to smoke' = pause in order to smoke."
+    }
   ],
   "practice": [
     {
@@ -32,14 +114,46 @@
       "title": "Complete with -ing or to + V",
       "instruction": "Put the verb in brackets into the correct form.",
       "items": [
-        {"prompt": "The board decided (postpone) __________ the launch until the third quarter.", "answer": "to postpone", "explanation": "'Decide' + infinitive."},
-        {"prompt": "Students should avoid (translate) __________ directly from their first language.", "answer": "translating", "explanation": "'Avoid' + gerund."},
-        {"prompt": "She is accustomed to (work) __________ long hours.", "answer": "working", "explanation": "'Accustomed to' is adj + preposition \u2192 gerund."},
-        {"prompt": "We cannot afford (ignore) __________ the warning signs.", "answer": "to ignore", "explanation": "'Afford' + infinitive."},
-        {"prompt": "I regret (not take) __________ the opportunity when it was offered.", "answer": "not taking", "explanation": "'Regret doing' = recall with regret."},
-        {"prompt": "After the scandal, he had no choice but (resign) __________ .", "answer": "to resign", "explanation": "'Have no choice but' + infinitive."},
-        {"prompt": "Policymakers should focus on (prevent) __________ the problem rather than (punish) __________ offenders.", "answer": "preventing / punishing", "explanation": "'Focus on' + gerund; parallel form for 'rather than'."},
-        {"prompt": "The minister refused (comment) __________ on the allegations.", "answer": "to comment", "explanation": "'Refuse' + infinitive."}
+        {
+          "prompt": "The board decided (postpone) __________ the launch until the third quarter.",
+          "answer": "to postpone",
+          "explanation": "'Decide' + infinitive."
+        },
+        {
+          "prompt": "Students should avoid (translate) __________ directly from their first language.",
+          "answer": "translating",
+          "explanation": "'Avoid' + gerund."
+        },
+        {
+          "prompt": "She is accustomed to (work) __________ long hours.",
+          "answer": "working",
+          "explanation": "'Accustomed to' is adj + preposition → gerund."
+        },
+        {
+          "prompt": "We cannot afford (ignore) __________ the warning signs.",
+          "answer": "to ignore",
+          "explanation": "'Afford' + infinitive."
+        },
+        {
+          "prompt": "I regret (not take) __________ the opportunity when it was offered.",
+          "answer": "not taking",
+          "explanation": "'Regret doing' = recall with regret."
+        },
+        {
+          "prompt": "After the scandal, he had no choice but (resign) __________ .",
+          "answer": "to resign",
+          "explanation": "'Have no choice but' + infinitive."
+        },
+        {
+          "prompt": "Policymakers should focus on (prevent) __________ the problem rather than (punish) __________ offenders.",
+          "answer": "preventing / punishing",
+          "explanation": "'Focus on' + gerund; parallel form for 'rather than'."
+        },
+        {
+          "prompt": "The minister refused (comment) __________ on the allegations.",
+          "answer": "to comment",
+          "explanation": "'Refuse' + infinitive."
+        }
       ]
     },
     {
@@ -47,14 +161,46 @@
       "title": "Type the correct form",
       "instruction": "Write the verb in brackets in the right form.",
       "items": [
-        {"prompt": "I cannot stand (wait) ___ in long queues.", "answer": "waiting", "explanation": "'Cannot stand' + gerund (standard)."},
-        {"prompt": "He managed (finish) ___ the report before the deadline.", "answer": "to finish", "explanation": "'Manage' + infinitive."},
-        {"prompt": "Before (submit) ___ your essay, proof-read it carefully.", "answer": "submitting", "explanation": "Preposition + gerund."},
-        {"prompt": "The new law enables citizens (access) ___ their medical records online.", "answer": "to access", "explanation": "'Enable someone to do'."},
-        {"prompt": "Let me (explain) ___ the procedure one more time.", "answer": "explain", "explanation": "'Let' + bare infinitive."},
-        {"prompt": "She denied (be) ___ involved in the incident.", "answer": "being", "explanation": "'Deny' + gerund."},
-        {"prompt": "Governments are committed to (reduce) ___ emissions by 2030.", "answer": "reducing", "explanation": "'Committed to' + gerund (to is a preposition here)."},
-        {"prompt": "There is no point (argue) ___ with him when he is angry.", "answer": "in arguing", "explanation": "'There is no point in' + gerund (though 'no point arguing' also acceptable)."}
+        {
+          "prompt": "I cannot stand (wait) ___ in long queues.",
+          "answer": "waiting",
+          "explanation": "'Cannot stand' + gerund (standard)."
+        },
+        {
+          "prompt": "He managed (finish) ___ the report before the deadline.",
+          "answer": "to finish",
+          "explanation": "'Manage' + infinitive."
+        },
+        {
+          "prompt": "Before (submit) ___ your essay, proof-read it carefully.",
+          "answer": "submitting",
+          "explanation": "Preposition + gerund."
+        },
+        {
+          "prompt": "The new law enables citizens (access) ___ their medical records online.",
+          "answer": "to access",
+          "explanation": "'Enable someone to do'."
+        },
+        {
+          "prompt": "Let me (explain) ___ the procedure one more time.",
+          "answer": "explain",
+          "explanation": "'Let' + bare infinitive."
+        },
+        {
+          "prompt": "She denied (be) ___ involved in the incident.",
+          "answer": "being",
+          "explanation": "'Deny' + gerund."
+        },
+        {
+          "prompt": "Governments are committed to (reduce) ___ emissions by 2030.",
+          "answer": "reducing",
+          "explanation": "'Committed to' + gerund (to is a preposition here)."
+        },
+        {
+          "prompt": "There is no point (argue) ___ with him when he is angry.",
+          "answer": "in arguing",
+          "explanation": "'There is no point in' + gerund (though 'no point arguing' also acceptable)."
+        }
       ]
     },
     {
@@ -62,14 +208,94 @@
       "title": "Gerund or infinitive?",
       "instruction": "Pick the natural complement.",
       "items": [
-        {"prompt": "She suggested ___ the meeting until Monday.", "options": ["to postpone", "postponing", "postpone", "to postponing"], "answer": 1, "explanation": "'Suggest' + gerund."},
-        {"prompt": "Students often forget ___ supporting examples in their body paragraphs.", "options": ["including", "to include", "to including", "for include"], "answer": 1, "explanation": "'Forget to do' = fail to remember."},
-        {"prompt": "He is used to ___ under pressure.", "options": ["work", "working", "to work", "to working"], "answer": 1, "explanation": "'Used to + -ing' = accustomed (not 'used to + V')."},
-        {"prompt": "I look forward to ___ from you.", "options": ["hear", "hearing", "be hearing", "have heard"], "answer": 1, "explanation": "'Look forward to' + gerund."},
-        {"prompt": "The policy aims ___ carbon emissions by 50% within a decade.", "options": ["reducing", "to reduce", "for reducing", "reduce"], "answer": 1, "explanation": "'Aim' + infinitive."},
-        {"prompt": "Children should be encouraged ___ their opinions respectfully.", "options": ["expressing", "to express", "to expressing", "express"], "answer": 1, "explanation": "'Encourage someone to do'."},
-        {"prompt": "She stopped ___ her phone and looked up.", "options": ["to check", "checking", "check", "for checking"], "answer": 1, "explanation": "'Stop doing' = cease the activity."},
-        {"prompt": "It is worth ___ the effort now to avoid problems later.", "options": ["to make", "make", "making", "made"], "answer": 2, "explanation": "'Worth' + gerund."}
+        {
+          "prompt": "She suggested ___ the meeting until Monday.",
+          "options": [
+            "to postpone",
+            "postponing",
+            "postpone",
+            "to postponing"
+          ],
+          "answer": 1,
+          "explanation": "'Suggest' + gerund."
+        },
+        {
+          "prompt": "Students often forget ___ supporting examples in their body paragraphs.",
+          "options": [
+            "including",
+            "to include",
+            "to including",
+            "for include"
+          ],
+          "answer": 1,
+          "explanation": "'Forget to do' = fail to remember."
+        },
+        {
+          "prompt": "He is used to ___ under pressure.",
+          "options": [
+            "work",
+            "working",
+            "to work",
+            "to working"
+          ],
+          "answer": 1,
+          "explanation": "'Used to + -ing' = accustomed (not 'used to + V')."
+        },
+        {
+          "prompt": "I look forward to ___ from you.",
+          "options": [
+            "hear",
+            "hearing",
+            "be hearing",
+            "have heard"
+          ],
+          "answer": 1,
+          "explanation": "'Look forward to' + gerund."
+        },
+        {
+          "prompt": "The policy aims ___ carbon emissions by 50% within a decade.",
+          "options": [
+            "reducing",
+            "to reduce",
+            "for reducing",
+            "reduce"
+          ],
+          "answer": 1,
+          "explanation": "'Aim' + infinitive."
+        },
+        {
+          "prompt": "Children should be encouraged ___ their opinions respectfully.",
+          "options": [
+            "expressing",
+            "to express",
+            "to expressing",
+            "express"
+          ],
+          "answer": 1,
+          "explanation": "'Encourage someone to do'."
+        },
+        {
+          "prompt": "She stopped ___ her phone and looked up.",
+          "options": [
+            "to check",
+            "checking",
+            "check",
+            "for checking"
+          ],
+          "answer": 1,
+          "explanation": "'Stop doing' = cease the activity."
+        },
+        {
+          "prompt": "It is worth ___ the effort now to avoid problems later.",
+          "options": [
+            "to make",
+            "make",
+            "making",
+            "made"
+          ],
+          "answer": 2,
+          "explanation": "'Worth' + gerund."
+        }
       ]
     }
   ]
