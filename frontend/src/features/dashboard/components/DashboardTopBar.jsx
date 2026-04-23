@@ -78,9 +78,9 @@ export default function DashboardTopBar({
                 border: "1px solid hsl(var(--sky) / .3)",
               }}
             >
-              {user?.initials || "AG"}
+              {user?.initials || (user?.firstName?.[0] || user?.name?.[0] || "S").toUpperCase()}
             </div>
-            <span className="text-sm font-medium">{user?.firstName || "Aga"}</span>
+            <span className="text-sm font-medium">{user?.firstName || user?.name?.split(' ')[0] || "Student"}</span>
           </a>
         </div>
       </div>

@@ -89,10 +89,10 @@ export default function DashboardMobileDrawer({
                 border: "1px solid hsl(var(--sky) / .3)",
               }}
             >
-              {user?.initials || (user?.email ? user.email[0]?.toUpperCase() : "AG")}
+              {user?.initials || (user?.firstName?.[0] || user?.name?.[0] || user?.email?.[0] || "S").toUpperCase()}
             </div>
             <div className="leading-tight">
-              <div className="text-sm font-medium">{user?.firstName || user?.name || "Aga"}</div>
+              <div className="text-sm font-medium">{user?.firstName || user?.name || "Student"}</div>
               <div className="text-[11px] text-muted truncate max-w-[180px]">{user?.email}</div>
             </div>
           </div>

@@ -24,7 +24,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function GeneralTask2Practice() {
   const navigate = useNavigate();
-  const { languageWireCode } = useI18n();
+  const { t, languageWireCode } = useI18n();
   const [searchParams] = useSearchParams();
   const urlTopic = searchParams.get('topic');
   
@@ -253,7 +253,7 @@ export default function GeneralTask2Practice() {
             {/* Essay Type Filter */}
             <Card className="p-4">
               <h3 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
-                <Target className="w-4 h-4 text-purple-600" /> Essay Tipi
+                <Target className="w-4 h-4 text-purple-600" /> {t('wt2EssayType')}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {essayTypes.map(type => (
@@ -304,7 +304,7 @@ export default function GeneralTask2Practice() {
               <Card className="p-4 bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="font-bold text-amber-800 flex items-center gap-2">
-                    <Lightbulb className="w-4 h-4" /> Essay İpuçları
+                    <Lightbulb className="w-4 h-4" /> {t('wt2EssayTips')}
                   </h3>
                   <Button
                     variant="ghost"
@@ -312,29 +312,29 @@ export default function GeneralTask2Practice() {
                     onClick={() => setShowTips(false)}
                     className="text-amber-600"
                   >
-                    Gizle
+                    {t('wt2Hide')}
                   </Button>
                 </div>
                 <ul className="space-y-2 text-sm text-amber-900">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-amber-600" />
-                    <span>Giriş paragrafında soruyu yeniden ifade edin</span>
+                    <span>{t('wt2Tip1')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-amber-600" />
-                    <span>Her paragraf tek bir ana fikir içersin</span>
+                    <span>{t('wt2Tip2')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-amber-600" />
-                    <span>Give examples from your own experience</span>
+                    <span>{t('wt2Tip3')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-amber-600" />
-                    <span>Clarify your opinion in the conclusion paragraph</span>
+                    <span>{t('wt2Tip4')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-amber-600" />
-                    <span>Use varied linking words (however, moreover, therefore)</span>
+                    <span>{t('wt2Tip5')}</span>
                   </li>
                 </ul>
               </Card>
@@ -578,7 +578,7 @@ export default function GeneralTask2Practice() {
                 {showModelAnswer && modelAnswers && (
                   <Card className="p-5 border-2 border-purple-200 bg-purple-50/30">
                     <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                      <Layers className="w-5 h-5 text-purple-600" /> Model Answerlar
+                      <Layers className="w-5 h-5 text-purple-600" /> {t('wt2ModelAnswers')}
                     </h3>
                     
                     <div className="flex gap-2 mb-4">

@@ -191,22 +191,6 @@ const COURSES = [
     directAccess: true
   },
   {
-    id: 'vocab-grammar',
-    name: 'Vocabulary & Grammar',
-    nameVi: 'Từ vựng & Ngữ pháp',
-    nameTr: 'Kelime & Dilbilgisi',
-    bandRange: 'Band 4.5 - 7.0+',
-    description: '30 units with 250+ vocabulary and grammar items',
-    descriptionVi: '30 bài học với 250+ từ vựng và ngữ pháp',
-    descriptionTr: '250+ kelime ve dilbilgisi öğesiyle 30 ünite',
-    color: 'from-pink-500 to-rose-600',
-    lightBg: 'bg-pink-50',
-    icon: '📖',
-    apiEndpoint: '/api/vocab-grammar/lessons',
-    previewRoute: '/vocab-grammar',
-    directAccess: true
-  },
-  {
     id: 'mastery',
     name: 'Mastery Course',
     nameVi: 'Khóa học Trung cấp',
@@ -332,31 +316,21 @@ export default function LandingPage({ onLogin, user, showLogin }) {
   useEffect(() => {
     const fetchAllCourseLessons = async () => {
       try {
-        // Fetch lessons from all 4 courses
-        const [beginnerRes, vocabRes, masteryRes, advancedRes] = await Promise.all([
+        // Fetch lessons from the three remaining courses
+        const [beginnerRes, masteryRes, advancedRes] = await Promise.all([
           fetch(`${API_URL}/api/beginner-english/lessons`).catch(() => ({ ok: false })),
-          fetch(`${API_URL}/api/vocab-grammar/lessons`).catch(() => ({ ok: false })),
           fetch(`${API_URL}/api/mastery-course/modules`).catch(() => ({ ok: false })),
           fetch(`${API_URL}/api/advanced-mastery/modules`).catch(() => ({ ok: false }))
         ]);
-        
+
         const lessons = {};
-        
+
         if (beginnerRes.ok) {
           const data = await beginnerRes.json();
           // Show 6 lessons: 3 free + 3 locked
           lessons.beginner = Array.isArray(data) ? data.slice(0, 6) : [];
         }
-        
-        if (vocabRes.ok) {
-          const data = await vocabRes.json();
-          // Get 6 lessons from different band levels for variety (3 free + 3 locked)
-          const foundation = data.filter(l => l.band_level === 'foundation').slice(0, 2);
-          const development = data.filter(l => l.band_level === 'development').slice(0, 2);
-          const advanced = data.filter(l => l.band_level === 'advanced').slice(0, 2);
-          lessons['vocab-grammar'] = [...foundation, ...development, ...advanced];
-        }
-        
+
         if (masteryRes.ok) {
           const data = await masteryRes.json();
           // Show 6 modules: 3 free + 3 locked
@@ -1131,9 +1105,7 @@ export default function LandingPage({ onLogin, user, showLogin }) {
                               }
                               setShowCourseSelector(false);
                               // Navigate directly to the real course page with lesson parameter
-                              if (course.id === 'vocab-grammar') {
-                                navigate(`/vocab-grammar?lesson=${lesson.id}&preview=true`);
-                              } else if (course.id === 'beginner') {
+                              if (course.id === 'beginner') {
                                 navigate(`/beginner-course?lesson=${lesson.id}&preview=true`);
                               } else if (course.id === 'mastery') {
                                 navigate(`/mastery-course?lesson=${lesson.module_number || idx + 1}&preview=true`);

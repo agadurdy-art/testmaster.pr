@@ -1,0 +1,76 @@
+{
+  "slug": "prepositions",
+  "module": 1,
+  "order": 4,
+  "title": "Prepositions",
+  "subtitle": "Time, place, and the verbs that insist on a specific partner",
+  "target_band": "4 \u2192 6",
+  "intro": "Prepositions are the joints of English: a sentence can be grammatically intact and still collapse on one wrong preposition. Examiners treat preposition errors as lexical-grammatical, which means they drag down both LR and GRA bands. The payoff for studying dependent prepositions ('interested in', 'depend on', 'consist of') is enormous because they recur in every task.",
+  "rules": [
+    {"heading": "Time: at / on / in \u2014 zoom levels", "body": "at a point (at 9pm, at night), on a day (on Monday, on 5 July), in a period (in 2024, in the morning, in the twentieth century)."},
+    {"heading": "Place: at / on / in \u2014 container logic", "body": "in = three dimensions (in the room, in London), on = surface (on the wall, on the coast), at = a point or institution (at the station, at university)."},
+    {"heading": "Dependent prepositions (verbs)", "body": "depend on, consist of, result in (cause), result from (effect), respond to, benefit from, focus on, rely on, suffer from, contribute to."},
+    {"heading": "Dependent prepositions (adjectives + nouns)", "body": "Adjectives: interested in, aware of, capable of, different from, similar to. Nouns: an increase in, a decline in, a solution to, the reason for, an effect on."}
+  ],
+  "examples": [
+    {"context": "Writing Task 1", "sentence": "Between 2000 and 2010, there was a sharp increase in renewable-energy investment.", "note": "'an increase IN' is fixed; 'Between X and Y' for range."},
+    {"context": "Writing Task 2", "sentence": "Urbanisation has resulted in a marked decline in farmland.", "note": "'result IN' (cause \u2192 effect); 'decline IN'."},
+    {"context": "Writing Task 2", "sentence": "The success of renewable energy depends on consistent government support.", "note": "'depend ON'; 'success OF'."},
+    {"context": "Speaking Part 3", "sentence": "I am particularly interested in how AI will affect creative work.", "note": "'interested IN' + how-clause; 'affect' takes no preposition."},
+    {"context": "Writing Task 2", "sentence": "Children suffering from malnutrition are more vulnerable to infectious disease.", "note": "'suffer FROM'; 'vulnerable TO'."}
+  ],
+  "band8_marker": "Band 8 writers use noun-noun preposition chains precisely: 'the impact of tourism ON local culture', 'the relationship BETWEEN income AND education'. They also distinguish nuanced pairs: 'worry ABOUT' (general concern) vs. 'worry OVER' (prolonged anxiety), 'agree WITH' (a person/opinion) vs. 'agree ON' (a decision) vs. 'agree TO' (a proposal).",
+  "common_errors": [
+    {"error": "'Discuss about the topic' / 'mention about it'", "fix": "'Discuss' and 'mention' are transitive \u2192 'discuss the topic', 'mention it'."},
+    {"error": "'In Monday' / 'on 2024' / 'at the morning'", "fix": "'on Monday', 'in 2024', 'in the morning'."},
+    {"error": "'Different THAN' (US informal)", "fix": "IELTS prefers 'different FROM'."},
+    {"error": "'Listen the music'", "fix": "'listen TO the music'."}
+  ],
+  "practice": [
+    {
+      "mode": "error_detection",
+      "title": "Preposition bug hunt",
+      "instruction": "Click the wrong preposition.",
+      "items": [
+        {"prompt": "The outcome depends [A:from] the level of public engagement [B:with] the policy.", "answer": "A", "explanation": "'depend ON'."},
+        {"prompt": "There was a notable increase [A:of] unemployment [B:during] the recession.", "answer": "A", "explanation": "'an increase IN'."},
+        {"prompt": "Many young people suffer [A:from] anxiety [B:about] their future career prospects.", "answer": null, "explanation": "Both correct: 'suffer from', 'anxiety about'."},
+        {"prompt": "I disagree [A:with] his view [B:on] climate policy.", "answer": null, "explanation": "Both correct: 'disagree with (a person)', 'view on (a topic)'."},
+        {"prompt": "The minister refused to discuss [A:about] the scandal [B:with] journalists.", "answer": "A", "explanation": "'discuss' is transitive \u2192 no 'about'."},
+        {"prompt": "I have been interested [A:with] astronomy [B:since] childhood.", "answer": "A", "explanation": "'interested IN'."},
+        {"prompt": "The treatment resulted [A:in] significant improvement [B:in] patients.", "answer": null, "explanation": "Both correct: 'result in', 'improvement in'."},
+        {"prompt": "Her approach is quite different [A:than] the traditional method [B:of] teaching.", "answer": "A", "explanation": "IELTS prefers 'different FROM'."}
+      ]
+    },
+    {
+      "mode": "gap_fill",
+      "title": "Supply the preposition",
+      "instruction": "Type the missing preposition.",
+      "items": [
+        {"prompt": "The government should invest more ___ education.", "answer": "in", "explanation": "'invest IN'."},
+        {"prompt": "She is responsible ___ quality control at the factory.", "answer": "for", "explanation": "'responsible FOR a task'."},
+        {"prompt": "This report focuses ___ the long-term effects of automation.", "answer": "on", "explanation": "'focus ON'."},
+        {"prompt": "His argument is based ___ outdated data.", "answer": "on", "explanation": "'based ON'."},
+        {"prompt": "There is no easy solution ___ this problem.", "answer": "to", "explanation": "'solution TO'."},
+        {"prompt": "Poor air quality has a serious impact ___ respiratory health.", "answer": "on", "explanation": "'impact ON'."},
+        {"prompt": "The decline ___ manufacturing jobs began ___ the 1980s.", "answer": "in / in", "explanation": "'decline IN', 'in the 1980s'."},
+        {"prompt": "Governments should protect citizens ___ online fraud.", "answer": "from / against", "explanation": "'protect FROM/AGAINST'."}
+      ]
+    },
+    {
+      "mode": "mcq",
+      "title": "Which preposition is idiomatic?",
+      "instruction": "Pick the natural collocation.",
+      "items": [
+        {"prompt": "Unemployment rose sharply ___ the second quarter.", "options": ["at", "on", "in", "by"], "answer": 2, "explanation": "Periods take 'in'."},
+        {"prompt": "Her essay consisted ___ three main arguments.", "options": ["of", "from", "in", "with"], "answer": 0, "explanation": "'consist OF'."},
+        {"prompt": "There is a clear link ___ sleep deprivation and cognitive decline.", "options": ["between", "among", "from", "with"], "answer": 0, "explanation": "'a link BETWEEN A and B'."},
+        {"prompt": "She is an expert ___ renewable energy policy.", "options": ["of", "about", "on", "for"], "answer": 2, "explanation": "'expert ON/IN'."},
+        {"prompt": "The population of the city grew ___ 25% ___ the past decade.", "options": ["by / over", "at / in", "in / for", "by / since"], "answer": 0, "explanation": "'grew BY 25%', 'OVER the past decade'."},
+        {"prompt": "We should not compare apples ___ oranges.", "options": ["to", "with", "at", "from"], "answer": 0, "explanation": "'compare TO' (for likeness), idiomatic fixed."},
+        {"prompt": "I congratulated her ___ her promotion.", "options": ["for", "on", "at", "about"], "answer": 1, "explanation": "'congratulate ON'."},
+        {"prompt": "Success in IELTS ultimately depends ___ consistent daily practice.", "options": ["of", "on", "from", "in"], "answer": 1, "explanation": "'depend ON'."}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "slug": "participle-clauses",
+  "module": 3,
+  "order": 1,
+  "title": "Participle Clauses",
+  "subtitle": "Compress two sentences into one without losing a gram of meaning",
+  "target_band": "8 \u2192 9",
+  "intro": "Participle clauses are the single most efficient way to sound academically fluent. They replace full subordinate clauses with -ing (active) or -ed (passive) forms, creating tight, information-dense prose that examiners associate with Band 8. The structure is everywhere in quality academic writing \u2014 if you are not using it, your essays look verbose by comparison.",
+  "rules": [
+    {"heading": "Present participle (-ing) replaces an active relative or time clause", "body": "'Students who attend the seminar pass' \u2192 'Students attending the seminar pass.' 'After she finished the report, she left' \u2192 'Having finished the report, she left.'"},
+    {"heading": "Past participle (-ed) replaces a passive relative clause", "body": "'The policy that was introduced in 2019' \u2192 'The policy introduced in 2019.' 'Products which are made locally' \u2192 'Products made locally.'"},
+    {"heading": "Perfect participle for sequence", "body": "'Having + V3' marks an earlier action: 'Having reviewed the evidence, the committee reached a verdict.'"},
+    {"heading": "Reduced adverbial participle clauses", "body": "With same subject: 'When I read the article, I realised\u2026' \u2192 'Reading the article, I realised\u2026'. Participle and main clause must share the subject, or you create a dangling modifier."}
+  ],
+  "examples": [
+    {"context": "Writing Task 2", "sentence": "Governments facing declining tax revenues have turned to indirect taxation.", "note": "Replaces 'Governments that are facing\u2026'"},
+    {"context": "Writing Task 2", "sentence": "Measures introduced in the last decade have had mixed results.", "note": "Past participle \u2014 passive relative."},
+    {"context": "Writing Task 2", "sentence": "Having analysed the data, the researchers proposed three explanations.", "note": "Perfect participle sequences actions."},
+    {"context": "Writing Task 1", "sentence": "Beginning in 2005, emissions fell for five consecutive years.", "note": "Participle clause as a fronted time frame."},
+    {"context": "Writing Task 2", "sentence": "Unaware of the long-term consequences, many consumers continue to purchase single-use plastics.", "note": "Adjective-led participle clause."}
+  ],
+  "band8_marker": "Band 8 writers chain participle clauses: 'Faced with rising costs and driven by competition, manufacturers turning to automation have accepted short-term disruption in exchange for long-term efficiency.' Three participle clauses, one sentence, no loss of clarity. This is not decoration \u2014 it is compression, and compression is exactly what separates a C1 writer from a C2 writer.",
+  "common_errors": [
+    {"error": "Dangling participle: 'Walking down the street, the building looked enormous.' (The building wasn\u2019t walking.)", "fix": "Ensure shared subject: 'Walking down the street, I thought the building looked enormous.'"},
+    {"error": "'Being + V3' when simpler is better", "fix": "'Being built in 1920' \u2192 simpler: 'Built in 1920'."},
+    {"error": "Mixing active and passive participle", "fix": "'Made the decision' (active \u2192 having made) vs. 'Made in China' (passive). Check voice."},
+    {"error": "Perfect participle misuse", "fix": "'Having finished, she left' is fine; 'Having finished and leaving' is not \u2014 keep parallel."}
+  ],
+  "practice": [
+    {
+      "mode": "sentence_transformation",
+      "title": "Reduce the clause to a participle",
+      "instruction": "Rewrite using a participle clause.",
+      "items": [
+        {"prompt": "People who live in rural areas often have less access to healthcare.", "answer": "People living in rural areas often have less access to healthcare.", "explanation": "Active relative \u2192 -ing."},
+        {"prompt": "The report, which was written by a team of experts, recommended sweeping reform.", "answer": "The report, written by a team of experts, recommended sweeping reform.", "explanation": "Passive relative \u2192 -ed."},
+        {"prompt": "After they had finished the survey, the researchers published their findings.", "answer": "Having finished the survey, the researchers published their findings.", "explanation": "Sequenced action \u2192 perfect participle."},
+        {"prompt": "Because he was tired, he decided to take the afternoon off.", "answer": "Tired, he decided to take the afternoon off. / Being tired, he decided\u2026", "explanation": "Reason clause \u2192 adjective or participle."},
+        {"prompt": "The documents, which had been signed by both parties, were filed immediately.", "answer": "Signed by both parties, the documents were filed immediately. / The documents, signed by both parties, were filed immediately.", "explanation": "Past participle."},
+        {"prompt": "When it was asked about the scandal, the spokesperson refused to comment.", "answer": "Asked about the scandal, the spokesperson refused to comment.", "explanation": "Reduced passive time clause."},
+        {"prompt": "Because they had been exposed to early education, the children outperformed their peers.", "answer": "Having been exposed to early education, the children outperformed their peers.", "explanation": "Perfect passive participle."},
+        {"prompt": "Drivers who ignore speed limits increase the risk of fatal accidents.", "answer": "Drivers ignoring speed limits increase the risk of fatal accidents.", "explanation": "Reduced active relative."}
+      ]
+    },
+    {
+      "mode": "band8_ranking",
+      "title": "Which version sounds Band 8?",
+      "instruction": "Pick the more academically mature version.",
+      "items": [
+        {"prompt": "A) 'The policy that was passed in 2019 is now being reviewed.' B) 'The policy passed in 2019 is now being reviewed.'", "options": ["A", "B"], "answer": 1, "explanation": "Participle version is tighter, more academic."},
+        {"prompt": "A) 'After the team completed the experiment, they published a paper.' B) 'Having completed the experiment, the team published a paper.'", "options": ["A", "B"], "answer": 1, "explanation": "Perfect participle upgrades register."},
+        {"prompt": "A) 'Students who are studying abroad often report improved confidence.' B) 'Students studying abroad often report improved confidence.'", "options": ["A", "B"], "answer": 1, "explanation": "Reduced relative is more natural in academic prose."},
+        {"prompt": "A) 'Faced with economic pressure, many businesses have cut staff.' B) 'Because they are facing economic pressure, many businesses have cut staff.'", "options": ["A", "B"], "answer": 0, "explanation": "Fronted participle clause \u2014 more compressed."},
+        {"prompt": "A) 'The data were collected and were later analysed.' B) 'Data, once collected, were analysed using statistical software.'", "options": ["A", "B"], "answer": 1, "explanation": "'Once collected' \u2014 participle adds sequence and economy."},
+        {"prompt": "A) 'People who have lost their jobs are entitled to benefits.' B) 'People having lost their jobs are entitled to benefits.'", "options": ["A", "B"], "answer": 0, "explanation": "'Having lost' is awkward as a restrictive relative \u2014 original is better. Rule: some relatives resist reduction."},
+        {"prompt": "A) 'Written by a Nobel laureate, the book became an instant classic.' B) 'The book that was written by a Nobel laureate became an instant classic.'", "options": ["A", "B"], "answer": 0, "explanation": "Fronted past participle is more stylish."},
+        {"prompt": "A) 'The committee, having reviewed all submissions, reached a consensus.' B) 'The committee has reviewed all submissions, and then reached a consensus.'", "options": ["A", "B"], "answer": 0, "explanation": "Perfect participle elegantly sequences actions."}
+      ]
+    },
+    {
+      "mode": "gap_fill",
+      "title": "Supply the correct participle",
+      "instruction": "Type the verb in brackets in the correct participle form.",
+      "items": [
+        {"prompt": "___ (face) mounting debt, the company declared bankruptcy.", "answer": "Faced", "explanation": "Passive past participle."},
+        {"prompt": "___ (write) in 1984, the book still feels relevant today.", "answer": "Written", "explanation": "Passive past participle."},
+        {"prompt": "___ (review) the manuscript, the editor requested substantial revisions.", "answer": "Having reviewed", "explanation": "Perfect participle \u2014 sequenced action."},
+        {"prompt": "Students ___ (prepare) thoroughly for the exam consistently outperform others.", "answer": "preparing", "explanation": "Reduced active relative."},
+        {"prompt": "___ (not realise) the impact of his words, he continued speaking.", "answer": "Not realising", "explanation": "Negative present participle."},
+        {"prompt": "Buildings ___ (construct) before 1980 must be retrofitted for earthquake safety.", "answer": "constructed", "explanation": "Passive past participle."},
+        {"prompt": "___ (take) all factors into account, the decision appears justified.", "answer": "Taking", "explanation": "Fronted active participle \u2014 formal discourse marker."},
+        {"prompt": "___ (exhaust) by the journey, the delegates asked to postpone the session.", "answer": "Exhausted", "explanation": "Adjective-led passive participle."}
+      ]
+    }
+  ]
+}

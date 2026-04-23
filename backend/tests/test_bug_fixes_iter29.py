@@ -57,7 +57,7 @@ class TestBugFix2ListeningAudio:
     def test_tts_endpoint_returns_json(self):
         """TTS endpoint should return JSON with audio field"""
         response = requests.post(
-            f"{BASE_URL}/api/vocab-grammar/tts",
+            f"{BASE_URL}/api/speech/tts",
             json={"text": "Hello world test", "voice": "alloy", "speed": 0.9}
         )
         assert response.status_code == 200

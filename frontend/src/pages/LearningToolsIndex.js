@@ -84,16 +84,28 @@ export default function LearningToolsIndex({ user }) {
       route: '/quick-practice',
     },
     {
-      id: 'vocab-grammar',
-      name: t('Vocab & Grammar', 'Từ vựng & Ngữ pháp', 'Kelime & Dilbilgisi'),
+      id: 'vocabulary',
+      name: t('Vocabulary', 'Từ vựng', 'Kelime'),
       description: t(
-        'Spaced-repetition vocabulary plus grammar drills.',
-        'Từ vựng lặp lại và bài tập ngữ pháp.',
-        'Aralıklı tekrar kelime + dilbilgisi alıştırmaları.'
+        'Twenty IELTS themes — Band 8 terms, collocations, idioms.',
+        '20 chủ đề IELTS — từ vựng, cụm từ, thành ngữ Band 8.',
+        '20 IELTS teması — Band 8 kelime, collocation ve deyim.'
+      ),
+      icon: BookMarked,
+      color: 'from-amber-500 to-orange-600',
+      route: '/vocabulary',
+    },
+    {
+      id: 'grammar',
+      name: t('Grammar', 'Ngữ pháp', 'Dilbilgisi'),
+      description: t(
+        'The IELTS 8 Grammar Blueprint — 17 topics across 3 modules.',
+        'Bản kế hoạch Ngữ pháp IELTS 8 — 17 chủ đề, 3 mô-đun.',
+        'IELTS 8 Grammar Blueprint — 3 modül, 17 konu.'
       ),
       icon: BookMarked,
       color: 'from-emerald-500 to-teal-600',
-      route: '/vocab-grammar',
+      route: '/grammar',
     },
     {
       id: 'writing',

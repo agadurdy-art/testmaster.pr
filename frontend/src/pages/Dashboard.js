@@ -240,7 +240,8 @@ export default function Dashboard({ user, onLogout }) {
 
   const allLearningTools = [
     { name: getText('Question Bank', 'Ngân hàng câu hỏi', 'Soru Bankası'), icon: LayoutDashboard, color: 'from-indigo-500 to-purple-600', route: '/question-bank', badge: 'NEW', ieltsOnly: true },
-    { name: getText('Vocab & Grammar', 'Từ vựng & Ngữ pháp', 'Kelime & Dilbilgisi'), icon: BookMarked, color: 'from-emerald-500 to-teal-600', route: '/vocab-grammar' },
+    { name: getText('Vocabulary', 'Từ vựng', 'Kelime'), icon: BookMarked, color: 'from-amber-500 to-orange-600', route: '/vocabulary' },
+    { name: getText('Grammar', 'Ngữ pháp', 'Dilbilgisi'), icon: BookMarked, color: 'from-emerald-500 to-teal-600', route: '/grammar' },
     { name: getText('Writing Practice', 'Luyện viết', 'Yazma Pratiği'), icon: FileText, color: 'from-orange-500 to-amber-600', route: '/writing-practice' },
     { name: getText('Speaking Practice', 'Luyện nói', 'Konuşma Pratiği'), icon: MessageSquare, color: 'from-violet-500 to-purple-600', route: '/speaking-practice', requiredPlan: 'Speaking Practice' },
     { name: getText('Tips & Strategies', 'Mẹo & Chiến lược', 'İpuçları & Stratejiler'), icon: Lightbulb, color: 'from-pink-500 to-rose-600', route: '/tips', ieltsOnly: true }
@@ -456,8 +457,8 @@ export default function Dashboard({ user, onLogout }) {
         </div>
 
 
-        {/* Quick Stats Row - Always visible */}
-        <div className="grid grid-cols-5 gap-3 mb-6">
+        {/* Quick Stats Row - Always visible (responsive: 2 on mobile, 3 on tablet, 5 on desktop) */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
           {[
             { icon: BarChart3, label: getText('Tests', 'Bài thi', 'Testler'), value: progress?.total_tests || 0, color: 'text-blue-600', bg: isDark ? 'bg-blue-900/30' : 'bg-blue-50' },
             { icon: Award, label: getText('Avg Band', 'TB Band', 'Ort. Band'), value: progress?.average_band?.toFixed(1) || '-', color: 'text-purple-600', bg: isDark ? 'bg-purple-900/30' : 'bg-purple-50' },

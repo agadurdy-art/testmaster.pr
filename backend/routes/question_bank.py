@@ -23,7 +23,6 @@ async def get_skills():
             {"id": "listening", "name": "Listening", "icon": "🎧", "description": "Multi-speaker audio with native accents"},
             {"id": "writing", "name": "Writing", "icon": "✍️", "description": "Task 1 & Task 2 with AI evaluation"},
             {"id": "speaking", "name": "Speaking", "icon": "🗣️", "description": "Parts 1-3 with dynamic follow-ups"},
-            {"id": "grammar_vocab", "name": "Grammar & Vocabulary", "icon": "📚", "description": "Foundation skills practice"},
         ]
     }
 
@@ -209,7 +208,6 @@ async def get_question_bank_stats(db=None):
                 "listening": cambridge_listening + ai_listening,
                 "writing": cambridge_writing + ai_writing,
                 "speaking": cambridge_speaking + ai_speaking,
-                "grammar_vocab": 0
             },
             "by_band": {
                 "4.0-5.0": int(total_questions * 0.25),
@@ -231,7 +229,7 @@ async def get_question_bank_stats(db=None):
         traceback.print_exc()
         return {
             "total_questions": 0,
-            "by_skill": {"reading": 0, "listening": 0, "writing": 0, "speaking": 0, "grammar_vocab": 0},
+            "by_skill": {"reading": 0, "listening": 0, "writing": 0, "speaking": 0},
             "by_band": {"4.0-5.0": 0, "5.5-6.5": 0, "7.0-9.0": 0},
             "by_type": {},
             "full_tests": 0,

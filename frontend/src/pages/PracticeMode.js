@@ -160,7 +160,7 @@ export default function PracticeMode({ user }) {
     if (!text) return;
     setAudioLoading(true);
     try {
-      const response = await fetch(`${API_URL}/api/vocab-grammar/tts`, {
+      const response = await fetch(`${API_URL}/api/speech/tts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: text.substring(0, 500), voice: 'alloy', speed: 0.9 })

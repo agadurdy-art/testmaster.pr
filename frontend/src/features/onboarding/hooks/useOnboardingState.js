@@ -39,7 +39,7 @@ const INITIAL_STATE = {
   currentBand: null,
   examDate: null, // Date | 'tbd' | null
   language: null,
-  name: 'Aga',
+  name: null, // collected on Step 5; never hardcode a real name here — it leaks into the Dashboard for other users
 };
 
 function isStepComplete(state) {

@@ -35,7 +35,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function WritingTask2Practice() {
   const navigate = useNavigate();
-  const { languageWireCode } = useI18n();
+  const { t, languageWireCode } = useI18n();
   const [searchParams] = useSearchParams();
   const examType = searchParams.get('type') || 'academic'; // academic or general
   const urlTopic = searchParams.get('topic');
@@ -313,7 +313,7 @@ export default function WritingTask2Practice() {
                 className="bg-white/10 border-white/20 text-white hover:bg-white/20"
                 onClick={() => setIsTimerRunning(!isTimerRunning)}
               >
-                {isTimerRunning ? 'Durdur' : 'Başlat'}
+                {isTimerRunning ? t('wt2Stop') : t('wt2Start')}
               </Button>
             </div>
           </div>
@@ -395,7 +395,7 @@ export default function WritingTask2Practice() {
               {/* ===== Preset-mode panels (hidden in custom mode) ===== */}
               {!isCustomMode && (
                 <Card className="p-4">
-                <h3 className="font-semibold text-gray-900 mb-3 text-sm">Essay Tipi</h3>
+                <h3 className="font-semibold text-gray-900 mb-3 text-sm">{t('wt2EssayType')}</h3>
                 <div className="flex flex-wrap gap-2">
                   {essayTypes.map(type => {
                     const Icon = type.icon;
@@ -462,7 +462,7 @@ export default function WritingTask2Practice() {
                   {selectedPrompt.key_points?.length > 0 && (
                     <div className="mb-3">
                       <h4 className="font-semibold text-gray-900 mb-2 text-xs flex items-center gap-1">
-                        <HelpCircle className="w-3.5 h-3.5 text-blue-500" /> Ele Alınması Gerekenler
+                        <HelpCircle className="w-3.5 h-3.5 text-blue-500" /> {t('wt2KeyPointsToAddress')}
                       </h4>
                       <ul className="space-y-1">
                         {selectedPrompt.key_points.map((point, idx) => (
@@ -478,7 +478,7 @@ export default function WritingTask2Practice() {
                   {/* Useful Vocabulary */}
                   {selectedPrompt.useful_vocabulary?.length > 0 && (
                     <div className="p-2 bg-purple-50 rounded-lg">
-                      <h4 className="font-semibold text-purple-800 mb-1 text-xs">📚 Faydalı Kelimeler</h4>
+                      <h4 className="font-semibold text-purple-800 mb-1 text-xs">📚 {t('wt2UsefulVocabulary')}</h4>
                       <div className="flex flex-wrap gap-1">
                         {selectedPrompt.useful_vocabulary.map((word, idx) => (
                           <span key={idx} className="px-1.5 py-0.5 bg-purple-100 text-purple-700 rounded text-xs">
@@ -499,7 +499,7 @@ export default function WritingTask2Practice() {
                     onClick={() => setShowTips(!showTips)}
                   >
                     <span className="flex items-center gap-2 font-semibold text-gray-900 text-sm">
-                      <Lightbulb className="w-4 h-4 text-amber-500" /> Yazma İpuçları
+                      <Lightbulb className="w-4 h-4 text-amber-500" /> {t('wt2WritingTips')}
                     </span>
                     {showTips ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                   </button>
@@ -528,14 +528,14 @@ export default function WritingTask2Practice() {
               {/* Writing Area */}
               <Card className="p-4 md:p-5">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-semibold text-gray-900 text-sm">Yanıtınız</h3>
+                  <h3 className="font-semibold text-gray-900 text-sm">{t('wt2YourResponse')}</h3>
                   <div className={`text-sm font-medium ${
                     wordCount >= 250 ? 'text-green-600' : wordCount >= 200 ? 'text-amber-600' : 'text-red-500'
                   }`}>
-                    {wordCount} kelime
+                    {wordCount} {t('wt2WordsUnit')}
                     {wordCount < 250 && (
                       <span className="text-gray-400 ml-1">
-                        ({250 - wordCount} daha gerekli)
+                        ({250 - wordCount} {t('wt2MoreNeeded')})
                       </span>
                     )}
                   </div>
@@ -544,7 +544,7 @@ export default function WritingTask2Practice() {
                 <Textarea
                   value={userResponse}
                   onChange={(e) => setUserResponse(e.target.value)}
-                  placeholder="Essay'inizi buraya yazın. Giriş paragrafıyla başlayın, ana argümanlarınızı geliştirin ve güçlü bir sonuçla bitirin..."
+                  placeholder={t('wt2ResponsePlaceholder')}
                   className="min-h-[300px] text-sm leading-relaxed resize-none"
                 />
 
@@ -560,11 +560,11 @@ export default function WritingTask2Practice() {
                   >
                     {evaluating ? (
                       <>
-                        <RefreshCw className="w-4 h-4 mr-2 animate-spin" /> Değerlendiriliyor...
+                        <RefreshCw className="w-4 h-4 mr-2 animate-spin" /> {t('wt2Evaluating')}
                       </>
                     ) : (
                       <>
-                        <Send className="w-4 h-4 mr-2" /> Değerlendir
+                        <Send className="w-4 h-4 mr-2" /> {t('wt2Evaluate')}
                       </>
                     )}
                   </Button>
@@ -575,7 +575,7 @@ export default function WritingTask2Practice() {
                       onClick={() => setShowModelAnswer(!showModelAnswer)}
                     >
                       {showModelAnswer ? <EyeOff className="w-4 h-4 mr-1" /> : <Eye className="w-4 h-4 mr-1" />}
-                      Model Yanıtlar
+                      {t('wt2ModelAnswers')}
                     </Button>
                   )}
                 </div>
@@ -585,7 +585,7 @@ export default function WritingTask2Practice() {
               {!isCustomMode && showModelAnswer && modelAnswers && (
                 <Card className="p-5 border-2 border-indigo-200 bg-indigo-50/30">
                   <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <Layers className="w-5 h-5 text-indigo-600" /> Model Yanıtlar
+                    <Layers className="w-5 h-5 text-indigo-600" /> {t('wt2ModelAnswers')}
                   </h3>
                   
                   {/* Band Selection Tabs */}

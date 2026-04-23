@@ -28,7 +28,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function GeneralTask1Practice() {
   const navigate = useNavigate();
-  const { languageWireCode } = useI18n();
+  const { t, languageWireCode } = useI18n();
   const [searchParams] = useSearchParams();
   const urlTopic = searchParams.get('topic');
   const urlBand = searchParams.get('band') || '5.5-6.5';
@@ -677,7 +677,7 @@ export default function GeneralTask1Practice() {
                     </div>
                   ) : (
                     <div className="text-center py-8 text-gray-500">
-                      <p className="text-sm">Bu soru için model mektup henüz eklenmedi.</p>
+                      <p className="text-sm">{t('generalTask1ModelLetterUnavailable')}</p>
                     </div>
                   )}
                 </Card>
