@@ -20,8 +20,8 @@ export default function Progress({ user }) {
   const isNightShift = activeTheme === THEME_MODES.NIGHT_SHIFT;
   
   // Theme-aware classes
-  const bgMain = isDark ? 'bg-gray-900' : isNightShift ? 'bg-amber-50' : 'bg-gradient-to-br from-slate-50 to-purple-50';
-  const bgCard = isDark ? 'bg-gray-800 border-gray-700' : isNightShift ? 'bg-amber-100/50 border-amber-200' : 'bg-white border-gray-200';
+  const bgMain = isDark ? 'bg-gray-900' : isNightShift ? 'bg-amber-50' : 'bg-gradient-to-br from-gray-50 via-violet-50/30 to-purple-50/30';
+  const bgCard = isDark ? 'bg-gray-800 border-gray-700' : isNightShift ? 'bg-amber-100/50 border-amber-200' : 'bg-white border-gray-100';
   const bgHeader = isDark ? 'bg-gray-800 border-gray-700' : isNightShift ? 'bg-amber-100 border-amber-200' : 'bg-white border-gray-200';
   const textPrimary = isDark ? 'text-gray-100' : isNightShift ? 'text-amber-900' : 'text-gray-900';
   const textSecondary = isDark ? 'text-gray-400' : isNightShift ? 'text-amber-700' : 'text-gray-600';

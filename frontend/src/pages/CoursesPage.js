@@ -28,11 +28,11 @@ export default function CoursesPage({ user, onLogout }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50">
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-violet-50/30 to-purple-50/30">
+      <header className="bg-white/80 backdrop-blur-xl border-b border-gray-100 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-sky-500 to-cyan-500 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-md shadow-violet-200">
               <Trophy className="w-6 h-6 text-white" />
             </div>
             <h1 className="text-2xl font-bold text-gray-900">IELTS Ace</h1>
@@ -57,15 +57,15 @@ export default function CoursesPage({ user, onLogout }) {
 
         {loading ? (
           <div className="text-center py-20">
-            <div className="w-16 h-16 border-4 border-sky-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <div className="w-16 h-16 border-4 border-violet-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
             <p className="text-gray-600">Loading courses...</p>
           </div>
         ) : courses.length > 0 ? (
           <div className="grid md:grid-cols-2 gap-6">
             {courses.map((course) => (
-              <Card key={course.id} className="p-6 hover-lift">
+              <Card key={course.id} className="p-6 hover-lift border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
                 <div className="flex items-start space-x-4 mb-6">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-sky-500 to-cyan-500 flex items-center justify-center flex-shrink-0">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-violet-200">
                     <BookOpen className="w-7 h-7 text-white" />
                   </div>
                   <div className="flex-1">
@@ -106,7 +106,7 @@ export default function CoursesPage({ user, onLogout }) {
                 </Accordion>
 
                 <Button
-                  className="w-full mt-6 primary-gradient text-white"
+                  className="w-full mt-6 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white rounded-xl"
                   onClick={() => navigate(`/courses/${course.id}`)}
                 >
                   Start Course
@@ -115,7 +115,7 @@ export default function CoursesPage({ user, onLogout }) {
             ))}
           </div>
         ) : (
-          <Card className="p-12 text-center">
+          <Card className="p-12 text-center border border-gray-100 rounded-2xl">
             <p className="text-gray-600">No courses available</p>
           </Card>
         )}

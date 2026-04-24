@@ -257,9 +257,9 @@ export default function QuestionBank({ user }) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-violet-50/30 to-purple-50/30">
       {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 text-white py-12 px-6">
+      <div className="bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 text-white py-12 px-6">
         <div className="max-w-7xl mx-auto">
           <Button
             variant="ghost"
@@ -281,25 +281,25 @@ export default function QuestionBank({ user }) {
 
           {/* Quick Stats */}
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-8">
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4" data-testid="stat-total-questions">
+            <div className="bg-white/10 backdrop-blur rounded-2xl p-4" data-testid="stat-total-questions">
               <div className="text-2xl font-bold">{stats?.total_questions || 0}</div>
               <div className="text-white/70 text-sm">Total Questions</div>
             </div>
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4" data-testid="stat-full-tests">
+            <div className="bg-white/10 backdrop-blur rounded-2xl p-4" data-testid="stat-full-tests">
               <div className="text-2xl font-bold">{stats?.full_tests || 0}</div>
               <div className="text-white/70 text-sm">Full Tests</div>
             </div>
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4" data-testid="stat-skill-areas">
+            <div className="bg-white/10 backdrop-blur rounded-2xl p-4" data-testid="stat-skill-areas">
               <div className="text-2xl font-bold">{stats?.practice_sets || 4}</div>
               <div className="text-white/70 text-sm">Skill Areas</div>
             </div>
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4" data-testid="stat-topics">
+            <div className="bg-white/10 backdrop-blur rounded-2xl p-4" data-testid="stat-topics">
               <div className="text-2xl font-bold">{stats?.topics_count || 0}</div>
               <div className="text-white/70 text-sm">Topics</div>
             </div>
             {/* Completion Rate - 5th stat box */}
             <div 
-              className="bg-white/20 backdrop-blur rounded-xl p-4 cursor-pointer hover:bg-white/25 transition-colors relative"
+              className="bg-white/20 backdrop-blur rounded-2xl p-4 cursor-pointer hover:bg-white/25 transition-colors relative"
               data-testid="stat-completion-rate"
               onClick={() => setShowCompletionDetail(!showCompletionDetail)}
             >
@@ -320,7 +320,7 @@ export default function QuestionBank({ user }) {
 
           {/* Completion Breakdown Popup */}
           {showCompletionDetail && completionStats && (
-            <div className="mt-4 bg-white/15 backdrop-blur-lg rounded-xl p-5 border border-white/20" data-testid="completion-breakdown">
+            <div className="mt-4 bg-white/15 backdrop-blur-lg rounded-2xl p-5 border border-white/20" data-testid="completion-breakdown">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="font-semibold text-sm">Completion Breakdown</h3>
                 <button onClick={() => setShowCompletionDetail(false)} className="text-white/60 hover:text-white">
@@ -396,7 +396,7 @@ export default function QuestionBank({ user }) {
                 key={tab.id}
                 variant={activeTab === tab.id ? 'default' : 'outline'}
                 onClick={() => setActiveTab(tab.id)}
-                className={activeTab === tab.id ? 'bg-indigo-600 hover:bg-indigo-700' : ''}
+                className={activeTab === tab.id ? 'bg-violet-600 hover:bg-violet-700 rounded-full' : 'rounded-full'}
               >
                 <Icon className="w-4 h-4 mr-2" /> {tab.label}
               </Button>
@@ -419,8 +419,8 @@ export default function QuestionBank({ user }) {
                     onClick={() => { setSelectedBand(selectedBand === band.id ? null : band.id); setSelectedTopic(null); }}
                     className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
                       selectedBand === band.id
-                        ? 'bg-indigo-600 text-white shadow-sm'
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                        ? 'bg-violet-600 text-white shadow-sm'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                     }`}
                   >
                     <span className="inline-block w-1.5 h-1.5 rounded-full mr-1.5" style={{ backgroundColor: band.color }} />
@@ -539,7 +539,7 @@ export default function QuestionBank({ user }) {
                       variant={isSelected ? 'default' : 'outline'}
                       onClick={() => setSelectedSkill(skill.id)}
                       className={`h-auto py-4 flex flex-col items-center gap-2 ${
-                        isSelected ? 'bg-indigo-600 hover:bg-indigo-700' : ''
+                        isSelected ? 'bg-violet-600 hover:bg-violet-700 rounded-xl' : 'rounded-xl'
                       }`}
                     >
                       <Icon className="w-6 h-6" />
@@ -1408,7 +1408,7 @@ export default function QuestionBank({ user }) {
 
               {/* All Practice Button */}
               <Button 
-                className="w-full mt-4 bg-gradient-to-r from-purple-600 to-indigo-600"
+                className="w-full mt-4 bg-gradient-to-r from-violet-600 to-purple-600 rounded-xl"
                 onClick={() => {
                   setShowListeningModal(false);
                   navigate('/question-bank/listening');
