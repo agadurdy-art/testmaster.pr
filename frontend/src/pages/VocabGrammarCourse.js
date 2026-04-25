@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Progress } from '../components/ui/progress';
@@ -69,7 +68,6 @@ const getVocabImage = (word) => {
 
 export default function VocabGrammarCourse({ user }) {
   const navigate = useNavigate();
-  const goBack = useGoBack();
   const [searchParams] = useSearchParams();
   const lessonFromUrl = searchParams.get('lesson');
   
@@ -963,7 +961,7 @@ export default function VocabGrammarCourse({ user }) {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
-          <Button variant="ghost" onClick={goBack}>
+          <Button variant="ghost" onClick={() => navigate('/dashboard')}>
             <ArrowLeft className="w-4 h-4 mr-2" /> Dashboard
           </Button>
         </div>

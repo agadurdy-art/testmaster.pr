@@ -10,14 +10,12 @@ import {
   ChevronDown, ChevronUp,
 } from 'lucide-react';
 import { toast } from 'sonner';
-import { useGoBack } from '../hooks/useGoBack';
 import AudioPlayer from '../components/AudioPlayer';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function ListeningPractice({ user }) {
   const navigate = useNavigate();
-  const goBack = useGoBack();
   const [searchParams] = useSearchParams();
   const initialBand = searchParams.get('band');
   const initialTopic = searchParams.get('topic');
@@ -236,7 +234,7 @@ export default function ListeningPractice({ user }) {
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between flex-wrap gap-3">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="sm" onClick={goBack}>
+              <Button variant="ghost" size="sm" onClick={() => navigate('/question-bank')}>
                 <ArrowLeft className="w-4 h-4 mr-1" /> Question Bank
               </Button>
               <div>

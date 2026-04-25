@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Trophy, User, Mail, Calendar, Award, ArrowLeft } from 'lucide-react';
@@ -12,7 +11,6 @@ import ThemeToggle from '../components/ThemeToggle';
 
 export default function Profile({ user, onLogout }) {
   const navigate = useNavigate();
-  const goBack = useGoBack();
   const [progress, setProgress] = useState(null);
   const [loading, setLoading] = useState(true);
   
@@ -57,7 +55,7 @@ export default function Profile({ user, onLogout }) {
             <ThemeToggle />
             <Button
               variant="outline"
-              onClick={goBack}
+              onClick={() => navigate('/dashboard')}
               className={isDark ? 'border-gray-600' : ''}
             >
               <ArrowLeft className="w-4 h-4 mr-2" />

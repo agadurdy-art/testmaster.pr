@@ -12,7 +12,6 @@ import {
 import { toast } from 'sonner';
 import MapLabelling from '../components/listening/MapLabelling';
 import OpinionMatching, { MatchingFeatures } from '../components/listening/OpinionMatching';
-import { useGoBack } from '../hooks/useGoBack';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -34,7 +33,6 @@ export default function FullTestInterface({ user }) {
   const { testId } = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const goBack = useGoBack();
   const sessionId = searchParams.get('session');
   const mode = searchParams.get('mode') || 'full';
 
@@ -1568,7 +1566,7 @@ export default function FullTestInterface({ user }) {
           <div className="flex items-center gap-4">
             {/* Back to Question Bank button */}
             <button
-              onClick={goBack}
+              onClick={() => navigate('/question-bank')}
               className="flex items-center gap-1 text-sm text-slate-300 hover:text-white transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />

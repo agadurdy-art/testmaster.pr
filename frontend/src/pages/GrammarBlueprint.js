@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
@@ -140,7 +139,6 @@ export default function GrammarBlueprint() {
 
 function LandingView() {
   const navigate = useNavigate();
-  const goBack = useGoBack();
   const scopeClass = useScopeClass();
   const [meta, setMeta] = useState(null);
   const [topics, setTopics] = useState([]);
@@ -185,7 +183,7 @@ function LandingView() {
         <div>
           <h2 className="display-m text-2xl mb-2">Grammar Blueprint unavailable</h2>
           <p className="text-muted mb-4">{error}</p>
-          <Button onClick={goBack}>Back to Dashboard</Button>
+          <Button onClick={() => navigate('/dashboard')}>Back to Dashboard</Button>
         </div>
       </div>
     );
@@ -204,7 +202,7 @@ function LandingView() {
       <div className="max-w-6xl mx-auto px-6 py-10">
         {/* Header */}
         <button
-          onClick={goBack}
+          onClick={() => navigate('/dashboard')}
           className="text-sm flex items-center gap-1 mb-6 transition-colors"
           style={{ color: 'hsl(var(--muted-fg))' }}
           onMouseEnter={(e) => { e.currentTarget.style.color = 'hsl(var(--fg))'; }}

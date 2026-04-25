@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Input } from '../components/ui/input';
@@ -54,7 +53,6 @@ const MODULE_CONFIG = {
 
 export default function MasteryCourse({ user }) {
   const navigate = useNavigate();
-  const goBack = useGoBack();
   const [searchParams] = useSearchParams();
   const { language } = useI18n();
   
@@ -588,7 +586,7 @@ export default function MasteryCourse({ user }) {
   const renderModulesList = () => (
     <div className="max-w-5xl mx-auto">
       <div className="flex items-center justify-between mb-4">
-        <Button variant="ghost" onClick={goBack} className={textSecondary}>
+        <Button variant="ghost" onClick={() => navigate('/dashboard')} className={textSecondary}>
           <ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard
         </Button>
         <ThemeToggle />

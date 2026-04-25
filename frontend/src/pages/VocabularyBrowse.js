@@ -11,7 +11,6 @@
  */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGoBack } from '../hooks/useGoBack';
 import { ArrowLeft, BookOpen, Sparkles, ChevronRight } from 'lucide-react';
 
 const THEMES = [
@@ -39,7 +38,6 @@ const THEMES = [
 
 export default function VocabularyBrowse() {
   const navigate = useNavigate();
-  const goBack = useGoBack();
 
   const openTheme = (n) => {
     navigate(`/advanced-mastery?lesson=${n}&focus=vocabulary`);
@@ -51,7 +49,7 @@ export default function VocabularyBrowse() {
       <div className="bg-white/80 backdrop-blur border-b border-amber-100 sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <button
-            onClick={goBack}
+            onClick={() => navigate('/dashboard')}
             className="flex items-center gap-2 text-gray-600 hover:text-gray-900 text-sm font-medium"
           >
             <ArrowLeft className="w-4 h-4" /> Dashboard

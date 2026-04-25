@@ -10,7 +10,6 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useI18n } from '../lib/i18n';
-import { useGoBack } from '../hooks/useGoBack';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -25,7 +24,6 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function GeneralTask2Practice() {
   const navigate = useNavigate();
-  const goBack = useGoBack();
   const { t, languageWireCode } = useI18n();
   const [searchParams] = useSearchParams();
   const urlTopic = searchParams.get('topic');
@@ -203,7 +201,7 @@ export default function GeneralTask2Practice() {
           <Button
             variant="ghost"
             className="text-white/80 hover:text-white hover:bg-white/10 mb-4"
-            onClick={goBack}
+            onClick={() => navigate('/question-bank')}
           >
             <ArrowLeft className="w-4 h-4 mr-2" /> Question Bank
           </Button>

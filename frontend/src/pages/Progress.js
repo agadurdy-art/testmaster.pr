@@ -10,11 +10,9 @@ import {
 import api from '../lib/api';
 import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
 import ThemeToggle from '../components/ThemeToggle';
-import { useGoBack } from '../hooks/useGoBack';
 
 export default function Progress({ user }) {
   const navigate = useNavigate();
-  const goBack = useGoBack();
   
   // Theme support
   const { activeTheme } = useTheme();
@@ -248,7 +246,7 @@ export default function Progress({ user }) {
     <div className={`min-h-screen ${bgMain} py-8 px-4 sm:px-6 transition-colors duration-300`}>
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center justify-between mb-6">
-          <Button variant="ghost" onClick={goBack} className={`${textSecondary} hover:text-violet-600`}>
+          <Button variant="ghost" onClick={() => navigate('/dashboard')} className={`${textSecondary} hover:text-violet-600`}>
             <ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard
           </Button>
           <ThemeToggle />

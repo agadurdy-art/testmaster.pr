@@ -10,7 +10,6 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import WritingEvaluatorResult from '../features/evaluator/components/WritingEvaluatorResult';
-import { useGoBack } from '../hooks/useGoBack';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -41,7 +40,6 @@ const WRITING_PROMPTS = {
 
 export default function WritingPractice({ user }) {
   const navigate = useNavigate();
-  const goBack = useGoBack();
   const [view, setView] = useState('tasks');
   const [selectedTaskType, setSelectedTaskType] = useState(null);
   const [selectedPrompt, setSelectedPrompt] = useState(null);
@@ -145,7 +143,7 @@ export default function WritingPractice({ user }) {
   if (view === 'tasks') return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 py-8 px-4 pb-32">
       <div className="max-w-4xl mx-auto">
-        <Button variant="ghost" onClick={goBack} className="mb-6 text-gray-600 hover:text-violet-600"><ArrowLeft className="w-4 h-4 mr-2" /> Dashboard</Button>
+        <Button variant="ghost" onClick={() => navigate('/dashboard')} className="mb-6 text-gray-600 hover:text-violet-600"><ArrowLeft className="w-4 h-4 mr-2" /> Dashboard</Button>
         <div className="text-center mb-8">
           <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-red-600 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-orange-200">
             <PenTool className="w-10 h-10 text-white" />

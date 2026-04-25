@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { 
@@ -13,7 +12,6 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function LearningPlatform({ user }) {
   const navigate = useNavigate();
-  const goBack = useGoBack();
   const [levels, setLevels] = useState([]);
   const [userProgress, setUserProgress] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -121,10 +119,10 @@ export default function LearningPlatform({ user }) {
       {/* Header */}
       <div className="bg-gradient-to-r from-violet-600 to-purple-600 text-white py-12">
         <div className="max-w-7xl mx-auto px-4">
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             className="text-white hover:bg-white/20 mb-4"
-            onClick={goBack}
+            onClick={() => navigate('/dashboard')}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Dashboard

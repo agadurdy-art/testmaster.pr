@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { GraduationCap, Trophy, Zap, ArrowLeft, ArrowRight } from 'lucide-react';
@@ -63,7 +62,6 @@ const TINT_STYLES = {
 
 export default function CoursesPage({ user, onLogout }) {
   const navigate = useNavigate();
-  const goBack = useGoBack();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-sky-50/40 to-emerald-50/30">
@@ -75,7 +73,7 @@ export default function CoursesPage({ user, onLogout }) {
             </div>
             <h1 className="text-xl font-bold text-slate-900">IELTS Ace</h1>
           </div>
-          <Button variant="outline" onClick={goBack}>
+          <Button variant="outline" onClick={() => navigate('/dashboard')}>
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Dashboard
           </Button>

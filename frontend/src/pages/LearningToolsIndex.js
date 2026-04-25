@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGoBack } from '../hooks/useGoBack';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import {
@@ -28,7 +27,6 @@ import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
  */
 export default function LearningToolsIndex({ user }) {
   const navigate = useNavigate();
-  const goBack = useGoBack();
   const { language } = useI18n();
   const { activeTheme } = useTheme();
   const isDark = activeTheme === THEME_MODES.DARK;
@@ -176,7 +174,7 @@ export default function LearningToolsIndex({ user }) {
         <Button
           variant="ghost"
           className={`mb-4 ${textSecondary} hover:${textPrimary}`}
-          onClick={goBack}
+          onClick={() => navigate('/dashboard')}
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           {t('Back to Dashboard', 'Quay lại Dashboard', 'Panele Dön')}

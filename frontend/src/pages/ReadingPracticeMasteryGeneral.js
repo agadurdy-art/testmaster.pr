@@ -9,13 +9,11 @@ import {
   Play, Pause, RotateCcw, Filter
 } from 'lucide-react';
 import { toast } from 'sonner';
-import { useGoBack } from '../hooks/useGoBack';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function ReadingPracticeMasteryGeneral({ user }) {
   const navigate = useNavigate();
-  const goBack = useGoBack();
   const [searchParams] = useSearchParams();
   const initialTopic = searchParams.get('topic');
 
@@ -157,7 +155,7 @@ export default function ReadingPracticeMasteryGeneral({ user }) {
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between flex-wrap gap-3">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="sm" onClick={goBack}>
+              <Button variant="ghost" size="sm" onClick={() => navigate('/question-bank')}>
                 <ArrowLeft className="w-4 h-4 mr-1" /> Question Bank
               </Button>
               <div>

@@ -12,7 +12,6 @@ import { useI18n } from '../lib/i18n';
 import NotebookPanel from '../components/NotebookPanel';
 import HighlightableText from '../components/HighlightableText';
 import QuestionNavigation from '../components/test/QuestionNavigation';
-import { useGoBack } from '../hooks/useGoBack';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 const resolveAudioUrl = (url) => {
@@ -24,7 +23,6 @@ const resolveAudioUrl = (url) => {
 export default function TestInterface({ user }) {
   const { testType } = useParams();
   const navigate = useNavigate();
-  const goBack = useGoBack();
   const { t, language } = useI18n();
   const [test, setTest] = useState(null);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -524,7 +522,7 @@ function ElevenLabsExaminer() {
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 flex items-center justify-center">
         <Card className="p-8 text-center">
           <p className="text-gray-600 mb-4">No tests available for this module</p>
-          <Button onClick={goBack}>Back to Dashboard</Button>
+          <Button onClick={() => navigate('/dashboard')}>Back to Dashboard</Button>
         </Card>
       </div>
     );

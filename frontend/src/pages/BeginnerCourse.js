@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Progress } from '../components/ui/progress';
@@ -51,7 +50,6 @@ const TOPIC_CONFIG = {
 
 export default function BeginnerCourse({ user }) {
   const navigate = useNavigate();
-  const goBack = useGoBack();
   const [searchParams] = useSearchParams();
   const { language, t } = useI18n();
   
@@ -603,7 +601,7 @@ export default function BeginnerCourse({ user }) {
       <div className="flex items-center justify-between mb-4">
         <Button
           variant="ghost"
-          onClick={goBack}
+          onClick={() => navigate('/dashboard')}
         >
           <ArrowLeft className="w-4 h-4 mr-2" /> {getText('backToDashboard')}
         </Button>

@@ -9,7 +9,6 @@ import {
   Loader2, ArrowRight
 } from 'lucide-react';
 
-import { useGoBack } from '../hooks/useGoBack';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -36,7 +35,6 @@ const SECTION_QUESTIONS = {
 
 export default function FullTestMode({ user }) {
   const navigate = useNavigate();
-  const goBack = useGoBack();
   const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
   const [testSets, setTestSets] = useState({ academic: [], general: [] });
@@ -120,7 +118,7 @@ export default function FullTestMode({ user }) {
       <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm" onClick={goBack}>
+            <Button variant="ghost" size="sm" onClick={() => navigate('/question-bank')}>
               <ArrowLeft className="w-4 h-4 mr-2" /> Back to Question Bank
             </Button>
             <div className="border-l pl-4">

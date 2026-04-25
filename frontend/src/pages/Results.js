@@ -8,12 +8,10 @@ import { useI18n } from '../lib/i18n';
 import SkillBreakdown from '../components/SkillBreakdown';
 import LocateExplain from '../components/test/LocateExplain';
 import ProgressAnalytics from '../components/test/ProgressAnalytics';
-import { useGoBack } from '../hooks/useGoBack';
 
 export default function Results({ user }) {
   const { attemptId } = useParams();
   const navigate = useNavigate();
-  const goBack = useGoBack();
   const { t, language } = useI18n();
   
   // Trilingual helper
@@ -57,7 +55,7 @@ export default function Results({ user }) {
       <div className="min-h-screen bg-gradient-to-b from-gray-50 via-violet-50/30 to-gray-100 flex items-center justify-center">
         <Card className="p-8 text-center bg-white border-0 shadow-lg rounded-2xl">
           <p className="text-gray-500 mb-4">Results not found</p>
-          <Button onClick={goBack} className="bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0">Back to Dashboard</Button>
+          <Button onClick={() => navigate('/dashboard')} className="bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0">Back to Dashboard</Button>
         </Card>
       </div>
     );
@@ -66,7 +64,7 @@ export default function Results({ user }) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 via-violet-50/30 to-gray-100 py-8 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
-        <Button variant="ghost" onClick={goBack} className="mb-6 text-gray-600 hover:text-violet-600">
+        <Button variant="ghost" onClick={() => navigate('/dashboard')} className="mb-6 text-gray-600 hover:text-violet-600">
           <ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard
         </Button>
 

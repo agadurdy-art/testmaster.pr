@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGoBack } from '../hooks/useGoBack';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -14,7 +13,6 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function VocabularyImageManager({ user }) {
   const navigate = useNavigate();
-  const goBack = useGoBack();
 
   const isAdmin = user?.email && (
     user.email.includes('aga.durdy') ||
@@ -148,7 +146,7 @@ export default function VocabularyImageManager({ user }) {
       <header className="border-b border-gray-800 bg-gray-950/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" onClick={goBack} className="text-gray-400 hover:text-white" data-testid="back-to-admin">
+            <Button variant="ghost" onClick={() => navigate('/admin')} className="text-gray-400 hover:text-white" data-testid="back-to-admin">
               <ArrowLeft className="w-4 h-4 mr-2" /> Admin
             </Button>
             <div className="h-6 w-px bg-gray-800" />
