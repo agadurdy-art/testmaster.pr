@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useGoBack } from '../hooks/useGoBack';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../components/ui/dialog';
@@ -35,6 +36,7 @@ const PAYPAL_PLAN_IDS = {
 
 export default function PricingPage({ user }) {
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const [searchParams] = useSearchParams();
   const { t, language, setLanguage } = useI18n();
   const [selectedPlan, setSelectedPlan] = useState(null);
@@ -170,7 +172,7 @@ export default function PricingPage({ user }) {
             </div>
             <Button
               variant="ghost"
-              onClick={() => navigate('/dashboard')}
+              onClick={goBack}
               className="text-gray-400 hover:text-white"
               data-testid="back-to-dashboard-btn"
             >

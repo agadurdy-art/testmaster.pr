@@ -10,11 +10,13 @@ import {
   AlertCircle, Rocket, GraduationCap, Star
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useGoBack } from '../hooks/useGoBack';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function AdaptiveLevelTest({ user }) {
   const navigate = useNavigate();
+  const goBack = useGoBack();
   
   // Stage management
   const [stage, setStage] = useState('intro'); // intro, assessment, reading, speaking, writing, evaluating, results
@@ -348,7 +350,7 @@ export default function AdaptiveLevelTest({ user }) {
         <div className="flex justify-between items-center pt-6 border-t">
           <Button
             variant="ghost"
-            onClick={() => navigate('/dashboard')}
+            onClick={goBack}
             className="text-gray-600"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />

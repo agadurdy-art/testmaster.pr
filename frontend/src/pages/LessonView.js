@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { 
@@ -13,6 +14,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 export default function LessonView({ user }) {
   const { lessonId } = useParams();
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const [lesson, setLesson] = useState(null);
   const [loading, setLoading] = useState(true);
   const [completing, setCompleting] = useState(false);
@@ -106,7 +108,7 @@ export default function LessonView({ user }) {
       <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex items-center justify-center">
         <Card className="p-8 text-center">
           <p className="text-slate-600 mb-4">Lesson not found</p>
-          <Button onClick={() => navigate(-1)}>
+          <Button onClick={goBack}>
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
           </Button>
@@ -124,11 +126,11 @@ export default function LessonView({ user }) {
         <div className="max-w-4xl mx-auto px-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 size="sm"
                 className="text-white hover:bg-white/20"
-                onClick={() => navigate(-1)}
+                onClick={goBack}
               >
                 <ArrowLeft className="w-4 h-4" />
               </Button>
@@ -389,9 +391,9 @@ export default function LessonView({ user }) {
 
         {/* Complete Button */}
         <div className="flex justify-between items-center mt-8">
-          <Button 
+          <Button
             variant="outline"
-            onClick={() => navigate(-1)}
+            onClick={goBack}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Unit

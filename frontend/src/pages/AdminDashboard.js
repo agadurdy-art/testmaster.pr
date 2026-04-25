@@ -4,7 +4,7 @@ import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import {
   Shield, Users, MessageSquare, CreditCard, BookOpen, Image,
-  Paintbrush, ArrowLeft, ChevronRight
+  Paintbrush, ArrowLeft, ChevronRight, BarChart3, UserPlus, GitBranch
 } from 'lucide-react';
 
 const ADMIN_MODULES = [
@@ -61,6 +61,42 @@ const ADMIN_MODULES = [
     path: '/admin/visual-generator',
     color: 'from-indigo-500 to-blue-600',
     bg: 'bg-indigo-50'
+  },
+  {
+    id: 'liz-analytics',
+    title: 'Liz Analytics',
+    description: 'Conversations, messages, top users over the last 30 days.',
+    icon: BarChart3,
+    path: '/admin/liz-analytics',
+    color: 'from-teal-500 to-emerald-600',
+    bg: 'bg-teal-50'
+  },
+  {
+    id: 'onboarding-analytics',
+    title: 'Onboarding Analytics',
+    description: 'Completion funnel and IELTS vs General English split.',
+    icon: UserPlus,
+    path: '/admin/onboarding-analytics',
+    color: 'from-emerald-500 to-green-600',
+    bg: 'bg-emerald-50'
+  },
+  {
+    id: 'learning-mode',
+    title: 'Learning Mode × Plan',
+    description: 'Who\u2019s on what plan, broken down by learning mode.',
+    icon: GitBranch,
+    path: '/admin/learning-mode',
+    color: 'from-indigo-500 to-violet-600',
+    bg: 'bg-indigo-50'
+  },
+  {
+    id: 'testimonials',
+    title: 'Testimonials',
+    description: 'Review and approve user-submitted testimonials for the landing page.',
+    icon: MessageSquare,
+    path: '/admin/testimonials',
+    color: 'from-amber-500 to-orange-600',
+    bg: 'bg-amber-50'
   }
 ];
 

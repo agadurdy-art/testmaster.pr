@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { 
+import { useGoBack } from '../hooks/useGoBack';
+import {
   Rocket, Star, TrendingUp, Plane, BookOpen, Award, Target, Crown,
   ChevronRight, Lock, CheckCircle, Flame, Trophy, Zap,
   Home, ArrowLeft
@@ -193,6 +194,7 @@ function GamificationHeader({ userProgress }) {
 
 export default function UnifiedCoursePage({ user }) {
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const [stages, setStages] = useState([]);
   const [userProgress, setUserProgress] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -267,7 +269,7 @@ export default function UnifiedCoursePage({ user }) {
         <Button 
           variant="ghost" 
           className="mb-6 rounded-full"
-          onClick={() => navigate('/dashboard')}
+          onClick={goBack}
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Dashboard

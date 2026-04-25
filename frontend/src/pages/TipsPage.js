@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
@@ -9,6 +10,7 @@ import { toast } from 'sonner';
 
 export default function TipsPage({ user, onLogout }) {
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const [tips, setTips] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -52,7 +54,7 @@ export default function TipsPage({ user, onLogout }) {
           </div>
           <Button
             variant="outline"
-            onClick={() => navigate('/dashboard')}
+            onClick={goBack}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Dashboard

@@ -6,6 +6,7 @@ import {
   BookOpen, Headphones, Play, Pause,
   Loader2, Lightbulb, RotateCcw, Zap
 } from 'lucide-react';
+import { useGoBack } from '../hooks/useGoBack';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -42,6 +43,7 @@ function extractOptionValue(opt) {
 
 export default function PracticeMode({ user }) {
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const [searchParams] = useSearchParams();
   const skill = searchParams.get('skill') || 'reading';
 
@@ -160,7 +162,7 @@ export default function PracticeMode({ user }) {
     if (!text) return;
     setAudioLoading(true);
     try {
-      const response = await fetch(`${API_URL}/api/vocab-grammar/tts`, {
+      const response = await fetch(`${API_URL}/api/speech/tts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: text.substring(0, 500), voice: 'alloy', speed: 0.9 })
@@ -241,7 +243,7 @@ export default function PracticeMode({ user }) {
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 flex flex-col" data-testid="quick-practice">
       {/* Top Bar */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-amber-200/60 bg-white/60 backdrop-blur-sm">
-        <button onClick={() => navigate('/question-bank')} className="text-amber-800/60 hover:text-amber-900 flex items-center gap-1.5 text-sm" data-testid="back-to-qb">
+        <button onClick={goBack} className="text-amber-800/60 hover:text-amber-900 flex items-center gap-1.5 text-sm" data-testid="back-to-qb">
           <ArrowLeft className="w-4 h-4" /> Back
         </button>
         <div className="flex items-center gap-2">

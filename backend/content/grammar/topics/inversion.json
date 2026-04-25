@@ -1,0 +1,91 @@
+{
+  "slug": "inversion",
+  "module": 3,
+  "order": 2,
+  "title": "Inversion",
+  "subtitle": "When negative adverbs trigger question-style word order in statements",
+  "target_band": "8 \u2192 9",
+  "intro": "Inversion is a deliberate, unmistakable marker of academic register. By starting a sentence with a negative or restrictive adverbial, you trigger the same subject-auxiliary inversion used in questions \u2014 but the sentence remains a statement. Because it cannot be produced accidentally, examiners treat a well-formed inversion as proof of grammatical range. One per Task 2 essay is plenty.",
+  "rules": [
+    {"heading": "Triggering adverbials (all inversion)", "body": "Not only\u2026 but also; Never (before); Seldom; Rarely; Hardly/Scarcely\u2026 when; No sooner\u2026 than; Little; Nowhere; Under no circumstances; On no account; Only + time/when/after/if; Not until\u2026"},
+    {"heading": "Word order after the trigger", "body": "Adverbial + auxiliary + subject + main verb. 'Rarely have governments faced such a complex challenge.' If there is no auxiliary, use do/does/did: 'Rarely do students appreciate the full scope of the exam.'"},
+    {"heading": "'Only after / only when / only if' fronting", "body": "The whole time clause is fronted, and the main clause inverts: 'Only after the policy took effect did its flaws become apparent.'"},
+    {"heading": "'Not only\u2026 but also' pattern", "body": "'Not only has the project exceeded its budget, but it has also missed every deadline.' Both halves benefit from parallel inversion / emphasis."}
+  ],
+  "examples": [
+    {"context": "Writing Task 2", "sentence": "Not only has automation displaced manual workers, but it has also reshaped the skills demanded of the professional class.", "note": "Double-barrelled inversion \u2014 the classic high-band opener."},
+    {"context": "Writing Task 2", "sentence": "Rarely does a single policy address both inequality and growth.", "note": "'Rarely' triggers do-inversion in the present."},
+    {"context": "Writing Task 2", "sentence": "Only when governments commit to long-term investment will the transition to clean energy be complete.", "note": "'Only when' + inverted main clause."},
+    {"context": "Writing Task 2", "sentence": "Under no circumstances should academic qualifications be the sole criterion for employment.", "note": "Modal inversion with 'Under no circumstances'."},
+    {"context": "Writing Task 2", "sentence": "Little did early policymakers suspect that the reform would backfire so dramatically.", "note": "'Little' triggers past inversion \u2014 stylish."}
+  ],
+  "band8_marker": "Band 8 writers use inversion sparingly and strategically \u2014 usually once per essay, positioned at the start of a body paragraph or topic sentence, where it commands attention without overwhelming the prose. Overusing inversion is a telltale sign of a writer who has learned a trick but not a language. One well-placed 'Not only\u2026 but also' says more than three.",
+  "common_errors": [
+    {"error": "Forgetting to invert: 'Rarely governments act decisively.'", "fix": "Invert subject and auxiliary \u2192 'Rarely do governments act decisively.'"},
+    {"error": "'No sooner had he arrived when\u2026'", "fix": "'No sooner' pairs with 'than' \u2192 'No sooner had he arrived than\u2026' 'Hardly had he arrived when\u2026'"},
+    {"error": "Using full inversion in the subordinate clause of 'Only when': 'Only when did he realise\u2026'", "fix": "'Only when + normal clause + did + main clause': 'Only when he realised the truth did he apologise.'"},
+    {"error": "Inverting 'Not only' without also inverting 'but also'", "fix": "Keep parallel emphasis: 'Not only has the price fallen, but demand has also risen.'"}
+  ],
+  "practice": [
+    {
+      "mode": "sentence_transformation",
+      "title": "Rewrite with inversion",
+      "instruction": "Use the fronting element in brackets and invert correctly.",
+      "items": [
+        {"prompt": "I have never seen such a dramatic turnaround. (Never)", "answer": "Never have I seen such a dramatic turnaround.", "explanation": "'Never' + auxiliary + subject."},
+        {"prompt": "She rarely attends board meetings in person. (Rarely)", "answer": "Rarely does she attend board meetings in person.", "explanation": "Do-inversion in the present."},
+        {"prompt": "The public will only accept the tax if the funds are ring-fenced for healthcare. (Only if)", "answer": "Only if the funds are ring-fenced for healthcare will the public accept the tax.", "explanation": "'Only if' + clause + inverted main."},
+        {"prompt": "You should not disclose the password under any circumstances. (Under no circumstances)", "answer": "Under no circumstances should you disclose the password.", "explanation": "Modal inversion."},
+        {"prompt": "He had hardly sat down when the phone rang. (Hardly)", "answer": "Hardly had he sat down when the phone rang.", "explanation": "Perfect-tense inversion."},
+        {"prompt": "The committee did not realise until later how serious the risk was. (Not until)", "answer": "Not until later did the committee realise how serious the risk was.", "explanation": "Fronted 'Not until'."},
+        {"prompt": "The reform reduced costs and improved quality. (Not only\u2026 but also)", "answer": "Not only did the reform reduce costs, but it also improved quality.", "explanation": "Parallel inversion."},
+        {"prompt": "The country had barely recovered from the recession when a second wave hit. (Scarcely)", "answer": "Scarcely had the country recovered from the recession when a second wave hit.", "explanation": "'Scarcely\u2026 when' with Past Perfect."}
+      ]
+    },
+    {
+      "mode": "band8_ranking",
+      "title": "Which opening is more Band 8?",
+      "instruction": "Pick the more sophisticated version.",
+      "items": [
+        {"prompt": "A) 'Governments have not often faced such complex challenges.' B) 'Seldom have governments faced such complex challenges.'", "options": ["A", "B"], "answer": 1, "explanation": "Inversion packs the same meaning with academic weight."},
+        {"prompt": "A) 'If you commit fully, you can succeed.' B) 'Only by committing fully can you succeed.'", "options": ["A", "B"], "answer": 1, "explanation": "'Only by + -ing' inversion \u2014 high-band."},
+        {"prompt": "A) 'He did not realise the danger until too late.' B) 'Not until too late did he realise the danger.'", "options": ["A", "B"], "answer": 1, "explanation": "Inversion dramatises the realisation."},
+        {"prompt": "A) 'The policy has flaws. It is also expensive.' B) 'Not only does the policy have flaws, but it is also expensive.'", "options": ["A", "B"], "answer": 1, "explanation": "Parallel inversion is more cohesive."},
+        {"prompt": "A) 'This is the first time I have encountered such a position.' B) 'Never before have I encountered such a position.'", "options": ["A", "B"], "answer": 1, "explanation": "'Never before' + inversion carries rhetorical weight."},
+        {"prompt": "A) 'We rarely see unanimity on this issue.' B) 'Rarely do we see unanimity on this issue.'", "options": ["A", "B"], "answer": 1, "explanation": "Fronted 'Rarely' with do-inversion."},
+        {"prompt": "A) 'Under no circumstances is dissent tolerated.' B) 'Dissent is never tolerated in any case.'", "options": ["A", "B"], "answer": 0, "explanation": "Inverted 'Under no circumstances' is formal and emphatic."},
+        {"prompt": "A) 'As soon as the session began, an objection was raised.' B) 'No sooner had the session begun than an objection was raised.'", "options": ["A", "B"], "answer": 1, "explanation": "'No sooner\u2026 than' with past-perfect inversion."}
+      ]
+    },
+    {
+      "mode": "gap_fill",
+      "title": "Complete the inverted structure",
+      "instruction": "Supply the missing words.",
+      "items": [
+        {"prompt": "Not only ___ the budget, but it has also missed every deadline.", "answer": "has the project exceeded", "explanation": "Auxiliary + subject + main verb."},
+        {"prompt": "Rarely ___ such clear consensus among economists.", "answer": "do we see / is there", "explanation": "Do-inversion or 'be' inversion."},
+        {"prompt": "Only after ___ the consultation process could the law be enacted.", "answer": "the committee had completed (or similar)", "explanation": "Normal clause inside 'Only after'."},
+        {"prompt": "No sooner ___ ___ the border than they were stopped.", "answer": "had they crossed", "explanation": "'No sooner had + subject + V3'."},
+        {"prompt": "Little ___ the early scientists suspect that their theory would be rejected for decades.", "answer": "did", "explanation": "'Little' + do-inversion."},
+        {"prompt": "Under no circumstances ___ personal data be shared without consent.", "answer": "should / may", "explanation": "Modal inversion."},
+        {"prompt": "Only when the evidence is overwhelming ___ the court intervene.", "answer": "will / does / should", "explanation": "'Only when' + clause + modal inversion."},
+        {"prompt": "Not until the third quarter ___ ___ any improvement in sales.", "answer": "did we see", "explanation": "'Not until' + do-inversion."}
+      ]
+    },
+    {
+      "mode": "mcq",
+      "title": "Inversion judgements",
+      "instruction": "Pick the version that sounds most natural to a Band 8 examiner.",
+      "items": [
+        {"prompt": "___ the central bank intervened did the currency stabilise.", "options": ["Only when", "Only after", "Not until", "All of the above are valid"], "answer": 3, "explanation": "Each fronting trigger licenses the same inverted main clause; all three are grammatical Band 8 openers."},
+        {"prompt": "___ the minister known the figures were inflated, she would have postponed the announcement.", "options": ["If", "Should", "Had", "Were"], "answer": 2, "explanation": "'Had' inverts the third conditional, dropping 'if' for academic register."},
+        {"prompt": "Rarely ___ a single reform addressed both equity and efficiency so decisively.", "options": ["a single reform has", "has a single reform", "did a single reform", "a single reform did"], "answer": 1, "explanation": "Fronted 'rarely' triggers auxiliary-subject inversion; the perfect aspect fits the present-relevant claim."},
+        {"prompt": "No sooner ___ the legislation passed ___ industry groups launched a legal challenge.", "options": ["the legislation was / when", "had the legislation been / than", "did the legislation pass / when", "was the legislation / than"], "answer": 1, "explanation": "'No sooner' pairs with 'than' and takes past-perfect inversion."},
+        {"prompt": "Which sentence is correctly inverted?", "options": ["So pervasive the problem has become that it now defies easy solution.", "So pervasive has the problem become that it now defies easy solution.", "So has the problem become pervasive that it now defies easy solution.", "Pervasive so has the problem become that it now defies easy solution."], "answer": 1, "explanation": "'So + adjective' fronting requires auxiliary-subject inversion immediately after the adjective."},
+        {"prompt": "Under no circumstances ___ confidential data ___ to third parties.", "options": ["should / be disclosed", "confidential data should / disclose", "should be / disclosed", "disclosed / be"], "answer": 0, "explanation": "Negative adverbial 'under no circumstances' triggers modal-subject inversion with passive infinitive."},
+        {"prompt": "Only by ___ in long-term infrastructure can a city remain economically viable.", "options": ["invest", "to invest", "investing", "invested"], "answer": 2, "explanation": "'Only by + -ing' is the standard gerundial fronting; the main clause then inverts with 'can'."},
+        {"prompt": "Little ___ that her early paper would later define the entire field.", "options": ["she suspected", "did she suspect", "had she suspected", "she did suspect"], "answer": 1, "explanation": "Negative-leaning 'little' triggers do-inversion in the past tense for retrospective narration."}
+      ]
+    }
+  ]
+}

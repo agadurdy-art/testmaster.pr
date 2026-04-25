@@ -17,7 +17,6 @@ class Skill(str, Enum):
     LISTENING = "listening"
     WRITING = "writing"
     SPEAKING = "speaking"
-    GRAMMAR_VOCAB = "grammar_vocab"
 
 class BandLevel(str, Enum):
     BAND_4_5 = "4.0-5.0"
@@ -267,7 +266,6 @@ class UserProgress(BaseModel):
     listening_stats: Dict[str, Any] = {}
     writing_stats: Dict[str, Any] = {}
     speaking_stats: Dict[str, Any] = {}
-    grammar_vocab_stats: Dict[str, Any] = {}
     # Topic-wise accuracy
     topic_accuracy: Dict[str, float] = {}
     # Question-type success rate

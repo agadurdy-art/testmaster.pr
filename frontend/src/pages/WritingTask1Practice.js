@@ -14,6 +14,13 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { getRecommendedLessonPath } from '../lib/recommendationRouting';
+import { useI18n } from '../lib/i18n';
+import WritingEvaluatorResult from '../features/evaluator/components/WritingEvaluatorResult';
+import {
+  WritingEvaluationResult,
+  verifyAnnotationOffsets,
+} from '../features/evaluator/schemas/writingResult';
+import { useGoBack } from '../hooks/useGoBack';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -30,6 +37,8 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function WritingTask1Practice() {
   const navigate = useNavigate();
+  const goBack = useGoBack();
+  const { languageWireCode } = useI18n();
   const [searchParams] = useSearchParams();
   const topic = searchParams.get('topic') || 'participation';
   const bandLevel = searchParams.get('band') || '5.5-6.5';
@@ -167,7 +176,7 @@ export default function WritingTask1Practice() {
       }
     } catch (error) {
       console.error('Error generating visual:', error);
-      toast.error('Görsel oluşturulamadı');
+      toast.error('Could not generate visual');
       
       // Fallback to old endpoint for generated chart types only
       if (!['process', 'map'].includes(visualType)) {
@@ -216,34 +225,38 @@ export default function WritingTask1Practice() {
     setEvaluating(true);
     setIsTimerRunning(false);
     toast.info('AI evaluation in progress...');
-    
+
     try {
-      const response = await fetch(`${API_URL}/api/question-bank/writing/evaluate`, {
+      const response = await fetch(`${API_URL}/api/writing-practice/evaluate/v2`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          response: userResponse,
-          task_type: 'task1',
-          visual_type: visualType,
-          topic: topic,
-          band_level: bandLevel,
-          task_description: taskData?.task_description || ''
-        })
+          task_type: 'task1_academic',
+          prompt: taskData?.task_description || '',
+          essay: userResponse,
+          user_language: languageWireCode || 'en',
+        }),
       });
-      
-      const data = await response.json();
-      
-      if (data.success) {
-        setEvaluation(data.evaluation);
-        // Store recommended lessons from ULTRA MASTER PROMPT
-        if (data.recommended_lessons && data.recommended_lessons.length > 0) {
-          setRecommendedLessons(data.recommended_lessons);
-        }
-        setModelAnswerStep(1); // Show band result first
-        toast.success('Evaluation complete!');
-      } else {
-        toast.error(data.error || 'Evaluation failed');
+
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        toast.error(err?.detail?.message || err?.detail || 'Evaluation failed');
+        return;
       }
+
+      const data = await response.json();
+      const parsed = WritingEvaluationResult.safeParse(data);
+      if (!parsed.success) {
+        console.error('[WritingTask1] schema mismatch', parsed.error);
+        toast.error('Evaluator returned unexpected data. Please try again.');
+        return;
+      }
+      const offsetErrors = verifyAnnotationOffsets(parsed.data, userResponse);
+      if (offsetErrors.length) {
+        console.warn('[WritingTask1] annotation offset mismatches', offsetErrors);
+      }
+      setEvaluation(parsed.data);
+      toast.success('Evaluation complete!');
     } catch (error) {
       console.error('Evaluation error:', error);
       toast.error('Error during evaluation');
@@ -261,6 +274,26 @@ export default function WritingTask1Practice() {
     setMobileView(prev => prev === 'visual' ? 'write' : 'visual');
   };
 
+  // Once evaluation comes back, swap to the V4 "Liz's Margin" result screen.
+  if (evaluation) {
+    return (
+      <WritingEvaluatorResult
+        result={evaluation}
+        essayText={userResponse}
+        prompt={taskData?.task_description || ''}
+        onRewrite={() => {
+          setEvaluation(null);
+          setUserResponse(evaluation.improved_version || userResponse);
+        }}
+        onPracticeMore={() => navigate('/question-bank/writing/task1')}
+        onViewRewrite={() => {
+          setUserResponse(evaluation.improved_version || userResponse);
+          setEvaluation(null);
+        }}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-green-50">
       {/* Header - Fixed */}
@@ -271,7 +304,7 @@ export default function WritingTask1Practice() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => navigate('/question-bank')}
+                onClick={goBack}
                 className="text-white/80 hover:text-white hover:bg-white/10"
               >
                 <ArrowLeft className="w-4 h-4" />
@@ -532,375 +565,6 @@ export default function WritingTask1Practice() {
                   </Button>
                 </div>
               </div>
-
-              {/* Evaluation Results - Step-based reveal */}
-              {evaluation && (
-                <div className="space-y-4">
-                  {/* Step 1: Band Result */}
-                  <Card className="p-5 border-2 border-green-200 bg-green-50/50">
-                    <div className="text-center mb-4">
-                      <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-2">
-                        <Award className="w-8 h-8 text-green-600" />
-                      </div>
-                      <div className="text-4xl font-bold text-green-600">
-                        Band {evaluation.overall_band}
-                      </div>
-                      <p className="text-sm text-gray-500 mt-1">Overall Band Score</p>
-                    </div>
-
-                    {/* Criteria Breakdown - Collapsible */}
-                    <details className="mt-4">
-                      <summary className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900">
-                        Criteria Details
-                      </summary>
-                      <div className="grid grid-cols-2 gap-3 mt-3">
-                        {[
-                          { name: 'Task Achievement', key: 'task_achievement' },
-                          { name: 'Coherence & Cohesion', key: 'coherence_cohesion' },
-                          { name: 'Lexical Resource', key: 'lexical_resource' },
-                          { name: 'Grammar', key: 'grammatical_range' },
-                        ].map(criterion => (
-                          <div key={criterion.key} className="bg-white p-3 rounded-lg">
-                            <div className="flex items-center justify-between mb-1">
-                              <span className="text-xs text-gray-600">{criterion.name}</span>
-                              <Badge variant="outline" className="text-xs">
-                                {evaluation[criterion.key]?.score || '-'}
-                              </Badge>
-                            </div>
-                            <p className="text-xs text-gray-500 line-clamp-2">
-                              {evaluation[criterion.key]?.feedback}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    </details>
-                  </Card>
-
-                  {/* Step 2: Academic Reasoning Feedback */}
-                  {modelAnswerStep >= 1 && (
-                    <Card className="p-5 border">
-                      <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                        <MessageSquare className="w-5 h-5 text-blue-600" /> Academic Feedback
-                      </h3>
-                      
-                      {/* Strengths */}
-                      {evaluation.strengths?.length > 0 && (
-                        <div className="mb-4">
-                          <h4 className="text-sm font-semibold text-green-700 mb-2">✅ Strengths</h4>
-                          <ul className="space-y-1">
-                            {evaluation.strengths.map((s, idx) => (
-                              <li key={idx} className="text-xs text-gray-600 flex items-start gap-2">
-                                <CheckCircle className="w-3.5 h-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                                {s}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-
-                      {/* Areas for Improvement */}
-                      {evaluation.weaknesses?.length > 0 && (
-                        <div className="mb-4">
-                          <h4 className="text-sm font-semibold text-amber-700 mb-2">⚠️ Areas for Improvement</h4>
-                          <ul className="space-y-1">
-                            {evaluation.weaknesses.map((w, idx) => (
-                              <li key={idx} className="text-xs text-gray-600 flex items-start gap-2">
-                                <AlertCircle className="w-3.5 h-3.5 text-amber-500 mt-0.5 flex-shrink-0" />
-                                {w}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-
-                      {evaluation.high_priority_fixes?.length > 0 && (
-                        <div className="mb-4 p-3 bg-rose-50 rounded-lg">
-                          <h4 className="text-sm font-semibold text-rose-700 mb-2">Highest-Priority Fixes</h4>
-                          <ul className="space-y-1">
-                            {evaluation.high_priority_fixes.map((fix, idx) => (
-                              <li key={idx} className="text-xs text-gray-700">• {fix}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-
-                      {/* Examiner Comment */}
-                      {evaluation.examiner_comment && (
-                        <div className="mb-4 p-3 bg-gray-50 rounded-lg border">
-                          <p className="text-xs text-gray-700 italic">{evaluation.examiner_comment}</p>
-                        </div>
-                      )}
-
-                      {/* Response Diagnosis */}
-                      {evaluation.response_diagnosis?.main_issue && (
-                        <div className="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-100">
-                          <h4 className="font-semibold text-blue-800 mb-2 text-xs">Response Diagnosis</h4>
-                          <div className="space-y-1 text-xs text-blue-700">
-                            <p><strong>Main Issue:</strong> {evaluation.response_diagnosis.main_issue}</p>
-                            <p><strong>Band Ceiling:</strong> {evaluation.response_diagnosis.band_ceiling_reason}</p>
-                            <p><strong>Quick Win:</strong> {evaluation.response_diagnosis.quick_win}</p>
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Rewrite Guidance */}
-                      {evaluation.rewrite_guidance?.weakest_paragraph && (
-                        <div className="mb-4 p-3 bg-violet-50 rounded-lg border border-violet-100">
-                          <h4 className="font-semibold text-violet-800 mb-2 text-xs">Rewrite Guidance</h4>
-                          <div className="space-y-1 text-xs text-violet-700">
-                            <p><strong>Weakest Paragraph:</strong> {evaluation.rewrite_guidance.weakest_paragraph}</p>
-                            <p><strong>Suggested Opening:</strong> {evaluation.rewrite_guidance.suggested_opening}</p>
-                            <p><strong>Key Linking Phrases:</strong> {evaluation.rewrite_guidance.key_linking_phrases}</p>
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Improvement Suggestions */}
-                      {evaluation.suggestions?.length > 0 && (
-                        <div className="p-3 bg-blue-50 rounded-lg">
-                          <h4 className="text-sm font-semibold text-blue-700 mb-2">💡 Improvement Suggestions</h4>
-                          <ul className="space-y-1">
-                            {evaluation.suggestions.map((sug, idx) => (
-                              <li key={idx} className="text-xs text-gray-600">• {sug}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-
-                      {evaluation.band_justification && (
-                        <div className="mt-4 p-3 bg-slate-50 rounded-lg border">
-                          <h4 className="text-sm font-semibold text-slate-700 mb-2">📏 Band Justification</h4>
-                          <p className="text-xs text-gray-700">{evaluation.band_justification}</p>
-                        </div>
-                      )}
-
-                      {evaluation.response_diagnosis && Object.keys(evaluation.response_diagnosis).length > 0 && (
-                        <div className="mt-4 p-3 bg-indigo-50 rounded-lg border border-indigo-100">
-                          <h4 className="text-sm font-semibold text-indigo-700 mb-2">🧭 Response Diagnosis</h4>
-                          <div className="space-y-2">
-                            {Object.entries(evaluation.response_diagnosis).map(([key, value]) => (
-                              <div key={key} className="bg-white rounded border p-2">
-                                <p className="text-[11px] font-semibold text-gray-600 uppercase tracking-wide">
-                                  {key.replace(/_/g, ' ')}
-                                </p>
-                                <p className="text-xs text-gray-700 mt-1">{value}</p>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {evaluation.line_by_line_corrections?.length > 0 && (
-                        <div className="mt-4 p-3 bg-white rounded-lg border">
-                          <h4 className="text-sm font-semibold text-gray-900 mb-2">✍️ Line-by-Line Corrections</h4>
-                          <div className="space-y-3">
-                            {evaluation.line_by_line_corrections.map((item, idx) => (
-                              <div key={idx} className="rounded-lg border p-3 bg-gray-50">
-                                <p className="text-xs text-red-700"><strong>Original:</strong> {item.original_line || item.original}</p>
-                                <p className="text-xs text-amber-700 mt-1"><strong>Issue:</strong> {item.issue}</p>
-                                <p className="text-xs text-green-700 mt-1"><strong>Corrected:</strong> {item.corrected_line || item.improved}</p>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {evaluation.rewrite_guidance && Object.keys(evaluation.rewrite_guidance).length > 0 && (
-                        <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-100">
-                          <h4 className="text-sm font-semibold text-green-700 mb-2">🔁 Rewrite Guidance</h4>
-                          <div className="space-y-3">
-                            {Object.entries(evaluation.rewrite_guidance).map(([key, value]) => (
-                              Array.isArray(value) ? (
-                                <div key={key}>
-                                  <p className="text-[11px] font-semibold text-gray-600 uppercase tracking-wide mb-1">
-                                    {key.replace(/_/g, ' ')}
-                                  </p>
-                                  <ul className="space-y-1">
-                                    {value.map((item, idx) => <li key={idx} className="text-xs text-gray-700">• {item}</li>)}
-                                  </ul>
-                                </div>
-                              ) : (
-                                <div key={key} className="bg-white rounded border p-2">
-                                  <p className="text-[11px] font-semibold text-gray-600 uppercase tracking-wide">
-                                    {key.replace(/_/g, ' ')}
-                                  </p>
-                                  <p className="text-xs text-gray-700 mt-1">{value}</p>
-                                </div>
-                              )
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* ULTRA MASTER PROMPT: Recommended Lessons */}
-                      {recommendedLessons.length > 0 && (
-                        <div className="p-3 bg-purple-50 rounded-lg border border-purple-200">
-                          <h4 className="text-sm font-semibold text-purple-700 mb-2 flex items-center gap-2">
-                            📚 Recommended Lessons
-                            <Badge className="bg-purple-100 text-purple-600 text-xs">Course Focused</Badge>
-                          </h4>
-                          <p className="text-xs text-purple-600 mb-2">
-                            Study these lessons to improve your weak areas:
-                          </p>
-                          <div className="space-y-2">
-                            {recommendedLessons.map((lesson, idx) => (
-                              <div 
-                                key={idx}
-                                className="p-2 bg-white rounded-lg border border-purple-100 cursor-pointer hover:border-purple-300 transition-colors"
-                                onClick={() => navigate(getRecommendedLessonPath(lesson))}
-                              >
-                                <div className="flex items-center justify-between">
-                                  <div className="flex-1">
-                                    <p className="text-sm font-medium text-gray-800">{lesson.title}</p>
-                                    <p className="text-xs text-gray-500">{lesson.reason}</p>
-                                  </div>
-                                  <div className="text-right">
-                                    <Badge 
-                                      className={`text-xs ${
-                                        lesson.stage === 'beginner' ? 'bg-green-100 text-green-700' :
-                                        lesson.stage === 'mastery' ? 'bg-blue-100 text-blue-700' :
-                                        'bg-amber-100 text-amber-700'
-                                      }`}
-                                    >
-                                      {lesson.band_level}
-                                    </Badge>
-                                  </div>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Expand to see more */}
-                      <Button
-                        variant="outline"
-                        className="w-full mt-4"
-                        onClick={() => setModelAnswerStep(3)}
-                      >
-                        {modelAnswerStep < 3 ? 'Show Model Answer' : 'Model Answer Shown'}
-                      </Button>
-                    </Card>
-                  )}
-
-                  {/* Step 3: Model Answer (Controlled Reveal) */}
-                  {modelAnswerStep >= 3 && (
-                    <Card className="p-5 border-2 border-blue-200 bg-blue-50/30">
-                      <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                        <Layers className="w-5 h-5 text-blue-600" /> Model Answer
-                      </h3>
-                      
-                      {modelAnswer ? (
-                        <>
-                          {/* Tab buttons for different band samples */}
-                          <div className="flex gap-2 mb-4">
-                            <Badge 
-                              className={`cursor-pointer ${modelTab === 'band8' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'}`}
-                              onClick={() => setModelTab('band8')}
-                              data-testid="model-tab-band8"
-                            >Band 8 Example</Badge>
-                            <Badge 
-                              className={`cursor-pointer ${modelTab === 'band6' ? 'bg-amber-100 text-amber-700' : 'bg-gray-100 text-gray-600'}`}
-                              onClick={() => setModelTab('band6')}
-                              data-testid="model-tab-band6"
-                            >Band 6 Example</Badge>
-                            <Badge 
-                              className={`cursor-pointer ${modelTab === 'notes' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600'}`}
-                              onClick={() => setModelTab('notes')}
-                              data-testid="model-tab-notes"
-                            >Academic Notes</Badge>
-                          </div>
-
-                          {/* Band 8 Model Answer */}
-                          {modelTab === 'band8' && (
-                            <div className="bg-white p-4 rounded-lg border">
-                              <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
-                                {modelAnswer?.layer_a_examiner_model?.full_text || 
-                                 modelAnswer?.text ||
-                                 'Loading model answer...'}
-                              </p>
-                              <div className="mt-3 pt-3 border-t flex items-center justify-between">
-                                <span className="text-xs text-gray-500">
-                                  Word Count: {modelAnswer?.layer_a_examiner_model?.word_count || modelAnswer?.word_count || '-'}
-                                </span>
-                                <Badge className="bg-green-100 text-green-700">
-                                  Estimated Band: {modelAnswer?.layer_a_examiner_model?.estimated_band || '8.0'}
-                                </Badge>
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Band 6 Model Answer */}
-                          {modelTab === 'band6' && (
-                            <div className="bg-white p-4 rounded-lg border">
-                              {modelAnswer?.layer_a6_band6_model?.full_text ? (
-                                <>
-                                  <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
-                                    {modelAnswer.layer_a6_band6_model.full_text}
-                                  </p>
-                                  <div className="mt-3 pt-3 border-t flex items-center justify-between">
-                                    <span className="text-xs text-gray-500">
-                                      Word Count: {modelAnswer.layer_a6_band6_model.word_count || '-'}
-                                    </span>
-                                    <Badge className="bg-amber-100 text-amber-700">
-                                      Band {modelAnswer.layer_a6_band6_model.estimated_band || '6.0'}
-                                    </Badge>
-                                  </div>
-                                  {modelAnswer.layer_a6_band6_model.band_characteristics?.length > 0 && (
-                                    <div className="mt-3 pt-3 border-t">
-                                      <p className="text-xs font-semibold text-gray-700 mb-1">Typical Band 6 Issues in This Response:</p>
-                                      <ul className="text-xs text-gray-600 space-y-0.5 list-disc pl-4">
-                                        {modelAnswer.layer_a6_band6_model.band_characteristics.map((c, i) => (
-                                          <li key={i}>{c}</li>
-                                        ))}
-                                      </ul>
-                                    </div>
-                                  )}
-                                </>
-                              ) : (
-                                <p className="text-sm text-gray-500">Band 6 example loading or not available for this task.</p>
-                              )}
-                            </div>
-                          )}
-
-                          {/* Academic Notes */}
-                          {modelTab === 'notes' && (
-                            <div className="bg-white p-4 rounded-lg border space-y-4">
-                              {modelAnswer?.layer_b_reasoning_notes ? (
-                                <div className="space-y-3">
-                                  {Object.entries(modelAnswer.layer_b_reasoning_notes).map(([key, value]) => (
-                                    <div key={key} className="p-3 bg-gray-50 rounded-lg">
-                                      <h5 className="text-xs font-semibold text-gray-800 mb-1">{value.question}</h5>
-                                      <p className="text-xs text-gray-600">{value.explanation}</p>
-                                    </div>
-                                  ))}
-                                </div>
-                              ) : (
-                                <p className="text-sm text-gray-500">Academic notes not available for this task.</p>
-                              )}
-                              {modelAnswer?.layer_c_alternatives && (
-                                <div>
-                                  <p className="text-xs font-semibold text-gray-700 mb-2">Alternative Expressions</p>
-                                  <div className="flex flex-wrap gap-2">
-                                    {modelAnswer.layer_c_alternatives.overview_alternatives?.slice(0, 6).map((alt, idx) => (
-                                      <Badge key={idx} variant="outline" className="text-xs">{alt}</Badge>
-                                    ))}
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          )}
-                        </>
-                      ) : (
-                        <div className="text-center py-6">
-                          <p className="text-sm text-gray-500">Loading model answer...</p>
-                          <p className="text-xs text-gray-400 mt-2">Please wait, AI is preparing the model answer.</p>
-                        </div>
-                      )}
-                    </Card>
-                  )}
-                </div>
-              )}
             </div>
           </div>
         </div>

@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { 
+import { useGoBack } from '../hooks/useGoBack';
+import {
   ArrowLeft, ChevronRight, CheckCircle, Clock, Zap, X,
   RefreshCw, RotateCcw, BookOpen, Gamepad2, FileText, Edit3, Headphones, 
   Mic, MicOff, Repeat, Play, Star, Lock, Volume2, AlertCircle, ThumbsUp, ThumbsDown, Square, Trophy,
-  Download, Map, Award, Sparkles, ArrowRight
+  Download, Map, Award, Sparkles, ArrowRight, ExternalLink
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { Button } from '../components/ui/button';
@@ -2216,6 +2217,7 @@ function ExitTicket({ activity, onComplete, onSkip }) {
 // ═══════ MAIN LESSON PAGE ═══════
 export default function UnifiedLessonPage({ user }) {
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const { lessonId } = useParams();
   const [lesson, setLesson] = useState(null);
   const [currentActivityType, setCurrentActivityType] = useState(null);
@@ -2430,7 +2432,7 @@ export default function UnifiedLessonPage({ user }) {
         </div>
         <h2 className="text-2xl font-bold text-gray-900 mb-3">Lesson Locked</h2>
         <p className="text-gray-600 mb-6">Complete the previous lesson first to unlock this one.</p>
-        <Button onClick={() => navigate(-1)} className="rounded-full px-6" data-testid="go-back-btn">
+        <Button onClick={goBack} className="rounded-full px-6" data-testid="go-back-btn">
           <ArrowLeft className="w-4 h-4 mr-2" /> Go Back
         </Button>
       </div>
@@ -2974,7 +2976,7 @@ function LessonSummary({ lesson, activityScores, summaryData, completedActivitie
                 data-testid={`extra-link-${i}`}>
                 {link.type === 'youtube' ? <Play className="w-5 h-5 text-red-500 shrink-0" /> : <BookOpen className="w-5 h-5 text-blue-500 shrink-0" />}
                 <span className="text-sm font-medium text-gray-700">{link.label}</span>
-                <ChevronRight className="w-4 h-4 text-gray-400 ml-auto" />
+                <ExternalLink className="w-4 h-4 text-gray-400 ml-auto" aria-label="Opens in a new tab" />
               </a>
             ))}
           </div>

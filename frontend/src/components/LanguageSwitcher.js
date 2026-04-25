@@ -1,77 +1,30 @@
 import React from 'react';
 import { useI18n, LANGUAGES } from '../lib/i18n';
-import { Button } from './ui/button';
 
 export default function LanguageSwitcher({ compact = false }) {
   const { language, setLanguage } = useI18n();
 
-  if (compact) {
-    return (
-      <div className="flex items-center space-x-1 text-xs">
-        <button
-          type="button"
-          onClick={() => setLanguage('en')}
-          className={`px-2 py-1 rounded-full border text-xs font-medium ${
-            language === 'en'
-              ? 'bg-sky-600 text-white border-sky-600'
-              : 'bg-white text-gray-700 border-gray-300'
-          }`}
-        >
-          EN
-        </button>
-        <button
-          type="button"
-          onClick={() => setLanguage('vi')}
-          className={`px-2 py-1 rounded-full border text-xs font-medium ${
-            language === 'vi'
-              ? 'bg-sky-600 text-white border-sky-600'
-              : 'bg-white text-gray-700 border-gray-300'
-          }`}
-        >
-          VI
-        </button>
-        <button
-          type="button"
-          onClick={() => setLanguage('tr')}
-          className={`px-2 py-1 rounded-full border text-xs font-medium ${
-            language === 'tr'
-              ? 'bg-sky-600 text-white border-sky-600'
-              : 'bg-white text-gray-700 border-gray-300'
-          }`}
-        >
-          TR
-        </button>
-      </div>
-    );
-  }
+  // Single-select dropdown scales cleanly to 12+ languages.
+  // Native <select> keeps accessibility + mobile UX correct on iOS/Android.
+  const sizeClass = compact
+    ? 'h-7 text-xs px-2 py-0.5 rounded-full border border-gray-300 bg-white text-gray-700'
+    : 'h-8 text-sm px-3 py-1 rounded-md border border-gray-300 bg-white text-gray-700';
 
   return (
-    <div className="flex items-center space-x-2">
-      <span className="text-xs text-gray-500">Lang</span>
-      <Button
-        variant={language === 'en' ? 'default' : 'outline'}
-        size="sm"
-        className="text-xs px-2 py-1 h-7"
-        onClick={() => setLanguage('en')}
+    <label className="inline-flex items-center gap-2">
+      {!compact && <span className="text-xs text-gray-500">Lang</span>}
+      <select
+        aria-label="Language"
+        value={language}
+        onChange={(e) => setLanguage(e.target.value)}
+        className={`${sizeClass} font-medium focus:outline-none focus:ring-2 focus:ring-sky-400 cursor-pointer`}
       >
-        {LANGUAGES.en}
-      </Button>
-      <Button
-        variant={language === 'vi' ? 'default' : 'outline'}
-        size="sm"
-        className="text-xs px-2 py-1 h-7"
-        onClick={() => setLanguage('vi')}
-      >
-        {LANGUAGES.vi}
-      </Button>
-      <Button
-        variant={language === 'tr' ? 'default' : 'outline'}
-        size="sm"
-        className="text-xs px-2 py-1 h-7"
-        onClick={() => setLanguage('tr')}
-      >
-        {LANGUAGES.tr}
-      </Button>
-    </div>
+        {Object.entries(LANGUAGES).map(([code, name]) => (
+          <option key={code} value={code}>
+            {name}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 }

@@ -1,16 +1,24 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
+import './styles/rtl.css';
 import LandingPage from './pages/LandingPage';
 import { loginWithEmergentSession } from './lib/api';
 import { toast } from 'sonner';
 import { Toaster } from './components/ui/sonner';
 import MobileBottomNav from './components/MobileBottomNav';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { AudioProvider } from './contexts/AudioContext';
 import { useI18n } from './lib/i18n';
 import { scanDomForLanguageLeaks } from './lib/leakDetection';
 import { isEnglishLockedRoute, getEffectiveLanguage } from './lib/languageLock';
 import ErrorBoundary from './components/ErrorBoundary';
+import QuotaExceededModal from './components/QuotaExceededModal';
+import {
+  stashPendingPlan, consumePendingPlan, pendingPlanRedirect,
+  stashPendingIntent, consumePendingIntent, pendingIntentRedirect,
+} from './lib/pendingPlan';
+import { isIeltsMode } from './lib/learningMode';
 
 // Critical pages - loaded immediately
 import Dashboard from './pages/Dashboard';
@@ -30,13 +38,37 @@ const VerifyEmailPage = lazy(() => import('./pages/VerifyEmailPage'));
 const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage'));
 const AdminCreditsPage = lazy(() => import('./pages/AdminCreditsPage'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const AdminLizAnalytics = lazy(() => import('./pages/AdminLizAnalytics'));
+const AdminOnboardingAnalytics = lazy(() => import('./pages/AdminOnboardingAnalytics'));
+const AdminLearningMode = lazy(() => import('./pages/AdminLearningMode'));
+const AdminTestimonials = lazy(() => import('./pages/AdminTestimonials'));
+const ShareYourStoryPage = lazy(() => import('./pages/ShareYourStoryPage'));
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
+const TermsPage = lazy(() => import('./pages/TermsPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const BlogPage = lazy(() => import('./pages/BlogPage'));
+const StatusPage = lazy(() => import('./pages/StatusPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 const VocabularyImageManager = lazy(() => import('./pages/VocabularyImageManager'));
 const LevelTest = lazy(() => import('./pages/LevelTest'));
 const ComprehensiveLevelTest = lazy(() => import('./pages/ComprehensiveLevelTest'));
 const AdaptiveLevelTest = lazy(() => import('./pages/AdaptiveLevelTest'));
-const VocabGrammarCourse = lazy(() => import('./pages/VocabGrammarCourse'));
-const VocabGrammarQuiz = lazy(() => import('./pages/VocabGrammarQuiz'));
 const WritingPractice = lazy(() => import('./pages/WritingPractice'));
+const EvaluatorResultPreview = lazy(() => import('./pages/EvaluatorResultPreview'));
+const SampleReportBand65Task2 = lazy(() => import('./pages/SampleReportBand65Task2'));
+const SampleReportBand50Task2 = lazy(() => import('./pages/SampleReportBand50Task2'));
+const SampleReportBand80Task2 = lazy(() => import('./pages/SampleReportBand80Task2'));
+const SampleReportSpeakingPart2 = lazy(() => import('./pages/SampleReportSpeakingPart2'));
+const PublicEssayEvaluator = lazy(() => import('./pages/PublicEssayEvaluator'));
+const DashboardPage = lazy(() => import('./pages/DashboardPage'));
+const LandingPageV2 = lazy(() => import('./pages/LandingPageV2'));
+const LandingPageDemo = lazy(() => import('./pages/LandingPageDemo'));
+const PricingPageV2 = lazy(() => import('./pages/PricingPageV2'));
+const BankTransferCheckout = lazy(() => import('./pages/BankTransferCheckout'));
+const OnboardingPageV2 = lazy(() => import('./pages/OnboardingPageV2'));
+const SpeakingPracticeV2 = lazy(() => import('./pages/SpeakingPracticeV2'));
 const SpeakingPractice = lazy(() => import('./pages/SpeakingPractice'));
 const Progress = lazy(() => import('./pages/Progress'));
 const BeginnerCourse = lazy(() => import('./pages/BeginnerCourse'));
@@ -62,6 +94,7 @@ const ReadingPracticeByType = lazy(() => import('./pages/ReadingPracticeByType')
 const ListeningPractice = lazy(() => import('./pages/ListeningPractice'));
 const SpeakingPracticeQB = lazy(() => import('./pages/SpeakingPracticeQB'));
 const PracticeMode = lazy(() => import('./pages/PracticeMode'));
+const LearningToolsIndex = lazy(() => import('./pages/LearningToolsIndex'));
 const FullTestMode = lazy(() => import('./pages/FullTestMode'));
 const FullTestInterface = lazy(() => import('./pages/FullTestInterface'));
 const FullTestResults = lazy(() => import('./pages/FullTestResults'));
@@ -80,6 +113,8 @@ const GrammarPracticeMode = lazy(() => import('./pages/GrammarPracticeMode'));
 const GrammarQuizMode = lazy(() => import('./pages/GrammarQuizMode'));
 const GrammarProductionMode = lazy(() => import('./pages/GrammarProductionMode'));
 const GrammarSmartReview = lazy(() => import('./pages/GrammarSmartReview'));
+const GrammarBlueprint = lazy(() => import('./pages/GrammarBlueprint'));
+const VocabularyBrowse = lazy(() => import('./pages/VocabularyBrowse'));
 const ReviewBank = lazy(() => import('./pages/ReviewBank'));
 const UnifiedCoursePage = lazy(() => import('./pages/UnifiedCoursePage'));
 const UnifiedStagePage = lazy(() => import('./pages/UnifiedStagePage'));
@@ -87,13 +122,23 @@ const UnifiedLessonPage = lazy(() => import('./pages/UnifiedLessonPage'));
 const DailyHabitPage = lazy(() => import('./pages/DailyHabitPage'));
 const GameDemo = lazy(() => import('./pages/GameDemo'));
 
-// Page loading spinner
+// Page loading fallback — skeleton-based to avoid empty-screen flash during
+// lazy route chunks. Neutral layout that reads as "something is coming" on
+// any page, not a specific one.
 function PageLoader() {
+  const { t } = useI18n();
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="flex flex-col items-center gap-3">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-violet-600"></div>
-        <p className="text-sm text-muted-foreground">Loading...</p>
+    <div className="min-h-screen bg-background px-4 py-10" role="status" aria-live="polite" aria-label={t('loadingLabel')}>
+      <div className="max-w-4xl mx-auto space-y-6">
+        <div className="animate-pulse rounded-lg bg-primary/10 h-8 w-2/3" />
+        <div className="animate-pulse rounded-lg bg-primary/10 h-4 w-5/6" />
+        <div className="animate-pulse rounded-lg bg-primary/10 h-4 w-4/6" />
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+          <div className="animate-pulse rounded-xl bg-primary/10 h-28" />
+          <div className="animate-pulse rounded-xl bg-primary/10 h-28" />
+          <div className="animate-pulse rounded-xl bg-primary/10 h-28" />
+        </div>
+        <span className="sr-only">{t('loadingLabel')}</span>
       </div>
     </div>
   );
@@ -197,9 +242,53 @@ function MobileNavWrapper({ user }) {
   ) {
     return null;
   }
+  // Dashboard V2 ships its own DashboardBottomNav inside DashboardLayout.
+  // Suppress the legacy MobileBottomNav on those routes so we don't stack
+  // two bars on mobile (bug report 2026-04-20).
+  if (location.pathname.startsWith('/dashboard')) {
+    return null;
+  }
 
   return <MobileBottomNav currentPath={location.pathname} />;
 }
+// Landing CTAs point here with `?path=ielts|general`. We stash the choice in
+// localStorage so the onboarding hook can pre-select Step 1 after signup, then
+// redirect to `/login?action=signup` (or `/onboarding` if the user is already
+// authenticated — they got linked a signup URL in error, just skip ahead).
+//
+// Pricing CTAs point here with `?plan=weekly|monthly|exam|free`. We stash the
+// plan so that after signup/onboarding completes we can bounce the user back
+// to /pricing (paid plans) where their chosen tier is ready to check out, or
+// /dashboard (free) — without losing the conversion.
+function SignupBridge({ user }) {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const path = (params.get('path') || '').trim().toLowerCase();
+  const plan = (params.get('plan') || '').trim().toLowerCase();
+  const intent = (params.get('intent') || '').trim().toLowerCase();
+  if (path === 'ielts' || path === 'general' || path === 'general_english' || path === 'general-english' || path === 'ge') {
+    try {
+      window.localStorage.setItem('testmaster_onboarding_path', path);
+    } catch (_) {
+      // non-fatal — user will re-select on step 1
+    }
+  }
+  stashPendingPlan(plan);
+  stashPendingIntent(intent);
+  if (user) {
+    // Already logged in — honor the pending plan / intent immediately.
+    if (!user.onboarding_complete) {
+      return <Navigate to="/onboarding" replace />;
+    }
+    const pendingPlan = consumePendingPlan();
+    const planTarget = pendingPlanRedirect(pendingPlan);
+    if (planTarget) return <Navigate to={planTarget} replace />;
+    const intentTarget = pendingIntentRedirect(consumePendingIntent());
+    return <Navigate to={intentTarget || '/dashboard'} replace />;
+  }
+  return <Navigate to="/login?action=signup" replace />;
+}
+
 function AppWithSessionHandler() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -244,6 +333,21 @@ function AppWithSessionHandler() {
   const handleLogin = (userData) => {
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
+    // If the user hasn't finished onboarding yet, route them there so the
+    // landing-page path selection isn't silently dropped. Onboarding will
+    // consume the pending plan (if any) on finish.
+    if (userData && userData.onboarding_complete === false) {
+      navigate('/onboarding');
+      return;
+    }
+    // Already-onboarded user came in via /signup?plan=X or ?intent=Y —
+    // honor the plan first (checkout is priority), then the intent
+    // (lands them on the evaluator they were promised). Without this,
+    // "Try your own essay" signups stranded users on /dashboard.
+    const planTarget = pendingPlanRedirect(consumePendingPlan());
+    if (planTarget) { navigate(planTarget); return; }
+    const intentTarget = pendingIntentRedirect(consumePendingIntent());
+    if (intentTarget) navigate(intentTarget);
   };
 
   const handleLogout = () => {
@@ -264,8 +368,16 @@ function AppWithSessionHandler() {
     <>
       <Suspense fallback={<PageLoader />}>
       <Routes>
-        <Route path="/" element={<LandingPage onLogin={handleLogin} user={user} />} />
-        <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <LandingPage onLogin={handleLogin} user={user} showLogin={true} />} />
+        <Route path="/" element={<LandingPageDemo />} />
+        <Route path="/landing/v1" element={<LandingPage onLogin={handleLogin} user={user} />} />
+        <Route path="/login" element={<LoginPage user={user} onLogin={handleLogin} />} />
+        <Route path="/signup" element={<SignupBridge user={user} />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/status" element={<StatusPage />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/admin/credits" element={<AdminCreditsPage user={user} />} />
@@ -273,9 +385,20 @@ function AppWithSessionHandler() {
         <Route path="/admin/users" element={<AdminPanel user={user} />} />
         <Route path="/admin/vocabulary-images" element={<VocabularyImageManager user={user} />} />
         <Route path="/admin" element={<AdminDashboard user={user} />} />
-        <Route 
-          path="/dashboard" 
-          element={user ? <Dashboard user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
+        <Route path="/admin/liz-analytics" element={<AdminLizAnalytics user={user} />} />
+        <Route path="/admin/onboarding-analytics" element={<AdminOnboardingAnalytics user={user} />} />
+        <Route path="/admin/learning-mode" element={<AdminLearningMode user={user} /> } />
+        <Route path="/admin/testimonials" element={<AdminTestimonials user={user} />} />
+        <Route path="/share-your-story" element={<ShareYourStoryPage user={user} />} />
+        <Route
+          path="/dashboard"
+          element={
+            user
+              ? (isIeltsMode(user)
+                  ? <DashboardPage user={user} onLogout={handleLogout} />
+                  : <Dashboard user={user} onLogout={handleLogout} />)
+              : <Navigate to="/" />
+          }
         />
         <Route 
           path="/test/:testType" 
@@ -317,9 +440,25 @@ function AppWithSessionHandler() {
           path="/profile" 
           element={user ? <Profile user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
         />
-        <Route 
-          path="/pricing" 
-          element={user ? <PricingPage user={user} /> : <Navigate to="/" />} 
+        <Route
+          path="/pricing"
+          element={<PricingPageV2 user={user} />}
+        />
+        {/* Legacy General English pricing (Explorer/Learner/Achiever/Master)
+           kept accessible for existing GE customers who still need it, but
+           no longer the default — every upgrade prompt routes to /pricing. */}
+        <Route
+          path="/pricing/ge"
+          element={<PricingPage user={user} />}
+        />
+        <Route
+          path="/checkout/bank/:plan"
+          element={user ? <BankTransferCheckout user={user} /> : <Navigate to="/" />}
+        />
+        <Route path="/pricing/v1" element={<PricingPage user={user} />} />
+        <Route
+          path="/onboarding"
+          element={user ? <OnboardingPageV2 user={user} /> : <Navigate to="/" />}
         />
         <Route 
           path="/admin/content" 
@@ -337,21 +476,54 @@ function AppWithSessionHandler() {
           path="/adaptive-level-test" 
           element={<AdaptiveLevelTest user={user} />} 
         />
-        <Route 
-          path="/vocab-grammar" 
-          element={<VocabGrammarCourse user={user} />} 
+        <Route
+          path="/writing-practice"
+          element={user ? <WritingPractice user={user} /> : <Navigate to="/" />}
         />
-        <Route 
-          path="/vocab-grammar/quiz" 
-          element={<VocabGrammarQuiz user={user} />} 
+        <Route
+          path="/dev/evaluator-result"
+          element={<EvaluatorResultPreview />}
         />
-        <Route 
-          path="/writing-practice" 
-          element={user ? <WritingPractice user={user} /> : <Navigate to="/" />} 
+        <Route
+          path="/samples/writing/band-5-0-task2"
+          element={<SampleReportBand50Task2 />}
         />
-        <Route 
-          path="/speaking-practice" 
-          element={user ? <SpeakingPractice user={user} /> : <Navigate to="/" />} 
+        <Route
+          path="/samples/writing/band-6-5-task2"
+          element={<SampleReportBand65Task2 />}
+        />
+        <Route
+          path="/samples/writing/band-8-0-task2"
+          element={<SampleReportBand80Task2 />}
+        />
+        <Route
+          path="/samples/speaking/band-6-5-part2"
+          element={<SampleReportSpeakingPart2 />}
+        />
+        {/* Legacy URL — Claude Design fixtures are Band 6.5; keep old route as alias */}
+        <Route
+          path="/samples/speaking/band-7-0-part2"
+          element={<SampleReportSpeakingPart2 />}
+        />
+        <Route path="/score-my-essay" element={<PublicEssayEvaluator />} />
+        <Route
+          path="/dashboard/v2"
+          element={user ? <DashboardPage /> : <Navigate to="/" />}
+        />
+        <Route path="/landing/v2" element={<LandingPageV2 />} />
+        <Route path="/landing/demo" element={<LandingPageDemo />} />
+        <Route path="/pricing/v2" element={<PricingPageV2 user={user} />} />
+        <Route path="/onboarding/v2" element={<OnboardingPageV2 user={user} />} />
+        <Route path="/speaking/v2" element={<SpeakingPracticeV2 />} />
+        <Route
+          path="/speaking-practice"
+          element={
+            user
+              ? (isIeltsMode(user)
+                  ? <SpeakingPracticeV2 user={user} />
+                  : <SpeakingPractice user={user} />)
+              : <Navigate to="/" />
+          }
         />
         <Route 
           path="/progress" 
@@ -369,9 +541,11 @@ function AppWithSessionHandler() {
           path="/advanced-mastery" 
           element={<AdvancedMasteryCourse user={user} />} 
         />
-        <Route 
-          path="/vocabulary/learn/:moduleId" 
-          element={user ? <VocabularyLearnMode user={user} /> : <Navigate to="/" />} 
+        {/* Vocabulary theme browser — deep-links into Advanced Mastery */}
+        <Route path="/vocabulary" element={<VocabularyBrowse />} />
+        <Route
+          path="/vocabulary/learn/:moduleId"
+          element={user ? <VocabularyLearnMode user={user} /> : <Navigate to="/" />}
         />
         <Route 
           path="/vocabulary/practice/:moduleId" 
@@ -411,11 +585,15 @@ function AppWithSessionHandler() {
           path="/grammar/free/:moduleId" 
           element={user ? <GrammarProductionMode user={user} stage="free" /> : <Navigate to="/" />} 
         />
-        <Route 
-          path="/grammar/smart-review/:moduleId" 
-          element={user ? <GrammarSmartReview user={user} /> : <Navigate to="/" />} 
+        <Route
+          path="/grammar/smart-review/:moduleId"
+          element={user ? <GrammarSmartReview user={user} /> : <Navigate to="/" />}
         />
-        
+
+        {/* Grammar Blueprint — curated IELTS 8 curriculum */}
+        <Route path="/grammar" element={<GrammarBlueprint user={user} />} />
+        <Route path="/grammar/:slug" element={<GrammarBlueprint user={user} />} />
+
         {/* Unified Learning System Routes */}
         <Route 
           path="/unified" 
@@ -510,9 +688,17 @@ function AppWithSessionHandler() {
           path="/question-bank/speaking" 
           element={user ? <SpeakingPracticeQB user={user} /> : <Navigate to="/" />} 
         />
-        <Route 
-          path="/question-bank/practice" 
-          element={user ? <PracticeMode user={user} /> : <Navigate to="/" />} 
+        <Route
+          path="/question-bank/practice"
+          element={user ? <PracticeMode user={user} /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/quick-practice"
+          element={user ? <PracticeMode user={user} /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/learning-tools"
+          element={user ? <LearningToolsIndex user={user} /> : <Navigate to="/" />}
         />
         <Route 
           path="/liz" 
@@ -549,13 +735,15 @@ function AppWithSessionHandler() {
           element={user ? <FocusPlan /> : <Navigate to="/" />} 
         />
         {/* Admin Tools */}
-        <Route 
-          path="/admin/visual-generator" 
-          element={user ? <VisualGenerator /> : <Navigate to="/" />} 
+        <Route
+          path="/admin/visual-generator"
+          element={user ? <VisualGenerator /> : <Navigate to="/" />}
         />
+        {/* Catch-all 404 — must be last */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       </Suspense>
-      {user && !location.pathname.startsWith('/liz') && (
+      {user && location.pathname.startsWith('/dashboard') && (
         <Suspense fallback={null}><LizFloatingButton user={user} /></Suspense>
       )}
       <EmergentBadgeWrapper />
@@ -572,10 +760,13 @@ function App() {
     <ErrorBoundary>
       <ThemeProvider>
         <Router>
-          <div className="App min-h-screen bg-background text-foreground">
-            <LanguageLeakWatcher />
-            <AppWithSessionHandler />
-          </div>
+          <AudioProvider>
+            <div className="App min-h-screen bg-background text-foreground">
+              <LanguageLeakWatcher />
+              <QuotaExceededModal />
+              <AppWithSessionHandler />
+            </div>
+          </AudioProvider>
         </Router>
       </ThemeProvider>
     </ErrorBoundary>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Textarea } from '../components/ui/textarea';
@@ -33,12 +34,14 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function AdvancedMasteryCourse({ user }) {
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const [searchParams] = useSearchParams();
   const { language } = useI18n();
   
   // Check for preview mode and lesson from URL
   const isPreviewMode = searchParams.get('preview') === 'true';
   const lessonIdFromUrl = searchParams.get('lesson');
+  const focusFromUrl = searchParams.get('focus'); // e.g., 'vocabulary' (from /vocabulary browse deep-link)
   
   // English-only notice for this IELTS-level module
   const englishNotice = getEnglishOnlyNotice(language);
@@ -128,9 +131,16 @@ export default function AdvancedMasteryCourse({ user }) {
         }
         setSelectedModule(targetModule);
         setView('module-detail');
+        if (focusFromUrl === 'vocabulary') {
+          setCurrentSection('vocabulary');
+          // Scroll after render so the vocabulary card is centred without the header overlap.
+          setTimeout(() => {
+            document.getElementById('vocabulary-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 250);
+        }
       }
     }
-  }, [lessonIdFromUrl, modules]);
+  }, [lessonIdFromUrl, focusFromUrl, modules]);
 
   const loadModules = async () => {
     try {
@@ -603,7 +613,7 @@ export default function AdvancedMasteryCourse({ user }) {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <Button variant="ghost" onClick={() => navigate('/dashboard')} className="p-2">
+          <Button variant="ghost" onClick={goBack} className="p-2">
             <ChevronLeft className="w-5 h-5" />
           </Button>
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg">
@@ -614,6 +624,7 @@ export default function AdvancedMasteryCourse({ user }) {
             <p className="text-gray-500">Band 6.0-9.0 • Cambridge-Aligned</p>
           </div>
         </div>
+        <ThemeToggle />
       </div>
 
       {/* Course Description */}
@@ -737,7 +748,7 @@ export default function AdvancedMasteryCourse({ user }) {
 
   // Render vocabulary section - Updated to handle nouns/verbs/adjectives/adverbs structure
   const renderVocabulary = () => (
-    <Card className="p-6 bg-white border-0 shadow-lg">
+    <Card id="vocabulary-section" className="p-6 bg-white border-0 shadow-lg scroll-mt-24">
       <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
         <BookOpen className="w-5 h-5 text-amber-600" /> Advanced Vocabulary
       </h3>

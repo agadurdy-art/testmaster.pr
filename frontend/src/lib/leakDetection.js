@@ -69,12 +69,21 @@ export function detectLanguageLeak(text, lang) {
 
 /**
  * Scan DOM for language leaks (development only)
+ *
+ * Elements with [data-lang-sample] (e.g. the landing-page "Tiếng Việt"
+ * translation demo) are intentionally multilingual and are excluded from
+ * the scan to avoid false positives.
+ *
  * @param {string} lang - Current system language
  * @returns {Object|null}
  */
 export function scanDomForLanguageLeaks(lang) {
   try {
-    const bodyText = document?.body?.innerText || '';
+    if (typeof document === 'undefined' || !document.body) return null;
+    // Clone body, strip opt-out nodes, then read .innerText.
+    const clone = document.body.cloneNode(true);
+    clone.querySelectorAll('[data-lang-sample]').forEach((n) => n.remove());
+    const bodyText = clone.innerText || '';
     return detectLanguageLeak(bodyText, lang);
   } catch (e) {
     console.warn('DOM scan failed:', e);

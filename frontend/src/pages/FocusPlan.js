@@ -7,6 +7,7 @@ import {
   Target, ArrowRight, Clock, Zap, ChevronLeft,
   Headphones, BookOpen, Mic, PenTool, RefreshCw, Dumbbell
 } from 'lucide-react';
+import { useGoBack } from '../hooks/useGoBack';
 
 const SKILL_ICONS = {
   listening: Headphones,
@@ -25,6 +26,7 @@ const SKILL_COLORS = {
 export default function FocusPlan() {
   const location = useLocation();
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const plan = location.state?.plan;
 
   if (!plan) {
@@ -65,8 +67,8 @@ export default function FocusPlan() {
       {/* Header */}
       <div className={`bg-gradient-to-r ${gradient} text-white`}>
         <div className="max-w-2xl mx-auto px-4 py-8">
-          <button 
-            onClick={() => navigate(-1)} 
+          <button
+            onClick={goBack}
             className="flex items-center gap-1 text-white/80 hover:text-white text-sm mb-6 transition-colors"
           >
             <ChevronLeft className="w-4 h-4" /> Back to Results

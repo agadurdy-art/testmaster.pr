@@ -75,7 +75,18 @@ export default function AdminCreditsPage({ user }) {
             >
               <option value="">(no change)</option>
               <option value="free">Free</option>
-              <option value="pro">Pro</option>
+              <optgroup label="IELTS-Ace (current)">
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="exam">Exam Pack</option>
+              </optgroup>
+              <optgroup label="Legacy General English">
+                <option value="explorer">Explorer</option>
+                <option value="learner">Learner</option>
+                <option value="achiever">Achiever</option>
+                <option value="master">Master</option>
+                <option value="pro">Pro (alias → Master)</option>
+              </optgroup>
             </select>
           </div>
           <div>

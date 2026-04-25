@@ -1,177 +1,99 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
-import { Sun, Moon, Sunset, Clock } from 'lucide-react';
 
+/**
+ * Inline theme switcher — sits inside whatever page header renders it.
+ * 4-option segmented control: Light / Dark / Night / Auto.
+ * Reads + writes the global ThemeContext so the choice is shared across every
+ * page (legacy pages keep importing this from `../components/ThemeToggle`).
+ */
 export default function ThemeToggle({ className = '' }) {
-  const { themeMode, setTheme, activeTheme } = useTheme();
-  const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef(null);
-
-  // Close menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  const { themeMode, setTheme } = useTheme();
 
   const options = [
-    { 
-      mode: THEME_MODES.LIGHT, 
-      icon: Sun, 
-      label: 'Light', 
-      description: 'Default bright mode',
-      color: 'text-yellow-500'
-    },
-    { 
-      mode: THEME_MODES.DARK, 
-      icon: Moon, 
-      label: 'Dark', 
-      description: 'Easy on the eyes',
-      color: 'text-indigo-400'
-    },
-    { 
-      mode: THEME_MODES.NIGHT_SHIFT, 
-      icon: Sunset, 
-      label: 'Night Shift', 
-      description: 'Warm colors, less blue light',
-      color: 'text-orange-400'
-    },
-    { 
-      mode: THEME_MODES.AUTO, 
-      icon: Clock, 
-      label: 'Auto', 
-      description: 'Switch based on time',
-      color: 'text-green-500'
-    },
+    { key: THEME_MODES.LIGHT,       label: 'Light', Icon: SunIcon },
+    { key: THEME_MODES.DARK,        label: 'Dark',  Icon: MoonIcon },
+    { key: THEME_MODES.NIGHT_SHIFT, label: 'Night', Icon: SepiaIcon },
+    { key: THEME_MODES.AUTO,        label: 'Auto',  Icon: AutoIcon },
   ];
 
-  const currentOption = options.find(o => o.mode === themeMode) || options[0];
-  const CurrentIcon = currentOption.icon;
-
   return (
-    <div className={`relative ${className}`} ref={menuRef}>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`
-          p-2 rounded-lg transition-all duration-200
-          ${activeTheme === THEME_MODES.DARK 
-            ? 'bg-gray-700 hover:bg-gray-600 text-gray-200' 
-            : activeTheme === THEME_MODES.NIGHT_SHIFT
-              ? 'bg-amber-100 hover:bg-amber-200 text-amber-800'
-              : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-          }
-        `}
-        title={`Theme: ${currentOption.label}`}
-      >
-        <CurrentIcon className={`w-5 h-5 ${currentOption.color}`} />
-      </button>
-
-      {isOpen && (
-        <div className={`
-          absolute right-0 mt-2 w-56 rounded-xl shadow-lg z-50 overflow-hidden
-          ${activeTheme === THEME_MODES.DARK 
-            ? 'bg-gray-800 border border-gray-700' 
-            : activeTheme === THEME_MODES.NIGHT_SHIFT
-              ? 'bg-amber-50 border border-amber-200'
-              : 'bg-white border border-gray-200'
-          }
-        `}>
-          <div className={`px-3 py-2 text-xs font-semibold uppercase tracking-wider
-            ${activeTheme === THEME_MODES.DARK 
-              ? 'text-gray-400 border-b border-gray-700' 
-              : activeTheme === THEME_MODES.NIGHT_SHIFT
-                ? 'text-amber-700 border-b border-amber-200'
-                : 'text-gray-500 border-b border-gray-100'
-            }
-          `}>
-            Display Mode
-          </div>
-          
-          {options.map((option) => {
-            const Icon = option.icon;
-            const isSelected = themeMode === option.mode;
-            
-            return (
-              <button
-                key={option.mode}
-                onClick={() => {
-                  setTheme(option.mode);
-                  setIsOpen(false);
-                }}
-                className={`
-                  w-full px-3 py-3 flex items-center gap-3 transition-colors
-                  ${isSelected 
-                    ? activeTheme === THEME_MODES.DARK
-                      ? 'bg-gray-700'
-                      : activeTheme === THEME_MODES.NIGHT_SHIFT
-                        ? 'bg-amber-100'
-                        : 'bg-purple-50'
-                    : activeTheme === THEME_MODES.DARK
-                      ? 'hover:bg-gray-700'
-                      : activeTheme === THEME_MODES.NIGHT_SHIFT
-                        ? 'hover:bg-amber-100'
-                        : 'hover:bg-gray-50'
-                  }
-                `}
-              >
-                <div className={`
-                  p-2 rounded-lg
-                  ${activeTheme === THEME_MODES.DARK 
-                    ? 'bg-gray-600' 
-                    : activeTheme === THEME_MODES.NIGHT_SHIFT
-                      ? 'bg-amber-200'
-                      : 'bg-gray-100'
-                  }
-                `}>
-                  <Icon className={`w-4 h-4 ${option.color}`} />
-                </div>
-                <div className="flex-1 text-left">
-                  <div className={`font-medium text-sm
-                    ${activeTheme === THEME_MODES.DARK 
-                      ? 'text-gray-200' 
-                      : activeTheme === THEME_MODES.NIGHT_SHIFT
-                        ? 'text-amber-900'
-                        : 'text-gray-800'
-                    }
-                  `}>
-                    {option.label}
-                  </div>
-                  <div className={`text-xs
-                    ${activeTheme === THEME_MODES.DARK 
-                      ? 'text-gray-400' 
-                      : activeTheme === THEME_MODES.NIGHT_SHIFT
-                        ? 'text-amber-700'
-                        : 'text-gray-500'
-                    }
-                  `}>
-                    {option.description}
-                  </div>
-                </div>
-                {isSelected && (
-                  <div className="w-2 h-2 rounded-full bg-purple-500"></div>
-                )}
-              </button>
-            );
-          })}
-
-          {themeMode === THEME_MODES.AUTO && (
-            <div className={`px-3 py-2 text-xs
-              ${activeTheme === THEME_MODES.DARK 
-                ? 'text-gray-400 border-t border-gray-700 bg-gray-750' 
-                : activeTheme === THEME_MODES.NIGHT_SHIFT
-                  ? 'text-amber-600 border-t border-amber-200 bg-amber-50'
-                  : 'text-gray-500 border-t border-gray-100 bg-gray-50'
-              }
-            `}>
-              🌙 Dark mode: 7pm - 7am
-            </div>
-          )}
-        </div>
-      )}
+    <div
+      role="radiogroup"
+      aria-label="Theme"
+      className={`inline-flex items-center ${className}`}
+      style={{
+        padding: 3,
+        borderRadius: 999,
+        background: 'rgba(255,255,255,0.7)',
+        border: '1px solid rgba(0,0,0,0.08)',
+        backdropFilter: 'blur(14px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(14px) saturate(180%)',
+        boxShadow: '0 4px 12px -8px rgba(0,0,0,0.18)',
+      }}
+    >
+      {options.map(({ key, label, Icon }) => {
+        const on = themeMode === key;
+        return (
+          <button
+            key={key}
+            type="button"
+            role="radio"
+            aria-checked={on}
+            aria-label={label}
+            title={label}
+            onClick={() => setTheme(key)}
+            style={{
+              width: 28,
+              height: 28,
+              borderRadius: 999,
+              border: 'none',
+              padding: 0,
+              cursor: 'pointer',
+              background: on ? 'rgba(16,163,127,0.18)' : 'transparent',
+              color: on ? '#0E8C6D' : '#6B7484',
+              transition: 'background-color .15s ease, color .15s ease',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Icon />
+          </button>
+        );
+      })}
     </div>
+  );
+}
+
+function SunIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+    </svg>
+  );
+}
+function MoonIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" />
+    </svg>
+  );
+}
+function SepiaIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z" />
+      <path d="M4 19.5V21h16" />
+    </svg>
+  );
+}
+function AutoIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 2" />
+    </svg>
   );
 }

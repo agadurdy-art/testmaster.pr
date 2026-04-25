@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import {
   ArrowLeft, ArrowRight, ChevronLeft, Volume2, BookOpen,
@@ -99,6 +100,7 @@ function SlideCard({ slide, category, onSpeak, speaking }) {
 
 export default function VocabLearn() {
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const { moduleId } = useParams();
   const [searchParams] = useSearchParams();
   const initCat = searchParams.get('cat') || 'advanced_terms';
@@ -179,7 +181,7 @@ export default function VocabLearn() {
       <div className="border-b border-slate-200 bg-white px-4 py-3">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <button onClick={() => navigate(-1)} className="text-slate-400 hover:text-slate-700" data-testid="back-btn">
+            <button onClick={goBack} className="text-slate-400 hover:text-slate-700" data-testid="back-btn">
               <ChevronLeft className="w-5 h-5" />
             </button>
             <div>
@@ -189,7 +191,7 @@ export default function VocabLearn() {
           </div>
           <Button
             size="sm"
-            onClick={() => navigate(`/vocab-practice/${moduleId}`)}
+            onClick={() => navigate(`/vocabulary/practice/${moduleId}`)}
             className="bg-emerald-500 hover:bg-emerald-600 text-white text-xs"
             data-testid="go-practice-btn"
           >

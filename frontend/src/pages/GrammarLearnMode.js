@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
@@ -334,6 +335,7 @@ const SLIDE_COLORS = {
 export default function GrammarLearnMode({ user }) {
   const { moduleId } = useParams();
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const [data, setData] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -393,7 +395,7 @@ export default function GrammarLearnMode({ user }) {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center" data-testid="grammar-learn-empty">
       <Card className="p-8 text-center max-w-md">
         <p className="text-gray-500 mb-4">No grammar content available.</p>
-        <Button onClick={() => navigate(-1)}>Go Back</Button>
+        <Button onClick={goBack}>Go Back</Button>
       </Card>
     </div>
   );
@@ -421,7 +423,7 @@ export default function GrammarLearnMode({ user }) {
       {/* Header */}
       <div className="bg-white border-b sticky top-0 z-10">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <button onClick={() => navigate(-1)} className="flex items-center gap-1 text-gray-600 hover:text-gray-900" data-testid="grammar-learn-back">
+          <button onClick={goBack} className="flex items-center gap-1 text-gray-600 hover:text-gray-900" data-testid="grammar-learn-back">
             <ArrowLeft className="w-4 h-4" /> Back
           </button>
           <div className="text-center">

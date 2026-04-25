@@ -1,0 +1,91 @@
+{
+  "slug": "cleft-sentences",
+  "module": 3,
+  "order": 3,
+  "title": "Cleft Sentences",
+  "subtitle": "Re-package a sentence to spotlight the element that matters",
+  "target_band": "8 \u2192 9",
+  "intro": "A cleft sentence splits a single clause into two parts, with the element you want to emphasise isolated in a 'spotlight' position. 'John wrote the report' becomes 'It was John who wrote the report' or 'What John wrote was the report.' Cleft structures give Band 8 writers fine-grained control over emphasis and cohesion \u2014 they choose which idea the reader should carry into the next sentence.",
+  "rules": [
+    {"heading": "It-cleft: 'It + be + X + that/who\u2026'", "body": "Spotlights a noun phrase, adverbial, or prepositional phrase: 'It was in 2019 that the policy was enacted.' / 'It is the lack of enforcement that undermines the regulation.'"},
+    {"heading": "Wh-cleft (pseudo-cleft): 'What\u2026 is/was\u2026'", "body": "Spotlights information by packaging it as an answer to an implicit question: 'What concerns me most is the decline in civic trust.' The element after 'is/was' is the new, emphasised information."},
+    {"heading": "Reversed wh-cleft", "body": "Flip for even stronger emphasis: 'The decline in civic trust is what concerns me most.' Used when the new-information element sounds more natural fronted."},
+    {"heading": "All-cleft and the-thing-cleft", "body": "'All (that) + clause + is\u2026' narrows to 'nothing more than': 'All we need is consistent enforcement.' 'The thing that\u2026' is a colloquial variant better avoided in formal writing."}
+  ],
+  "examples": [
+    {"context": "Writing Task 2", "sentence": "It is the absence of long-term planning, not the lack of funding, that explains the failure of many urban projects.", "note": "It-cleft isolates the cause."},
+    {"context": "Writing Task 2", "sentence": "What the research actually demonstrates is a correlation, not a cause.", "note": "Wh-cleft reframes a common misreading."},
+    {"context": "Writing Task 2", "sentence": "The element most often overlooked in this debate is the role of local communities.", "note": "Reversed wh-cleft \u2014 smoother in academic prose."},
+    {"context": "Speaking Part 3", "sentence": "What I find most troubling is how quickly the public accepts misinformation.", "note": "Wh-cleft in speaking \u2014 sounds considered and fluent."},
+    {"context": "Writing Task 2", "sentence": "All that is required is a modest increase in the minimum wage to lift millions above the poverty line.", "note": "All-cleft minimises what is needed."}
+  ],
+  "band8_marker": "Band 8 writers use cleft sentences to manage information flow: they decide whether the new information should come at the end (unmarked, neutral) or at the front (marked, emphasised). When one paragraph has to pivot from an accepted claim to a surprising qualification, a cleft is the cleanest way to do it: 'While efficiency matters, it is equity that ultimately legitimises public policy.'",
+  "common_errors": [
+    {"error": "'It is me who wrote it.' (informal)", "fix": "Formal English takes the subject form \u2192 'It is I who wrote it.' In practice, avoid by rephrasing: 'I was the one who wrote it.'"},
+    {"error": "'What I want is to going home.'", "fix": "The element after 'is' must be a noun phrase or infinitive \u2192 'What I want is to go home.'"},
+    {"error": "Using 'which' instead of 'that' in it-clefts: 'It was John which said it.'", "fix": "It-clefts use 'that' / 'who' \u2192 'It was John who said it.'"},
+    {"error": "Wh-cleft with a non-nominal: 'What he did was ran away.'", "fix": "\u2192 'What he did was run away.' (bare infinitive after 'was'.)"}
+  ],
+  "practice": [
+    {
+      "mode": "sentence_transformation",
+      "title": "Re-cast as a cleft",
+      "instruction": "Rewrite to emphasise the underlined/bolded element using the cleft type in brackets.",
+      "items": [
+        {"prompt": "The government introduced the tax in 2021. [Emphasise '2021' \u2014 it-cleft]", "answer": "It was in 2021 that the government introduced the tax.", "explanation": "Time phrase in spotlight."},
+        {"prompt": "Lack of funding is the real problem. [wh-cleft]", "answer": "What is really the problem is lack of funding. / What concerns us is the lack of funding.", "explanation": "Wh-cleft reframes."},
+        {"prompt": "Enforcement is what we lack. [reversed wh-cleft]", "answer": "It is enforcement that we lack. / What we lack is enforcement.", "explanation": "Two cleft options."},
+        {"prompt": "We need transparency, nothing more. [all-cleft]", "answer": "All (that) we need is transparency.", "explanation": "All-cleft minimises."},
+        {"prompt": "The minister, not the prime minister, made the announcement. [it-cleft]", "answer": "It was the minister, not the prime minister, who made the announcement.", "explanation": "It-cleft with who."},
+        {"prompt": "The survey reveals a clear preference for public ownership. [wh-cleft]", "answer": "What the survey reveals is a clear preference for public ownership.", "explanation": "Wh-cleft fronts the surveying verb."},
+        {"prompt": "It is public trust that legitimises democracy. [Paraphrase as reversed wh-cleft]", "answer": "Public trust is what legitimises democracy.", "explanation": "Flip direction."},
+        {"prompt": "The cost of inaction matters most to voters. [it-cleft]", "answer": "It is the cost of inaction that matters most to voters.", "explanation": "Spotlight the subject."}
+      ]
+    },
+    {
+      "mode": "band8_ranking",
+      "title": "Pick the more effective emphasis",
+      "instruction": "Which version better spotlights the intended idea?",
+      "items": [
+        {"prompt": "A) 'The lack of accountability is the real issue here.' B) 'It is the lack of accountability that is the real issue here.'", "options": ["A", "B"], "answer": 1, "explanation": "It-cleft isolates and emphasises the cause."},
+        {"prompt": "A) 'I disapprove of the tone, not the content.' B) 'What I disapprove of is the tone, not the content.'", "options": ["A", "B"], "answer": 1, "explanation": "Wh-cleft makes the contrast crisper."},
+        {"prompt": "A) 'We need decisive leadership.' B) 'All we need is decisive leadership.'", "options": ["A", "B"], "answer": 1, "explanation": "'All\u2026 is' minimises what is needed \u2014 rhetorical punch."},
+        {"prompt": "A) 'Early intervention matters, not the size of the budget.' B) 'It is early intervention that matters, not the size of the budget.'", "options": ["A", "B"], "answer": 1, "explanation": "It-cleft for contrastive focus."},
+        {"prompt": "A) 'It is the way we measure success which shapes behaviour.' B) 'It is the way we measure success that shapes behaviour.'", "options": ["A", "B"], "answer": 1, "explanation": "Use 'that' in it-clefts."},
+        {"prompt": "A) 'What I am suggesting is that we pause the rollout.' B) 'I am suggesting that we pause the rollout.'", "options": ["A", "B"], "answer": 0, "explanation": "Wh-cleft signals the suggestion is the topic, not the fact of saying."},
+        {"prompt": "A) 'The question is not whether reform is needed but how it should be structured.' B) 'What is in question is not whether reform is needed but how it should be structured.'", "options": ["A", "B"], "answer": 1, "explanation": "Wh-cleft heightens the issue."},
+        {"prompt": "A) 'The committee rejected the proposal because of procedural concerns.' B) 'It was because of procedural concerns that the committee rejected the proposal.'", "options": ["A", "B"], "answer": 1, "explanation": "It-cleft spotlights the reason."}
+      ]
+    },
+    {
+      "mode": "gap_fill",
+      "title": "Complete the cleft",
+      "instruction": "Fill in with the missing cleft element.",
+      "items": [
+        {"prompt": "It ___ the minister ___ first proposed the reform.", "answer": "was / who", "explanation": "It-cleft with 'who'."},
+        {"prompt": "What the data ___ suggest is a slow recovery.", "answer": "actually / clearly / really", "explanation": "Adverb emphasises the verb."},
+        {"prompt": "All ___ we can do now is wait for the results.", "answer": "(that)", "explanation": "'All (that) we can do\u2026'"},
+        {"prompt": "___ is of real concern is the erosion of public trust.", "answer": "What", "explanation": "Wh-cleft opener."},
+        {"prompt": "It ___ in the 1970s ___ the current model was established.", "answer": "was / that", "explanation": "Time-phrase it-cleft."},
+        {"prompt": "___ the report highlights most starkly ___ the generational divide.", "answer": "What / is", "explanation": "Wh-cleft framework."},
+        {"prompt": "It is ___ enforcement, not the law itself, that needs strengthening.", "answer": "the lack of / proper / consistent", "explanation": "Any contrastive noun phrase works."},
+        {"prompt": "___ most voters want ___ a clear plan, not more promises.", "answer": "What / is", "explanation": "Wh-cleft."}
+      ]
+    },
+    {
+      "mode": "mcq",
+      "title": "Cleft choices",
+      "instruction": "Pick the version that sounds most natural to a Band 8 examiner.",
+      "items": [
+        {"prompt": "Which sentence places the strongest spotlight on 'the absence of enforcement'?", "options": ["The absence of enforcement undermines the regulation.", "It is the absence of enforcement that undermines the regulation.", "The regulation is undermined by the absence of enforcement.", "Enforcement is absent, and this undermines the regulation."], "answer": 1, "explanation": "It-cleft fronts the cause into focus position, sharpening contrastive emphasis."},
+        {"prompt": "___ the report makes clear ___ the scale of the funding gap.", "options": ["That / is", "What / is", "It / that", "Which / is"], "answer": 1, "explanation": "Wh-cleft uses 'What\u2026 is\u2026' to package the new information after the copula."},
+        {"prompt": "Which is the correct reversed wh-cleft?", "options": ["What concerns voters most is rising inequality.", "Rising inequality is what concerns voters most.", "It is rising inequality which concerns voters.", "The thing that concerns voters is rising inequality."], "answer": 1, "explanation": "Reversed wh-cleft fronts the new-information element before 'is what\u2026' for marked emphasis."},
+        {"prompt": "It was ___ the second wave of the pandemic ___ the limitations of the health system became fully visible.", "options": ["during / who", "during / that", "in / which", "at / when"], "answer": 1, "explanation": "Time-phrase it-clefts use 'that' regardless of whether the clefted element is temporal or nominal."},
+        {"prompt": "All ___ the proposal lacks ___ a credible funding mechanism.", "options": ["which / is", "what / is", "that / is", "it / which"], "answer": 2, "explanation": "All-cleft pattern is 'All (that) + clause + is\u2026', minimising what is missing."},
+        {"prompt": "Which version is grammatical in formal academic prose?", "options": ["What he did was ran from the issue.", "What he did was running from the issue.", "What he did was run from the issue.", "What he did was to ran from the issue."], "answer": 2, "explanation": "Wh-clefts of action take a bare infinitive after 'was', not a past form."},
+        {"prompt": "___ that the policy succeeded ___ rests on contested data.", "options": ["What / the claim", "The claim / what", "It / which", "The claim that / is what"], "answer": 3, "explanation": "Embedded reverse cleft: 'The claim that\u2026 is what\u2026' fronts the noun phrase under scrutiny."},
+        {"prompt": "It is ___ that determines a country's resilience, not its wealth alone.", "options": ["the institutional capacity who", "the institutional capacity that", "the institutional capacity which", "the institutional capacity, that"], "answer": 1, "explanation": "It-clefts on inanimate noun phrases take 'that', not 'which' or 'who'."}
+      ]
+    }
+  ]
+}

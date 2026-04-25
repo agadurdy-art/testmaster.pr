@@ -9,11 +9,13 @@ import {
   Play, Pause, RotateCcw, Filter, FileText
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useGoBack } from '../hooks/useGoBack';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function ReadingPracticeByType({ user }) {
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const [searchParams] = useSearchParams();
   const initialType = searchParams.get('type');
 
@@ -169,7 +171,7 @@ export default function ReadingPracticeByType({ user }) {
     return true;
   });
 
-  const currentTypeName = selectedType ? questionTypes[selectedType]?.name : 'Tüm Tipler';
+  const currentTypeName = selectedType ? questionTypes[selectedType]?.name : 'All Types';
 
   if (loading && !moduleContent) {
     return (
@@ -189,7 +191,7 @@ export default function ReadingPracticeByType({ user }) {
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between flex-wrap gap-3">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="sm" onClick={() => navigate('/question-bank')}>
+              <Button variant="ghost" size="sm" onClick={goBack}>
                 <ArrowLeft className="w-4 h-4 mr-1" /> Question Bank
               </Button>
               <div>
@@ -253,7 +255,7 @@ export default function ReadingPracticeByType({ user }) {
                   onClick={() => setSelectedTrack(track)}
                   className={selectedTrack === track ? 'bg-gray-700' : ''}
                 >
-                  {track === 'all' ? 'Tümü' : track === 'academic' ? 'Academic' : 'General'}
+                  {track === 'all' ? 'All' : track === 'academic' ? 'Academic' : 'General'}
                 </Button>
               ))}
             </div>

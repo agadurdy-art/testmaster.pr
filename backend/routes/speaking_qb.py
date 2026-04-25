@@ -1040,6 +1040,79 @@ async def transcribe_user_audio(
     }
 
 
+@router.post("/score")
+async def score_speaking_response(
+    audio: UploadFile = File(...),
+    part: str = Form("part2"),
+    cue_card_prompt: str = Form(...),
+    cue_card_bullets: str = Form(""),
+    user_language: str = Form("en"),
+    target_band: float = Form(7.0),
+    duration_seconds: float = Form(0.0),
+):
+    """D7 Speaking Practice scoring endpoint.
+
+    Accepts a single monologue recording (Part 1/2/3) plus cue-card context.
+    Runs Azure STT + pronunciation assessment, computes local fluency
+    metrics, and calls Claude Sonnet to produce a SpeakingEvaluationResult
+    shaped for the D7 UI.
+    """
+    from schemas.speaking_evaluator import (
+        SpeakingEvaluationRequest,
+        SpeakingPart,
+    )
+    from services.speaking_evaluator import (
+        SpeakingEvaluatorFailure,
+        evaluate_speaking,
+    )
+
+    audio_bytes = await audio.read()
+    if len(audio_bytes) < 100:
+        raise HTTPException(
+            status_code=400, detail="Audio file too small or empty"
+        )
+
+    try:
+        part_enum = SpeakingPart(part) if part else SpeakingPart.part2
+    except ValueError:
+        part_enum = SpeakingPart.part2
+
+    bullets: List[str] = []
+    if cue_card_bullets:
+        bullets = [
+            b.strip()
+            for b in cue_card_bullets.replace("\r", "").split("\n")
+            if b.strip()
+        ]
+
+    try:
+        req = SpeakingEvaluationRequest(
+            part=part_enum,
+            cue_card_prompt=cue_card_prompt,
+            cue_card_bullets=bullets,
+            user_language=user_language,
+            target_band=target_band,
+            duration_seconds=duration_seconds if duration_seconds > 0 else None,
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=f"invalid request: {exc}")
+
+    try:
+        result = await evaluate_speaking(req, audio_bytes)
+    except SpeakingEvaluatorFailure as exc:
+        raise HTTPException(
+            status_code=502,
+            detail={
+                "error": "speaking_evaluator_failed",
+                "message": str(exc),
+                "attempts": exc.attempts,
+                "last_error": exc.last_error,
+            },
+        )
+
+    return result.model_dump()
+
+
 @router.get("/evaluation-tiers")
 async def get_evaluation_tiers():
     """Get available evaluation tiers and their features."""

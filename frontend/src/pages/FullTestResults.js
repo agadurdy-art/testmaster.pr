@@ -10,6 +10,7 @@ import {
   AlertTriangle, Zap, GraduationCap, ChevronRight, Eye, RefreshCw
 } from 'lucide-react';
 import { getRecommendedLessonPath } from '../lib/recommendationRouting';
+import { useGoBack } from '../hooks/useGoBack';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -28,7 +29,8 @@ export default function FullTestResults() {
   const { sessionId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  
+  const goBack = useGoBack();
+
   const [results, setResults] = useState(location.state?.results || null);
   const [loading, setLoading] = useState(!location.state?.results);
   const [expandedSection, setExpandedSection] = useState(null);
@@ -80,7 +82,7 @@ export default function FullTestResults() {
         <Card className="p-8 text-center">
           <h2 className="text-xl font-semibold text-slate-900 mb-4">Results Not Available</h2>
           <p className="text-slate-600 mb-6">The results for this test session could not be found.</p>
-          <Button onClick={() => navigate('/question-bank')}>Back to Question Bank</Button>
+          <Button onClick={goBack}>Back to Question Bank</Button>
         </Card>
       </div>
     );
@@ -103,7 +105,7 @@ export default function FullTestResults() {
   return (
     <div data-testid="full-test-results" className="min-h-screen bg-gradient-to-b from-gray-50 via-slate-50/30 to-gray-100 py-8 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
-        <Button data-testid="back-to-qb-btn" variant="ghost" onClick={() => navigate('/question-bank')} className="mb-6 text-gray-600 hover:text-slate-600">
+        <Button data-testid="back-to-qb-btn" variant="ghost" onClick={goBack} className="mb-6 text-gray-600 hover:text-slate-600">
           <ArrowLeft className="w-4 h-4 mr-2" /> Back to Question Bank
         </Button>
 
@@ -669,7 +671,7 @@ export default function FullTestResults() {
 
         {/* Action Buttons */}
         <div className="flex justify-center gap-4 mt-8 pb-12">
-          <Button data-testid="back-btn" variant="outline" onClick={() => navigate('/question-bank')}>
+          <Button data-testid="back-btn" variant="outline" onClick={goBack}>
             <ArrowLeft className="w-4 h-4 mr-2" /> Back to Question Bank
           </Button>
           <Button data-testid="take-another-btn" className="bg-slate-900 hover:bg-slate-800" onClick={() => navigate('/full-test')}>

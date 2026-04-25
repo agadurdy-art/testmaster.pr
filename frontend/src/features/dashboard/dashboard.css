@@ -1,0 +1,374 @@
+/*
+ * Dashboard — IELTS Ace
+ * Scoped stylesheet for the authenticated home.
+ * All styles are scoped under .dashboard-scope so they don't leak into other
+ * pages (which use the shared Tailwind theme). Theming (light/dark/night) is
+ * applied by toggling `.theme-dark` / `.theme-night` on the scope element.
+ *
+ * Playfair 500 + JetBrains Mono aren't in the shared index.css import;
+ * pulling them in here keeps the shared bundle untouched.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=JetBrains+Mono:wght@400;500&display=swap');
+
+.dashboard-scope {
+  /* iOS 26 tint tweak — the old palette was near-pure white, which the
+     user described as "aşırı beyaz". Warmer background + tinted surface
+     gives glass cards something to read against without changing layout. */
+  --bg: 214 45% 96.5%;
+  --bg-tint-a: 200 70% 94%;   /* cool wash top-left */
+  --bg-tint-b: 160 45% 94%;   /* emerald wash bottom-right */
+  --surface: 210 50% 99.5%;
+  --fg: 222 47% 11%;
+  --muted-fg: 215 16% 47%;
+  --border: 214 32% 88%;
+  --rule: 214 25% 86%;
+  --primary: 160 84% 39%;
+  --primary-ink: 160 84% 22%;
+  --sky: 199 89% 60%;
+  --gold: 43 96% 56%;
+  --gold-ink: 35 90% 38%;
+  --destruct: 0 84% 60%;
+  --liz: 268 60% 62%;
+  --liz-bg: 268 100% 98%;
+  --liz-ink: 268 55% 30%;
+
+  background:
+    radial-gradient(1200px 620px at 0% 0%, hsl(var(--bg-tint-a) / .55), transparent 60%),
+    radial-gradient(1000px 540px at 100% 100%, hsl(var(--bg-tint-b) / .45), transparent 62%),
+    hsl(var(--bg));
+  background-attachment: fixed;
+  color: hsl(var(--fg));
+  font-family: Inter, system-ui, sans-serif;
+  font-feature-settings: "cv11", "ss01", "ss03";
+  min-height: 100vh;
+}
+.dashboard-scope.theme-dark {
+  --bg: 222 47% 8%;
+  --surface: 222 40% 12%;
+  --fg: 210 30% 96%;
+  --muted-fg: 215 16% 65%;
+  --border: 217 19% 22%;
+  --rule: 217 19% 20%;
+  --primary: 160 74% 48%;
+  --primary-ink: 160 70% 85%;
+  --sky: 199 89% 65%;
+  --gold: 43 96% 62%;
+  --gold-ink: 43 96% 72%;
+  --liz: 268 70% 72%;
+  --liz-bg: 268 30% 16%;
+  --liz-ink: 268 50% 88%;
+}
+.dashboard-scope.theme-night {
+  --bg: 30 40% 8%;
+  --surface: 28 30% 12%;
+  --fg: 38 40% 94%;
+  --muted-fg: 30 20% 65%;
+  --border: 28 20% 22%;
+  --rule: 28 20% 20%;
+  --primary: 150 50% 52%;
+  --primary-ink: 150 60% 85%;
+  --sky: 199 50% 65%;
+  --gold: 40 80% 62%;
+  --gold-ink: 40 90% 75%;
+  --liz: 300 40% 72%;
+  --liz-bg: 300 20% 16%;
+  --liz-ink: 300 40% 88%;
+}
+
+/* Typography */
+.dashboard-scope .font-display { font-family: "Playfair Display", serif; letter-spacing: -0.01em; }
+.dashboard-scope .display-xxl { font-family: "Playfair Display", serif; font-weight: 500; letter-spacing: -0.022em; line-height: 1.02; }
+.dashboard-scope .display-xl  { font-family: "Playfair Display", serif; font-weight: 500; letter-spacing: -0.018em; line-height: 1.08; }
+.dashboard-scope .display-l   { font-family: "Playfair Display", serif; font-weight: 500; letter-spacing: -0.012em; line-height: 1.15; }
+.dashboard-scope .display-m   { font-family: "Playfair Display", serif; font-weight: 500; letter-spacing: -0.008em; line-height: 1.25; }
+
+.dashboard-scope .eyebrow {
+  font-family: Inter; font-size: 11px; font-weight: 500;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: hsl(var(--muted-fg));
+}
+.dashboard-scope .label {
+  font-family: Inter; font-size: 11px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: hsl(var(--muted-fg));
+}
+
+/* Liquid-glass card — iOS 26 tint: slightly denser surface + 2-stop gradient
+   so the glass actually reads against the now-tinted background. */
+.dashboard-scope .card {
+  background:
+    linear-gradient(180deg, hsl(var(--surface) / .88) 0%, hsl(var(--surface) / .72) 100%);
+  border: 1px solid hsl(var(--fg) / .08);
+  border-radius: 1.5rem;
+  backdrop-filter: blur(22px) saturate(170%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / .7),
+    0 1px 2px hsl(var(--fg) / .04),
+    0 18px 40px -18px hsl(var(--fg) / .14);
+}
+.dashboard-scope.theme-dark .card,
+.dashboard-scope.theme-night .card {
+  background: hsl(var(--surface) / .55);
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / .08),
+    0 14px 32px -14px rgba(0, 0, 0, .55);
+}
+.dashboard-scope .glass-chip {
+  background: hsl(var(--surface) / .6);
+  border: 1px solid hsl(var(--fg) / .08);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .5);
+}
+
+/* Icon tile — iOS 26 squircle with tinted gradient fill and a soft rim.
+   Keeps the same footprint (40×40) but reads as a "chip" instead of a flat
+   swatch, which is what the user asked for ("icon çerçeveleri"). */
+.dashboard-scope .icon-tile {
+  width: 40px; height: 40px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  background:
+    linear-gradient(180deg, hsl(var(--primary) / .22) 0%, hsl(var(--primary) / .12) 100%);
+  color: hsl(var(--primary-ink));
+  border: 1px solid hsl(var(--primary) / .24);
+  transition: transform .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+  flex-shrink: 0;
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / .7),
+    0 1px 2px hsl(var(--primary) / .18);
+}
+.dashboard-scope .icon-tile.sky  {
+  background: linear-gradient(180deg, hsl(var(--sky) / .26) 0%, hsl(var(--sky) / .14) 100%);
+  color: hsl(199 60% 32%); border-color: hsl(var(--sky) / .32);
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .7), 0 1px 2px hsl(var(--sky) / .2);
+}
+.dashboard-scope .icon-tile.gold {
+  background: linear-gradient(180deg, hsl(var(--gold) / .32) 0%, hsl(var(--gold) / .18) 100%);
+  color: hsl(var(--gold-ink)); border-color: hsl(var(--gold) / .38);
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .7), 0 1px 2px hsl(var(--gold) / .22);
+}
+.dashboard-scope .icon-tile.liz  {
+  background: linear-gradient(180deg, hsl(var(--liz) / .24) 0%, hsl(var(--liz) / .14) 100%);
+  color: hsl(var(--liz-ink)); border-color: hsl(var(--liz) / .32);
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / .7), 0 1px 2px hsl(var(--liz) / .2);
+}
+.dashboard-scope .elsewhere-item:hover .icon-tile {
+  transform: translateY(-1px);
+  background: linear-gradient(180deg, hsl(var(--primary) / .32) 0%, hsl(var(--primary) / .18) 100%);
+  border-color: hsl(var(--primary) / .38);
+}
+.dashboard-scope .elsewhere-item:hover .icon-tile.sky {
+  background: linear-gradient(180deg, hsl(var(--sky) / .36) 0%, hsl(var(--sky) / .2) 100%);
+  border-color: hsl(var(--sky) / .42);
+}
+.dashboard-scope .elsewhere-item:hover .icon-tile.gold {
+  background: linear-gradient(180deg, hsl(var(--gold) / .42) 0%, hsl(var(--gold) / .26) 100%);
+  border-color: hsl(var(--gold) / .5);
+}
+.dashboard-scope .elsewhere-item:hover .icon-tile.liz {
+  background: linear-gradient(180deg, hsl(var(--liz) / .34) 0%, hsl(var(--liz) / .18) 100%);
+  border-color: hsl(var(--liz) / .42);
+}
+
+.dashboard-scope .hairline { border-color: hsl(var(--rule)); }
+.dashboard-scope .text-muted { color: hsl(var(--muted-fg)); }
+.dashboard-scope .text-fg { color: hsl(var(--fg)); }
+.dashboard-scope .bg-surface { background: hsl(var(--surface)); }
+.dashboard-scope .rule { border-top: 1px solid hsl(var(--rule)); }
+
+/* Buttons */
+.dashboard-scope .btn {
+  display: inline-flex; align-items: center; gap: .55rem;
+  font-weight: 500; border-radius: .75rem;
+  transition: transform .2s ease, box-shadow .25s ease, filter .2s ease;
+  position: relative; overflow: hidden; isolation: isolate;
+}
+.dashboard-scope .btn::after {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(120deg, transparent 20%, hsl(0 0% 100% / .22) 45%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform .9s cubic-bezier(.2, .8, .2, 1);
+  pointer-events: none;
+}
+.dashboard-scope .btn:hover::after { transform: translateX(120%); }
+
+.dashboard-scope .btn-primary {
+  color: white; padding: .8rem 1.2rem;
+  background: linear-gradient(180deg, hsl(160 72% 46%) 0%, hsl(var(--primary)) 55%, hsl(160 84% 34%) 100%);
+  box-shadow:
+    inset 0 1px 0 hsl(160 80% 70% / .35),
+    inset 0 -1px 0 hsl(var(--primary-ink) / .35),
+    0 1px 2px hsl(var(--primary) / .35),
+    0 6px 18px -6px hsl(var(--primary) / .45);
+}
+.dashboard-scope .btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 hsl(160 80% 75% / .4),
+    inset 0 -1px 0 hsl(var(--primary-ink) / .4),
+    0 2px 4px hsl(var(--primary) / .4),
+    0 12px 26px -8px hsl(var(--primary) / .55);
+  filter: saturate(1.05);
+}
+.dashboard-scope .btn-primary:active { transform: translateY(0); filter: brightness(.96); }
+
+.dashboard-scope .btn-ghost {
+  color: hsl(var(--fg)); padding: .8rem 1.1rem;
+  border: 1px solid hsl(var(--rule)); background: transparent;
+}
+.dashboard-scope .btn-ghost:hover { background: hsl(var(--fg) / .04); }
+.dashboard-scope .btn-ghost::after { display: none; }
+
+.dashboard-scope .btn-gold {
+  color: hsl(35 90% 15%); padding: .9rem 1.4rem; font-weight: 600;
+  background: linear-gradient(180deg, hsl(45 98% 65%) 0%, hsl(var(--gold)) 55%, hsl(38 92% 48%) 100%);
+  box-shadow:
+    inset 0 1px 0 hsl(48 100% 85% / .6),
+    inset 0 -1px 0 hsl(var(--gold-ink) / .35),
+    0 2px 4px hsl(var(--gold) / .35),
+    0 8px 22px -6px hsl(var(--gold) / .5);
+}
+.dashboard-scope .btn-gold:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 hsl(48 100% 88% / .7),
+    inset 0 -1px 0 hsl(var(--gold-ink) / .4),
+    0 3px 6px hsl(var(--gold) / .45),
+    0 14px 30px -8px hsl(var(--gold) / .6);
+}
+.dashboard-scope .btn-gold:active { transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-scope .btn,
+  .dashboard-scope .btn::after { transition: none !important; }
+  .dashboard-scope .btn:hover { transform: none !important; }
+}
+
+.dashboard-scope .chip {
+  display: inline-flex; align-items: center;
+  padding: .55rem .95rem; border-radius: 999px;
+  border: 1px solid hsl(var(--rule));
+  white-space: nowrap; font-size: .875rem;
+  color: hsl(var(--fg)); background: transparent;
+}
+.dashboard-scope .chip:hover { border-color: hsl(var(--primary) / .5); color: hsl(var(--primary-ink)); }
+
+/* Liz surface */
+.dashboard-scope .liz-surface {
+  background: hsl(var(--liz-bg) / .75);
+  border: 1px solid hsl(var(--liz) / .2);
+  border-radius: 1.5rem;
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / .5),
+    0 16px 32px -16px hsl(var(--liz) / .18);
+}
+.dashboard-scope.theme-dark .liz-surface,
+.dashboard-scope.theme-night .liz-surface {
+  background: hsl(var(--liz-bg) / .7);
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / .06),
+    0 18px 36px -16px rgba(0, 0, 0, .5);
+}
+.dashboard-scope .liz-ink { color: hsl(var(--liz-ink)); }
+.dashboard-scope .liz-avatar {
+  background: hsl(var(--liz) / .18);
+  border: 1px solid hsl(var(--liz) / .35);
+}
+
+.dashboard-scope .progress {
+  height: 4px; background: hsl(var(--rule));
+  border-radius: 999px; overflow: hidden;
+}
+.dashboard-scope .progress > div { height: 100%; border-radius: 999px; }
+
+/* Mock test gold-edge frame */
+.dashboard-scope .mock-frame {
+  background: hsl(var(--surface) / .72);
+  border: 1px solid hsl(var(--gold) / .35);
+  border-radius: 1.5rem;
+  position: relative;
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / .55),
+    0 20px 44px -18px hsl(var(--gold) / .3);
+}
+.dashboard-scope .mock-frame::before {
+  content: ''; position: absolute; inset: 0 0 auto 0; height: 3px;
+  background: linear-gradient(90deg, hsl(var(--gold) / 0), hsl(var(--gold)) 25%, hsl(var(--gold)) 75%, hsl(var(--gold) / 0));
+  border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem;
+}
+
+/* Streak dots */
+.dashboard-scope .dot {
+  width: 30px; height: 30px; border-radius: 999px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 500;
+}
+.dashboard-scope .dot-on    { background: transparent; color: hsl(var(--primary-ink)); border: 1px solid hsl(var(--primary) / .4); }
+.dashboard-scope .dot-today { background: hsl(var(--primary)); color: white; }
+.dashboard-scope .dot-off   { background: transparent; color: hsl(var(--muted-fg)); border: 1px dashed hsl(var(--rule)); }
+
+.dashboard-scope .trend-up   { color: hsl(var(--primary-ink)); }
+.dashboard-scope .trend-down { color: hsl(var(--destruct)); }
+.dashboard-scope .trend-flat { color: hsl(var(--muted-fg)); }
+.dashboard-scope .warn-ink   { color: hsl(var(--destruct)); }
+
+.dashboard-scope .tile { transition: border-color .15s ease, background .15s ease; cursor: pointer; }
+.dashboard-scope .tile:hover { border-color: hsl(var(--primary) / .4); background: hsl(var(--fg) / .015); }
+
+/* Nav link */
+.dashboard-scope .nav-link {
+  position: relative; padding: .25rem 0;
+  color: hsl(var(--fg)); font-weight: 450; font-size: 14px;
+}
+.dashboard-scope .nav-link.active::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -10px;
+  height: 1px; background: hsl(var(--primary));
+}
+.dashboard-scope .nav-link.muted { color: hsl(var(--muted-fg)); }
+.dashboard-scope .nav-link.muted:hover { color: hsl(var(--fg)); }
+
+/* Mobile bottom nav visibility */
+.dashboard-scope .dashboard-bottom-nav { display: none; }
+@media (max-width: 768px) {
+  .dashboard-scope .dashboard-bottom-nav { display: flex; }
+  .dashboard-scope .desktop-nav { display: none; }
+  .dashboard-scope .body-pad-bottom { padding-bottom: 120px; }
+}
+
+.dashboard-scope button:focus-visible,
+.dashboard-scope a:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px; border-radius: 4px;
+}
+
+/* Logo mark */
+.dashboard-scope .logomark {
+  width: 42px; height: 42px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    0 3px 8px hsl(var(--primary) / .28),
+    0 1px 2px hsl(var(--primary-ink) / .18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+  flex-shrink: 0;
+}
+.dashboard-scope .logomark img {
+  width: 100%; height: 100%; object-fit: cover;
+  border-radius: inherit;
+  display: block;
+}
+
+/* Editorial body + divider */
+.dashboard-scope .editorial-body { font-size: 15px; line-height: 1.7; color: hsl(var(--fg)); }
+.dashboard-scope .divider-dot {
+  display: inline-block; width: 3px; height: 3px; border-radius: 999px;
+  background: hsl(var(--muted-fg)); opacity: .6;
+  margin: 0 .75rem; vertical-align: middle;
+}

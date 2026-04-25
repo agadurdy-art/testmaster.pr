@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
@@ -127,6 +128,7 @@ function PromptCard({ prompt, grammarTitle, moduleId, onEvaluated }) {
 export default function GrammarProductionMode({ user, stage = 'guided' }) {
   const { moduleId } = useParams();
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -194,7 +196,7 @@ export default function GrammarProductionMode({ user, stage = 'guided' }) {
             })}
           </div>
           <div className="flex gap-3">
-            <Button variant="outline" onClick={() => navigate(-1)} className="flex-1">Back</Button>
+            <Button variant="outline" onClick={goBack} className="flex-1">Back</Button>
             {isGuided ? (
               <Button onClick={() => navigate(`/grammar/free/${moduleId}`)} className="flex-1 bg-gradient-to-r from-green-500 to-emerald-600" data-testid="go-to-free-btn">
                 Free Production <ChevronRight className="w-4 h-4 ml-1" />
@@ -216,7 +218,7 @@ export default function GrammarProductionMode({ user, stage = 'guided' }) {
     <div className="min-h-screen bg-gray-50" data-testid={`grammar-${stage}-page`}>
       <div className="bg-white border-b sticky top-0 z-10">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <button onClick={() => navigate(-1)} className="flex items-center gap-1 text-gray-600 hover:text-gray-900" data-testid={`grammar-${stage}-back`}>
+          <button onClick={goBack} className="flex items-center gap-1 text-gray-600 hover:text-gray-900" data-testid={`grammar-${stage}-back`}>
             <ArrowLeft className="w-4 h-4" /> Back
           </button>
           <div className="text-center">

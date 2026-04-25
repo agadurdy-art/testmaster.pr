@@ -1,20 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
-import { 
-  ArrowLeft, Clock, Headphones, HelpCircle, CheckCircle, 
+import {
+  ArrowLeft, Clock, Headphones, HelpCircle, CheckCircle,
   ChevronRight, Target, Lightbulb, Award, AlertCircle,
-  Play, Pause, RotateCcw, Volume2, VolumeX, FileText,
-  ChevronDown, ChevronUp, SkipBack, SkipForward
+  VolumeX, FileText, Play, Pause, RotateCcw,
+  ChevronDown, ChevronUp,
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useGoBack } from '../hooks/useGoBack';
+import AudioPlayer from '../components/AudioPlayer';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function ListeningPractice({ user }) {
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const [searchParams] = useSearchParams();
   const initialBand = searchParams.get('band');
   const initialTopic = searchParams.get('topic');
@@ -37,13 +40,10 @@ export default function ListeningPractice({ user }) {
   const [filterBand, setFilterBand] = useState(initialBand || '');
   const [filterTopic, setFilterTopic] = useState(initialTopic || '');
   
-  // Audio state
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [audioProgress, setAudioProgress] = useState(0);
-  const [audioDuration, setAudioDuration] = useState(0);
+  // Audio is owned by <AudioPlayer />; only transcript + error visibility
+  // remain in this page's state.
   const [showTranscript, setShowTranscript] = useState(false);
   const [audioError, setAudioError] = useState(false);
-  const audioRef = useRef(null);
 
   useEffect(() => {
     loadData();
@@ -110,8 +110,6 @@ export default function ListeningPractice({ user }) {
         setTimeLeft(60 * 30);
         setTimerActive(false);
         setShowTranscript(false);
-        setIsPlaying(false);
-        setAudioProgress(0);
         setLoading(false);
         
         // Check if audio is already cached (instant load)
@@ -178,42 +176,6 @@ export default function ListeningPractice({ user }) {
     }));
   };
 
-  // Audio controls
-  const togglePlayPause = () => {
-    if (!audioRef.current) return;
-    
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  const handleAudioTimeUpdate = () => {
-    if (audioRef.current) {
-      setAudioProgress(audioRef.current.currentTime);
-      setAudioDuration(audioRef.current.duration || moduleContent?.duration_seconds || 180);
-    }
-  };
-
-  const handleSeek = (e) => {
-    const seekTime = parseFloat(e.target.value);
-    if (audioRef.current) {
-      audioRef.current.currentTime = seekTime;
-      setAudioProgress(seekTime);
-    }
-  };
-
-  const skipTime = (seconds) => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = Math.max(0, Math.min(
-        audioRef.current.currentTime + seconds,
-        audioRef.current.duration
-      ));
-    }
-  };
-
   const submitAnswers = async () => {
     if (!moduleContent?.questions) return;
 
@@ -274,7 +236,7 @@ export default function ListeningPractice({ user }) {
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between flex-wrap gap-3">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="sm" onClick={() => navigate('/question-bank')}>
+              <Button variant="ghost" size="sm" onClick={goBack}>
                 <ArrowLeft className="w-4 h-4 mr-1" /> Question Bank
               </Button>
               <div>
@@ -390,62 +352,16 @@ export default function ListeningPractice({ user }) {
                   </div>
                 ) : (
                   <div className="space-y-3">
-                    {/* Hidden audio element */}
-                    <audio
-                      ref={audioRef}
+                    <AudioPlayer
                       src={moduleContent.audio_url}
-                      onTimeUpdate={handleAudioTimeUpdate}
-                      onEnded={() => setIsPlaying(false)}
-                      onError={() => setAudioError(true)}
+                      persistKey={`listening:${selectedModule}`}
                     />
-                    
-                    {/* Play controls */}
-                    <div className="flex items-center justify-center gap-4">
-                      <Button 
-                        variant="ghost" 
-                        size="sm"
-                        onClick={() => skipTime(-10)}
-                      >
-                        <SkipBack className="w-5 h-5" />
-                      </Button>
-                      <Button 
-                        className="w-14 h-14 rounded-full bg-purple-600 hover:bg-purple-700"
-                        onClick={togglePlayPause}
-                      >
-                        {isPlaying ? (
-                          <Pause className="w-6 h-6 text-white" />
-                        ) : (
-                          <Play className="w-6 h-6 text-white ml-1" />
-                        )}
-                      </Button>
-                      <Button 
-                        variant="ghost" 
-                        size="sm"
-                        onClick={() => skipTime(10)}
-                      >
-                        <SkipForward className="w-5 h-5" />
-                      </Button>
-                    </div>
-                    
-                    {/* Progress bar */}
-                    <div className="flex items-center gap-3">
-                      <span className="text-xs text-gray-500 w-12">{formatTime(Math.floor(audioProgress))}</span>
-                      <input
-                        type="range"
-                        min="0"
-                        max={audioDuration || moduleContent.duration_seconds || 180}
-                        value={audioProgress}
-                        onChange={handleSeek}
-                        className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
-                      />
-                      <span className="text-xs text-gray-500 w-12">{formatTime(Math.floor(audioDuration || moduleContent.duration_seconds || 180))}</span>
-                    </div>
-                    
+
                     {/* Transcript toggle - only show after submit or for lower bands */}
                     {(submitted || filterBand === '4.0-5.0') && (
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
+                      <Button
+                        variant="ghost"
+                        size="sm"
                         className="w-full"
                         onClick={() => setShowTranscript(!showTranscript)}
                       >

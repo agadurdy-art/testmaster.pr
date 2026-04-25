@@ -4,14 +4,22 @@ import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Textarea } from '../components/ui/textarea';
-import { 
-  ArrowLeft, PenTool, Clock, RefreshCw, Send, 
+import {
+  ArrowLeft, PenTool, Clock, RefreshCw, Send,
   MessageSquare, HelpCircle, Scale, AlertTriangle,
-  Lightbulb, CheckCircle, ChevronDown, ChevronUp, 
-  Eye, EyeOff, BookOpen, Award, Layers, Star
+  Lightbulb, CheckCircle, ChevronDown, ChevronUp,
+  Eye, EyeOff, BookOpen, Award, Layers, Star,
+  Edit3, ListFilter
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { getRecommendedLessonPath } from '../lib/recommendationRouting';
+import { useI18n } from '../lib/i18n';
+import WritingEvaluatorResult from '../features/evaluator/components/WritingEvaluatorResult';
+import {
+  WritingEvaluationResult,
+  verifyAnnotationOffsets,
+} from '../features/evaluator/schemas/writingResult';
+import { useGoBack } from '../hooks/useGoBack';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -28,6 +36,8 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function WritingTask2Practice() {
   const navigate = useNavigate();
+  const goBack = useGoBack();
+  const { t, languageWireCode } = useI18n();
   const [searchParams] = useSearchParams();
   const examType = searchParams.get('type') || 'academic'; // academic or general
   const urlTopic = searchParams.get('topic');
@@ -49,9 +59,14 @@ export default function WritingTask2Practice() {
   const [targetBand, setTargetBand] = useState(urlBand);
   const [modelAnswers, setModelAnswers] = useState(null);
   const [recommendedLessons, setRecommendedLessons] = useState([]);
+  // Custom prompt mode — paid practice users can paste their own task prompt
+  // and get the same v2 evaluation without being restricted to our question
+  // bank. Gated only by being on this authenticated route.
+  const [isCustomMode, setIsCustomMode] = useState(false);
+  const [customPrompt, setCustomPrompt] = useState('');
 
   const essayTypes = [
-    { id: 'all', name: 'Tümü', icon: BookOpen },
+    { id: 'all', name: 'All', icon: BookOpen },
     { id: 'opinion', name: 'Opinion', icon: MessageSquare },
     { id: 'discussion', name: 'Discussion', icon: Scale },
     { id: 'advantage_disadvantage', name: 'Advantage/Disadvantage', icon: Scale },
@@ -148,55 +163,58 @@ export default function WritingTask2Practice() {
 
   const submitForEvaluation = async () => {
     if (wordCount < 200) {
-      toast.error('En az 200 kelime yazmalısınız');
+      toast.error('Please write at least 200 words');
       return;
     }
-    
+
+    const effectivePrompt = isCustomMode
+      ? customPrompt.trim()
+      : (selectedPrompt?.prompt || '');
+
+    if (!effectivePrompt) {
+      toast.error(isCustomMode
+        ? 'Paste your own task prompt first'
+        : 'Please select a prompt first');
+      return;
+    }
+
     setEvaluating(true);
-    toast.info('AI değerlendirmesi yapılıyor...');
-    
+    toast.info('AI evaluation in progress...');
+
     try {
-      const response = await fetch(`${API_URL}/api/question-bank/writing/evaluate`, {
+      const response = await fetch(`${API_URL}/api/writing-practice/evaluate/v2`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          response: userResponse,
           task_type: 'task2',
-          topic: selectedPrompt?.topic,
-          band_level: selectedPrompt?.band_level || '5.5-6.5',
-          task_description: selectedPrompt?.prompt || ''
-        })
+          prompt: effectivePrompt,
+          essay: userResponse,
+          user_language: languageWireCode || 'en',
+        }),
       });
-      
-      const data = await response.json();
-      
-      if (data.success) {
-        setEvaluation({
-          overall_band: data.evaluation.overall_band,
-          task_achievement: data.evaluation.task_achievement,
-          coherence_cohesion: data.evaluation.coherence_cohesion,
-          lexical_resource: data.evaluation.lexical_resource,
-          grammatical_range: data.evaluation.grammatical_range,
-          strengths: data.evaluation.strengths || [],
-          weaknesses: data.evaluation.weaknesses || [],
-          suggestions: data.evaluation.improvement_suggestions || [],
-          high_priority_fixes: data.evaluation.high_priority_fixes || [],
-          response_diagnosis: data.evaluation.response_diagnosis || {},
-          band_justification: data.evaluation.band_justification || '',
-          line_by_line_corrections: data.evaluation.line_by_line_corrections || [],
-          rewrite_guidance: data.evaluation.rewrite_guidance || {},
-          vocabulary_to_use: data.evaluation.vocabulary_to_use || [],
-          grammar_corrections: data.evaluation.grammar_corrections || [],
-          examiner_comment: data.evaluation.examiner_comment || ''
-        });
-        // Store recommended lessons from ULTRA MASTER PROMPT
-        if (data.recommended_lessons && data.recommended_lessons.length > 0) {
-          setRecommendedLessons(data.recommended_lessons);
-        }
-        toast.success('Evaluation complete!');
-      } else {
-        toast.error(data.error || 'Evaluation failed');
+
+      if (!response.ok) {
+        const errText = await response.text().catch(() => '');
+        console.error('Evaluation HTTP error:', response.status, errText);
+        toast.error('Evaluation failed — please try again');
+        return;
       }
+
+      const data = await response.json();
+      const parsed = WritingEvaluationResult.safeParse(data);
+      if (!parsed.success) {
+        console.error('Evaluation schema validation failed:', parsed.error);
+        toast.error('Evaluation response was malformed');
+        return;
+      }
+
+      const offsetErrors = verifyAnnotationOffsets(parsed.data, userResponse);
+      if (offsetErrors.length > 0) {
+        console.warn('Annotation offset mismatch:', offsetErrors);
+      }
+
+      setEvaluation(parsed.data);
+      toast.success('Evaluation complete!');
     } catch (error) {
       console.error('Evaluation error:', error);
       toast.error('Error during evaluation');
@@ -236,6 +254,25 @@ export default function WritingTask2Practice() {
     );
   }
 
+  if (evaluation) {
+    return (
+      <WritingEvaluatorResult
+        result={evaluation}
+        essayText={userResponse}
+        prompt={isCustomMode ? customPrompt : (selectedPrompt?.prompt || '')}
+        onRewrite={() => {
+          setEvaluation(null);
+          setUserResponse(evaluation.improved_version || userResponse);
+        }}
+        onPracticeMore={() => navigate('/question-bank/writing/task2')}
+        onViewRewrite={() => {
+          setUserResponse(evaluation.improved_version || userResponse);
+          setEvaluation(null);
+        }}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Header */}
@@ -246,7 +283,7 @@ export default function WritingTask2Practice() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => navigate('/question-bank')}
+                onClick={goBack}
                 className="text-white/80 hover:text-white hover:bg-white/10"
               >
                 <ArrowLeft className="w-4 h-4" />
@@ -278,7 +315,7 @@ export default function WritingTask2Practice() {
                 className="bg-white/10 border-white/20 text-white hover:bg-white/20"
                 onClick={() => setIsTimerRunning(!isTimerRunning)}
               >
-                {isTimerRunning ? 'Durdur' : 'Başlat'}
+                {isTimerRunning ? t('wt2Stop') : t('wt2Start')}
               </Button>
             </div>
           </div>
@@ -292,10 +329,75 @@ export default function WritingTask2Practice() {
           {/* LEFT PANEL - Prompt Selection (40%) */}
           <div className="lg:w-[40%] lg:border-r border-gray-200 lg:sticky lg:top-[80px] lg:h-[calc(100vh-80px)] lg:overflow-y-auto">
             <div className="p-4 md:p-6 space-y-4">
-              
-              {/* Essay Type Filter */}
-              <Card className="p-4">
-                <h3 className="font-semibold text-gray-900 mb-3 text-sm">Essay Tipi</h3>
+
+              {/* Mode toggle — Preset questions vs Custom (bring-your-own) */}
+              <Card className="p-1.5 bg-gray-50 border-gray-200">
+                <div className="grid grid-cols-2 gap-1">
+                  <button
+                    type="button"
+                    onClick={() => setIsCustomMode(false)}
+                    className={`flex items-center justify-center gap-1.5 px-3 py-2 rounded-md text-xs font-medium transition-colors ${
+                      !isCustomMode
+                        ? 'bg-white text-blue-700 shadow-sm border border-blue-100'
+                        : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                  >
+                    <ListFilter className="w-3.5 h-3.5" />
+                    Preset Questions
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setIsCustomMode(true)}
+                    className={`flex items-center justify-center gap-1.5 px-3 py-2 rounded-md text-xs font-medium transition-colors ${
+                      isCustomMode
+                        ? 'bg-white text-blue-700 shadow-sm border border-blue-100'
+                        : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                  >
+                    <Edit3 className="w-3.5 h-3.5" />
+                    My Own Question
+                  </button>
+                </div>
+              </Card>
+
+              {/* ===== Custom-mode panel ===== */}
+              {isCustomMode && (
+                <Card className="p-4 border-2 border-blue-100">
+                  <h3 className="font-semibold text-gray-900 mb-1 text-sm flex items-center gap-1.5">
+                    <Edit3 className="w-4 h-4 text-blue-600" />
+                    Your own Task 2 prompt
+                  </h3>
+                  <p className="text-xs text-gray-500 mb-3">
+                    Paste the exact question you were given. The evaluator
+                    will grade your essay against this prompt, same rubric as
+                    the preset questions.
+                  </p>
+                  <Textarea
+                    value={customPrompt}
+                    onChange={(e) => setCustomPrompt(e.target.value)}
+                    placeholder="e.g. Some people think modern technology has made our lives more convenient; others say it has created new problems. Discuss both views and give your own opinion."
+                    className="min-h-[160px] text-sm leading-relaxed resize-none"
+                    maxLength={4000}
+                  />
+                  <div className="mt-2 flex items-center justify-between text-[11px] text-gray-500">
+                    <span>{customPrompt.length} / 4000 characters</span>
+                    {customPrompt.trim() && (
+                      <button
+                        type="button"
+                        onClick={() => setCustomPrompt('')}
+                        className="text-gray-500 hover:text-gray-700"
+                      >
+                        Clear
+                      </button>
+                    )}
+                  </div>
+                </Card>
+              )}
+
+              {/* ===== Preset-mode panels (hidden in custom mode) ===== */}
+              {!isCustomMode && (
+                <Card className="p-4">
+                <h3 className="font-semibold text-gray-900 mb-3 text-sm">{t('wt2EssayType')}</h3>
                 <div className="flex flex-wrap gap-2">
                   {essayTypes.map(type => {
                     const Icon = type.icon;
@@ -313,10 +415,12 @@ export default function WritingTask2Practice() {
                   })}
                 </div>
               </Card>
+              )}
 
               {/* Prompt Selection */}
+              {!isCustomMode && (
               <Card className="p-4">
-                <h3 className="font-semibold text-gray-900 mb-3 text-sm">Soru Seçin</h3>
+                <h3 className="font-semibold text-gray-900 mb-3 text-sm">Select Question</h3>
                 <div className="space-y-2 max-h-40 overflow-y-auto">
                   {prompts.map(prompt => (
                     <div
@@ -336,9 +440,10 @@ export default function WritingTask2Practice() {
                   ))}
                 </div>
               </Card>
+              )}
 
               {/* Selected Prompt Display */}
-              {selectedPrompt && (
+              {!isCustomMode && selectedPrompt && (
                 <Card className="p-4 bg-white border-2 border-blue-100">
                   <div className="flex items-center gap-2 mb-3">
                     <Badge className={getTypeColor(selectedPrompt.type)}>{selectedPrompt.type}</Badge>
@@ -359,7 +464,7 @@ export default function WritingTask2Practice() {
                   {selectedPrompt.key_points?.length > 0 && (
                     <div className="mb-3">
                       <h4 className="font-semibold text-gray-900 mb-2 text-xs flex items-center gap-1">
-                        <HelpCircle className="w-3.5 h-3.5 text-blue-500" /> Ele Alınması Gerekenler
+                        <HelpCircle className="w-3.5 h-3.5 text-blue-500" /> {t('wt2KeyPointsToAddress')}
                       </h4>
                       <ul className="space-y-1">
                         {selectedPrompt.key_points.map((point, idx) => (
@@ -375,7 +480,7 @@ export default function WritingTask2Practice() {
                   {/* Useful Vocabulary */}
                   {selectedPrompt.useful_vocabulary?.length > 0 && (
                     <div className="p-2 bg-purple-50 rounded-lg">
-                      <h4 className="font-semibold text-purple-800 mb-1 text-xs">📚 Faydalı Kelimeler</h4>
+                      <h4 className="font-semibold text-purple-800 mb-1 text-xs">📚 {t('wt2UsefulVocabulary')}</h4>
                       <div className="flex flex-wrap gap-1">
                         {selectedPrompt.useful_vocabulary.map((word, idx) => (
                           <span key={idx} className="px-1.5 py-0.5 bg-purple-100 text-purple-700 rounded text-xs">
@@ -389,14 +494,14 @@ export default function WritingTask2Practice() {
               )}
 
               {/* Tips - Collapsible */}
-              {selectedPrompt && (
+              {!isCustomMode && selectedPrompt && (
                 <Card className="overflow-hidden">
                   <button
                     className="w-full p-3 flex items-center justify-between text-left"
                     onClick={() => setShowTips(!showTips)}
                   >
                     <span className="flex items-center gap-2 font-semibold text-gray-900 text-sm">
-                      <Lightbulb className="w-4 h-4 text-amber-500" /> Yazma İpuçları
+                      <Lightbulb className="w-4 h-4 text-amber-500" /> {t('wt2WritingTips')}
                     </span>
                     {showTips ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                   </button>
@@ -425,14 +530,14 @@ export default function WritingTask2Practice() {
               {/* Writing Area */}
               <Card className="p-4 md:p-5">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-semibold text-gray-900 text-sm">Yanıtınız</h3>
+                  <h3 className="font-semibold text-gray-900 text-sm">{t('wt2YourResponse')}</h3>
                   <div className={`text-sm font-medium ${
                     wordCount >= 250 ? 'text-green-600' : wordCount >= 200 ? 'text-amber-600' : 'text-red-500'
                   }`}>
-                    {wordCount} kelime
+                    {wordCount} {t('wt2WordsUnit')}
                     {wordCount < 250 && (
                       <span className="text-gray-400 ml-1">
-                        ({250 - wordCount} daha gerekli)
+                        ({250 - wordCount} {t('wt2MoreNeeded')})
                       </span>
                     )}
                   </div>
@@ -441,204 +546,48 @@ export default function WritingTask2Practice() {
                 <Textarea
                   value={userResponse}
                   onChange={(e) => setUserResponse(e.target.value)}
-                  placeholder="Essay'inizi buraya yazın. Giriş paragrafıyla başlayın, ana argümanlarınızı geliştirin ve güçlü bir sonuçla bitirin..."
+                  placeholder={t('wt2ResponsePlaceholder')}
                   className="min-h-[300px] text-sm leading-relaxed resize-none"
                 />
 
                 <div className="mt-4 flex flex-col sm:flex-row gap-3">
                   <Button
                     onClick={submitForEvaluation}
-                    disabled={evaluating || wordCount < 200}
+                    disabled={
+                      evaluating ||
+                      wordCount < 200 ||
+                      (isCustomMode ? !customPrompt.trim() : !selectedPrompt)
+                    }
                     className="flex-1 bg-blue-600 hover:bg-blue-700"
                   >
                     {evaluating ? (
                       <>
-                        <RefreshCw className="w-4 h-4 mr-2 animate-spin" /> Değerlendiriliyor...
+                        <RefreshCw className="w-4 h-4 mr-2 animate-spin" /> {t('wt2Evaluating')}
                       </>
                     ) : (
                       <>
-                        <Send className="w-4 h-4 mr-2" /> Değerlendir
+                        <Send className="w-4 h-4 mr-2" /> {t('wt2Evaluate')}
                       </>
                     )}
                   </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => setShowModelAnswer(!showModelAnswer)}
-                  >
-                    {showModelAnswer ? <EyeOff className="w-4 h-4 mr-1" /> : <Eye className="w-4 h-4 mr-1" />}
-                    Model Yanıtlar
-                  </Button>
+                  {/* Model answers only exist for preset prompts */}
+                  {!isCustomMode && (
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowModelAnswer(!showModelAnswer)}
+                    >
+                      {showModelAnswer ? <EyeOff className="w-4 h-4 mr-1" /> : <Eye className="w-4 h-4 mr-1" />}
+                      {t('wt2ModelAnswers')}
+                    </Button>
+                  )}
                 </div>
               </Card>
 
-              {/* Evaluation Results */}
-              {evaluation && (
-                <Card className="p-5 border-2 border-blue-200 bg-blue-50/50">
-                  <div className="text-center mb-4">
-                    <div className="inline-flex items-center justify-center w-14 h-14 bg-blue-100 rounded-full mb-2">
-                      <Award className="w-7 h-7 text-blue-600" />
-                    </div>
-                    <div className="text-3xl font-bold text-blue-600">
-                      Band {evaluation.overall_band}
-                    </div>
-                    <p className="text-xs text-gray-500 mt-1">Overall Band Score</p>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3 mb-4">
-                    {[
-                      { name: 'Task Response', data: evaluation.task_achievement },
-                      { name: 'Coherence', data: evaluation.coherence_cohesion },
-                      { name: 'Lexical', data: evaluation.lexical_resource },
-                      { name: 'Grammar', data: evaluation.grammatical_range },
-                    ].map(criterion => (
-                      <div key={criterion.name} className="bg-white p-2 rounded-lg">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-xs text-gray-600">{criterion.name}</span>
-                          <Badge variant="outline" className="text-xs">{criterion.data?.score}</Badge>
-                        </div>
-                        <p className="text-xs text-gray-500 line-clamp-2">{criterion.data?.feedback}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Suggestions & Feedback */}
-                  <div className="grid grid-cols-2 gap-3">
-                    {evaluation.strengths?.length > 0 && (
-                      <div className="bg-green-50 p-3 rounded-lg">
-                        <h4 className="font-semibold text-green-800 mb-2 text-xs">✅ Güçlü Yönler</h4>
-                        <ul className="space-y-1">
-                          {evaluation.strengths.slice(0, 3).map((s, idx) => (
-                            <li key={idx} className="text-xs text-green-700">• {s}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {evaluation.weaknesses?.length > 0 && (
-                      <div className="bg-amber-50 p-3 rounded-lg">
-                        <h4 className="font-semibold text-amber-800 mb-2 text-xs">⚠️ Geliştirilecek</h4>
-                        <ul className="space-y-1">
-                          {evaluation.weaknesses.slice(0, 3).map((w, idx) => (
-                            <li key={idx} className="text-xs text-amber-700">• {w}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {/* ULTRA MASTER PROMPT: Recommended Lessons */}
-                    {recommendedLessons.length > 0 && (
-                      <div className="bg-purple-50 p-3 rounded-lg border border-purple-200 col-span-2">
-                        <h4 className="font-semibold text-purple-800 mb-2 text-xs flex items-center gap-2">
-                          Recommended Lessons
-                          <Badge className="bg-purple-100 text-purple-600 text-xs">Kurs Odaklı</Badge>
-                        </h4>
-                        <p className="text-xs text-purple-600 mb-2">
-                          Zayıf noktalarınızı geliştirmek için bu dersleri çalışın:
-                        </p>
-                        <div className="space-y-2">
-                          {recommendedLessons.map((lesson, idx) => (
-                            <div 
-                              key={idx}
-                              className="p-2 bg-white rounded-lg border border-purple-100 cursor-pointer hover:border-purple-300 transition-colors"
-                              onClick={() => navigate(getRecommendedLessonPath(lesson))}
-                            >
-                              <div className="flex items-center justify-between">
-                                <div className="flex-1">
-                                  <p className="text-sm font-medium text-gray-800">{lesson.title}</p>
-                                  <p className="text-xs text-gray-500">{lesson.reason}</p>
-                                </div>
-                                <Badge 
-                                  className={`text-xs ${
-                                    lesson.stage === 'beginner' ? 'bg-green-100 text-green-700' :
-                                    lesson.stage === 'mastery' ? 'bg-blue-100 text-blue-700' :
-                                    'bg-amber-100 text-amber-700'
-                                  }`}
-                                >
-                                  {lesson.band_level}
-                                </Badge>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {evaluation.band_justification && (
-                    <div className="mt-4 p-3 bg-slate-50 rounded-lg border">
-                      <h4 className="font-semibold text-slate-800 mb-2 text-xs">📏 Band Justification</h4>
-                      <p className="text-xs text-gray-700">{evaluation.band_justification}</p>
-                    </div>
-                  )}
-
-                  {evaluation.high_priority_fixes?.length > 0 && (
-                    <div className="mt-4 p-3 bg-rose-50 rounded-lg">
-                      <h4 className="font-semibold text-rose-800 mb-2 text-xs">🚨 Highest-Priority Fixes</h4>
-                      <ul className="space-y-1">
-                        {evaluation.high_priority_fixes.map((fix, idx) => (
-                          <li key={idx} className="text-xs text-rose-700">• {fix}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {evaluation.response_diagnosis && Object.keys(evaluation.response_diagnosis).length > 0 && (
-                    <div className="mt-4 p-3 bg-indigo-50 rounded-lg border border-indigo-100">
-                      <h4 className="font-semibold text-indigo-800 mb-2 text-xs">🧭 Response Diagnosis</h4>
-                      <div className="space-y-2">
-                        {Object.entries(evaluation.response_diagnosis).map(([key, value]) => (
-                          <div key={key} className="bg-white rounded border p-2">
-                            <p className="text-[11px] font-semibold text-gray-600 uppercase tracking-wide">{key.replace(/_/g, ' ')}</p>
-                            <p className="text-xs text-gray-700 mt-1">{value}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {evaluation.line_by_line_corrections?.length > 0 && (
-                    <div className="mt-4 p-3 bg-white rounded-lg border">
-                      <h4 className="font-semibold text-gray-900 mb-2 text-xs">✍️ Line-by-Line Corrections</h4>
-                      <div className="space-y-2">
-                        {evaluation.line_by_line_corrections.map((item, idx) => (
-                          <div key={idx} className="rounded border p-2 bg-gray-50">
-                            <p className="text-xs text-red-700"><strong>Original:</strong> {item.original_line || item.original}</p>
-                            <p className="text-xs text-amber-700 mt-1"><strong>Issue:</strong> {item.issue}</p>
-                            <p className="text-xs text-green-700 mt-1"><strong>Corrected:</strong> {item.corrected_line || item.improved}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {evaluation.rewrite_guidance && Object.keys(evaluation.rewrite_guidance).length > 0 && (
-                    <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-100">
-                      <h4 className="font-semibold text-green-800 mb-2 text-xs">🔁 Rewrite Guidance</h4>
-                      <div className="space-y-2">
-                        {Object.entries(evaluation.rewrite_guidance).map(([key, value]) => (
-                          Array.isArray(value) ? (
-                            <div key={key}>
-                              <p className="text-[11px] font-semibold text-gray-600 uppercase tracking-wide mb-1">{key.replace(/_/g, ' ')}</p>
-                              <ul className="space-y-1">
-                                {value.map((item, idx) => <li key={idx} className="text-xs text-gray-700">• {item}</li>)}
-                              </ul>
-                            </div>
-                          ) : (
-                            <div key={key} className="bg-white rounded border p-2">
-                              <p className="text-[11px] font-semibold text-gray-600 uppercase tracking-wide">{key.replace(/_/g, ' ')}</p>
-                              <p className="text-xs text-gray-700 mt-1">{value}</p>
-                            </div>
-                          )
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </Card>
-              )}
-
-              {/* Model Answers - Band 6 & Band 8.5 */}
-              {showModelAnswer && modelAnswers && (
+              {/* Model Answers - Band 6 & Band 8.5 (preset prompts only) */}
+              {!isCustomMode && showModelAnswer && modelAnswers && (
                 <Card className="p-5 border-2 border-indigo-200 bg-indigo-50/30">
                   <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <Layers className="w-5 h-5 text-indigo-600" /> Model Yanıtlar
+                    <Layers className="w-5 h-5 text-indigo-600" /> {t('wt2ModelAnswers')}
                   </h3>
                   
                   {/* Band Selection Tabs */}
@@ -711,7 +660,7 @@ export default function WritingTask2Practice() {
               )}
 
               {/* Show generic model if no specific model answers loaded */}
-              {showModelAnswer && !modelAnswers && selectedPrompt && (
+              {!isCustomMode && showModelAnswer && !modelAnswers && selectedPrompt && (
                 <Card className="p-5 border-2 border-indigo-200 bg-indigo-50/30">
                   <h3 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
                     <Eye className="w-5 h-5 text-indigo-600" /> Model Answer Structure

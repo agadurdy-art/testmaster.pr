@@ -11,6 +11,8 @@ import {
   User, Users, Heart
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useI18n } from '../lib/i18n';
+import { useGoBack } from '../hooks/useGoBack';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -27,6 +29,8 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function GeneralTask1Practice() {
   const navigate = useNavigate();
+  const goBack = useGoBack();
+  const { t, languageWireCode } = useI18n();
   const [searchParams] = useSearchParams();
   const urlTopic = searchParams.get('topic');
   const urlBand = searchParams.get('band') || '5.5-6.5';
@@ -47,10 +51,10 @@ export default function GeneralTask1Practice() {
   const [modelAnswers, setModelAnswers] = useState(null);
 
   const letterTypes = [
-    { id: 'all', name: 'Tümü', icon: FileText },
-    { id: 'formal', name: 'Formal', icon: User, description: 'İş, şikayet, başvuru' },
-    { id: 'semi_formal', name: 'Semi-Formal', icon: Users, description: 'Tanıdık ama resmi' },
-    { id: 'informal', name: 'Informal', icon: Heart, description: 'Arkadaş, aile' },
+    { id: 'all', name: 'All', icon: FileText },
+    { id: 'formal', name: 'Formal', icon: User, description: 'Work, complaint, application' },
+    { id: 'semi_formal', name: 'Semi-Formal', icon: Users, description: 'Acquaintance, somewhat formal' },
+    { id: 'informal', name: 'Informal', icon: Heart, description: 'Friend, family' },
   ];
 
   const tips = {
@@ -151,7 +155,8 @@ export default function GeneralTask1Practice() {
           topic: selectedPrompt?.topic,
           band_level: urlBand || '5.5-6.5',
           task_description: selectedPrompt?.prompt || '',
-          track: 'general'  // Dual-Track: General Training
+          track: 'general',  // Dual-Track: General Training
+          user_language: languageWireCode
         })
       });
       
@@ -242,7 +247,7 @@ export default function GeneralTask1Practice() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => navigate('/question-bank')}
+                onClick={goBack}
                 className="text-white/80 hover:text-white hover:bg-white/10"
               >
                 <ArrowLeft className="w-4 h-4" />
@@ -309,9 +314,9 @@ export default function GeneralTask1Practice() {
                   })}
                 </div>
                 <div className="mt-2 grid grid-cols-3 gap-2 text-xs text-gray-500">
-                  <div className="flex items-center gap-1"><User className="w-3 h-3" /> İş/Şikayet</div>
-                  <div className="flex items-center gap-1"><Users className="w-3 h-3" /> Komşu/Kulüp</div>
-                  <div className="flex items-center gap-1"><Heart className="w-3 h-3" /> Arkadaş</div>
+                  <div className="flex items-center gap-1"><User className="w-3 h-3" /> Work / Complaint</div>
+                  <div className="flex items-center gap-1"><Users className="w-3 h-3" /> Neighbor / Club</div>
+                  <div className="flex items-center gap-1"><Heart className="w-3 h-3" /> Friend</div>
                 </div>
               </Card>
 
@@ -597,7 +602,7 @@ export default function GeneralTask1Practice() {
                           <li 
                             key={idx} 
                             className="text-xs bg-white p-2 rounded border border-indigo-100 cursor-pointer hover:border-indigo-300 transition-colors"
-                            onClick={() => navigate(`/courses/mastery/general/${lesson.lesson_id}`)}
+                            onClick={() => navigate(`/mastery-course?lesson=${lesson.lesson_id}`)}
                           >
                             <div className="flex items-center justify-between">
                               <span className="font-medium text-indigo-700">{lesson.title}</span>
@@ -674,7 +679,7 @@ export default function GeneralTask1Practice() {
                     </div>
                   ) : (
                     <div className="text-center py-8 text-gray-500">
-                      <p className="text-sm">Bu soru için model mektup henüz eklenmedi.</p>
+                      <p className="text-sm">{t('generalTask1ModelLetterUnavailable')}</p>
                     </div>
                   )}
                 </Card>

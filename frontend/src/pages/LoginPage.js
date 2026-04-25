@@ -1,0 +1,270 @@
+import React, { useEffect, useState } from 'react';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import { AlertTriangle, ArrowLeft, CheckCircle, Eye, EyeOff } from 'lucide-react';
+import { registerUser, loginUser } from '../lib/api';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+
+// Standalone auth page — replaces the old V1 LandingPage rendering at /login.
+// Before this page existed, users clicking Sign-up / Log-in on the new V2
+// landing were bounced to /login which rendered LandingPage V1 behind an
+// auth modal (users experienced it as "going to the old site"). This page
+// is a clean centered auth surface that reuses registerUser/loginUser from
+// lib/api plus the Emergent-hosted Google OAuth redirect.
+export default function LoginPage({ user, onLogin }) {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const initialMode = () => {
+    const action = new URLSearchParams(location.search).get('action');
+    return action === 'signup' ? 'signup' : 'signin';
+  };
+
+  const [mode, setMode] = useState(initialMode);
+  const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  useEffect(() => {
+    setMode(initialMode());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search]);
+
+  if (user) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  const handleGoogle = () => {
+    window.location.href = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(window.location.origin)}`;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (mode === 'signup' && formData.password !== formData.confirmPassword) {
+      toast.error('Passwords do not match.');
+      return;
+    }
+    setLoading(true);
+    try {
+      if (mode === 'signup') {
+        const { name, email, password } = formData;
+        const userData = await registerUser({ name, email, password });
+        onLogin(userData);
+        toast.success('Welcome! Check your email to verify your account.', { duration: 5000 });
+        navigate('/dashboard');
+      } else {
+        const { email, password } = formData;
+        const userData = await loginUser({ email, password });
+        onLogin(userData);
+        toast.success('Welcome back!');
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      const msg = err?.response?.data?.detail || 'Authentication failed. Please try again.';
+      toast.error(msg);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleForgot = async () => {
+    if (!formData.email) {
+      toast.error('Enter your email first.');
+      return;
+    }
+    try {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/forgot-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: formData.email }),
+      });
+      if (!res.ok) throw new Error('Reset failed');
+      toast.success('Reset link sent to your email.');
+    } catch (_) {
+      toast.error('Failed to send reset link.');
+    }
+  };
+
+  const passwordsMismatch =
+    mode === 'signup' && formData.confirmPassword && formData.password !== formData.confirmPassword;
+  const passwordsMatch =
+    mode === 'signup' &&
+    formData.confirmPassword &&
+    formData.password === formData.confirmPassword &&
+    formData.password.length >= 8;
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-violet-50 flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        <Link to="/" className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-6">
+          <ArrowLeft className="w-4 h-4" /> Back to home
+        </Link>
+
+        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-7">
+          <div className="mb-6">
+            <div className="text-xl font-bold text-gray-900">
+              testmaster<span className="text-violet-600">.pro</span>
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 mt-4">
+              {mode === 'signup' ? 'Create your account' : 'Welcome back'}
+            </h1>
+            <p className="text-sm text-gray-500 mt-1">
+              {mode === 'signup'
+                ? 'Free to start. No credit card required.'
+                : 'Sign in to continue your IELTS prep.'}
+            </p>
+          </div>
+
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full border-gray-300 text-gray-700 hover:bg-gray-50 flex items-center justify-center gap-2 py-5 mb-4"
+            onClick={handleGoogle}
+            disabled={loading}
+          >
+            <svg className="w-5 h-5" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+            </svg>
+            Continue with Google
+          </Button>
+
+          <div className="relative my-4">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-gray-200" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-white px-2 text-gray-400">
+                {mode === 'signup' ? 'Or sign up with email' : 'Or sign in with email'}
+              </span>
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {mode === 'signup' && (
+              <div>
+                <label className="block text-sm font-medium mb-1 text-gray-700">Name</label>
+                <Input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  required
+                  className="border-gray-300"
+                />
+              </div>
+            )}
+
+            <div>
+              <label className="block text-sm font-medium mb-1 text-gray-700">Email</label>
+              <Input
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                required
+                className="border-gray-300"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1 text-gray-700">Password</label>
+              <div className="relative">
+                <Input
+                  type={showPassword ? 'text' : 'password'}
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  required
+                  minLength={8}
+                  className="border-gray-300 pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((v) => !v)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  tabIndex={-1}
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
+
+            {mode === 'signup' && (
+              <div>
+                <label className="block text-sm font-medium mb-1 text-gray-700">Confirm password</label>
+                <div className="relative">
+                  <Input
+                    type={showConfirm ? 'text' : 'password'}
+                    value={formData.confirmPassword}
+                    onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                    required
+                    minLength={8}
+                    className={`border-gray-300 pr-10 ${passwordsMismatch ? 'border-red-300 focus:ring-red-500' : ''}`}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirm((v) => !v)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    tabIndex={-1}
+                  >
+                    {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+                {passwordsMismatch && <p className="text-xs text-red-500 mt-1">Passwords do not match</p>}
+                {passwordsMatch && (
+                  <p className="text-xs text-green-600 mt-1 flex items-center gap-1">
+                    <CheckCircle className="w-3 h-3" /> Passwords match
+                  </p>
+                )}
+              </div>
+            )}
+
+            {mode === 'signin' && (
+              <div className="text-right text-xs">
+                <button type="button" className="text-violet-600 hover:underline" onClick={handleForgot}>
+                  Forgot password?
+                </button>
+              </div>
+            )}
+
+            {mode === 'signup' && (
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 flex items-start gap-2">
+                <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-700">
+                  Use a real email — we send a verification link to unlock all features.
+                </p>
+              </div>
+            )}
+
+            <Button
+              type="submit"
+              disabled={loading || passwordsMismatch}
+              className="w-full bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0"
+            >
+              {loading ? 'Working…' : mode === 'signup' ? 'Create account' : 'Sign in'}
+            </Button>
+          </form>
+
+          <div className="text-center text-sm text-gray-500 mt-5">
+            <button
+              type="button"
+              className="text-violet-600 hover:underline"
+              onClick={() => setMode(mode === 'signup' ? 'signin' : 'signup')}
+            >
+              {mode === 'signup' ? 'Already have an account? Sign in' : "Don't have an account? Create one"}
+            </button>
+          </div>
+        </div>
+
+        <p className="text-xs text-gray-500 text-center mt-6">
+          By continuing, you agree to our{' '}
+          <Link to="/terms" className="text-violet-600 hover:underline">Terms</Link>{' '}
+          and{' '}
+          <Link to="/privacy" className="text-violet-600 hover:underline">Privacy Policy</Link>.
+        </p>
+      </div>
+    </div>
+  );
+}

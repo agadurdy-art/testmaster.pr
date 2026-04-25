@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useGoBack } from '../hooks/useGoBack';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import {
   ArrowLeft, Image, Upload, Search, ChevronDown, ChevronRight,
-  Check, X, Loader2, Eye
+  Check, X, Loader2, Eye, Shield
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -13,6 +14,14 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function VocabularyImageManager({ user }) {
   const navigate = useNavigate();
+  const goBack = useGoBack();
+
+  const isAdmin = user?.email && (
+    user.email.includes('aga.durdy') ||
+    user.email === 'admin@ieltsace.com' ||
+    user.email === 'stemhousebenluc@gmail.com'
+  );
+
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedStage, setExpandedStage] = useState(null);
@@ -38,7 +47,24 @@ export default function VocabularyImageManager({ user }) {
     }
   }, [user.email, expandedStage]);
 
-  useEffect(() => { loadGroups(); }, [loadGroups]);
+  useEffect(() => {
+    if (isAdmin) loadGroups();
+  }, [isAdmin, loadGroups]);
+
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen bg-gray-950 flex items-center justify-center p-4">
+        <Card className="p-8 text-center max-w-md bg-gray-900 border-gray-800">
+          <Shield className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h1 className="text-2xl font-bold text-white mb-2">Access Denied</h1>
+          <p className="text-gray-400 mb-4">You don't have permission to access this admin page.</p>
+          <Button onClick={() => navigate('/dashboard')} variant="outline" className="border-gray-700 text-gray-300">
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard
+          </Button>
+        </Card>
+      </div>
+    );
+  }
 
   const handleFileUpload = async (lessonId, word, file) => {
     const uploadKey = `${lessonId}_${word}`;
@@ -122,7 +148,7 @@ export default function VocabularyImageManager({ user }) {
       <header className="border-b border-gray-800 bg-gray-950/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" onClick={() => navigate('/admin')} className="text-gray-400 hover:text-white" data-testid="back-to-admin">
+            <Button variant="ghost" onClick={goBack} className="text-gray-400 hover:text-white" data-testid="back-to-admin">
               <ArrowLeft className="w-4 h-4 mr-2" /> Admin
             </Button>
             <div className="h-6 w-px bg-gray-800" />

@@ -20,6 +20,7 @@ from emergentintegrations.llm.chat import LlmChat, UserMessage
 import json
 from emergentintegrations.llm.openai import OpenAISpeechToText
 import resend
+import re
 import io
 import httpx
 
@@ -542,6 +543,16 @@ except Exception as e:
     import traceback
     traceback.print_exc()
 
+# Grammar Blueprint routes (static JSON content — no DB needed)
+try:
+    from routes.grammar_blueprint import router as grammar_blueprint_router
+    app.include_router(grammar_blueprint_router)
+    print("✅ Grammar Blueprint routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Grammar Blueprint routes: {e}")
+    import traceback
+    traceback.print_exc()
+
 try:
     from routes.auth import router as auth_router, set_db as set_auth_db
     set_auth_db(db)
@@ -572,6 +583,24 @@ except Exception as e:
     import traceback
     traceback.print_exc()
 
+try:
+    from routes.admin_analytics import router as admin_analytics_router
+    app.include_router(admin_analytics_router)
+    print("✅ Admin analytics routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Admin analytics routes: {e}")
+    import traceback
+    traceback.print_exc()
+
+try:
+    from routes.testimonials import router as testimonials_router
+    app.include_router(testimonials_router)
+    print("✅ Testimonials routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Testimonials routes: {e}")
+    import traceback
+    traceback.print_exc()
+
 
 
 # ============ Models ============
@@ -594,6 +623,14 @@ class User(BaseModel):
     last_resend_at: Optional[str] = None
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     test_history: List[str] = Field(default_factory=list)
+    # Onboarding + personalization (set via /api/users/{id}/onboarding)
+    learning_mode: Optional[str] = None  # "ielts" | "general_english"
+    onboarding_complete: bool = False
+    onboarding_completed_at: Optional[str] = None
+    target_band: Optional[float] = None
+    current_band: Optional[float] = None
+    exam_date: Optional[str] = None  # ISO date string (YYYY-MM-DD)
+    feedback_language: Optional[str] = None  # ISO 639-1, e.g. "en", "tr", "vi"
 
 class UserCreate(BaseModel):
     email: str
@@ -1685,29 +1722,60 @@ async def get_test_attempt(attempt_id: str):
     return attempt
 
 # AI Evaluation routes
+from services.usage_tracking import check_usage, increment_usage
+
+
+async def _enforce_evaluation_quota(user_id: str, counter: str) -> dict:
+    """Look up the user, check their monthly quota for `counter`, raise 402
+    if exhausted. Returns the user doc on success."""
+    user = await db.users.find_one({"id": user_id}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    usage = await check_usage(db, user, counter)
+    if not usage["allowed"]:
+        raise HTTPException(
+            status_code=402,
+            detail={
+                "code": "quota_exceeded",
+                "message": "Monthly evaluation quota reached. Upgrade to keep going.",
+                "counter": counter,
+                "used": usage["used"],
+                "quota": usage["quota"],
+                "period": usage["period"],
+                "upgrade_url": "/pricing",
+            },
+        )
+    return user
+
+
 @api_router.post("/evaluate/writing")
 async def evaluate_writing(data: EvaluateWriting):
+    user = await _enforce_evaluation_quota(data.user_id, "evaluations")
     try:
         evaluation = await evaluate_with_ai(
             test_type="writing",
             question=data.question,
             user_answer=data.answer
         )
-        return evaluation
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    # Only increment on success so a failed call doesn't burn quota.
+    await increment_usage(db, user, "evaluations")
+    return evaluation
 
 @api_router.post("/evaluate/speaking")
 async def evaluate_speaking(data: SpeakingTest):
+    user = await _enforce_evaluation_quota(data.user_id, "evaluations")
     try:
         evaluation = await evaluate_with_ai(
             test_type="speaking",
             question=data.question,
             user_answer=data.user_response
         )
-        return evaluation
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    await increment_usage(db, user, "evaluations")
+    return evaluation
 
 # Speaking test with AI - simple transcribe endpoint
 @api_router.post("/transcribe-audio")
@@ -1889,8 +1957,343 @@ async def get_user_progress(user_id: str):
         "badges": badges,
         "recent_attempts": attempts  # Return ALL attempts for Progress page
     }
-    
+
     return stats
+
+
+# ============ DASHBOARD SUMMARY ============
+#
+# /api/dashboard/summary is the single read the IELTS-Ace dashboard makes on
+# mount. It returns everything DashboardPage needs: user state + skill bands
+# + streak + recent sessions + a recommended Today's Task, Liz nudge, and
+# Mock pick — all derived from real test_attempts data rather than frontend
+# fixtures (bug report 2026-04-21: "bilgisi olmadigi halde band bilgisi veriyor").
+#
+# Today's Task / Liz message / Mock are picked with a small rules engine (no
+# LLM call) so they remain deterministic, fast, and free to serve. Copy lives
+# inline in SKILL_TASK_LIBRARY below; localise via i18n on the frontend if we
+# ever want non-EN output.
+
+SKILL_TASK_LIBRARY = {
+    "writing": {
+        "today_task_key": "writing_task2_coherence",
+        "today_task": {
+            "title": "Task 2 coherence drill",
+            "description": "Tighten the links between body paragraphs in a Task 2 essay — cohesive devices, topic sentences, and the rhythm that pushes a 6 toward a 7.",
+            "duration_minutes": 10,
+            "steps": [
+                "Identify weak transitions in a sample essay.",
+                "Rewrite three body paragraphs with Liz's feedback.",
+                "Run the final draft through the evaluator.",
+            ],
+            "cta_href": "/question-bank/writing/task2",
+        },
+        "liz_message": "Your writing band is pulling the overall down. Let's work on coherence today — the quietest skill that lifts a 6 toward a 7.",
+        "mock_section_href": "/practice-test/writing",
+        "mock_recommendation": "Writing full mock (60 min)",
+    },
+    "reading": {
+        "today_task_key": "reading_skim_scan",
+        "today_task": {
+            "title": "Skim + scan drill",
+            "description": "A 20-minute academic passage with True/False/Not Given — build speed without losing the gist.",
+            "duration_minutes": 20,
+            "steps": [
+                "Skim the passage in under three minutes.",
+                "Answer the T/F/NG block before reading closely.",
+                "Check missed ones against the paragraph that paraphrased them.",
+            ],
+            "cta_href": "/question-bank/reading",
+        },
+        "liz_message": "Reading accuracy is where your next half-band lives. A timed T/F/NG set today will tell us which question type is leaking marks.",
+        "mock_section_href": "/practice-test/reading",
+        "mock_recommendation": "Reading full mock (60 min)",
+    },
+    "listening": {
+        "today_task_key": "listening_section3",
+        "today_task": {
+            "title": "Section 3 note completion",
+            "description": "Academic discussion — the section where most students lose their streak. Focus on signposting words and spelling.",
+            "duration_minutes": 15,
+            "steps": [
+                "Preview the questions for 30 seconds.",
+                "Listen once through and answer in real time.",
+                "Check spelling — that's where the marks go.",
+            ],
+            "cta_href": "/question-bank/listening",
+        },
+        "liz_message": "Listening drops in Section 3 for most students. Let's do a 15-minute set today and see where the gaps are.",
+        "mock_section_href": "/practice-test/listening",
+        "mock_recommendation": "Listening full mock (30 min)",
+    },
+    "speaking": {
+        "today_task_key": "speaking_part2_cue",
+        "today_task": {
+            "title": "Part 2 cue card",
+            "description": "A two-minute monologue from a fresh cue card — record, self-review, then ask Liz for two concrete fixes.",
+            "duration_minutes": 5,
+            "steps": [
+                "Prepare for 60 seconds.",
+                "Record a two-minute answer.",
+                "Send it to the evaluator for a band + top-two fixes.",
+            ],
+            "cta_href": "/question-bank/speaking",
+        },
+        "liz_message": "Speaking fluency grows with daily minutes, not weekly hours. A single Part 2 cue today keeps the muscle warm.",
+        "mock_section_href": "/practice-test/speaking",
+        "mock_recommendation": "Speaking mock (11–14 min)",
+    },
+}
+
+# Fallback when the user has zero history — give them a gentle on-ramp.
+NEW_USER_TASK = {
+    "today_task_key": "first_drill",
+    "today_task": {
+        "title": "Your first drill",
+        "description": "A ten-minute Writing Task 2 prompt to set a baseline. Liz will read it and flag your first two fixes.",
+        "duration_minutes": 10,
+        "steps": [
+            "Read the prompt and plan for two minutes.",
+            "Write 220+ words against the timer.",
+            "Submit for a band score and two concrete fixes.",
+        ],
+        "cta_href": "/question-bank/writing/task2",
+    },
+    "liz_message": "Welcome in. Before anything else, let's set a baseline — a short writing prompt today tells me where to point the rest of your week.",
+    "mock_section_href": "/practice-test",
+    "mock_recommendation": "Full mock test (2h 45m)",
+    "skill": None,
+}
+
+
+def _skill_from_test_type(test_type: str) -> str:
+    """Map legacy test_type values onto the four-skill taxonomy."""
+    if not test_type:
+        return "writing"
+    t = test_type.lower()
+    if "writ" in t:
+        return "writing"
+    if "read" in t:
+        return "reading"
+    if "listen" in t:
+        return "listening"
+    if "speak" in t:
+        return "speaking"
+    return "writing"
+
+
+def _session_title(attempt: dict) -> str:
+    """Build a short editorial title for a recent session card."""
+    skill = _skill_from_test_type(attempt.get("test_type"))
+    skill_label = {
+        "writing": "Writing",
+        "reading": "Reading",
+        "listening": "Listening",
+        "speaking": "Speaking",
+    }.get(skill, skill.capitalize())
+    test_id = attempt.get("test_id") or ""
+    # test_id often encodes the sub-type (e.g. "writing-task2-line-graph").
+    subtitle_frag = ""
+    if test_id:
+        tail = test_id.rsplit("-", 2)
+        if len(tail) >= 2:
+            subtitle_frag = " — " + tail[-1].replace("_", " ").title()
+    return f"{skill_label}{subtitle_frag}"
+
+
+@api_router.get("/dashboard/summary")
+async def get_dashboard_summary(user_id: str):
+    """Everything the authenticated dashboard renders. Derived from the user
+    doc + recent test_attempts; no fixtures."""
+    user = await db.users.find_one({"id": user_id}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    attempts = (
+        await db.test_attempts.find(
+            {"user_id": user_id}, {"_id": 0}
+        )
+        .sort("completed_at", -1)
+        .to_list(200)
+    )
+
+    now = datetime.now(timezone.utc)
+    today = now.date()
+
+    # --- Per-skill band history (latest 5 attempts per skill, averaged) ---
+    per_skill_bands: dict = {
+        "listening": [],
+        "reading": [],
+        "writing": [],
+        "speaking": [],
+    }
+    for a in attempts:
+        skill = _skill_from_test_type(a.get("test_type"))
+        band = a.get("band_score") or 0
+        if band and skill in per_skill_bands:
+            per_skill_bands[skill].append(float(band))
+
+    skill_bands: dict = {}
+    for skill, bands in per_skill_bands.items():
+        if not bands:
+            skill_bands[skill] = {
+                "band": None,
+                "pctOfTarget": 0,
+                "trend": "flat",
+                "attempts": 0,
+            }
+            continue
+        recent = bands[:5]
+        avg = round(sum(recent) / len(recent), 1)
+        trend = "flat"
+        if len(recent) >= 2:
+            first_half = recent[len(recent) // 2 :]
+            second_half = recent[: len(recent) // 2]
+            if sum(second_half) / len(second_half) > sum(first_half) / len(first_half) + 0.25:
+                trend = "up"
+            elif sum(second_half) / len(second_half) < sum(first_half) / len(first_half) - 0.25:
+                trend = "down"
+        target = float(user.get("target_band") or 0) or None
+        pct = int(round(min(100.0, max(0.0, (avg / target) * 100)))) if target else 0
+        skill_bands[skill] = {
+            "band": avg,
+            "pctOfTarget": pct,
+            "trend": trend,
+            "attempts": len(bands),
+        }
+
+    # --- Weakest skill (must have at least one attempt to be picked) ---
+    attempted = {k: v for k, v in skill_bands.items() if v["band"] is not None}
+    weakest_skill = None
+    if attempted:
+        weakest_skill = min(attempted.items(), key=lambda kv: kv[1]["band"])[0]
+        # Flag it for the frontend
+        skill_bands[weakest_skill]["isWeakest"] = True
+
+    # --- Current band (average across all attempts with bands) ---
+    all_bands = [float(a["band_score"]) for a in attempts if a.get("band_score")]
+    current_band = round(sum(all_bands) / len(all_bands), 1) if all_bands else None
+    # Prefer the explicit user doc value if the onboarding flow captured one.
+    if user.get("current_band") is not None:
+        try:
+            current_band = float(user["current_band"])
+        except (TypeError, ValueError):
+            pass
+
+    target_band = user.get("target_band")
+    try:
+        target_band = float(target_band) if target_band is not None else None
+    except (TypeError, ValueError):
+        target_band = None
+
+    # --- Streak: ISO dates of activity in the last 30 days ---
+    activity_dates: set = set()
+    for a in attempts:
+        completed = a.get("completed_at")
+        if not completed:
+            continue
+        if isinstance(completed, str):
+            try:
+                completed = datetime.fromisoformat(completed.replace("Z", "+00:00"))
+            except ValueError:
+                continue
+        activity_dates.add(completed.date())
+    streak_iso = [
+        d.isoformat()
+        for d in activity_dates
+        if (today - d).days <= 30 and (today - d).days >= 0
+    ]
+
+    # --- Recent sessions (last 3) ---
+    recent_sessions = []
+    for a in attempts[:3]:
+        completed = a.get("completed_at")
+        if isinstance(completed, datetime):
+            subtitle_dt = completed
+        elif isinstance(completed, str):
+            try:
+                subtitle_dt = datetime.fromisoformat(completed.replace("Z", "+00:00"))
+            except ValueError:
+                subtitle_dt = None
+        else:
+            subtitle_dt = None
+        if subtitle_dt:
+            delta_days = (today - subtitle_dt.date()).days
+            if delta_days == 0:
+                subtitle = "Today"
+            elif delta_days == 1:
+                subtitle = "Yesterday"
+            else:
+                subtitle = subtitle_dt.strftime("%b %d")
+        else:
+            subtitle = ""
+        recent_sessions.append(
+            {
+                "title": _session_title(a),
+                "subtitle": subtitle,
+                "band": a.get("band_score"),
+                "attempt_id": a.get("id"),
+            }
+        )
+
+    # --- Today's Task + Liz + Mock pick ---
+    if weakest_skill:
+        lib = SKILL_TASK_LIBRARY[weakest_skill]
+        today_block = {
+            **lib["today_task"],
+            "skill": weakest_skill,
+            "key": lib["today_task_key"],
+        }
+        liz_message = lib["liz_message"]
+        mock_recommendation = {
+            "label": lib["mock_recommendation"],
+            "href": lib["mock_section_href"],
+        }
+    else:
+        today_block = {
+            **NEW_USER_TASK["today_task"],
+            "skill": None,
+            "key": NEW_USER_TASK["today_task_key"],
+        }
+        liz_message = NEW_USER_TASK["liz_message"]
+        mock_recommendation = {
+            "label": NEW_USER_TASK["mock_recommendation"],
+            "href": NEW_USER_TASK["mock_section_href"],
+        }
+
+    # --- Days to exam ---
+    exam_date = user.get("exam_date")
+    days_remaining = None
+    if exam_date:
+        try:
+            exam_dt = datetime.fromisoformat(str(exam_date).replace("Z", "+00:00"))
+            days_remaining = max(0, (exam_dt.date() - today).days)
+        except ValueError:
+            days_remaining = None
+
+    return {
+        "user": {
+            "id": user.get("id"),
+            "email": user.get("email"),
+            "name": user.get("name"),
+            "first_name": (user.get("name") or "").split(" ")[0] if user.get("name") else None,
+            "plan": user.get("plan"),
+            "exam_date": exam_date,
+            "days_remaining": days_remaining,
+        },
+        "current_band": current_band,
+        "target_band": target_band,
+        "skill_bands": skill_bands,
+        "weakest_skill": weakest_skill,
+        "streak": streak_iso,
+        "recent_sessions": recent_sessions,
+        "today_task": today_block,
+        "liz_message": liz_message,
+        "mock_recommendation": mock_recommendation,
+        "has_history": bool(attempts),
+        "generated_at": now.isoformat(),
+    }
+
 
 # ============ TEST COMPLETION TRACKING ============
 
@@ -1991,32 +2394,18 @@ async def get_course(course_id: str):
     return course
 
 
-# ============ Vocabulary & Grammar Course ============
+# ============ Generic speech helper ============
+# Generic TTS used by BeginnerCourse, MasteryCourse, PracticeMode (Quick Practice).
+# Previously mounted under `/vocab-grammar/tts`; renamed 2026-04-23 when the
+# old band-tiered Vocab/Grammar course was retired.
 
-@api_router.get("/vocab-grammar/lessons")
-async def get_vocab_grammar_lessons(band_level: str = None):
-    """Get vocabulary and grammar lessons, optionally filtered by band level"""
-    query = {}
-    if band_level:
-        query["band_level"] = band_level
-    lessons = await db.vocab_grammar_lessons.find(query, {"_id": 0}).to_list(100)
-    return lessons
-
-@api_router.get("/vocab-grammar/lessons/{lesson_id}")
-async def get_vocab_grammar_lesson(lesson_id: str):
-    """Get a specific lesson with all items"""
-    lesson = await db.vocab_grammar_lessons.find_one({"id": lesson_id}, {"_id": 0})
-    if not lesson:
-        raise HTTPException(status_code=404, detail="Lesson not found")
-    return lesson
-
-@api_router.post("/vocab-grammar/tts")
+@api_router.post("/speech/tts")
 async def text_to_speech(request: dict):
     """Generate TTS audio for pronunciation"""
     text = request.get("text", "")
     if not text:
         raise HTTPException(status_code=400, detail="Text is required")
-    
+
     try:
         from emergentintegrations.llm.openai import OpenAITextToSpeech
         tts = OpenAITextToSpeech(api_key=os.getenv("EMERGENT_LLM_KEY"))
@@ -2030,237 +2419,6 @@ async def text_to_speech(request: dict):
     except Exception as e:
         logging.getLogger(__name__).error(f"TTS error: {e}")
         raise HTTPException(status_code=500, detail="Failed to generate audio")
-
-class PronunciationEvalRequest(BaseModel):
-    word: str
-    user_transcript: str
-    expected_pronunciation: Optional[str] = None
-
-@api_router.post("/vocab-grammar/evaluate-pronunciation")
-async def evaluate_pronunciation(request: PronunciationEvalRequest):
-    """Evaluate user's pronunciation using AI"""
-    try:
-        chat = LlmChat(
-            api_key=os.getenv("EMERGENT_LLM_KEY"),
-            model="claude-3-sonnet-20240229"
-        )
-        
-        prompt = f"""You are an English pronunciation teacher. Evaluate the student's pronunciation attempt.
-
-Target word/phrase: "{request.word}"
-What the student said (transcribed): "{request.user_transcript}"
-
-Evaluate:
-1. Did they pronounce it correctly? (correct/partially correct/incorrect)
-2. What specific sounds need improvement?
-3. Give a helpful tip for better pronunciation.
-
-Respond in JSON format:
-{{
-    "score": "correct" or "partially_correct" or "incorrect",
-    "score_percent": 0-100,
-    "feedback": "brief encouraging feedback",
-    "tip": "specific pronunciation tip",
-    "phonetic_hint": "simplified phonetic guide"
-}}"""
-
-        response = await chat.send_message(UserMessage(text=prompt))
-        response_text = response.text.strip()
-        
-        if "```json" in response_text:
-            response_text = response_text.split("```json")[1].split("```")[0].strip()
-        elif "```" in response_text:
-            response_text = response_text.split("```")[1].split("```")[0].strip()
-        
-        return json.loads(response_text)
-    except Exception as e:
-        logging.getLogger(__name__).error(f"Pronunciation evaluation error: {e}")
-        return {
-            "score": "partially_correct",
-            "score_percent": 70,
-            "feedback": "Good attempt! Keep practicing.",
-            "tip": "Try saying it slowly and clearly.",
-            "phonetic_hint": request.word
-        }
-
-class SaveProgressRequest(BaseModel):
-    user_id: str
-    lesson_id: str
-    completed_items: List[str]
-    practice_scores: Dict[str, Any]
-
-@api_router.post("/vocab-grammar/progress")
-async def save_vocab_grammar_progress(request: SaveProgressRequest):
-    """Save user's progress in vocabulary/grammar lessons"""
-    progress = {
-        "user_id": request.user_id,
-        "lesson_id": request.lesson_id,
-        "completed_items": request.completed_items,
-        "practice_scores": request.practice_scores,
-        "updated_at": datetime.now(timezone.utc).isoformat()
-    }
-    
-    await db.vocab_grammar_progress.update_one(
-        {"user_id": request.user_id, "lesson_id": request.lesson_id},
-        {"$set": progress},
-        upsert=True
-    )
-    
-    return {"message": "Progress saved"}
-
-@api_router.get("/vocab-grammar/progress/{user_id}")
-async def get_vocab_grammar_progress(user_id: str):
-    """Get user's progress across all lessons"""
-    progress = await db.vocab_grammar_progress.find(
-        {"user_id": user_id}, {"_id": 0}
-    ).to_list(100)
-    return progress
-
-# ============ Question Bank - Grammar & Vocab Quiz ============
-
-@api_router.get("/question-bank/grammar-vocab/quizzes")
-async def get_grammar_vocab_quizzes(
-    band_level: Optional[str] = None,
-    unit_id: Optional[str] = None,
-    quiz_type: Optional[str] = None,
-    limit: int = 20,
-    random_order: bool = True
-):
-    """Get grammar & vocabulary quiz questions for Question Bank practice."""
-    query = {}
-    if band_level:
-        query["band_level"] = band_level
-    if unit_id:
-        query["unit_id"] = unit_id
-    if quiz_type:
-        query["type"] = quiz_type
-    
-    quizzes = await db.vocab_grammar_quizzes.find(query, {"_id": 0}).to_list(200)
-    
-    if random_order and quizzes:
-        import random
-        random.shuffle(quizzes)
-    
-    return {
-        "quizzes": quizzes[:limit],
-        "total": len(quizzes),
-        "band_level": band_level,
-        "unit_id": unit_id
-    }
-
-@api_router.get("/question-bank/grammar-vocab/units")
-async def get_grammar_vocab_units(band_level: Optional[str] = None):
-    """Get all vocab/grammar units available for quiz practice."""
-    query = {}
-    if band_level:
-        query["band_level"] = band_level
-    
-    units = await db.vocab_grammar_lessons.find(query, {"_id": 0, "id": 1, "title": 1, "band_level": 1, "type": 1, "unit_number": 1}).to_list(100)
-    
-    # Group by band level
-    grouped = {"foundation": [], "development": [], "advanced": []}
-    for unit in units:
-        level = unit.get("band_level", "foundation")
-        if level in grouped:
-            grouped[level].append(unit)
-    
-    return {
-        "units": grouped,
-        "total": len(units)
-    }
-
-class GrammarVocabEvaluateRequest(BaseModel):
-    answers: Dict[str, str]
-    user_id: Optional[str] = None
-
-@api_router.post("/question-bank/grammar-vocab/evaluate")
-async def evaluate_grammar_vocab_quiz(request: GrammarVocabEvaluateRequest):
-    """Evaluate grammar & vocab quiz answers and provide feedback."""
-    answers = request.answers
-    user_id = request.user_id
-    results = []
-    correct_count = 0
-    
-    for quiz_id, user_answer in answers.items():
-        quiz = await db.vocab_grammar_quizzes.find_one({"id": quiz_id}, {"_id": 0})
-        if quiz:
-            is_correct = user_answer.lower().strip() == quiz.get("answer", "").lower().strip()
-            if is_correct:
-                correct_count += 1
-            
-            results.append({
-                "quiz_id": quiz_id,
-                "question": quiz.get("question"),
-                "user_answer": user_answer,
-                "correct_answer": quiz.get("answer"),
-                "is_correct": is_correct,
-                "explanation": quiz.get("explanation"),
-                "unit_id": quiz.get("unit_id"),
-                "unit_title": quiz.get("unit_title")
-            })
-    
-    total = len(answers)
-    score = (correct_count / total * 100) if total > 0 else 0
-    
-    # Identify weak areas (units where user got questions wrong)
-    weak_units = list(set([r["unit_id"] for r in results if not r["is_correct"] and r["unit_id"]]))
-    
-    # Get recommended lessons based on weak areas
-    recommended_lessons = []
-    for unit_id in weak_units[:3]:  # Top 3 weak areas
-        lesson = await db.vocab_grammar_lessons.find_one(
-            {"id": unit_id}, 
-            {"_id": 0, "id": 1, "title": 1, "band_level": 1, "type": 1, "unit_number": 1}
-        )
-        if lesson:
-            recommended_lessons.append(lesson)
-    
-    # Save progress if user_id provided
-    if user_id and total > 0:
-        await db.vocab_grammar_quiz_progress.update_one(
-            {"user_id": user_id},
-            {
-                "$inc": {"total_questions": total, "correct_answers": correct_count},
-                "$addToSet": {"weak_units": {"$each": weak_units}},
-                "$set": {"last_quiz_date": datetime.now(timezone.utc).isoformat()}
-            },
-            upsert=True
-        )
-    
-    return {
-        "score": round(score, 1),
-        "correct": correct_count,
-        "total": total,
-        "results": results,
-        "weak_units": weak_units,
-        "recommended_lessons": recommended_lessons,
-        "recommendation": f"Review these units: {', '.join(weak_units)}" if weak_units else "Great job! Keep practicing!"
-    }
-
-@api_router.get("/question-bank/grammar-vocab/weak-areas/{user_id}")
-async def get_grammar_vocab_weak_areas(user_id: str):
-    """Get user's weak areas and recommend lessons to review."""
-    progress = await db.vocab_grammar_quiz_progress.find_one({"user_id": user_id}, {"_id": 0})
-    
-    if not progress:
-        return {"weak_units": [], "recommended_lessons": [], "message": "No quiz history found. Start practicing!"}
-    
-    weak_unit_ids = progress.get("weak_units", [])
-    
-    # Get lesson details for weak units
-    recommended_lessons = []
-    for unit_id in weak_unit_ids[:5]:  # Top 5 weak areas
-        lesson = await db.vocab_grammar_lessons.find_one({"id": unit_id}, {"_id": 0, "id": 1, "title": 1, "band_level": 1, "type": 1})
-        if lesson:
-            recommended_lessons.append(lesson)
-    
-    return {
-        "weak_units": weak_unit_ids,
-        "recommended_lessons": recommended_lessons,
-        "total_questions": progress.get("total_questions", 0),
-        "correct_answers": progress.get("correct_answers", 0),
-        "accuracy": round((progress.get("correct_answers", 0) / progress.get("total_questions", 1)) * 100, 1)
-    }
 
 # Admin endpoint to add new tests
 class CreateTestRequest(BaseModel):
@@ -2745,6 +2903,231 @@ class WritingPracticeRequest(BaseModel):
     prompt: str
     essay: str
     word_count: int
+
+
+# ── Writing Evaluator v2 (Claude Sonnet, 4-criterion + inline annotations) ──
+
+def _map_task_type_hint(task_type: str) -> str:
+    """Map the loose task_type string from the client to the v2 TaskType enum."""
+    if task_type == "task2":
+        return "task2_opinion"
+    if task_type == "task1_academic":
+        return "task1_academic_chart"
+    if task_type == "task1_general":
+        return "task1_general_formal"
+    return "task2_opinion"
+
+
+class WritingPracticeV2Request(BaseModel):
+    task_type: str
+    prompt: str
+    essay: str
+    user_language: Optional[str] = "en"
+
+
+@api_router.post("/writing-practice/evaluate/v2")
+async def evaluate_writing_practice_v2(request: WritingPracticeV2Request):
+    """Claude Sonnet evaluator — returns full WritingEvaluationResult schema.
+
+    New route is additive; /writing-practice/evaluate (below) stays live so old
+    clients don't break. Frontend V4 UI consumes this endpoint."""
+    from services.writing_evaluator_v2 import evaluate_writing, EvaluatorFailure
+    from schemas.writing_evaluator import WritingEvaluationRequest, TaskType
+    from security_utils import sanitize_ai_input
+
+    essay = sanitize_ai_input(request.essay or "")
+    prompt = sanitize_ai_input(request.prompt or "")
+    if not essay.strip():
+        raise HTTPException(status_code=400, detail="Essay is empty")
+    if not prompt.strip():
+        raise HTTPException(status_code=400, detail="Task prompt is required")
+
+    hint = _map_task_type_hint(request.task_type)
+    try:
+        task_hint_enum = TaskType(hint)
+    except ValueError:
+        task_hint_enum = TaskType.task2_opinion
+
+    try:
+        eval_req = WritingEvaluationRequest(
+            essay_text=essay,
+            task_type_hint=task_hint_enum,
+            task_prompt=prompt,
+            user_language=(request.user_language or "en"),
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=f"Invalid request: {exc}")
+
+    try:
+        result = await evaluate_writing(eval_req)
+    except EvaluatorFailure as exc:
+        logging.getLogger(__name__).error(
+            "Writing evaluator v2 failed after %d attempts: %s",
+            exc.attempts, exc.last_error,
+        )
+        raise HTTPException(
+            status_code=502,
+            detail={
+                "message": "Evaluator unavailable. Please try again.",
+                "attempts": exc.attempts,
+                "last_error": exc.last_error,
+            },
+        )
+    return result.model_dump()
+
+
+# ---------------------------------------------------------------------------
+# Public (anonymous) essay evaluation — one evaluation per email, ever.
+# Drives the "Score my own essay" lead magnet on sample writing pages.
+# No email is sent; result is viewable in-browser only. See project memory
+# project_anonymous_essay_evaluation.md for the product rationale.
+# ---------------------------------------------------------------------------
+
+_PUBLIC_EVAL_EMAIL_RE = re.compile(r"^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$")
+
+
+class PublicEvaluateEssayRequest(BaseModel):
+    email: str
+    task_type: str = "task2"
+    prompt: str
+    essay: str
+    user_language: Optional[str] = "en"
+
+
+@api_router.post("/public/evaluate-essay")
+async def public_evaluate_essay(request: PublicEvaluateEssayRequest):
+    """Anonymous one-per-email writing evaluation.
+
+    Same evaluator as /writing-practice/evaluate/v2, gated on a unique email
+    so each visitor can claim a single free report. Reservation is inserted
+    atomically *before* the LLM call; the Mongo unique index on `email`
+    blocks races. If the evaluator fails, the reservation is rolled back so
+    the visitor can retry.
+    """
+    from services.writing_evaluator_v2 import evaluate_writing, EvaluatorFailure
+    from schemas.writing_evaluator import WritingEvaluationRequest, TaskType
+    from security_utils import sanitize_ai_input
+    from pymongo.errors import DuplicateKeyError
+
+    email = (request.email or "").strip().lower()
+    if not _PUBLIC_EVAL_EMAIL_RE.match(email) or len(email) > 254:
+        raise HTTPException(status_code=400, detail="Please enter a valid email address.")
+
+    essay = sanitize_ai_input(request.essay or "")
+    prompt = sanitize_ai_input(request.prompt or "")
+    if not essay.strip():
+        raise HTTPException(status_code=400, detail="Essay is empty.")
+    if len(essay) > 20000:
+        raise HTTPException(status_code=400, detail="Essay is too long (max 20,000 chars).")
+    if not prompt.strip():
+        raise HTTPException(status_code=400, detail="Task prompt is required.")
+    if len(prompt) > 4000:
+        raise HTTPException(status_code=400, detail="Task prompt is too long.")
+
+    essay_hash = hashlib.sha256(essay.encode("utf-8")).hexdigest()
+    now = datetime.now(timezone.utc)
+
+    # Reserve the email slot. Unique index catches dupes & races.
+    try:
+        await db.anonymous_evaluations.insert_one({
+            "email": email,
+            "status": "pending",
+            "created_at": now,
+            "essay_hash": essay_hash,
+            "task_type": request.task_type,
+            "user_language": request.user_language or "en",
+            "prompt": prompt,
+        })
+    except DuplicateKeyError:
+        existing = await db.anonymous_evaluations.find_one({"email": email})
+        if existing and existing.get("status") == "complete" and existing.get("result"):
+            # Return the previously generated report so an honest refresh
+            # still shows the same answer instead of an error.
+            return existing["result"]
+        raise HTTPException(
+            status_code=409,
+            detail="This email has already been used. Each email may claim only one free evaluation.",
+        )
+
+    hint = _map_task_type_hint(request.task_type)
+    try:
+        task_hint_enum = TaskType(hint)
+    except ValueError:
+        task_hint_enum = TaskType.task2_opinion
+
+    try:
+        eval_req = WritingEvaluationRequest(
+            essay_text=essay,
+            task_type_hint=task_hint_enum,
+            task_prompt=prompt,
+            user_language=(request.user_language or "en"),
+        )
+    except Exception as exc:
+        # Roll back reservation so the visitor can fix and resubmit.
+        await db.anonymous_evaluations.delete_one({"email": email, "status": "pending"})
+        raise HTTPException(status_code=400, detail=f"Invalid request: {exc}")
+
+    try:
+        result = await evaluate_writing(eval_req)
+    except EvaluatorFailure as exc:
+        await db.anonymous_evaluations.delete_one({"email": email, "status": "pending"})
+        logging.getLogger(__name__).error(
+            "Public essay evaluator failed after %d attempts: %s",
+            exc.attempts, exc.last_error,
+        )
+        raise HTTPException(
+            status_code=502,
+            detail={
+                "message": "Evaluator unavailable. Please try again in a moment.",
+                "attempts": exc.attempts,
+                "last_error": exc.last_error,
+            },
+        )
+
+    result_dict = result.model_dump()
+    await db.anonymous_evaluations.update_one(
+        {"email": email},
+        {"$set": {
+            "status": "complete",
+            "completed_at": datetime.now(timezone.utc),
+            "result": result_dict,
+            "essay": essay,
+        }},
+    )
+    return result_dict
+
+
+# ---------------------------------------------------------------------------
+# Evaluator rating capture — anonymous 1-5 star + optional comment. Drives
+# the "Rate this evaluator" action in PublicScoreCard (sample pages +
+# /score-my-essay). Best-effort storage: no auth, no rate limit beyond
+# client-side localStorage gate. If abuse shows up, add IP throttle.
+# ---------------------------------------------------------------------------
+
+class EvaluatorRatingRequest(BaseModel):
+    stars: int
+    comment: Optional[str] = None
+    page_url: Optional[str] = None
+
+
+@api_router.post("/public/evaluator-rating")
+async def public_evaluator_rating(request: EvaluatorRatingRequest, http_request: Request):
+    if not isinstance(request.stars, int) or not (1 <= request.stars <= 5):
+        raise HTTPException(status_code=400, detail="stars must be an integer between 1 and 5")
+    comment = (request.comment or "").strip()
+    if len(comment) > 2000:
+        comment = comment[:2000]
+    page_url = (request.page_url or "").strip()[:500] or None
+    ua = (http_request.headers.get("user-agent") or "")[:300]
+    await db.evaluator_ratings.insert_one({
+        "stars": request.stars,
+        "comment": comment or None,
+        "page_url": page_url,
+        "created_at": datetime.now(timezone.utc),
+        "user_agent": ua,
+    })
+    return {"ok": True}
+
 
 @api_router.post("/writing-practice/evaluate")
 async def evaluate_writing_practice(request: WritingPracticeRequest):
@@ -5976,19 +6359,13 @@ async def seed_reading_test_2_inline():
 @app.on_event("startup")
 async def startup_event():
     """Seed vocab grammar lessons and beginner english lessons if they don't exist"""
+    # Public essay-evaluation lead magnet — one-per-email uniqueness.
+    # Safe to run on every startup (idempotent).
     try:
-        # Seed vocab grammar lessons
-        count = await db.vocab_grammar_lessons.count_documents({})
-        if count == 0:
-            logger.info("No vocab grammar lessons found, running seed...")
-            import subprocess
-            result = subprocess.run(["python", "seed_vocab_grammar_v2.py"], cwd="/app/backend", capture_output=True, text=True)
-            logger.info(f"Seed output: {result.stdout}")
-            if result.returncode != 0:
-                logger.error(f"Seed error: {result.stderr}")
-        else:
-            logger.info(f"Found {count} vocab grammar lessons in database")
-        
+        await db.anonymous_evaluations.create_index("email", unique=True)
+    except Exception as e:
+        logger.warning(f"anonymous_evaluations index create failed: {e}")
+    try:
         # Seed beginner english lessons
         beginner_count = await db.beginner_english_lessons.count_documents({})
         if beginner_count == 0:

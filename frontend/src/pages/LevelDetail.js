@@ -292,7 +292,7 @@ export default function LevelDetail({ user }) {
 
               <Button 
                 className="bg-amber-500 hover:bg-amber-600"
-                onClick={() => navigate(`/learning/quiz/${level.exit_test.id}`)}
+                onClick={() => navigate(`/learning/lesson/${level.exit_test.id}`)}
                 disabled={!level.user_progress?.completed}
               >
                 {level.user_progress?.completed ? 'Passed! Review Test' : 'Complete all units first'}

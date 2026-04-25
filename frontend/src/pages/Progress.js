@@ -10,9 +10,11 @@ import {
 import api from '../lib/api';
 import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
 import ThemeToggle from '../components/ThemeToggle';
+import { useGoBack } from '../hooks/useGoBack';
 
 export default function Progress({ user }) {
   const navigate = useNavigate();
+  const goBack = useGoBack();
   
   // Theme support
   const { activeTheme } = useTheme();
@@ -35,7 +37,11 @@ export default function Progress({ user }) {
     recentTrend: []
   });
   const [filter, setFilter] = useState('all');
+  // Prefer the target band captured during onboarding (user.target_band) over
+  // the legacy localStorage key. Pre-onboarding users or accounts created
+  // before this field existed still fall back to the old storage → 7.0 default.
   const [targetBand, setTargetBand] = useState(() => {
+    if (typeof user?.target_band === 'number') return user.target_band;
     const saved = localStorage.getItem('targetBand');
     return saved ? parseFloat(saved) : 7.0;
   });
@@ -198,6 +204,17 @@ export default function Progress({ user }) {
     setTargetBand(band);
     localStorage.setItem('targetBand', band.toString());
     setShowTargetModal(false);
+    // Sync the new target back to the onboarding profile so other surfaces
+    // (Dashboard hero, Liz) reflect it without waiting for a re-login.
+    // Best-effort — the modal already closed; we don't block the UI on this.
+    if (user?.id) {
+      api
+        .post(`/users/${encodeURIComponent(user.id)}/onboarding`, { targetBand: band })
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.warn('[progress] target band sync failed', err);
+        });
+    }
   };
 
   const weeklyData = getWeeklyComparison();
@@ -230,9 +247,12 @@ export default function Progress({ user }) {
   return (
     <div className={`min-h-screen ${bgMain} py-8 px-4 sm:px-6 transition-colors duration-300`}>
       <div className="max-w-5xl mx-auto">
-        <Button variant="ghost" onClick={() => navigate('/dashboard')} className={`mb-6 ${textSecondary} hover:text-violet-600`}>
-          <ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard
-        </Button>
+        <div className="flex items-center justify-between mb-6">
+          <Button variant="ghost" onClick={goBack} className={`${textSecondary} hover:text-violet-600`}>
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard
+          </Button>
+          <ThemeToggle />
+        </div>
 
         {/* Header */}
         <div className="mb-8">

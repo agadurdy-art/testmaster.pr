@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { getRecommendedLessonPath } from '../lib/recommendationRouting';
+import { useGoBack } from '../hooks/useGoBack';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -18,7 +19,8 @@ export default function CambridgeTestResults() {
   const { bookId, testId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  
+  const goBack = useGoBack();
+
   const [loading, setLoading] = useState(true);
   const [evaluating, setEvaluating] = useState(false);
   const [results, setResults] = useState(null);
@@ -591,7 +593,7 @@ export default function CambridgeTestResults() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 via-violet-50/30 to-gray-100 py-8 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
-        <Button variant="ghost" onClick={() => navigate('/question-bank')} className="mb-6 text-gray-600 hover:text-violet-600">
+        <Button variant="ghost" onClick={goBack} className="mb-6 text-gray-600 hover:text-violet-600">
           <ArrowLeft className="w-4 h-4 mr-2" /> Back to Question Bank
         </Button>
 
@@ -1851,7 +1853,7 @@ export default function CambridgeTestResults() {
             <BookMarked className="w-4 h-4 mr-2" /> More Tests
           </Button>
           <Button 
-            onClick={() => navigate('/mastery')} 
+            onClick={() => navigate('/mastery-course')}
             className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 shadow-lg"
           >
             <GraduationCap className="w-4 h-4 mr-2" /> Study Weak Areas

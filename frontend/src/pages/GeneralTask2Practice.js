@@ -9,6 +9,8 @@ import {
   Play, Pause, RotateCcw, Send, Eye, ChevronRight
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useI18n } from '../lib/i18n';
+import { useGoBack } from '../hooks/useGoBack';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -23,6 +25,8 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function GeneralTask2Practice() {
   const navigate = useNavigate();
+  const goBack = useGoBack();
+  const { t, languageWireCode } = useI18n();
   const [searchParams] = useSearchParams();
   const urlTopic = searchParams.get('topic');
   
@@ -42,7 +46,7 @@ export default function GeneralTask2Practice() {
   const [modelAnswers, setModelAnswers] = useState(null);
 
   const essayTypes = [
-    { id: 'all', name: 'Tümü', color: 'gray' },
+    { id: 'all', name: 'All', color: 'gray' },
     { id: 'opinion', name: 'Opinion', color: 'blue', description: 'Agree/Disagree essays' },
     { id: 'discussion', name: 'Discussion', color: 'green', description: 'Discuss both views' },
     { id: 'problem_solution', name: 'Problem-Solution', color: 'orange', description: 'Problems and solutions' },
@@ -135,7 +139,8 @@ export default function GeneralTask2Practice() {
           topic: selectedPrompt?.topic || 'general',
           band_level: '5.5-6.5',
           task_description: selectedPrompt?.prompt || '',
-          track: 'general'  // Dual-Track: General Training
+          track: 'general',  // Dual-Track: General Training
+          user_language: languageWireCode
         })
       });
       
@@ -198,7 +203,7 @@ export default function GeneralTask2Practice() {
           <Button
             variant="ghost"
             className="text-white/80 hover:text-white hover:bg-white/10 mb-4"
-            onClick={() => navigate('/question-bank')}
+            onClick={goBack}
           >
             <ArrowLeft className="w-4 h-4 mr-2" /> Question Bank
           </Button>
@@ -250,7 +255,7 @@ export default function GeneralTask2Practice() {
             {/* Essay Type Filter */}
             <Card className="p-4">
               <h3 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
-                <Target className="w-4 h-4 text-purple-600" /> Essay Tipi
+                <Target className="w-4 h-4 text-purple-600" /> {t('wt2EssayType')}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {essayTypes.map(type => (
@@ -301,7 +306,7 @@ export default function GeneralTask2Practice() {
               <Card className="p-4 bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="font-bold text-amber-800 flex items-center gap-2">
-                    <Lightbulb className="w-4 h-4" /> Essay İpuçları
+                    <Lightbulb className="w-4 h-4" /> {t('wt2EssayTips')}
                   </h3>
                   <Button
                     variant="ghost"
@@ -309,29 +314,29 @@ export default function GeneralTask2Practice() {
                     onClick={() => setShowTips(false)}
                     className="text-amber-600"
                   >
-                    Gizle
+                    {t('wt2Hide')}
                   </Button>
                 </div>
                 <ul className="space-y-2 text-sm text-amber-900">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-amber-600" />
-                    <span>Giriş paragrafında soruyu yeniden ifade edin</span>
+                    <span>{t('wt2Tip1')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-amber-600" />
-                    <span>Her paragraf tek bir ana fikir içersin</span>
+                    <span>{t('wt2Tip2')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-amber-600" />
-                    <span>Give examples from your own experience</span>
+                    <span>{t('wt2Tip3')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-amber-600" />
-                    <span>Clarify your opinion in the conclusion paragraph</span>
+                    <span>{t('wt2Tip4')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-amber-600" />
-                    <span>Use varied linking words (however, moreover, therefore)</span>
+                    <span>{t('wt2Tip5')}</span>
                   </li>
                 </ul>
               </Card>
@@ -554,7 +559,7 @@ export default function GeneralTask2Practice() {
                             <li 
                               key={idx} 
                               className="text-xs bg-white p-2 rounded border border-indigo-100 cursor-pointer hover:border-indigo-300 transition-colors"
-                              onClick={() => navigate(`/courses/mastery/general/${lesson.lesson_id}`)}
+                              onClick={() => navigate(`/mastery-course?lesson=${lesson.lesson_id}`)}
                             >
                               <div className="flex items-center justify-between">
                                 <span className="font-medium text-indigo-700">{lesson.title}</span>
@@ -575,7 +580,7 @@ export default function GeneralTask2Practice() {
                 {showModelAnswer && modelAnswers && (
                   <Card className="p-5 border-2 border-purple-200 bg-purple-50/30">
                     <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                      <Layers className="w-5 h-5 text-purple-600" /> Model Answerlar
+                      <Layers className="w-5 h-5 text-purple-600" /> {t('wt2ModelAnswers')}
                     </h3>
                     
                     <div className="flex gap-2 mb-4">

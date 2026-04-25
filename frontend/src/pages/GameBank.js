@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
@@ -567,6 +568,7 @@ const FishingGame = ({ game, onComplete }) => {
 
 export default function GameBank() {
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const { language } = useI18n();
   const [games, setGames] = useState([]);
   const [topics, setTopics] = useState([]);
@@ -750,7 +752,7 @@ export default function GameBank() {
       {/* Header */}
       <div className="p-4">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <Button variant="ghost" onClick={() => navigate('/dashboard')} className="text-white">
+          <Button variant="ghost" onClick={goBack} className="text-white">
             <ArrowLeft className="w-5 h-5 mr-2" /> {getText('backToDashboard')}
           </Button>
           <h1 className="text-xl font-bold text-white flex items-center gap-2">

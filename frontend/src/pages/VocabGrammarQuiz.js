@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useGoBack } from '../hooks/useGoBack';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
@@ -15,6 +16,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function VocabGrammarQuiz({ user }) {
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const [searchParams] = useSearchParams();
   const initialBand = searchParams.get('band');
   
@@ -178,7 +180,7 @@ export default function VocabGrammarQuiz({ user }) {
         <div className="max-w-2xl mx-auto">
           <Button
             variant="ghost"
-            onClick={() => navigate('/question-bank')}
+            onClick={goBack}
             className="mb-6"
           >
             <ArrowLeft className="w-4 h-4 mr-2" /> Back to Question Bank
@@ -335,7 +337,7 @@ export default function VocabGrammarQuiz({ user }) {
         <div className="max-w-4xl mx-auto">
           <Button
             variant="ghost"
-            onClick={() => navigate('/question-bank')}
+            onClick={goBack}
             className="text-white/80 hover:text-white hover:bg-white/10 mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" /> Back to Question Bank
