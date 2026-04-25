@@ -61,7 +61,7 @@ async def generate_tts(request: TTSRequest):
         cache_path = get_cache_path(request.text, request.voice_id)
         if cache_path.exists():
             return TTSResponse(
-                audio_url=f"/api/audio/tts/{cache_path.name}",
+                audio_url=f"/api/static/audio/tts_cache/{cache_path.name}",
                 cached=True
             )
         
@@ -92,7 +92,7 @@ async def generate_tts(request: TTSRequest):
             f.write(audio_data)
         
         return TTSResponse(
-            audio_url=f"/api/audio/tts/{cache_path.name}",
+            audio_url=f"/api/static/audio/tts_cache/{cache_path.name}",
             cached=False
         )
         
@@ -137,7 +137,7 @@ async def generate_speaking_questions_audio(request: TTSBatchRequest):
             if cache_path.exists():
                 results.append({
                     "text": text,
-                    "audio_url": f"/api/audio/tts/{cache_path.name}",
+                    "audio_url": f"/api/static/audio/tts_cache/{cache_path.name}",
                     "cached": True
                 })
                 continue
@@ -166,7 +166,7 @@ async def generate_speaking_questions_audio(request: TTSBatchRequest):
             
             results.append({
                 "text": text,
-                "audio_url": f"/api/audio/tts/{cache_path.name}",
+                "audio_url": f"/api/static/audio/tts_cache/{cache_path.name}",
                 "cached": False
             })
         
