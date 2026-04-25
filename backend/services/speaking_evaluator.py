@@ -349,34 +349,51 @@ def _format_problem_words(word_results: List[Dict[str, Any]]) -> str:
 # ─── Public entry point ──────────────────────────────────────────────────────
 
 
-async def evaluate_speaking(
+def _build_azure_block(azure: Dict[str, Any]) -> str:
+    return (
+        "## Azure word-level pronunciation (top problem words)\n"
+        f"{_format_problem_words(azure.get('word_results') or [])}\n"
+        "\n"
+        "## Azure aggregate scores (0-100)\n"
+        f"- pronunciation: {azure.get('pron_score', 0):.1f}\n"
+        f"- accuracy: {azure.get('accuracy_score', 0):.1f}\n"
+        f"- fluency: {azure.get('fluency_score', 0):.1f}\n"
+        f"- prosody: {azure.get('prosody_score', 0):.1f}\n"
+        f"- completeness: {azure.get('completeness_score', 0):.1f}"
+    )
+
+
+_BASIC_AZURE_BLOCK = (
+    "## Pronunciation analysis\n"
+    "Not available in basic mode (no Azure phoneme assessment). Score "
+    "pronunciation conservatively from transcript-level cues only — do not "
+    "assert specific phoneme errors. If the transcript reads cleanly, a band "
+    "in the 5.5–6.5 range is appropriate; reserve 7+ for clearly fluent, "
+    "well-stressed delivery and use 5 or below only when the transcript "
+    "itself shows breakdown."
+)
+
+_BASIC_MODE_INSTRUCTION = (
+    "\n- BASIC MODE: You do not have Azure phoneme data. In transcript_tokens, "
+    "you may still mark a word with `pron: \"ok\"` or `\"bad\"` if the "
+    "transcript shows obvious lexical/grammatical breakdown around it, but do "
+    "NOT invent IPA strings or phoneme-level notes. Most tokens should be "
+    "neutral runs; emit at most 2 problem words with brief, transcript-grounded "
+    "notes."
+)
+
+
+async def _run_evaluator_llm(
+    *,
     req: SpeakingEvaluationRequest,
-    audio_bytes: bytes,
+    transcript: str,
+    fluency: Dict[str, Any],
+    azure_block: str,
+    mode_instruction: str,
 ) -> SpeakingEvaluationResult:
-    """Run the full pipeline. Raises SpeakingEvaluatorFailure on persistent error."""
-    if not audio_bytes:
-        raise SpeakingEvaluatorFailure("empty audio payload", attempts=0)
-
+    """Shared inner loop: render prompts, call Sonnet, retry, validate."""
     system_template, user_template = _load_prompt_blocks()
-
-    try:
-        wav_bytes = await transcode_to_wav(audio_bytes)
-    except Exception as exc:
-        raise SpeakingEvaluatorFailure(
-            f"audio transcode failed: {exc!r}", attempts=0
-        ) from exc
-
-    azure = await run_azure_pronunciation(wav_bytes, reference_text="")
-    if "error" in azure or not azure.get("recognized_text"):
-        raise SpeakingEvaluatorFailure(
-            f"azure failed: {azure.get('error', 'no transcript')}",
-            attempts=0,
-            last_error=str(azure.get("details") or azure.get("error") or ""),
-        )
-
-    transcript = azure["recognized_text"]
     duration = float(req.duration_seconds or 0.0)
-    fluency = compute_fluency(transcript, duration)
 
     user_prompt = _substitute(
         user_template,
@@ -393,14 +410,13 @@ async def evaluate_speaking(
         pause_count=fluency["pauses"],
         filled_pause_count=fluency["filled_pauses"],
         fillers_detected=", ".join(fluency["fillers_detected"]) or "(none)",
-        azure_problem_words=_format_problem_words(azure.get("word_results") or []),
-        azure_pron_score=f"{azure.get('pron_score', 0):.1f}",
-        azure_accuracy_score=f"{azure.get('accuracy_score', 0):.1f}",
-        azure_fluency_score=f"{azure.get('fluency_score', 0):.1f}",
-        azure_prosody_score=f"{azure.get('prosody_score', 0):.1f}",
-        azure_completeness_score=f"{azure.get('completeness_score', 0):.1f}",
+        azure_block=azure_block,
     )
-    system_prompt = _substitute(system_template, part=req.part.value)
+    system_prompt = _substitute(
+        system_template,
+        part=req.part.value,
+        mode_instruction=mode_instruction,
+    )
 
     model = liz_llm.deep_model()
     last_error: Optional[str] = None
@@ -462,6 +478,106 @@ async def evaluate_speaking(
         attempts=MAX_ATTEMPTS,
         last_error=last_error,
     )
+
+
+async def evaluate_speaking(
+    req: SpeakingEvaluationRequest,
+    audio_bytes: bytes,
+) -> SpeakingEvaluationResult:
+    """Full pipeline: Azure STT + pronunciation + Sonnet. Raises on failure."""
+    if not audio_bytes:
+        raise SpeakingEvaluatorFailure("empty audio payload", attempts=0)
+
+    try:
+        wav_bytes = await transcode_to_wav(audio_bytes)
+    except Exception as exc:
+        raise SpeakingEvaluatorFailure(
+            f"audio transcode failed: {exc!r}", attempts=0
+        ) from exc
+
+    azure = await run_azure_pronunciation(wav_bytes, reference_text="")
+    if "error" in azure or not azure.get("recognized_text"):
+        raise SpeakingEvaluatorFailure(
+            f"azure failed: {azure.get('error', 'no transcript')}",
+            attempts=0,
+            last_error=str(azure.get("details") or azure.get("error") or ""),
+        )
+
+    transcript = azure["recognized_text"]
+    duration = float(req.duration_seconds or 0.0)
+    fluency = compute_fluency(transcript, duration)
+
+    return await _run_evaluator_llm(
+        req=req,
+        transcript=transcript,
+        fluency=fluency,
+        azure_block=_build_azure_block(azure),
+        mode_instruction="",
+    )
+
+
+async def evaluate_speaking_basic(
+    req: SpeakingEvaluationRequest,
+    audio_bytes: bytes,
+    *,
+    transcribe_audio: Optional[Any] = None,
+) -> SpeakingEvaluationResult:
+    """Basic pipeline: Whisper STT + Sonnet (no Azure pronunciation).
+
+    Used for the free-tier weekly cycle after the first "taste" eval is
+    consumed. `transcribe_audio` is an injectable async callable accepting
+    raw audio bytes and returning a transcript string; defaults to the
+    OpenAI Whisper helper. Injection keeps tests offline.
+    """
+    if not audio_bytes:
+        raise SpeakingEvaluatorFailure("empty audio payload", attempts=0)
+
+    if transcribe_audio is None:
+        transcribe_audio = _default_whisper_transcribe
+
+    try:
+        transcript = await transcribe_audio(audio_bytes)
+    except Exception as exc:
+        raise SpeakingEvaluatorFailure(
+            f"transcription failed: {exc!r}", attempts=0
+        ) from exc
+
+    if not transcript or not transcript.strip():
+        raise SpeakingEvaluatorFailure(
+            "empty transcript from whisper", attempts=0
+        )
+
+    duration = float(req.duration_seconds or 0.0)
+    fluency = compute_fluency(transcript, duration)
+
+    return await _run_evaluator_llm(
+        req=req,
+        transcript=transcript,
+        fluency=fluency,
+        azure_block=_BASIC_AZURE_BLOCK,
+        mode_instruction=_BASIC_MODE_INSTRUCTION,
+    )
+
+
+async def _default_whisper_transcribe(audio_bytes: bytes) -> str:
+    """Default Whisper transcription via emergentintegrations. Lazy-imported
+    so unit tests that inject a fake transcribe_audio don't pay for the
+    SDK import or require EMERGENT_LLM_KEY."""
+    api_key = os.environ.get("EMERGENT_LLM_KEY")
+    if not api_key:
+        raise RuntimeError("EMERGENT_LLM_KEY not configured")
+    from emergentintegrations.llm.openai import OpenAISpeechToText  # type: ignore
+    import io
+
+    stt = OpenAISpeechToText(api_key=api_key)
+    buf = io.BytesIO(audio_bytes)
+    buf.name = f"audio-{uuid.uuid4().hex}.webm"
+    response = await stt.transcribe(
+        file=buf,
+        model="whisper-1",
+        response_format="json",
+    )
+    return getattr(response, "text", "") or ""
 
 
 def health() -> Dict[str, Any]:

@@ -4,13 +4,15 @@ import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { 
-  ArrowLeft, Clock, Mic, Play, Square, 
-  CheckCircle, ChevronRight, Target, Lightbulb, Award,
+  ArrowLeft, Clock, Mic, Play, Square,
+  CheckCircle, ChevronRight, Award,
   Volume2, Eye, EyeOff, SkipForward, RotateCcw,
   User, MessageSquare, FileText, Loader2
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useGoBack } from '../hooks/useGoBack';
+import { ResultsState as SpeakingResultsState, adaptSpeakingResult } from '../features/speaking';
+import '../features/speaking/speaking.css';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -614,13 +616,15 @@ export default function SpeakingPracticeQB({ user }) {
           </div>
         )}
 
-        {results && (
-          <Card className="p-6 bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-                <Award className="w-6 h-6 text-indigo-600" /> Results
-              </h2>
-              <div className="flex items-center gap-2">
+        {results && (() => {
+          const adapted = adaptSpeakingResult(results, {
+            targetBand: user?.target_band,
+            durationSeconds: results.metrics?.total_duration,
+          });
+          return (
+            <div className="space-y-4">
+              {/* Tier / credits chip strip — kept outside D7 for app-level context */}
+              <div className="flex items-center justify-end gap-2">
                 {results.remaining_credits !== undefined && (
                   <Badge className="bg-gray-100 text-gray-600 text-xs">
                     {results.remaining_credits} credit{results.remaining_credits !== 1 ? 's' : ''} left
@@ -632,170 +636,59 @@ export default function SpeakingPracticeQB({ user }) {
                   </Badge>
                 )}
               </div>
-            </div>
-            
-            <div className="text-center mb-6">
-              <p className="text-5xl font-bold text-indigo-600">{results.overall_band}</p>
-              <p className="text-gray-500">Overall Band</p>
-            </div>
-            
-            {/* Premium: Azure Pronunciation Scores */}
-            {results.pronunciation_analysis?.azure_scores && (
-              <div className="mb-6 p-4 bg-purple-50 rounded-lg border border-purple-200">
-                <h4 className="font-semibold text-purple-800 mb-3 flex items-center gap-2">
-                  <Mic className="w-4 h-4" /> Pronunciation Analysis (Azure)
-                </h4>
-                <div className="grid grid-cols-5 gap-2 text-center">
-                  {Object.entries(results.pronunciation_analysis.azure_scores).map(([k, v]) => (
-                    <div key={k} className="bg-white p-2 rounded">
-                      <p className="text-lg font-bold text-purple-700">{v}</p>
-                      <p className="text-xs text-gray-500 capitalize">{k}</p>
-                    </div>
-                  ))}
+
+              {/* Unified D7 ResultsState */}
+              {adapted ? (
+                <div className="speaking-scope rounded-2xl overflow-hidden border border-indigo-100 shadow-sm">
+                  <SpeakingResultsState
+                    data={adapted}
+                    onRetryCard={() => selectModule(selectedModule)}
+                    onNewCard={() => navigate('/question-bank')}
+                  />
                 </div>
-              </div>
-            )}
-            
-            {/* Premium: Pronunciation Issues */}
-            {results.pronunciation_analysis?.main_issues?.length > 0 && (
-              <div className="mb-6 p-4 bg-red-50 rounded-lg border border-red-200">
-                <h4 className="font-semibold text-red-800 mb-2">⚠️ Pronunciation Issues</h4>
-                <ul className="text-sm text-red-700 space-y-1">
-                  {results.pronunciation_analysis.main_issues.map((issue, i) => (
-                    <li key={i}>• {issue}</li>
-                  ))}
-                </ul>
-                {results.pronunciation_analysis.swallowed_sounds?.length > 0 && (
-                  <p className="mt-2 text-xs text-red-600">
-                    <strong>Swallowed sounds:</strong> {results.pronunciation_analysis.swallowed_sounds.join(', ')}
-                  </p>
-                )}
-                {results.pronunciation_analysis.missing_endings?.length > 0 && (
-                  <p className="text-xs text-red-600">
-                    <strong>Missing endings:</strong> {results.pronunciation_analysis.missing_endings.join(', ')}
-                  </p>
-                )}
-              </div>
-            )}
-            
-            {/* Premium: Word-level Results */}
-            {results.word_level_results?.length > 0 && (
-              <div className="mb-6 p-4 bg-orange-50 rounded-lg border border-orange-200">
-                <h4 className="font-semibold text-orange-800 mb-2">🔤 Problem Words</h4>
-                <div className="flex flex-wrap gap-2">
-                  {results.word_level_results.slice(0, 10).map((word, i) => (
-                    <span key={i} className="px-2 py-1 bg-white rounded text-sm border border-orange-200">
-                      <span className="font-medium">{word.word}</span>
-                      <span className="text-orange-600 ml-1">({word.accuracy_score}%)</span>
-                      {word.error_type !== 'None' && (
-                        <span className="text-xs text-red-500 ml-1">[{word.error_type}]</span>
-                      )}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-            
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              {results.criteria && Object.entries(results.criteria).map(([k, v]) => (
-                <div key={k} className="bg-white p-3 rounded-lg">
-                  <p className="text-sm text-gray-500 capitalize">{k.replace('_', ' ')}</p>
-                  <p className="text-xl font-bold text-gray-900">{v}</p>
-                </div>
-              ))}
-            </div>
-            
-            {/* Free tier metrics */}
-            {results.metrics && (
-              <div className="mb-6 p-3 bg-gray-50 rounded-lg">
-                <div className="grid grid-cols-3 gap-4 text-center text-sm">
-                  <div>
-                    <p className="text-xl font-bold text-gray-700">{results.metrics.total_words}</p>
-                    <p className="text-xs text-gray-500">Words Spoken</p>
+              ) : (
+                <Card className="p-6 text-center text-gray-500">No evaluation data returned.</Card>
+              )}
+
+              {/* QB-specific overflow info that doesn't fit the D7 layout */}
+              {results.per_part_summary && (
+                <Card className="p-4">
+                  <h3 className="font-semibold text-gray-800 mb-2">Part-by-part</h3>
+                  <div className="space-y-1 text-sm">
+                    {Object.entries(results.per_part_summary).map(([p, s]) => (
+                      <div key={p}><span className="font-medium capitalize">{p}: </span><span className="text-gray-600">{s}</span></div>
+                    ))}
                   </div>
-                  <div>
-                    <p className="text-xl font-bold text-gray-700">{results.metrics.words_per_minute}</p>
-                    <p className="text-xs text-gray-500">Words/Min</p>
+                </Card>
+              )}
+
+              {results.upgrade_prompt && (
+                <Card className="p-4 bg-gradient-to-r from-purple-100 to-indigo-100 border-purple-200">
+                  <p className="text-sm text-purple-700">{results.upgrade_prompt}</p>
+                </Card>
+              )}
+
+              {results.recommended_lessons?.length > 0 && (
+                <Card className="p-4">
+                  <h4 className="font-semibold text-gray-800 mb-3">Recommended Lessons</h4>
+                  <div className="space-y-2">
+                    {results.recommended_lessons.map((l, i) => (
+                      <div key={i} className="flex items-center justify-between bg-white p-3 rounded-lg border">
+                        <div><p className="font-medium text-gray-900">{l.title}</p><p className="text-xs text-gray-500">{l.track} • {l.stage}</p></div>
+                        <Button variant="outline" size="sm" onClick={() => navigate(l.url || '/mastery-course')}>Go <ChevronRight className="w-3 h-3 ml-1" /></Button>
+                      </div>
+                    ))}
                   </div>
-                  <div>
-                    <p className="text-xl font-bold text-gray-700">{Math.round(results.metrics.total_duration)}s</p>
-                    <p className="text-xs text-gray-500">Duration</p>
-                  </div>
-                </div>
-              </div>
-            )}
-            
-            {results.per_part_summary && (
-              <div className="mb-6 space-y-2">
-                <h3 className="font-semibold text-gray-800">Part Analysis</h3>
-                {Object.entries(results.per_part_summary).map(([p, s]) => (
-                  <div key={p} className="bg-white p-3 rounded-lg text-sm">
-                    <span className="font-medium capitalize">{p}: </span><span className="text-gray-600">{s}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-            
-            <div className="grid md:grid-cols-2 gap-4 mb-6">
-              <div className="bg-green-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2"><CheckCircle className="w-4 h-4" /> Strengths</h4>
-                <ul className="text-sm text-green-700 space-y-1">{results.strengths?.map((s, i) => <li key={i}>• {s}</li>)}</ul>
-              </div>
-              <div className="bg-amber-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-amber-800 mb-2 flex items-center gap-2"><Target className="w-4 h-4" /> Improve</h4>
-                <ul className="text-sm text-amber-700 space-y-1">{results.weaknesses?.map((w, i) => <li key={i}>• {w}</li>)}</ul>
+                </Card>
+              )}
+
+              <div className="flex gap-3">
+                <Button variant="outline" onClick={() => selectModule(selectedModule)} className="flex-1"><RotateCcw className="w-4 h-4 mr-2" /> Again</Button>
+                <Button onClick={() => navigate('/question-bank')} className="flex-1 bg-indigo-600">More <ChevronRight className="w-4 h-4 ml-1" /></Button>
               </div>
             </div>
-            
-            {results.mentor_notes && (
-              <div className="bg-white p-4 rounded-lg border mb-6">
-                <h4 className="font-semibold text-gray-800 mb-2 flex items-center gap-2"><User className="w-4 h-4" /> Mentor Notes</h4>
-                <p className="text-sm text-gray-600 italic">{results.mentor_notes}</p>
-              </div>
-            )}
-            
-            {/* Premium: Practice Focus */}
-            {results.practice_focus?.length > 0 && (
-              <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-200 mb-6">
-                <h4 className="font-semibold text-indigo-800 mb-2 flex items-center gap-2">🎯 Practice Focus</h4>
-                <ul className="text-sm text-indigo-700 space-y-1">{results.practice_focus.map((p, i) => <li key={i}>• {p}</li>)}</ul>
-              </div>
-            )}
-            
-            {results.try_this_next?.length > 0 && (
-              <div className="bg-blue-50 p-4 rounded-lg border border-blue-200 mb-6">
-                <h4 className="font-semibold text-blue-800 mb-2 flex items-center gap-2"><Lightbulb className="w-4 h-4" /> Try This Next</h4>
-                <ul className="text-sm text-blue-700 space-y-1">{results.try_this_next.map((t, i) => <li key={i}>• {t}</li>)}</ul>
-              </div>
-            )}
-            
-            {/* Free tier upgrade prompt */}
-            {results.upgrade_prompt && (
-              <div className="bg-gradient-to-r from-purple-100 to-indigo-100 p-4 rounded-lg border border-purple-200 mb-6">
-                <p className="text-sm text-purple-700">{results.upgrade_prompt}</p>
-              </div>
-            )}
-            
-            {results.recommended_lessons?.length > 0 && (
-              <div className="mb-6">
-                <h4 className="font-semibold text-gray-800 mb-3">Recommended Lessons</h4>
-                <div className="space-y-2">
-                  {results.recommended_lessons.map((l, i) => (
-                    <div key={i} className="flex items-center justify-between bg-white p-3 rounded-lg border">
-                      <div><p className="font-medium text-gray-900">{l.title}</p><p className="text-xs text-gray-500">{l.track} • {l.stage}</p></div>
-                      <Button variant="outline" size="sm" onClick={() => navigate(l.url || '/mastery-course')}>Go <ChevronRight className="w-3 h-3 ml-1" /></Button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-            
-            <div className="flex gap-3">
-              <Button variant="outline" onClick={() => selectModule(selectedModule)} className="flex-1"><RotateCcw className="w-4 h-4 mr-2" /> Again</Button>
-              <Button onClick={() => navigate('/question-bank')} className="flex-1 bg-indigo-600">More <ChevronRight className="w-4 h-4 ml-1" /></Button>
-            </div>
-          </Card>
-        )}
+          );
+        })()}
       </div>
     </div>
   );

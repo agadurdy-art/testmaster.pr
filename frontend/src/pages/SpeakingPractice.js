@@ -6,6 +6,7 @@ import { Progress } from '../components/ui/progress';
 import { Mic, MicOff, ArrowLeft, Clock, CheckCircle, XCircle, Loader2, ChevronRight, Play, Pause, RotateCcw, Volume2, MessageSquare, Target, AlertCircle, Lightbulb, Award, Square, User, Bot } from 'lucide-react';
 import { toast } from 'sonner';
 import { useGoBack } from '../hooks/useGoBack';
+import { speakOnce } from '../hooks/useLizVoice';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -144,14 +145,14 @@ export default function SpeakingPractice({ user }) {
   // Auto-record mode state
   const [autoRecordEnabled, setAutoRecordEnabled] = useState(true);
   
-  const playQuestion = (text, autoStartRecord = false) => { 
-    if ('speechSynthesis' in window) { 
-      window.speechSynthesis.cancel(); 
-      const u = new SpeechSynthesisUtterance(text); 
-      u.lang = 'en-US'; 
-      u.rate = 0.9; 
-      setPlayingAudio(text); 
-      u.onend = () => { 
+  const playQuestion = (text, autoStartRecord = false) => {
+    // Liz voice via ElevenLabs (cached server-side in /api/tts/generate).
+    // Falls back to Web Speech automatically when the key isn't configured.
+    setPlayingAudio(text);
+    speakOnce(text, {
+      lang: 'en-GB',
+      rate: 0.95,
+      onEnd: () => {
         setPlayingAudio(null);
         // Auto-start recording after prompt plays (if enabled and not Part 2 which has prep time)
         if (autoStartRecord && autoRecordEnabled && selectedPart !== 'part2' && !recording) {
@@ -160,9 +161,9 @@ export default function SpeakingPractice({ user }) {
             startRecording();
           }, 500);
         }
-      }; 
-      window.speechSynthesis.speak(u); 
-    } 
+      },
+      onError: () => setPlayingAudio(null),
+    });
   };
 
   const getBandColor = (band) => band >= 7 ? 'bg-green-100 text-green-700' : band >= 6 ? 'bg-blue-100 text-blue-700' : band >= 5 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700';

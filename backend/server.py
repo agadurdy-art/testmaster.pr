@@ -381,6 +381,30 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load speaking QB routes: {e}")
 
+# Import unified speaking evaluation route (feature-flagged during rollout).
+# Phase 1 plan: this runs alongside the legacy /api/speaking/score and
+# /api/speaking/submit endpoints; UI surfaces migrate one-by-one. Set
+# UNIFIED_SPEAKING_EVAL_ENABLED=0 to disable in an emergency.
+if os.environ.get("UNIFIED_SPEAKING_EVAL_ENABLED", "1").lower() not in {"0", "false", "off"}:
+    try:
+        from routes.speaking_unified import (
+            router as speaking_unified_router,
+            set_db as set_speaking_unified_db,
+            init_indexes as init_speaking_unified_indexes,
+        )
+        set_speaking_unified_db(db)
+        app.include_router(speaking_unified_router)
+
+        @app.on_event("startup")
+        async def _bootstrap_speaking_unified_indexes():
+            await init_speaking_unified_indexes()
+
+        print("✅ Speaking Unified routes loaded")
+    except Exception as e:
+        print(f"⚠️  Could not load speaking unified routes: {e}")
+        import traceback
+        traceback.print_exc()
+
 # Import full test mode routes
 try:
     from routes.full_test import router as full_test_router

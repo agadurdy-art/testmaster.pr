@@ -51,6 +51,7 @@ Rules
   English so IPA and sound names don't get lost in translation.
 - Be fair. A 60-second Part 2 at ~100 WPM with 2-3 hesitations and minor
   pronunciation slips is typically Band 6.5. Don't over- or under-score.
+{{mode_instruction}}
 
 Output: one JSON object, nothing else.
 ```
@@ -77,15 +78,7 @@ Output: one JSON object, nothing else.
 - filled_pause_count: {{filled_pause_count}}
 - fillers_detected: {{fillers_detected}}
 
-## Azure word-level pronunciation (top problem words)
-{{azure_problem_words}}
-
-## Azure aggregate scores (0-100)
-- pronunciation: {{azure_pron_score}}
-- accuracy: {{azure_accuracy_score}}
-- fluency: {{azure_fluency_score}}
-- prosody: {{azure_prosody_score}}
-- completeness: {{azure_completeness_score}}
+{{azure_block}}
 
 Return the JSON object.
 ```

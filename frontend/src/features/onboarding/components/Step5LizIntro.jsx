@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { MONTHS, DAY_SHORT } from '../constants';
 import LizAvatar from '../../landing/components/LizAvatar';
+import { useLizVoice } from '../../../hooks/useLizVoice';
 
 // Short, natural Liz greeting per supported language. The placeholder
 // {name}/{current}/{target} tokens are filled in buildGreeting below.
@@ -28,43 +29,6 @@ function buildGreeting(code, name, current, target) {
     .replaceAll('{current}', current.toFixed(1))
     .replaceAll('{target}', target.toFixed(1));
   return { lang: entry.lang, text };
-}
-
-// Pick the most "Liz-like" voice available for the target BCP-47 tag.
-// Liz is female, so we filter the OS voice list for female markers.
-// Known female voice names by platform are ranked first; after that we
-// fall back to anything tagged "female" / "woman"; and finally the first
-// voice for that language (better than browser default, which on many
-// systems is male for tr-TR / vi-VN / ar-SA).
-const FEMALE_HINTS = [
-  // Apple / macOS / iOS
-  'samantha', 'karen', 'moira', 'tessa', 'yelda', 'kyoko', 'ting-ting', 'mei-jia',
-  'yuna', 'monica', 'paulina', 'joana', 'luciana', 'milena', 'damayanti', 'kanya',
-  'laila', 'maged',
-  // Google
-  'female', 'google .* female', 'google türkçe', 'google tiếng việt',
-  'google 普通话', 'google 中文', 'google español', 'google português',
-  // Microsoft
-  'zira', 'hazel', 'filiz', 'huihui', 'haruka', 'sunhi', 'irina', 'helena',
-  'heloisa', 'catherine', 'hoda',
-];
-
-function pickFemaleVoice(voices, bcp47) {
-  if (!voices || voices.length === 0) return null;
-  const tag = (bcp47 || '').toLowerCase();
-  const primary = tag.split('-')[0];
-  const sameLang = voices.filter((v) => {
-    const l = (v.lang || '').toLowerCase();
-    return l === tag || l.startsWith(primary + '-') || l === primary;
-  });
-  const pool = sameLang.length ? sameLang : voices;
-  const hinted = pool.find((v) =>
-    FEMALE_HINTS.some((h) => new RegExp(h).test((v.name || '').toLowerCase())),
-  );
-  if (hinted) return hinted;
-  // Last resort: prefer any same-language voice over the platform default,
-  // which is often male for non-English locales.
-  return pool[0] || null;
 }
 
 const CONFETTI_COLORS = [
@@ -130,13 +94,8 @@ function Wave({ playing }) {
 }
 
 export default function Step5LizIntro({ direction, state }) {
-  const [playing, setPlaying] = useState(false);
   const confettiShown = useRef(false);
   const [showConfetti, setShowConfetti] = useState(false);
-  const utterRef = useRef(null);
-  const [voices, setVoices] = useState([]);
-  const ttsSupported =
-    typeof window !== 'undefined' && 'speechSynthesis' in window;
 
   useEffect(() => {
     if (!confettiShown.current) {
@@ -145,31 +104,6 @@ export default function Step5LizIntro({ direction, state }) {
     }
   }, []);
 
-  // Voice list loads asynchronously on Chrome — `getVoices()` returns [] on
-  // first call and fires `voiceschanged` once the OS list is ready. Listen
-  // so we can pick a female voice instead of the platform default (which
-  // is often male for Turkish, Vietnamese, Arabic, etc.).
-  //
-  // We also prime the TTS pipeline with a near-silent utterance on mount.
-  // Chrome's first speak() call has a 1–3 s warm-up (voice load + audio
-  // graph init); doing it up front means the user's first tap on the play
-  // button starts immediately.
-  useEffect(() => {
-    if (!ttsSupported) return undefined;
-    const load = () => setVoices(window.speechSynthesis.getVoices() || []);
-    load();
-    window.speechSynthesis.addEventListener?.('voiceschanged', load);
-    try {
-      const primer = new window.SpeechSynthesisUtterance(' ');
-      primer.volume = 0;
-      primer.rate = 1;
-      window.speechSynthesis.speak(primer);
-    } catch (_) { /* ignore */ }
-    return () => {
-      window.speechSynthesis.removeEventListener?.('voiceschanged', load);
-    };
-  }, [ttsSupported]);
-
   const name = state.name || 'there';
   const target = state.targetBand || 7.0;
   const current = state.currentBand || 6.0;
@@ -177,42 +111,21 @@ export default function Step5LizIntro({ direction, state }) {
   const lang = state.language?.name || 'English';
   const track = state.path === 'general' ? 'General English' : 'IELTS Ace';
 
-  // Cancel any in-flight speech when the step unmounts so navigating to
-  // the dashboard doesn't leave Liz talking over the next screen.
-  useEffect(() => {
-    return () => {
-      if (ttsSupported) {
-        try { window.speechSynthesis.cancel(); } catch (_) { /* ignore */ }
-      }
-    };
-  }, [ttsSupported]);
+  // Liz voice via ElevenLabs (multilingual model handles all 12 supported
+  // greeting languages with a single consistent female voice). Hook
+  // registers with AudioProvider so it stops on route change automatically;
+  // falls back to Web Speech if the backend key isn't configured.
+  const greeting = useMemo(
+    () => buildGreeting(langCode, name, current, target),
+    [langCode, name, current, target],
+  );
+  const liz = useLizVoice(greeting.text, {
+    lang: greeting.lang,
+    rate: 0.97,
+  });
 
-  const handleTogglePlay = () => {
-    if (!ttsSupported) return;
-    if (playing) {
-      try { window.speechSynthesis.cancel(); } catch (_) { /* ignore */ }
-      setPlaying(false);
-      return;
-    }
-    const greeting = buildGreeting(langCode, name, current, target);
-    const u = new window.SpeechSynthesisUtterance(greeting.text);
-    u.lang = greeting.lang;
-    // Liz is female. Pick a matching-language female voice; otherwise
-    // nudge pitch up so the platform default doesn't read as masculine.
-    const voice = pickFemaleVoice(
-      voices.length ? voices : window.speechSynthesis.getVoices() || [],
-      greeting.lang,
-    );
-    if (voice) u.voice = voice;
-    u.rate = 0.97;
-    u.pitch = voice ? 1.05 : 1.25;
-    u.onend = () => setPlaying(false);
-    u.onerror = () => setPlaying(false);
-    utterRef.current = u;
-    try { window.speechSynthesis.cancel(); } catch (_) { /* ignore */ }
-    setPlaying(true);
-    window.speechSynthesis.speak(u);
-  };
+  const handleTogglePlay = () => liz.toggle();
+  const playing = liz.isPlaying && !liz.isPaused;
 
   let examTxt = 'To be decided';
   if (state.examDate instanceof Date) {
@@ -247,7 +160,7 @@ export default function Step5LizIntro({ direction, state }) {
           every note into <b>{lang}</b>. Ready to see it?
         </p>
 
-        {ttsSupported && (
+        {liz.isSupported && (
           <div className="wave-row">
             <button
               type="button"

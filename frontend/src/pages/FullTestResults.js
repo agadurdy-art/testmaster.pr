@@ -10,6 +10,8 @@ import {
   AlertTriangle, Zap, GraduationCap, ChevronRight, Eye, RefreshCw
 } from 'lucide-react';
 import { getRecommendedLessonPath } from '../lib/recommendationRouting';
+import { ResultsState as SpeakingResultsState, adaptSpeakingResult } from '../features/speaking';
+import '../features/speaking/speaking.css';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -602,55 +604,23 @@ export default function FullTestResults() {
           </Card>
         )}
 
-        {/* Speaking Results */}
-        {results.sections?.speaking && results.sections.speaking.band > 0 && (
-          <Card data-testid="speaking-results-card" className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-lg">
-                <Mic className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900">Speaking</h3>
-                <p className="text-sm text-gray-500">Band {results.sections.speaking.band}</p>
-              </div>
+        {/* Speaking Results — D7 ResultsState (adapter handles `band`+`criteria.*` shape) */}
+        {results.sections?.speaking && results.sections.speaking.band > 0 && (() => {
+          const adapted = adaptSpeakingResult(results.sections.speaking);
+          if (!adapted) return null;
+          return (
+            <div
+              data-testid="speaking-results-card"
+              className="speaking-scope mb-6 rounded-2xl overflow-hidden border border-orange-100 shadow-lg"
+            >
+              <SpeakingResultsState
+                data={adapted}
+                onRetryCard={() => navigate('/speaking-practice')}
+                onNewCard={() => navigate('/dashboard')}
+              />
             </div>
-            
-            {results.sections.speaking.criteria && (
-              <div className="grid grid-cols-2 gap-3 mb-4">
-                {Object.entries(results.sections.speaking.criteria).map(([key, value]) => (
-                  <div key={key} className="p-3 bg-slate-50 rounded-lg">
-                    <div className="text-xs text-gray-500 capitalize mb-1">{key.replace(/_/g, ' ')}</div>
-                    <div className="text-xl font-bold text-gray-900">{value}</div>
-                  </div>
-                ))}
-              </div>
-            )}
-            
-            {results.sections.speaking.strengths?.length > 0 && (
-              <div className="mb-3">
-                <p className="text-sm font-medium text-green-600 mb-1">Strengths:</p>
-                <ul className="text-sm text-gray-600 list-disc list-inside">
-                  {results.sections.speaking.strengths.map((s, i) => <li key={i}>{s}</li>)}
-                </ul>
-              </div>
-            )}
-            
-            {results.sections.speaking.weaknesses?.length > 0 && (
-              <div className="mb-3">
-                <p className="text-sm font-medium text-amber-600 mb-1">Areas for Improvement:</p>
-                <ul className="text-sm text-gray-600 list-disc list-inside">
-                  {results.sections.speaking.weaknesses.map((w, i) => <li key={i}>{w}</li>)}
-                </ul>
-              </div>
-            )}
-            
-            {results.sections.speaking.feedback && (
-              <div className="p-3 bg-slate-50 rounded-lg">
-                <p className="text-sm text-gray-700">{results.sections.speaking.feedback}</p>
-              </div>
-            )}
-          </Card>
-        )}
+          );
+        })()}
 
         {/* Summary */}
         {results.summary && (
