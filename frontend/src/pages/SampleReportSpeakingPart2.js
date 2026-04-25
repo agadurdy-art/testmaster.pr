@@ -195,7 +195,7 @@ export default function SampleReportSpeakingPart2() {
           </p>
           <div className="mt-5 flex flex-wrap justify-center gap-3">
             <a
-              href="/speaking/v2"
+              href="/score-my-speaking"
               className="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-[14px] px-5 py-2.5 rounded-xl shadow-[0_6px_22px_-8px_hsl(160_84%_39%/_0.55)]"
             >
               <Mic className="w-4 h-4" />
