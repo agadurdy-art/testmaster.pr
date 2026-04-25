@@ -404,12 +404,18 @@ async def evaluate_anonymous(
         return JSONResponse(content=cached, headers={"X-Speaking-Cached": "1"})
 
     # Weekly cap enforcement: separate collection so authenticated quota
-    # logic stays untouched.
+    # logic stays untouched. We also fetch the previously-used `part` so the
+    # frontend can tailor the conversion prompt — per the per-part flow
+    # decision, anon gets one trial total but we surface which part they
+    # already tried so the login CTA reads as
+    # "You already tried Part 2 — sign in to try Part 1 too" rather than a
+    # generic block.
     existing = await db.anonymous_speaking_evals.find_one(
         {"email": email_norm, "ip": ip, "week_key": week_key},
-        {"_id": 0, "created_at": 1},
+        {"_id": 0, "created_at": 1, "part": 1},
     )
     if existing:
+        part_used = existing.get("part")
         raise HTTPException(
             status_code=402,
             detail={
@@ -418,6 +424,7 @@ async def evaluate_anonymous(
                     "You've already used your free evaluation this week. "
                     "Sign up for a paid plan to keep going."
                 ),
+                "part_used": part_used,
                 "period": week_key,
                 "upgrade_to": ["weekly", "monthly", "exam"],
             },
@@ -472,12 +479,15 @@ async def evaluate_anonymous(
     result_dump = result.model_dump()
 
     # Mark the anon slot as consumed atomically (upsert avoids race).
+    # `part` is recorded (not part of the unique key) so the 402 path on the
+    # next request can tell the frontend which part was already used.
     try:
         await db.anonymous_speaking_evals.insert_one({
             "_id": uuid.uuid4().hex,
             "email": email_norm,
             "ip": ip,
             "week_key": week_key,
+            "part": part,
             "created_at": datetime.now(timezone.utc),
             "audio_url": audio_meta["relative_url"],
         })

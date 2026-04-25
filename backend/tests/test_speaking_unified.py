@@ -586,3 +586,47 @@ async def test_anonymous_one_per_week(db, client):
     )
     assert r2.status_code == 402
     assert r2.json()["detail"]["code"] == "anon_quota_exhausted"
+
+
+@pytest.mark.asyncio
+async def test_anonymous_records_part_and_surfaces_in_402(db, client):
+    """Per the per-part flow decision: anon gets one trial total, but the
+    402 response on the next call must tell the frontend which part was
+    already used so the login CTA can be tailored ("you tried Part 2,
+    sign in to try Part 1 too")."""
+    files1 = {"audio": ("p3.webm", BytesIO(b"x" * 5000), "audio/webm")}
+    r1 = client.post(
+        "/api/speaking/evaluate-anonymous",
+        data={
+            "email": "convert@example.com",
+            "part": "part3",
+            "cue_card_prompt": "Discuss the impact of technology.",
+            "duration_seconds": "75",
+        },
+        files=files1,
+    )
+    assert r1.status_code == 200
+
+    # Recorded document carries the part used.
+    stored = await db.anonymous_speaking_evals.find_one(
+        {"email": "convert@example.com"}
+    )
+    assert stored is not None
+    assert stored.get("part") == "part3"
+
+    # Second call — even for a *different* part — is blocked, and the 402
+    # detail carries `part_used` so the frontend knows which part was spent.
+    r2 = client.post(
+        "/api/speaking/evaluate-anonymous",
+        data={
+            "email": "convert@example.com",
+            "part": "part1",
+            "cue_card_prompt": "Tell me about your hometown.",
+            "duration_seconds": "45",
+        },
+        files={"audio": ("p1.webm", BytesIO(b"x" * 5000), "audio/webm")},
+    )
+    assert r2.status_code == 402
+    detail = r2.json()["detail"]
+    assert detail["code"] == "anon_quota_exhausted"
+    assert detail["part_used"] == "part3"
