@@ -11,6 +11,8 @@ import {
   ListChecks, Eye, FileText, MessageSquare
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { ResultsState as SpeakingResultsState, adaptSpeakingResult } from '../features/speaking';
+import '../features/speaking/speaking.css';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -3466,7 +3468,7 @@ export default function CambridgeTestInterface() {
               
               {/* Resume Button */}
               <div className="flex justify-center mt-8">
-                <button 
+                <button
                   onClick={() => setScreenHidden(false)}
                   className="px-8 py-2 bg-slate-200 hover:bg-slate-300 border border-slate-400 rounded text-slate-800 font-medium transition-colors"
                 >
@@ -3477,6 +3479,41 @@ export default function CambridgeTestInterface() {
           </div>
         </div>
       )}
+
+      {/* D7 Speaking evaluation modal — fires after each per-question evaluate */}
+      {showEvaluationModal && currentEvaluation && (() => {
+        const adapted = adaptSpeakingResult(currentEvaluation, {
+          targetBand: location.state?.target_band,
+        });
+        if (!adapted) return null;
+        return (
+          <div
+            className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4"
+            onClick={() => setShowEvaluationModal(false)}
+          >
+            <div
+              className="speaking-scope bg-white rounded-2xl max-w-5xl w-full max-h-[92vh] overflow-y-auto shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between px-6 py-4 border-b">
+                <h3 className="font-semibold text-gray-900">Response evaluation</h3>
+                <button
+                  onClick={() => setShowEvaluationModal(false)}
+                  className="text-gray-400 hover:text-gray-700"
+                  aria-label="Close"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <SpeakingResultsState
+                data={adapted}
+                onRetryCard={() => setShowEvaluationModal(false)}
+                onNewCard={() => setShowEvaluationModal(false)}
+              />
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }

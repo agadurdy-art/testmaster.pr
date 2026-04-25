@@ -6,3 +6,5 @@ export { default as ResultsState } from './components/ResultsState';
 export { default as ProcessingState } from './components/ProcessingState';
 export { default as ErrorState } from './components/ErrorState';
 export { useSpeakingFlow, formatMMSS } from './hooks/useSpeakingFlow';
+export { useSpeakingRecorder, default as useSpeakingRecorderDefault } from './hooks/useSpeakingRecorder';
+export { adaptSpeakingResult } from './lib/adaptSpeakingResult';

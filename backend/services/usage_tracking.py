@@ -23,8 +23,8 @@ the Mongo doc directly:
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
-from typing import Any, Dict, Optional
+from datetime import datetime, timedelta, timezone
+from typing import Any, Dict, Optional, Tuple
 
 from plan_access import (
     get_plan_features,
@@ -60,6 +60,131 @@ MONTHLY_QUOTAS: Dict[str, Dict[str, Optional[int]]] = {
 def current_period_key(now: Optional[datetime] = None) -> str:
     now = now or datetime.now(timezone.utc)
     return f"{now.year:04d}-{now.month:02d}"
+
+
+# ─── Speaking-eval period machinery (separate from monthly evaluations) ──────
+#
+# Speaking quotas are tracked under their own counter family because the
+# refresh cadence varies per plan:
+#   free    -> ISO week  (5/week, first one full, rest basic)
+#   weekly  -> ISO week  (20/week, all full)
+#   monthly -> calendar month (100/month)
+#   exam    -> single 30-day window keyed off plan_expires_at (200/window)
+#
+# Counter shape on the user doc:
+#   usage.{period_key}.speaking_evals       -> int
+#   usage.{period_key}.speaking_taste_used  -> bool (free tier only)
+#
+# Period keys never overlap across plans, so a user who upgrades mid-cycle
+# starts fresh on the new plan's bucket.
+SPEAKING_QUOTAS: Dict[str, Dict[str, Any]] = {
+    "free":    {"limit": 5,   "period": "weekly",      "full_per_period": 1},
+    "weekly":  {"limit": 20,  "period": "weekly"},
+    "monthly": {"limit": 100, "period": "monthly"},
+    "exam":    {"limit": 200, "period": "exam_window"},
+    # Legacy GE plans fall back to a sensible policy. They aren't sold for
+    # IELTS but we don't want a KeyError if a GE user lands on the endpoint.
+    "explorer": {"limit": 20,  "period": "weekly"},
+    "learner":  {"limit": 100, "period": "monthly"},
+    "achiever": {"limit": 200, "period": "monthly"},
+    "master":   {"limit": 200, "period": "monthly"},
+}
+
+# Plans whose period key is anchored to plan_expires_at, not the calendar.
+EXAM_WINDOW_PLANS = {"exam"}
+
+
+def current_week_key(now: Optional[datetime] = None) -> str:
+    """ISO-week key, e.g. '2026-W17'. Anchored to UTC."""
+    now = now or datetime.now(timezone.utc)
+    iso_year, iso_week, _ = now.isocalendar()
+    return f"{iso_year:04d}-W{iso_week:02d}"
+
+
+def _exam_window_key(plan_expires_at: Optional[Any]) -> str:
+    """Single bucket for the exam plan's 30-day window. Falls back to a
+    calendar month key if plan_expires_at is missing (defensive — should
+    never happen for a real exam-plan user)."""
+    if not plan_expires_at:
+        return f"exam-{current_period_key()}"
+    if isinstance(plan_expires_at, datetime):
+        anchor = plan_expires_at
+    else:
+        try:
+            anchor = datetime.fromisoformat(str(plan_expires_at).replace("Z", "+00:00"))
+        except ValueError:
+            return f"exam-{current_period_key()}"
+    return f"exam-{anchor.date().isoformat()}"
+
+
+def speaking_period_key_for_plan(
+    plan: str,
+    user: Optional[Dict[str, Any]] = None,
+    now: Optional[datetime] = None,
+) -> str:
+    """Return the period bucket key for a given plan's speaking quota."""
+    plan_norm = normalize_plan_name(plan)
+    quota = SPEAKING_QUOTAS.get(plan_norm) or SPEAKING_QUOTAS["free"]
+    period = quota["period"]
+    if period == "weekly":
+        return current_week_key(now)
+    if period == "monthly":
+        return current_period_key(now)
+    if period == "exam_window":
+        return _exam_window_key((user or {}).get("plan_expires_at"))
+    return current_period_key(now)
+
+
+def speaking_period_resets_at(
+    plan: str,
+    user: Optional[Dict[str, Any]] = None,
+    now: Optional[datetime] = None,
+) -> datetime:
+    """When does the current speaking period roll over? Used in 402 detail
+    so the frontend can display 'resets at …'."""
+    now = now or datetime.now(timezone.utc)
+    plan_norm = normalize_plan_name(plan)
+    quota = SPEAKING_QUOTAS.get(plan_norm) or SPEAKING_QUOTAS["free"]
+    period = quota["period"]
+
+    if period == "weekly":
+        # Next ISO Monday 00:00 UTC.
+        days_ahead = (7 - now.weekday()) % 7
+        if days_ahead == 0:
+            days_ahead = 7
+        nxt = (now + timedelta(days=days_ahead)).replace(
+            hour=0, minute=0, second=0, microsecond=0
+        )
+        return nxt
+
+    if period == "monthly":
+        if now.month == 12:
+            return datetime(now.year + 1, 1, 1, tzinfo=timezone.utc)
+        return datetime(now.year, now.month + 1, 1, tzinfo=timezone.utc)
+
+    if period == "exam_window":
+        expires = (user or {}).get("plan_expires_at")
+        if isinstance(expires, datetime):
+            return expires
+        if isinstance(expires, str):
+            try:
+                return datetime.fromisoformat(expires.replace("Z", "+00:00"))
+            except ValueError:
+                pass
+        # Fallback: 30 days from now.
+        return now + timedelta(days=30)
+
+    return now + timedelta(days=7)
+
+
+def speaking_quota_for(user: Dict[str, Any]) -> Tuple[str, Dict[str, Any]]:
+    """Return (plan_name, quota_config) for a user. Admins get the highest
+    practical cap so they don't hit 402 in production."""
+    if user.get("email") and is_admin_user(user["email"]):
+        return ("master", {"limit": 9999, "period": "monthly"})
+    plan = normalize_plan_name(user.get("plan"))
+    quota = SPEAKING_QUOTAS.get(plan) or SPEAKING_QUOTAS["free"]
+    return plan, quota
 
 
 def _quota_for(user: Dict[str, Any], counter: str) -> Optional[int]:

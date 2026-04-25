@@ -56,6 +56,10 @@ class User(BaseModel):
     google_id: Optional[str] = None
     facebook_id: Optional[str] = None
     plan: str = Field(default="free", description="Subscription plan")
+    plan_expires_at: Optional[str] = Field(
+        default=None,
+        description="ISO-8601 UTC timestamp; None for free or non-expiring plans",
+    )
     examCredits: int = Field(default=0)
     ai_interview_free_seconds_used: int = Field(default=0)
     ai_mentor_messages_used: int = Field(default=0)

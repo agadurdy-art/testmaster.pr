@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useSpeechSynthesis } from "../hooks/useSpeechSynthesis";
+import { useLizVoice } from "../hooks/useLizVoice";
 import { ArrowRight, Mic, Play, Square } from "lucide-react";
 import PublicNav from "../features/samples/components/PublicNav";
 import SampleBanner from "../features/samples/components/SampleBanner";
@@ -37,8 +37,10 @@ const SAMPLE_SCRIPT =
 export default function SampleReportSpeakingPart2() {
   // Shared hook handles route-change cleanup centrally via AudioProvider —
   // no per-page useEffect cleanup needed (and the previous one was racy
-  // against Chrome's speechSynthesis singleton).
-  const speech = useSpeechSynthesis(SAMPLE_SCRIPT, {
+  // against Chrome's speechSynthesis singleton). Liz voice is served from
+  // ElevenLabs via /api/tts/generate when the key is configured (Emergent);
+  // falls back to Web Speech locally so the page still demos.
+  const speech = useLizVoice(SAMPLE_SCRIPT, {
     lang: "en-GB",
     rate: 0.95,
     pitch: 1.0,
@@ -106,7 +108,7 @@ export default function SampleReportSpeakingPart2() {
               )}
             </button>
             <span className="text-[12px] text-slate-500">
-              Read aloud by your browser · ~45 s
+              Voiced by Liz · ~45 s
             </span>
           </div>
         )}
