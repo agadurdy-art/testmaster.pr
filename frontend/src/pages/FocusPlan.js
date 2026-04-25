@@ -65,8 +65,8 @@ export default function FocusPlan() {
       {/* Header */}
       <div className={`bg-gradient-to-r ${gradient} text-white`}>
         <div className="max-w-2xl mx-auto px-4 py-8">
-          <button 
-            onClick={() => navigate(-1)} 
+          <button
+            onClick={() => navigate('/dashboard')}
             className="flex items-center gap-1 text-white/80 hover:text-white text-sm mb-6 transition-colors"
           >
             <ChevronLeft className="w-4 h-4" /> Back to Results

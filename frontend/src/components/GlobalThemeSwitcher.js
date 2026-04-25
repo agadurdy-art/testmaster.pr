@@ -1,36 +1,42 @@
-import React from 'react';
-import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
+import React from "react";
+import { useTheme, THEME_MODES } from "../contexts/ThemeContext";
 
 /**
- * Inline theme switcher — sits inside whatever page header renders it.
- * 4-option segmented control: Light / Dark / Night / Auto.
- * Reads + writes the global ThemeContext so the choice is shared across every
- * page (legacy pages keep importing this from `../components/ThemeToggle`).
+ * Floating segmented theme switch — fixed top-right on every page.
+ * Reads from the global ThemeContext, so the choice (Light / Dark / Night /
+ * Auto) is shared across the dashboard, courses, practice, and every other
+ * route. Renders above page chrome via z-index 60 and a glass background.
  */
-export default function ThemeToggle({ className = '' }) {
+export default function GlobalThemeSwitcher() {
   const { themeMode, setTheme } = useTheme();
 
   const options = [
-    { key: THEME_MODES.LIGHT,       label: 'Light', Icon: SunIcon },
-    { key: THEME_MODES.DARK,        label: 'Dark',  Icon: MoonIcon },
-    { key: THEME_MODES.NIGHT_SHIFT, label: 'Night', Icon: SepiaIcon },
-    { key: THEME_MODES.AUTO,        label: 'Auto',  Icon: AutoIcon },
+    { key: THEME_MODES.LIGHT,       label: "Light", Icon: SunIcon },
+    { key: THEME_MODES.DARK,        label: "Dark",  Icon: MoonIcon },
+    { key: THEME_MODES.NIGHT_SHIFT, label: "Night", Icon: SepiaIcon },
+    { key: THEME_MODES.AUTO,        label: "Auto",  Icon: AutoIcon },
   ];
 
   return (
     <div
       role="radiogroup"
       aria-label="Theme"
-      className={`inline-flex items-center ${className}`}
       style={{
+        position: "fixed",
+        top: 14,
+        right: 14,
+        zIndex: 60,
+        display: "inline-flex",
+        alignItems: "center",
         padding: 3,
         borderRadius: 999,
-        background: 'rgba(255,255,255,0.7)',
-        border: '1px solid rgba(0,0,0,0.08)',
-        backdropFilter: 'blur(14px) saturate(180%)',
-        WebkitBackdropFilter: 'blur(14px) saturate(180%)',
-        boxShadow: '0 4px 12px -8px rgba(0,0,0,0.18)',
+        background: "rgba(255,255,255,0.7)",
+        border: "1px solid rgba(0,0,0,0.08)",
+        backdropFilter: "blur(14px) saturate(180%)",
+        WebkitBackdropFilter: "blur(14px) saturate(180%)",
+        boxShadow: "0 6px 18px -8px rgba(0,0,0,0.18)",
       }}
+      className="dark:bg-gray-900/70 dark:border-white/10 night-shift:bg-amber-100/70 night-shift:border-amber-300/40"
     >
       {options.map(({ key, label, Icon }) => {
         const on = themeMode === key;
@@ -47,15 +53,15 @@ export default function ThemeToggle({ className = '' }) {
               width: 28,
               height: 28,
               borderRadius: 999,
-              border: 'none',
+              border: "none",
               padding: 0,
-              cursor: 'pointer',
-              background: on ? 'rgba(16,163,127,0.18)' : 'transparent',
-              color: on ? '#0E8C6D' : '#6B7484',
-              transition: 'background-color .15s ease, color .15s ease',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              cursor: "pointer",
+              background: on ? "rgba(16,163,127,0.18)" : "transparent",
+              color: on ? "#0E8C6D" : "#6B7484",
+              transition: "background-color .15s ease, color .15s ease",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
             <Icon />

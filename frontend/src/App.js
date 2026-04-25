@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import { Toaster } from './components/ui/sonner';
 import MobileBottomNav from './components/MobileBottomNav';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { AudioProvider } from './contexts/AudioContext';
 import { useI18n } from './lib/i18n';
 import { scanDomForLanguageLeaks } from './lib/leakDetection';
 import { isEnglishLockedRoute, getEffectiveLanguage } from './lib/languageLock';
@@ -232,24 +233,27 @@ function EmergentBadgeWrapper() {
 function MobileNavWrapper({ user }) {
   const location = useLocation();
 
-  // Decide visibility first so we can mirror the decision on <body> for
-  // CSS-driven bottom padding (see App.css `.has-mobile-bottom-nav`). Without
-  // that padding, the last line of long pages (quiz submit, evaluator CTAs)
-  // gets trapped behind the fixed bar on mobile.
+  // Decide whether to show the legacy global MobileBottomNav.
   let visible = true;
-  if (!user) visible = false;
-  else if (
+  if (!user) {
+    visible = false;
+  } else if (
     location.pathname === '/' ||
     location.pathname === '/verify-email' ||
     location.pathname === '/reset-password'
   ) {
     visible = false;
   } else if (location.pathname.startsWith('/dashboard')) {
-    // Dashboard V2 ships its own DashboardBottomNav inside DashboardLayout;
-    // the dashboard scope handles its own reserved footer space.
+    // Dashboard V2 ships its own DashboardBottomNav inside DashboardLayout.
+    // Suppress the legacy MobileBottomNav on those routes so we don't stack
+    // two bars on mobile (bug report 2026-04-20).
     visible = false;
   }
 
+  // Reserve scroll room (88px + safe-area) on the body whenever the bar is
+  // mounted — otherwise the last line of any page (quiz submit buttons,
+  // evaluator CTAs) sits behind the fixed bar on mobile. Pairs with the
+  // `body.has-mobile-bottom-nav` rule in App.css.
   useEffect(() => {
     if (typeof document === 'undefined') return;
     const cls = 'has-mobile-bottom-nav';
@@ -773,11 +777,13 @@ function App() {
     <ErrorBoundary>
       <ThemeProvider>
         <Router>
-          <div className="App min-h-screen bg-background text-foreground">
-            <LanguageLeakWatcher />
-            <QuotaExceededModal />
-            <AppWithSessionHandler />
-          </div>
+          <AudioProvider>
+            <div className="App min-h-screen bg-background text-foreground">
+              <LanguageLeakWatcher />
+              <QuotaExceededModal />
+              <AppWithSessionHandler />
+            </div>
+          </AudioProvider>
         </Router>
       </ThemeProvider>
     </ErrorBoundary>

@@ -57,7 +57,8 @@ Full-stack IELTS prep platform (React + FastAPI + MongoDB). Prepare branch `feat
 - Non-blocker: ElevenLabs widget CORS fail on /pricing (known)
 
 ## Critical Notes
-- **Workspace sync caveat**: This pod has NO external git remote. Commits c9a18a0f + bc51335e were applied via raw-GitHub `curl` fetch. If Emergent pull/sync reruns, confirm these commits remain — else re-apply.
+- **Workspace sync caveat**: This pod has NO external git remote. Commits c9a18a0f + bc51335e + 697066de + 73b55485 + a02618a5 + ec6f8aec were applied via raw-GitHub `curl` fetch. If Emergent pull/sync reruns, confirm these commits remain — else re-apply.
+- **Future deploy branches: branch from the LATEST live deploy commit (e.g. `deploy-2026-04-25`), NOT from the original April 12 base.** Branching from `deployed-app-12042026` lost session-applied mobile polish fixes (LandingNav drawer, hero-grid minmax, AnnotatedEssayPanel margin, App.js body-class effect) requiring re-application. Document this in deploy notes.
 - User communicates in Turkish
 - DB_NAME = `ielts_database`
 - EMERGENT_LLM_KEY format: `sk-emergent-*` (working)

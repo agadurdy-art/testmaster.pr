@@ -585,9 +585,12 @@ export default function MasteryCourse({ user }) {
   // Render modules list
   const renderModulesList = () => (
     <div className="max-w-5xl mx-auto">
-      <Button variant="ghost" onClick={() => navigate('/dashboard')} className={`mb-4 ${textSecondary}`}>
-        <ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard
-      </Button>
+      <div className="flex items-center justify-between mb-4">
+        <Button variant="ghost" onClick={() => navigate('/dashboard')} className={textSecondary}>
+          <ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard
+        </Button>
+        <ThemeToggle />
+      </div>
       
       {/* English-only notice for non-EN users */}
       {language !== 'en' && (

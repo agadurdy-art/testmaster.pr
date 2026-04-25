@@ -1565,7 +1565,7 @@ export default function FullTestInterface({ user }) {
         <div className="bg-slate-800 text-white px-4 py-2 flex items-center justify-between">
           <div className="flex items-center gap-4">
             {/* Back to Question Bank button */}
-            <button 
+            <button
               onClick={() => navigate('/question-bank')}
               className="flex items-center gap-1 text-sm text-slate-300 hover:text-white transition-colors"
             >

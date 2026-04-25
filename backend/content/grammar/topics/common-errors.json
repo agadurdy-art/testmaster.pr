@@ -2,140 +2,34 @@
   "slug": "common-errors",
   "module": 0,
   "order": 99,
-  "title": "Common Errors — The Bug Report",
-  "subtitle": "The fossilised mistakes examiners see every day — and how to eradicate them",
+  "title": "Common Errors \u2014 The Bug Report",
+  "subtitle": "The fossilised mistakes examiners see every day \u2014 and how to eradicate them",
   "target_band": "All bands",
-  "intro": "This is a cross-cutting reference, not a module lesson. Use it before you submit any essay — it catches the errors that even careful Band 7 writers keep repeating. Each entry gives you the error pattern, why it is wrong, and the correction. Internalise these twenty fixes and you will often pick up an extra 0.5 band on Grammatical Accuracy alone.",
-  "mind_map": {
-    "center": "Error categories IELTS flags",
-    "branches": [
-      {
-        "label": "Subject–verb",
-        "children": [
-          "'The number of X is' (not 'are')",
-          "Collective nouns: 'the government has'",
-          "Inversion triggers ('Rarely has…')"
-        ]
-      },
-      {
-        "label": "Article / determiner",
-        "children": [
-          "'the' before generalisations",
-          "Missing 'a/an' with vowel sounds",
-          "Double determiners: 'my the book' ✗"
-        ]
-      },
-      {
-        "label": "Prepositions",
-        "children": [
-          "'depend on', 'differ from'",
-          "'discuss' takes no 'about'",
-          "'married to', not 'married with'"
-        ]
-      },
-      {
-        "label": "Word form",
-        "children": [
-          "Noun/verb confusion: advice/advise, effect/affect",
-          "Adjective order",
-          "Comparative forms: 'more better' ✗"
-        ]
-      }
-    ]
-  },
+  "intro": "This is a cross-cutting reference, not a module lesson. Use it before you submit any essay \u2014 it catches the errors that even careful Band 7 writers keep repeating. Each entry gives you the error pattern, why it is wrong, and the correction. Internalise these twenty fixes and you will often pick up an extra 0.5 band on Grammatical Accuracy alone.",
   "rules": [
-    {
-      "heading": "Article and countability errors",
-      "body": "'Most important problem is' → 'The most important problem is'. 'Many informations' → 'Much information'. 'In twenty-first century' → 'In the twenty-first century'."
-    },
-    {
-      "heading": "Subject–verb agreement drift",
-      "body": "Long subjects with interrupters — find the head noun before writing the verb. 'The impact of rising temperatures on coastal communities (is / are) now impossible to ignore' → subject is 'impact' → 'is'."
-    },
-    {
-      "heading": "Tense shift inside a paragraph",
-      "body": "Pick an anchor tense and justify every departure from it. 'The chart shows that production rose and then increases' → stay in past: 'rose and then plateaued'."
-    },
-    {
-      "heading": "Preposition traps",
-      "body": "Discuss (no 'about'); depend ON; consist OF; interested IN; different FROM; effect ON; reason FOR; solution TO; increase IN."
-    },
-    {
-      "heading": "Register blunders",
-      "body": "'According to me' / 'In my point of view' → 'In my view' / 'I would argue that…'. 'Nowadays' overused → 'In recent decades', 'At present'. Contractions (don’t, can’t) → full forms in Task 2."
-    }
+    {"heading": "Article and countability errors", "body": "'Most important problem is' \u2192 'The most important problem is'. 'Many informations' \u2192 'Much information'. 'In twenty-first century' \u2192 'In the twenty-first century'."},
+    {"heading": "Subject\u2013verb agreement drift", "body": "Long subjects with interrupters \u2014 find the head noun before writing the verb. 'The impact of rising temperatures on coastal communities (is / are) now impossible to ignore' \u2192 subject is 'impact' \u2192 'is'."},
+    {"heading": "Tense shift inside a paragraph", "body": "Pick an anchor tense and justify every departure from it. 'The chart shows that production rose and then increases' \u2192 stay in past: 'rose and then plateaued'."},
+    {"heading": "Preposition traps", "body": "Discuss (no 'about'); depend ON; consist OF; interested IN; different FROM; effect ON; reason FOR; solution TO; increase IN."},
+    {"heading": "Register blunders", "body": "'According to me' / 'In my point of view' \u2192 'In my view' / 'I would argue that\u2026'. 'Nowadays' overused \u2192 'In recent decades', 'At present'. Contractions (don\u2019t, can\u2019t) \u2192 full forms in Task 2."}
   ],
   "examples": [
-    {
-      "context": "Pre-submission audit",
-      "sentence": "Check every 'a / an / the / —' in your introduction and conclusion sentences — these paragraphs are where article errors cost the most marks.",
-      "note": "Make the article pass your first manual pass."
-    },
-    {
-      "context": "Pre-submission audit",
-      "sentence": "Read each paragraph aloud in a single tense to catch drift. If a verb feels wrong when isolated, it usually is.",
-      "note": "Tense audit trick."
-    },
-    {
-      "context": "Pre-submission audit",
-      "sentence": "Scan for 'nowadays', 'very', 'really', 'a lot of', 'so', 'thing', 'people' — every one is a candidate for a precision upgrade.",
-      "note": "Lexical upgrade pass."
-    },
-    {
-      "context": "Pre-submission audit",
-      "sentence": "Count your Band 8 markers: is there at least one participle clause, one inversion or cleft, one piece of hedging, and one nominalised subject?",
-      "note": "High-band checklist."
-    },
-    {
-      "context": "Pre-submission audit",
-      "sentence": "Confirm that every 'this' and 'these' has an unambiguous referent in the previous sentence.",
-      "note": "Cohesion audit."
-    }
+    {"context": "Pre-submission audit", "sentence": "Check every 'a / an / the / \u2014' in your introduction and conclusion sentences \u2014 these paragraphs are where article errors cost the most marks.", "note": "Make the article pass your first manual pass."},
+    {"context": "Pre-submission audit", "sentence": "Read each paragraph aloud in a single tense to catch drift. If a verb feels wrong when isolated, it usually is.", "note": "Tense audit trick."},
+    {"context": "Pre-submission audit", "sentence": "Scan for 'nowadays', 'very', 'really', 'a lot of', 'so', 'thing', 'people' \u2014 every one is a candidate for a precision upgrade.", "note": "Lexical upgrade pass."},
+    {"context": "Pre-submission audit", "sentence": "Count your Band 8 markers: is there at least one participle clause, one inversion or cleft, one piece of hedging, and one nominalised subject?", "note": "High-band checklist."},
+    {"context": "Pre-submission audit", "sentence": "Confirm that every 'this' and 'these' has an unambiguous referent in the previous sentence.", "note": "Cohesion audit."}
   ],
-  "band_comparison": {
-    "band6": {
-      "text": "The governments should to discuss about this problem because it effect the childrens future.",
-      "issue": "'should to', 'discuss about', 'effect' as verb, 'childrens' plural+possessive muddle — 4 errors in 14 words."
-    },
-    "band8": {
-      "text": "Governments should discuss this problem openly, as it directly affects children's futures.",
-      "why": "Bare infinitive after 'should', 'discuss' with no preposition, verb 'affect' (not 'effect'), and clean possessive 'children's'."
-    }
-  },
-  "band8_marker": "Band 8 writers treat proofreading as a distinct skill. They do not just re-read; they run specific audit passes: article pass, subject–verb pass, preposition pass, tense pass, repetition pass. Each pass catches a class of error. This discipline is what separates a rushed Band 6.5 essay from a polished Band 8.",
+  "band8_marker": "Band 8 writers treat proofreading as a distinct skill. They do not just re-read; they run specific audit passes: article pass, subject\u2013verb pass, preposition pass, tense pass, repetition pass. Each pass catches a class of error. This discipline is what separates a rushed Band 6.5 essay from a polished Band 8.",
   "common_errors": [
-    {
-      "error": "'Nowadays society is facing many challenges'",
-      "fix": "Cliche + over-generalisation → 'Contemporary societies face a range of pressing challenges' or start with a more specific claim."
-    },
-    {
-      "error": "'There are many people who think that…'",
-      "fix": "Wordy cliche → 'Many argue that…' or 'It is widely claimed that…'"
-    },
-    {
-      "error": "'In conclusion, I want to say that…'",
-      "fix": "→ 'In conclusion, the evidence suggests…' / 'To conclude, the case for X rests on…'"
-    },
-    {
-      "error": "'Last but not least…'",
-      "fix": "Cliche in formal writing → 'Finally' / 'A further consideration is…'"
-    },
-    {
-      "error": "'People have different opinions on this matter'",
-      "fix": "Vacuous filler → delete, replace with a specific claim."
-    },
-    {
-      "error": "'In today’s modern world…'",
-      "fix": "Redundant → 'Today' / 'In recent years'."
-    },
-    {
-      "error": "'The environment is being destroyed day by day.'",
-      "fix": "→ 'Environmental degradation has accelerated over recent decades.'"
-    },
-    {
-      "error": "'Researches have shown that…'",
-      "fix": "'Research' is uncountable → 'Research has shown that…' or 'Studies have shown…'"
-    }
+    {"error": "'Nowadays society is facing many challenges'", "fix": "Cliche + over-generalisation \u2192 'Contemporary societies face a range of pressing challenges' or start with a more specific claim."},
+    {"error": "'There are many people who think that\u2026'", "fix": "Wordy cliche \u2192 'Many argue that\u2026' or 'It is widely claimed that\u2026'"},
+    {"error": "'In conclusion, I want to say that\u2026'", "fix": "\u2192 'In conclusion, the evidence suggests\u2026' / 'To conclude, the case for X rests on\u2026'"},
+    {"error": "'Last but not least\u2026'", "fix": "Cliche in formal writing \u2192 'Finally' / 'A further consideration is\u2026'"},
+    {"error": "'People have different opinions on this matter'", "fix": "Vacuous filler \u2192 delete, replace with a specific claim."},
+    {"error": "'In today\u2019s modern world\u2026'", "fix": "Redundant \u2192 'Today' / 'In recent years'."},
+    {"error": "'The environment is being destroyed day by day.'", "fix": "\u2192 'Environmental degradation has accelerated over recent decades.'"},
+    {"error": "'Researches have shown that\u2026'", "fix": "'Research' is uncountable \u2192 'Research has shown that\u2026' or 'Studies have shown\u2026'"}
   ],
   "practice": [
     {
@@ -143,46 +37,14 @@
       "title": "Audit the essay fragment",
       "instruction": "Click the single error in each sentence.",
       "items": [
-        {
-          "prompt": "[A:Nowadays], [B:society] is [C:facing] [D:many informations] about climate change.",
-          "answer": "D",
-          "explanation": "'Information' is uncountable → 'much information'."
-        },
-        {
-          "prompt": "The impact of rising temperatures [A:on] coastal communities [B:are] [C:impossible] [D:to ignore].",
-          "answer": "B",
-          "explanation": "Subject is 'impact' → 'is'."
-        },
-        {
-          "prompt": "The chart [A:shows] that production [B:rose] sharply and then [C:increases] [D:again].",
-          "answer": "C",
-          "explanation": "Tense drift → 'plateaued / rose / increased'."
-        },
-        {
-          "prompt": "In [A:my point of view], [B:governments] [C:should] invest [D:in] education.",
-          "answer": "A",
-          "explanation": "'In my point of view' is non-standard → 'In my view'."
-        },
-        {
-          "prompt": "[A:Researches] [B:have shown] that early exposure [C:improves] [D:fluency].",
-          "answer": "A",
-          "explanation": "'Research' is uncountable → 'Research has shown' or 'Studies have shown'."
-        },
-        {
-          "prompt": "The new policy [A:depends from] [B:the cooperation] [C:of several] [D:ministries].",
-          "answer": "A",
-          "explanation": "'Depends ON'."
-        },
-        {
-          "prompt": "[A:Last but not least], [B:public awareness] [C:must be] [D:raised].",
-          "answer": "A",
-          "explanation": "'Last but not least' is a cliche in academic writing → 'Finally' / 'A further consideration is…'"
-        },
-        {
-          "prompt": "[A:People] [B:are] [C:using] [D:the internet] more than ever.",
-          "answer": null,
-          "explanation": "No error — clean sentence."
-        }
+        {"prompt": "[A:Nowadays], [B:society] is [C:facing] [D:many informations] about climate change.", "answer": "D", "explanation": "'Information' is uncountable \u2192 'much information'."},
+        {"prompt": "The impact of rising temperatures [A:on] coastal communities [B:are] [C:impossible] [D:to ignore].", "answer": "B", "explanation": "Subject is 'impact' \u2192 'is'."},
+        {"prompt": "The chart [A:shows] that production [B:rose] sharply and then [C:increases] [D:again].", "answer": "C", "explanation": "Tense drift \u2192 'plateaued / rose / increased'."},
+        {"prompt": "In [A:my point of view], [B:governments] [C:should] invest [D:in] education.", "answer": "A", "explanation": "'In my point of view' is non-standard \u2192 'In my view'."},
+        {"prompt": "[A:Researches] [B:have shown] that early exposure [C:improves] [D:fluency].", "answer": "A", "explanation": "'Research' is uncountable \u2192 'Research has shown' or 'Studies have shown'."},
+        {"prompt": "The new policy [A:depends from] [B:the cooperation] [C:of several] [D:ministries].", "answer": "A", "explanation": "'Depends ON'."},
+        {"prompt": "[A:Last but not least], [B:public awareness] [C:must be] [D:raised].", "answer": "A", "explanation": "'Last but not least' is a cliche in academic writing \u2192 'Finally' / 'A further consideration is\u2026'"},
+        {"prompt": "[A:People] [B:are] [C:using] [D:the internet] more than ever.", "answer": null, "explanation": "No error \u2014 clean sentence."}
       ]
     },
     {
@@ -190,46 +52,14 @@
       "title": "Upgrade the cliche",
       "instruction": "Replace the underlined phrase with a stronger alternative.",
       "items": [
-        {
-          "prompt": "'Nowadays, technology is changing our lives.' → Replace 'Nowadays'.",
-          "answer": "In recent years / Over the past decade / At present",
-          "explanation": "Avoid the overused 'nowadays'."
-        },
-        {
-          "prompt": "'There are many people who think that…' → Replace the whole phrase.",
-          "answer": "Many argue that… / It is widely believed that…",
-          "explanation": "Tighten."
-        },
-        {
-          "prompt": "'In my point of view…' → Replace.",
-          "answer": "In my view / I would argue that / It is my contention that",
-          "explanation": "Standard register."
-        },
-        {
-          "prompt": "'It is a well-known fact that…' → Replace.",
-          "answer": "There is broad consensus that… / Most analysts agree that…",
-          "explanation": "Evidence-based attribution."
-        },
-        {
-          "prompt": "'very important' → One-word upgrade.",
-          "answer": "crucial / pivotal / decisive",
-          "explanation": "Precision."
-        },
-        {
-          "prompt": "'a lot of problems' → Upgrade.",
-          "answer": "a range of challenges / numerous obstacles / a host of difficulties",
-          "explanation": "Lexical range."
-        },
-        {
-          "prompt": "'nowadays young people' → Upgrade.",
-          "answer": "contemporary youth / today’s young adults / the younger generation",
-          "explanation": "Formal alternatives."
-        },
-        {
-          "prompt": "'destroy the environment' → Upgrade.",
-          "answer": "degrade the environment / inflict environmental damage / accelerate ecological decline",
-          "explanation": "Academic register."
-        }
+        {"prompt": "'Nowadays, technology is changing our lives.' \u2192 Replace 'Nowadays'.", "answer": "In recent years / Over the past decade / At present", "explanation": "Avoid the overused 'nowadays'."},
+        {"prompt": "'There are many people who think that\u2026' \u2192 Replace the whole phrase.", "answer": "Many argue that\u2026 / It is widely believed that\u2026", "explanation": "Tighten."},
+        {"prompt": "'In my point of view\u2026' \u2192 Replace.", "answer": "In my view / I would argue that / It is my contention that", "explanation": "Standard register."},
+        {"prompt": "'It is a well-known fact that\u2026' \u2192 Replace.", "answer": "There is broad consensus that\u2026 / Most analysts agree that\u2026", "explanation": "Evidence-based attribution."},
+        {"prompt": "'very important' \u2192 One-word upgrade.", "answer": "crucial / pivotal / decisive", "explanation": "Precision."},
+        {"prompt": "'a lot of problems' \u2192 Upgrade.", "answer": "a range of challenges / numerous obstacles / a host of difficulties", "explanation": "Lexical range."},
+        {"prompt": "'nowadays young people' \u2192 Upgrade.", "answer": "contemporary youth / today\u2019s young adults / the younger generation", "explanation": "Formal alternatives."},
+        {"prompt": "'destroy the environment' \u2192 Upgrade.", "answer": "degrade the environment / inflict environmental damage / accelerate ecological decline", "explanation": "Academic register."}
       ]
     },
     {
@@ -237,94 +67,14 @@
       "title": "Final sanity checks",
       "instruction": "Pick the version an examiner would reward.",
       "items": [
-        {
-          "prompt": "Which opening is strongest for a Task 2 essay?",
-          "options": [
-            "'Nowadays, there are many problems in the world.'",
-            "'The twenty-first century has ushered in a set of interlocking global challenges.'",
-            "'In today’s modern world, everything is changing.'",
-            "'People have different opinions about many things.'"
-          ],
-          "answer": 1,
-          "explanation": "Specific, elevated, clear thesis territory."
-        },
-        {
-          "prompt": "Which sentence controls register?",
-          "options": [
-            "'Kids today don’t read books anymore.'",
-            "'Children today rarely engage with traditional print media.'",
-            "'Nowadays, children don’t read book like before.'",
-            "'Kids don’t really read anymore.'"
-          ],
-          "answer": 1,
-          "explanation": "Formal, precise, no contractions."
-        },
-        {
-          "prompt": "Which closing is best?",
-          "options": [
-            "'In conclusion, I want to say that this issue is very important.'",
-            "'In conclusion, while the problem is complex, evidence favours a targeted intervention.'",
-            "'To sum up, many people think different things.'",
-            "'Last but not least, government should do something.'"
-          ],
-          "answer": 1,
-          "explanation": "Substantive conclusion with judgement."
-        },
-        {
-          "prompt": "Which attribution is academically credible?",
-          "options": [
-            "'Everyone knows that pollution is bad.'",
-            "'There is broad scientific consensus that air pollution harms respiratory health.'",
-            "'It is 100% true that pollution kills people.'",
-            "'Many people say pollution is a problem.'"
-          ],
-          "answer": 1,
-          "explanation": "Evidence + hedge."
-        },
-        {
-          "prompt": "Which sentence has no error?",
-          "options": [
-            "'The policies that was introduced in 2019 have succeeded.'",
-            "'The policies introduced in 2019 have succeeded.'",
-            "'The policies which introduced in 2019 have succeeded.'",
-            "'The policies was introduced in 2019 and have succeeded.'"
-          ],
-          "answer": 1,
-          "explanation": "Reduced passive relative clause — correct."
-        },
-        {
-          "prompt": "Which hedges appropriately?",
-          "options": [
-            "'Obviously, this proves that automation destroys jobs.'",
-            "'Some evidence suggests that automation may displace certain categories of jobs.'",
-            "'It’s a fact that AI will take all jobs.'",
-            "'Nobody denies that automation is terrible.'"
-          ],
-          "answer": 1,
-          "explanation": "Measured academic claim."
-        },
-        {
-          "prompt": "Which is most cohesive?",
-          "options": [
-            "'Pollution is bad. Pollution kills people. Pollution is everywhere.'",
-            "'Air pollution has become a defining public-health concern; its effects are now documented across every major metropolitan area.'",
-            "'Pollution is very bad, and people die, and it is everywhere.'",
-            "'In conclusion, pollution is a problem.'"
-          ],
-          "answer": 1,
-          "explanation": "Lexical variation + demonstrative pronoun."
-        },
-        {
-          "prompt": "Pick the sentence using correct articles and tense.",
-          "options": [
-            "'Education is a key to prosperous society.'",
-            "'The education is key to a prosperous society.'",
-            "'Education is key to a prosperous society.'",
-            "'Education are key to the prosperous society.'"
-          ],
-          "answer": 2,
-          "explanation": "Generic 'education' (zero article) + indefinite 'a prosperous society'."
-        }
+        {"prompt": "Which opening is strongest for a Task 2 essay?", "options": ["'Nowadays, there are many problems in the world.'", "'The twenty-first century has ushered in a set of interlocking global challenges.'", "'In today\u2019s modern world, everything is changing.'", "'People have different opinions about many things.'"], "answer": 1, "explanation": "Specific, elevated, clear thesis territory."},
+        {"prompt": "Which sentence controls register?", "options": ["'Kids today don\u2019t read books anymore.'", "'Children today rarely engage with traditional print media.'", "'Nowadays, children don\u2019t read book like before.'", "'Kids don\u2019t really read anymore.'"], "answer": 1, "explanation": "Formal, precise, no contractions."},
+        {"prompt": "Which closing is best?", "options": ["'In conclusion, I want to say that this issue is very important.'", "'In conclusion, while the problem is complex, evidence favours a targeted intervention.'", "'To sum up, many people think different things.'", "'Last but not least, government should do something.'"], "answer": 1, "explanation": "Substantive conclusion with judgement."},
+        {"prompt": "Which attribution is academically credible?", "options": ["'Everyone knows that pollution is bad.'", "'There is broad scientific consensus that air pollution harms respiratory health.'", "'It is 100% true that pollution kills people.'", "'Many people say pollution is a problem.'"], "answer": 1, "explanation": "Evidence + hedge."},
+        {"prompt": "Which sentence has no error?", "options": ["'The policies that was introduced in 2019 have succeeded.'", "'The policies introduced in 2019 have succeeded.'", "'The policies which introduced in 2019 have succeeded.'", "'The policies was introduced in 2019 and have succeeded.'"], "answer": 1, "explanation": "Reduced passive relative clause \u2014 correct."},
+        {"prompt": "Which hedges appropriately?", "options": ["'Obviously, this proves that automation destroys jobs.'", "'Some evidence suggests that automation may displace certain categories of jobs.'", "'It\u2019s a fact that AI will take all jobs.'", "'Nobody denies that automation is terrible.'"], "answer": 1, "explanation": "Measured academic claim."},
+        {"prompt": "Which is most cohesive?", "options": ["'Pollution is bad. Pollution kills people. Pollution is everywhere.'", "'Air pollution has become a defining public-health concern; its effects are now documented across every major metropolitan area.'", "'Pollution is very bad, and people die, and it is everywhere.'", "'In conclusion, pollution is a problem.'"], "answer": 1, "explanation": "Lexical variation + demonstrative pronoun."},
+        {"prompt": "Pick the sentence using correct articles and tense.", "options": ["'Education is a key to prosperous society.'", "'The education is key to a prosperous society.'", "'Education is key to a prosperous society.'", "'Education are key to the prosperous society.'"], "answer": 2, "explanation": "Generic 'education' (zero article) + indefinite 'a prosperous society'."}
       ]
     }
   ]

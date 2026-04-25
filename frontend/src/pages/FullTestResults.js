@@ -28,7 +28,7 @@ export default function FullTestResults() {
   const { sessionId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   const [results, setResults] = useState(location.state?.results || null);
   const [loading, setLoading] = useState(!location.state?.results);
   const [expandedSection, setExpandedSection] = useState(null);

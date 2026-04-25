@@ -24,6 +24,7 @@ import {
 } from '../components/games/grammar';
 import { ArrowLeft, Gamepad2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useGoBack } from '../hooks/useGoBack';
 
 // Sample vocabulary data for testing
 const SAMPLE_VOCAB = [
@@ -75,6 +76,7 @@ const GAMES = [
 
 const GameDemo = () => {
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const [selectedGame, setSelectedGame] = useState(null);
   const [lastScore, setLastScore] = useState(null);
 
@@ -139,8 +141,8 @@ const GameDemo = () => {
   return (
     <div className="min-h-screen bg-mesh p-6">
       <div className="max-w-4xl mx-auto">
-        <button 
-          onClick={() => navigate(-1)}
+        <button
+          onClick={goBack}
           className="flex items-center gap-2 text-slate-500 hover:text-slate-700 mb-6 font-semibold transition-colors"
         >
           <ArrowLeft className="w-4 h-4" /> Back

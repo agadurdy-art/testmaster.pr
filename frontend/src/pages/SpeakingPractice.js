@@ -5,6 +5,7 @@ import { Card } from '../components/ui/card';
 import { Progress } from '../components/ui/progress';
 import { Mic, MicOff, ArrowLeft, Clock, CheckCircle, XCircle, Loader2, ChevronRight, Play, Pause, RotateCcw, Volume2, MessageSquare, Target, AlertCircle, Lightbulb, Award, Square, User, Bot } from 'lucide-react';
 import { toast } from 'sonner';
+import { useGoBack } from '../hooks/useGoBack';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 

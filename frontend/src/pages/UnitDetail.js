@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { 
@@ -12,6 +13,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 export default function UnitDetail({ user }) {
   const { unitId } = useParams();
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const [unit, setUnit] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -104,7 +106,7 @@ export default function UnitDetail({ user }) {
           <Button 
             variant="ghost" 
             className="text-white hover:bg-white/20 mb-4"
-            onClick={() => navigate(-1)}
+            onClick={goBack}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back

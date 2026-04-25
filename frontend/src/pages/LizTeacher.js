@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import {
   ArrowLeft, Send, Volume2, VolumeX, Plus,
@@ -226,6 +227,7 @@ function HomeworkCard({ hw, onSubmit, onDelete, submitting }) {
 
 export default function LizTeacher({ user }) {
   const navigate = useNavigate();
+  const goBack = useGoBack();
 
   // Plan gate - learner and above can access Liz
   if (!canAccessLiz(user)) {
@@ -252,7 +254,7 @@ export default function LizTeacher({ user }) {
               Upgrade to Unlock Liz
             </Button>
             <button
-              onClick={() => navigate(-1)}
+              onClick={goBack}
               className="text-sm text-slate-400 hover:text-slate-600"
               data-testid="go-back-btn"
             >
@@ -586,7 +588,7 @@ export default function LizTeacher({ user }) {
       <div className="border-b border-slate-200/60 bg-white/80 backdrop-blur-sm px-4 py-2.5">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <button onClick={() => navigate(-1)} className="text-slate-400 hover:text-slate-700" data-testid="liz-back-btn">
+            <button onClick={goBack} className="text-slate-400 hover:text-slate-700" data-testid="liz-back-btn">
               <ArrowLeft className="w-5 h-5" />
             </button>
             <div>

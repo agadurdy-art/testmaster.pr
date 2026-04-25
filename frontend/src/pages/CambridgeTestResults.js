@@ -18,7 +18,7 @@ export default function CambridgeTestResults() {
   const { bookId, testId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   const [loading, setLoading] = useState(true);
   const [evaluating, setEvaluating] = useState(false);
   const [results, setResults] = useState(null);

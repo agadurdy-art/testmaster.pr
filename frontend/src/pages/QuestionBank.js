@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
@@ -11,6 +11,7 @@ import {
   HelpCircle, Award, PlayCircle, AlertCircle, Loader2
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useGoBack } from '../hooks/useGoBack';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -52,6 +53,27 @@ export default function QuestionBank({ user }) {
   const [showReadingModal, setShowReadingModal] = useState(false);
   const [showListeningModal, setShowListeningModal] = useState(false);
   const [showSpeakingModal, setShowSpeakingModal] = useState(false);
+  // Tracks whether the currently-open skill picker modal was auto-opened from
+  // a deep-link (e.g. dashboard ?writing=1 / ?reading=1 / ...). When true,
+  // closing the modal pops history instead of leaving the user stranded on
+  // /question-bank.
+  const modalDeepLink = useRef(false);
+  // Generic "back" that respects browser history; falls back to dashboard if
+  // the user landed here directly (no history entry to pop).
+  const goBack = useGoBack();
+  const makeCloseModal = (setShow) => () => {
+    if (modalDeepLink.current) {
+      modalDeepLink.current = false;
+      setShow(false);
+      goBack();
+    } else {
+      setShow(false);
+    }
+  };
+  const closeWritingModal = makeCloseModal(setShowWritingModal);
+  const closeReadingModal = makeCloseModal(setShowReadingModal);
+  const closeListeningModal = makeCloseModal(setShowListeningModal);
+  const closeSpeakingModal = makeCloseModal(setShowSpeakingModal);
   const [fullTests, setFullTests] = useState([]);
   const [cambridgeBooks, setCambridgeBooks] = useState([]);
   const [selectedCambridgeBook, setSelectedCambridgeBook] = useState(null);
@@ -99,6 +121,40 @@ export default function QuestionBank({ user }) {
     searchParams.delete('tab');
     setSearchParams(searchParams, { replace: true });
   }, [searchParams, setSearchParams, navigate]);
+
+  // Open Full Tests tab when dashboard sends ?fulltests=cambridge|ai|picker.
+  // 'cambridge' / 'ai' jump straight into the sub-list; anything else lands
+  // the user on the "Choose Your Test Type" picker screen.
+  useEffect(() => {
+    const ft = searchParams.get('fulltests');
+    if (!ft) return;
+    setActiveTab('tests');
+    if (ft === 'cambridge' || ft === 'ai') {
+      setTestCategory(ft);
+    } else {
+      setTestCategory(null);
+    }
+    searchParams.delete('fulltests');
+    setSearchParams(searchParams, { replace: true });
+  }, [searchParams, setSearchParams]);
+
+  // Auto-open a skill picker modal when dashboard sends a deep-link param
+  // (?writing=1 / ?reading=1 / ?listening=1 / ?speaking=1). Sets
+  // `modalDeepLink` so the modal close handler pops history instead of
+  // stranding the user on /question-bank.
+  useEffect(() => {
+    const skill = ['writing', 'reading', 'listening', 'speaking'].find(
+      (s) => searchParams.get(s) === '1'
+    );
+    if (!skill) return;
+    if (skill === 'writing') setShowWritingModal(true);
+    else if (skill === 'reading') setShowReadingModal(true);
+    else if (skill === 'listening') setShowListeningModal(true);
+    else if (skill === 'speaking') setShowSpeakingModal(true);
+    modalDeepLink.current = true;
+    searchParams.delete(skill);
+    setSearchParams(searchParams, { replace: true });
+  }, [searchParams, setSearchParams]);
 
   // Auto-open Cambridge test modal when returning from a test via openTest param
   useEffect(() => {
@@ -275,14 +331,14 @@ export default function QuestionBank({ user }) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 text-white py-12 px-6">
+      <div className="bg-gradient-to-r from-emerald-500 via-teal-500 to-sky-500 text-white py-12 px-6">
         <div className="max-w-7xl mx-auto">
           <Button
             variant="ghost"
-            onClick={() => navigate('/dashboard')}
+            onClick={goBack}
             className="text-white/80 hover:text-white hover:bg-white/10 mb-4"
           >
-            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back
           </Button>
           
           <div className="flex items-center gap-4 mb-4">
@@ -414,7 +470,7 @@ export default function QuestionBank({ user }) {
                 key={tab.id}
                 variant={activeTab === tab.id ? 'default' : 'outline'}
                 onClick={() => setActiveTab(tab.id)}
-                className={activeTab === tab.id ? 'bg-indigo-600 hover:bg-indigo-700' : ''}
+                className={activeTab === tab.id ? 'bg-emerald-600 hover:bg-emerald-700' : ''}
               >
                 <Icon className="w-4 h-4 mr-2" /> {tab.label}
               </Button>
@@ -437,7 +493,7 @@ export default function QuestionBank({ user }) {
                     onClick={() => { setSelectedBand(selectedBand === band.id ? null : band.id); setSelectedTopic(null); }}
                     className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
                       selectedBand === band.id
-                        ? 'bg-indigo-600 text-white shadow-sm'
+                        ? 'bg-emerald-600 text-white shadow-sm'
                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                     }`}
                   >
@@ -556,7 +612,7 @@ export default function QuestionBank({ user }) {
                       variant={isSelected ? 'default' : 'outline'}
                       onClick={() => setSelectedSkill(skill.id)}
                       className={`h-auto py-4 flex flex-col items-center gap-2 ${
-                        isSelected ? 'bg-indigo-600 hover:bg-indigo-700' : ''
+                        isSelected ? 'bg-emerald-600 hover:bg-emerald-700' : ''
                       }`}
                     >
                       <Icon className="w-6 h-6" />
@@ -834,7 +890,7 @@ export default function QuestionBank({ user }) {
                 </button>
 
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-lg">
                     <Zap className="w-6 h-6 text-white" />
                   </div>
                   <div>
@@ -845,12 +901,12 @@ export default function QuestionBank({ user }) {
 
                 <div className="space-y-5">
                   {/* Academic IELTS */}
-                  <Card className="p-6 border-2 border-indigo-100 bg-gradient-to-br from-white to-indigo-50/30 rounded-2xl">
+                  <Card className="p-6 border-2 border-emerald-100 bg-gradient-to-br from-white to-emerald-50/30 rounded-2xl">
                     <div className="flex items-start justify-between mb-5">
                       <div>
                         <div className="flex items-center gap-2 mb-1">
                           <h3 className="font-bold text-lg text-gray-900">Academic IELTS</h3>
-                          <Badge className="bg-indigo-100 text-indigo-700 text-xs">8 Sets</Badge>
+                          <Badge className="bg-emerald-100 text-emerald-700 text-xs">8 Sets</Badge>
                         </div>
                         <p className="text-sm text-gray-500">Complete practice tests with Listening, Reading, Writing & Speaking</p>
                       </div>
@@ -870,7 +926,7 @@ export default function QuestionBank({ user }) {
                         <div 
                           key={set.id}
                           data-testid={`academic-set-${set.label.toLowerCase()}-card`}
-                          className="p-4 bg-white rounded-xl border-2 border-indigo-200 hover:border-indigo-400 hover:shadow-md transition-all cursor-pointer group"
+                          className="p-4 bg-white rounded-xl border-2 border-emerald-200 hover:border-emerald-400 hover:shadow-md transition-all cursor-pointer group"
                           onClick={() => {
                             const fullTest = fullTests.find(t => t.test_id === set.id);
                             if (fullTest) {
@@ -881,10 +937,10 @@ export default function QuestionBank({ user }) {
                           }}
                         >
                           <div className="flex items-center justify-between mb-2">
-                            <div className="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center group-hover:bg-indigo-200 transition-colors">
-                              <span className="font-bold text-indigo-700 text-lg">{set.label}</span>
+                            <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center group-hover:bg-emerald-200 transition-colors">
+                              <span className="font-bold text-emerald-700 text-lg">{set.label}</span>
                             </div>
-                            <PlayCircle className="w-5 h-5 text-indigo-400 group-hover:text-indigo-600 transition-colors" />
+                            <PlayCircle className="w-5 h-5 text-emerald-400 group-hover:text-emerald-600 transition-colors" />
                           </div>
                           <h4 className="font-semibold text-gray-900 text-sm">Set {set.label}</h4>
                           <p className="text-xs text-gray-500 mt-0.5">{set.topic}</p>
@@ -901,12 +957,12 @@ export default function QuestionBank({ user }) {
                   </Card>
 
                   {/* General Training */}
-                  <Card className="p-6 border-2 border-purple-100 bg-gradient-to-br from-white to-purple-50/30 rounded-2xl">
+                  <Card className="p-6 border-2 border-sky-100 bg-gradient-to-br from-white to-sky-50/30 rounded-2xl">
                     <div className="flex items-start justify-between mb-5">
                       <div>
                         <div className="flex items-center gap-2 mb-1">
                           <h3 className="font-bold text-lg text-gray-900">General Training IELTS</h3>
-                          <Badge className="bg-purple-100 text-purple-700 text-xs">4 Sets</Badge>
+                          <Badge className="bg-sky-100 text-sky-700 text-xs">4 Sets</Badge>
                         </div>
                         <p className="text-sm text-gray-500">Practice tests for General Training module</p>
                       </div>
@@ -922,7 +978,7 @@ export default function QuestionBank({ user }) {
                         <div 
                           key={set.id}
                           data-testid={`general-set-${set.label.toLowerCase()}-card`}
-                          className="p-4 bg-white rounded-xl border-2 border-purple-200 hover:border-purple-400 hover:shadow-md transition-all cursor-pointer group"
+                          className="p-4 bg-white rounded-xl border-2 border-sky-200 hover:border-sky-400 hover:shadow-md transition-all cursor-pointer group"
                           onClick={() => {
                             const fullTest = fullTests.find(t => t.test_id === set.id);
                             if (fullTest) {
@@ -933,10 +989,10 @@ export default function QuestionBank({ user }) {
                           }}
                         >
                           <div className="flex items-center justify-between mb-2">
-                            <div className="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center group-hover:bg-purple-200 transition-colors">
-                              <span className="font-bold text-purple-700 text-lg">{set.label}</span>
+                            <div className="w-10 h-10 rounded-xl bg-sky-100 flex items-center justify-center group-hover:bg-sky-200 transition-colors">
+                              <span className="font-bold text-sky-700 text-lg">{set.label}</span>
                             </div>
-                            <PlayCircle className="w-5 h-5 text-purple-400 group-hover:text-purple-600 transition-colors" />
+                            <PlayCircle className="w-5 h-5 text-sky-400 group-hover:text-sky-600 transition-colors" />
                           </div>
                           <h4 className="font-semibold text-gray-900 text-sm">Set {set.label}</h4>
                           <p className="text-xs text-gray-500 mt-0.5">{set.topic}</p>
@@ -978,7 +1034,7 @@ export default function QuestionBank({ user }) {
               variant="ghost"
               size="sm"
               className="absolute top-4 right-4"
-              onClick={() => setShowWritingModal(false)}
+              onClick={closeWritingModal}
             >
               <X className="w-4 h-4" />
             </Button>
@@ -1144,7 +1200,7 @@ export default function QuestionBank({ user }) {
                 <div className="flex items-center gap-2">
                   <BookOpen className="w-5 h-5 text-blue-600" /> Reading Practice
                 </div>
-                <Button variant="ghost" size="sm" onClick={() => setShowReadingModal(false)}>
+                <Button variant="ghost" size="sm" onClick={closeReadingModal}>
                   <X className="w-5 h-5" />
                 </Button>
               </div>
@@ -1323,11 +1379,11 @@ export default function QuestionBank({ user }) {
               variant="ghost"
               size="sm"
               className="absolute top-4 right-4"
-              onClick={() => setShowListeningModal(false)}
+              onClick={closeListeningModal}
             >
               <X className="w-4 h-4" />
             </Button>
-            
+
             <h2 className="text-xl font-bold text-gray-900 mb-2 flex items-center gap-2">
               <Headphones className="w-5 h-5 text-purple-600" /> Listening Practice
             </h2>
@@ -1585,11 +1641,11 @@ export default function QuestionBank({ user }) {
               variant="ghost"
               size="sm"
               className="absolute top-4 right-4"
-              onClick={() => setShowSpeakingModal(false)}
+              onClick={closeSpeakingModal}
             >
               <X className="w-4 h-4" />
             </Button>
-            
+
             <h2 className="text-xl font-bold text-gray-900 mb-2 flex items-center gap-2">
               <Mic className="w-5 h-5 text-orange-600" /> Speaking Practice
             </h2>

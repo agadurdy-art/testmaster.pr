@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
@@ -18,6 +19,7 @@ const AREA_COLORS = { form: 'purple', meaning: 'blue', usage: 'amber', recogniti
 export default function GrammarSmartReview({ user }) {
   const { moduleId } = useParams();
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const location = useLocation();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -301,7 +303,7 @@ export default function GrammarSmartReview({ user }) {
     <div className="min-h-screen bg-gray-50" data-testid="smart-review-page">
       <div className="bg-white border-b sticky top-0 z-10">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <button onClick={() => navigate(-1)} className="flex items-center gap-1 text-gray-600 hover:text-gray-900" data-testid="smart-review-back">
+          <button onClick={goBack} className="flex items-center gap-1 text-gray-600 hover:text-gray-900" data-testid="smart-review-back">
             <ArrowLeft className="w-4 h-4" /> Back
           </button>
           <div className="text-center">

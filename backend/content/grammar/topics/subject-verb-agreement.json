@@ -2,116 +2,29 @@
   "slug": "subject-verb-agreement",
   "module": 1,
   "order": 5,
-  "title": "Subject–Verb Agreement",
+  "title": "Subject\u2013Verb Agreement",
   "subtitle": "Finding the real subject when the sentence tries to hide it",
-  "target_band": "4 → 6",
+  "target_band": "4 \u2192 6",
   "intro": "In a short sentence, agreement is obvious. The moment you add a prepositional phrase or a relative clause between the subject and its verb, agreement errors multiply. Examiners count every 'the list of candidates are...' against Grammatical Accuracy. The fix is a single habit: before writing the verb, strip away the modifiers and locate the head noun.",
-  "mind_map": {
-    "center": "Match the real subject",
-    "branches": [
-      {
-        "label": "Tricky quantifiers",
-        "children": [
-          "'a number of students are' vs 'the number of students is'",
-          "'None of the data is/are' (both accepted)"
-        ]
-      },
-      {
-        "label": "Collective nouns",
-        "children": [
-          "'the government is' (UK) / 'are' (US)",
-          "'team', 'committee' — treat as single unit in Task 2"
-        ]
-      },
-      {
-        "label": "Proximity traps",
-        "children": [
-          "'The list of errors is long.' (not 'are')",
-          "'Each of the students has…' — 'each' forces singular"
-        ]
-      },
-      {
-        "label": "'Neither…nor / Either…or'",
-        "children": [
-          "Verb agrees with the closer subject",
-          "'Neither the PM nor his ministers were available.'"
-        ]
-      }
-    ]
-  },
   "rules": [
-    {
-      "heading": "Interrupters do not change the subject",
-      "body": "'The list of new candidates IS long' — the head is 'list', not 'candidates'."
-    },
-    {
-      "heading": "'There' takes the number of what follows",
-      "body": "'There IS a problem' → 'There ARE several problems'."
-    },
-    {
-      "heading": "Collective nouns: one unit or many members?",
-      "body": "British English accepts both: 'The team IS' (unit) / 'The team ARE' (individuals). Writing Task 2 safer with singular unless you mean the members."
-    },
-    {
-      "heading": "Either/neither … or / each / every / none",
-      "body": "'Each student HAS a desk'; 'Either option IS viable'; 'Neither of the proposals WAS accepted'; 'None of the data IS conclusive' (modern usage)."
-    }
+    {"heading": "Interrupters do not change the subject", "body": "'The list of new candidates IS long' \u2014 the head is 'list', not 'candidates'."},
+    {"heading": "'There' takes the number of what follows", "body": "'There IS a problem' \u2192 'There ARE several problems'."},
+    {"heading": "Collective nouns: one unit or many members?", "body": "British English accepts both: 'The team IS' (unit) / 'The team ARE' (individuals). Writing Task 2 safer with singular unless you mean the members."},
+    {"heading": "Either/neither \u2026 or / each / every / none", "body": "'Each student HAS a desk'; 'Either option IS viable'; 'Neither of the proposals WAS accepted'; 'None of the data IS conclusive' (modern usage)."}
   ],
   "examples": [
-    {
-      "context": "Writing Task 1",
-      "sentence": "The number of international students has risen steadily.",
-      "note": "'The number of X' takes singular verb."
-    },
-    {
-      "context": "Writing Task 2",
-      "sentence": "A number of policies have failed to reduce inequality.",
-      "note": "'A number of' takes plural. Do not confuse with 'the number of'."
-    },
-    {
-      "context": "Writing Task 2",
-      "sentence": "Neither the government nor the opposition appears willing to compromise.",
-      "note": "Singular subjects joined by 'neither…nor' → singular verb."
-    },
-    {
-      "context": "Speaking Part 3",
-      "sentence": "Every one of my classmates has a different study strategy.",
-      "note": "'Every one' is singular despite 'of my classmates'."
-    },
-    {
-      "context": "Writing Task 1",
-      "sentence": "Twenty percent of the population lives below the poverty line.",
-      "note": "Fraction/percentage takes the number of the noun it refers to: 'population' → singular."
-    }
+    {"context": "Writing Task 1", "sentence": "The number of international students has risen steadily.", "note": "'The number of X' takes singular verb."},
+    {"context": "Writing Task 2", "sentence": "A number of policies have failed to reduce inequality.", "note": "'A number of' takes plural. Do not confuse with 'the number of'."},
+    {"context": "Writing Task 2", "sentence": "Neither the government nor the opposition appears willing to compromise.", "note": "Singular subjects joined by 'neither\u2026nor' \u2192 singular verb."},
+    {"context": "Speaking Part 3", "sentence": "Every one of my classmates has a different study strategy.", "note": "'Every one' is singular despite 'of my classmates'."},
+    {"context": "Writing Task 1", "sentence": "Twenty percent of the population lives below the poverty line.", "note": "Fraction/percentage takes the number of the noun it refers to: 'population' \u2192 singular."}
   ],
-  "band_comparison": {
-    "band6": {
-      "text": "A number of students in this country struggles with exam stress and the government are not helping.",
-      "issue": "'a number of students struggles' (should be 'struggle') and 'government are' wobbles register."
-    },
-    "band8": {
-      "text": "A substantial number of students struggle with exam-related stress, yet successive governments have done little to address the issue.",
-      "why": "Plural agreement after 'a number of', plus upgrade to 'successive governments have done' (perfect aspect, historical sweep)."
-    }
-  },
   "band8_marker": "Band 8 writers handle the tricky plural-looking singulars and singular-looking plurals with ease: 'The data show' (formal plural of datum) or 'The data shows' (modern acceptable singular), 'politics is' (the field) vs. 'her politics are' (her views), 'statistics is' (the subject) vs. 'the statistics are' (the numbers). Control of these micro-choices signals a reader who respects conventions.",
   "common_errors": [
-    {
-      "error": "'The list of candidates are long'",
-      "fix": "Subject is 'list' → 'is long'."
-    },
-    {
-      "error": "'There is many reasons'",
-      "fix": "→ 'There are many reasons'."
-    },
-    {
-      "error": "'Everyone have their opinion'",
-      "fix": "'Everyone' singular → 'Everyone HAS their opinion' (singular they allowed)."
-    },
-    {
-      "error": "'A number of factors is relevant'",
-      "fix": "'A number of' → plural: 'are relevant'."
-    }
+    {"error": "'The list of candidates are long'", "fix": "Subject is 'list' \u2192 'is long'."},
+    {"error": "'There is many reasons'", "fix": "\u2192 'There are many reasons'."},
+    {"error": "'Everyone have their opinion'", "fix": "'Everyone' singular \u2192 'Everyone HAS their opinion' (singular they allowed)."},
+    {"error": "'A number of factors is relevant'", "fix": "'A number of' \u2192 plural: 'are relevant'."}
   ],
   "practice": [
     {
@@ -119,46 +32,14 @@
       "title": "Find the disagreement",
       "instruction": "Click the verb that does not agree with its subject.",
       "items": [
-        {
-          "prompt": "The impact of digital platforms on young minds [A:are] becoming [B:impossible] to ignore.",
-          "answer": "A",
-          "explanation": "Subject is 'impact' → 'is'."
-        },
-        {
-          "prompt": "There [A:is] several reasons [B:why] the proposal failed.",
-          "answer": "A",
-          "explanation": "'Reasons' plural → 'there ARE'."
-        },
-        {
-          "prompt": "Each of the applicants [A:were] required to submit [B:a portfolio].",
-          "answer": "A",
-          "explanation": "'Each of' takes singular → 'was'."
-        },
-        {
-          "prompt": "Neither the committee nor the director [A:are] willing to comment [B:on the matter].",
-          "answer": "A",
-          "explanation": "Singular subjects joined by 'neither…nor' → 'is'."
-        },
-        {
-          "prompt": "The number of remote workers [A:have] doubled [B:since 2020].",
-          "answer": "A",
-          "explanation": "'The number' singular → 'has'."
-        },
-        {
-          "prompt": "A wide range of proposals [A:have] been submitted [B:for review].",
-          "answer": null,
-          "explanation": "'A wide range of' can take plural when focus is on items."
-        },
-        {
-          "prompt": "Everyone in the workshop [A:have] their own perspective [B:on the issue].",
-          "answer": "A",
-          "explanation": "'Everyone' singular → 'has'."
-        },
-        {
-          "prompt": "Ten years [A:is] a long time [B:in politics].",
-          "answer": null,
-          "explanation": "Period of time treated as a single unit → singular."
-        }
+        {"prompt": "The impact of digital platforms on young minds [A:are] becoming [B:impossible] to ignore.", "answer": "A", "explanation": "Subject is 'impact' \u2192 'is'."},
+        {"prompt": "There [A:is] several reasons [B:why] the proposal failed.", "answer": "A", "explanation": "'Reasons' plural \u2192 'there ARE'."},
+        {"prompt": "Each of the applicants [A:were] required to submit [B:a portfolio].", "answer": "A", "explanation": "'Each of' takes singular \u2192 'was'."},
+        {"prompt": "Neither the committee nor the director [A:are] willing to comment [B:on the matter].", "answer": "A", "explanation": "Singular subjects joined by 'neither\u2026nor' \u2192 'is'."},
+        {"prompt": "The number of remote workers [A:have] doubled [B:since 2020].", "answer": "A", "explanation": "'The number' singular \u2192 'has'."},
+        {"prompt": "A wide range of proposals [A:have] been submitted [B:for review].", "answer": null, "explanation": "'A wide range of' can take plural when focus is on items."},
+        {"prompt": "Everyone in the workshop [A:have] their own perspective [B:on the issue].", "answer": "A", "explanation": "'Everyone' singular \u2192 'has'."},
+        {"prompt": "Ten years [A:is] a long time [B:in politics].", "answer": null, "explanation": "Period of time treated as a single unit \u2192 singular."}
       ]
     },
     {
@@ -166,46 +47,14 @@
       "title": "Agree with the subject",
       "instruction": "Type 'is / are / was / were / has / have / does / do' to match.",
       "items": [
-        {
-          "prompt": "The media often ___ guilty of sensationalism.",
-          "answer": "is / are",
-          "explanation": "'Media' accepts both; singular is now more common."
-        },
-        {
-          "prompt": "Statistics ___ a subject I always struggled with.",
-          "answer": "is / was",
-          "explanation": "Field of study → singular."
-        },
-        {
-          "prompt": "The statistics on this chart ___ self-explanatory.",
-          "answer": "are",
-          "explanation": "Plural count of figures → 'are'."
-        },
-        {
-          "prompt": "One of the biggest challenges facing educators today ___ funding.",
-          "answer": "is",
-          "explanation": "'One of…' → singular."
-        },
-        {
-          "prompt": "Neither of those options ___ acceptable to the board.",
-          "answer": "is / was",
-          "explanation": "'Neither of' → singular."
-        },
-        {
-          "prompt": "A majority of voters ___ in favour of the amendment.",
-          "answer": "are / were",
-          "explanation": "'A majority of + plural noun' → plural verb."
-        },
-        {
-          "prompt": "News about the merger ___ spreading quickly.",
-          "answer": "is / was",
-          "explanation": "'News' is uncountable singular."
-        },
-        {
-          "prompt": "Fifty per cent of the budget ___ allocated to healthcare.",
-          "answer": "is / was",
-          "explanation": "'Budget' uncountable → singular."
-        }
+        {"prompt": "The media often ___ guilty of sensationalism.", "answer": "is / are", "explanation": "'Media' accepts both; singular is now more common."},
+        {"prompt": "Statistics ___ a subject I always struggled with.", "answer": "is / was", "explanation": "Field of study \u2192 singular."},
+        {"prompt": "The statistics on this chart ___ self-explanatory.", "answer": "are", "explanation": "Plural count of figures \u2192 'are'."},
+        {"prompt": "One of the biggest challenges facing educators today ___ funding.", "answer": "is", "explanation": "'One of\u2026' \u2192 singular."},
+        {"prompt": "Neither of those options ___ acceptable to the board.", "answer": "is / was", "explanation": "'Neither of' \u2192 singular."},
+        {"prompt": "A majority of voters ___ in favour of the amendment.", "answer": "are / were", "explanation": "'A majority of + plural noun' \u2192 plural verb."},
+        {"prompt": "News about the merger ___ spreading quickly.", "answer": "is / was", "explanation": "'News' is uncountable singular."},
+        {"prompt": "Fifty per cent of the budget ___ allocated to healthcare.", "answer": "is / was", "explanation": "'Budget' uncountable \u2192 singular."}
       ]
     },
     {
@@ -213,94 +62,14 @@
       "title": "Which verb form?",
       "instruction": "Pick the form that agrees.",
       "items": [
-        {
-          "prompt": "A survey of 2,000 residents ___ that housing costs are the top concern.",
-          "options": [
-            "show",
-            "shows",
-            "are showing",
-            "have shown"
-          ],
-          "answer": 1,
-          "explanation": "Subject 'survey' → singular."
-        },
-        {
-          "prompt": "The number of applications ___ every year.",
-          "options": [
-            "grow",
-            "grows",
-            "have grown",
-            "are growing"
-          ],
-          "answer": 1,
-          "explanation": "'The number of' → singular."
-        },
-        {
-          "prompt": "A number of applications ___ been rejected this month.",
-          "options": [
-            "has",
-            "have",
-            "is",
-            "was"
-          ],
-          "answer": 1,
-          "explanation": "'A number of' → plural."
-        },
-        {
-          "prompt": "Either the teacher or her students ___ wrong.",
-          "options": [
-            "is",
-            "are",
-            "was",
-            "has"
-          ],
-          "answer": 1,
-          "explanation": "Nearest noun rule: 'students' → plural."
-        },
-        {
-          "prompt": "Every one of those policies ___ its own drawbacks.",
-          "options": [
-            "have",
-            "has",
-            "are having",
-            "had have"
-          ],
-          "answer": 1,
-          "explanation": "'Every one of' → singular."
-        },
-        {
-          "prompt": "My family ___ divided on the question of relocation.",
-          "options": [
-            "is",
-            "are",
-            "were",
-            "have"
-          ],
-          "answer": 1,
-          "explanation": "Collective noun referring to individual members → plural acceptable."
-        },
-        {
-          "prompt": "There ___ no reason to postpone the decision.",
-          "options": [
-            "is",
-            "are",
-            "were",
-            "have"
-          ],
-          "answer": 0,
-          "explanation": "Singular 'reason' → 'is'."
-        },
-        {
-          "prompt": "The committee ___ announced its decision this morning.",
-          "options": [
-            "have",
-            "has",
-            "are",
-            "were"
-          ],
-          "answer": 1,
-          "explanation": "Collective acting as unit → 'has'."
-        }
+        {"prompt": "A survey of 2,000 residents ___ that housing costs are the top concern.", "options": ["show", "shows", "are showing", "have shown"], "answer": 1, "explanation": "Subject 'survey' \u2192 singular."},
+        {"prompt": "The number of applications ___ every year.", "options": ["grow", "grows", "have grown", "are growing"], "answer": 1, "explanation": "'The number of' \u2192 singular."},
+        {"prompt": "A number of applications ___ been rejected this month.", "options": ["has", "have", "is", "was"], "answer": 1, "explanation": "'A number of' \u2192 plural."},
+        {"prompt": "Either the teacher or her students ___ wrong.", "options": ["is", "are", "was", "has"], "answer": 1, "explanation": "Nearest noun rule: 'students' \u2192 plural."},
+        {"prompt": "Every one of those policies ___ its own drawbacks.", "options": ["have", "has", "are having", "had have"], "answer": 1, "explanation": "'Every one of' \u2192 singular."},
+        {"prompt": "My family ___ divided on the question of relocation.", "options": ["is", "are", "were", "have"], "answer": 1, "explanation": "Collective noun referring to individual members \u2192 plural acceptable."},
+        {"prompt": "There ___ no reason to postpone the decision.", "options": ["is", "are", "were", "have"], "answer": 0, "explanation": "Singular 'reason' \u2192 'is'."},
+        {"prompt": "The committee ___ announced its decision this morning.", "options": ["have", "has", "are", "were"], "answer": 1, "explanation": "Collective acting as unit \u2192 'has'."}
       ]
     }
   ]

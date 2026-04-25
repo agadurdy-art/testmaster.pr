@@ -20,6 +20,7 @@ import {
   WritingEvaluationResult,
   verifyAnnotationOffsets,
 } from '../features/evaluator/schemas/writingResult';
+import { useGoBack } from '../hooks/useGoBack';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -36,6 +37,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function WritingTask1Practice() {
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const { languageWireCode } = useI18n();
   const [searchParams] = useSearchParams();
   const topic = searchParams.get('topic') || 'participation';
@@ -302,7 +304,7 @@ export default function WritingTask1Practice() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => navigate('/question-bank')}
+                onClick={goBack}
                 className="text-white/80 hover:text-white hover:bg-white/10"
               >
                 <ArrowLeft className="w-4 h-4" />

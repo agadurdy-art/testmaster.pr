@@ -9,6 +9,7 @@ import {
   Loader2, ArrowRight
 } from 'lucide-react';
 
+
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 const SECTION_ICONS = {

@@ -119,8 +119,8 @@ export default function LearningPlatform({ user }) {
       {/* Header */}
       <div className="bg-gradient-to-r from-violet-600 to-purple-600 text-white py-12">
         <div className="max-w-7xl mx-auto px-4">
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             className="text-white hover:bg-white/20 mb-4"
             onClick={() => navigate('/dashboard')}
           >

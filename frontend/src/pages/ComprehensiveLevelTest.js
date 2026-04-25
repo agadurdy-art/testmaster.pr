@@ -15,6 +15,7 @@ import QuestionNavigation from '../components/test/QuestionNavigation';
 import SideBySideReader from '../components/test/SideBySideReader';
 import LocateExplain from '../components/test/LocateExplain';
 import ProgressAnalytics from '../components/test/ProgressAnalytics';
+import AudioPlayer from '../components/AudioPlayer';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -117,9 +118,7 @@ export default function ComprehensiveLevelTest({ user }) {
   const [currentListeningSection, setCurrentListeningSection] = useState(0);
   const [listeningAnswers, setListeningAnswers] = useState({});
   const [flaggedListeningQuestions, setFlaggedListeningQuestions] = useState(new Set()); // For listening navigation
-  const [audioPlaying, setAudioPlaying] = useState(false);
   const [audioPlayed, setAudioPlayed] = useState({});
-  const listeningAudioRef = useRef(null);
   
   // Writing state
   const [writingTasks, setWritingTasks] = useState([]);
@@ -368,40 +367,14 @@ export default function ComprehensiveLevelTest({ user }) {
     }
   };
   
-  // Handle listening audio play
-  const playListeningAudio = (sectionId, audioUrl) => {
-    if (listeningAudioRef.current) {
-      listeningAudioRef.current.pause();
-    }
-    
-    const audio = new Audio(audioUrl);
-    listeningAudioRef.current = audio;
-    
-    audio.onplay = () => setAudioPlaying(true);
-    audio.onpause = () => setAudioPlaying(false);
-    audio.onended = () => {
-      setAudioPlaying(false);
-      setAudioPlayed(prev => ({ ...prev, [sectionId]: true }));
-    };
-    audio.onerror = () => {
-      setAudioPlaying(false);
-      // Allow continuing even if audio fails
-      setAudioPlayed(prev => ({ ...prev, [sectionId]: true }));
-      toast.info('Audio not available. You can still answer the questions.');
-    };
-    
-    audio.play().catch(() => {
-      setAudioPlayed(prev => ({ ...prev, [sectionId]: true }));
-      toast.info('Audio playback not available in this browser.');
-    });
+  // Audio is owned by AudioPlayer (which uses useAudio under the hood). All
+  // we track here is whether the user has finished the section's clip at
+  // least once — the existing "Audio played" badge depends on it.
+  const markSectionAudioPlayed = (sectionId) => {
+    setAudioPlayed((prev) => ({ ...prev, [sectionId]: true }));
   };
-  
-  const pauseListeningAudio = () => {
-    if (listeningAudioRef.current) {
-      listeningAudioRef.current.pause();
-    }
-  };
-  
+
+
   // Handle listening answer selection
   const handleListeningAnswer = (questionId, answer) => {
     setListeningAnswers(prev => ({ ...prev, [questionId]: answer }));
@@ -1499,37 +1472,22 @@ export default function ComprehensiveLevelTest({ user }) {
               </div>
               
               {/* Audio Player */}
-              <div className="bg-cyan-50 p-4 rounded-lg mb-6">
+              <div className="mb-6">
                 <p className="text-sm text-gray-600 mb-3">
                   {language === 'vi' ? 'Nghe đoạn ghi âm và trả lời các câu hỏi bên dưới:' :
                    language === 'tr' ? 'Ses kaydını dinleyin ve aşağıdaki soruları cevaplayın:' :
                    'Listen to the recording and answer the questions below:'}
                 </p>
-                <div className="flex items-center gap-4">
-                  {!audioPlaying ? (
-                    <Button
-                      onClick={() => playListeningAudio(currentSection.id, currentSection.audio_url)}
-                      className="bg-cyan-600 hover:bg-cyan-700"
-                    >
-                      <Volume2 className="w-4 h-4 mr-2" />
-                      {audioPlayed[currentSection.id] ? 'Play Again' : 'Play Audio'}
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={pauseListeningAudio}
-                      variant="outline"
-                      className="border-cyan-600 text-cyan-600"
-                    >
-                      <Pause className="w-4 h-4 mr-2" />
-                      Pause
-                    </Button>
-                  )}
-                  {audioPlayed[currentSection.id] && (
-                    <span className="text-xs text-green-600 flex items-center gap-1">
-                      <CheckCircle className="w-3 h-3" /> Audio played
-                    </span>
-                  )}
-                </div>
+                <AudioPlayer
+                  src={currentSection.audio_url}
+                  persistKey={`comprehensive-level-test:${currentSection.id}`}
+                  onEnded={() => markSectionAudioPlayed(currentSection.id)}
+                />
+                {audioPlayed[currentSection.id] && (
+                  <span className="text-xs text-green-600 flex items-center gap-1 mt-2">
+                    <CheckCircle className="w-3 h-3" /> Audio played
+                  </span>
+                )}
               </div>
             </div>
 

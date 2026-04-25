@@ -4,109 +4,27 @@
   "order": 2,
   "title": "Passive Voice",
   "subtitle": "When the doer is unknown, unimportant, or strategically backgrounded",
-  "target_band": "6 → 7.5",
-  "intro": "The passive voice is not an 'academic sounding' gimmick — it is a focus tool. It moves the recipient of the action into subject position when the doer is irrelevant ('The results were published in 2019'), unknown ('The car was stolen last night'), or obvious from context. In IELTS Writing Task 1 process diagrams, the passive is the default because the process matters, not the operator.",
-  "mind_map": {
-    "center": "Be + past participle",
-    "branches": [
-      {
-        "label": "Use it when",
-        "children": [
-          "Actor unknown / irrelevant",
-          "Result matters more than agent",
-          "Formal / impersonal tone needed"
-        ]
-      },
-      {
-        "label": "Avoid it when",
-        "children": [
-          "Agent is important",
-          "Sentence becomes ambiguous",
-          "Overuse drains energy"
-        ]
-      },
-      {
-        "label": "Agentless formula",
-        "children": [
-          "'It has been argued / reported / demonstrated that…'",
-          "Task 2 intro line, no 'by X' needed"
-        ]
-      }
-    ]
-  },
+  "target_band": "6 \u2192 7.5",
+  "intro": "The passive voice is not an 'academic sounding' gimmick \u2014 it is a focus tool. It moves the recipient of the action into subject position when the doer is irrelevant ('The results were published in 2019'), unknown ('The car was stolen last night'), or obvious from context. In IELTS Writing Task 1 process diagrams, the passive is the default because the process matters, not the operator.",
   "rules": [
-    {
-      "heading": "Formation",
-      "body": "Subject + form of 'be' + past participle (+ 'by' + agent). 'The policy was approved (by parliament).' The tense of 'be' carries the tense of the clause."
-    },
-    {
-      "heading": "When to choose passive over active",
-      "body": "Doer unknown / unimportant / obvious; or when you want the recipient as topic of the sentence for cohesion."
-    },
-    {
-      "heading": "Agentless passive for objectivity",
-      "body": "'It is widely believed that…' / 'It has been argued that…'. A hallmark of academic hedging."
-    },
-    {
-      "heading": "Passive with reporting verbs",
-      "body": "'The minister is said to have resigned.' / 'The treaty is expected to be signed.' These allow you to attribute information without naming a source."
-    }
+    {"heading": "Formation", "body": "Subject + form of 'be' + past participle (+ 'by' + agent). 'The policy was approved (by parliament).' The tense of 'be' carries the tense of the clause."},
+    {"heading": "When to choose passive over active", "body": "Doer unknown / unimportant / obvious; or when you want the recipient as topic of the sentence for cohesion."},
+    {"heading": "Agentless passive for objectivity", "body": "'It is widely believed that\u2026' / 'It has been argued that\u2026'. A hallmark of academic hedging."},
+    {"heading": "Passive with reporting verbs", "body": "'The minister is said to have resigned.' / 'The treaty is expected to be signed.' These allow you to attribute information without naming a source."}
   ],
   "examples": [
-    {
-      "context": "Writing Task 1 (process)",
-      "sentence": "First, the raw materials are delivered to the factory, where they are sorted and cleaned.",
-      "note": "Process description → passive preferred."
-    },
-    {
-      "context": "Writing Task 2",
-      "sentence": "It has been argued that compulsory voting would strengthen democratic engagement.",
-      "note": "Agentless passive for careful claim."
-    },
-    {
-      "context": "Writing Task 2",
-      "sentence": "The new regulations are expected to take effect in the next fiscal year.",
-      "note": "Passive with reporting verb 'expected'."
-    },
-    {
-      "context": "Writing Task 1 (chart)",
-      "sentence": "Most of the growth in the sector can be attributed to increased consumer spending.",
-      "note": "'Be attributed to' — a Band 7+ passive idiom."
-    },
-    {
-      "context": "Speaking Part 3",
-      "sentence": "A great deal is being done to expand public transport in my city.",
-      "note": "Present continuous passive in spoken register."
-    }
+    {"context": "Writing Task 1 (process)", "sentence": "First, the raw materials are delivered to the factory, where they are sorted and cleaned.", "note": "Process description \u2192 passive preferred."},
+    {"context": "Writing Task 2", "sentence": "It has been argued that compulsory voting would strengthen democratic engagement.", "note": "Agentless passive for careful claim."},
+    {"context": "Writing Task 2", "sentence": "The new regulations are expected to take effect in the next fiscal year.", "note": "Passive with reporting verb 'expected'."},
+    {"context": "Writing Task 1 (chart)", "sentence": "Most of the growth in the sector can be attributed to increased consumer spending.", "note": "'Be attributed to' \u2014 a Band 7+ passive idiom."},
+    {"context": "Speaking Part 3", "sentence": "A great deal is being done to expand public transport in my city.", "note": "Present continuous passive in spoken register."}
   ],
-  "band_comparison": {
-    "band6": {
-      "text": "People do many studies about climate change and they find new things.",
-      "issue": "Vague 'people' agent adds nothing; register too informal for academic writing."
-    },
-    "band8": {
-      "text": "Numerous studies have been conducted on climate change, with several novel findings recently reported.",
-      "why": "Two agentless passives focus the reader on the studies and findings — the actual content — rather than a vague 'people'."
-    }
-  },
-  "band8_marker": "Band 8 writers pair the passive with reporting verbs and hedges to produce the voice of academic authority: 'It is widely acknowledged that…', 'This phenomenon has been attributed to…', 'Concerns have been raised over…'. They also avoid stylistic overuse: they know that two or three passives per paragraph is maximum — more than that and prose becomes lifeless.",
+  "band8_marker": "Band 8 writers pair the passive with reporting verbs and hedges to produce the voice of academic authority: 'It is widely acknowledged that\u2026', 'This phenomenon has been attributed to\u2026', 'Concerns have been raised over\u2026'. They also avoid stylistic overuse: they know that two or three passives per paragraph is maximum \u2014 more than that and prose becomes lifeless.",
   "common_errors": [
-    {
-      "error": "'The problem is being solved by everyone.'",
-      "fix": "If the doer is everyone, active is cleaner → 'Everyone is working on the problem.' Passive only when the doer is backgrounded."
-    },
-    {
-      "error": "'He was born in 1990 by his mother.'",
-      "fix": "'Be born' is idiomatic passive without agent → 'He was born in 1990.'"
-    },
-    {
-      "error": "'The chart was shown the data.'",
-      "fix": "'Show' takes two objects; passive → 'The data was shown on the chart.'"
-    },
-    {
-      "error": "Forgetting past participle: 'The decision was take yesterday.'",
-      "fix": "→ 'was taken'."
-    }
+    {"error": "'The problem is being solved by everyone.'", "fix": "If the doer is everyone, active is cleaner \u2192 'Everyone is working on the problem.' Passive only when the doer is backgrounded."},
+    {"error": "'He was born in 1990 by his mother.'", "fix": "'Be born' is idiomatic passive without agent \u2192 'He was born in 1990.'"},
+    {"error": "'The chart was shown the data.'", "fix": "'Show' takes two objects; passive \u2192 'The data was shown on the chart.'"},
+    {"error": "Forgetting past participle: 'The decision was take yesterday.'", "fix": "\u2192 'was taken'."}
   ],
   "practice": [
     {
@@ -114,46 +32,14 @@
       "title": "Turn active into passive",
       "instruction": "Rewrite each sentence in the passive voice, keeping the same tense.",
       "items": [
-        {
-          "prompt": "Scientists have discovered a new species in the Amazon.",
-          "answer": "A new species has been discovered (by scientists) in the Amazon.",
-          "explanation": "Present Perfect passive."
-        },
-        {
-          "prompt": "The government will announce the results next week.",
-          "answer": "The results will be announced (by the government) next week.",
-          "explanation": "Future Simple passive."
-        },
-        {
-          "prompt": "Workers are building a new bridge over the river.",
-          "answer": "A new bridge is being built (by workers) over the river.",
-          "explanation": "Present Continuous passive."
-        },
-        {
-          "prompt": "Someone stole my bicycle last night.",
-          "answer": "My bicycle was stolen last night.",
-          "explanation": "Past Simple passive; agent dropped because unknown."
-        },
-        {
-          "prompt": "They are going to publish her novel in two languages.",
-          "answer": "Her novel is going to be published in two languages.",
-          "explanation": "'Be going to' passive."
-        },
-        {
-          "prompt": "Analysts expect inflation to peak in the third quarter.",
-          "answer": "Inflation is expected to peak in the third quarter.",
-          "explanation": "Passive with reporting verb + infinitive."
-        },
-        {
-          "prompt": "Climate change has caused many of these shifts.",
-          "answer": "Many of these shifts have been caused by climate change.",
-          "explanation": "Present Perfect passive, agent retained for meaning."
-        },
-        {
-          "prompt": "The minister must sign the document before noon.",
-          "answer": "The document must be signed (by the minister) before noon.",
-          "explanation": "Modal passive."
-        }
+        {"prompt": "Scientists have discovered a new species in the Amazon.", "answer": "A new species has been discovered (by scientists) in the Amazon.", "explanation": "Present Perfect passive."},
+        {"prompt": "The government will announce the results next week.", "answer": "The results will be announced (by the government) next week.", "explanation": "Future Simple passive."},
+        {"prompt": "Workers are building a new bridge over the river.", "answer": "A new bridge is being built (by workers) over the river.", "explanation": "Present Continuous passive."},
+        {"prompt": "Someone stole my bicycle last night.", "answer": "My bicycle was stolen last night.", "explanation": "Past Simple passive; agent dropped because unknown."},
+        {"prompt": "They are going to publish her novel in two languages.", "answer": "Her novel is going to be published in two languages.", "explanation": "'Be going to' passive."},
+        {"prompt": "Analysts expect inflation to peak in the third quarter.", "answer": "Inflation is expected to peak in the third quarter.", "explanation": "Passive with reporting verb + infinitive."},
+        {"prompt": "Climate change has caused many of these shifts.", "answer": "Many of these shifts have been caused by climate change.", "explanation": "Present Perfect passive, agent retained for meaning."},
+        {"prompt": "The minister must sign the document before noon.", "answer": "The document must be signed (by the minister) before noon.", "explanation": "Modal passive."}
       ]
     },
     {
@@ -161,46 +47,14 @@
       "title": "Complete the passive",
       "instruction": "Type the correct passive form of the verb in brackets.",
       "items": [
-        {
-          "prompt": "The new law (introduce) ___ in January and has already reduced traffic fatalities.",
-          "answer": "was introduced",
-          "explanation": "Past Simple passive."
-        },
-        {
-          "prompt": "Several investigations (launch) ___ since the scandal broke.",
-          "answer": "have been launched",
-          "explanation": "Present Perfect passive plural subject."
-        },
-        {
-          "prompt": "In the diagram, the bottles (clean) ___ before they (fill) ___ .",
-          "answer": "are cleaned / are filled",
-          "explanation": "Process description → present passive."
-        },
-        {
-          "prompt": "The proposal (consider) ___ by the committee at the moment.",
-          "answer": "is being considered",
-          "explanation": "Present Continuous passive."
-        },
-        {
-          "prompt": "If the policy (implement) ___ nationwide, emissions would drop.",
-          "answer": "were implemented",
-          "explanation": "Second-conditional passive."
-        },
-        {
-          "prompt": "By 2030, at least one million homes (retrofit) ___ .",
-          "answer": "will have been retrofitted",
-          "explanation": "Future Perfect passive."
-        },
-        {
-          "prompt": "It (believe) ___ that the artefact dates back two thousand years.",
-          "answer": "is believed",
-          "explanation": "Agentless passive with 'it…that'."
-        },
-        {
-          "prompt": "The contract must (review) ___ before it can be signed.",
-          "answer": "be reviewed",
-          "explanation": "Modal passive takes 'be + V3'."
-        }
+        {"prompt": "The new law (introduce) ___ in January and has already reduced traffic fatalities.", "answer": "was introduced", "explanation": "Past Simple passive."},
+        {"prompt": "Several investigations (launch) ___ since the scandal broke.", "answer": "have been launched", "explanation": "Present Perfect passive plural subject."},
+        {"prompt": "In the diagram, the bottles (clean) ___ before they (fill) ___ .", "answer": "are cleaned / are filled", "explanation": "Process description \u2192 present passive."},
+        {"prompt": "The proposal (consider) ___ by the committee at the moment.", "answer": "is being considered", "explanation": "Present Continuous passive."},
+        {"prompt": "If the policy (implement) ___ nationwide, emissions would drop.", "answer": "were implemented", "explanation": "Second-conditional passive."},
+        {"prompt": "By 2030, at least one million homes (retrofit) ___ .", "answer": "will have been retrofitted", "explanation": "Future Perfect passive."},
+        {"prompt": "It (believe) ___ that the artefact dates back two thousand years.", "answer": "is believed", "explanation": "Agentless passive with 'it\u2026that'."},
+        {"prompt": "The contract must (review) ___ before it can be signed.", "answer": "be reviewed", "explanation": "Modal passive takes 'be + V3'."}
       ]
     },
     {
@@ -208,94 +62,14 @@
       "title": "Which voice serves the meaning?",
       "instruction": "Pick the option that best fits register and focus.",
       "items": [
-        {
-          "prompt": "The results of the survey ___ yesterday.",
-          "options": [
-            "published",
-            "were published",
-            "was published",
-            "are being published"
-          ],
-          "answer": 1,
-          "explanation": "Past Simple passive, plural."
-        },
-        {
-          "prompt": "In a refinery, crude oil ___ into various fractions.",
-          "options": [
-            "separates",
-            "is separated",
-            "separated",
-            "has separated"
-          ],
-          "answer": 1,
-          "explanation": "Process → present passive."
-        },
-        {
-          "prompt": "Over the past decade, ___ investment in renewable energy.",
-          "options": [
-            "governments have tripled",
-            "governments tripled",
-            "there has been a tripling in",
-            "it was tripled"
-          ],
-          "answer": 2,
-          "explanation": "Agentless nominalised passive — academic."
-        },
-        {
-          "prompt": "The agreement ___ once all parties have reviewed the text.",
-          "options": [
-            "will be sign",
-            "will signs",
-            "will be signed",
-            "be signed"
-          ],
-          "answer": 2,
-          "explanation": "Future passive: 'will be + V3'."
-        },
-        {
-          "prompt": "A high proportion of the workforce ___ for more than ten years.",
-          "options": [
-            "has been employed",
-            "have employed",
-            "employed",
-            "was employing"
-          ],
-          "answer": 0,
-          "explanation": "Present Perfect passive singular ('proportion')."
-        },
-        {
-          "prompt": "It is widely ___ that early intervention reduces long-term costs.",
-          "options": [
-            "recognise",
-            "recognised",
-            "recognising",
-            "recognition"
-          ],
-          "answer": 1,
-          "explanation": "'It is widely recognised that…'."
-        },
-        {
-          "prompt": "The bridge ___ after the earthquake rendered it unsafe.",
-          "options": [
-            "demolished",
-            "was demolished",
-            "is demolishing",
-            "has demolish"
-          ],
-          "answer": 1,
-          "explanation": "Past Simple passive."
-        },
-        {
-          "prompt": "Concerns ___ about the reliability of the data.",
-          "options": [
-            "raised",
-            "have been raised",
-            "has raised",
-            "was raise"
-          ],
-          "answer": 1,
-          "explanation": "Idiomatic 'concerns have been raised'."
-        }
+        {"prompt": "The results of the survey ___ yesterday.", "options": ["published", "were published", "was published", "are being published"], "answer": 1, "explanation": "Past Simple passive, plural."},
+        {"prompt": "In a refinery, crude oil ___ into various fractions.", "options": ["separates", "is separated", "separated", "has separated"], "answer": 1, "explanation": "Process \u2192 present passive."},
+        {"prompt": "Over the past decade, ___ investment in renewable energy.", "options": ["governments have tripled", "governments tripled", "there has been a tripling in", "it was tripled"], "answer": 2, "explanation": "Agentless nominalised passive \u2014 academic."},
+        {"prompt": "The agreement ___ once all parties have reviewed the text.", "options": ["will be sign", "will signs", "will be signed", "be signed"], "answer": 2, "explanation": "Future passive: 'will be + V3'."},
+        {"prompt": "A high proportion of the workforce ___ for more than ten years.", "options": ["has been employed", "have employed", "employed", "was employing"], "answer": 0, "explanation": "Present Perfect passive singular ('proportion')."},
+        {"prompt": "It is widely ___ that early intervention reduces long-term costs.", "options": ["recognise", "recognised", "recognising", "recognition"], "answer": 1, "explanation": "'It is widely recognised that\u2026'."},
+        {"prompt": "The bridge ___ after the earthquake rendered it unsafe.", "options": ["demolished", "was demolished", "is demolishing", "has demolish"], "answer": 1, "explanation": "Past Simple passive."},
+        {"prompt": "Concerns ___ about the reliability of the data.", "options": ["raised", "have been raised", "has raised", "was raise"], "answer": 1, "explanation": "Idiomatic 'concerns have been raised'."}
       ]
     }
   ]

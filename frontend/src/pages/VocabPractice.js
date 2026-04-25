@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import {
   ChevronLeft, CheckCircle2, XCircle, ArrowRight,
@@ -164,6 +165,7 @@ function ExerciseCard({ exercise, onAnswer, answered, userAnswer, isCorrect }) {
 
 export default function VocabPractice() {
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const { moduleId } = useParams();
   const [module, setModule] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -230,7 +232,7 @@ export default function VocabPractice() {
       <div className="border-b border-slate-200 bg-white px-4 py-3">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <button onClick={() => navigate(-1)} className="text-slate-400 hover:text-slate-700" data-testid="back-btn">
+            <button onClick={goBack} className="text-slate-400 hover:text-slate-700" data-testid="back-btn">
               <ChevronLeft className="w-5 h-5" />
             </button>
             <div>

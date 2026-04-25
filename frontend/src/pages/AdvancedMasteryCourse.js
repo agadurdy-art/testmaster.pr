@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Textarea } from '../components/ui/textarea';
@@ -33,6 +34,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function AdvancedMasteryCourse({ user }) {
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const [searchParams] = useSearchParams();
   const { language } = useI18n();
   
@@ -611,7 +613,7 @@ export default function AdvancedMasteryCourse({ user }) {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <Button variant="ghost" onClick={() => navigate('/dashboard')} className="p-2">
+          <Button variant="ghost" onClick={goBack} className="p-2">
             <ChevronLeft className="w-5 h-5" />
           </Button>
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg">
@@ -622,6 +624,7 @@ export default function AdvancedMasteryCourse({ user }) {
             <p className="text-gray-500">Band 6.0-9.0 • Cambridge-Aligned</p>
           </div>
         </div>
+        <ThemeToggle />
       </div>
 
       {/* Course Description */}

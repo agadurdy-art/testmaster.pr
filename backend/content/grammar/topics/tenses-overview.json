@@ -4,115 +4,27 @@
   "order": 1,
   "title": "Tenses Overview",
   "subtitle": "The 12-tense system, decoded",
-  "target_band": "4 → 6",
-  "intro": "English tense is not a choice between 'past' and 'present' — it is a three-dimensional decision: time (past/present/future) × aspect (simple/continuous/perfect/perfect continuous). Most non-native writers lose marks not because they use the wrong word, but because they drift between tenses inside a single paragraph. Before you attempt complex grammar, your tense backbone must be stable.",
-  "mind_map": {
-    "center": "Time + aspect grid",
-    "branches": [
-      {
-        "label": "Simple",
-        "children": [
-          "Habits, facts, completed events",
-          "present/past/future simple"
-        ]
-      },
-      {
-        "label": "Continuous",
-        "children": [
-          "Actions in progress, temporary",
-          "present/past/future continuous"
-        ]
-      },
-      {
-        "label": "Perfect",
-        "children": [
-          "Before a reference point",
-          "'has lived' (up to now), 'had lived' (before then)"
-        ]
-      },
-      {
-        "label": "Perfect continuous",
-        "children": [
-          "Duration up to a reference point",
-          "'has been rising' (and still is)",
-          "Highlights the trend itself"
-        ]
-      }
-    ]
-  },
+  "target_band": "4 \u2192 6",
+  "intro": "English tense is not a choice between 'past' and 'present' \u2014 it is a three-dimensional decision: time (past/present/future) \u00d7 aspect (simple/continuous/perfect/perfect continuous). Most non-native writers lose marks not because they use the wrong word, but because they drift between tenses inside a single paragraph. Before you attempt complex grammar, your tense backbone must be stable.",
   "rules": [
-    {
-      "heading": "Simple = the fact, full stop",
-      "body": "Present Simple (habits, general truths), Past Simple (completed past), Future Simple (prediction). Use these when the time is the only thing that matters."
-    },
-    {
-      "heading": "Continuous = the action in progress",
-      "body": "Add -ing when the event is in motion at a specific moment: 'is rising', 'was studying', 'will be arriving'. Do not use with stative verbs (know, believe, own)."
-    },
-    {
-      "heading": "Perfect = connects two time points",
-      "body": "Present Perfect links past to now ('has doubled since 2000'). Past Perfect marks an earlier past ('had already left when...'). The trigger is always a relationship between two times."
-    },
-    {
-      "heading": "Perfect Continuous = duration of an ongoing action",
-      "body": "'Has been rising for a decade' emphasises both duration and continuation. Rare in IELTS but powerful in Task 1 trend description."
-    }
+    {"heading": "Simple = the fact, full stop", "body": "Present Simple (habits, general truths), Past Simple (completed past), Future Simple (prediction). Use these when the time is the only thing that matters."},
+    {"heading": "Continuous = the action in progress", "body": "Add -ing when the event is in motion at a specific moment: 'is rising', 'was studying', 'will be arriving'. Do not use with stative verbs (know, believe, own)."},
+    {"heading": "Perfect = connects two time points", "body": "Present Perfect links past to now ('has doubled since 2000'). Past Perfect marks an earlier past ('had already left when...'). The trigger is always a relationship between two times."},
+    {"heading": "Perfect Continuous = duration of an ongoing action", "body": "'Has been rising for a decade' emphasises both duration and continuation. Rare in IELTS but powerful in Task 1 trend description."}
   ],
   "examples": [
-    {
-      "context": "Writing Task 1",
-      "sentence": "Between 1990 and 2010, carbon emissions rose by 40%, after which they plateaued.",
-      "note": "Past Simple for completed change; no need for perfect here."
-    },
-    {
-      "context": "Writing Task 2",
-      "sentence": "The share of households that have adopted renewable energy has more than tripled since the subsidy was introduced.",
-      "note": "Present Perfect links past policy to current state."
-    },
-    {
-      "context": "Writing Task 2",
-      "sentence": "Governments that invest in public transport tend to see lower congestion.",
-      "note": "Present Simple for general truth — do not shift to future."
-    },
-    {
-      "context": "Speaking Part 2",
-      "sentence": "I had already been learning English for two years before I moved to the city.",
-      "note": "Past Perfect Continuous to sequence two past events."
-    },
-    {
-      "context": "Speaking Part 3",
-      "sentence": "By 2040, most petrol cars will have been replaced by electric alternatives.",
-      "note": "Future Perfect Passive — projects a completed state at a future point."
-    }
+    {"context": "Writing Task 1", "sentence": "Between 1990 and 2010, carbon emissions rose by 40%, after which they plateaued.", "note": "Past Simple for completed change; no need for perfect here."},
+    {"context": "Writing Task 2", "sentence": "The share of households that have adopted renewable energy has more than tripled since the subsidy was introduced.", "note": "Present Perfect links past policy to current state."},
+    {"context": "Writing Task 2", "sentence": "Governments that invest in public transport tend to see lower congestion.", "note": "Present Simple for general truth \u2014 do not shift to future."},
+    {"context": "Speaking Part 2", "sentence": "I had already been learning English for two years before I moved to the city.", "note": "Past Perfect Continuous to sequence two past events."},
+    {"context": "Speaking Part 3", "sentence": "By 2040, most petrol cars will have been replaced by electric alternatives.", "note": "Future Perfect Passive \u2014 projects a completed state at a future point."}
   ],
-  "band_comparison": {
-    "band6": {
-      "text": "In the last ten years, the population grows fast and many problems appear.",
-      "issue": "Needs perfect aspect to link past period to now — 'grows' and 'appear' feel time-dislocated."
-    },
-    "band8": {
-      "text": "Over the past decade, the population has been growing rapidly, and a number of urban problems have emerged as a result.",
-      "why": "Present perfect continuous ('has been growing') captures the still-ongoing trend; present perfect ('have emerged') ties consequence to the same window."
-    }
-  },
   "band8_marker": "Band 8 writers do not show off with rare tenses; they show control. The examiner notices when a four-sentence paragraph holds one consistent 'narrative time' and shifts only when the meaning demands it. Inconsistent tense drift ('The graph shows that emissions rose and then increases') is the single fastest path to a 6.0 ceiling on Grammatical Range & Accuracy.",
   "common_errors": [
-    {
-      "error": "'Since' + Past Simple (e.g., 'since 2000 I live here')",
-      "fix": "'Since' triggers Present Perfect → 'since 2000 I have lived here'."
-    },
-    {
-      "error": "Using continuous with stative verbs ('I am knowing')",
-      "fix": "Know/understand/own/believe stay simple → 'I know'."
-    },
-    {
-      "error": "Narrative tense drift inside one paragraph",
-      "fix": "Pick your anchor tense (present or past) before writing; every finite verb must justify any departure from it."
-    },
-    {
-      "error": "'Will' in time clauses ('when I will arrive')",
-      "fix": "After 'when/before/until/as soon as', use present form → 'when I arrive'."
-    }
+    {"error": "'Since' + Past Simple (e.g., 'since 2000 I live here')", "fix": "'Since' triggers Present Perfect \u2192 'since 2000 I have lived here'."},
+    {"error": "Using continuous with stative verbs ('I am knowing')", "fix": "Know/understand/own/believe stay simple \u2192 'I know'."},
+    {"error": "Narrative tense drift inside one paragraph", "fix": "Pick your anchor tense (present or past) before writing; every finite verb must justify any departure from it."},
+    {"error": "'Will' in time clauses ('when I will arrive')", "fix": "After 'when/before/until/as soon as', use present form \u2192 'when I arrive'."}
   ],
   "practice": [
     {
@@ -120,46 +32,14 @@
       "title": "Find the tense bug",
       "instruction": "Each sentence contains one tense error. Click the incorrect verb.",
       "items": [
-        {
-          "prompt": "Since 2010, the government [A:invests] heavily in public transport, and emissions [B:have fallen].",
-          "answer": "A",
-          "explanation": "'Since' + a period → Present Perfect: 'has invested'."
-        },
-        {
-          "prompt": "When I [A:will finish] my degree, I [B:will move] to a larger city.",
-          "answer": "A",
-          "explanation": "After 'when', use Present Simple → 'when I finish'."
-        },
-        {
-          "prompt": "The chart shows that tourist numbers [A:rose] sharply in 2005 and then [B:plateau] for a decade.",
-          "answer": "B",
-          "explanation": "Tense must stay past → 'plateaued'."
-        },
-        {
-          "prompt": "I [A:am knowing] the answer but I [B:can't] remember it.",
-          "answer": "A",
-          "explanation": "'Know' is stative → 'I know'."
-        },
-        {
-          "prompt": "By the time the report [A:was published], the policy [B:already changed].",
-          "answer": "B",
-          "explanation": "Earlier past requires Past Perfect → 'had already changed'."
-        },
-        {
-          "prompt": "She [A:has studied] Mandarin when she was in Beijing.",
-          "answer": "A",
-          "explanation": "'When she was in Beijing' = finished past period → Past Simple 'studied'."
-        },
-        {
-          "prompt": "Researchers [A:are finding] that sleep deprivation [B:impairs] cognition.",
-          "answer": "A",
-          "explanation": "'Find' here is a general conclusion verb → 'find'."
-        },
-        {
-          "prompt": "By 2030, governments [A:will invest] at least a trillion dollars in renewables [B:since 2015].",
-          "answer": "A",
-          "explanation": "The 'since 2015' span to a future point needs Future Perfect → 'will have invested'."
-        }
+        {"prompt": "Since 2010, the government [A:invests] heavily in public transport, and emissions [B:have fallen].", "answer": "A", "explanation": "'Since' + a period \u2192 Present Perfect: 'has invested'."},
+        {"prompt": "When I [A:will finish] my degree, I [B:will move] to a larger city.", "answer": "A", "explanation": "After 'when', use Present Simple \u2192 'when I finish'."},
+        {"prompt": "The chart shows that tourist numbers [A:rose] sharply in 2005 and then [B:plateau] for a decade.", "answer": "B", "explanation": "Tense must stay past \u2192 'plateaued'."},
+        {"prompt": "I [A:am knowing] the answer but I [B:can't] remember it.", "answer": "A", "explanation": "'Know' is stative \u2192 'I know'."},
+        {"prompt": "By the time the report [A:was published], the policy [B:already changed].", "answer": "B", "explanation": "Earlier past requires Past Perfect \u2192 'had already changed'."},
+        {"prompt": "She [A:has studied] Mandarin when she was in Beijing.", "answer": "A", "explanation": "'When she was in Beijing' = finished past period \u2192 Past Simple 'studied'."},
+        {"prompt": "Researchers [A:are finding] that sleep deprivation [B:impairs] cognition.", "answer": "A", "explanation": "'Find' here is a general conclusion verb \u2192 'find'."},
+        {"prompt": "By 2030, governments [A:will invest] at least a trillion dollars in renewables [B:since 2015].", "answer": "A", "explanation": "The 'since 2015' span to a future point needs Future Perfect \u2192 'will have invested'."}
       ]
     },
     {
@@ -167,46 +47,14 @@
       "title": "Anchor your tense",
       "instruction": "Type the correct form of the verb in brackets.",
       "items": [
-        {
-          "prompt": "The number of remote workers __ (double) since the pandemic began.",
-          "answer": "has doubled",
-          "explanation": "Present Perfect links past start to present result."
-        },
-        {
-          "prompt": "Between 1995 and 2005, electricity consumption __ (rise) steadily.",
-          "answer": "rose",
-          "explanation": "Fixed past period → Past Simple."
-        },
-        {
-          "prompt": "As soon as the minister __ (announce) the policy, media coverage intensified.",
-          "answer": "announced",
-          "explanation": "Both events are past; time clause takes Past Simple."
-        },
-        {
-          "prompt": "By the end of this decade, solar capacity __ (overtake) coal.",
-          "answer": "will have overtaken",
-          "explanation": "Future Perfect for a completed state at a future point."
-        },
-        {
-          "prompt": "She __ (work) on her thesis for six months when the funding was cut.",
-          "answer": "had been working",
-          "explanation": "Past Perfect Continuous: duration before another past event."
-        },
-        {
-          "prompt": "Plastic pollution __ (be) a defining environmental issue of our time.",
-          "answer": "is",
-          "explanation": "General truth → Present Simple."
-        },
-        {
-          "prompt": "The data suggest that commuters __ (spend) more on transport than on food in 2023.",
-          "answer": "spent",
-          "explanation": "Specific past year → Past Simple."
-        },
-        {
-          "prompt": "I __ (learn) English since I was eleven.",
-          "answer": "have been learning",
-          "explanation": "Continuing duration → Present Perfect Continuous."
-        }
+        {"prompt": "The number of remote workers __ (double) since the pandemic began.", "answer": "has doubled", "explanation": "Present Perfect links past start to present result."},
+        {"prompt": "Between 1995 and 2005, electricity consumption __ (rise) steadily.", "answer": "rose", "explanation": "Fixed past period \u2192 Past Simple."},
+        {"prompt": "As soon as the minister __ (announce) the policy, media coverage intensified.", "answer": "announced", "explanation": "Both events are past; time clause takes Past Simple."},
+        {"prompt": "By the end of this decade, solar capacity __ (overtake) coal.", "answer": "will have overtaken", "explanation": "Future Perfect for a completed state at a future point."},
+        {"prompt": "She __ (work) on her thesis for six months when the funding was cut.", "answer": "had been working", "explanation": "Past Perfect Continuous: duration before another past event."},
+        {"prompt": "Plastic pollution __ (be) a defining environmental issue of our time.", "answer": "is", "explanation": "General truth \u2192 Present Simple."},
+        {"prompt": "The data suggest that commuters __ (spend) more on transport than on food in 2023.", "answer": "spent", "explanation": "Specific past year \u2192 Past Simple."},
+        {"prompt": "I __ (learn) English since I was eleven.", "answer": "have been learning", "explanation": "Continuing duration \u2192 Present Perfect Continuous."}
       ]
     },
     {
@@ -214,94 +62,14 @@
       "title": "Pick the right tense",
       "instruction": "Choose the option that matches the time reference.",
       "items": [
-        {
-          "prompt": "Last Tuesday at 8pm, I ___ dinner with my family.",
-          "options": [
-            "am eating",
-            "was eating",
-            "have eaten",
-            "eat"
-          ],
-          "answer": 1,
-          "explanation": "A specific past moment → Past Continuous."
-        },
-        {
-          "prompt": "Renewable energy ___ the dominant source of new power generation over the past five years.",
-          "options": [
-            "becomes",
-            "became",
-            "has become",
-            "is becoming"
-          ],
-          "answer": 2,
-          "explanation": "'Over the past five years' → Present Perfect."
-        },
-        {
-          "prompt": "The population of Tokyo ___ by approximately 2% per year throughout the 1960s.",
-          "options": [
-            "grew",
-            "has grown",
-            "was growing",
-            "grows"
-          ],
-          "answer": 0,
-          "explanation": "Completed past period → Past Simple."
-        },
-        {
-          "prompt": "If the pattern continues, experts predict that global temperatures ___ by 2.5°C by 2100.",
-          "options": [
-            "rise",
-            "will rise",
-            "are rising",
-            "rose"
-          ],
-          "answer": 1,
-          "explanation": "Prediction about a future result."
-        },
-        {
-          "prompt": "She ___ her passport before she reached the airport, which was why she missed the flight.",
-          "options": [
-            "lost",
-            "had lost",
-            "was losing",
-            "has lost"
-          ],
-          "answer": 1,
-          "explanation": "Earlier past before another past event → Past Perfect."
-        },
-        {
-          "prompt": "Children who ___ regular exercise tend to concentrate better.",
-          "options": [
-            "get",
-            "are getting",
-            "got",
-            "have got"
-          ],
-          "answer": 0,
-          "explanation": "General truth → Present Simple."
-        },
-        {
-          "prompt": "By the time the committee finishes its review, it ___ over 200 applications.",
-          "options": [
-            "will examine",
-            "will have examined",
-            "examines",
-            "has examined"
-          ],
-          "answer": 1,
-          "explanation": "Completed by a future point → Future Perfect."
-        },
-        {
-          "prompt": "I ___ three languages fluently.",
-          "options": [
-            "am speaking",
-            "have been speaking",
-            "speak",
-            "was speaking"
-          ],
-          "answer": 2,
-          "explanation": "Stative-like ability / general truth → Present Simple."
-        }
+        {"prompt": "Last Tuesday at 8pm, I ___ dinner with my family.", "options": ["am eating", "was eating", "have eaten", "eat"], "answer": 1, "explanation": "A specific past moment \u2192 Past Continuous."},
+        {"prompt": "Renewable energy ___ the dominant source of new power generation over the past five years.", "options": ["becomes", "became", "has become", "is becoming"], "answer": 2, "explanation": "'Over the past five years' \u2192 Present Perfect."},
+        {"prompt": "The population of Tokyo ___ by approximately 2% per year throughout the 1960s.", "options": ["grew", "has grown", "was growing", "grows"], "answer": 0, "explanation": "Completed past period \u2192 Past Simple."},
+        {"prompt": "If the pattern continues, experts predict that global temperatures ___ by 2.5\u00b0C by 2100.", "options": ["rise", "will rise", "are rising", "rose"], "answer": 1, "explanation": "Prediction about a future result."},
+        {"prompt": "She ___ her passport before she reached the airport, which was why she missed the flight.", "options": ["lost", "had lost", "was losing", "has lost"], "answer": 1, "explanation": "Earlier past before another past event \u2192 Past Perfect."},
+        {"prompt": "Children who ___ regular exercise tend to concentrate better.", "options": ["get", "are getting", "got", "have got"], "answer": 0, "explanation": "General truth \u2192 Present Simple."},
+        {"prompt": "By the time the committee finishes its review, it ___ over 200 applications.", "options": ["will examine", "will have examined", "examines", "has examined"], "answer": 1, "explanation": "Completed by a future point \u2192 Future Perfect."},
+        {"prompt": "I ___ three languages fluently.", "options": ["am speaking", "have been speaking", "speak", "was speaking"], "answer": 2, "explanation": "Stative-like ability / general truth \u2192 Present Simple."}
       ]
     }
   ]

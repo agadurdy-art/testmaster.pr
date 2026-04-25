@@ -632,62 +632,12 @@
 .landing-scope.landing-demo .sample-preview-body {
   display: grid;
   /* minmax(0,1fr) so annotated essay or margin notes can't push the row
-     past its own container on tablets. */
+     past the container on tablet widths (before the ≤699px stack kicks in). */
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 16px;
 }
 @media (max-width: 699px) {
   .landing-scope.landing-demo .sample-preview-body { grid-template-columns: 1fr; }
-}
-
-/* Phone screens (<=480px): shrink the Writing sample demo so the "See a full
-   report" switcher + the 4-criterion footer fit in a single row. Without this
-   the criteria row wraps Grammar onto a second line and the band pills push
-   Band 8.0 below the label, which is what the user flagged on a 393px iPhone. */
-@media (max-width: 480px) {
-  .landing-scope.landing-demo .sample-chips {
-    gap: 6px;
-    padding: 8px 10px;
-  }
-  .landing-scope.landing-demo .sample-chips-label {
-    font-size: 11.5px;
-    margin-right: 2px;
-  }
-  .landing-scope.landing-demo .sample-chip {
-    padding: 4px 9px;
-    font-size: 11.5px;
-  }
-  .landing-scope.landing-demo .sample-preview-footer {
-    flex-wrap: wrap;
-    gap: 8px 12px;
-  }
-  .landing-scope.landing-demo .sample-preview-criteria {
-    gap: 10px;
-    width: 100%;
-  }
-  .landing-scope.landing-demo .sample-preview-criterion-name {
-    font-size: 9px;
-  }
-  .landing-scope.landing-demo .sample-preview-criterion-val {
-    font-size: 12.5px;
-  }
-  .landing-scope.landing-demo .sample-preview-cta {
-    font-size: 12px;
-  }
-  .landing-scope.landing-demo .sample-preview-annotated {
-    font-size: 12.5px;
-    line-height: 1.5;
-  }
-  .landing-scope.landing-demo .sample-preview-note {
-    font-size: 11.5px;
-    padding: 6px 8px;
-  }
-  .landing-scope.landing-demo .sample-preview-title {
-    font-size: 14px;
-  }
-  .landing-scope.landing-demo .sample-preview-band-num {
-    font-size: 22px;
-  }
 }
 .landing-scope.landing-demo .sample-preview-annotated {
   font-size: 13.5px;

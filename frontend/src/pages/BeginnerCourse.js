@@ -598,13 +598,15 @@ export default function BeginnerCourse({ user }) {
   // Render lessons list
   const renderLessonsList = () => (
     <div className="max-w-4xl mx-auto">
-      <Button 
-        variant="ghost" 
-        onClick={() => navigate('/dashboard')}
-        className="mb-4"
-      >
-        <ArrowLeft className="w-4 h-4 mr-2" /> {getText('backToDashboard')}
-      </Button>
+      <div className="flex items-center justify-between mb-4">
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/dashboard')}
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" /> {getText('backToDashboard')}
+        </Button>
+        <ThemeToggle />
+      </div>
       
       <div className="text-center mb-8">
         <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-green-200 animate-bounce">

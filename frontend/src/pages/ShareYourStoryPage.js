@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import { ArrowLeft, Heart } from 'lucide-react';
 import TestimonialSubmitForm from '../components/TestimonialSubmitForm';
@@ -8,13 +9,14 @@ import TestimonialSubmitForm from '../components/TestimonialSubmitForm';
 // Intentionally minimal so it loads fast and the form is the focus.
 export default function ShareYourStoryPage({ user }) {
   const navigate = useNavigate();
+  const goBack = useGoBack();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-teal-50 to-white py-12 px-4">
       <div className="max-w-2xl mx-auto">
         <Button
           variant="ghost"
-          onClick={() => navigate(-1)}
+          onClick={goBack}
           className="mb-6 text-gray-600"
         >
           <ArrowLeft className="w-4 h-4 mr-2" /> Back

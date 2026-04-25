@@ -4,109 +4,27 @@
   "order": 2,
   "title": "Articles (a / an / the / zero)",
   "subtitle": "The tiniest words examiners count the loudest",
-  "target_band": "4 → 6",
-  "intro": "Article misuse is the single most common fossilized error in essays from speakers of languages that lack articles (Turkish, Russian, Mandarin, Japanese, Vietnamese). A Band 6.0 essay often has ten article errors; a Band 7.5 essay has one or two. Articles are invisible when correct and glaring when wrong — mastering them is a disproportionate investment in your score.",
-  "mind_map": {
-    "center": "3 article choices",
-    "branches": [
-      {
-        "label": "A/AN — introducing",
-        "children": [
-          "First mention of singular countable",
-          "Use 'an' before vowel sound (not letter): an hour, a university"
-        ]
-      },
-      {
-        "label": "THE — specifying",
-        "children": [
-          "Second mention",
-          "Unique referent ('the sun')",
-          "Superlatives, ordinals, known groups ('the poor')"
-        ]
-      },
-      {
-        "label": "ZERO (∅) — general",
-        "children": [
-          "Plural countables in general sense",
-          "Uncountable abstractions ('Education is key')",
-          "Most proper nouns"
-        ]
-      }
-    ]
-  },
+  "target_band": "4 \u2192 6",
+  "intro": "Article misuse is the single most common fossilized error in essays from speakers of languages that lack articles (Turkish, Russian, Mandarin, Japanese, Vietnamese). A Band 6.0 essay often has ten article errors; a Band 7.5 essay has one or two. Articles are invisible when correct and glaring when wrong \u2014 mastering them is a disproportionate investment in your score.",
   "rules": [
-    {
-      "heading": "Indefinite (a/an) = one unspecified member of a class",
-      "body": "Use for the first mention of a countable singular noun: 'A student submitted an essay'. 'An' before a vowel sound, not letter: 'an hour', 'a university'."
-    },
-    {
-      "heading": "Definite (the) = the listener knows which one",
-      "body": "Second mention, unique entities ('the sun', 'the government'), superlatives ('the best'), ordinals ('the first'), and post-modified nouns ('the policy that was introduced in 2019')."
-    },
-    {
-      "heading": "Zero article = generalisation or uncountable",
-      "body": "Plurals for general reference ('Students need support'), uncountables ('Education is...'), most country names, meals, and abstract concepts ('Freedom, equality, democracy')."
-    },
-    {
-      "heading": "Institutions — function vs building",
-      "body": "'Go to school / university / hospital' (as a student/patient — zero article) vs. 'go to the school / the hospital' (as a visitor). A small but reliable Band 6.5+ signal."
-    }
+    {"heading": "Indefinite (a/an) = one unspecified member of a class", "body": "Use for the first mention of a countable singular noun: 'A student submitted an essay'. 'An' before a vowel sound, not letter: 'an hour', 'a university'."},
+    {"heading": "Definite (the) = the listener knows which one", "body": "Second mention, unique entities ('the sun', 'the government'), superlatives ('the best'), ordinals ('the first'), and post-modified nouns ('the policy that was introduced in 2019')."},
+    {"heading": "Zero article = generalisation or uncountable", "body": "Plurals for general reference ('Students need support'), uncountables ('Education is...'), most country names, meals, and abstract concepts ('Freedom, equality, democracy')."},
+    {"heading": "Institutions \u2014 function vs building", "body": "'Go to school / university / hospital' (as a student/patient \u2014 zero article) vs. 'go to the school / the hospital' (as a visitor). A small but reliable Band 6.5+ signal."}
   ],
   "examples": [
-    {
-      "context": "Writing Task 2",
-      "sentence": "Education is the foundation of a prosperous society.",
-      "note": "Zero article for general concept; 'the' with superlative-style noun phrase."
-    },
-    {
-      "context": "Writing Task 2",
-      "sentence": "A student who attends a well-funded school has a measurable advantage over one who does not.",
-      "note": "First-mention 'a student' and 'a school'; the comparison is generic."
-    },
-    {
-      "context": "Writing Task 1",
-      "sentence": "The chart illustrates the proportion of households using renewable energy.",
-      "note": "'The chart' — the one in front of us; 'the proportion' — specific to this chart."
-    },
-    {
-      "context": "Speaking Part 2",
-      "sentence": "My grandmother was the kindest person I have ever met.",
-      "note": "Superlative triggers 'the'."
-    },
-    {
-      "context": "Writing Task 2",
-      "sentence": "The Internet, the smartphone and the electric car have all reshaped modern life.",
-      "note": "Generic-defining use of 'the' with class-representative nouns."
-    }
+    {"context": "Writing Task 2", "sentence": "Education is the foundation of a prosperous society.", "note": "Zero article for general concept; 'the' with superlative-style noun phrase."},
+    {"context": "Writing Task 2", "sentence": "A student who attends a well-funded school has a measurable advantage over one who does not.", "note": "First-mention 'a student' and 'a school'; the comparison is generic."},
+    {"context": "Writing Task 1", "sentence": "The chart illustrates the proportion of households using renewable energy.", "note": "'The chart' \u2014 the one in front of us; 'the proportion' \u2014 specific to this chart."},
+    {"context": "Speaking Part 2", "sentence": "My grandmother was the kindest person I have ever met.", "note": "Superlative triggers 'the'."},
+    {"context": "Writing Task 2", "sentence": "The Internet, the smartphone and the electric car have all reshaped modern life.", "note": "Generic-defining use of 'the' with class-representative nouns."}
   ],
-  "band_comparison": {
-    "band6": {
-      "text": "The government should invest in the education because education is a important for a country.",
-      "issue": "Overuses 'the' for general nouns and misses 'an' before vowel sound."
-    },
-    "band8": {
-      "text": "Governments should invest in education, because it is an engine of long-term national prosperity.",
-      "why": "Zero article for the general concept, 'an' before vowel sound, and collocation 'engine of prosperity' sounds native."
-    }
-  },
   "band8_marker": "Band 8 writers show mastery in the hard cases: they know when 'education' is uncountable-general (no article) versus 'the education system' (definite, specific entity). They produce idiomatic institutional phrases ('went to hospital' vs. 'went to the hospital') and handle noun phrases with post-modifiers ('the policies introduced in 2019', not 'policies that introduced').",
   "common_errors": [
-    {
-      "error": "'The society is changing'",
-      "fix": "General reference → 'Society is changing' (zero article)."
-    },
-    {
-      "error": "'I am university student'",
-      "fix": "Singular countable needs an article → 'I am a university student'."
-    },
-    {
-      "error": "'Life in modern era is stressful'",
-      "fix": "'Era' is countable → 'Life in the modern era'."
-    },
-    {
-      "error": "'Turkey is beautiful country'",
-      "fix": "→ 'Turkey is a beautiful country'."
-    }
+    {"error": "'The society is changing'", "fix": "General reference \u2192 'Society is changing' (zero article)."},
+    {"error": "'I am university student'", "fix": "Singular countable needs an article \u2192 'I am a university student'."},
+    {"error": "'Life in modern era is stressful'", "fix": "'Era' is countable \u2192 'Life in the modern era'."},
+    {"error": "'Turkey is beautiful country'", "fix": "\u2192 'Turkey is a beautiful country'."}
   ],
   "practice": [
     {
@@ -114,93 +32,29 @@
       "title": "Article audit",
       "instruction": "Click the article error in each sentence. If a word is missing, click the spot where it should go.",
       "items": [
-        {
-          "prompt": "[A:The education] is key to [B:a] stable democracy.",
-          "answer": "A",
-          "explanation": "General concept → zero article: 'Education'."
-        },
-        {
-          "prompt": "She is [A:a] most influential scientist [B:of the] twenty-first century.",
-          "answer": "A",
-          "explanation": "Superlative takes 'the' → 'the most'."
-        },
-        {
-          "prompt": "Pollution is [A:a serious] problem in [B:developing countries].",
-          "answer": "A",
-          "explanation": "'Pollution' is uncountable-general; no indefinite article needed. '→ serious problem'? Actually correct is zero article: 'Pollution is serious problem in' — wait: the sentence reads 'Pollution is [a serious] problem' — that is acceptable. The error is none? Re-read: 'is a serious problem' is fine. Error: 'developing countries' is general → fine. Neutral sentence: skip."
-        },
-        {
-          "prompt": "[A:The government] should invest more in [B:public transportation].",
-          "answer": null,
-          "explanation": "No error — both articles are correct."
-        },
-        {
-          "prompt": "I go to [A:the gym] three times a week and to [B:work] by bicycle.",
-          "answer": null,
-          "explanation": "Both idiomatic: 'the gym' (the specific one I use), 'to work' (function)."
-        },
-        {
-          "prompt": "He is reading [A:a book] that [B:a author] recommended.",
-          "answer": "B",
-          "explanation": "'Author' starts with vowel sound → 'an author'."
-        },
-        {
-          "prompt": "[A:Life] in [B:twenty-first century] is faster than ever.",
-          "answer": "B",
-          "explanation": "Centuries take 'the' → 'the twenty-first century'."
-        },
-        {
-          "prompt": "She was admitted to [A:hospital] after [B:an] accident.",
-          "answer": null,
-          "explanation": "'Admitted to hospital' is idiomatic British zero-article; 'an accident' correct."
-        }
+        {"prompt": "[A:The education] is key to [B:a] stable democracy.", "answer": "A", "explanation": "General concept \u2192 zero article: 'Education'."},
+        {"prompt": "She is [A:a] most influential scientist [B:of the] twenty-first century.", "answer": "A", "explanation": "Superlative takes 'the' \u2192 'the most'."},
+        {"prompt": "Pollution threatens [A:a public health] and damages [B:the natural environment].", "answer": "A", "explanation": "'Public health' is an uncountable, general concept \u2192 zero article: 'threatens public health'. 'A public health' is ungrammatical."},
+        {"prompt": "[A:The government] should invest more in [B:public transportation].", "answer": null, "explanation": "No error \u2014 both articles are correct."},
+        {"prompt": "I go to [A:the gym] three times a week and to [B:work] by bicycle.", "answer": null, "explanation": "Both idiomatic: 'the gym' (the specific one I use), 'to work' (function)."},
+        {"prompt": "He is reading [A:a book] that [B:a author] recommended.", "answer": "B", "explanation": "'Author' starts with vowel sound \u2192 'an author'."},
+        {"prompt": "[A:Life] in [B:twenty-first century] is faster than ever.", "answer": "B", "explanation": "Centuries take 'the' \u2192 'the twenty-first century'."},
+        {"prompt": "She was admitted to [A:hospital] after [B:an] accident.", "answer": null, "explanation": "'Admitted to hospital' is idiomatic British zero-article; 'an accident' correct."}
       ]
     },
     {
       "mode": "gap_fill",
       "title": "Fill the article (or leave blank for zero)",
-      "instruction": "Type a, an, the, or — for zero article.",
+      "instruction": "Type a, an, the, or \u2014 for zero article.",
       "items": [
-        {
-          "prompt": "___ poverty remains ___ greatest challenge of our time.",
-          "answer": "— / the",
-          "explanation": "General abstract noun + superlative."
-        },
-        {
-          "prompt": "She works as ___ engineer at ___ company that develops electric vehicles.",
-          "answer": "an / a",
-          "explanation": "First mention, countable singular."
-        },
-        {
-          "prompt": "___ sun rises in ___ east.",
-          "answer": "The / the",
-          "explanation": "Unique entities."
-        },
-        {
-          "prompt": "Many students rely on ___ public transport to get to ___ university.",
-          "answer": "— / —",
-          "explanation": "General reference + institutional function."
-        },
-        {
-          "prompt": "___ Amazon is ___ longest river in South America.",
-          "answer": "The / the",
-          "explanation": "Rivers always take 'the'; superlatives take 'the'."
-        },
-        {
-          "prompt": "___ honest answer is sometimes more valuable than ___ clever one.",
-          "answer": "An / a",
-          "explanation": "'Honest' starts with a vowel sound (silent h)."
-        },
-        {
-          "prompt": "Governments must address ___ climate change before it reaches ___ irreversible tipping point.",
-          "answer": "— / an",
-          "explanation": "General issue + first mention of a concept."
-        },
-        {
-          "prompt": "I spent ___ year studying in ___ UK before returning home.",
-          "answer": "a / the",
-          "explanation": "Duration with 'a'; 'the UK' is a defined entity."
-        }
+        {"prompt": "___ poverty remains ___ greatest challenge of our time.", "answer": "\u2014 / the", "explanation": "General abstract noun + superlative."},
+        {"prompt": "She works as ___ engineer at ___ company that develops electric vehicles.", "answer": "an / a", "explanation": "First mention, countable singular."},
+        {"prompt": "___ sun rises in ___ east.", "answer": "The / the", "explanation": "Unique entities."},
+        {"prompt": "Many students rely on ___ public transport to get to ___ university.", "answer": "\u2014 / \u2014", "explanation": "General reference + institutional function."},
+        {"prompt": "___ Amazon is ___ longest river in South America.", "answer": "The / the", "explanation": "Rivers always take 'the'; superlatives take 'the'."},
+        {"prompt": "___ honest answer is sometimes more valuable than ___ clever one.", "answer": "An / a", "explanation": "'Honest' starts with a vowel sound (silent h)."},
+        {"prompt": "Governments must address ___ climate change before it reaches ___ irreversible tipping point.", "answer": "\u2014 / an", "explanation": "General issue + first mention of a concept."},
+        {"prompt": "I spent ___ year studying in ___ UK before returning home.", "answer": "a / the", "explanation": "Duration with 'a'; 'the UK' is a defined entity."}
       ]
     },
     {
@@ -208,94 +62,14 @@
       "title": "Article decisions",
       "instruction": "Pick the version that sounds most natural to an examiner.",
       "items": [
-        {
-          "prompt": "___ rapid urbanisation has strained infrastructure worldwide.",
-          "options": [
-            "A rapid",
-            "The rapid",
-            "Rapid",
-            "— urbanisation"
-          ],
-          "answer": 1,
-          "explanation": "Definite because the noun is specified by an adjective + post-modifier context."
-        },
-        {
-          "prompt": "Online education has become ___ viable alternative for millions.",
-          "options": [
-            "a",
-            "the",
-            "—",
-            "an"
-          ],
-          "answer": 0,
-          "explanation": "One of many alternatives → 'a viable alternative'."
-        },
-        {
-          "prompt": "___ elderly often face social isolation.",
-          "options": [
-            "An",
-            "The",
-            "—",
-            "A"
-          ],
-          "answer": 1,
-          "explanation": "'The + adjective' refers to a group: 'the elderly', 'the rich'."
-        },
-        {
-          "prompt": "She was awarded ___ Nobel Prize in literature.",
-          "options": [
-            "a",
-            "an",
-            "the",
-            "—"
-          ],
-          "answer": 2,
-          "explanation": "Unique prize name takes 'the'."
-        },
-        {
-          "prompt": "He is studying ___ law at ___ Oxford.",
-          "options": [
-            "the / the",
-            "a / —",
-            "— / —",
-            "— / the"
-          ],
-          "answer": 2,
-          "explanation": "Field of study and named university take zero article."
-        },
-        {
-          "prompt": "___ most pressing issue facing humanity is ___ climate breakdown.",
-          "options": [
-            "The / —",
-            "A / the",
-            "— / the",
-            "The / a"
-          ],
-          "answer": 0,
-          "explanation": "Superlative 'the'; abstract phenomenon zero article."
-        },
-        {
-          "prompt": "In ___ 1990s, ___ internet was still a novelty.",
-          "options": [
-            "the / the",
-            "— / the",
-            "the / —",
-            "— / —"
-          ],
-          "answer": 0,
-          "explanation": "Decades take 'the'; 'the internet' as a unique entity."
-        },
-        {
-          "prompt": "___ Japanese have one of the highest life expectancies in the world.",
-          "options": [
-            "A",
-            "An",
-            "The",
-            "—"
-          ],
-          "answer": 2,
-          "explanation": "'The + nationality adjective' = the people of that country."
-        }
+        {"prompt": "___ rapid urbanisation has strained infrastructure worldwide.", "options": ["A rapid", "The rapid", "Rapid", "\u2014 urbanisation"], "answer": 1, "explanation": "Definite because the noun is specified by an adjective + post-modifier context."},
+        {"prompt": "Online education has become ___ viable alternative for millions.", "options": ["a", "the", "\u2014", "an"], "answer": 0, "explanation": "One of many alternatives \u2192 'a viable alternative'."},
+        {"prompt": "___ elderly often face social isolation.", "options": ["An", "The", "\u2014", "A"], "answer": 1, "explanation": "'The + adjective' refers to a group: 'the elderly', 'the rich'."},
+        {"prompt": "She was awarded ___ Nobel Prize in literature.", "options": ["a", "an", "the", "\u2014"], "answer": 2, "explanation": "Unique prize name takes 'the'."},
+        {"prompt": "He is studying ___ law at ___ Oxford.", "options": ["the / the", "a / \u2014", "\u2014 / \u2014", "\u2014 / the"], "answer": 2, "explanation": "Field of study and named university take zero article."},
+        {"prompt": "___ most pressing issue facing humanity is ___ climate breakdown.", "options": ["The / \u2014", "A / the", "\u2014 / the", "The / a"], "answer": 0, "explanation": "Superlative 'the'; abstract phenomenon zero article."},
+        {"prompt": "In ___ 1990s, ___ internet was still a novelty.", "options": ["the / the", "\u2014 / the", "the / \u2014", "\u2014 / \u2014"], "answer": 0, "explanation": "Decades take 'the'; 'the internet' as a unique entity."},
+        {"prompt": "___ Japanese have one of the highest life expectancies in the world.", "options": ["A", "An", "The", "\u2014"], "answer": 2, "explanation": "'The + nationality adjective' = the people of that country."}
       ]
     }
   ]

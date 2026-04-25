@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { 
+import {
   Rocket, Star, TrendingUp, Plane, BookOpen, Award, Target, Crown,
   ChevronRight, Lock, CheckCircle, Flame, Trophy, Zap,
   Home, ArrowLeft
@@ -264,8 +264,8 @@ export default function UnifiedCoursePage({ user }) {
       
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Back button */}
-        <Button 
-          variant="ghost" 
+        <Button
+          variant="ghost"
           className="mb-6 rounded-full"
           onClick={() => navigate('/dashboard')}
         >

@@ -4,126 +4,27 @@
   "order": 1,
   "title": "Conditionals",
   "subtitle": "Zero, first, second, third, and the mixed conditional that buys you 0.5 a band",
-  "target_band": "6 → 7.5",
-  "intro": "Conditionals let you reason about what is, what could be, and what might have been. A Band 6 writer uses only first and second conditional. A Band 7.5 writer moves fluently between types, including mixed conditionals that blend past causes and present effects — precisely the structures IELTS Task 2 rewards when you discuss hypothetical solutions.",
-  "mind_map": {
-    "center": "5 conditional types",
-    "branches": [
-      {
-        "label": "Zero — always true",
-        "children": [
-          "If + present, present",
-          "Scientific / habitual",
-          "'If water boils, it evaporates.'"
-        ]
-      },
-      {
-        "label": "First — real future",
-        "children": [
-          "If + present, will/may/can + base",
-          "Realistic possibilities",
-          "'If we invest, emissions will fall.'"
-        ]
-      },
-      {
-        "label": "Second — unreal present",
-        "children": [
-          "If + past, would + base",
-          "'were' for all persons (formal)",
-          "'If I were minister, I would…'"
-        ]
-      },
-      {
-        "label": "Third — unreal past",
-        "children": [
-          "If + past perfect, would have + V3",
-          "Regret / analysis of history",
-          "'If we had acted, we would have avoided…'"
-        ]
-      },
-      {
-        "label": "Mixed — past ➜ present",
-        "children": [
-          "If + past perfect, would + base",
-          "Past cause, present consequence",
-          "'If the EU had enforced limits, air today would be cleaner.'"
-        ]
-      }
-    ]
-  },
+  "target_band": "6 \u2192 7.5",
+  "intro": "Conditionals let you reason about what is, what could be, and what might have been. A Band 6 writer uses only first and second conditional. A Band 7.5 writer moves fluently between types, including mixed conditionals that blend past causes and present effects \u2014 precisely the structures IELTS Task 2 rewards when you discuss hypothetical solutions.",
   "rules": [
-    {
-      "heading": "Zero: general truths",
-      "body": "If + present simple, present simple. 'If water boils, it turns to steam.' Used for scientific or habitual facts."
-    },
-    {
-      "heading": "First: real future possibility",
-      "body": "If + present simple, will/can/may + base. 'If governments invest in public transport, cities will be less congested.'"
-    },
-    {
-      "heading": "Second: present / future hypothetical",
-      "body": "If + past simple, would/could/might + base. 'If I were the minister, I would prioritise education.' Use 'were' for all persons in formal register."
-    },
-    {
-      "heading": "Third and mixed",
-      "body": "Third (unreal past): If + past perfect, would have + V3 → 'If we had acted in 2000, the crisis would have been less severe.' Mixed: If + past perfect, would + base (past cause → present effect): 'If the EU had enforced emission limits earlier, air quality today would be substantially better.'"
-    }
+    {"heading": "Zero: general truths", "body": "If + present simple, present simple. 'If water boils, it turns to steam.' Used for scientific or habitual facts."},
+    {"heading": "First: real future possibility", "body": "If + present simple, will/can/may + base. 'If governments invest in public transport, cities will be less congested.'"},
+    {"heading": "Second: present / future hypothetical", "body": "If + past simple, would/could/might + base. 'If I were the minister, I would prioritise education.' Use 'were' for all persons in formal register."},
+    {"heading": "Third and mixed", "body": "Third (unreal past): If + past perfect, would have + V3 \u2192 'If we had acted in 2000, the crisis would have been less severe.' Mixed: If + past perfect, would + base (past cause \u2192 present effect): 'If the EU had enforced emission limits earlier, air quality today would be substantially better.'"}
   ],
   "examples": [
-    {
-      "context": "Writing Task 2",
-      "sentence": "If schools made financial literacy compulsory, young adults would be better equipped to manage debt.",
-      "note": "Second conditional for a desirable but hypothetical reform."
-    },
-    {
-      "context": "Writing Task 2",
-      "sentence": "Had policymakers invested in renewable energy two decades ago, the transition would be complete by now.",
-      "note": "Mixed conditional with inverted third-conditional 'Had…' (drops 'if')."
-    },
-    {
-      "context": "Writing Task 2",
-      "sentence": "Unless children are exposed to a second language before the age of seven, true bilingualism becomes difficult to attain.",
-      "note": "'Unless' = 'if not'; first-conditional pattern."
-    },
-    {
-      "context": "Speaking Part 3",
-      "sentence": "If I were advising a first-time IELTS candidate, I would tell them to focus on Task 2 structure before vocabulary.",
-      "note": "Second conditional in discourse."
-    },
-    {
-      "context": "Writing Task 2",
-      "sentence": "Provided that emissions are capped globally, the 2°C target remains achievable.",
-      "note": "'Provided that' = stricter 'if'."
-    }
+    {"context": "Writing Task 2", "sentence": "If schools made financial literacy compulsory, young adults would be better equipped to manage debt.", "note": "Second conditional for a desirable but hypothetical reform."},
+    {"context": "Writing Task 2", "sentence": "Had policymakers invested in renewable energy two decades ago, the transition would be complete by now.", "note": "Mixed conditional with inverted third-conditional 'Had\u2026' (drops 'if')."},
+    {"context": "Writing Task 2", "sentence": "Unless children are exposed to a second language before the age of seven, true bilingualism becomes difficult to attain.", "note": "'Unless' = 'if not'; first-conditional pattern."},
+    {"context": "Speaking Part 3", "sentence": "If I were advising a first-time IELTS candidate, I would tell them to focus on Task 2 structure before vocabulary.", "note": "Second conditional in discourse."},
+    {"context": "Writing Task 2", "sentence": "Provided that emissions are capped globally, the 2\u00b0C target remains achievable.", "note": "'Provided that' = stricter 'if'."}
   ],
-  "band_comparison": {
-    "band6": {
-      "text": "If governments would invest in public transport, cities will be less congested.",
-      "issue": "'would' in if-clause ✗ and mixes second-conditional frame with first-conditional result."
-    },
-    "band8": {
-      "text": "Had governments invested in public transport a decade ago, urban congestion today would be markedly lower.",
-      "why": "Inverted mixed conditional — past cause, present effect — signals deliberate, high-band syntactic control."
-    }
-  },
-  "band8_marker": "Band 8 writers use inverted conditionals to replace 'if': 'Had the authorities intervened…', 'Were the policy extended…', 'Should demand continue to rise…'. This structure sounds academically assured and is impossible to produce by accident, so examiners recognise it as a deliberate, high-band feature.",
+  "band8_marker": "Band 8 writers use inverted conditionals to replace 'if': 'Had the authorities intervened\u2026', 'Were the policy extended\u2026', 'Should demand continue to rise\u2026'. This structure sounds academically assured and is impossible to produce by accident, so examiners recognise it as a deliberate, high-band feature.",
   "common_errors": [
-    {
-      "error": "'If I would be you, I would study harder.'",
-      "fix": "Never use 'would' in the if-clause → 'If I were you, I would study harder.'"
-    },
-    {
-      "error": "Mixing tense in third conditional: 'If he had known, he would know.'",
-      "fix": "For past cause → past effect: 'he would have known'; past cause → present effect: 'he would know' is the mixed form (context-dependent)."
-    },
-    {
-      "error": "'Unless + not'",
-      "fix": "'Unless' already contains the negative → 'Unless it rains' (not 'Unless it doesn’t rain')."
-    },
-    {
-      "error": "Using 'when' for hypothetical: 'When I am rich, I would buy…'",
-      "fix": "Hypothetical → 'If I were rich, I would buy…'."
-    }
+    {"error": "'If I would be you, I would study harder.'", "fix": "Never use 'would' in the if-clause \u2192 'If I were you, I would study harder.'"},
+    {"error": "Mixing tense in third conditional: 'If he had known, he would know.'", "fix": "For past cause \u2192 past effect: 'he would have known'; past cause \u2192 present effect: 'he would know' is the mixed form (context-dependent)."},
+    {"error": "'Unless + not'", "fix": "'Unless' already contains the negative \u2192 'Unless it rains' (not 'Unless it doesn\u2019t rain')."},
+    {"error": "Using 'when' for hypothetical: 'When I am rich, I would buy\u2026'", "fix": "Hypothetical \u2192 'If I were rich, I would buy\u2026'."}
   ],
   "practice": [
     {
@@ -131,46 +32,14 @@
       "title": "Rewrite using the conditional in brackets",
       "instruction": "Complete the second sentence so it has the same meaning.",
       "items": [
-        {
-          "prompt": "The factory closed because demand collapsed. (Third conditional) — 'If demand ______________, the factory __________.'",
-          "answer": "had not collapsed / would not have closed",
-          "explanation": "Past cause → past result."
-        },
-        {
-          "prompt": "We do not have strict emission limits, so air quality is poor. (Mixed) — 'If we ______________ strict emission limits, air quality __________ today.'",
-          "answer": "had introduced / would be (much) better",
-          "explanation": "Past cause, present effect."
-        },
-        {
-          "prompt": "Rewrite with inversion: 'If the government had acted sooner, the crisis would have been avoided.'",
-          "answer": "Had the government acted sooner, the crisis would have been avoided.",
-          "explanation": "Drop 'if', invert subject and auxiliary."
-        },
-        {
-          "prompt": "Rewrite with 'unless': 'If we do not reform the tax system, inequality will grow.'",
-          "answer": "Unless we reform the tax system, inequality will grow.",
-          "explanation": "'Unless' = 'if…not'."
-        },
-        {
-          "prompt": "Rewrite with 'provided that': 'If all countries comply with the treaty, emissions will fall.'",
-          "answer": "Provided that all countries comply with the treaty, emissions will fall.",
-          "explanation": "'Provided that' marks strict conditions."
-        },
-        {
-          "prompt": "Second conditional: 'Education is not free; that is why many children drop out.' — 'If education ______________, fewer children __________.'",
-          "answer": "were free / would drop out",
-          "explanation": "Present hypothetical."
-        },
-        {
-          "prompt": "Mixed: 'He missed the deadline because he overslept.' — 'If he __________, he __________ the deadline now.'",
-          "answer": "had not overslept / would not be missing (or 'would have met')",
-          "explanation": "Past cause → present state."
-        },
-        {
-          "prompt": "First conditional: 'We need to cut waste. Otherwise landfills will overflow.' — 'If we __________ waste, landfills __________.'",
-          "answer": "do not cut / will overflow",
-          "explanation": "Real future consequence."
-        }
+        {"prompt": "The factory closed because demand collapsed. (Third conditional) \u2014 'If demand ______________, the factory __________.'", "answer": "had not collapsed / would not have closed", "explanation": "Past cause \u2192 past result."},
+        {"prompt": "We do not have strict emission limits, so air quality is poor. (Mixed) \u2014 'If we ______________ strict emission limits, air quality __________ today.'", "answer": "had introduced / would be (much) better", "explanation": "Past cause, present effect."},
+        {"prompt": "Rewrite with inversion: 'If the government had acted sooner, the crisis would have been avoided.'", "answer": "Had the government acted sooner, the crisis would have been avoided.", "explanation": "Drop 'if', invert subject and auxiliary."},
+        {"prompt": "Rewrite with 'unless': 'If we do not reform the tax system, inequality will grow.'", "answer": "Unless we reform the tax system, inequality will grow.", "explanation": "'Unless' = 'if\u2026not'."},
+        {"prompt": "Rewrite with 'provided that': 'If all countries comply with the treaty, emissions will fall.'", "answer": "Provided that all countries comply with the treaty, emissions will fall.", "explanation": "'Provided that' marks strict conditions."},
+        {"prompt": "Second conditional: 'Education is not free; that is why many children drop out.' \u2014 'If education ______________, fewer children __________.'", "answer": "were free / would drop out", "explanation": "Present hypothetical."},
+        {"prompt": "Mixed: 'He missed the deadline because he overslept.' \u2014 'If he __________, he __________ the deadline now.'", "answer": "had not overslept / would not be missing (or 'would have met')", "explanation": "Past cause \u2192 present state."},
+        {"prompt": "First conditional: 'We need to cut waste. Otherwise landfills will overflow.' \u2014 'If we __________ waste, landfills __________.'", "answer": "do not cut / will overflow", "explanation": "Real future consequence."}
       ]
     },
     {
@@ -178,46 +47,14 @@
       "title": "Conjugate the conditional",
       "instruction": "Type the correct form of the verb in brackets.",
       "items": [
-        {
-          "prompt": "If the minister (resign) ___ , the scandal would be defused immediately.",
-          "answer": "resigned",
-          "explanation": "Second conditional."
-        },
-        {
-          "prompt": "Had the engineer (notice) ___ the flaw, the building would not have collapsed.",
-          "answer": "noticed",
-          "explanation": "Third conditional, inverted form."
-        },
-        {
-          "prompt": "If the bill passes, healthcare costs (fall) ___ for millions.",
-          "answer": "will fall",
-          "explanation": "First conditional."
-        },
-        {
-          "prompt": "If automation (not, displace) ___ so many workers, wages (be) ___ higher today.",
-          "answer": "had not displaced / would be",
-          "explanation": "Mixed conditional."
-        },
-        {
-          "prompt": "Unless the board (approve) ___ the funding, the project cannot proceed.",
-          "answer": "approves",
-          "explanation": "'Unless' + present simple for real future."
-        },
-        {
-          "prompt": "If I (be) ___ in your position, I would not accept the offer.",
-          "answer": "were",
-          "explanation": "Formal second conditional."
-        },
-        {
-          "prompt": "Should demand for electric vehicles (continue) ___ to grow, charging networks will need expansion.",
-          "answer": "continue",
-          "explanation": "Inverted first conditional uses base form."
-        },
-        {
-          "prompt": "Provided that the weather (hold) ___ , the event will proceed outdoors.",
-          "answer": "holds",
-          "explanation": "'Provided that' + present simple."
-        }
+        {"prompt": "If the minister (resign) ___ , the scandal would be defused immediately.", "answer": "resigned", "explanation": "Second conditional."},
+        {"prompt": "Had the engineer (notice) ___ the flaw, the building would not have collapsed.", "answer": "noticed", "explanation": "Third conditional, inverted form."},
+        {"prompt": "If the bill passes, healthcare costs (fall) ___ for millions.", "answer": "will fall", "explanation": "First conditional."},
+        {"prompt": "If automation (not, displace) ___ so many workers, wages (be) ___ higher today.", "answer": "had not displaced / would be", "explanation": "Mixed conditional."},
+        {"prompt": "Unless the board (approve) ___ the funding, the project cannot proceed.", "answer": "approves", "explanation": "'Unless' + present simple for real future."},
+        {"prompt": "If I (be) ___ in your position, I would not accept the offer.", "answer": "were", "explanation": "Formal second conditional."},
+        {"prompt": "Should demand for electric vehicles (continue) ___ to grow, charging networks will need expansion.", "answer": "continue", "explanation": "Inverted first conditional uses base form."},
+        {"prompt": "Provided that the weather (hold) ___ , the event will proceed outdoors.", "answer": "holds", "explanation": "'Provided that' + present simple."}
       ]
     },
     {
@@ -225,94 +62,14 @@
       "title": "Pick the right conditional",
       "instruction": "Choose the option that matches the meaning.",
       "items": [
-        {
-          "prompt": "If public transport ___ reliable, fewer people ___ their cars.",
-          "options": [
-            "was / would use",
-            "were / would use",
-            "is / will use",
-            "had been / would have used"
-          ],
-          "answer": 1,
-          "explanation": "Hypothetical present → second conditional."
-        },
-        {
-          "prompt": "Had the vaccine ___ earlier, thousands of lives ___.",
-          "options": [
-            "arrived / would save",
-            "been arrived / would saved",
-            "arrived / would have been saved",
-            "arrive / will be saved"
-          ],
-          "answer": 2,
-          "explanation": "Third conditional with passive result."
-        },
-        {
-          "prompt": "___ the climate summit fail, global cooperation will suffer for years.",
-          "options": [
-            "Should",
-            "If",
-            "Had",
-            "Were"
-          ],
-          "answer": 0,
-          "explanation": "'Should' replaces 'if' for uncertain future."
-        },
-        {
-          "prompt": "If I ___ more time, I would have written a longer essay.",
-          "options": [
-            "had",
-            "have had",
-            "had had",
-            "would have"
-          ],
-          "answer": 2,
-          "explanation": "Third conditional uses 'had had'."
-        },
-        {
-          "prompt": "Unless governments act now, rising seas ___ coastal cities within decades.",
-          "options": [
-            "would threaten",
-            "will threaten",
-            "threatened",
-            "had threatened"
-          ],
-          "answer": 1,
-          "explanation": "'Unless' + first conditional."
-        },
-        {
-          "prompt": "If he ___ smoked for thirty years, his lungs ___ in much better shape now.",
-          "options": [
-            "hadn’t / would be",
-            "did not / would be",
-            "had not / would have been",
-            "does not / will be"
-          ],
-          "answer": 0,
-          "explanation": "Mixed conditional."
-        },
-        {
-          "prompt": "Provided that all parties agree, the treaty ___ next month.",
-          "options": [
-            "was signed",
-            "would sign",
-            "will be signed",
-            "would have been signed"
-          ],
-          "answer": 2,
-          "explanation": "'Provided that' + future."
-        },
-        {
-          "prompt": "Were the policy ___ universally, inequality might shrink.",
-          "options": [
-            "applied",
-            "apply",
-            "applying",
-            "to apply"
-          ],
-          "answer": 0,
-          "explanation": "Inverted second conditional in passive: 'Were X applied…'"
-        }
+        {"prompt": "If public transport ___ reliable, fewer people ___ their cars.", "options": ["was / would use", "were / would use", "is / will use", "had been / would have used"], "answer": 1, "explanation": "Hypothetical present \u2192 second conditional."},
+        {"prompt": "Had the vaccine ___ earlier, thousands of lives ___.", "options": ["arrived / would save", "been arrived / would saved", "arrived / would have been saved", "arrive / will be saved"], "answer": 2, "explanation": "Third conditional with passive result."},
+        {"prompt": "___ the climate summit fail, global cooperation will suffer for years.", "options": ["Should", "If", "Had", "Were"], "answer": 0, "explanation": "'Should' replaces 'if' for uncertain future."},
+        {"prompt": "If I ___ more time, I would have written a longer essay.", "options": ["had", "have had", "had had", "would have"], "answer": 2, "explanation": "Third conditional uses 'had had'."},
+        {"prompt": "Unless governments act now, rising seas ___ coastal cities within decades.", "options": ["would threaten", "will threaten", "threatened", "had threatened"], "answer": 1, "explanation": "'Unless' + first conditional."},
+        {"prompt": "If he ___ smoked for thirty years, his lungs ___ in much better shape now.", "options": ["hadn\u2019t / would be", "did not / would be", "had not / would have been", "does not / will be"], "answer": 0, "explanation": "Mixed conditional."},
+        {"prompt": "Provided that all parties agree, the treaty ___ next month.", "options": ["was signed", "would sign", "will be signed", "would have been signed"], "answer": 2, "explanation": "'Provided that' + future."},
+        {"prompt": "Were the policy ___ universally, inequality might shrink.", "options": ["applied", "apply", "applying", "to apply"], "answer": 0, "explanation": "Inverted second conditional in passive: 'Were X applied\u2026'"}
       ]
     }
   ]

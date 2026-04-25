@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
+import { useSpeechSynthesis } from "../hooks/useSpeechSynthesis";
 import { ArrowRight, Mic, Play, Square } from "lucide-react";
 import PublicNav from "../features/samples/components/PublicNav";
 import SampleBanner from "../features/samples/components/SampleBanner";
@@ -33,47 +34,15 @@ const NOOP = () => {};
 const SAMPLE_SCRIPT =
   "The person who has influenced me the most is my aunt Mai. She lives in Ha Noi and I have known her since I was a child. My aunt is a primary school teacher and she used to take care of me every summer when my parents were working. She is thoughtful, patient, and a little bit stubborn — qualities I try to copy. What I admire most is how she listens. When I was fifteen, I failed a maths exam and I was too embarrassed to tell my parents. I called her first. She didn't judge me, she just asked, \"What do you want to do through this?\" That thought stayed with me. From that moment, I learned to face difficulty instead of hiding from it.";
 
-function useSampleSpeech() {
-  const [playing, setPlaying] = useState(false);
-  const [supported, setSupported] = useState(true);
-  const utterRef = useRef(null);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.speechSynthesis) {
-      setSupported(false);
-    }
-    return () => {
-      if (typeof window !== "undefined" && window.speechSynthesis) {
-        window.speechSynthesis.cancel();
-      }
-    };
-  }, []);
-
-  const play = () => {
-    if (!window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    const u = new window.SpeechSynthesisUtterance(SAMPLE_SCRIPT);
-    u.rate = 0.95;
-    u.pitch = 1.0;
-    u.lang = "en-GB";
-    u.onend = () => setPlaying(false);
-    u.onerror = () => setPlaying(false);
-    utterRef.current = u;
-    setPlaying(true);
-    window.speechSynthesis.speak(u);
-  };
-
-  const stop = () => {
-    if (!window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    setPlaying(false);
-  };
-
-  return { playing, supported, play, stop };
-}
-
 export default function SampleReportSpeakingPart2() {
-  const speech = useSampleSpeech();
+  // Shared hook handles route-change cleanup centrally via AudioProvider —
+  // no per-page useEffect cleanup needed (and the previous one was racy
+  // against Chrome's speechSynthesis singleton).
+  const speech = useSpeechSynthesis(SAMPLE_SCRIPT, {
+    lang: "en-GB",
+    rate: 0.95,
+    pitch: 1.0,
+  });
 
   useEffect(() => {
     const prev = document.title;
@@ -113,18 +82,18 @@ export default function SampleReportSpeakingPart2() {
           previewed end to end. Scroll through, then start when you're
           ready.
         </p>
-        {speech.supported && (
+        {speech.isSupported && (
           <div className="mt-5 flex flex-wrap items-center gap-3">
             <button
               type="button"
-              onClick={speech.playing ? speech.stop : speech.play}
+              onClick={speech.isPlaying ? speech.stop : speech.play}
               className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-[14px] transition-colors ${
-                speech.playing
+                speech.isPlaying
                   ? "bg-rose-600 hover:bg-rose-700 text-white"
                   : "bg-emerald-600 hover:bg-emerald-700 text-white"
               }`}
             >
-              {speech.playing ? (
+              {speech.isPlaying ? (
                 <>
                   <Square className="w-4 h-4" fill="currentColor" />
                   Stop

@@ -245,9 +245,12 @@ export default function Progress({ user }) {
   return (
     <div className={`min-h-screen ${bgMain} py-8 px-4 sm:px-6 transition-colors duration-300`}>
       <div className="max-w-5xl mx-auto">
-        <Button variant="ghost" onClick={() => navigate('/dashboard')} className={`mb-6 ${textSecondary} hover:text-violet-600`}>
-          <ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard
-        </Button>
+        <div className="flex items-center justify-between mb-6">
+          <Button variant="ghost" onClick={() => navigate('/dashboard')} className={`${textSecondary} hover:text-violet-600`}>
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard
+          </Button>
+          <ThemeToggle />
+        </div>
 
         {/* Header */}
         <div className="mb-8">

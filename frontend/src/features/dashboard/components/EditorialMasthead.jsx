@@ -11,8 +11,8 @@ export default function EditorialMasthead({
   subhead,
 }) {
   return (
-    <section className="mb-14 md:mb-20">
-      <div className="label mb-5">
+    <section className="mb-8 md:mb-12">
+      <div className="label mb-3">
         {dateLabel}
         {daysToExamLabel && (
           <>
@@ -21,11 +21,11 @@ export default function EditorialMasthead({
           </>
         )}
       </div>
-      <h1 className="display-xxl text-[48px] md:text-[72px] max-w-[16ch]">
+      <h1 className="display-xxl text-[28px] md:text-[36px] max-w-[20ch]">
         {greeting}
       </h1>
       {subhead && (
-        <p className="mt-6 text-[17px] md:text-[18px] text-muted max-w-[46ch] leading-relaxed">
+        <p className="mt-3 text-[14px] md:text-[15px] text-muted max-w-[52ch] leading-relaxed">
           {subhead}
         </p>
       )}

@@ -3,8 +3,7 @@ import "../dashboard.css";
 import DashboardTopBar from "./DashboardTopBar";
 import DashboardBottomNav from "./DashboardBottomNav";
 import DashboardMobileDrawer from "./DashboardMobileDrawer";
-import ThemeSwitch from "./ThemeSwitch";
-import useDashboardTheme from "../hooks/useDashboardTheme";
+import { useTheme, THEME_MODES } from "../../../contexts/ThemeContext";
 
 /**
  * DashboardLayout wraps every authenticated dashboard view.
@@ -19,10 +18,17 @@ export default function DashboardLayout({
   onMobileTab,
   onLogout,
 }) {
-  const [theme, setTheme] = useDashboardTheme("light");
+  // Bridge to the global ThemeContext so the dashboard scope respects whatever
+  // mode the user picks (Light / Dark / Night-shift / Auto), and the choice is
+  // shared with the rest of the app.
+  const { themeMode, activeTheme, setTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const themeClass =
-    theme === "dark" ? "theme-dark" : theme === "night" ? "theme-night" : "";
+    activeTheme === THEME_MODES.DARK
+      ? "theme-dark"
+      : activeTheme === THEME_MODES.NIGHT_SHIFT
+      ? "theme-night"
+      : "";
 
   return (
     <div className={`dashboard-scope ${themeClass}`}>
@@ -30,6 +36,8 @@ export default function DashboardLayout({
         activeSection={activeSection}
         user={user}
         onOpenMenu={() => setMenuOpen(true)}
+        theme={themeMode}
+        onThemeChange={setTheme}
       />
       <main className="max-w-[1160px] mx-auto px-6 md:px-10 pt-14 md:pt-20 pb-20 body-pad-bottom">
         {children}
@@ -41,7 +49,6 @@ export default function DashboardLayout({
         user={user}
         onLogout={onLogout}
       />
-      <ThemeSwitch theme={theme} onChange={setTheme} />
     </div>
   );
 }
