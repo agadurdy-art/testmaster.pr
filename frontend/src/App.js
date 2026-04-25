@@ -62,6 +62,7 @@ const SampleReportBand50Task2 = lazy(() => import('./pages/SampleReportBand50Tas
 const SampleReportBand80Task2 = lazy(() => import('./pages/SampleReportBand80Task2'));
 const SampleReportSpeakingPart2 = lazy(() => import('./pages/SampleReportSpeakingPart2'));
 const PublicEssayEvaluator = lazy(() => import('./pages/PublicEssayEvaluator'));
+const PublicSpeakingTrial = lazy(() => import('./pages/PublicSpeakingTrial'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage'));
 const LandingPageV2 = lazy(() => import('./pages/LandingPageV2'));
 const LandingPageDemo = lazy(() => import('./pages/LandingPageDemo'));
@@ -523,6 +524,7 @@ function AppWithSessionHandler() {
           element={<SampleReportSpeakingPart2 />}
         />
         <Route path="/score-my-essay" element={<PublicEssayEvaluator />} />
+        <Route path="/score-my-speaking" element={<PublicSpeakingTrial />} />
         <Route
           path="/dashboard/v2"
           element={user ? <DashboardPage /> : <Navigate to="/" />}
