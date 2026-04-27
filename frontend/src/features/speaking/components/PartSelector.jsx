@@ -272,7 +272,7 @@ export default function PartSelector({
               part={part}
               selected={selectedPart === part.id}
               onSelect={() => onSelectPart(part.id)}
-              onStart={() => { onSelectPart(part.id); onStart(); }}
+              onStart={() => { onSelectPart(part.id); onStart(part.id); }}
             />
           ))}
         </div>

@@ -17,12 +17,16 @@ router = APIRouter(prefix="/api/tts", tags=["tts"])
 # ElevenLabs client
 ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY")
 
-# Cache directory for generated audio
-AUDIO_CACHE_DIR = Path("/app/backend/static/audio/tts_cache")
+# Cache directory for generated audio. Override via TTS_CACHE_DIR for local
+# dev (macOS SIP makes /app/ unwritable); prod keeps default.
+AUDIO_CACHE_DIR = Path(os.environ.get("TTS_CACHE_DIR", "/app/backend/static/audio/tts_cache"))
 AUDIO_CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
-# Default voice settings for IELTS examiner
-DEFAULT_VOICE_ID = "21m00Tcm4TlvDq8ikWAM"  # Rachel - clear British female voice
+# Default voice settings for IELTS examiner.
+# Override via LIZ_VOICE_ID env var. Default is Rachel (paid library voice);
+# free tier accounts must set LIZ_VOICE_ID to a premade voice id (e.g. Sarah
+# `EXAVITQu4vr4xnSDxMaL` or Bella `hpp4J3VqNfWAUOO0d1Us`).
+DEFAULT_VOICE_ID = os.environ.get("LIZ_VOICE_ID", "21m00Tcm4TlvDq8ikWAM")
 EXAMINER_VOICE_SETTINGS = {
     "stability": 0.7,
     "similarity_boost": 0.8,

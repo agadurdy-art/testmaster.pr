@@ -23,11 +23,23 @@ import "../features/speaking/speaking.css";
  * Static walkthrough of the D7 Claude Design Speaking Practice flow. Anon
  * visitors scroll through all four states (Selector → Prep → Recording →
  * Results) as a design preview — no interactive recording, no state
- * machine. Click handlers are no-ops; the only live CTA is "Start free
- * speaking trial" at the bottom, which routes to the interactive page.
+ * machine. Most click handlers are no-ops; the Selector's "Start Part X"
+ * buttons now jump to the live anonymous trial (/score-my-speaking) with
+ * the chosen part pre-selected, so they aren't dead clicks.
  */
 
 const NOOP = () => {};
+
+// Send the visitor into the live anon trial with the picked part. Falling
+// back to part2 keeps the bottom CTA's behavior (which never specified a
+// part) unchanged.
+const goToTrial = (partId) => {
+  const safe =
+    partId === "part1" || partId === "part2" || partId === "part3"
+      ? partId
+      : "part2";
+  window.location.assign(`/score-my-speaking?part=${safe}`);
+};
 
 // Candidate's full Part 2 monologue — read aloud via browser TTS when the
 // user taps "Listen to sample". No audio asset required; works offline.
@@ -146,7 +158,7 @@ export default function SampleReportSpeakingPart2() {
           <PartSelector
             selectedPart="part2"
             onSelectPart={NOOP}
-            onStart={NOOP}
+            onStart={goToTrial}
             topics={DEFAULT_TOPICS_ON}
             onToggleTopic={NOOP}
             onClearTopics={NOOP}

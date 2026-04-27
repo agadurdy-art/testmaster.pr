@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import BandRadar from './BandRadar';
 import LizCard from './LizCard';
 import {
@@ -6,6 +6,147 @@ import {
   SCORES as FIXTURE_SCORES,
   FLUENCY as FIXTURE_FLUENCY,
 } from '../constants';
+
+const API_BASE = process.env.REACT_APP_BACKEND_URL || '';
+
+function resolveAudioSrc(audioUrl) {
+  if (!audioUrl) return null;
+  if (/^https?:\/\//i.test(audioUrl)) return audioUrl;
+  // Relative paths come back as `/static/recordings/...` from the backend.
+  return `${API_BASE}${audioUrl}`;
+}
+
+function fmtMMSS(seconds) {
+  if (!Number.isFinite(seconds) || seconds < 0) return '0:00';
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}:${String(s).padStart(2, '0')}`;
+}
+
+function AudioPlayer({ src, fallbackDurationLabel }) {
+  const audioRef = useRef(null);
+  const [playing, setPlaying] = useState(false);
+  const [current, setCurrent] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    const a = audioRef.current;
+    if (!a) return undefined;
+    const onTime = () => setCurrent(a.currentTime || 0);
+    const onMeta = () => setTotal(Number.isFinite(a.duration) ? a.duration : 0);
+    const onEnd = () => setPlaying(false);
+    const onPlay = () => setPlaying(true);
+    const onPause = () => setPlaying(false);
+    a.addEventListener('timeupdate', onTime);
+    a.addEventListener('loadedmetadata', onMeta);
+    a.addEventListener('ended', onEnd);
+    a.addEventListener('play', onPlay);
+    a.addEventListener('pause', onPause);
+    return () => {
+      a.removeEventListener('timeupdate', onTime);
+      a.removeEventListener('loadedmetadata', onMeta);
+      a.removeEventListener('ended', onEnd);
+      a.removeEventListener('play', onPlay);
+      a.removeEventListener('pause', onPause);
+    };
+  }, [src]);
+
+  if (!src) {
+    return (
+      <span
+        className="sp-font-mono"
+        style={{ fontSize: 11, color: 'var(--sp-muted-fg)' }}
+      >
+        Audio not available
+      </span>
+    );
+  }
+
+  const toggle = () => {
+    const a = audioRef.current;
+    if (!a) return;
+    if (a.paused) a.play();
+    else a.pause();
+  };
+
+  const pct = total > 0 ? Math.min(100, (current / total) * 100) : 0;
+  const totalLabel = total > 0 ? fmtMMSS(total) : (fallbackDurationLabel || '—');
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 12,
+        background: 'var(--sp-muted)',
+        borderRadius: 9999,
+        padding: '4px 12px 4px 4px',
+        border: '1px solid var(--sp-border)',
+      }}
+    >
+      <audio ref={audioRef} src={src} preload="metadata" style={{ display: 'none' }} />
+      <button
+        onClick={toggle}
+        aria-label={playing ? 'Pause recording' : 'Play recording'}
+        style={{
+          width: 28,
+          height: 28,
+          borderRadius: 9999,
+          background: 'var(--sp-primary)',
+          border: 'none',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+        }}
+      >
+        {playing ? (
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="white">
+            <rect x="6" y="5" width="4" height="14" rx="1" />
+            <rect x="14" y="5" width="4" height="14" rx="1" />
+          </svg>
+        ) : (
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="white">
+            <path d="M8 5v14l11-7L8 5z" />
+          </svg>
+        )}
+      </button>
+      <div
+        onClick={(e) => {
+          const a = audioRef.current;
+          if (!a || !total) return;
+          const rect = e.currentTarget.getBoundingClientRect();
+          const ratio = (e.clientX - rect.left) / rect.width;
+          a.currentTime = Math.max(0, Math.min(total, ratio * total));
+        }}
+        style={{
+          width: 96,
+          height: 4,
+          background: 'hsl(222 47% 11% / 0.18)',
+          borderRadius: 9999,
+          cursor: 'pointer',
+          position: 'relative',
+        }}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: `${pct}%`,
+            background: 'var(--sp-primary)',
+            borderRadius: 9999,
+          }}
+        />
+      </div>
+      <span
+        className="sp-font-mono"
+        style={{ fontSize: 11, color: 'var(--sp-muted-fg)', fontVariantNumeric: 'tabular-nums' }}
+      >
+        {fmtMMSS(current)} / {totalLabel}
+      </span>
+    </div>
+  );
+}
 
 function Transcript({ tokens }) {
   return (
@@ -106,11 +247,25 @@ function FluencyStats({ fluency }) {
   );
 }
 
+const PART_LABEL = { '1': 'Part 1', '2': 'Part 2', '3': 'Part 3' };
+
+function buildContextLine(data, fluency) {
+  const part = data?.part ? PART_LABEL[String(data.part)] || `Part ${data.part}` : null;
+  const cardId = data?.question_id || data?.card_id;
+  const head = [part, cardId ? null : data?.cue_card_prompt].filter(Boolean).join(' · ');
+  const tail = [fluency.duration, fluency.words ? `${fluency.words} words` : null]
+    .filter(Boolean)
+    .join(' · ');
+  return { head: head || (cardId ? part : 'Speaking attempt'), cardId, tail };
+}
+
 export default function ResultsState({ data, onRetryCard, onNewCard }) {
   const SCORES = data?.scores || FIXTURE_SCORES;
   const FLUENCY = data?.fluency || FIXTURE_FLUENCY;
   const TRANSCRIPT_TOKENS = data?.transcript_tokens || FIXTURE_TOKENS;
   const lizNote = data?.liz_note;
+  const audioSrc = resolveAudioSrc(data?.audio_url);
+  const meta = buildContextLine(data, FLUENCY);
   return (
     <section style={{ background: 'white', borderTop: '1px solid var(--sp-border)', borderBottom: '1px solid var(--sp-border)' }}>
       <div style={{ maxWidth: 1320, margin: '0 auto', padding: '56px 32px 80px' }}>
@@ -159,10 +314,20 @@ export default function ResultsState({ data, onRetryCard, onNewCard }) {
               Scored
             </span>
             <span style={{ color: 'var(--sp-muted-fg)' }}>
-              Part 2 · People · <span className="sp-font-mono">cc‑006</span>
+              {meta.head}
+              {meta.cardId && (
+                <>
+                  {' · '}
+                  <span className="sp-font-mono">{meta.cardId}</span>
+                </>
+              )}
             </span>
-            <span style={{ color: 'var(--sp-muted-fg)' }}>·</span>
-            <span style={{ color: 'var(--sp-muted-fg)' }}>{FLUENCY.duration} · {FLUENCY.words} words</span>
+            {meta.tail && (
+              <>
+                <span style={{ color: 'var(--sp-muted-fg)' }}>·</span>
+                <span style={{ color: 'var(--sp-muted-fg)' }}>{meta.tail}</span>
+              </>
+            )}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <button className="sp-btn-secondary" style={{ height: 36, fontSize: 13 }}>
@@ -207,53 +372,7 @@ export default function ResultsState({ data, onRetryCard, onNewCard }) {
                   Word‑level pronunciation
                 </h3>
               </div>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 12,
-                  background: 'var(--sp-muted)',
-                  borderRadius: 9999,
-                  padding: '4px 12px 4px 4px',
-                  border: '1px solid var(--sp-border)',
-                }}
-              >
-                <button
-                  style={{
-                    width: 28,
-                    height: 28,
-                    borderRadius: 9999,
-                    background: 'var(--sp-primary)',
-                    border: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="white">
-                    <path d="M8 5v14l11-7L8 5z" />
-                  </svg>
-                </button>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 2, height: 20 }}>
-                  {[30, 60, 90, 55, 80, 40, 70, 45, 90, 65, 30, 55, 80, 40, 60, 75, 35, 50].map((h, i) => (
-                    <span
-                      key={i}
-                      style={{
-                        width: 2,
-                        height: `${h}%`,
-                        background: i < 6 ? 'var(--sp-primary)' : 'hsl(222 47% 11% / 0.25)',
-                        borderRadius: 2,
-                      }}
-                    />
-                  ))}
-                </div>
-                <span
-                  className="sp-font-mono"
-                  style={{ fontSize: 11, color: 'var(--sp-muted-fg)', fontVariantNumeric: 'tabular-nums' }}
-                >
-                  0:42 / {FLUENCY.duration.replace(/min|s|\s/g, '').replace('2', '2:')}
-                </span>
-              </div>
+              <AudioPlayer src={audioSrc} fallbackDurationLabel={FLUENCY.duration} />
             </div>
 
             {/* Legend */}
@@ -295,49 +414,6 @@ export default function ResultsState({ data, onRetryCard, onNewCard }) {
             </div>
 
             <Transcript tokens={TRANSCRIPT_TOKENS} />
-
-            {/* Inline popover preview */}
-            <div
-              style={{
-                marginTop: 24,
-                display: 'inline-flex',
-                alignItems: 'stretch',
-                borderRadius: 12,
-                border: '1px solid var(--sp-border)',
-                background: 'hsl(210 40% 96% / 0.6)',
-                overflow: 'hidden',
-              }}
-            >
-              <div style={{ background: 'white', padding: '12px 16px' }}>
-                <div className="sp-mono-label" style={{ marginBottom: 4 }}>Tapped · thoughtful</div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <span className="sp-font-display" style={{ fontSize: 18 }}>thoughtful</span>
-                  <span className="sp-font-mono" style={{ fontSize: 13, color: 'var(--sp-muted-fg)' }}>/ˈθɔːtfəl/</span>
-                </div>
-              </div>
-              <div style={{ padding: '12px 16px', fontSize: 13, color: 'hsl(222 47% 11% / 0.8)', display: 'flex', alignItems: 'center', maxWidth: 360 }}>
-                You said{' '}
-                <span className="sp-font-mono" style={{ color: 'var(--sp-destructive)', marginLeft: 4 }}>
-                  /ˈtɔːtfəl/
-                </span>{' '}— the /θ/ sound came out as /t/.
-              </div>
-              <button
-                style={{
-                  padding: '0 16px',
-                  background: 'var(--sp-primary)',
-                  color: 'white',
-                  fontWeight: 500,
-                  fontSize: 13,
-                  border: 'none',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 8,
-                }}
-              >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7L8 5z" /></svg>
-                Hear it
-              </button>
-            </div>
 
             <FluencyStats fluency={FLUENCY} />
           </div>

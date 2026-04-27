@@ -73,7 +73,7 @@ class Scores(BaseModel):
 
 class CriterionDetail(BaseModel):
     band: float = Field(..., ge=0, le=9)
-    explanation: str = Field(..., min_length=1, max_length=400)
+    explanation: str = Field(..., min_length=1, max_length=600)
     strengths: List[str] = Field(default_factory=list, max_length=4)
     weaknesses: List[str] = Field(default_factory=list, max_length=4)
 
@@ -127,7 +127,7 @@ class SpeakingEvaluationResult(BaseModel):
     fluency: Fluency
     transcript_tokens: List[TranscriptToken] = Field(..., min_length=1)
     live_transcript_words: List[str] = Field(default_factory=list)
-    liz_note: str = Field(..., min_length=1, max_length=600)
+    liz_note: str = Field(..., min_length=1, max_length=1000)
     feedback_language: str = Field(..., min_length=2, max_length=5)
 
 
@@ -155,3 +155,71 @@ class SpeakingEvaluationRequest(BaseModel):
     @classmethod
     def band_if_given(cls, v: Optional[float]) -> Optional[float]:
         return None if v is None else _validate_band(v)
+
+
+# ---------- Full Test (holistic) ----------
+
+
+class FullTestPartInput(BaseModel):
+    """One of the three parts in a Full Test submission. Audio is uploaded
+    out-of-band as multipart; this object is the per-part metadata."""
+    part: SpeakingPart
+    cue_card_prompt: str = Field(..., min_length=1, max_length=1000)
+    cue_card_bullets: List[str] = Field(default_factory=list, max_length=6)
+    duration_seconds: float = Field(0.0, ge=0, le=600)
+
+
+class FullTestPartInsight(BaseModel):
+    """Per-part informational insight — NOT a separately scored band.
+    IELTS examiner methodology: a single holistic band is awarded across
+    the whole test, not per-part. This carries a transcript snippet, the
+    examiner's qualitative observation for that part, and an indicative
+    band only for student informational use (clearly labeled in UI)."""
+    part: SpeakingPart
+    transcript: str = Field(..., min_length=1)
+    duration_seconds: float = Field(..., ge=0, le=600)
+    indicative_band: float = Field(..., ge=0, le=9)
+    observation: str = Field(..., min_length=1, max_length=600)
+
+    @field_validator("indicative_band")
+    @classmethod
+    def half_increment(cls, v: float) -> float:
+        return _validate_band(v)
+
+
+class SpeakingFullTestEvaluationResult(BaseModel):
+    """Holistic Full Test result. Single FC/LR/GRA/PR pass over the whole
+    test (concatenated transcripts), with per-part insights as
+    informational metadata only."""
+    scores: Scores
+    criteria: CriteriaBreakdown
+    parts: List[FullTestPartInsight] = Field(..., min_length=3, max_length=3)
+    liz_note: str = Field(..., min_length=1, max_length=1500)
+    feedback_language: str = Field(..., min_length=2, max_length=5)
+
+
+class SpeakingFullTestEvaluationRequest(BaseModel):
+    """Top-level Full Test request envelope (audio per part is multipart)."""
+    parts: List[FullTestPartInput] = Field(..., min_length=3, max_length=3)
+    user_language: str = Field("en", min_length=2, max_length=5)
+    target_band: Optional[float] = Field(7.0, ge=0, le=9)
+
+    @field_validator("user_language")
+    @classmethod
+    def normalize_language(cls, v: str) -> str:
+        lang = v.lower().split("-")[0]
+        return lang if lang in SUPPORTED_LANGUAGES else "en"
+
+    @field_validator("target_band")
+    @classmethod
+    def band_if_given(cls, v: Optional[float]) -> Optional[float]:
+        return None if v is None else _validate_band(v)
+
+    @field_validator("parts")
+    @classmethod
+    def parts_in_order(cls, v: List[FullTestPartInput]) -> List[FullTestPartInput]:
+        expected = [SpeakingPart.part1, SpeakingPart.part2, SpeakingPart.part3]
+        actual = [p.part for p in v]
+        if actual != expected:
+            raise ValueError(f"parts must be ordered [part1, part2, part3]; got {actual}")
+        return v

@@ -11,7 +11,7 @@ import { useState, useCallback, useEffect, useRef } from 'react';
  *   'results'    → Two-panel feedback (S4)
  *   'error'      → Low audio / mic issue
  *
- * Real-mic capture + /api/speaking/score submission is active when the
+ * Real-mic capture + /api/speaking/evaluate submission is active when the
  * browser supports MediaRecorder. If capture is denied or unavailable,
  * the hook falls through to the previous simulated-counter behaviour so
  * designers can still preview the flow offline.
@@ -240,14 +240,37 @@ export function useSpeakingFlow({ prepSeconds = 60, recordSeconds = 120 } = {}) 
     };
   }, [state, stopMediaRecorder]);
 
-  // Scoring submission (real backend OR fallback simulated delay)
-  const submitScoring = useCallback(async ({ endpoint, cueCard, part, userLanguage, targetBand }) => {
+  // Scoring submission — posts to the unified /api/speaking/evaluate endpoint
+  // (Faz 2 / task #40). The legacy /api/speaking/score path is retired; QB,
+  // Cambridge, Full Test and Smart Practice all flow through one shape now.
+  const submitScoring = useCallback(async ({
+    endpoint,
+    cueCard,
+    part,
+    userLanguage,
+    targetBand,
+    userId,
+    context,
+    setId,
+    questionId,
+    bookId,
+    testId,
+    clientRequestId,
+  }) => {
     setScoreError(null);
     if (!audioBlob) {
       // No audio → simulated preview path (keeps design mode working offline)
       await new Promise(r => setTimeout(r, 3000));
       setScoreResult(null);
       setState('results');
+      return;
+    }
+    if (!userId) {
+      // Authenticated endpoint requires user_id; SpeakingPractice mounts
+      // under a `user ? ...` route guard so this should not normally fire,
+      // but surface a clear error rather than a 422 from the backend.
+      setScoreError('You must be logged in to score a speaking attempt.');
+      setState('error');
       return;
     }
     try {
@@ -257,14 +280,22 @@ export function useSpeakingFlow({ prepSeconds = 60, recordSeconds = 120 } = {}) 
         audioBlob,
         `speaking-${Date.now()}.${audioBlob.type.includes('ogg') ? 'ogg' : 'webm'}`
       );
+      form.append('user_id', userId);
       form.append('part', part || 'part2');
       form.append('cue_card_prompt', cueCard?.prompt || '');
       form.append('cue_card_bullets', (cueCard?.bullets || []).join('\n'));
       form.append('user_language', userLanguage || 'en');
       form.append('target_band', String(targetBand ?? 7.0));
       form.append('duration_seconds', String(recordedDurationRef.current || 0));
+      if (context) form.append('context', context);
+      if (clientRequestId) form.append('client_request_id', clientRequestId);
+      if (setId) form.append('set_id', setId);
+      if (questionId) form.append('question_id', questionId);
+      if (bookId) form.append('book_id', bookId);
+      if (testId) form.append('test_id', testId);
 
-      const url = endpoint || `${process.env.REACT_APP_API_URL || ''}/api/speaking/score`;
+      const base = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_API_URL || '';
+      const url = endpoint || `${base}/api/speaking/evaluate`;
       const resp = await fetch(url, { method: 'POST', body: form });
       if (!resp.ok) {
         let detail;
