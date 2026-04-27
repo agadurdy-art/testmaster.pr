@@ -489,3 +489,12 @@ backend/data/speaking_calibration/
 # Local-only test artifacts (recorded WebM, runtime ElevenLabs cache)
 backend/static/recordings/
 backend/static/audio/tts_cache/*.mp3
+-e 
+# Environment and credential files
+.env
+.env.*
+*.env
+credentials.json
+*.pem
+*.key
+.credentials
