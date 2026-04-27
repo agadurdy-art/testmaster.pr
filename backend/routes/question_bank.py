@@ -1186,7 +1186,7 @@ async def evaluate_writing(request: WritingEvaluationRequest):
     """
     import os
     import json
-    from emergentintegrations.llm.chat import LlmChat, UserMessage
+    from services.llm_compat import LlmChat, UserMessage
     
     response_text = request.response.strip()
     word_count = len(response_text.split())

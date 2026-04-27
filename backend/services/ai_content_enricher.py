@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from emergentintegrations.llm.chat import LlmChat, UserMessage
+from services.llm_compat import LlmChat, UserMessage
 
 # System prompt for the AI teacher
 ESL_TEACHER_SYSTEM_PROMPT = """You are Master Emma, a highly experienced Native English ESL Teacher with 20+ years of experience teaching young learners (ages 4-8). You specialize in:

@@ -298,7 +298,7 @@ async def evaluate_cambridge_writing(
         raise HTTPException(status_code=500, detail="Evaluation service not configured")
     
     try:
-        from emergentintegrations.llm.openai import LlmChat, UserMessage
+        from services.llm_compat import LlmChat, UserMessage
         
         # Get task details
         book = CAMBRIDGE_TESTS.get(book_id, {})
@@ -445,7 +445,7 @@ async def evaluate_cambridge_full_test(
         raise HTTPException(status_code=500, detail="Evaluation service not configured")
     
     try:
-        from emergentintegrations.llm.openai import LlmChat, UserMessage
+        from services.llm_compat import LlmChat, UserMessage
         
         # Get test data and answers
         book = CAMBRIDGE_TESTS.get(book_id, {})

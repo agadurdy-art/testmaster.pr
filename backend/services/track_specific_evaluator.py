@@ -766,7 +766,7 @@ class TrackSpecificEvaluator:
     ) -> Optional[str]:
         """Get AI-powered track-specific feedback."""
         try:
-            from emergentintegrations.llm.chat import LlmChat, UserMessage
+            from services.llm_compat import LlmChat, UserMessage
             
             llm = LlmChat(
                 api_key=os.environ.get("EMERGENT_LLM_KEY"),

@@ -18,7 +18,7 @@ from typing import Optional
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-from emergentintegrations.llm.chat import LlmChat, UserMessage
+from services.llm_compat import LlmChat, UserMessage
 
 logger = logging.getLogger(__name__)
 

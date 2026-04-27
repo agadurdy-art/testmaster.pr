@@ -3,6 +3,7 @@ export { default as PartSelector } from './components/PartSelector';
 export { default as PreparationState } from './components/PreparationState';
 export { default as RecordingState } from './components/RecordingState';
 export { default as ResultsState } from './components/ResultsState';
+export { default as LegacySpeakingDetailDrawer } from './components/LegacySpeakingDetailDrawer';
 export { default as ProcessingState } from './components/ProcessingState';
 export { default as ErrorState } from './components/ErrorState';
 export { useSpeakingFlow, formatMMSS } from './hooks/useSpeakingFlow';

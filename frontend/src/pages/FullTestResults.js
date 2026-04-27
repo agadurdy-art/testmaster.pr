@@ -10,7 +10,11 @@ import {
   AlertTriangle, Zap, GraduationCap, ChevronRight, Eye, RefreshCw
 } from 'lucide-react';
 import { getRecommendedLessonPath } from '../lib/recommendationRouting';
-import { ResultsState as SpeakingResultsState, adaptSpeakingResult } from '../features/speaking';
+import {
+  ResultsState as SpeakingResultsState,
+  adaptSpeakingResult,
+  LegacySpeakingDetailDrawer,
+} from '../features/speaking';
 import '../features/speaking/speaking.css';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -604,20 +608,56 @@ export default function FullTestResults() {
           </Card>
         )}
 
-        {/* Speaking Results — D7 ResultsState (adapter handles `band`+`criteria.*` shape) */}
-        {results.sections?.speaking && results.sections.speaking.band > 0 && (() => {
-          const adapted = adaptSpeakingResult(results.sections.speaking);
+        {/* Speaking Results — D7 ResultsState + drawer with legacy examiner detail.
+             When the eval hasn't returned yet (band missing) we show a pending
+             card so users see the speaking section is in progress instead of
+             nothing at all. */}
+        {results.sections?.speaking && (() => {
+          const speaking = results.sections.speaking;
+          const hasBand = (speaking.band || 0) > 0;
+          if (!hasBand) {
+            return (
+              <Card
+                data-testid="speaking-pending-card"
+                className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl"
+              >
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-lg">
+                    <Mic className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Speaking
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      {speaking.error
+                        ? speaking.error
+                        : 'Liz is still scoring your speaking responses…'}
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-3 flex items-center gap-2 text-sm text-gray-500">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Hang tight — band scoring usually takes a few seconds.
+                </div>
+              </Card>
+            );
+          }
+          const adapted = adaptSpeakingResult(speaking);
           if (!adapted) return null;
           return (
             <div
               data-testid="speaking-results-card"
-              className="speaking-scope mb-6 rounded-2xl overflow-hidden border border-orange-100 shadow-lg"
+              className="mb-6"
             >
-              <SpeakingResultsState
-                data={adapted}
-                onRetryCard={() => navigate('/speaking-practice')}
-                onNewCard={() => navigate('/dashboard')}
-              />
+              <div className="speaking-scope rounded-2xl overflow-hidden border border-orange-100 shadow-lg">
+                <SpeakingResultsState
+                  data={adapted}
+                  onRetryCard={() => navigate('/speaking-practice')}
+                  onNewCard={() => navigate('/dashboard')}
+                />
+              </div>
+              <LegacySpeakingDetailDrawer evaluation={speaking} />
             </div>
           );
         })()}

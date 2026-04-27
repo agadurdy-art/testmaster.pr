@@ -15,7 +15,7 @@ import os
 import json
 import uuid
 from typing import Dict, List, Any
-from emergentintegrations.llm.chat import LlmChat, UserMessage
+from services.llm_compat import LlmChat, UserMessage
 
 # Initialize LlmChat for evaluation
 def get_llm_chat():

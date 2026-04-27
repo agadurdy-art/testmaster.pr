@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 import os
 import json
 import logging
-from emergentintegrations.llm.chat import LlmChat, UserMessage
+from services.llm_compat import LlmChat, UserMessage
 
 # Import question banks
 from adaptive_level_test_data import (

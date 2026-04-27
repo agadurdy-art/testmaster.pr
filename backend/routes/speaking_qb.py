@@ -345,7 +345,7 @@ async def evaluate_speaking_free(
         return {"error": "Evaluation service not configured"}
     
     try:
-        from emergentintegrations.llm.openai import LlmChat, UserMessage
+        from services.llm_compat import LlmChat, UserMessage
         import uuid
         
         # Calculate basic metrics
@@ -436,7 +436,7 @@ async def evaluate_speaking_premium(
         return {"error": "Evaluation service not configured"}
     
     try:
-        from emergentintegrations.llm.openai import LlmChat, UserMessage
+        from services.llm_compat import LlmChat, UserMessage
         
         # Aggregate Azure scores
         total_pron_score = 0
@@ -533,7 +533,7 @@ Focus especially on pronunciation issues like:
 - Word stress errors
 - Intonation patterns"""
         
-        from emergentintegrations.llm.openai import LlmChat, UserMessage
+        from services.llm_compat import LlmChat, UserMessage
         import uuid
         
         chat = LlmChat(
@@ -604,7 +604,7 @@ async def evaluate_speaking_test(
         return {"error": "Evaluation service not configured"}
     
     try:
-        from emergentintegrations.llm.openai import LlmChat, UserMessage
+        from services.llm_compat import LlmChat, UserMessage
         
         # Organize transcripts by part
         part1_answers = [t for t in transcripts if t.get("part") == "1"]
@@ -664,7 +664,7 @@ Provide a detailed evaluation in the following JSON format:
 Be fair, objective, and follow Cambridge IELTS standards strictly. Do not be overly generous or harsh.
 """
         
-        from emergentintegrations.llm.openai import LlmChat, UserMessage
+        from services.llm_compat import LlmChat, UserMessage
         import uuid
         
         chat = LlmChat(

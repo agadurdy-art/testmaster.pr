@@ -16,7 +16,7 @@ import hashlib
 import bcrypt
 import hmac
 import urllib.parse
-from emergentintegrations.llm.chat import LlmChat, UserMessage
+from services.llm_compat import LlmChat, UserMessage
 import json
 from emergentintegrations.llm.openai import OpenAISpeechToText
 import resend

@@ -71,6 +71,7 @@ const BankTransferCheckout = lazy(() => import('./pages/BankTransferCheckout'));
 const OnboardingPageV2 = lazy(() => import('./pages/OnboardingPageV2'));
 const SpeakingPracticeV2 = lazy(() => import('./pages/SpeakingPracticeV2'));
 const SpeakingPractice = lazy(() => import('./pages/SpeakingPractice'));
+const SpeakingPremium = lazy(() => import('./pages/SpeakingPremium'));
 const Progress = lazy(() => import('./pages/Progress'));
 const BeginnerCourse = lazy(() => import('./pages/BeginnerCourse'));
 const MasteryCourse = lazy(() => import('./pages/MasteryCourse'));
@@ -534,6 +535,10 @@ function AppWithSessionHandler() {
         <Route path="/pricing/v2" element={<PricingPageV2 user={user} />} />
         <Route path="/onboarding/v2" element={<OnboardingPageV2 user={user} />} />
         <Route path="/speaking/v2" element={<SpeakingPracticeV2 />} />
+        <Route
+          path="/speaking-premium"
+          element={user ? <SpeakingPremium user={user} /> : <Navigate to="/" />}
+        />
         <Route
           path="/speaking-practice"
           element={

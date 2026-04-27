@@ -11,6 +11,12 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { getRecommendedLessonPath } from '../lib/recommendationRouting';
+import {
+  ResultsState as SpeakingResultsState,
+  adaptSpeakingResult,
+  LegacySpeakingDetailDrawer,
+} from '../features/speaking';
+import '../features/speaking/speaking.css';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -1422,103 +1428,106 @@ export default function CambridgeTestResults() {
           )}
         </Card>
 
-        {/* Speaking Section */}
-        <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
-          <div 
-            className="flex items-center justify-between cursor-pointer"
-            onClick={() => Object.keys(speakingEvaluations).length > 0 && setExpandedSection(expandedSection === 'speaking' ? null : 'speaking')}
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center shadow-lg">
-                <Mic className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900">Speaking Evaluation</h3>
-                <p className="text-sm text-gray-500">
-                  {Object.keys(speakingEvaluations).length > 0 
-                    ? `${Object.keys(speakingEvaluations).length} responses evaluated` 
-                    : 'Speaking responses will be evaluated upon submission'}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              {Object.keys(speakingEvaluations).length > 0 ? (
-                <>
-                  <Badge className={`text-lg px-3 py-1 ${getBandLightBg(
-                    Math.round(Object.values(speakingEvaluations).reduce((sum, e) => sum + (e.overall_band || 5), 0) / Object.keys(speakingEvaluations).length * 2) / 2
-                  )}`}>
-                    Band {Math.round(Object.values(speakingEvaluations).reduce((sum, e) => sum + (e.overall_band || 5), 0) / Object.keys(speakingEvaluations).length * 2) / 2}
-                  </Badge>
-                  {expandedSection === 'speaking' ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
-                </>
-              ) : (
-                <Badge className="bg-gray-100 text-gray-500">Pending</Badge>
-              )}
-            </div>
-          </div>
-          
-          {/* Speaking Results - Expandable */}
-          {expandedSection === 'speaking' && Object.keys(speakingEvaluations).length > 0 && (
-            <div className="mt-6 space-y-4">
-              {Object.entries(speakingEvaluations).map(([questionIdx, evaluation]) => (
-                <div key={questionIdx} className="p-5 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl border border-emerald-200">
-                  <div className="flex justify-between items-center mb-4 pb-3 border-b border-emerald-100">
-                    <span className="font-bold text-lg text-gray-900">Response {parseInt(questionIdx) + 1}</span>
-                    <Badge className={`text-lg px-3 py-1 ${getBandLightBg(evaluation.overall_band || 5)}`}>
-                      Band {evaluation.overall_band || 5}
-                    </Badge>
+        {/* Speaking Section — D7 ResultsState header + drawer with legacy
+             per-response detail. Pending state shown when no evaluations yet. */}
+        {(() => {
+          const evalEntries = Object.entries(speakingEvaluations || {});
+          const hasEvals = evalEntries.length > 0;
+
+          if (!hasEvals) {
+            return (
+              <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center shadow-lg">
+                    <Mic className="w-5 h-5 text-white" />
                   </div>
-                  
-                  {/* Criteria Scores */}
-                  {evaluation.criteria && (
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-                      {evaluation.criteria.fluency_coherence && (
-                        <div className="p-3 bg-blue-50 rounded-lg text-center">
-                          <div className="text-xs text-blue-600 font-medium">Fluency</div>
-                          <div className={`text-lg font-bold ${getBandColorClass(evaluation.criteria.fluency_coherence)}`}>
-                            {evaluation.criteria.fluency_coherence}
-                          </div>
-                        </div>
-                      )}
-                      {evaluation.criteria.lexical_resource && (
-                        <div className="p-3 bg-purple-50 rounded-lg text-center">
-                          <div className="text-xs text-purple-600 font-medium">Vocabulary</div>
-                          <div className={`text-lg font-bold ${getBandColorClass(evaluation.criteria.lexical_resource)}`}>
-                            {evaluation.criteria.lexical_resource}
-                          </div>
-                        </div>
-                      )}
-                      {evaluation.criteria.grammatical_range && (
-                        <div className="p-3 bg-green-50 rounded-lg text-center">
-                          <div className="text-xs text-green-600 font-medium">Grammar</div>
-                          <div className={`text-lg font-bold ${getBandColorClass(evaluation.criteria.grammatical_range)}`}>
-                            {evaluation.criteria.grammatical_range}
-                          </div>
-                        </div>
-                      )}
-                      {evaluation.criteria.pronunciation && (
-                        <div className="p-3 bg-amber-50 rounded-lg text-center">
-                          <div className="text-xs text-amber-600 font-medium">Pronunciation</div>
-                          <div className={`text-lg font-bold ${getBandColorClass(evaluation.criteria.pronunciation)}`}>
-                            {evaluation.criteria.pronunciation}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  
-                  {/* Feedback */}
-                  {evaluation.feedback && (
-                    <div className="mb-3 p-3 bg-emerald-50 rounded-lg border-l-4 border-emerald-500">
-                      <p className="text-xs font-bold text-emerald-700 mb-1">Teacher&apos;s Feedback</p>
-                      <p className="text-sm text-gray-700">{evaluation.feedback}</p>
-                    </div>
-                  )}
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Speaking Evaluation
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      Speaking responses will be evaluated upon submission.
+                    </p>
+                  </div>
+                  <Badge className="bg-gray-100 text-gray-500">Pending</Badge>
                 </div>
-              ))}
+              </Card>
+            );
+          }
+
+          // Aggregate per-response criteria + band into a single object the
+          // D7 ResultsState adapter understands. Rounded to nearest 0.5.
+          const overallBand =
+            Math.round(
+              (evalEntries.reduce(
+                (sum, [, e]) => sum + (e.overall_band || 5),
+                0,
+              ) /
+                evalEntries.length) *
+                2,
+            ) / 2;
+
+          const criteriaAvg = (key) => {
+            const values = evalEntries
+              .map(([, e]) => e?.criteria?.[key])
+              .filter((v) => typeof v === 'number');
+            if (!values.length) return null;
+            return (
+              Math.round(
+                (values.reduce((a, b) => a + b, 0) / values.length) * 2,
+              ) / 2
+            );
+          };
+
+          const aggregated = {
+            band: overallBand,
+            criteria: {
+              fluency_coherence: criteriaAvg('fluency_coherence'),
+              lexical_resource: criteriaAvg('lexical_resource'),
+              grammatical_range: criteriaAvg('grammatical_range'),
+              pronunciation: criteriaAvg('pronunciation'),
+            },
+          };
+          const adapted = adaptSpeakingResult(aggregated);
+
+          const responses = evalEntries.map(([idx, evaluation]) => ({
+            id: idx,
+            label: `Response ${parseInt(idx, 10) + 1}`,
+            ...evaluation,
+          }));
+
+          return (
+            <div className="mb-6">
+              {adapted ? (
+                <div className="speaking-scope rounded-2xl overflow-hidden border border-orange-100 shadow-lg">
+                  <SpeakingResultsState
+                    data={adapted}
+                    onRetryCard={() => navigate('/speaking-practice')}
+                    onNewCard={() => navigate('/dashboard')}
+                  />
+                </div>
+              ) : (
+                <Card className="p-6 bg-white border-0 shadow-lg rounded-2xl">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center shadow-lg">
+                      <Mic className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        Speaking
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        Band {overallBand} · {evalEntries.length} responses
+                        evaluated
+                      </p>
+                    </div>
+                  </div>
+                </Card>
+              )}
+              <LegacySpeakingDetailDrawer responses={responses} />
             </div>
-          )}
-        </Card>
+          );
+        })()}
 
         {/* ============ SPEAKING P2 FEATURES ============ */}
         {Object.keys(speakingEvaluations).length > 0 && (
