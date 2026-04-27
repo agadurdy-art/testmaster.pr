@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLizLive } from '../hooks/useLizLive';
+
+const API_BASE = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_API_URL || '';
 
 /**
  * LizLivePanel — Smart Practice Part 1 / Part 3 conversational mode.
@@ -18,17 +20,57 @@ import { useLizLive } from '../hooks/useLizLive';
  * `closed` payload) to the unified evaluator.
  */
 export default function LizLivePanel({ part, onExit, user }) {
+  // `topic` is the free-text seed; `selectedTopic` is the course-catalogue
+  // chip the user picked. We send whichever is non-empty (chip wins) so the
+  // examiner prompt is anchored to a real lesson topic instead of "anything".
   const [topic, setTopic] = useState('');
+  const [selectedTopic, setSelectedTopic] = useState(null);
+  const [topics, setTopics] = useState([]);
+  const [topicsError, setTopicsError] = useState(null);
+  const [topicsLoading, setTopicsLoading] = useState(true);
   const [started, setStarted] = useState(false);
   const live = useLizLive();
 
   const partLabel = part === 'part3' ? 'Part 3 — Discussion' : 'Part 1 — Warm-up';
 
+  // Pull the 47-topic catalogue from the backend on mount. We optionally
+  // filter by the user's target band so a B1 candidate isn't served
+  // advanced-only topics (registry handles the gating).
+  useEffect(() => {
+    let cancelled = false;
+    const params = new URLSearchParams();
+    if (typeof user?.target_band === 'number') {
+      const tb = user.target_band;
+      const band =
+        tb >= 7 ? '7.0-9.0' : tb >= 5.5 ? '5.5-6.5' : '4.0-5.0';
+      params.set('band_level', band);
+    }
+    const qs = params.toString() ? `?${params.toString()}` : '';
+    fetch(`${API_BASE}/api/speaking/topics${qs}`)
+      .then(async (r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
+      .then((data) => {
+        if (cancelled) return;
+        setTopics(Array.isArray(data?.topics) ? data.topics : []);
+        setTopicsLoading(false);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        setTopicsError(err?.message || 'Could not load topics');
+        setTopicsLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, [user?.target_band]);
+
+  const effectiveTopic = (selectedTopic?.name || topic.trim() || '').trim();
+
   const handleStart = async () => {
     setStarted(true);
     await live.start({
       part,
-      topic: topic.trim() || null,
+      topic: effectiveTopic || null,
       // Faz 3.5: pass user identity so the server runs the evaluator on the
       // candidate audio after the session ends. Anonymous sessions skip this.
       userId: user?.id || null,
@@ -65,20 +107,78 @@ export default function LizLivePanel({ part, onExit, user }) {
         </div>
 
         <div>
-          <label htmlFor="liz-topic" className="block text-sm font-medium text-slate-700">
-            Topic seed (optional)
-          </label>
-          <input
-            id="liz-topic"
-            type="text"
-            value={topic}
-            onChange={(e) => setTopic(e.target.value)}
-            placeholder={part === 'part3' ? 'e.g. The role of technology in education' : 'e.g. Hometown, Hobbies, Work'}
-            className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-violet-500 focus:ring-1 focus:ring-violet-500"
-          />
+          <div className="flex items-center justify-between">
+            <label className="block text-sm font-medium text-slate-700">
+              Pick a topic
+            </label>
+            {selectedTopic && (
+              <button
+                type="button"
+                onClick={() => setSelectedTopic(null)}
+                className="text-xs text-slate-500 hover:text-slate-800"
+              >
+                Clear
+              </button>
+            )}
+          </div>
           <p className="mt-1 text-xs text-slate-500">
-            Leave blank to let Liz pick.
+            Liz will run the conversation on the topic you choose, using
+            questions drawn from the relevant course lessons.
           </p>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            {topicsLoading && (
+              <span className="text-xs text-slate-400">Loading topics…</span>
+            )}
+            {topicsError && !topicsLoading && (
+              <span className="text-xs text-rose-600">
+                Couldn't load topics ({topicsError}). Type one below instead.
+              </span>
+            )}
+            {!topicsLoading && !topicsError && topics.length === 0 && (
+              <span className="text-xs text-slate-500">
+                No topics yet — type one below.
+              </span>
+            )}
+            {topics.map((t) => {
+              const on = selectedTopic?.id === t.id;
+              return (
+                <button
+                  key={t.id}
+                  type="button"
+                  onClick={() => {
+                    setSelectedTopic(on ? null : t);
+                    if (!on) setTopic(''); // chip wins; clear free-text
+                  }}
+                  className={
+                    'inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-medium transition-colors ' +
+                    (on
+                      ? 'border-violet-600 bg-violet-600 text-white'
+                      : 'border-slate-300 bg-white text-slate-700 hover:border-violet-400 hover:bg-violet-50')
+                  }
+                >
+                  {t.name}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="mt-4">
+            <label htmlFor="liz-topic" className="block text-xs font-medium text-slate-600">
+              Or type your own topic
+            </label>
+            <input
+              id="liz-topic"
+              type="text"
+              value={topic}
+              onChange={(e) => {
+                setTopic(e.target.value);
+                if (e.target.value.trim()) setSelectedTopic(null);
+              }}
+              placeholder={part === 'part3' ? 'e.g. The role of technology in education' : 'e.g. Hometown, Hobbies, Work'}
+              className="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-violet-500 focus:ring-1 focus:ring-violet-500"
+            />
+          </div>
         </div>
 
         <div className="flex items-center justify-between pt-2">
@@ -92,9 +192,10 @@ export default function LizLivePanel({ part, onExit, user }) {
           <button
             type="button"
             onClick={handleStart}
-            className="bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg shadow-sm"
+            disabled={!effectiveTopic}
+            className="bg-violet-600 hover:bg-violet-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white text-sm font-medium px-5 py-2.5 rounded-lg shadow-sm"
           >
-            Start conversation
+            {effectiveTopic ? `Start: ${effectiveTopic}` : 'Pick a topic to start'}
           </button>
         </div>
       </div>

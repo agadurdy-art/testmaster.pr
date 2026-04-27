@@ -182,6 +182,37 @@ def _quota_headers(decision: EvalDecision) -> Dict[str, str]:
     }
 
 
+# ─── Topic catalogue ─────────────────────────────────────────────────────────
+
+
+@router.get("/topics")
+async def list_speaking_topics(band_level: Optional[str] = None) -> Dict[str, Any]:
+    """Return the course-driven topic catalogue used to seed Liz Live and
+    cue-card draws. Pulls from beginner / mastery / advanced lesson collections
+    via LessonRegistry — single source of truth so /question-bank, /speaking
+    and /liz-live all see the same ~47 topics.
+
+    Optional ``band_level`` (one of "4.0-5.0", "5.5-6.5", "7.0-9.0") narrows
+    the result to topics permitted at that band per the standard topic gate.
+    """
+    if db is None:
+        raise HTTPException(
+            status_code=503,
+            detail={"code": "db_unavailable", "message": "Topic catalogue unavailable."},
+        )
+    from services.lesson_registry import LessonRegistry
+
+    registry = LessonRegistry(db)
+    if band_level:
+        topics = await registry.get_topics_by_band(band_level)
+    else:
+        topics = await registry.get_all_topics()
+    # Stable order: alphabetic by name so the chip rail doesn't reshuffle
+    # between requests (Mongo ordering is not guaranteed across collections).
+    topics.sort(key=lambda t: (t.get("name") or "").lower())
+    return {"topics": topics, "count": len(topics)}
+
+
 # ─── Authenticated endpoint ──────────────────────────────────────────────────
 
 
