@@ -1,16 +1,20 @@
 """
 Liz LLM provider abstraction
 ============================
-Unified async interface for Liz Teacher LLM calls. Supports Anthropic (Claude)
-as primary provider with OpenAI (emergentintegrations) fallback, selected via
-environment flag. Keeps call-site code identical regardless of backend.
+Unified async interface for Liz Teacher LLM calls. Supports Anthropic (Claude),
+Gemini, and OpenAI (emergentintegrations) as interchangeable backends, selected
+via environment flag. Keeps call-site code identical regardless of backend.
 
 Env:
-  LIZ_LLM_PROVIDER         = "anthropic" | "openai"   (default: anthropic if
-                             ANTHROPIC_API_KEY is set, else openai)
+  LIZ_LLM_PROVIDER         = "anthropic" | "gemini" | "openai"
+                             (default: anthropic if ANTHROPIC_API_KEY is set,
+                             else gemini if GEMINI_API_KEY is set, else openai)
   ANTHROPIC_API_KEY        = Claude API key
+  GEMINI_API_KEY           = Gemini API key (also used by Liz Live)
   LIZ_DEFAULT_MODEL        = Haiku model id (chat/greet/light tasks)
   LIZ_DEEP_MODEL           = Sonnet model id (evaluation/deep tasks)
+  LIZ_GEMINI_DEFAULT_MODEL = Gemini fast-chat model id
+  LIZ_GEMINI_DEEP_MODEL    = Gemini deep model id
   EMERGENT_LLM_KEY         = OpenAI key (via emergentintegrations)
   LIZ_OPENAI_DEFAULT_MODEL = legacy OpenAI default (fallback)
   LIZ_OPENAI_DEEP_MODEL    = legacy OpenAI deep (fallback)
@@ -31,6 +35,8 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_ANTHROPIC_CHAT = "claude-haiku-4-5-20251001"
 DEFAULT_ANTHROPIC_DEEP = "claude-sonnet-4-6"
+DEFAULT_GEMINI_CHAT = "gemini-2.5-flash"
+DEFAULT_GEMINI_DEEP = "gemini-2.5-pro"
 DEFAULT_OPENAI_CHAT = "gpt-4o-mini"
 DEFAULT_OPENAI_DEEP = "gpt-4o"
 
@@ -43,9 +49,13 @@ DEEP_KEYWORDS = (
 
 def _active_provider() -> str:
     explicit = (os.environ.get("LIZ_LLM_PROVIDER") or "").strip().lower()
-    if explicit in {"anthropic", "openai"}:
+    if explicit in {"anthropic", "gemini", "openai"}:
         return explicit
-    return "anthropic" if os.environ.get("ANTHROPIC_API_KEY") else "openai"
+    if os.environ.get("ANTHROPIC_API_KEY"):
+        return "anthropic"
+    if os.environ.get("GEMINI_API_KEY"):
+        return "gemini"
+    return "openai"
 
 
 def active_provider() -> str:
@@ -54,14 +64,20 @@ def active_provider() -> str:
 
 
 def default_model() -> str:
-    if _active_provider() == "anthropic":
+    provider = _active_provider()
+    if provider == "anthropic":
         return os.environ.get("LIZ_DEFAULT_MODEL", DEFAULT_ANTHROPIC_CHAT)
+    if provider == "gemini":
+        return os.environ.get("LIZ_GEMINI_DEFAULT_MODEL", DEFAULT_GEMINI_CHAT)
     return os.environ.get("LIZ_OPENAI_DEFAULT_MODEL", DEFAULT_OPENAI_CHAT)
 
 
 def deep_model() -> str:
-    if _active_provider() == "anthropic":
+    provider = _active_provider()
+    if provider == "anthropic":
         return os.environ.get("LIZ_DEEP_MODEL", DEFAULT_ANTHROPIC_DEEP)
+    if provider == "gemini":
+        return os.environ.get("LIZ_GEMINI_DEEP_MODEL", DEFAULT_GEMINI_DEEP)
     return os.environ.get("LIZ_OPENAI_DEEP_MODEL", DEFAULT_OPENAI_DEEP)
 
 
@@ -78,6 +94,27 @@ def select_model(message: str, is_voice: bool = False, task: str = "chat") -> st
 # ─── Async clients (lazy, cached) ─────────────────────────────────────────────
 
 _anthropic_client = None
+_gemini_client = None
+
+
+def _get_gemini_client():
+    """Returns a cached google-genai async client. Used for both chat and
+    streaming via `aio.models.generate_content` / `generate_content_stream`."""
+    global _gemini_client
+    if _gemini_client is not None:
+        return _gemini_client
+    try:
+        from google import genai  # type: ignore
+    except ImportError as exc:
+        raise RuntimeError(
+            "google-genai SDK is not installed. Add `google-genai` to "
+            "requirements.txt and redeploy, or set LIZ_LLM_PROVIDER=anthropic."
+        ) from exc
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        raise RuntimeError("GEMINI_API_KEY is not configured.")
+    _gemini_client = genai.Client(api_key=api_key)
+    return _gemini_client
 
 
 def _get_anthropic_client():
@@ -141,6 +178,19 @@ async def complete(
                 parts.append(text)
         return "".join(parts).strip()
 
+    if provider == "gemini":
+        from google.genai import types as gtypes  # type: ignore
+        client = _get_gemini_client()
+        response = await client.aio.models.generate_content(
+            model=chosen,
+            contents=user_message,
+            config=gtypes.GenerateContentConfig(
+                system_instruction=system,
+                max_output_tokens=max_tokens,
+            ),
+        )
+        return (response.text or "").strip()
+
     # openai fallback
     from emergentintegrations.llm.chat import UserMessage  # type: ignore
     chat = _get_openai_chat(system, chosen, session_id)
@@ -174,6 +224,22 @@ async def stream(
                     yield text_delta
         return
 
+    if provider == "gemini":
+        from google.genai import types as gtypes  # type: ignore
+        client = _get_gemini_client()
+        async for chunk in await client.aio.models.generate_content_stream(
+            model=chosen,
+            contents=user_message,
+            config=gtypes.GenerateContentConfig(
+                system_instruction=system,
+                max_output_tokens=max_tokens,
+            ),
+        ):
+            text = getattr(chunk, "text", None)
+            if text:
+                yield text
+        return
+
     # fallback: single-shot
     full = await complete(
         system=system, user_message=user_message, model=chosen,
@@ -191,5 +257,6 @@ def health() -> dict:
         "default_model": default_model(),
         "deep_model": deep_model(),
         "anthropic_configured": bool(os.environ.get("ANTHROPIC_API_KEY")),
+        "gemini_configured": bool(os.environ.get("GEMINI_API_KEY")),
         "openai_configured": bool(os.environ.get("EMERGENT_LLM_KEY")),
     }

@@ -11,6 +11,8 @@ import {
   RecentSessions,
   LizNote,
 } from "../features/dashboard";
+import { isSpeakingPremiumUser } from "../lib/planAccess";
+import { Sparkles, Lock } from "lucide-react";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 const SKILL_KEYS = ["Listening", "Reading", "Writing", "Speaking"];
@@ -297,6 +299,7 @@ export default function DashboardPage({ user, onLogout }) {
         />
         <SmartPracticeList
           skills={skills}
+          user={user}
           onPick={(key) => {
             const path = {
               Writing: "/question-bank?writing=1",
@@ -306,6 +309,7 @@ export default function DashboardPage({ user, onLogout }) {
             }[key];
             if (path) navigate(path);
           }}
+          onSpeakingPremium={() => navigate("/speaking-premium")}
         />
       </section>
 
@@ -957,8 +961,9 @@ function DaysSquare({
   );
 }
 
-function SmartPracticeList({ skills, onPick }) {
+function SmartPracticeList({ skills, user, onPick, onSpeakingPremium }) {
   const order = ["Writing", "Reading", "Speaking", "Listening"];
+  const isPremium = isSpeakingPremiumUser(user);
   return (
     <div>
       <div className="mb-5">
@@ -972,7 +977,7 @@ function SmartPracticeList({ skills, onPick }) {
         {order.map((key) => {
           const s = skills.find((x) => x.key === key) || {};
           const tone = SKILL_TONE[key];
-          return (
+          const row = (
             <button
               key={key}
               type="button"
@@ -1002,6 +1007,58 @@ function SmartPracticeList({ skills, onPick }) {
               </div>
               <Arrow small />
             </button>
+          );
+
+          if (key !== "Speaking") return row;
+
+          // Inject Speaking Premium card directly under the Speaking row.
+          // Premium tiers (monthly + exam) get a clean entry; free / weekly
+          // see a locked appearance with a short conversion blurb.
+          return (
+            <React.Fragment key={key}>
+              {row}
+              <button
+                type="button"
+                onClick={onSpeakingPremium}
+                className="w-full grid grid-cols-[auto_1fr_auto] items-center gap-4 py-4 text-left transition-colors px-1"
+                onMouseEnter={(e) => (e.currentTarget.style.background = "hsl(var(--fg) / 0.025)")}
+                onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+              >
+                <span
+                  aria-hidden="true"
+                  style={{
+                    width: 4,
+                    height: 28,
+                    borderRadius: 4,
+                    background: "linear-gradient(180deg, #7c3aed, #ec4899)",
+                  }}
+                />
+                <div>
+                  <div className="font-display text-[18px] flex items-center gap-2">
+                    Speaking Premium
+                    <span className="inline-flex items-center gap-1 rounded-full bg-violet-50 text-violet-700 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider">
+                      {isPremium ? (
+                        <>
+                          <Sparkles className="w-3 h-3" />
+                          Liz Live
+                        </>
+                      ) : (
+                        <>
+                          <Lock className="w-3 h-3" />
+                          Premium
+                        </>
+                      )}
+                    </span>
+                  </div>
+                  <div className="text-xs text-muted">
+                    {isPremium
+                      ? "Live conversation with Liz · Gemini 2.5 voice tutor"
+                      : "Real-time Liz examiner conversation — upgrade to unlock"}
+                  </div>
+                </div>
+                <Arrow small />
+              </button>
+            </React.Fragment>
           );
         })}
       </div>

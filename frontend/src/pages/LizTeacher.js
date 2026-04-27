@@ -4,13 +4,15 @@ import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import {
   ArrowLeft, Send, Volume2, VolumeX, Plus,
-  Loader2, ChevronDown, Mic, MicOff,
+  Loader2, ChevronDown, Mic, MicOff, Headphones,
   MessageSquare, BookOpen, PenTool, Target,
   GraduationCap, ChevronUp, ClipboardList,
   CheckCircle2, Clock, X, Star, FileText
 } from 'lucide-react';
 import { canAccessLiz } from '../lib/lizAccess';
 import { parseLizSegments } from '../lib/lizNavigateParser';
+import LizLivePanel from '../features/speaking/components/LizLivePanel';
+import '../features/speaking/speaking.css';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const LIZ_AVATAR = 'https://static.prod-images.emergentagent.com/jobs/799d7d0f-0425-4acb-aa13-54128002d580/images/baeb03c8118b149f97024b78f7f053e092a9d4c22d6c09656fd3a17aacf6359b.png';
@@ -280,6 +282,9 @@ export default function LizTeacher({ user }) {
   const [submittingHw, setSubmittingHw] = useState(false);
   const [autoVoice, setAutoVoice] = useState(true);
   const [hasGreeted, setHasGreeted] = useState(false);
+  // When true, hand the conversation off to the Gemini Live voice panel.
+  // The chat UI remains mounted so returning preserves context.
+  const [liveMode, setLiveMode] = useState(false);
   const audioRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
@@ -574,6 +579,37 @@ export default function LizTeacher({ user }) {
   const isLizBusy = status === 'thinking' || status === 'speaking';
   const isUserBusy = status === 'listening' || status === 'transcribing';
 
+  if (liveMode) {
+    // Hand the conversation off to the Gemini Live voice panel. The chat
+    // surface is unmounted so the mic/speaker pipeline doesn't fight with
+    // Liz Live's own audio context. Returning ("End") brings the chat back.
+    return (
+      <div
+        className="min-h-screen bg-slate-50 speaking-scope"
+        data-testid="liz-live-mode"
+      >
+        <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between border-b border-slate-200/60 bg-white">
+          <button
+            onClick={() => setLiveMode(false)}
+            className="text-slate-400 hover:text-slate-700"
+            data-testid="liz-live-back-btn"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+          <div className="text-[12px] font-medium text-slate-600">
+            Live conversation with Liz · Gemini 2.5
+          </div>
+          <div className="w-5" />
+        </div>
+        <LizLivePanel
+          part="part1"
+          user={user}
+          onExit={() => setLiveMode(false)}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-teal-50/20 to-white flex flex-col" data-testid="liz-teacher-page">
       {/* CSS for audio bars */}
@@ -624,6 +660,14 @@ export default function LizTeacher({ user }) {
               title={autoVoice ? 'Voice On' : 'Voice Off'}
             >
               {autoVoice ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+            </button>
+            <button
+              onClick={() => setLiveMode(true)}
+              className="p-2 rounded-full text-violet-600 bg-violet-50 hover:bg-violet-100 transition-colors"
+              data-testid="liz-live-toggle"
+              title="Live conversation with Liz"
+            >
+              <Headphones className="w-4 h-4" />
             </button>
             <div className="relative">
               <Button variant="ghost" size="sm" onClick={() => setShowSessions(!showSessions)} className="text-slate-500 text-xs" data-testid="sessions-btn">

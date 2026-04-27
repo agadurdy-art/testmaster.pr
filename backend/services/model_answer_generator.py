@@ -601,7 +601,7 @@ Write ONLY the essay text, no labels or explanations."""
         Generate AI-powered model answer using GPT-4o.
         Only used for generating the academic reasoning feedback.
         """
-        from emergentintegrations.llm.chat import LlmChat, UserMessage
+        from services.llm_compat import LlmChat, UserMessage
         
         try:
             llm = LlmChat(
@@ -737,7 +737,7 @@ Write ONLY the essay text. No titles, no labels, no word count."""
     @classmethod
     def _sync_ai_call(cls, prompt: str) -> str:
         import os
-        from emergentintegrations.llm.chat import LlmChat, UserMessage
+        from services.llm_compat import LlmChat, UserMessage
         import uuid
         import asyncio
         loop = asyncio.new_event_loop()
@@ -749,7 +749,7 @@ Write ONLY the essay text. No titles, no labels, no word count."""
     @classmethod
     async def _async_ai_call(cls, prompt: str) -> str:
         import os, uuid
-        from emergentintegrations.llm.chat import LlmChat, UserMessage
+        from services.llm_compat import LlmChat, UserMessage
         llm = LlmChat(
             api_key=os.environ.get("EMERGENT_LLM_KEY", ""),
             session_id=f"model_answer_{uuid.uuid4()}",

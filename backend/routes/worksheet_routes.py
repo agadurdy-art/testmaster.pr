@@ -85,7 +85,7 @@ async def _collect_words_and_rules(lesson_id: str, max_words: int = 20):
 
 async def _generate_exercises_gpt4o(words: list, rules: list, lesson_title: str) -> dict:
     """Use GPT-4o to generate teacher-quality worksheet exercises."""
-    from emergentintegrations.llm.chat import LlmChat, UserMessage
+    from services.llm_compat import LlmChat, UserMessage
 
     api_key = os.environ.get("EMERGENT_LLM_KEY")
     if not api_key:

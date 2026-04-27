@@ -122,7 +122,7 @@ class AIModelAnswerGenerator:
     
     async def _generate_with_ai(self, prompt: str, task_data: Dict[str, Any]) -> str:
         """Generate model answer using AI."""
-        from emergentintegrations.llm.chat import LlmChat, UserMessage
+        from services.llm_compat import LlmChat, UserMessage
         
         llm = LlmChat(
             api_key=os.environ.get("EMERGENT_LLM_KEY"),

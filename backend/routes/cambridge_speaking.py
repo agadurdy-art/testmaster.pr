@@ -69,7 +69,7 @@ async def evaluate_free_speaking(audio_path: str, question: str, part: int) -> D
         return {"error": "Evaluation service not configured", "success": False}
     
     try:
-        from emergentintegrations.llm.openai import LlmChat, UserMessage
+        from services.llm_compat import LlmChat, UserMessage
         import uuid
         from openai import OpenAI
         
@@ -158,7 +158,7 @@ async def evaluate_premium_speaking(audio_path: str, question: str, part: int) -
     try:
         import azure.cognitiveservices.speech as speechsdk
         import subprocess
-        from emergentintegrations.llm.openai import LlmChat, UserMessage
+        from services.llm_compat import LlmChat, UserMessage
         import uuid
         
         # Convert to WAV
@@ -456,7 +456,7 @@ async def generate_speaking_drills(
             # LLM personalization: generate 1 short personalized tip (max ~100 tokens)
             if EMERGENT_LLM_KEY and (weaknesses or transcript):
                 try:
-                    from emergentintegrations.llm.openai import LlmChat, UserMessage
+                    from services.llm_compat import LlmChat, UserMessage
                     import uuid
                     
                     context = f"Weaknesses: {', '.join(weaknesses[:3])}" if weaknesses else ""
@@ -523,7 +523,7 @@ async def generate_model_answers(
                     "band7": {"structure": _get_structure_template(part, 7)},
                     "band8": {"structure": _get_structure_template(part, 8)}}
         
-        from emergentintegrations.llm.openai import LlmChat, UserMessage
+        from services.llm_compat import LlmChat, UserMessage
         import uuid
         
         # Length guidelines per part

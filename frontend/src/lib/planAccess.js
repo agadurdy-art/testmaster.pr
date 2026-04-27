@@ -35,6 +35,18 @@ export function isOnNewPaidPlan(user) {
   return NEW_PAID_PLANS.includes(plan);
 }
 
+// Speaking Premium = Liz Gemini Live full AI tutor. Gated to the two top
+// IELTS-Ace tiers (monthly + exam). Weekly users still get standard
+// /speaking-practice + /question-bank/speaking; they see a locked card on
+// /speaking-premium with a conversion CTA → /pricing/v2.
+export const SPEAKING_PREMIUM_PLANS = ['monthly', 'exam'];
+
+export function isSpeakingPremiumUser(user) {
+  if (isAdminUser(user)) return true;
+  const plan = normalizePlanName(user?.plan);
+  return SPEAKING_PREMIUM_PLANS.includes(plan);
+}
+
 export function normalizePlanName(plan) {
   const normalized = (plan || 'free').toString().trim().toLowerCase();
   return LEGACY_PLAN_ALIASES[normalized] || normalized || 'free';

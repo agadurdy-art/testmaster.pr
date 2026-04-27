@@ -45,6 +45,16 @@ export default function SpeakingPracticeQB({ user }) {
   const [results, setResults] = useState(null);
   const [showText, setShowText] = useState(false);
   const [showTierModal, setShowTierModal] = useState(false);
+  // Submission overlay: covers the screen while /api/speaking/submit is in flight.
+  // Without this, clicking Basic/Premium just dismisses the modal and the user
+  // sees the stale Part 3 question for ~30–60s — they assume it's broken and leave.
+  // submittingTier=null means idle; 'free'|'premium' means an overlay is showing.
+  // submitStep narrates progress so users know we're working: 'preparing' (base64
+  // encode for premium), 'uploading' (HTTP request in flight), 'evaluating'
+  // (server is scoring). 'error' shows a retry path without bouncing the user.
+  const [submittingTier, setSubmittingTier] = useState(null);
+  const [submitStep, setSubmitStep] = useState('idle');
+  const [submitError, setSubmitError] = useState(null);
   
   const [timeLeft, setTimeLeft] = useState(0);
   const [prepTime, setPrepTime] = useState(60);
@@ -309,29 +319,34 @@ export default function SpeakingPracticeQB({ user }) {
   };
 
   const submitTest = async (tier = 'free') => {
+    // Overlay-driven flow: show the processing screen immediately so the user
+    // sees Liz "thinking" instead of staring at the stale Part 3 question.
+    // Toast-only feedback (the previous implementation) was invisible during
+    // the modal-close→fetch gap and silent on errors that landed after the
+    // user had already navigated away.
+    setShowTierModal(false);
+    setSubmittingTier(tier);
+    setSubmitError(null);
+    setSubmitStep(tier === 'premium' ? 'preparing' : 'evaluating');
+
     try {
-      setLoading(true);
-      setShowTierModal(false);
-      
-      // Prepare answers with audio data for premium tier
       let preparedAnswers = [...answers];
-      
+
       if (tier === 'premium') {
-        // Add audio_data (base64) for each answer if available
-        toast.info('Preparing audio for Azure analysis...');
+        // Base64-encoding 10 webm blobs can take a couple of seconds on
+        // mid-range phones; keep the user on the 'preparing' step until
+        // the upload starts.
         preparedAnswers = await Promise.all(answers.map(async (answer) => {
           const audioBlob = audioBlobsRef.current[answer.question_id];
           if (audioBlob) {
             const audioBase64 = await blobToBase64(audioBlob);
-            return {
-              ...answer,
-              audio_data: audioBase64
-            };
+            return { ...answer, audio_data: audioBase64 };
           }
           return answer;
         }));
+        setSubmitStep('uploading');
       }
-      
+
       const res = await fetch(`${API_URL}/api/speaking/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -344,31 +359,33 @@ export default function SpeakingPracticeQB({ user }) {
           user_id: user?.id
         })
       });
-      
+
+      // Once bytes are on the wire, the server-side eval (Sonnet + optionally
+      // Azure for premium) is what we're now waiting on.
+      setSubmitStep('evaluating');
+
       const data = await res.json();
       if (data.success) {
         setResults(data);
-        // Clear stored audio blobs after submission
         audioBlobsRef.current = {};
-        
-        // Update user credits if premium
         if (tier === 'premium' && data.remaining_credits !== undefined) {
           setUserCredits(data.remaining_credits);
         }
-        
-        toast.success(tier === 'premium' ? '⭐ Premium evaluation complete!' : '✅ Basic evaluation complete!');
+        setSubmittingTier(null);
+        setSubmitStep('idle');
       } else {
-        if (data.error === 'Insufficient credits for premium evaluation') {
-          toast.error(`Need ${data.credits_needed} credit. You have ${data.current_credits}.`);
-        } else {
-          toast.error(data.error || 'Evaluation failed');
-        }
+        // Stay in the overlay so the user can retry without losing their
+        // answers (audioBlobsRef is intentionally not cleared on error).
+        const message = data.error === 'Insufficient credits for premium evaluation'
+          ? `Need ${data.credits_needed} credit. You have ${data.current_credits}.`
+          : (data.error || 'Evaluation failed');
+        setSubmitError(message);
+        setSubmitStep('error');
       }
     } catch (error) {
       console.error('Submit error:', error);
-      toast.error('Could not submit test');
-    } finally {
-      setLoading(false);
+      setSubmitError('Could not reach the evaluation server. Check your connection and try again.');
+      setSubmitStep('error');
     }
   };
 
@@ -535,6 +552,24 @@ export default function SpeakingPracticeQB({ user }) {
           </div>
         )}
 
+        {/* Submission processing overlay — keeps the user on a clearly-active
+            screen while the eval runs. Replaces the previous toast-only flow
+            where users would leave the page before the result landed. */}
+        {submittingTier && (
+          <SubmittingOverlay
+            tier={submittingTier}
+            step={submitStep}
+            error={submitError}
+            onRetry={() => submitTest(submittingTier)}
+            onCancel={() => {
+              setSubmittingTier(null);
+              setSubmitStep('idle');
+              setSubmitError(null);
+              setShowTierModal(true);
+            }}
+          />
+        )}
+
         {/* Evaluation Tier Selection Modal */}
         {showTierModal && (
           <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
@@ -692,4 +727,125 @@ export default function SpeakingPracticeQB({ user }) {
       </div>
     </div>
   );
+}
+
+/**
+ * Full-screen overlay shown during /api/speaking/submit.
+ *
+ * Why this exists: clicking Basic/Premium used to dismiss the tier modal and
+ * leave the user on the (now-stale) Part 3 last-question screen until the
+ * fetch resolved 30–60s later. Premium adds Azure word-level pronunciation
+ * + Sonnet on top of base scoring, so timing can stretch toward a minute on
+ * cold starts. Without an overlay, users assumed the click was lost and
+ * navigated away before the result arrived.
+ *
+ * The overlay narrates progress (preparing → uploading → evaluating) so the
+ * wait feels intentional, and surfaces errors inline with a Retry button so
+ * users don't lose their answers — audioBlobsRef is preserved on error.
+ */
+function SubmittingOverlay({ tier, step, error, onRetry, onCancel }) {
+  const isError = step === 'error';
+  const isPremium = tier === 'premium';
+
+  const stepCopy = {
+    preparing: {
+      title: 'Preparing your audio',
+      detail: 'Encoding your responses for Azure pronunciation analysis…',
+    },
+    uploading: {
+      title: 'Uploading to Liz',
+      detail: 'Sending your answers to the evaluator. Don\'t close this window.',
+    },
+    evaluating: {
+      title: isPremium ? 'Liz is evaluating your speaking' : 'Liz is reviewing your answers',
+      detail: isPremium
+        ? 'Azure word-level pronunciation + Sonnet IELTS examiner. Usually 30–60 seconds.'
+        : 'Sonnet IELTS examiner is scoring four criteria. Usually 15–25 seconds.',
+    },
+  };
+
+  const copy = stepCopy[step] || stepCopy.evaluating;
+
+  return (
+    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-[60] p-4">
+      <Card className="w-full max-w-md p-8 bg-white text-center">
+        {isError ? (
+          <>
+            <div className="w-16 h-16 mx-auto rounded-full bg-rose-50 flex items-center justify-center mb-4">
+              <span className="text-3xl" role="img" aria-label="error">⚠️</span>
+            </div>
+            <h2 className="text-xl font-bold text-gray-900 mb-2">
+              Something went wrong
+            </h2>
+            <p className="text-sm text-gray-600 mb-6">{error}</p>
+            <p className="text-xs text-gray-400 mb-6">
+              Your recordings are safe — you can retry without re-recording.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button variant="outline" onClick={onCancel} className="flex-1">
+                Choose tier again
+              </Button>
+              <Button onClick={onRetry} className="flex-1 bg-indigo-600 hover:bg-indigo-700">
+                <RotateCcw className="w-4 h-4 mr-2" /> Retry
+              </Button>
+            </div>
+          </>
+        ) : (
+          <>
+            {/* Pulsing avatar — Liz "thinking". Two stacked rings for a soft
+                radial glow rather than the harsh Loader2 spin we use in the
+                rest of the app; the wait is long enough that a calmer
+                animation feels less alarming. */}
+            <div className="relative w-20 h-20 mx-auto mb-5">
+              <div className={`absolute inset-0 rounded-full ${isPremium ? 'bg-purple-200' : 'bg-emerald-200'} animate-ping opacity-60`} />
+              <div className={`absolute inset-2 rounded-full ${isPremium ? 'bg-gradient-to-br from-purple-500 to-indigo-600' : 'bg-gradient-to-br from-emerald-500 to-teal-600'} flex items-center justify-center`}>
+                {isPremium ? (
+                  <Award className="w-8 h-8 text-white" />
+                ) : (
+                  <Mic className="w-8 h-8 text-white" />
+                )}
+              </div>
+            </div>
+
+            <h2 className="text-xl font-bold text-gray-900 mb-2">{copy.title}</h2>
+            <p className="text-sm text-gray-600 mb-6">{copy.detail}</p>
+
+            <div className="flex items-center justify-center gap-2 mb-6">
+              <StepDot active={step === 'preparing'} done={step === 'uploading' || step === 'evaluating'} />
+              {isPremium && (
+                <>
+                  <StepLine done={step === 'uploading' || step === 'evaluating'} />
+                  <StepDot active={step === 'uploading'} done={step === 'evaluating'} />
+                </>
+              )}
+              <StepLine done={step === 'evaluating'} />
+              <StepDot active={step === 'evaluating'} done={false} />
+            </div>
+
+            <p className="text-xs text-gray-400">
+              Please keep this window open. Your test won't be saved if you leave.
+            </p>
+          </>
+        )}
+      </Card>
+    </div>
+  );
+}
+
+function StepDot({ active, done }) {
+  if (done) {
+    return (
+      <span className="w-3 h-3 rounded-full bg-emerald-500 flex items-center justify-center">
+        <CheckCircle className="w-3 h-3 text-white" strokeWidth={3} />
+      </span>
+    );
+  }
+  if (active) {
+    return <span className="w-3 h-3 rounded-full bg-indigo-500 animate-pulse" />;
+  }
+  return <span className="w-3 h-3 rounded-full bg-gray-200" />;
+}
+
+function StepLine({ done }) {
+  return <span className={`h-0.5 w-8 ${done ? 'bg-emerald-500' : 'bg-gray-200'}`} />;
 }

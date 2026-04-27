@@ -643,7 +643,7 @@ async def generate_ai_teacher_feedback(results: Dict, skill_breakdown: list, tes
     if not EMERGENT_LLM_KEY:
         return None
     try:
-        from emergentintegrations.llm.openai import LlmChat, UserMessage
+        from services.llm_compat import LlmChat, UserMessage
 
         sections = results.get("sections", {})
         listening = sections.get("listening", {})
@@ -849,7 +849,7 @@ async def evaluate_writing_section(test: Dict, answers: Dict) -> Dict:
         }
     
     try:
-        from emergentintegrations.llm.openai import LlmChat, UserMessage
+        from services.llm_compat import LlmChat, UserMessage
         
         test_writing = test["sections"]["writing"]
         task_results = []
@@ -950,7 +950,7 @@ async def evaluate_speaking_section(test: Dict, answers: Dict) -> Dict:
         }
     
     try:
-        from emergentintegrations.llm.openai import LlmChat, UserMessage
+        from services.llm_compat import LlmChat, UserMessage
         
         # Combine all transcripts
         transcripts = []
