@@ -36,9 +36,10 @@ import { useAudioRegistry } from '../contexts/AudioContext';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL || '';
 
-// Default voice id matches backend EXAMINER default (Rachel — clear British
-// female). Override per call site if a different Liz voice is desired.
-const DEFAULT_VOICE_ID = '21m00Tcm4TlvDq8ikWAM';
+// Empty default → backend picks (LIZ_VOICE_ID env or its own DEFAULT_VOICE_ID).
+// Lets free-tier ElevenLabs accounts swap to a premade voice without a
+// frontend deploy. Override per call site if a different Liz voice is desired.
+const DEFAULT_VOICE_ID = '';
 
 // Module-level cache of resolved audio URLs keyed by `${voiceId}::${text}`.
 // Same component re-rendering doesn't re-hit the API; different components
@@ -50,10 +51,13 @@ async function resolveAudioUrl(text, voiceId) {
   const key = `${voiceId}::${text}`;
   if (urlCache.has(key)) return urlCache.get(key);
 
+  // Only include voice_id when caller passed one; empty string lets the
+  // backend apply its LIZ_VOICE_ID env default.
+  const body = voiceId ? { text, voice_id: voiceId } : { text };
   const res = await fetch(`${API_URL}/api/tts/generate`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text, voice_id: voiceId }),
+    body: JSON.stringify(body),
   });
   if (!res.ok) {
     throw new Error(`TTS generate failed: ${res.status}`);

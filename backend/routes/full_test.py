@@ -507,10 +507,26 @@ async def evaluate_full_test(
         writing_result = await evaluate_writing_section(test, answers["writing"])
         results["sections"]["writing"] = writing_result
 
-    # Evaluate Speaking (AI)
+    # Evaluate Speaking
+    # Faz 2 path: frontend orchestrator submits 3 audio blobs to
+    # /api/speaking/evaluate-fulltest (holistic Sonnet eval) and forwards
+    # the result here as `answers["speaking"]["fulltest_eval"]`. In that
+    # case we just pass it through and ensure a top-level `band` field
+    # is set so the overall-band aggregation at line ~520 works.
+    # Legacy path (transcript-only): fall back to evaluate_speaking_section.
     if "speaking" in answers and "speaking" in test.get("sections", {}):
-        speaking_result = await evaluate_speaking_section(test, answers["speaking"])
-        results["sections"]["speaking"] = speaking_result
+        sa = answers["speaking"] or {}
+        if isinstance(sa, dict) and isinstance(sa.get("fulltest_eval"), dict):
+            ft = sa["fulltest_eval"]
+            speaking_result = dict(ft)
+            if "band" not in speaking_result:
+                scores = ft.get("scores") or {}
+                if isinstance(scores, dict):
+                    speaking_result["band"] = scores.get("overall", 0)
+            results["sections"]["speaking"] = speaking_result
+        else:
+            speaking_result = await evaluate_speaking_section(test, sa)
+            results["sections"]["speaking"] = speaking_result
 
     # Calculate overall band
     bands = []

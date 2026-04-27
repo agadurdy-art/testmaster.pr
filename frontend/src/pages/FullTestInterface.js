@@ -90,15 +90,22 @@ export default function FullTestInterface({ user }) {
   const [writingTask, setWritingTask] = useState(1);
   const [wordCount, setWordCount] = useState({ task1: 0, task2: 0 });
 
-  // Speaking specific
+  // Speaking specific (continuous-per-part — one Blob per part for /api/speaking/evaluate-fulltest)
+  // speakingState lifecycle:
+  //   IDLE → (Part 2 only: PREP 60s) → RECORDING → PROCESSING → PART_DONE
+  //   PART_DONE → IDLE (next part) | ALL_DONE (after Part 3)
+  //   ALL_DONE → EVALUATING (multipart POST) → submit complete
   const [speakingPart, setSpeakingPart] = useState(1);
   const [speakingQuestion, setSpeakingQuestion] = useState(0);
   const [speakingState, setSpeakingState] = useState('IDLE');
-  const [questionTimeRemaining, setQuestionTimeRemaining] = useState(0);
-  const [recordings, setRecordings] = useState({});
+  const [partTimeRemaining, setPartTimeRemaining] = useState(0);
+  const [prepTimeRemaining, setPrepTimeRemaining] = useState(0);
+  const [recordings, setRecordings] = useState({}); // { part1: {blob,url,duration}, part2, part3 }
+  const [fulltestSpeakingResult, setFulltestSpeakingResult] = useState(null);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const questionAudioRef = useRef(null);
+  const recordingStartRef = useRef(null);
 
   const sectionOrder = ['listening', 'reading', 'writing', 'speaking'];
   const isSingleSectionMode = ['listening', 'reading', 'writing', 'speaking'].includes(mode);
@@ -181,6 +188,13 @@ export default function FullTestInterface({ user }) {
   };
 
   const submitCurrentSection = async () => {
+    // Speaking goes through the holistic /api/speaking/evaluate-fulltest path
+    // (multipart with 3 audio blobs); skip the legacy JSON submit-section.
+    if (currentSection === 'speaking') {
+      await submitFullTestSpeaking();
+      return;
+    }
+
     setSubmitting(true);
     try {
       const res = await fetch(`${API_URL}/api/full-test/submit-section`, {
@@ -397,43 +411,50 @@ export default function FullTestInterface({ user }) {
     }
   };
 
-  // Speaking handlers
+  // Speaking handlers — continuous-per-part recording
+  // Each part records as ONE continuous take. Sub-questions display on screen
+  // and the candidate paces themselves; mic stays open across sub-questions.
+  // Auto-stop ceilings keep parts within real-IELTS bounds (server schema also
+  // clamps duration_seconds ≤ 600).
+  const PART_KEYS = { 1: 'part1', 2: 'part2', 3: 'part3' };
+  const PART_MAX_DURATION = {
+    1: 5 * 60 + 30, // ~5–6 min (9 short Q&As)
+    2: SPEAKING_TIMING.part2.speakTime, // 120s monologue
+    3: 5 * 60, // ~5 min discussion
+  };
+
   const startSpeakingRecording = async () => {
     try {
-      if (mediaRecorderRef.current) {
-        mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
+      if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+        mediaRecorderRef.current.stop();
       }
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
       audioChunksRef.current = [];
-      
+      recordingStartRef.current = Date.now();
+      const partAtStart = speakingPart;
+
       mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0) audioChunksRef.current.push(event.data);
       };
-      
+
       mediaRecorder.onstop = () => {
         const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
-        const answerId = `${speakingPart}_${speakingQuestion}`;
+        const partKey = PART_KEYS[partAtStart];
+        const duration = (Date.now() - recordingStartRef.current) / 1000;
         setRecordings(prev => ({
           ...prev,
-          [answerId]: { blob: audioBlob, url: URL.createObjectURL(audioBlob) }
-        }));
-        setSectionAnswers(prev => ({
-          ...prev,
-          speaking: { ...prev.speaking, [answerId]: { audioBlob } }
+          [partKey]: { blob: audioBlob, url: URL.createObjectURL(audioBlob), duration },
         }));
         stream.getTracks().forEach(track => track.stop());
-        setSpeakingState('READY_NEXT');
+        setSpeakingState('PART_DONE');
       };
-      
+
       mediaRecorderRef.current = mediaRecorder;
       mediaRecorder.start();
       setSpeakingState('RECORDING');
-      
-      const maxTime = speakingPart === 1 ? SPEAKING_TIMING.part1.questionTime :
-                     speakingPart === 2 ? SPEAKING_TIMING.part2.speakTime :
-                     SPEAKING_TIMING.part3.questionTime;
-      setQuestionTimeRemaining(maxTime);
+      setSpeakingQuestion(0);
+      setPartTimeRemaining(PART_MAX_DURATION[partAtStart]);
     } catch (error) {
       toast.error('Could not access microphone');
     }
@@ -446,12 +467,22 @@ export default function FullTestInterface({ user }) {
     }
   };
 
-  // Speaking timer
+  const advanceToNextPart = () => {
+    if (speakingPart < 3) {
+      setSpeakingPart(prev => prev + 1);
+      setSpeakingQuestion(0);
+      setSpeakingState('IDLE');
+    } else {
+      setSpeakingState('ALL_DONE');
+    }
+  };
+
+  // Auto-stop timer for active recording (caps part duration)
   useEffect(() => {
     let interval;
-    if (speakingState === 'RECORDING' && questionTimeRemaining > 0) {
+    if (speakingState === 'RECORDING' && partTimeRemaining > 0) {
       interval = setInterval(() => {
-        setQuestionTimeRemaining(prev => {
+        setPartTimeRemaining(prev => {
           if (prev <= 1) {
             stopSpeakingRecording();
             return 0;
@@ -461,7 +492,122 @@ export default function FullTestInterface({ user }) {
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [speakingState, questionTimeRemaining]);
+  }, [speakingState, partTimeRemaining]);
+
+  // Part 2 prep timer: counts down 60s before speaking
+  useEffect(() => {
+    let interval;
+    if (speakingState === 'PREP' && prepTimeRemaining > 0) {
+      interval = setInterval(() => {
+        setPrepTimeRemaining(prev => {
+          if (prev <= 1) {
+            // Auto-start recording when prep ends
+            startSpeakingRecording();
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [speakingState, prepTimeRemaining]);
+
+  const startPart2Prep = () => {
+    setSpeakingState('PREP');
+    setPrepTimeRemaining(SPEAKING_TIMING.part2.prepTime);
+  };
+
+  // Build multipart FormData and POST to /api/speaking/evaluate-fulltest.
+  // Stores the holistic result on state and threads it into sectionAnswers
+  // so completeTest forwards it to the backend (which short-circuits the
+  // legacy speaking evaluator when fulltest_eval is present).
+  const submitFullTestSpeaking = async () => {
+    setSubmitting(true);
+    setSpeakingState('EVALUATING');
+    try {
+      const speaking = testData?.sections?.speaking;
+      const partsMeta = [1, 2, 3].map(p => speaking?.parts?.[p - 1] || {});
+
+      // Validate all 3 parts have recordings
+      for (let p = 1; p <= 3; p++) {
+        if (!recordings[`part${p}`]?.blob) {
+          throw new Error(`Part ${p} recording missing`);
+        }
+      }
+
+      const formData = new FormData();
+      const userId = (() => {
+        try { return JSON.parse(localStorage.getItem('user'))?.id; } catch { return null; }
+      })();
+      if (userId) formData.append('user_id', userId);
+      formData.append('user_language', 'en');
+      formData.append('target_band', '7.0');
+      formData.append(
+        'client_request_id',
+        sessionId || `fulltest_${testId}_${Date.now()}`,
+      );
+      formData.append('test_id', testId);
+
+      [1, 2, 3].forEach((p, idx) => {
+        const partKey = `part${p}`;
+        const rec = recordings[partKey];
+        const meta = partsMeta[idx];
+        formData.append(`${partKey}_audio`, rec.blob, `${partKey}.webm`);
+
+        let cuePrompt = '';
+        let cueBullets = [];
+        if (p === 2 && meta.cue_card) {
+          cuePrompt = meta.cue_card.topic || meta.description || `Part ${p}`;
+          cueBullets = meta.cue_card.points || [];
+        } else {
+          const qTexts = (meta.questions || [])
+            .map(q => q.text || q.question || '')
+            .filter(Boolean);
+          cuePrompt = qTexts.length
+            ? qTexts.join('\n')
+            : (meta.description || `Part ${p}`);
+        }
+        formData.append(`${partKey}_cue_card_prompt`, cuePrompt.slice(0, 1000));
+        formData.append(`${partKey}_cue_card_bullets`, JSON.stringify(cueBullets.slice(0, 6)));
+        formData.append(
+          `${partKey}_duration_seconds`,
+          String(Math.min(600, Math.round(rec.duration || 0))),
+        );
+      });
+
+      const res = await fetch(`${API_URL}/api/speaking/evaluate-fulltest`, {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data?.detail || `HTTP ${res.status}`);
+      }
+      setFulltestSpeakingResult(data);
+      setSectionAnswers(prev => ({
+        ...prev,
+        speaking: { fulltest_eval: data },
+      }));
+      setCompletedSections(prev => prev.includes('speaking') ? prev : [...prev, 'speaking']);
+
+      if (isSingleSectionMode) {
+        navigate(`/full-test/results/${sessionId}`, {
+          state: { results: { sections: { speaking: data } } },
+        });
+        return;
+      }
+      // Continue normal flow — completeTest aggregates all sections
+      completeTest();
+    } catch (err) {
+      console.error('Speaking submit error:', err);
+      toast.error(`Speaking evaluation failed: ${err.message || 'Please try again'}`);
+      setSpeakingState('ALL_DONE');
+    } finally {
+      setSubmitting(false);
+      setShowConfirmSubmit(false);
+    }
+  };
 
   // ============ RENDER IELTS-STYLE HEADER ============
   const renderHeader = () => (
@@ -1463,14 +1609,44 @@ export default function FullTestInterface({ user }) {
   const renderSpeakingSection = () => {
     const speaking = testData?.sections?.speaking;
     const currentPartData = speaking?.parts?.[speakingPart - 1];
-    const currentQ = currentPartData?.questions?.[speakingQuestion];
-    
+    const partKey = `part${speakingPart}`;
+    const partRecording = recordings[partKey];
+    const allPartsRecorded = ['part1', 'part2', 'part3'].every(k => recordings[k]?.blob);
+
+    // Per-part progress strip (top of section)
+    const progressStrip = (
+      <div className="flex items-center justify-center gap-2 mb-6">
+        {[1, 2, 3].map(p => {
+          const k = `part${p}`;
+          const done = !!recordings[k];
+          const active = p === speakingPart;
+          return (
+            <div
+              key={p}
+              className={`px-3 py-1 rounded-full text-sm border ${
+                done
+                  ? 'bg-green-50 border-green-300 text-green-700'
+                  : active
+                    ? 'bg-blue-50 border-blue-400 text-blue-700 font-medium'
+                    : 'bg-slate-50 border-slate-200 text-slate-500'
+              }`}
+            >
+              Part {p}{done ? ' ✓' : ''}
+            </div>
+          );
+        })}
+      </div>
+    );
+
     return (
       <div className="flex-1 overflow-auto bg-white">
         <div className="max-w-3xl mx-auto p-6">
+          {progressStrip}
+
           <h2 className="text-2xl font-bold text-slate-900 mb-2">Part {speakingPart}</h2>
           <p className="text-slate-600 mb-6">{currentPartData?.description}</p>
 
+          {/* Part 2: Cue card */}
           {speakingPart === 2 && currentPartData?.cue_card && (
             <Card className="p-6 bg-amber-50 border-2 border-amber-300 mb-6">
               <h3 className="font-bold text-amber-900 mb-3">Cue Card</h3>
@@ -1484,71 +1660,96 @@ export default function FullTestInterface({ user }) {
             </Card>
           )}
 
+          {/* Parts 1 & 3: question list (shown on screen for self-paced answering) */}
           {(speakingPart === 1 || speakingPart === 3) && (
-            <Card className="p-8 text-center bg-slate-50">
-              <Headphones className="w-16 h-16 mx-auto text-blue-500 mb-4" />
-              <p className="text-lg text-slate-700 mb-2">Listen to the examiner&apos;s question</p>
-              <p className="text-sm text-slate-500 mb-6">
-                Question {speakingQuestion + 1} of {currentPartData?.questions?.length}
+            <Card className="p-6 bg-slate-50 mb-6">
+              <p className="text-sm text-slate-500 mb-3">
+                Recording will run continuously across all questions in Part {speakingPart}.
+                Read each question and answer naturally; click <strong>End Part</strong> when done.
               </p>
-              <Button
-                onClick={() => {
-                  if (questionAudioRef.current) {
-                    questionAudioRef.current.play();
-                    setSpeakingState('PROMPT_PLAYING');
-                  }
-                }}
-                disabled={speakingState !== 'IDLE'}
-                className="bg-blue-500 hover:bg-blue-600"
-              >
-                <Volume2 className="w-5 h-5 mr-2" />
-                Play Question
-              </Button>
-              <audio
-                ref={questionAudioRef}
-                src={currentQ ? `${API_URL}/api/full-test/audio/stream/${testId}/speaking/speaking_p${speakingPart}_${currentQ.id}` : ''}
-                onEnded={() => setSpeakingState('IDLE')}
-                style={{ display: 'none' }}
-              />
+              <ol className="list-decimal list-inside space-y-2">
+                {(currentPartData?.questions || []).map((q, idx) => (
+                  <li key={q.id || idx} className="text-slate-800">
+                    {q.text || q.question || ''}
+                  </li>
+                ))}
+              </ol>
             </Card>
           )}
 
+          {/* Recording controls */}
           <Card className="p-6 mt-6">
             {speakingState === 'RECORDING' && (
               <div className="text-3xl font-mono font-bold text-red-600 text-center mb-4">
-                {formatTimeShort(questionTimeRemaining)}
+                {formatTimeShort(partTimeRemaining)}
               </div>
             )}
+            {speakingState === 'PREP' && (
+              <div className="text-center mb-4">
+                <div className="text-3xl font-mono font-bold text-amber-600 mb-1">
+                  {formatTimeShort(prepTimeRemaining)}
+                </div>
+                <p className="text-sm text-slate-600">Preparation time — make notes if you wish</p>
+              </div>
+            )}
+
             <div className="flex justify-center gap-4">
-              {speakingState === 'IDLE' && (
+              {speakingState === 'IDLE' && !partRecording && speakingPart === 2 && (
+                <Button onClick={startPart2Prep} className="bg-amber-500 hover:bg-amber-600">
+                  <Clock className="w-5 h-5 mr-2" /> Start 60s Preparation
+                </Button>
+              )}
+              {speakingState === 'IDLE' && !partRecording && speakingPart !== 2 && (
                 <Button onClick={startSpeakingRecording} className="bg-red-500 hover:bg-red-600">
-                  <Mic className="w-5 h-5 mr-2" /> Start Recording
+                  <Mic className="w-5 h-5 mr-2" /> Start Part {speakingPart} Recording
+                </Button>
+              )}
+              {speakingState === 'PREP' && (
+                <Button onClick={startSpeakingRecording} className="bg-red-500 hover:bg-red-600">
+                  <Mic className="w-5 h-5 mr-2" /> Start Speaking Now
                 </Button>
               )}
               {speakingState === 'RECORDING' && (
                 <Button onClick={stopSpeakingRecording} variant="destructive">
-                  <Square className="w-5 h-5 mr-2" /> Stop
+                  <Square className="w-5 h-5 mr-2" /> End Part {speakingPart}
                 </Button>
               )}
-              {speakingState === 'READY_NEXT' && (
-                <Button onClick={() => {
-                  const questions = currentPartData?.questions || [];
-                  if (speakingQuestion < questions.length - 1) {
-                    setSpeakingQuestion(prev => prev + 1);
-                    setSpeakingState('IDLE');
-                  } else if (speakingPart < 3) {
-                    setSpeakingPart(prev => prev + 1);
-                    setSpeakingQuestion(0);
-                    setSpeakingState('IDLE');
-                  } else {
-                    setShowConfirmSubmit(true);
-                  }
-                }}>
-                  <SkipForward className="w-5 h-5 mr-2" /> Next
+              {(speakingState === 'PART_DONE' || (speakingState === 'IDLE' && partRecording)) && (
+                <Button
+                  onClick={advanceToNextPart}
+                  disabled={!partRecording}
+                  className="bg-slate-900 hover:bg-slate-800"
+                >
+                  {speakingPart < 3
+                    ? <><SkipForward className="w-5 h-5 mr-2" /> Continue to Part {speakingPart + 1}</>
+                    : <><CheckCircle className="w-5 h-5 mr-2" /> All parts recorded</>}
                 </Button>
+              )}
+              {speakingState === 'EVALUATING' && (
+                <div className="flex items-center gap-2 text-slate-600">
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  Evaluating your full test…
+                </div>
               )}
             </div>
+
+            {/* Playback for the just-recorded part */}
+            {partRecording?.url && speakingState !== 'EVALUATING' && (
+              <div className="mt-4 flex justify-center">
+                <audio src={partRecording.url} controls className="w-full max-w-md" />
+              </div>
+            )}
           </Card>
+
+          {/* Final submit hint when all 3 parts recorded */}
+          {allPartsRecorded && speakingState !== 'EVALUATING' && (
+            <Card className="p-4 mt-4 bg-green-50 border-green-200 text-center">
+              <p className="text-sm text-green-800">
+                All three parts recorded. Click <strong>Submit speaking</strong> below to receive
+                your holistic IELTS evaluation.
+              </p>
+            </Card>
+          )}
         </div>
       </div>
     );
@@ -1822,13 +2023,23 @@ export default function FullTestInterface({ user }) {
           {timerActive && (currentSection === 'listening' || currentSection === 'reading') && renderNavigationBar()}
           
           {/* Submit button for writing/speaking */}
-          {timerActive && (currentSection === 'writing' || currentSection === 'speaking') && (
-            <div className="bg-slate-100 border-t p-4 flex justify-end">
-              <Button onClick={() => setShowConfirmSubmit(true)} className="bg-green-600 hover:bg-green-700">
-                Submit {currentSection} <ChevronRight className="w-4 h-4 ml-1" />
-              </Button>
-            </div>
-          )}
+          {timerActive && (currentSection === 'writing' || currentSection === 'speaking') && (() => {
+            const speakingReady =
+              currentSection !== 'speaking' ||
+              ['part1', 'part2', 'part3'].every(k => recordings[k]?.blob);
+            return (
+              <div className="bg-slate-100 border-t p-4 flex justify-end">
+                <Button
+                  onClick={() => setShowConfirmSubmit(true)}
+                  disabled={!speakingReady || speakingState === 'EVALUATING'}
+                  className="bg-green-600 hover:bg-green-700 disabled:opacity-50"
+                  title={!speakingReady ? 'Record all 3 parts first' : ''}
+                >
+                  Submit {currentSection} <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              </div>
+            );
+          })()}
         </>
       )}
 

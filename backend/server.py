@@ -295,6 +295,22 @@ if static_audio_path.exists():
     app.mount("/static/audio", StaticFiles(directory=str(static_audio_path)), name="audio")
     print("✅ Static audio files mounted at /api/static/audio and /static/audio")
 
+# Mount static files for speaking eval recordings (unified endpoint stores
+# the raw webm here and the results UI plays it back via <audio src=...>).
+static_recordings_path = ROOT_DIR / "static" / "recordings"
+static_recordings_path.mkdir(parents=True, exist_ok=True)
+app.mount(
+    "/api/static/recordings",
+    StaticFiles(directory=str(static_recordings_path)),
+    name="recordings_api",
+)
+app.mount(
+    "/static/recordings",
+    StaticFiles(directory=str(static_recordings_path)),
+    name="recordings_static",
+)
+print("✅ Static recordings mounted at /api/static/recordings and /static/recordings")
+
 # Mount static files for vocabulary images
 static_vocab_path = ROOT_DIR / "static" / "vocab_images"
 if not static_vocab_path.exists():
@@ -381,10 +397,12 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load speaking QB routes: {e}")
 
-# Import unified speaking evaluation route (feature-flagged during rollout).
-# Phase 1 plan: this runs alongside the legacy /api/speaking/score and
-# /api/speaking/submit endpoints; UI surfaces migrate one-by-one. Set
-# UNIFIED_SPEAKING_EVAL_ENABLED=0 to disable in an emergency.
+# Import unified speaking evaluation route. The unified /evaluate +
+# /evaluate-anonymous endpoints are the canonical surface for D7 speaking
+# UI. Legacy /api/speaking/score, /api/speaking/submit, /api/speaking/transcribe
+# in routes/speaking_qb.py are still active because SpeakingPracticeQB.js
+# (Question Bank flow) hasn't been API-migrated yet — see Task #64.
+# Set UNIFIED_SPEAKING_EVAL_ENABLED=0 to disable in an emergency.
 if os.environ.get("UNIFIED_SPEAKING_EVAL_ENABLED", "1").lower() not in {"0", "false", "off"}:
     try:
         from routes.speaking_unified import (
@@ -404,6 +422,17 @@ if os.environ.get("UNIFIED_SPEAKING_EVAL_ENABLED", "1").lower() not in {"0", "fa
         print(f"⚠️  Could not load speaking unified routes: {e}")
         import traceback
         traceback.print_exc()
+
+# Import Liz Live (Gemini Live API WebSocket proxy) — Faz 3.
+# Active for Smart Practice Part 1 + Part 3 conversational entry. Part 2
+# remains a monologue (no Live wiring). Disabled if google-genai is missing
+# or GEMINI_API_KEY is unset; the route handler short-circuits gracefully.
+try:
+    from routes.liz_live import router as liz_live_router
+    app.include_router(liz_live_router)
+    print("✅ Liz Live (Gemini Live) WebSocket route loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Liz Live route: {e}")
 
 # Import full test mode routes
 try:

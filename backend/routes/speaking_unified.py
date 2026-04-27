@@ -23,16 +23,23 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
+from email_validator import EmailNotValidError, validate_email
 from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
 from fastapi.responses import JSONResponse
 
-from schemas.speaking_evaluator import SpeakingEvaluationRequest, SpeakingPart
+from schemas.speaking_evaluator import (
+    FullTestPartInput,
+    SpeakingEvaluationRequest,
+    SpeakingFullTestEvaluationRequest,
+    SpeakingPart,
+)
 from services import speaking_idempotency
 from services.audio_processor import persist_audio, validate_audio
 from services.speaking_evaluator import (
     SpeakingEvaluatorFailure,
     evaluate_speaking,
     evaluate_speaking_basic,
+    evaluate_speaking_fulltest,
 )
 from services.tier_resolver import (
     EvalDecision,
@@ -305,6 +312,13 @@ async def evaluate(
 
     latency_ms = int((time.monotonic() - started) * 1000)
     result_dump = result.model_dump()
+    # Surface audio_url + part metadata so the results UI can render a real
+    # playback element and a data-driven header instead of fixtures.
+    result_dump["audio_url"] = audio_meta["relative_url"]
+    result_dump["part"] = req.part.value
+    result_dump["cue_card_prompt"] = req.cue_card_prompt
+    if question_id:
+        result_dump["question_id"] = question_id
 
     # Persist the attempt + bump counters only on success.
     await _persist_attempt(
@@ -383,11 +397,17 @@ async def evaluate_anonymous(
             detail={"code": "db_unavailable", "message": "DB not initialised"},
         )
 
-    email_norm = (email or "").strip().lower()
-    if not email_norm or "@" not in email_norm or "." not in email_norm:
+    # Real validation: syntax + DNS MX lookup. Catches typos like "gmail.ru"
+    # and throwaway addresses without MX records, since these emails feed the
+    # marketing follow-up pipeline.
+    email_raw = (email or "").strip()
+    try:
+        info = validate_email(email_raw, check_deliverability=True)
+        email_norm = info.normalized.lower()
+    except EmailNotValidError as exc:
         raise HTTPException(
             status_code=400,
-            detail={"code": "invalid_email", "message": "A valid email is required."},
+            detail={"code": "invalid_email", "message": str(exc)},
         )
     ip = _client_ip(request)
     week_key = current_week_key()
@@ -477,6 +497,11 @@ async def evaluate_anonymous(
 
     latency_ms = int((time.monotonic() - started) * 1000)
     result_dump = result.model_dump()
+    # Same surface contract as the authed endpoint — audio + part metadata
+    # lets the anon results page render a real player and accurate header.
+    result_dump["audio_url"] = audio_meta["relative_url"]
+    result_dump["part"] = part
+    result_dump["cue_card_prompt"] = cue_card_prompt
 
     # Mark the anon slot as consumed atomically (upsert avoids race).
     # `part` is recorded (not part of the unique key) so the 402 path on the
@@ -528,6 +553,267 @@ async def evaluate_anonymous(
     )
 
 
+# ─── Authenticated Full Test endpoint (holistic) ─────────────────────────────
+
+
+async def _persist_fulltest_attempt(
+    *,
+    user_id: str,
+    client_request_id: Optional[str],
+    audio_meta_by_part: Dict[str, Dict[str, Any]],
+    req: SpeakingFullTestEvaluationRequest,
+    result_dump: Dict[str, Any],
+    decision: EvalDecision,
+    test_id: Optional[str],
+) -> None:
+    if db is None:
+        return
+    try:
+        await db.speaking_fulltest_attempts.insert_one(
+            {
+                "_id": uuid.uuid4().hex,
+                "user_id": user_id,
+                "client_request_id": client_request_id,
+                "created_at": datetime.now(timezone.utc),
+                "context": "full_test",
+                "user_language": req.user_language,
+                "target_band": req.target_band,
+                "audio_by_part": {
+                    part_value: {
+                        "audio_url": meta["relative_url"],
+                        "audio_filename": meta["filename"],
+                        "audio_bytes": meta["bytes"],
+                    }
+                    for part_value, meta in audio_meta_by_part.items()
+                },
+                "result": result_dump,
+                "evaluation_mode": decision.mode,
+                "plan": decision.plan,
+                "period_key": decision.period_key,
+                "test_id": test_id,
+            }
+        )
+    except Exception as exc:
+        logger.warning("Failed to persist fulltest attempt: %s", exc)
+
+
+@router.post("/evaluate-fulltest")
+async def evaluate_fulltest(
+    request: Request,
+    user_id: str = Form(...),
+    user_language: str = Form("en"),
+    target_band: float = Form(7.0),
+    client_request_id: Optional[str] = Form(None),
+    test_id: Optional[str] = Form(None),
+    # Part 1
+    part1_audio: UploadFile = File(...),
+    part1_cue_card_prompt: str = Form(...),
+    part1_cue_card_bullets: str = Form(""),
+    part1_duration_seconds: float = Form(0.0),
+    # Part 2
+    part2_audio: UploadFile = File(...),
+    part2_cue_card_prompt: str = Form(...),
+    part2_cue_card_bullets: str = Form(""),
+    part2_duration_seconds: float = Form(0.0),
+    # Part 3
+    part3_audio: UploadFile = File(...),
+    part3_cue_card_prompt: str = Form(...),
+    part3_cue_card_bullets: str = Form(""),
+    part3_duration_seconds: float = Form(0.0),
+):
+    """Holistic Full Test evaluation. 3 audio uploads, single Sonnet pass.
+
+    IELTS examiner methodology: one band per criterion across the whole
+    test, NOT averaged from per-part bands. Per-part insights are
+    informational only. Quota cost: 1 attempt (the test is one unit).
+    """
+    if db is None:
+        raise HTTPException(
+            status_code=503,
+            detail={"code": "db_unavailable", "message": "DB not initialised"},
+        )
+
+    user = await db.users.find_one({"id": user_id}, {"_id": 0})
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail={"code": "user_not_found", "message": "User not found"},
+        )
+
+    # Idempotency: same user + client_request_id replays the cached result.
+    cached = await speaking_idempotency.lookup(
+        db,
+        user_id=user_id,
+        anon_key=None,
+        client_request_id=client_request_id,
+    )
+    if cached is not None:
+        return JSONResponse(content=cached, headers={"X-Speaking-Cached": "1"})
+
+    # Build the request envelope. Splits each part's bullets line-by-line
+    # mirroring _build_eval_request(); validates ordering [part1, part2, part3].
+    def _split_bullets(raw: str) -> List[str]:
+        if not raw:
+            return []
+        return [b.strip() for b in raw.replace("\r", "").split("\n") if b.strip()]
+
+    try:
+        req = SpeakingFullTestEvaluationRequest(
+            user_language=user_language,
+            target_band=target_band,
+            parts=[
+                FullTestPartInput(
+                    part=SpeakingPart.part1,
+                    cue_card_prompt=part1_cue_card_prompt,
+                    cue_card_bullets=_split_bullets(part1_cue_card_bullets),
+                    duration_seconds=part1_duration_seconds,
+                ),
+                FullTestPartInput(
+                    part=SpeakingPart.part2,
+                    cue_card_prompt=part2_cue_card_prompt,
+                    cue_card_bullets=_split_bullets(part2_cue_card_bullets),
+                    duration_seconds=part2_duration_seconds,
+                ),
+                FullTestPartInput(
+                    part=SpeakingPart.part3,
+                    cue_card_prompt=part3_cue_card_prompt,
+                    cue_card_bullets=_split_bullets(part3_cue_card_bullets),
+                    duration_seconds=part3_duration_seconds,
+                ),
+            ],
+        )
+    except Exception as exc:
+        raise HTTPException(
+            status_code=400,
+            detail={"code": "invalid_request", "message": str(exc)},
+        )
+
+    # Tier gate — Full Test costs 1 attempt regardless of part count.
+    decision = await resolve_speaking_eval(db, user)
+    if not decision.allowed:
+        await _emit_telemetry({
+            "_id": uuid.uuid4().hex,
+            "ts": datetime.now(timezone.utc),
+            "event": "speaking_fulltest_eval",
+            "user_id": user_id,
+            "plan": decision.plan,
+            "mode": decision.mode,
+            "context": "full_test",
+            "success": False,
+            "error_code": "quota_exhausted",
+            "quota_remaining": decision.remaining,
+            "period_key": decision.period_key,
+            "latency_ms": 0,
+        })
+        raise HTTPException(
+            status_code=402,
+            detail={
+                "code": "quota_exhausted",
+                "message": decision.message
+                    or "You've used all evaluations for this period.",
+                "quota": decision.quota,
+                "used": decision.used,
+                "period": decision.period_key,
+                "resets_at": decision.resets_at,
+                "upgrade_to": decision.upgrade_to,
+                "current_plan": decision.plan,
+            },
+        )
+
+    # Read + validate audio per part, persist each.
+    audio_files = {
+        SpeakingPart.part1: (part1_audio, part1_duration_seconds),
+        SpeakingPart.part2: (part2_audio, part2_duration_seconds),
+        SpeakingPart.part3: (part3_audio, part3_duration_seconds),
+    }
+    audios_by_part: Dict[SpeakingPart, bytes] = {}
+    audio_meta_by_part: Dict[str, Dict[str, Any]] = {}
+    for part, (upload, duration) in audio_files.items():
+        audio_bytes = await upload.read()
+        validate_audio(audio_bytes, duration)
+        audios_by_part[part] = audio_bytes
+        audio_meta_by_part[part.value] = persist_audio(audio_bytes)
+
+    started = time.monotonic()
+    try:
+        result = await evaluate_speaking_fulltest(
+            req,
+            audios_by_part,
+            use_azure=(decision.mode == "full"),
+        )
+    except SpeakingEvaluatorFailure as exc:
+        latency_ms = int((time.monotonic() - started) * 1000)
+        await _emit_telemetry({
+            "_id": uuid.uuid4().hex,
+            "ts": datetime.now(timezone.utc),
+            "event": "speaking_fulltest_eval",
+            "user_id": user_id,
+            "plan": decision.plan,
+            "mode": decision.mode,
+            "context": "full_test",
+            "success": False,
+            "error_code": "evaluator_failed",
+            "error_detail": exc.last_error,
+            "attempts": exc.attempts,
+            "quota_remaining": decision.remaining,
+            "period_key": decision.period_key,
+            "latency_ms": latency_ms,
+        })
+        raise HTTPException(
+            status_code=502,
+            detail={
+                "code": "speaking_evaluator_failed",
+                "message": str(exc),
+                "attempts": exc.attempts,
+                "last_error": exc.last_error,
+            },
+        )
+
+    latency_ms = int((time.monotonic() - started) * 1000)
+    result_dump = result.model_dump()
+
+    # Surface per-part audio_url so the orchestrator UI can play back each
+    # part on the results screen.
+    for part_insight in result_dump.get("parts", []):
+        meta = audio_meta_by_part.get(part_insight["part"])
+        if meta:
+            part_insight["audio_url"] = meta["relative_url"]
+    result_dump["test_id"] = test_id
+
+    await _persist_fulltest_attempt(
+        user_id=user_id,
+        client_request_id=client_request_id,
+        audio_meta_by_part=audio_meta_by_part,
+        req=req,
+        result_dump=result_dump,
+        decision=decision,
+        test_id=test_id,
+    )
+    await record_speaking_eval(db, user, decision)
+    await speaking_idempotency.store(
+        db,
+        user_id=user_id,
+        anon_key=None,
+        client_request_id=client_request_id,
+        result=result_dump,
+    )
+    await _emit_telemetry({
+        "_id": uuid.uuid4().hex,
+        "ts": datetime.now(timezone.utc),
+        "event": "speaking_fulltest_eval",
+        "user_id": user_id,
+        "plan": decision.plan,
+        "mode": decision.mode,
+        "context": "full_test",
+        "success": True,
+        "latency_ms": latency_ms,
+        "quota_remaining": max(decision.remaining - 1, 0),
+        "period_key": decision.period_key,
+    })
+
+    return JSONResponse(content=result_dump, headers=_quota_headers(decision))
+
+
 # ─── Index bootstrap ─────────────────────────────────────────────────────────
 
 
@@ -541,6 +827,7 @@ async def init_indexes() -> None:
             [("email", 1), ("ip", 1), ("week_key", 1)], unique=True
         )
         await db.speaking_attempts.create_index([("user_id", 1), ("created_at", -1)])
+        await db.speaking_fulltest_attempts.create_index([("user_id", 1), ("created_at", -1)])
         await db.telemetry_events.create_index([("event", 1), ("ts", -1)])
     except Exception as exc:
         logger.warning("Failed to ensure speaking_unified indexes: %s", exc)

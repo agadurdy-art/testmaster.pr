@@ -95,6 +95,21 @@ function isCanonicalShape(raw) {
   );
 }
 
+function isFulltestShape(raw) {
+  // Faz 2 holistic Full Test result (SpeakingFullTestEvaluationResult):
+  //   { scores, criteria: {fc,lr,gra,pr}, parts: [3 insights], liz_note, ... }
+  // No transcript_tokens — they get synthesized from parts[].transcript.
+  return Boolean(
+    raw &&
+      raw.scores &&
+      typeof raw.scores === 'object' &&
+      Array.isArray(raw.parts) &&
+      raw.parts.length > 0 &&
+      raw.parts[0] &&
+      typeof raw.parts[0].transcript === 'string',
+  );
+}
+
 function isLegacyMultiResponseShape(raw) {
   // Persisted attempts: result.feedback.speaking_feedback = { [k]: { band_score, ... } }
   // OR raw response itself with that shape inline.
@@ -297,6 +312,67 @@ function fromLegacyMultiResponse(raw, ctx) {
   };
 }
 
+function fromFulltest(raw) {
+  // Build transcript_tokens by concatenating parts[].transcript with
+  // small "Part N" header tokens between them. The D7 transcript drawer
+  // doesn't have part-aware styling yet — tokens are plain text runs and
+  // the headers help orient the reader.
+  const tokens = [];
+  let totalWords = 0;
+  let totalSeconds = 0;
+  raw.parts.forEach((p, idx) => {
+    if (idx > 0) tokens.push({ t: '\n\n' });
+    if (p.part) tokens.push({ t: `Part ${String(p.part).replace('part', '')}\n` });
+    if (typeof p.transcript === 'string' && p.transcript.length > 0) {
+      tokens.push({ t: p.transcript });
+      totalWords += p.transcript.trim().split(/\s+/).filter(Boolean).length;
+    }
+    if (typeof p.duration_seconds === 'number') totalSeconds += p.duration_seconds;
+  });
+
+  // Derive a basic fluency block — Full Test holistic mode doesn't run the
+  // per-token Azure pron pass, so wpm/word-count are crude estimates from
+  // the transcripts. Pauses/fillers/unique left as em-dash so the UI shows
+  // them as "—" rather than fake numbers.
+  const wpm = totalSeconds > 0 ? Math.round((totalWords / totalSeconds) * 60) : 0;
+  const fluency = {
+    wpm,
+    pauses: '—',
+    fillers: '—',
+    unique: '—',
+    duration: durationLabel(totalSeconds),
+    words: totalWords,
+  };
+
+  // The new criteria block already uses D7 short keys (fc/lr/gra/pr) with
+  // {band, explanation, strengths, weaknesses}. Pass it through and let
+  // ResultsState read what it needs.
+  const criteria = raw.criteria && typeof raw.criteria === 'object' ? raw.criteria : null;
+
+  return {
+    scores: { ...raw.scores },
+    fluency,
+    transcript_tokens: tokens.length ? tokens : FIXTURE_TOKENS,
+    live_transcript_words: [],
+    liz_note: raw.liz_note || '',
+    criteria,
+    feedback_language: raw.feedback_language || 'en',
+    // Per-part metadata — surfaced separately by FullTestResults so the
+    // UI can render the indicative-band cards (clearly labeled as
+    // informational, not a separate score).
+    parts: Array.isArray(raw.parts)
+      ? raw.parts.map((p) => ({
+          part: p.part,
+          transcript: p.transcript || '',
+          duration_seconds: p.duration_seconds || 0,
+          indicative_band: p.indicative_band ?? null,
+          observation: p.observation || '',
+        }))
+      : [],
+    _source: 'fulltest',
+  };
+}
+
 function fromCanonical(raw) {
   // Pass-through with a defensive copy so callers can mutate without
   // poisoning the SWR cache or whatever fed the data in.
@@ -312,6 +388,12 @@ function fromCanonical(raw) {
     liz_note: raw.liz_note || '',
     criteria: raw.criteria || null,
     feedback_language: raw.feedback_language || 'en',
+    // Audio + per-attempt metadata from backend. audio_url is a relative path
+    // (`/static/recordings/...`); the player resolves it against the API origin.
+    audio_url: raw.audio_url || null,
+    part: raw.part || null,
+    cue_card_prompt: raw.cue_card_prompt || '',
+    question_id: raw.question_id || null,
     _source: 'canonical',
   };
 }
@@ -334,6 +416,7 @@ export function adaptSpeakingResult(raw, ctx = {}) {
   if (!raw || typeof raw !== 'object') return null;
 
   if (isCanonicalShape(raw)) return fromCanonical(raw);
+  if (isFulltestShape(raw)) return fromFulltest(raw);
   if (isLegacyMultiResponseShape(raw)) {
     const out = fromLegacyMultiResponse(raw, ctx);
     if (out) return out;

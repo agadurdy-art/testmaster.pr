@@ -124,7 +124,13 @@ export default function PublicSpeakingTrial() {
   // "submit", "result", "quota", "error"
   const [stage, setStage] = useState("intro");
   const [email, setEmail] = useState("");
-  const [partId, setPartId] = useState("part2");
+  // Honor `?part=part1|part2|part3` so the Samples page can deep-link
+  // visitors into the picker with their chosen part already highlighted.
+  const [partId, setPartId] = useState(() => {
+    if (typeof window === "undefined") return "part2";
+    const q = new URLSearchParams(window.location.search).get("part");
+    return q === "part1" || q === "part2" || q === "part3" ? q : "part2";
+  });
   const [errorMsg, setErrorMsg] = useState("");
   const [result, setResult] = useState(null);
   const [submittedPart, setSubmittedPart] = useState(null);
