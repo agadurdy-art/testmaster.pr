@@ -23,6 +23,7 @@ import json
 import logging
 import os
 import re
+import shutil
 import subprocess
 import tempfile
 import time
@@ -140,31 +141,75 @@ def _substitute(template: str, **values: Any) -> str:
 # ─── Audio transcoding ───────────────────────────────────────────────────────
 
 
+# Memoize the ffmpeg lookup; logged once at first transcode so deploy logs
+# show clearly whether the binary is on PATH (and therefore whether we'll
+# fall through to the pydub path on every request).
+_ffmpeg_path_logged = False
+
+
+def _resolve_ffmpeg_once() -> Optional[str]:
+    global _ffmpeg_path_logged
+    path = shutil.which("ffmpeg")
+    if not _ffmpeg_path_logged:
+        if path:
+            logger.info("Speaking transcode: ffmpeg found at %s", path)
+        else:
+            logger.warning(
+                "Speaking transcode: ffmpeg not on PATH — falling back to pydub. "
+                "Install ffmpeg in the deploy image for faster, more reliable "
+                "webm→wav conversion."
+            )
+        _ffmpeg_path_logged = True
+    return path
+
+
 async def transcode_to_wav(audio_bytes: bytes) -> bytes:
     """Convert arbitrary browser audio (webm/ogg/mp4) to 16kHz mono WAV.
 
-    Tries ffmpeg first, falls back to pydub. Raises on total failure.
+    Tries ffmpeg first, falls back to pydub. Raises a clear RuntimeError on
+    total failure so the caller can surface a useful message instead of
+    bubbling a generic FileNotFoundError back to the user.
     """
+    if not audio_bytes:
+        raise RuntimeError("audio payload is empty")
+
+    ffmpeg_bin = _resolve_ffmpeg_once()
+
     def _run_sync() -> bytes:
         tmp_in = Path(tempfile.mkstemp(suffix=".webm")[1])
         tmp_out = Path(tempfile.mkstemp(suffix=".wav")[1])
         try:
             tmp_in.write_bytes(audio_bytes)
-            try:
-                subprocess.run(
-                    [
-                        "ffmpeg", "-y", "-i", str(tmp_in),
-                        "-acodec", "pcm_s16le", "-ac", "1", "-ar", "16000",
-                        str(tmp_out),
-                    ],
-                    capture_output=True,
-                    check=True,
-                )
-            except (FileNotFoundError, subprocess.CalledProcessError):
-                from pydub import AudioSegment  # type: ignore
-                audio = AudioSegment.from_file(str(tmp_in))
-                audio = audio.set_channels(1).set_frame_rate(16000)
-                audio.export(str(tmp_out), format="wav")
+            ffmpeg_err: Optional[str] = None
+            if ffmpeg_bin:
+                try:
+                    subprocess.run(
+                        [
+                            ffmpeg_bin, "-y", "-i", str(tmp_in),
+                            "-acodec", "pcm_s16le", "-ac", "1", "-ar", "16000",
+                            str(tmp_out),
+                        ],
+                        capture_output=True,
+                        check=True,
+                    )
+                except subprocess.CalledProcessError as exc:
+                    ffmpeg_err = (
+                        (exc.stderr or b"").decode("utf-8", errors="replace")[-400:]
+                        or str(exc)
+                    )
+            if not ffmpeg_bin or ffmpeg_err is not None:
+                try:
+                    from pydub import AudioSegment  # type: ignore
+
+                    audio = AudioSegment.from_file(str(tmp_in))
+                    audio = audio.set_channels(1).set_frame_rate(16000)
+                    audio.export(str(tmp_out), format="wav")
+                except Exception as exc:  # pydub raises CouldntDecodeError etc.
+                    raise RuntimeError(
+                        "could not decode audio "
+                        f"(ffmpeg: {'unavailable' if not ffmpeg_bin else ffmpeg_err}; "
+                        f"pydub: {exc!r})"
+                    ) from exc
             return tmp_out.read_bytes()
         finally:
             tmp_in.unlink(missing_ok=True)

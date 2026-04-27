@@ -283,8 +283,12 @@ export default function LizTeacher({ user }) {
   const [autoVoice, setAutoVoice] = useState(true);
   const [hasGreeted, setHasGreeted] = useState(false);
   // When true, hand the conversation off to the Gemini Live voice panel.
-  // The chat UI remains mounted so returning preserves context.
-  const [liveMode, setLiveMode] = useState(false);
+  // The chat UI remains mounted so returning preserves context. Defaulting
+  // to true makes /liz-teacher open straight into the real-time Gemini
+  // tutor (the chat round-trip via /api/liz/tts had ~2s latency that felt
+  // like the old Web Speech regression to users); chat is still reachable
+  // via the toggle.
+  const [liveMode, setLiveMode] = useState(true);
   const audioRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
