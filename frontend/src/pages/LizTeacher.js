@@ -245,14 +245,14 @@ export default function LizTeacher({ user }) {
           <h1 className="text-2xl font-bold text-slate-900">Meet Liz, Your AI Teacher</h1>
           <p className="text-slate-500 text-sm leading-relaxed">
             Liz is your personal IELTS teacher who speaks to you, tracks your progress,
-            assigns homework, and builds structured study plans. Available for
-            <span className="font-semibold text-violet-600"> Learner</span>,
-            <span className="font-semibold text-fuchsia-600"> Achiever</span>, and
-            <span className="font-semibold text-orange-500"> Master</span> members.
+            assigns homework, and builds structured study plans. Available on the
+            <span className="font-semibold text-violet-600"> Weekly</span>,
+            <span className="font-semibold text-fuchsia-600"> Monthly</span>, and
+            <span className="font-semibold text-orange-500"> Exam Pack</span> plans.
           </p>
           <div className="flex flex-col gap-3">
             <Button
-              onClick={() => navigate('/pricing')}
+              onClick={() => navigate('/pricing/v2')}
               className="bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white shadow-lg"
               data-testid="upgrade-btn"
             >

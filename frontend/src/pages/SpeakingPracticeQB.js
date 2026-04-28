@@ -12,6 +12,7 @@ import {
 import { toast } from 'sonner';
 import { useGoBack } from '../hooks/useGoBack';
 import { ResultsState as SpeakingResultsState, adaptSpeakingResult } from '../features/speaking';
+import { isSpeakingPremiumUser } from '../lib/planAccess';
 import '../features/speaking/speaking.css';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -44,7 +45,6 @@ export default function SpeakingPracticeQB({ user }) {
   const [answers, setAnswers] = useState([]);
   const [results, setResults] = useState(null);
   const [showText, setShowText] = useState(false);
-  const [showTierModal, setShowTierModal] = useState(false);
   // Submission overlay: covers the screen while /api/speaking/submit is in flight.
   // Without this, clicking Basic/Premium just dismisses the modal and the user
   // sees the stale Part 3 question for ~30–60s — they assume it's broken and leave.
@@ -299,8 +299,12 @@ export default function SpeakingPracticeQB({ user }) {
         setRecordingState(STATES.IDLE);
       } else {
         setRecordingState(STATES.COMPLETED);
-        // Show tier selection modal instead of auto-submit
-        setShowTierModal(true);
+        // IELTS Ace plan model: no modal, no credits/tokens. Tier is derived
+        // from the user's plan — Monthly + Exam Pack (and admins) get the
+        // premium pronunciation pass automatically; Free / Weekly get the
+        // Sonnet-only band estimate. See lib/planAccess.isSpeakingPremiumUser.
+        const tier = isSpeakingPremiumUser(user) ? 'premium' : 'free';
+        submitTest(tier);
       }
     }
   };
@@ -324,7 +328,6 @@ export default function SpeakingPracticeQB({ user }) {
     // Toast-only feedback (the previous implementation) was invisible during
     // the modal-close→fetch gap and silent on errors that landed after the
     // user had already navigated away.
-    setShowTierModal(false);
     setSubmittingTier(tier);
     setSubmitError(null);
     setSubmitStep(tier === 'premium' ? 'preparing' : 'evaluating');
@@ -562,94 +565,20 @@ export default function SpeakingPracticeQB({ user }) {
             error={submitError}
             onRetry={() => submitTest(submittingTier)}
             onCancel={() => {
+              // Without a tier modal there's no in-flow choice to fall back
+              // to; cancelling just dismisses the overlay so the user can
+              // retry from the COMPLETED state (or leave the page).
               setSubmittingTier(null);
               setSubmitStep('idle');
               setSubmitError(null);
-              setShowTierModal(true);
             }}
           />
         )}
 
-        {/* Evaluation Tier Selection Modal */}
-        {showTierModal && (
-          <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-            <Card className="w-full max-w-lg p-6 bg-white">
-              <h2 className="text-xl font-bold text-gray-900 mb-2 flex items-center gap-2">
-                <Award className="w-5 h-5 text-indigo-600" /> Test Completed! 🎉
-              </h2>
-              <p className="text-gray-500 mb-4">Choose your evaluation type:</p>
-              
-              {/* User Credits Display */}
-              <div className="mb-4 p-3 bg-gray-50 rounded-lg flex items-center justify-between">
-                <span className="text-sm text-gray-600">Your Credits:</span>
-                <Badge className={userCredits > 0 ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 text-gray-500'}>
-                  {userCredits} credit{userCredits !== 1 ? 's' : ''}
-                </Badge>
-              </div>
-              
-              <div className="space-y-4">
-                {/* Free Tier */}
-                <Card 
-                  className="p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-green-400 bg-green-50/50"
-                  onClick={() => submitTest('free')}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Mic className="w-6 h-6 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-bold text-gray-900">Basic Evaluation</h3>
-                        <Badge className="bg-green-100 text-green-700">FREE</Badge>
-                      </div>
-                      <p className="text-sm text-gray-500 mb-2">AI-powered analysis with Whisper + GPT-4o</p>
-                      <ul className="text-xs text-gray-500 space-y-1">
-                        <li className="flex items-center gap-1"><CheckCircle className="w-3 h-3 text-green-500" /> Band estimation</li>
-                        <li className="flex items-center gap-1"><CheckCircle className="w-3 h-3 text-green-500" /> Strengths & weaknesses</li>
-                        <li className="flex items-center gap-1"><CheckCircle className="w-3 h-3 text-green-500" /> General feedback</li>
-                      </ul>
-                    </div>
-                    <ChevronRight className="w-5 h-5 text-gray-400 mt-4" />
-                  </div>
-                </Card>
-
-                {/* Premium Tier */}
-                <Card 
-                  className={`p-4 cursor-pointer hover:shadow-md transition-all border-2 bg-gradient-to-r from-purple-50 to-indigo-50 ${userCredits > 0 ? 'hover:border-purple-400' : 'opacity-75'}`}
-                  onClick={() => userCredits > 0 ? submitTest('premium') : toast.error('You need at least 1 credit for premium evaluation')}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Award className="w-6 h-6 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-bold text-gray-900">Premium Evaluation</h3>
-                        <Badge className="bg-purple-100 text-purple-700">1 Token</Badge>
-                      </div>
-                      <p className="text-sm text-gray-500 mb-2">Azure Pronunciation Assessment + Advanced AI</p>
-                      <ul className="text-xs text-gray-500 space-y-1">
-                        <li className="flex items-center gap-1"><CheckCircle className="w-3 h-3 text-purple-500" /> Word-level accuracy scores</li>
-                        <li className="flex items-center gap-1"><CheckCircle className="w-3 h-3 text-purple-500" /> Phoneme analysis (ses yutma tespiti)</li>
-                        <li className="flex items-center gap-1"><CheckCircle className="w-3 h-3 text-purple-500" /> Missing endings detection</li>
-                        <li className="flex items-center gap-1"><CheckCircle className="w-3 h-3 text-purple-500" /> Fluency & prosody scores</li>
-                        <li className="flex items-center gap-1"><CheckCircle className="w-3 h-3 text-purple-500" /> Mentor notes & practice focus</li>
-                      </ul>
-                      {userCredits === 0 && (
-                        <p className="text-xs text-red-500 mt-2">⚠️ You need at least 1 credit</p>
-                      )}
-                    </div>
-                    <ChevronRight className="w-5 h-5 text-gray-400 mt-4" />
-                  </div>
-                </Card>
-              </div>
-              
-              <p className="text-xs text-gray-400 mt-4 text-center">
-                1 Credit = 5 Tokens • Premium gives detailed pronunciation feedback
-              </p>
-            </Card>
-          </div>
-        )}
+        {/* Tier-selection modal removed 2026-04-28: IELTS Ace plan model auto-
+            picks the eval tier from user.plan, so candidates never see a credit/
+            token chooser after Part 3. Free / Weekly → Sonnet-only band; Monthly
+            / Exam Pack (and admins) → Sonnet + Azure pronunciation. */}
 
         {results && (() => {
           const adapted = adaptSpeakingResult(results, {
