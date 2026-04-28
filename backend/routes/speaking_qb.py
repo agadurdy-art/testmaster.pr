@@ -1182,42 +1182,59 @@ async def submit_speaking_test(
     
     # PREMIUM TIER: Azure Pronunciation Assessment + GPT-4o
     if evaluation_tier == "premium":
-        # Check user tokens and deduct if available
+        # IELTS Ace plan model (2026-04-28): Monthly + Exam Pack (and admins)
+        # are entitled to premium pronunciation eval as part of their plan, no
+        # examCredits deduction. The legacy GE flow still falls back to the
+        # examCredits counter so existing GE users aren't broken.
+        from plan_access import normalize_plan_name, is_admin_user
+        IELTS_ACE_PREMIUM_PLANS = {"monthly", "exam"}
         remaining_credits = None
-        
+
         if user_id:
             try:
                 mongo_url = os.environ.get("MONGO_URL", "mongodb://localhost:27017")
                 db_name = os.environ.get("DB_NAME", "ielts_database")
                 client = AsyncIOMotorClient(mongo_url)
                 db = client[db_name]
-                
-                # Try to deduct 1 credit from user
-                result = await db.users.find_one_and_update(
-                    {"id": user_id, "examCredits": {"$gt": 0}},
-                    {"$inc": {"examCredits": -1}},
-                    return_document=True,
-                    projection={"_id": 0, "examCredits": 1}
+
+                user_doc = await db.users.find_one(
+                    {"id": user_id},
+                    {"_id": 0, "examCredits": 1, "plan": 1, "email": 1}
                 )
-                
-                if result:
-                    remaining_credits = result.get("examCredits", 0)
-                    print(f"Premium evaluation: User {user_id} charged 1 credit. Remaining: {remaining_credits}")
+                user_plan = normalize_plan_name(user_doc.get("plan") if user_doc else None)
+                user_email = (user_doc or {}).get("email", "")
+                plan_entitled = user_plan in IELTS_ACE_PREMIUM_PLANS or is_admin_user(user_email)
+
+                if plan_entitled:
+                    # Plan-based access — no credit deduction. Surface remaining
+                    # examCredits if any so the UI badge stays consistent.
+                    remaining_credits = (user_doc or {}).get("examCredits", 0)
+                    print(f"Premium evaluation: User {user_id} entitled via plan '{user_plan}'.")
                 else:
-                    # User has no credits - check if they exist
-                    user = await db.users.find_one({"id": user_id}, {"_id": 0, "examCredits": 1})
-                    if user:
+                    # Fall back to examCredits deduction (legacy GE flow + any
+                    # IELTS Ace user who topped up credits separately).
+                    result = await db.users.find_one_and_update(
+                        {"id": user_id, "examCredits": {"$gt": 0}},
+                        {"$inc": {"examCredits": -1}},
+                        return_document=True,
+                        projection={"_id": 0, "examCredits": 1}
+                    )
+
+                    if result:
+                        remaining_credits = result.get("examCredits", 0)
+                        print(f"Premium evaluation: User {user_id} charged 1 credit. Remaining: {remaining_credits}")
+                    elif user_doc:
                         return {
                             "success": False,
                             "error": "Insufficient credits for premium evaluation",
                             "tier": "premium",
                             "credits_needed": 1,
-                            "current_credits": user.get("examCredits", 0),
-                            "message": "Please purchase credits or use the free evaluation option."
+                            "current_credits": user_doc.get("examCredits", 0),
+                            "message": "Upgrade to Monthly or Exam Pack for premium pronunciation eval, or use the free evaluation option."
                         }
                     else:
                         print(f"User {user_id} not found, allowing premium evaluation anyway")
-                
+
                 client.close()
             except Exception as e:
                 print(f"Token check error: {e}")
