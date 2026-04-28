@@ -15,8 +15,10 @@ import '../features/speaking/speaking.css';
  *   - routes Part 1 / Part 3 into the LizLivePanel (Gemini 2.5 Flash Live)
  *   - keeps Part 2 on the monologue cue-card flow with Sonnet eval
  *
- * Mounted at /speaking-premium. Reachable from the Dashboard Smart Practice
- * list (rendered immediately under the "Speaking" row).
+ * Mounted at /speaking-premium. The `/liz` route mounts a different surface
+ * (LizTeacher avatar + chat); these are intentionally separate per Aga
+ * 2026-04-28 — premium speaking IS Gemini Live; the Liz button (e.g. on
+ * the Dashboard) routes to LizTeacher.
  */
 export default function SpeakingPremium({ user }) {
   const navigate = useNavigate();
