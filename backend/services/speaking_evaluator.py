@@ -148,17 +148,32 @@ _ffmpeg_path_logged = False
 
 
 def _resolve_ffmpeg_once() -> Optional[str]:
+    """Locate an ffmpeg binary, preferring system PATH then the bundled
+    static binary shipped by imageio-ffmpeg. The latter is included in
+    requirements.txt as a deploy-image-independent fallback so transcode
+    works even when the pod base image lacks ffmpeg.
+    """
     global _ffmpeg_path_logged
     path = shutil.which("ffmpeg")
+    source = "system PATH"
+    if not path:
+        try:
+            import imageio_ffmpeg  # type: ignore
+
+            path = imageio_ffmpeg.get_ffmpeg_exe()
+            source = "imageio-ffmpeg bundled binary"
+        except Exception as exc:  # pragma: no cover — package optional
+            if not _ffmpeg_path_logged:
+                logger.warning(
+                    "Speaking transcode: ffmpeg unavailable on PATH and "
+                    "imageio-ffmpeg fallback failed (%s). Pydub will also "
+                    "fail because it shells out to the same binary.",
+                    exc,
+                )
+                _ffmpeg_path_logged = True
+            return None
     if not _ffmpeg_path_logged:
-        if path:
-            logger.info("Speaking transcode: ffmpeg found at %s", path)
-        else:
-            logger.warning(
-                "Speaking transcode: ffmpeg not on PATH — falling back to pydub. "
-                "Install ffmpeg in the deploy image for faster, more reliable "
-                "webm→wav conversion."
-            )
+        logger.info("Speaking transcode: ffmpeg resolved via %s → %s", source, path)
         _ffmpeg_path_logged = True
     return path
 
@@ -201,6 +216,11 @@ async def transcode_to_wav(audio_bytes: bytes) -> bytes:
                 try:
                     from pydub import AudioSegment  # type: ignore
 
+                    # Point pydub at whichever ffmpeg we found (system or
+                    # imageio-bundled) so it doesn't blow up looking for one
+                    # on PATH.
+                    if ffmpeg_bin:
+                        AudioSegment.converter = ffmpeg_bin
                     audio = AudioSegment.from_file(str(tmp_in))
                     audio = audio.set_channels(1).set_frame_rate(16000)
                     audio.export(str(tmp_out), format="wav")

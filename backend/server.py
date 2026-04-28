@@ -390,10 +390,11 @@ except Exception as e:
     print(f"⚠️  Could not load listening QB routes: {e}")
 
 # Import unified speaking evaluation route FIRST so its /evaluate, /topics,
-# and /liz-live/ws endpoints take precedence over the legacy /topics + score
-# endpoints in routes/speaking_qb.py (FastAPI resolves first-registered on
-# path collisions). The legacy /score /submit /transcribe in speaking_qb
-# remain reachable because they don't collide.
+# and other endpoints take precedence over the legacy ones in
+# routes/speaking_qb.py (FastAPI resolves the first-registered match). Both
+# routers share prefix /api/speaking and define overlapping paths like
+# /topics — without this ordering, the QB router shadows the unified 47-topic
+# endpoint and LizLivePanel's chip selector goes empty.
 # Set UNIFIED_SPEAKING_EVAL_ENABLED=0 to disable in an emergency.
 if os.environ.get("UNIFIED_SPEAKING_EVAL_ENABLED", "1").lower() not in {"0", "false", "off"}:
     try:
@@ -415,8 +416,9 @@ if os.environ.get("UNIFIED_SPEAKING_EVAL_ENABLED", "1").lower() not in {"0", "fa
         import traceback
         traceback.print_exc()
 
-# Import speaking question bank routes (legacy — registered after unified
-# so unified's /topics + /evaluate take precedence)
+# Import speaking question bank routes (registered AFTER unified so its
+# legacy /score, /submit, /transcribe endpoints stay reachable for
+# SpeakingPracticeQB.js until Task #64 migrates that flow).
 try:
     from routes.speaking_qb import router as speaking_qb_router
     app.include_router(speaking_qb_router)
