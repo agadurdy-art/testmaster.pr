@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import BandRadar from './BandRadar';
 import LizCard from './LizCard';
+import PremiumPronunciationDrawer from './PremiumPronunciationDrawer';
 import {
   TRANSCRIPT_TOKENS as FIXTURE_TOKENS,
   SCORES as FIXTURE_SCORES,
@@ -266,6 +267,16 @@ export default function ResultsState({ data, onRetryCard, onNewCard }) {
   const lizNote = data?.liz_note;
   const audioSrc = resolveAudioSrc(data?.audio_url);
   const meta = buildContextLine(data, FLUENCY);
+  // Premium QB submit returns Azure pronunciation detail + Liz's practice
+  // plan. When present we surface them in a dedicated drawer and hide the
+  // fixture-band rubric block (it shows hardcoded "Pronunciation 6.0" text
+  // that's misleading next to the real numbers).
+  const hasPremiumDetail = Boolean(
+    data?.pronunciation_analysis?.azure_scores ||
+      (Array.isArray(data?.word_level_results) && data.word_level_results.length > 0) ||
+      (Array.isArray(data?.practice_focus) && data.practice_focus.length > 0) ||
+      (Array.isArray(data?.try_this_next) && data.try_this_next.length > 0),
+  );
   return (
     <section style={{ background: 'white', borderTop: '1px solid var(--sp-border)', borderBottom: '1px solid var(--sp-border)' }}>
       <div style={{ maxWidth: 1320, margin: '0 auto', padding: '56px 32px 80px' }}>
@@ -606,7 +617,21 @@ export default function ResultsState({ data, onRetryCard, onNewCard }) {
           )}
         </LizCard>
 
-        {/* Examiner's rubric */}
+        {hasPremiumDetail && (
+          <PremiumPronunciationDrawer
+            pronunciationAnalysis={data.pronunciation_analysis}
+            wordLevelResults={data.word_level_results}
+            practiceFocus={data.practice_focus}
+            tryThisNext={data.try_this_next}
+            strengths={data.strengths}
+            weaknesses={data.weaknesses}
+          />
+        )}
+
+        {/* Examiner's rubric — hidden when premium detail is present (the
+            static copy below is fixture-band leftover that conflicts with
+            real numbers from the premium endpoint). */}
+        {!hasPremiumDetail && (
         <details
           style={{
             marginTop: 24,
@@ -647,6 +672,7 @@ export default function ResultsState({ data, onRetryCard, onNewCard }) {
             </p>
           </div>
         </details>
+        )}
 
         <style>{`
           @media (min-width: 1024px) {
