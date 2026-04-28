@@ -142,8 +142,11 @@ function TranscriptItem({ msg }) {
   );
 }
 
+// `route: '/speaking-premium'` sends the user to the dedicated Gemini Live
+// premium surface; other chips send a chat prompt so the lesson stays in
+// Liz's text surface.
 const LESSON_MODES = [
-  { icon: MessageSquare, label: 'Speaking Practice', prompt: 'Start a structured IELTS Speaking practice session. Begin with Part 1 warm-up questions, then move to Part 2 cue card, and finish with Part 3 discussion. Guide me step by step.', testId: 'lesson-speaking' },
+  { icon: MessageSquare, label: 'Speaking Practice', route: '/speaking-premium', testId: 'lesson-speaking' },
   { icon: BookOpen, label: 'Vocabulary Builder', prompt: 'Start an interactive vocabulary lesson. Teach me useful IELTS vocabulary with examples, then quiz me on it. Use adaptive difficulty.', testId: 'lesson-vocab' },
   { icon: PenTool, label: 'Grammar Lesson', prompt: 'Start a structured grammar lesson focused on common IELTS grammar patterns. Explain a concept, give me a task, then provide feedback. Build up difficulty.', testId: 'lesson-grammar' },
   { icon: Target, label: 'Study Plan', prompt: 'Analyze my progress and create a detailed study plan for the next week. Be specific about what I should practice each day.', testId: 'lesson-plan' },
@@ -283,12 +286,11 @@ export default function LizTeacher({ user }) {
   const [autoVoice, setAutoVoice] = useState(true);
   const [hasGreeted, setHasGreeted] = useState(false);
   // When true, hand the conversation off to the Gemini Live voice panel.
-  // The chat UI remains mounted so returning preserves context. Defaulting
-  // to true makes /liz-teacher open straight into the real-time Gemini
-  // tutor (the chat round-trip via /api/liz/tts had ~2s latency that felt
-  // like the old Web Speech regression to users); chat is still reachable
-  // via the toggle.
-  const [liveMode, setLiveMode] = useState(true);
+  // The chat UI remains mounted so returning preserves context. Defaults
+  // to false so /liz opens on the avatar/chat surface (per Aga 2026-04-28:
+  // Liz UI is the unified surface; Gemini Live is opt-in via the
+  // Speaking Practice chip, not the auto-open mode).
+  const [liveMode, setLiveMode] = useState(false);
   const audioRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
@@ -723,7 +725,13 @@ export default function LizTeacher({ user }) {
             {LESSON_MODES.map(m => (
               <button
                 key={m.testId}
-                onClick={() => sendMessage(m.prompt)}
+                onClick={() => {
+                  if (m.route) {
+                    navigate(m.route);
+                  } else if (m.prompt) {
+                    sendMessage(m.prompt);
+                  }
+                }}
                 className="flex items-center gap-1.5 px-3 py-2 bg-white/80 border border-slate-200 rounded-xl text-xs text-slate-600 hover:bg-teal-50 hover:border-teal-300 hover:text-teal-700 transition-all shadow-sm"
                 data-testid={m.testId}
               >
