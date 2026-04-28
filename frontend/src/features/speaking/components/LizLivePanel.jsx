@@ -349,10 +349,36 @@ function EvaluationCard({ isEvaluating, result, error }) {
     );
   }
   if (error) {
+    // Most-common Azure / pipeline failures map to actionable user guidance.
+    // Anything else falls through to the raw error string.
+    const raw = String(error || '');
+    const isNoMatch = /NoMatch|no\s*match|no_speech|no\s*speech/i.test(raw);
+    const isTooShort = /audio_too_short|too\s*short|too_short|min_seconds/i.test(raw);
+    const isMicLikely = isNoMatch || isTooShort
+      || /audio_too_small|empty|silen[ct]e|no\s*audio/i.test(raw);
+
     return (
       <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-        <div className="font-semibold">Couldn't score this session</div>
-        <div className="opacity-80 mt-0.5">{error}</div>
+        <div className="font-semibold">
+          {isMicLikely
+            ? "We couldn't hear your response"
+            : "Couldn't score this session"}
+        </div>
+        {isMicLikely ? (
+          <div className="opacity-80 mt-1 leading-relaxed">
+            {isTooShort
+              ? "Your reply was shorter than 5 seconds. When Liz asks a question, take a breath and answer in full sentences for at least 5–10 seconds before tapping End conversation."
+              : "Liz heard the question but couldn't pick up a clear answer from your microphone. Try this:"}
+            <ul className="mt-2 list-disc pl-5 space-y-0.5">
+              <li>Check your browser's microphone permission (the lock icon in the URL bar → Microphone = Allow).</li>
+              <li>Confirm the right input device is selected in your system audio settings (not a Bluetooth headset that's powered off).</li>
+              <li>Speak in full sentences for at least 5–10 seconds when Liz asks a question.</li>
+              <li>Close other apps that might be holding the microphone (Zoom, FaceTime, Discord).</li>
+            </ul>
+          </div>
+        ) : (
+          <div className="opacity-80 mt-0.5">{raw}</div>
+        )}
       </div>
     );
   }

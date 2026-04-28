@@ -376,9 +376,22 @@ export default function SpeakingPracticeQB({ user }) {
       } else {
         // Stay in the overlay so the user can retry without losing their
         // answers (audioBlobsRef is intentionally not cleared on error).
-        const message = data.error === 'Insufficient credits for premium evaluation'
-          ? `Need ${data.credits_needed} credit. You have ${data.current_credits}.`
-          : (data.error || 'Evaluation failed');
+        // Map common Azure / pipeline failures to actionable mic guidance.
+        const rawError = data.error || data.detail?.message || data.detail?.code || 'Evaluation failed';
+        const combined = `${data.detail?.code || ''} ${rawError}`;
+        const isNoMatch = /NoMatch|no\s*match|no_speech|no\s*speech/i.test(combined);
+        const isTooShort = /audio_too_short|audio_too_small|too\s*short|too_short|min_seconds|min_bytes/i.test(combined);
+
+        let message;
+        if (data.error === 'Insufficient credits for premium evaluation') {
+          message = `Need ${data.credits_needed} credit. You have ${data.current_credits}.`;
+        } else if (isTooShort) {
+          message = "One or more answers were shorter than 5 seconds. Re-record your responses, speaking in full sentences for 10–15 seconds each, then submit again.";
+        } else if (isNoMatch) {
+          message = "We couldn't pick up clear speech from your microphone. Check the lock icon in the URL bar → Microphone = Allow, confirm the right input device is selected (not a Bluetooth headset that's powered off), and re-record speaking in full sentences for at least 5–10 seconds.";
+        } else {
+          message = rawError;
+        }
         setSubmitError(message);
         setSubmitStep('error');
       }

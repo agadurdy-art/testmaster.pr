@@ -253,10 +253,22 @@ export default function PublicSpeakingTrial() {
           return;
         }
 
-        const message =
-          (typeof detail === "string" && detail) ||
-          detail?.message ||
-          "Evaluation failed. Please try again in a moment.";
+        // Map common Azure / pipeline failures to actionable mic-permission
+        // guidance. Anything else falls through to the raw detail message.
+        const detailCode = detail?.code || "";
+        const detailMsg = (typeof detail === "string" && detail) || detail?.message || "";
+        const combined = `${detailCode} ${detailMsg}`;
+        const isNoMatch = /NoMatch|no\s*match|no_speech|no\s*speech/i.test(combined);
+        const isTooShort = /audio_too_short|audio_too_small|too\s*short|too_short|min_seconds|min_bytes/i.test(combined);
+
+        let message;
+        if (isTooShort) {
+          message = "Your reply was shorter than 5 seconds. When the question appears, take a breath and answer in full sentences for at least 5–10 seconds before stopping.";
+        } else if (isNoMatch) {
+          message = "We couldn't hear your response. Check your browser's microphone permission (the lock icon in the URL bar → Microphone = Allow), confirm the right input device is selected, and speak in full sentences for at least 5–10 seconds.";
+        } else {
+          message = detailMsg || "Evaluation failed. Please try again in a moment.";
+        }
         setErrorMsg(message);
         setStage("error");
         return;
