@@ -282,6 +282,9 @@ def _make_blob(data: bytes, *, mime_type: str):
 async def _pump_gemini_to_browser(ws: WebSocket, session: Any) -> str:
     """Forward Gemini audio + transcripts to the browser. Returns the close
     reason ('gemini_eof' | 'gemini_error:<...>')."""
+    audio_chunks_sent = 0
+    transcript_frames_sent = 0
+    turns_completed = 0
     try:
         async for response in session.receive():
             sc = response.server_content
@@ -296,6 +299,7 @@ async def _pump_gemini_to_browser(ws: WebSocket, session: Any) -> str:
                                 "data": base64.b64encode(inline.data).decode("ascii"),
                             },
                         )
+                        audio_chunks_sent += 1
             if sc and sc.input_transcription and sc.input_transcription.text:
                 await _send_json(
                     ws,
@@ -305,6 +309,7 @@ async def _pump_gemini_to_browser(ws: WebSocket, session: Any) -> str:
                         "text": sc.input_transcription.text,
                     },
                 )
+                transcript_frames_sent += 1
             if sc and sc.output_transcription and sc.output_transcription.text:
                 await _send_json(
                     ws,
@@ -314,13 +319,34 @@ async def _pump_gemini_to_browser(ws: WebSocket, session: Any) -> str:
                         "text": sc.output_transcription.text,
                     },
                 )
+                transcript_frames_sent += 1
             if sc and sc.turn_complete:
                 await _send_json(ws, {"type": "turn_complete"})
+                turns_completed += 1
+            # `go_away` is Gemini Live's early-disconnect signal (often
+            # session token expiry or quota). Surface it so the client knows
+            # the close was server-side, not user-initiated.
+            go_away = getattr(sc, "go_away", None) if sc else None
+            if go_away is not None:
+                logger.warning(
+                    "Liz Live: Gemini sent go_away (time_left=%s) — "
+                    "audio_chunks=%d transcripts=%d turns=%d",
+                    getattr(go_away, "time_left", "?"),
+                    audio_chunks_sent, transcript_frames_sent, turns_completed,
+                )
+        logger.info(
+            "Liz Live: Gemini stream ended cleanly — audio_chunks=%d "
+            "transcripts=%d turns=%d",
+            audio_chunks_sent, transcript_frames_sent, turns_completed,
+        )
         return "gemini_eof"
     except asyncio.CancelledError:
         raise
     except Exception as exc:  # noqa: BLE001
-        logger.warning("Gemini pump error: %s", exc)
+        logger.warning(
+            "Gemini pump error: %s — audio_chunks=%d transcripts=%d turns=%d",
+            exc, audio_chunks_sent, transcript_frames_sent, turns_completed,
+        )
         await _send_json(ws, {"type": "error", "message": f"gemini_error:{exc.__class__.__name__}"})
         return f"gemini_error:{exc.__class__.__name__}"
 
@@ -384,7 +410,27 @@ async def liz_live_ws(ws: WebSocket) -> None:
         target_band = 7.0
 
     client = genai.Client(api_key=api_key, http_options={"api_version": "v1beta"})
-    config = gtypes.LiveConnectConfig(
+
+    # Tune VAD for IELTS candidates: Part 1/3 examinees take 1–2s thinking
+    # pauses mid-answer. With Gemini's default VAD (~500 ms silence ⇒ turn
+    # end), Liz interrupts and the session can collapse after a single turn.
+    # Lower the sensitivity and stretch silence_duration_ms so a thoughtful
+    # pause doesn't get classified as end-of-speech.
+    realtime_input_cfg = None
+    try:
+        realtime_input_cfg = gtypes.RealtimeInputConfig(
+            automatic_activity_detection=gtypes.AutomaticActivityDetection(
+                disabled=False,
+                start_of_speech_sensitivity=gtypes.StartSensitivity.START_SENSITIVITY_LOW,
+                end_of_speech_sensitivity=gtypes.EndSensitivity.END_SENSITIVITY_LOW,
+                prefix_padding_ms=200,
+                silence_duration_ms=1500,
+            ),
+        )
+    except Exception as exc:  # pragma: no cover — older SDKs without these types
+        logger.warning("Liz Live: VAD config unavailable (%s) — falling back to default", exc)
+
+    config_kwargs: dict[str, Any] = dict(
         response_modalities=[gtypes.Modality.AUDIO],
         input_audio_transcription=gtypes.AudioTranscriptionConfig(),
         output_audio_transcription=gtypes.AudioTranscriptionConfig(),
@@ -392,6 +438,9 @@ async def liz_live_ws(ws: WebSocket) -> None:
             parts=[gtypes.Part(text=system_prompt)],
         ),
     )
+    if realtime_input_cfg is not None:
+        config_kwargs["realtime_input_config"] = realtime_input_cfg
+    config = gtypes.LiveConnectConfig(**config_kwargs)
 
     candidate_audio_chunks: list[bytes] = []  # accumulated for downstream eval
     close_reason: str = "unknown"
