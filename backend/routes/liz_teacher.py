@@ -392,13 +392,50 @@ async def build_voice_pronunciation_context(audio_data_b64: Optional[str]) -> tu
         azure_result = await azure_pronunciation_assessment(audio_bytes, reference_text=None, language="en-US")
         if not azure_result or not azure_result.get("success"):
             return "", None
+
+        # Word-level pronunciation array — frontend (D8 LizTeacher TeacherNote)
+        # underlines low-score words inline. Each item: {word, score, tip?}.
+        # We surface every word so the UI can render the full sentence; weak
+        # ones (score < 70) get a wavy underline, strong ones render plain.
+        word_results = azure_result.get("word_results", []) or []
+        words_payload = []
+        weak_words = []
+        for w in word_results:
+            word_text = (w.get("word") or "").strip()
+            if not word_text:
+                continue
+            try:
+                score_val = round(float(w.get("accuracy_score", 100)), 1)
+            except (TypeError, ValueError):
+                score_val = 100.0
+            err = (w.get("error_type") or "None")
+            tip_parts = [f"{score_val:.0f}/100 accuracy"]
+            if err and err != "None":
+                tip_parts.append(f"{err.lower()} error")
+            problem_phonemes = w.get("problem_phonemes") or []
+            if problem_phonemes:
+                phon_list = ", ".join(p.get("phoneme", "?") for p in problem_phonemes[:3])
+                tip_parts.append(f"weak phonemes: {phon_list}")
+            words_payload.append({
+                "word": word_text,
+                "score": score_val,
+                "tip": " · ".join(tip_parts),
+            })
+            if score_val < 70 or (err and err != "None"):
+                weak_words.append(word_text)
+
         azure_scores = {
             "pronunciation": round(float(azure_result.get("pronunciation_score", 0)), 1),
             "accuracy": round(float(azure_result.get("accuracy_score", 0)), 1),
             "fluency": round(float(azure_result.get("fluency_score", 0)), 1),
             "completeness": round(float(azure_result.get("completeness_score", 0)), 1),
             "prosody": round(float(azure_result.get("prosody_score", 0)), 1),
+            "words": words_payload or None,
         }
+        weak_words_line = (
+            f"- Words to practice: {', '.join(weak_words[:8])}\n"
+            if weak_words else ""
+        )
         azure_context = (
             "\n\n## Acoustic Pronunciation Signals\n"
             f"- Pronunciation: {azure_scores['pronunciation']}/100\n"
@@ -406,6 +443,7 @@ async def build_voice_pronunciation_context(audio_data_b64: Optional[str]) -> tu
             f"- Fluency: {azure_scores['fluency']}/100\n"
             f"- Completeness: {azure_scores['completeness']}/100\n"
             f"- Prosody: {azure_scores['prosody']}/100\n"
+            f"{weak_words_line}"
             "Use these scores when you comment on pronunciation and fluency."
         )
         return azure_context, azure_scores
@@ -601,6 +639,33 @@ async def get_user_context(user_id: str) -> str:
     return "\n".join(lines)
 
 
+def detect_liz_mode(user_message: str, response: str, is_voice: bool, has_pronunciation: bool) -> str:
+    """Classify the current Liz turn into one of: teaching, listening, reviewing,
+    coaching, default. Drives the canvas tint on the LizTeacher D8 surface
+    (no badge is shown to the user — internal signal only).
+
+    Heuristics, in priority order:
+    - Pronunciation feedback turn (Azure scores returned) → reviewing
+    - User spoke (is_voice) → listening
+    - Response references homework / feedback / review → reviewing
+    - Response gives praise + tip / motivation → coaching
+    - Otherwise → teaching (the default for an explanatory turn)
+    """
+    if has_pronunciation:
+        return "reviewing"
+    if is_voice:
+        return "listening"
+    resp_lower = (response or "").lower()
+    user_lower = (user_message or "").lower()
+    review_kw = ("homework", "review", "feedback on your", "let's go over", "your last answer")
+    if any(kw in resp_lower for kw in review_kw) or any(kw in user_lower for kw in review_kw):
+        return "reviewing"
+    coach_kw = ("great job", "well done", "nice work", "keep it up", "you can do this", "remember to")
+    if any(kw in resp_lower for kw in coach_kw):
+        return "coaching"
+    return "teaching"
+
+
 async def get_or_create_session(user_id: str, session_id: Optional[str] = None) -> dict:
     """Get existing session or create a new one."""
     if session_id:
@@ -703,6 +768,9 @@ async def chat_with_liz(req: ChatRequest):
         "success": True,
         "session_id": session_id,
         "response": display_response,
+        "mode": detect_liz_mode(
+            req.message, display_response, req.is_voice, ctx["azure_scores"] is not None
+        ),
         "navigate_links": nav_links,
         "homework_assigned": [{"homework_id": h["homework_id"], "title": h["title"], "type": h["type"]} for h in hw_list],
         "voice_pronunciation": ctx["azure_scores"],
@@ -763,6 +831,9 @@ async def chat_with_liz_stream(req: ChatRequest):
             "type": "done",
             "session_id": session_id,
             "response": display_response,
+            "mode": detect_liz_mode(
+                req.message, display_response, req.is_voice, ctx["azure_scores"] is not None
+            ),
             "navigate_links": nav_links,
             "homework_assigned": [
                 {"homework_id": h["homework_id"], "title": h["title"], "type": h["type"]}
@@ -850,6 +921,7 @@ Student Profile:
         "success": True,
         "session_id": session["session_id"],
         "greeting": greeting,
+        "mode": "teaching",  # greeting always opens in teaching tint
         "audio": tts_result["audio"],
         "audio_provider": tts_result["provider"],
     }

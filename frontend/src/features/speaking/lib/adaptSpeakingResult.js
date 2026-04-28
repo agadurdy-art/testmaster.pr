@@ -204,6 +204,22 @@ function fromLegacyFlat(raw, ctx) {
     wkSummary ||
     'Result loaded from a legacy evaluation. Run a fresh recording for full pronunciation analysis.';
 
+  // Premium passthrough: when the QB premium endpoint runs Azure + Sonnet it
+  // returns extra detail (azure_scores, word-level results, focused-practice
+  // suggestions). The canonical D7 surface ignores them; we forward the
+  // whole bundle so a premium-aware drawer can render the deluxe view.
+  const pronunciationAnalysis =
+    raw.pronunciation_analysis && typeof raw.pronunciation_analysis === 'object'
+      ? raw.pronunciation_analysis
+      : null;
+  const wordLevelResults = Array.isArray(raw.word_level_results)
+    ? raw.word_level_results
+    : null;
+  const practiceFocus = Array.isArray(raw.practice_focus) ? raw.practice_focus : null;
+  const tryThisNext = Array.isArray(raw.try_this_next) ? raw.try_this_next : null;
+  const strengths = Array.isArray(raw.strengths) ? raw.strengths : null;
+  const weaknesses = Array.isArray(raw.weaknesses) ? raw.weaknesses : null;
+
   return {
     scores,
     fluency,
@@ -224,6 +240,13 @@ function fromLegacyFlat(raw, ctx) {
       },
       pr: { band: scores.pr, explanation: toFeedback(raw.pronunciation ?? crit.pronunciation) || '—' },
     },
+    pronunciation_analysis: pronunciationAnalysis,
+    word_level_results: wordLevelResults,
+    practice_focus: practiceFocus,
+    try_this_next: tryThisNext,
+    strengths,
+    weaknesses,
+    tier: raw.tier || null,
     _source: 'legacy_flat',
   };
 }

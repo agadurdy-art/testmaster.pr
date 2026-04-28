@@ -411,17 +411,23 @@ async def liz_live_ws(ws: WebSocket) -> None:
 
     client = genai.Client(api_key=api_key, http_options={"api_version": "v1beta"})
 
-    # Tune VAD for IELTS candidates: Part 1/3 examinees take 1–2s thinking
-    # pauses mid-answer. With Gemini's default VAD (~500 ms silence ⇒ turn
-    # end), Liz interrupts and the session can collapse after a single turn.
-    # Lower the sensitivity and stretch silence_duration_ms so a thoughtful
-    # pause doesn't get classified as end-of-speech.
+    # Tune VAD for IELTS candidates:
+    #   * start_of_speech_sensitivity=HIGH — Vietnamese/Turkish/Arabic
+    #     accents on phone mics + browser noise-suppression often produce
+    #     low-RMS speech that LOW sensitivity classifies as silence. With
+    #     LOW, the previous build couldn't hear the candidate at all
+    #     (Aga 2026-04-28: "gemini live halen sesi duymuyor"). HIGH triggers
+    #     on softer onsets so the candidate's reply actually registers.
+    #   * end_of_speech_sensitivity=LOW + silence_duration_ms=1500 — slow
+    #     to end of turn, so a 1–2 s thinking pause mid-answer doesn't get
+    #     classified as end-of-speech (which previously caused Liz to
+    #     reply after the candidate said only their name).
     realtime_input_cfg = None
     try:
         realtime_input_cfg = gtypes.RealtimeInputConfig(
             automatic_activity_detection=gtypes.AutomaticActivityDetection(
                 disabled=False,
-                start_of_speech_sensitivity=gtypes.StartSensitivity.START_SENSITIVITY_LOW,
+                start_of_speech_sensitivity=gtypes.StartSensitivity.START_SENSITIVITY_HIGH,
                 end_of_speech_sensitivity=gtypes.EndSensitivity.END_SENSITIVITY_LOW,
                 prefix_padding_ms=200,
                 silence_duration_ms=1500,

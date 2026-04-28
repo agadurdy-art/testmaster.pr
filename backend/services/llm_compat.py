@@ -142,9 +142,16 @@ class LlmChat:
         return _extract_text(response)
 
     # ─── public verbs (compatibility) ──────────────────────────────────
-    async def send_message(self, message) -> str:
-        """Newer call shape used by Liz / enricher / generator code."""
-        text = getattr(message, "text", None) or getattr(message, "content", "")
+    async def send_message(self, message=None, *, user_message=None) -> str:
+        """Newer call shape used by Liz / enricher / generator code.
+
+        The original emergentintegrations SDK accepted `user_message=` as a
+        keyword argument; some legacy call sites (speaking_qb, full_test,
+        cambridge, cambridge_speaking) still use that form. Accept both so
+        we don't have to chase every call site.
+        """
+        msg = message if message is not None else user_message
+        text = getattr(msg, "text", None) or getattr(msg, "content", "")
         return await self._create(text or "")
 
     async def chat(self, messages: Iterable) -> str:

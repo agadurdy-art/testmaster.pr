@@ -1,16 +1,30 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGoBack } from '../hooks/useGoBack';
 import { Button } from '../components/ui/button';
 import {
-  ArrowLeft, Send, Volume2, VolumeX, Plus,
-  Loader2, ChevronDown, Mic, MicOff, Headphones,
-  MessageSquare, BookOpen, PenTool, Target,
-  GraduationCap, ChevronUp, ClipboardList,
-  CheckCircle2, Clock, X, Star, FileText
+  ArrowLeft,
+  Send,
+  Volume2,
+  VolumeX,
+  Plus,
+  Loader2,
+  Mic,
+  MicOff,
+  Headphones,
+  MessageSquare,
+  BookOpen,
+  PenTool,
+  Target,
+  GraduationCap,
+  ClipboardList,
+  CheckCircle2,
+  X,
+  Star,
+  FileText,
+  PlayCircle,
+  Sparkles,
 } from 'lucide-react';
 import { canAccessLiz } from '../lib/lizAccess';
-import { parseLizSegments } from '../lib/lizNavigateParser';
 import LizLivePanel from '../features/speaking/components/LizLivePanel';
 import '../features/speaking/speaking.css';
 
@@ -19,140 +33,72 @@ const LIZ_AVATAR = 'https://static.prod-images.emergentagent.com/jobs/799d7d0f-0
 
 /* ── Status: idle | listening | transcribing | thinking | speaking ── */
 
-function AudioBars({ active }) {
-  if (!active) return null;
-  const heights = [12, 20, 28, 20, 12, 24, 16, 28, 20, 12];
-  return (
-    <div className="flex items-end justify-center gap-[3px] h-8" data-testid="audio-bars">
-      {heights.map((h, i) => (
-        <div
-          key={i}
-          className="w-[3px] rounded-full bg-teal-400"
-          style={{
-            animation: `audioPulse 0.6s ease-in-out infinite alternate`,
-            animationDelay: `${i * 0.07}s`,
-            height: `${h}px`,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
+// Mode → internal tint (no badge shown to user — per project memory)
+const MODE_TINT = {
+  teaching:   { canvasBg: 'bg-emerald-50/40', halo: 'ring-emerald-200' },
+  listening:  { canvasBg: 'bg-sky-50/40',     halo: 'ring-sky-200' },
+  reviewing:  { canvasBg: 'bg-amber-50/40',   halo: 'ring-amber-200' },
+  coaching:   { canvasBg: 'bg-rose-50/40',    halo: 'ring-rose-200' },
+  default:    { canvasBg: 'bg-white',         halo: 'ring-slate-200' },
+};
 
-function LizPresence({ status, onStop }) {
-  const isSpeaking = status === 'speaking';
-  const isThinking = status === 'thinking';
-
-  return (
-    <div className="flex flex-col items-center">
-      <div className="relative cursor-pointer" onClick={isSpeaking ? onStop : undefined}>
-        {/* Glow ring when speaking */}
-        {isSpeaking && (
-          <div className="absolute -inset-3 rounded-full bg-teal-400/20 animate-ping" style={{ animationDuration: '1.5s' }} />
-        )}
-        <div className={`relative w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 transition-all duration-500 ${
-          isSpeaking
-            ? 'border-teal-400 shadow-[0_0_30px_rgba(20,184,166,0.4)]'
-            : isThinking
-              ? 'border-teal-300/50 animate-pulse'
-              : 'border-white/80 shadow-lg'
-        }`}>
-          <img src={LIZ_AVATAR} alt="Liz" className="w-full h-full object-cover" />
-          {/* Stop overlay when speaking */}
-          {isSpeaking && (
-            <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-              <VolumeX className="w-8 h-8 text-white drop-shadow-lg" />
-            </div>
-          )}
-        </div>
-        {/* Status dot */}
-        <div className={`absolute bottom-1 right-1 w-4 h-4 rounded-full border-2 border-white ${
-          isSpeaking ? 'bg-teal-400' : isThinking ? 'bg-amber-400 animate-pulse' : 'bg-emerald-400'
-        }`} />
-      </div>
-      <AudioBars active={isSpeaking} />
-      {isSpeaking ? (
-        <button
-          onClick={onStop}
-          className="flex items-center gap-1.5 mt-1 px-3 py-1 rounded-full bg-slate-100 hover:bg-red-50 text-slate-500 hover:text-red-500 text-xs font-medium transition-colors"
-          data-testid="stop-speaking-btn"
-        >
-          <VolumeX className="w-3.5 h-3.5" /> Stop
-        </button>
-      ) : (
-        <p className="text-xs text-slate-400 mt-1" data-testid="liz-status">
-          {status === 'thinking' && 'Liz is preparing...'}
-          {status === 'listening' && 'Listening to you...'}
-          {status === 'transcribing' && 'Understanding...'}
-          {status === 'idle' && ''}
-        </p>
-      )}
-    </div>
-  );
-}
-
-function SpeechDisplay({ text, status }) {
-  if (!text) return null;
-  return (
-    <div className={`max-w-xl mx-auto px-5 py-4 rounded-2xl text-sm sm:text-base leading-relaxed text-center whitespace-pre-wrap transition-all ${
-      status === 'speaking'
-        ? 'bg-white/90 border border-teal-200 shadow-md text-slate-800'
-        : 'bg-white/60 border border-slate-200 text-slate-700'
-    }`} data-testid="liz-speech">
-      <LizContent text={text} />
-    </div>
-  );
-}
-
-// Render Liz's message with any [NAVIGATE: /path | Label] directives turned
-// into clickable buttons. Plain text segments keep whitespace-pre-wrap.
-function LizContent({ text }) {
-  const navigate = useNavigate();
-  const segments = parseLizSegments(text);
-  return (
-    <>
-      {segments.map((seg, i) => {
-        if (seg.type === 'nav') {
-          return (
-            <button
-              key={i}
-              type="button"
-              onClick={() => navigate(seg.path)}
-              className="inline-flex items-center gap-1 mx-1 px-2.5 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-700 text-xs font-semibold hover:bg-teal-100 transition-colors"
-            >
-              {seg.label} →
-            </button>
-          );
-        }
-        return <span key={i}>{seg.value}</span>;
-      })}
-    </>
-  );
-}
-
-function TranscriptItem({ msg }) {
-  const isUser = msg.role === 'user';
-  return (
-    <div className={`flex gap-2 text-xs py-1.5 ${isUser ? 'justify-end' : ''}`}>
-      <span className={`font-semibold ${isUser ? 'text-slate-500' : 'text-teal-600'}`}>
-        {isUser ? 'You' : 'Liz'}:
-      </span>
-      <span className="text-slate-600 max-w-[80%] truncate">{msg.content}</span>
-    </div>
-  );
-}
-
-// `route: '/speaking-premium'` sends the user to the dedicated Gemini Live
-// premium surface; other chips send a chat prompt so the lesson stays in
-// Liz's text surface.
 const LESSON_MODES = [
-  { icon: MessageSquare, label: 'Speaking Practice', route: '/speaking-premium', testId: 'lesson-speaking' },
+  { icon: MessageSquare, label: 'Speaking Practice', prompt: 'Start a structured IELTS Speaking practice session. Begin with Part 1 warm-up questions, then move to Part 2 cue card, and finish with Part 3 discussion. Guide me step by step.', testId: 'lesson-speaking' },
   { icon: BookOpen, label: 'Vocabulary Builder', prompt: 'Start an interactive vocabulary lesson. Teach me useful IELTS vocabulary with examples, then quiz me on it. Use adaptive difficulty.', testId: 'lesson-vocab' },
   { icon: PenTool, label: 'Grammar Lesson', prompt: 'Start a structured grammar lesson focused on common IELTS grammar patterns. Explain a concept, give me a task, then provide feedback. Build up difficulty.', testId: 'lesson-grammar' },
   { icon: Target, label: 'Study Plan', prompt: 'Analyze my progress and create a detailed study plan for the next week. Be specific about what I should practice each day.', testId: 'lesson-plan' },
 ];
 
 const HW_ICONS = { vocabulary: BookOpen, writing: PenTool, grammar: FileText, speaking: MessageSquare };
+
+// ── Pronunciation underline renderer ──
+// If msg.pronunciation_words is a word-level array [{word, score, tip?}], underline weak ones with tooltips.
+// Otherwise, render content as plain text.
+function TeacherNote({ msg }) {
+  const modeTint = MODE_TINT[msg.mode] || MODE_TINT.default;
+  const hasWords = Array.isArray(msg.pronunciation_words) && msg.pronunciation_words.length > 0;
+
+  const body = hasWords
+    ? msg.pronunciation_words.map((w, i) => (
+        w.score != null && w.score < 70 ? (
+          <span
+            key={i}
+            className="underline decoration-rose-400 decoration-wavy decoration-2 underline-offset-4 cursor-help"
+            title={w.tip || `Pronunciation: ${w.score}/100`}
+          >
+            {w.word}{' '}
+          </span>
+        ) : (
+          <span key={i}>{w.word} </span>
+        )
+      ))
+    : msg.content;
+
+  return (
+    <div className="flex gap-3 py-3">
+      <div className={`w-9 h-9 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-offset-2 ring-offset-white ${modeTint.halo}`}>
+        <img src={LIZ_AVATAR} alt="Liz" className="w-full h-full object-cover" />
+      </div>
+      <div className={`flex-1 min-w-0 border-l-2 border-emerald-400 pl-4 py-1 ${modeTint.canvasBg} rounded-r-lg`}>
+        <div className="text-[10px] font-semibold uppercase tracking-wider text-emerald-700 mb-0.5">Liz</div>
+        <div className="font-serif text-[15px] leading-relaxed text-slate-800 whitespace-pre-wrap" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+          {body}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function UserNote({ msg }) {
+  return (
+    <div className="flex justify-end py-2">
+      <div className="max-w-[80%] text-right">
+        <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 mb-0.5">You asked</div>
+        <div className="italic text-slate-600 text-[14px] leading-relaxed whitespace-pre-wrap">{msg.content}</div>
+      </div>
+    </div>
+  );
+}
 
 function HomeworkCard({ hw, onSubmit, onDelete, submitting }) {
   const [answer, setAnswer] = useState('');
@@ -162,15 +108,13 @@ function HomeworkCard({ hw, onSubmit, onDelete, submitting }) {
   const statusColors = {
     pending: isOverdue ? 'text-red-500' : 'text-amber-500',
     submitted: 'text-blue-500',
-    reviewed: 'text-emerald-500'
+    reviewed: 'text-emerald-500',
   };
 
   return (
     <div className="bg-white border border-slate-200 rounded-xl p-3 shadow-sm" data-testid={`homework-${hw.homework_id}`}>
       <div className="flex items-start gap-3 cursor-pointer" onClick={() => setExpanded(!expanded)}>
-        <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${
-          hw.status === 'reviewed' ? 'bg-emerald-50' : 'bg-teal-50'
-        }`}>
+        <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${hw.status === 'reviewed' ? 'bg-emerald-50' : 'bg-teal-50'}`}>
           {hw.status === 'reviewed' ? <CheckCircle2 className="w-5 h-5 text-emerald-500" /> : <Icon className="w-5 h-5 text-teal-500" />}
         </div>
         <div className="flex-1 min-w-0">
@@ -232,7 +176,6 @@ function HomeworkCard({ hw, onSubmit, onDelete, submitting }) {
 
 export default function LizTeacher({ user }) {
   const navigate = useNavigate();
-  const goBack = useGoBack();
 
   // Plan gate - learner and above can access Liz
   if (!canAccessLiz(user)) {
@@ -245,10 +188,10 @@ export default function LizTeacher({ user }) {
           <h1 className="text-2xl font-bold text-slate-900">Meet Liz, Your AI Teacher</h1>
           <p className="text-slate-500 text-sm leading-relaxed">
             Liz is your personal IELTS teacher who speaks to you, tracks your progress,
-            assigns homework, and builds structured study plans. Available on the
-            <span className="font-semibold text-violet-600"> Weekly</span>,
-            <span className="font-semibold text-fuchsia-600"> Monthly</span>, and
-            <span className="font-semibold text-orange-500"> Exam Pack</span> plans.
+            assigns homework, and builds structured study plans. Available on
+            <span className="font-semibold text-teal-600"> Weekly</span>,
+            <span className="font-semibold text-emerald-600"> Monthly</span>, and
+            <span className="font-semibold text-violet-600"> Exam Pack</span> plans.
           </p>
           <div className="flex flex-col gap-3">
             <Button
@@ -259,7 +202,7 @@ export default function LizTeacher({ user }) {
               Upgrade to Unlock Liz
             </Button>
             <button
-              onClick={goBack}
+              onClick={() => navigate(-1)}
               className="text-sm text-slate-400 hover:text-slate-600"
               data-testid="go-back-btn"
             >
@@ -270,52 +213,46 @@ export default function LizTeacher({ user }) {
       </div>
     );
   }
+
   const [status, setStatus] = useState('idle');
-  const [messages, setMessages] = useState([]);
-  const [latestLiz, setLatestLiz] = useState('');
-  const [voiceInsight, setVoiceInsight] = useState(null);
+  const [messages, setMessages] = useState([]); // each: {role, content, mode?, pronunciation_words?, timestamp, audio?}
+  const [voiceInsight, setVoiceInsight] = useState(null); // scalar fallback
   const [input, setInput] = useState('');
   const [sessionId, setSessionId] = useState(null);
   const [sessions, setSessions] = useState([]);
   const [lizStatus, setLizStatus] = useState(null);
-  const [showSessions, setShowSessions] = useState(false);
-  const [showTranscript, setShowTranscript] = useState(false);
-  const [showHomework, setShowHomework] = useState(false);
   const [homework, setHomework] = useState([]);
   const [submittingHw, setSubmittingHw] = useState(false);
-  const [autoVoice, setAutoVoice] = useState(true);
+  const [autoVoice, setAutoVoice] = useState(false); // opt-in per D8 spec
   const [hasGreeted, setHasGreeted] = useState(false);
-  // When true, hand the conversation off to the Gemini Live voice panel.
-  // The chat UI remains mounted so returning preserves context. Defaults
-  // to false so /liz opens on the avatar/chat surface (per Aga 2026-04-28:
-  // Liz UI is the unified surface; Gemini Live is opt-in via the
-  // Speaking Practice chip, not the auto-open mode).
-  const [liveMode, setLiveMode] = useState(false);
+  const [currentMode, setCurrentMode] = useState('default'); // latest mode from backend
+  const [liveMode, setLiveMode] = useState(false); // Gemini Live realtime conversation overlay
   const audioRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
-  const transcriptEndRef = useRef(null);
+  const canvasEndRef = useRef(null);
 
-  const scrollTranscript = useCallback(() => {
-    transcriptEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  const scrollCanvas = useCallback(() => {
+    canvasEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
-  useEffect(() => { scrollTranscript(); }, [messages, scrollTranscript]);
+  useEffect(() => { scrollCanvas(); }, [messages, scrollCanvas]);
 
   // Load sessions
   useEffect(() => {
     if (!user?.id) return;
     fetch(`${API_URL}/api/liz/sessions/${user.id}`)
-      .then(r => r.json())
-      .then(d => { if (d.success) setSessions(d.sessions || []); })
+      .then((r) => r.json())
+      .then((d) => { if (d.success) setSessions(d.sessions || []); })
       .catch(() => {});
   }, [user?.id]);
 
+  // Load plan/quota
   useEffect(() => {
     if (!user?.id) return;
     fetch(`${API_URL}/api/liz/status/${user.id}`)
-      .then(r => r.json())
-      .then(d => { if (d.success) setLizStatus(d); })
+      .then((r) => r.json())
+      .then((d) => { if (d.success) setLizStatus(d); })
       .catch(() => {});
   }, [user?.id]);
 
@@ -323,8 +260,8 @@ export default function LizTeacher({ user }) {
   const fetchHomework = useCallback(() => {
     if (!user?.id) return;
     fetch(`${API_URL}/api/liz/homework/${user.id}`)
-      .then(r => r.json())
-      .then(d => { if (d.success) setHomework(d.homework || []); })
+      .then((r) => r.json())
+      .then((d) => { if (d.success) setHomework(d.homework || []); })
       .catch(() => {});
   }, [user?.id]);
 
@@ -336,7 +273,8 @@ export default function LizTeacher({ user }) {
     if (!user?.id || hasGreetedRef.current || hasGreeted || sessionId) return;
     hasGreetedRef.current = true;
     greetStudent();
-  }, [user?.id, hasGreeted, sessionId]); // greetStudent is stable enough
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id, hasGreeted, sessionId]);
 
   const playAudio = useCallback((base64Audio) => {
     return new Promise((resolve) => {
@@ -353,24 +291,38 @@ export default function LizTeacher({ user }) {
         audio.onended = () => { setStatus('idle'); URL.revokeObjectURL(url); resolve(); };
         audio.onerror = () => { setStatus('idle'); resolve(); };
         audio.play().catch(() => { setStatus('idle'); resolve(); });
-      } catch { setStatus('idle'); resolve(); }
+      } catch {
+        setStatus('idle');
+        resolve();
+      }
     });
   }, []);
 
-  const speakText = useCallback(async (text) => {
-    if (!autoVoice) return;
+  const ttsText = useCallback(async (text) => {
     try {
       const res = await fetch(`${API_URL}/api/liz/tts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: text.substring(0, 500) })
+        body: JSON.stringify({ text: text.substring(0, 500) }),
       });
       const data = await res.json();
-      if (data.audio) await playAudio(data.audio);
-    } catch {
-      setStatus('idle');
+      if (data.audio) return data.audio;
+    } catch { /* ignore */ }
+    return null;
+  }, []);
+
+  const speakMessage = useCallback(async (msg) => {
+    // Per-message opt-in listen. If msg has cached audio, play it; else fetch now.
+    if (msg.audio) {
+      await playAudio(msg.audio);
+      return;
     }
-  }, [autoVoice, playAudio]);
+    const a = await ttsText(msg.content);
+    if (a) {
+      msg.audio = a;
+      await playAudio(a);
+    }
+  }, [playAudio, ttsText]);
 
   const blobToBase64 = useCallback((blob) => {
     return new Promise((resolve, reject) => {
@@ -395,14 +347,21 @@ export default function LizTeacher({ user }) {
       const res = await fetch(`${API_URL}/api/liz/greet`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id: user.id })
+        body: JSON.stringify({ user_id: user.id }),
       });
       const data = await res.json();
       if (data.success) {
         setSessionId(data.session_id);
-        setLatestLiz(data.greeting);
         setVoiceInsight(null);
-        setMessages([{ role: 'assistant', content: data.greeting, timestamp: new Date().toISOString() }]);
+        const mode = data.mode || 'default';
+        setCurrentMode(mode);
+        setMessages([{
+          role: 'assistant',
+          content: data.greeting,
+          mode,
+          audio: data.audio || null,
+          timestamp: new Date().toISOString(),
+        }]);
         if (data.audio && autoVoice) {
           await playAudio(data.audio);
         } else {
@@ -419,7 +378,7 @@ export default function LizTeacher({ user }) {
   const sendMessage = async (text, isVoice = false, audioData = null) => {
     if (!text?.trim() || status === 'thinking' || status === 'speaking') return;
     const trimmed = text.trim();
-    setMessages(prev => [...prev, { role: 'user', content: trimmed, timestamp: new Date().toISOString() }]);
+    setMessages((prev) => [...prev, { role: 'user', content: trimmed, timestamp: new Date().toISOString() }]);
     setInput('');
     setStatus('thinking');
 
@@ -427,31 +386,55 @@ export default function LizTeacher({ user }) {
       const res = await fetch(`${API_URL}/api/liz/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id: user.id, message: trimmed, session_id: sessionId, is_voice: isVoice, audio_data: audioData, feedback_language: user.feedback_language || undefined })
+        body: JSON.stringify({
+          user_id: user.id,
+          message: trimmed,
+          session_id: sessionId,
+          is_voice: isVoice,
+          audio_data: audioData,
+        }),
       });
       const data = await res.json();
       if (res.ok && data.success) {
         setSessionId(data.session_id);
-        setLatestLiz(data.response);
         if (data.usage) {
-          setLizStatus(prev => ({
-            ...(prev || {}),
-            ...data.usage,
-            has_access: true,
-          }));
+          setLizStatus((prev) => ({ ...(prev || {}), ...data.usage, has_access: true }));
         }
-        setMessages(prev => [...prev, { role: 'assistant', content: data.response, timestamp: new Date().toISOString() }]);
-        // Refresh homework if new one was assigned
+        const mode = data.mode || 'default';
+        setCurrentMode(mode);
+        const pronWords = data.voice_pronunciation?.words || null;
+        setMessages((prev) => [...prev, {
+          role: 'assistant',
+          content: data.response,
+          mode,
+          pronunciation_words: pronWords,
+          audio: data.audio || null,
+          timestamp: new Date().toISOString(),
+        }]);
         if (data.homework_assigned?.length > 0) fetchHomework();
-        setVoiceInsight(data.voice_pronunciation || null);
-        // Auto-TTS
-        await speakText(data.response);
+        // Voice insight (scalar fallback when no word-level data)
+        setVoiceInsight(pronWords ? null : (data.voice_pronunciation || null));
+        if (data.audio && autoVoice) {
+          await playAudio(data.audio);
+        } else {
+          setStatus('idle');
+        }
       } else {
-        setLatestLiz(data.detail || "I couldn't process that right now.");
+        setMessages((prev) => [...prev, {
+          role: 'assistant',
+          content: data.detail || "I couldn't process that right now.",
+          mode: 'default',
+          timestamp: new Date().toISOString(),
+        }]);
         setStatus('idle');
       }
     } catch {
-      setLatestLiz("I couldn't process that. Please try again.");
+      setMessages((prev) => [...prev, {
+        role: 'assistant',
+        content: "I couldn't process that. Please try again.",
+        mode: 'default',
+        timestamp: new Date().toISOString(),
+      }]);
       setStatus('idle');
     }
   };
@@ -465,7 +448,7 @@ export default function LizTeacher({ user }) {
       chunksRef.current = [];
       recorder.ondataavailable = (e) => { if (e.data.size > 0) chunksRef.current.push(e.data); };
       recorder.onstop = async () => {
-        stream.getTracks().forEach(t => t.stop());
+        stream.getTracks().forEach((t) => t.stop());
         const blob = new Blob(chunksRef.current, { type: 'audio/webm' });
         if (blob.size > 0) await transcribeAudio(blob);
       };
@@ -507,7 +490,7 @@ export default function LizTeacher({ user }) {
 
   const toggleAutoVoice = () => {
     if (audioRef.current) audioRef.current.pause();
-    setAutoVoice(v => !v);
+    setAutoVoice((v) => !v);
     if (status === 'speaking') setStatus('idle');
   };
 
@@ -526,15 +509,19 @@ export default function LizTeacher({ user }) {
       const res = await fetch(`${API_URL}/api/liz/homework/${hwId}/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id: user.id, submission: answer })
+        body: JSON.stringify({ user_id: user.id, submission: answer }),
       });
       const data = await res.json();
       if (data.success) {
         fetchHomework();
         if (data.feedback) {
-          setLatestLiz(data.feedback);
-          setMessages(prev => [...prev, { role: 'assistant', content: `Homework Review:\n\n${data.feedback}`, timestamp: new Date().toISOString() }]);
-          await speakText(data.feedback);
+          setMessages((prev) => [...prev, {
+            role: 'assistant',
+            content: `Homework Review:\n\n${data.feedback}`,
+            mode: 'reviewing',
+            timestamp: new Date().toISOString(),
+          }]);
+          setCurrentMode('reviewing');
         }
       }
     } catch { /* ignore */ }
@@ -544,7 +531,7 @@ export default function LizTeacher({ user }) {
   const deleteHomework = async (hwId) => {
     try {
       await fetch(`${API_URL}/api/liz/homework/${hwId}?user_id=${user.id}`, { method: 'DELETE' });
-      setHomework(prev => prev.filter(h => h.homework_id !== hwId));
+      setHomework((prev) => prev.filter((h) => h.homework_id !== hwId));
     } catch { /* ignore */ }
   };
 
@@ -561,10 +548,7 @@ export default function LizTeacher({ user }) {
         setMessages(msgs);
         setSessionId(sid);
         setVoiceInsight(null);
-        setShowSessions(false);
         setHasGreeted(true);
-        const lastLiz = [...msgs].reverse().find(m => m.role === 'assistant');
-        if (lastLiz) setLatestLiz(lastLiz.content);
       }
     } catch { /* ignore */ }
   };
@@ -572,28 +556,30 @@ export default function LizTeacher({ user }) {
   const startNewSession = () => {
     setMessages([]);
     setSessionId(null);
-    setLatestLiz('');
     setVoiceInsight(null);
-    setShowSessions(false);
     setHasGreeted(false);
+    setCurrentMode('default');
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(input); }
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage(input);
+    }
   };
 
   const isLizBusy = status === 'thinking' || status === 'speaking';
   const isUserBusy = status === 'listening' || status === 'transcribing';
+  const tint = MODE_TINT[currentMode] || MODE_TINT.default;
 
+  const pendingHwCount = homework.filter((h) => h.status === 'pending').length;
+  const isFirstTime = messages.length === 0;
+
+  // Liz Live (Gemini realtime ses+chat) opt-in overlay. Chat surface unmount edilir
+  // ki mic/speaker pipeline'ı LizLivePanel'in kendi audio context'iyle kavga etmesin.
   if (liveMode) {
-    // Hand the conversation off to the Gemini Live voice panel. The chat
-    // surface is unmounted so the mic/speaker pipeline doesn't fight with
-    // Liz Live's own audio context. Returning ("End") brings the chat back.
     return (
-      <div
-        className="min-h-screen bg-slate-50 speaking-scope"
-        data-testid="liz-live-mode"
-      >
+      <div className="min-h-screen bg-slate-50 speaking-scope" data-testid="liz-live-mode">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between border-b border-slate-200/60 bg-white">
           <button
             onClick={() => setLiveMode(false)}
@@ -607,18 +593,13 @@ export default function LizTeacher({ user }) {
           </div>
           <div className="w-5" />
         </div>
-        <LizLivePanel
-          part="part1"
-          user={user}
-          onExit={() => setLiveMode(false)}
-        />
+        <LizLivePanel part="part1" user={user} onExit={() => setLiveMode(false)} />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-teal-50/20 to-white flex flex-col" data-testid="liz-teacher-page">
-      {/* CSS for audio bars */}
+    <div className="min-h-screen bg-slate-50 flex flex-col" data-testid="liz-teacher-page">
       <style>{`
         @keyframes audioPulse {
           0% { transform: scaleY(0.4); opacity: 0.5; }
@@ -627,213 +608,269 @@ export default function LizTeacher({ user }) {
       `}</style>
 
       {/* ── Header ── */}
-      <div className="border-b border-slate-200/60 bg-white/80 backdrop-blur-sm px-4 py-2.5">
-        <div className="max-w-2xl mx-auto flex items-center justify-between">
+      <header className="border-b border-slate-200 bg-white/90 backdrop-blur sticky top-0 z-40">
+        <div className="max-w-[1400px] mx-auto px-5 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <button onClick={goBack} className="text-slate-400 hover:text-slate-700" data-testid="liz-back-btn">
+            <button onClick={() => navigate(-1)} className="text-slate-400 hover:text-slate-700" data-testid="liz-back-btn">
               <ArrowLeft className="w-5 h-5" />
             </button>
-            <div>
-              <h1 className="font-bold text-slate-900 text-sm">Liz</h1>
-              <p className="text-teal-600/60 text-[10px]">Your IELTS Teacher</p>
+            <div className="flex items-center gap-2">
+              <div className={`w-9 h-9 rounded-full overflow-hidden ring-2 ring-offset-2 ring-offset-white transition ${tint.halo} ${status === 'speaking' ? 'shadow-[0_0_20px_rgba(20,184,166,0.35)]' : ''}`}>
+                <img src={LIZ_AVATAR} alt="Liz" className="w-full h-full object-cover" />
+              </div>
+              <div>
+                <h1 className="font-bold text-slate-900 text-sm leading-none">Liz</h1>
+                <p className="text-teal-600/60 text-[10px] mt-0.5">Your IELTS Teacher</p>
+              </div>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            {lizStatus?.has_access && (
+            {lizStatus?.has_access && lizStatus?.plan && (
               <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-slate-50 border border-slate-200 text-[11px] text-slate-500">
-                <span>{lizStatus.plan}</span>
+                <span className="capitalize">{lizStatus.plan}</span>
                 <span>·</span>
-                <span>{lizStatus.remaining_messages ?? 0} messages left</span>
+                <span>{lizStatus.remaining_messages ?? 0}/{lizStatus.monthly_quota ?? '–'} msgs</span>
               </div>
             )}
-            {/* Homework button with badge */}
-            <button
-              onClick={() => setShowHomework(v => !v)}
-              className={`relative p-2 rounded-full transition-colors ${showHomework ? 'text-teal-600 bg-teal-50' : 'text-slate-400 bg-slate-50 hover:bg-slate-100'}`}
-              data-testid="homework-toggle-btn"
-            >
-              <ClipboardList className="w-4 h-4" />
-              {homework.filter(h => h.status === 'pending').length > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center" data-testid="homework-badge">
-                  {homework.filter(h => h.status === 'pending').length}
-                </span>
-              )}
-            </button>
             <button
               onClick={toggleAutoVoice}
               className={`p-2 rounded-full transition-colors ${autoVoice ? 'text-teal-600 bg-teal-50' : 'text-slate-400 bg-slate-50'}`}
+              title={autoVoice ? 'Auto-voice on' : 'Auto-voice off'}
               data-testid="auto-voice-toggle"
-              title={autoVoice ? 'Voice On' : 'Voice Off'}
             >
               {autoVoice ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
             </button>
             <button
               onClick={() => setLiveMode(true)}
               className="p-2 rounded-full text-violet-600 bg-violet-50 hover:bg-violet-100 transition-colors"
+              title="Live conversation with Liz (Gemini realtime)"
               data-testid="liz-live-toggle"
-              title="Live conversation with Liz"
             >
               <Headphones className="w-4 h-4" />
             </button>
-            <div className="relative">
-              <Button variant="ghost" size="sm" onClick={() => setShowSessions(!showSessions)} className="text-slate-500 text-xs" data-testid="sessions-btn">
-                History <ChevronDown className="w-3 h-3 ml-1" />
-              </Button>
-              {showSessions && (
-                <div className="absolute right-0 top-full mt-1 w-60 bg-white rounded-xl border border-slate-200 shadow-xl z-50 py-2 max-h-60 overflow-y-auto" data-testid="sessions-dropdown">
-                  <button onClick={startNewSession} className="w-full px-4 py-2 text-left text-sm hover:bg-teal-50 flex items-center gap-2 text-teal-700 font-medium" data-testid="new-session-btn">
-                    <Plus className="w-4 h-4" /> New Lesson
-                  </button>
-                  <div className="border-t border-slate-100 my-1" />
-                  {sessions.map(s => (
-                    <button key={s.session_id} onClick={() => loadSession(s.session_id)} className={`w-full px-4 py-1.5 text-left text-xs hover:bg-teal-50 truncate ${sessionId === s.session_id ? 'bg-teal-50 text-teal-800' : 'text-slate-500'}`}>
-                      {s.preview || 'New lesson'}
-                    </button>
-                  ))}
-                  {sessions.length === 0 && <p className="px-4 py-2 text-[11px] text-slate-400">No previous lessons</p>}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Main Content ── */}
-      <div className="flex-1 flex flex-col items-center justify-center px-4 py-6 gap-4 overflow-hidden">
-        {/* Liz Presence */}
-        <LizPresence status={status} onStop={stopSpeaking} />
-
-        {/* Current Liz Speech */}
-        <SpeechDisplay text={latestLiz} status={status} />
-
-        {lizStatus?.has_access && (
-          <div className="text-[11px] text-slate-400" data-testid="liz-usage-note">
-            {lizStatus.remaining_messages ?? 0} messages remaining this month
-          </div>
-        )}
-
-        {voiceInsight && (
-          <div className="max-w-xl w-full bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-xs text-amber-800" data-testid="liz-voice-insight">
-            <span className="font-semibold">Voice snapshot:</span>{' '}
-            Pronunciation {voiceInsight.pronunciation}/100, Fluency {voiceInsight.fluency}/100, Accuracy {voiceInsight.accuracy}/100.
-          </div>
-        )}
-
-        {/* Lesson mode buttons (only on fresh start, no messages yet) */}
-        {messages.length <= 1 && status === 'idle' && latestLiz && (
-          <div className="flex flex-wrap justify-center gap-2 mt-2" data-testid="lesson-modes">
-            {LESSON_MODES.map(m => (
-              <button
-                key={m.testId}
-                onClick={() => {
-                  if (m.route) {
-                    navigate(m.route);
-                  } else if (m.prompt) {
-                    sendMessage(m.prompt);
-                  }
-                }}
-                className="flex items-center gap-1.5 px-3 py-2 bg-white/80 border border-slate-200 rounded-xl text-xs text-slate-600 hover:bg-teal-50 hover:border-teal-300 hover:text-teal-700 transition-all shadow-sm"
-                data-testid={m.testId}
-              >
-                <m.icon className="w-3.5 h-3.5 text-teal-500" />
-                {m.label}
+            {status === 'speaking' && (
+              <button onClick={stopSpeaking} className="px-3 py-1.5 rounded-full bg-rose-50 text-rose-600 text-xs font-medium hover:bg-rose-100" data-testid="stop-speaking-btn">
+                <VolumeX className="w-3.5 h-3.5 inline mr-1" /> Stop
               </button>
-            ))}
-          </div>
-        )}
-
-        {/* Homework Panel */}
-        {showHomework && (
-          <div className="w-full max-w-xl space-y-2" data-testid="homework-panel">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-slate-700 flex items-center gap-1.5">
-                <ClipboardList className="w-4 h-4 text-teal-500" /> My Homework
-              </h3>
-              {messages.length > 2 && (
-                <button onClick={requestHomework} disabled={isLizBusy} className="text-[11px] text-teal-600 hover:text-teal-700 font-medium disabled:opacity-40" data-testid="request-homework-btn">
-                  + Ask for homework
-                </button>
-              )}
-            </div>
-            {homework.length === 0 ? (
-              <p className="text-xs text-slate-400 text-center py-3">No homework yet. Liz will assign tasks during lessons.</p>
-            ) : (
-              homework.map(hw => (
-                <HomeworkCard key={hw.homework_id} hw={hw} onSubmit={submitHomework} onDelete={deleteHomework} submitting={submittingHw} />
-              ))
             )}
           </div>
-        )}
+        </div>
+      </header>
 
-        {/* Transcript toggle */}
-        {messages.length > 1 && (
-          <button
-            onClick={() => setShowTranscript(v => !v)}
-            className="flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 transition-colors"
-            data-testid="transcript-toggle"
-          >
-            {showTranscript ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-            {showTranscript ? 'Hide' : 'Show'} conversation ({messages.length} messages)
-          </button>
-        )}
-
-        {/* Transcript */}
-        {showTranscript && messages.length > 0 && (
-          <div className="w-full max-w-xl max-h-48 overflow-y-auto bg-white/50 border border-slate-200 rounded-xl px-4 py-2 space-y-0.5" data-testid="transcript">
-            {messages.map((msg, i) => <TranscriptItem key={i} msg={msg} />)}
-            <div ref={transcriptEndRef} />
+      {/* ── 3-panel body ── */}
+      <div className="flex-1 max-w-[1400px] w-full mx-auto grid grid-cols-1 lg:grid-cols-[260px_minmax(0,1fr)_300px] gap-5 p-5">
+        {/* LEFT: Today with Liz — sessions list */}
+        <aside className="hidden lg:block">
+          <div className="bg-white rounded-xl border border-slate-200 p-4 sticky top-[76px]">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-semibold text-slate-800 text-sm flex items-center gap-1.5">
+                <Sparkles className="w-4 h-4 text-emerald-500" /> Today with Liz
+              </h3>
+              <button onClick={startNewSession} className="text-teal-600 hover:text-teal-700" title="New lesson" data-testid="new-session-btn">
+                <Plus className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="space-y-1 max-h-[60vh] overflow-y-auto">
+              {sessions.length === 0 && (
+                <p className="text-[11px] text-slate-400 py-2">Your lessons will appear here.</p>
+              )}
+              {sessions.map((s) => (
+                <button
+                  key={s.session_id}
+                  onClick={() => loadSession(s.session_id)}
+                  className={`w-full text-left px-3 py-2 rounded-lg text-xs transition ${
+                    sessionId === s.session_id ? 'bg-emerald-50 text-emerald-800 font-medium' : 'text-slate-600 hover:bg-slate-50'
+                  }`}
+                >
+                  <div className="truncate">{s.preview || 'New lesson'}</div>
+                  {s.created_at && (
+                    <div className="text-[10px] text-slate-400 mt-0.5">
+                      {new Date(s.created_at).toLocaleDateString()}
+                    </div>
+                  )}
+                </button>
+              ))}
+            </div>
           </div>
-        )}
-      </div>
+        </aside>
 
-      {/* ── Input Area ── */}
-      <div className="border-t border-slate-200/60 bg-white/80 backdrop-blur-sm px-4 py-4">
-        <div className="max-w-2xl mx-auto flex flex-col items-center gap-3">
-          {/* Microphone - primary action */}
-          <button
-            onClick={handleMicClick}
-            disabled={isLizBusy || status === 'transcribing'}
-            className={`w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 ${
-              status === 'listening'
-                ? 'bg-red-500 text-white shadow-lg shadow-red-200/60 scale-110 animate-pulse'
-                : 'bg-gradient-to-br from-teal-500 to-emerald-600 text-white shadow-lg shadow-teal-200/40 hover:scale-105 hover:shadow-xl'
-            } disabled:opacity-30 disabled:scale-100`}
-            data-testid="mic-btn"
-          >
-            {status === 'listening' ? <MicOff className="w-7 h-7" /> :
-             status === 'transcribing' ? <Loader2 className="w-7 h-7 animate-spin" /> :
-             <Mic className="w-7 h-7" />}
-          </button>
-          <p className="text-[11px] text-slate-400">
-            {status === 'listening' ? 'Tap to stop recording' :
-             status === 'transcribing' ? 'Processing your voice...' :
-             isLizBusy ? '' : 'Tap to speak to Liz'}
-          </p>
+        {/* CENTER: Conversation canvas */}
+        <section className={`rounded-xl border border-slate-200 ${tint.canvasBg} transition-colors flex flex-col min-h-[70vh]`}>
+          <div className="flex-1 overflow-y-auto p-6">
+            {isFirstTime ? (
+              <div className="h-full flex flex-col items-center justify-center text-center px-6 py-12">
+                <div className="w-24 h-24 rounded-full overflow-hidden ring-4 ring-emerald-100 shadow-lg mb-5">
+                  <img src={LIZ_AVATAR} alt="Liz" className="w-full h-full object-cover" />
+                </div>
+                <h2 className="font-serif text-2xl text-slate-900 mb-2" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+                  Welcome. Let's work together.
+                </h2>
+                <p className="text-slate-500 text-sm max-w-md mb-6">
+                  Speak, type, or pick a lesson below. I'll remember where we leave off.
+                </p>
+                <div className="flex flex-wrap justify-center gap-2 max-w-2xl">
+                  {LESSON_MODES.map((m) => (
+                    <button
+                      key={m.testId}
+                      onClick={() => sendMessage(m.prompt)}
+                      disabled={isLizBusy}
+                      className="flex items-center gap-1.5 px-3.5 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-700 hover:bg-emerald-50 hover:border-emerald-300 hover:text-emerald-700 transition-all shadow-sm disabled:opacity-40"
+                      data-testid={m.testId}
+                    >
+                      <m.icon className="w-3.5 h-3.5 text-teal-500" />
+                      {m.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="max-w-3xl mx-auto">
+                {messages.map((msg, i) => (
+                  <div key={i}>
+                    {msg.role === 'user' ? (
+                      <UserNote msg={msg} />
+                    ) : (
+                      <div className="flex items-start gap-2">
+                        <div className="flex-1">
+                          <TeacherNote msg={msg} />
+                        </div>
+                        {/* ▶ Listen button (opt-in per message) */}
+                        <button
+                          onClick={() => speakMessage(msg)}
+                          disabled={isLizBusy}
+                          className="mt-3 text-slate-400 hover:text-emerald-600 p-1 rounded-full hover:bg-emerald-50 transition disabled:opacity-30"
+                          title="Listen"
+                        >
+                          <PlayCircle className="w-5 h-5" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ))}
+                {status === 'thinking' && (
+                  <div className="flex items-center gap-2 py-4 text-slate-400 text-sm">
+                    <Loader2 className="w-4 h-4 animate-spin" /> Liz is thinking…
+                  </div>
+                )}
+                <div ref={canvasEndRef} />
+              </div>
+            )}
+          </div>
 
-          {/* Text input - secondary */}
-          <div className="w-full flex items-end gap-2">
-            <div className="flex-1">
+          {/* Scalar voice insight fallback (only if no word-level data in last message) */}
+          {voiceInsight && (
+            <div className="mx-6 mb-3 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-xs text-amber-800" data-testid="liz-voice-insight">
+              <span className="font-semibold">Voice snapshot:</span>{' '}
+              Pronunciation {voiceInsight.pronunciation}/100, Fluency {voiceInsight.fluency}/100, Accuracy {voiceInsight.accuracy}/100.
+            </div>
+          )}
+
+          {/* ── Input bar ── */}
+          <div className="border-t border-slate-200 bg-white/60 p-4">
+            <div className="max-w-3xl mx-auto flex items-end gap-3">
+              <button
+                onClick={handleMicClick}
+                disabled={isLizBusy || status === 'transcribing'}
+                className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 flex-shrink-0 ${
+                  status === 'listening'
+                    ? 'bg-red-500 text-white shadow-lg shadow-red-200/60 scale-110 animate-pulse'
+                    : 'bg-gradient-to-br from-teal-500 to-emerald-600 text-white shadow-lg shadow-teal-200/40 hover:scale-105 hover:shadow-xl'
+                } disabled:opacity-30 disabled:scale-100`}
+                data-testid="mic-btn"
+              >
+                {status === 'listening' ? <MicOff className="w-5 h-5" /> :
+                 status === 'transcribing' ? <Loader2 className="w-5 h-5 animate-spin" /> :
+                 <Mic className="w-5 h-5" />}
+              </button>
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Or type here..."
+                placeholder={status === 'listening' ? 'Listening…' : status === 'transcribing' ? 'Processing…' : 'Type or tap the mic'}
                 disabled={isLizBusy || isUserBusy}
-                className="w-full px-4 py-2.5 rounded-full border border-slate-200 bg-slate-50/50 text-slate-800 placeholder-slate-400 focus:border-teal-400 focus:ring-1 focus:ring-teal-300/50 outline-none text-sm disabled:opacity-40"
+                className="flex-1 px-4 py-2.5 rounded-full border border-slate-200 bg-white text-slate-800 placeholder-slate-400 focus:border-teal-400 focus:ring-1 focus:ring-teal-300/50 outline-none text-sm disabled:opacity-40"
                 data-testid="liz-input"
               />
+              <Button
+                onClick={() => sendMessage(input)}
+                disabled={!input.trim() || isLizBusy || isUserBusy}
+                className="h-11 w-11 rounded-full bg-slate-800 hover:bg-slate-900 text-white disabled:opacity-30 shrink-0 p-0"
+                data-testid="liz-send-btn"
+              >
+                {status === 'thinking' ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+              </Button>
             </div>
-            <Button
-              onClick={() => sendMessage(input)}
-              disabled={!input.trim() || isLizBusy || isUserBusy}
-              className="h-10 w-10 rounded-full bg-slate-700 hover:bg-slate-800 text-white disabled:opacity-30 shrink-0 p-0"
-              data-testid="liz-send-btn"
-            >
-              {status === 'thinking' ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-            </Button>
           </div>
-        </div>
+        </section>
+
+        {/* RIGHT: Liz remembers + quick actions */}
+        <aside className="hidden lg:block">
+          <div className="sticky top-[76px] space-y-3">
+            {/* Liz remembers — summary */}
+            <div className="bg-white rounded-xl border border-slate-200 p-4">
+              <h3 className="font-semibold text-slate-800 text-sm mb-2">Liz remembers</h3>
+              <ul className="space-y-1.5 text-xs text-slate-600">
+                {lizStatus?.target_band != null && (
+                  <li>Target band: <b className="text-slate-900">{lizStatus.target_band}</b></li>
+                )}
+                {messages.length > 0 && <li>{messages.length} messages this session</li>}
+                {pendingHwCount > 0 && <li>{pendingHwCount} homework item{pendingHwCount === 1 ? '' : 's'} pending</li>}
+                {currentMode !== 'default' && (
+                  <li className="text-[10px] text-slate-400 uppercase tracking-wider">
+                    Mode: {currentMode}
+                  </li>
+                )}
+              </ul>
+            </div>
+
+            {/* Homework */}
+            <div className="bg-white rounded-xl border border-slate-200 p-4" data-testid="homework-panel">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-sm font-semibold text-slate-700 flex items-center gap-1.5">
+                  <ClipboardList className="w-4 h-4 text-teal-500" /> Homework
+                  {pendingHwCount > 0 && (
+                    <span className="ml-1 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full grid place-items-center" data-testid="homework-badge">
+                      {pendingHwCount}
+                    </span>
+                  )}
+                </h3>
+                {messages.length > 2 && (
+                  <button onClick={requestHomework} disabled={isLizBusy} className="text-[11px] text-teal-600 hover:text-teal-700 font-medium disabled:opacity-40" data-testid="request-homework-btn">
+                    + Ask
+                  </button>
+                )}
+              </div>
+              {homework.length === 0 ? (
+                <p className="text-xs text-slate-400 py-2">No homework yet.</p>
+              ) : (
+                <div className="space-y-2 max-h-[40vh] overflow-y-auto">
+                  {homework.map((hw) => (
+                    <HomeworkCard key={hw.homework_id} hw={hw} onSubmit={submitHomework} onDelete={deleteHomework} submitting={submittingHw} />
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Quick actions */}
+            <div className="bg-white rounded-xl border border-slate-200 p-4">
+              <h3 className="font-semibold text-slate-800 text-sm mb-2">Quick actions</h3>
+              <div className="space-y-1.5">
+                {LESSON_MODES.slice(0, 3).map((m) => (
+                  <button
+                    key={m.testId}
+                    onClick={() => sendMessage(m.prompt)}
+                    disabled={isLizBusy}
+                    className="w-full flex items-center gap-2 px-3 py-2 text-left text-xs text-slate-600 rounded-lg hover:bg-teal-50 hover:text-teal-700 transition disabled:opacity-40"
+                  >
+                    <m.icon className="w-3.5 h-3.5 text-teal-500" />
+                    {m.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   );
