@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ConversationProvider } from '@elevenlabs/react';
 import SpeakingHeader from './SpeakingHeader';
 import PartSelector from './PartSelector';
@@ -17,12 +17,58 @@ import '../../liz/liz.css';
 // (replaces Gemini Live). Part 2 remains the cue-card monologue flow.
 const CONVERSATIONAL_PARTS = new Set(['part1', 'part3']);
 
+// /api/speaking/evaluate requires a non-empty cue_card_prompt, but Part 1/3
+// don't have one — the meaningful prompts came from Liz at runtime. Send a
+// stable label so the evaluator at least knows which part it's scoring.
+const CONVERSATIONAL_CUE_LABEL = {
+  part1: 'IELTS Speaking — Part 1 (familiar topics conversation with Liz)',
+  part3: 'IELTS Speaking — Part 3 (abstract discussion connected to Part 2)',
+};
+
+async function submitLizSpeakingEval({ user, part, audioBlob, transcript, durationSecs }) {
+  const base = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_API_URL || '';
+  const ext = audioBlob.type.includes('wav') ? 'wav'
+    : audioBlob.type.includes('ogg') ? 'ogg' : 'webm';
+  const form = new FormData();
+  form.append('audio', audioBlob, `liz-${part}-${Date.now()}.${ext}`);
+  form.append('user_id', user.id);
+  form.append('part', part);
+  form.append('cue_card_prompt', CONVERSATIONAL_CUE_LABEL[part] || `IELTS Speaking — ${part}`);
+  // Pass the user-only transcript as a single bullet so Sonnet has the
+  // candidate's verbatim speech as evidence even when Azure STT is conservative
+  // on conversational utterances.
+  form.append('cue_card_bullets', transcript || '');
+  form.append('user_language', user.feedback_language || 'en');
+  form.append('target_band', String(user.target_band || 7.0));
+  form.append('duration_seconds', String(durationSecs || 0));
+  form.append('context', 'practice');
+  const resp = await fetch(`${base}/api/speaking/evaluate`, {
+    method: 'POST',
+    body: form,
+  });
+  if (!resp.ok) {
+    let detail;
+    try { detail = await resp.json(); } catch (_e) { detail = await resp.text(); }
+    const msg = typeof detail === 'string'
+      ? detail
+      : (detail?.detail?.message || detail?.detail || `HTTP ${resp.status}`);
+    throw new Error(msg);
+  }
+  return resp.json();
+}
+
 // Live conversation gate for Part 1/3 — auto-starts a Liz session inside the
-// ConversationProvider, renders VoiceOverlay, and surfaces a quota-locked
-// upgrade prompt if the plan blocks it.
+// ConversationProvider, renders VoiceOverlay, and on session end posts the
+// user-only audio + transcript to /api/speaking/evaluate so the candidate
+// gets word-level pronunciation feedback (same surface as Part 2).
 function LiveConversation({ part, user, onExit }) {
   const liz = useElevenLabsLiz({ userId: user?.id });
   const [started, setStarted] = useState(false);
+  // 'live' → 'submitting' → 'results' | 'error'
+  const [phase, setPhase] = useState('live');
+  const [scoreResult, setScoreResult] = useState(null);
+  const [scoreError, setScoreError] = useState(null);
+  const submittedRef = useRef(false);
 
   useEffect(() => {
     if (started || !user?.id) return;
@@ -31,12 +77,75 @@ function LiveConversation({ part, user, onExit }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [started, user?.id, part]);
 
+  // Liz session ended → flush user-only audio to /evaluate. Without captured
+  // audio (mic denied, no user turns), fall back to the old "exit straight to
+  // selector" behaviour so the user isn't stuck on a spinner.
   useEffect(() => {
-    if (!liz.isEnded) return;
-    onExit?.();
-    liz.reset();
+    if (!liz.isEnded || submittedRef.current) return;
+    submittedRef.current = true;
+
+    const blob = liz.userAudioBlob;
+    const transcript = liz.userTranscript;
+    const durationSecs = liz.elapsedSeconds;
+
+    if (!blob) {
+      onExit?.();
+      liz.reset();
+      return;
+    }
+
+    setPhase('submitting');
+    submitLizSpeakingEval({ user, part, audioBlob: blob, transcript, durationSecs })
+      .then((data) => {
+        setScoreResult(data);
+        setPhase('results');
+      })
+      .catch((err) => {
+        setScoreError(err?.message || String(err));
+        setPhase('error');
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [liz.isEnded]);
+
+  const handleClose = () => {
+    onExit?.();
+    liz.reset();
+  };
+
+  if (phase === 'submitting') {
+    return (
+      <>
+        <SpeakingHeader />
+        <ProcessingState audioBlob={liz.userAudioBlob} />
+      </>
+    );
+  }
+
+  if (phase === 'results') {
+    return (
+      <>
+        <SpeakingHeader />
+        <ResultsState
+          data={scoreResult}
+          onRetryCard={handleClose}
+          onNewCard={handleClose}
+        />
+      </>
+    );
+  }
+
+  if (phase === 'error') {
+    return (
+      <>
+        <SpeakingHeader />
+        <ErrorState
+          errorMessage={scoreError}
+          onRetry={handleClose}
+          onBack={handleClose}
+        />
+      </>
+    );
+  }
 
   const showUpgrade = liz.isError && liz.errorCode === 'liz_live_locked';
 
@@ -65,12 +174,12 @@ function LiveConversation({ part, user, onExit }) {
             </p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a className="sp-btn-primary" href="/pricing/v2" style={{ height: 44, padding: '0 22px', display: 'inline-flex', alignItems: 'center' }}>See plans</a>
-              <button className="sp-btn-ghost" onClick={onExit} style={{ height: 44, padding: '0 18px' }}>Back</button>
+              <button className="sp-btn-ghost" onClick={handleClose} style={{ height: 44, padding: '0 18px' }}>Back</button>
             </div>
           </div>
         ) : (
           <div className="liz-scope">
-            <VoiceOverlay liz={liz} onClose={onExit} />
+            <VoiceOverlay liz={liz} onClose={handleClose} />
           </div>
         )}
       </section>
