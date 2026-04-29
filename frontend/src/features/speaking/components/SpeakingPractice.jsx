@@ -11,11 +11,18 @@ import { useSpeakingFlow } from '../hooks/useSpeakingFlow';
 import { pickRandomCueCard } from '../lib/pickCueCard';
 import useElevenLabsLiz from '../../liz/hooks/useElevenLabsLiz';
 import VoiceOverlay from '../../liz/components/VoiceOverlay';
+import FullTestFlow from './FullTestFlow';
 import '../../liz/liz.css';
 
 // 2026-04-29: Part 1 + Part 3 are conversational, driven by ElevenLabs Liz
 // (replaces Gemini Live). Part 2 remains the cue-card monologue flow.
 const CONVERSATIONAL_PARTS = new Set(['part1', 'part3']);
+
+// Full Test is gated to Monthly + Exam Pack (matches FULL_TEST_PLANS in
+// backend/services/tier_resolver.py). Free / Weekly users see a locked card
+// in PartSelector and a clean upgrade panel inside FullTestFlow if they
+// somehow bypass the gate.
+const FULL_TEST_PLANS = new Set(['monthly', 'exam', 'master']);
 
 // /api/speaking/evaluate requires a non-empty cue_card_prompt, but Part 1/3
 // don't have one — the meaningful prompts came from Liz at runtime. Send a
@@ -204,6 +211,17 @@ function SpeakingPracticeInner({ onExit, user }) {
   // Active part for the ElevenLabs Live conversation (Part 1 / Part 3).
   // null when in the standard cue-card flow.
   const [pendingLivePart, setPendingLivePart] = useState(null);
+  // True when the user has opened the 3-part Full Test orchestrator. Mutually
+  // exclusive with pendingLivePart and the per-part flow states.
+  const [pendingFullTest, setPendingFullTest] = useState(false);
+
+  // Lock the Full Test card for plans that aren't Monthly/Exam Pack. The
+  // backend enforces the same rule, but locking in the UI gives a clearer
+  // message before the candidate spends a click + a connection attempt.
+  const lockedParts = useMemo(() => {
+    const planRaw = (user?.plan || 'free').toLowerCase();
+    return FULL_TEST_PLANS.has(planRaw) ? new Set() : new Set(['fulltest']);
+  }, [user?.plan]);
   // Pick a fresh Part 2 cue card per session. Memoised so re-renders during
   // prep/recording don't swap the prompt under the candidate. handleExit /
   // "New card" reset bumps `cueCardKey` to draw a different one.
@@ -237,6 +255,7 @@ function SpeakingPracticeInner({ onExit, user }) {
   const handleExit = () => {
     flow.reset();
     setPendingLivePart(null);
+    setPendingFullTest(false);
     setCueCardKey((k) => k + 1);
     if (onExit) onExit();
   };
@@ -257,12 +276,32 @@ function SpeakingPracticeInner({ onExit, user }) {
     // PartSelector passes the clicked part id explicitly so we don't read a
     // stale `flow.selectedPart` from before React flushed setSelectedPart.
     const part = partOverride || flow.selectedPart;
+    // Locked parts (e.g. Full Test on Free/Weekly) route to upgrade rather
+    // than into a session that the backend will 402 anyway.
+    if (lockedParts.has(part)) {
+      window.location.href = '/pricing/v2';
+      return;
+    }
+    if (part === 'fulltest') {
+      setPendingFullTest(true);
+      return;
+    }
     if (CONVERSATIONAL_PARTS.has(part)) {
       setPendingLivePart(part);
     } else {
       flow.startPrep();
     }
   };
+
+  // Full Test — 3-part orchestrator with one shared theme.
+  if (pendingFullTest) {
+    return (
+      <FullTestFlow
+        user={user}
+        onExit={() => setPendingFullTest(false)}
+      />
+    );
+  }
 
   // Part 1 / Part 3 — live conversation with Liz via ElevenLabs.
   if (pendingLivePart) {
@@ -287,6 +326,7 @@ function SpeakingPracticeInner({ onExit, user }) {
           topics={flow.topics}
           onToggleTopic={flow.toggleTopic}
           onClearTopics={flow.clearTopics}
+          lockedParts={lockedParts}
         />
       )}
 

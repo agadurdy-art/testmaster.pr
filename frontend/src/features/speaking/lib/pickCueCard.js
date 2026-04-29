@@ -20,13 +20,21 @@ const decorate = (card) => ({
   andExplain: card.andExplain,
 });
 
-/** Pick a random Part 2 cue card. Optional excludeId avoids repeats. */
-export function pickRandomCueCard({ excludeId } = {}) {
+/** Pick a random Part 2 cue card. Optional excludeId avoids repeats; optional
+ * theme restricts to a single topic bucket (used by Full Test so Part 1 / 2 / 3
+ * stay tematik bağlantılı). Falls back to the full pool if the theme has no
+ * cards (defensive — should not happen with the seeded JSON). */
+export function pickRandomCueCard({ excludeId, theme } = {}) {
   if (!POOL.length) return null;
+  let scope = POOL;
+  if (theme) {
+    const themed = POOL.filter((c) => c.topic === theme);
+    if (themed.length) scope = themed;
+  }
   const filtered = excludeId
-    ? POOL.filter((c) => c.id !== excludeId)
-    : POOL;
-  const pool = filtered.length ? filtered : POOL;
+    ? scope.filter((c) => c.id !== excludeId)
+    : scope;
+  const pool = filtered.length ? filtered : scope;
   const card = pool[Math.floor(Math.random() * pool.length)];
   return decorate(card);
 }

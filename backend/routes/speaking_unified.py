@@ -719,9 +719,15 @@ async def evaluate_fulltest(
             detail={"code": "invalid_request", "message": str(exc)},
         )
 
-    # Tier gate — Full Test costs 1 attempt regardless of part count.
-    decision = await resolve_speaking_eval(db, user)
+    # Tier gate — Full Test costs 1 attempt regardless of part count, AND is
+    # plan-restricted to Monthly + Exam Pack (resolve_speaking_eval enforces
+    # the plan check when context='full_test').
+    decision = await resolve_speaking_eval(db, user, context="full_test")
     if not decision.allowed:
+        # Distinguish "you don't have this feature" from "you're out of quota"
+        # so the frontend can route to /pricing instead of "wait until reset".
+        is_plan_locked = decision.plan not in {"monthly", "exam", "master"}
+        error_code = "fulltest_locked" if is_plan_locked else "quota_exhausted"
         await _emit_telemetry({
             "_id": uuid.uuid4().hex,
             "ts": datetime.now(timezone.utc),
@@ -731,7 +737,7 @@ async def evaluate_fulltest(
             "mode": decision.mode,
             "context": "full_test",
             "success": False,
-            "error_code": "quota_exhausted",
+            "error_code": error_code,
             "quota_remaining": decision.remaining,
             "period_key": decision.period_key,
             "latency_ms": 0,
@@ -739,7 +745,7 @@ async def evaluate_fulltest(
         raise HTTPException(
             status_code=402,
             detail={
-                "code": "quota_exhausted",
+                "code": error_code,
                 "message": decision.message
                     or "You've used all evaluations for this period.",
                 "quota": decision.quota,

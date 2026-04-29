@@ -5,6 +5,27 @@ import LizCard from './LizCard';
 const ICON_SIZE = 28;
 
 function PartIcon({ partId }) {
+  if (partId === 'fulltest') {
+    return (
+      <div
+        className="sp-part-icon"
+        style={{
+          background: 'var(--sp-primary-50, #ecfdf5)',
+          border: '1px solid var(--sp-primary-200, #a7f3d0)',
+        }}
+      >
+        <svg viewBox="0 0 32 32" width={ICON_SIZE} height={ICON_SIZE} fill="none"
+             stroke="hsl(160 82% 27%)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M6 9h20" />
+          <path d="M6 16h20" />
+          <path d="M6 23h20" />
+          <circle cx="9" cy="9" r="1.6" fill="hsl(160 82% 27%)" />
+          <circle cx="16" cy="16" r="1.6" fill="hsl(160 82% 27%)" />
+          <circle cx="23" cy="23" r="1.6" fill="hsl(160 82% 27%)" />
+        </svg>
+      </div>
+    );
+  }
   if (partId === 'part1') {
     return (
       <div
@@ -59,11 +80,21 @@ function PartIcon({ partId }) {
   );
 }
 
-function PartCard({ part, selected, onSelect, onStart }) {
-  const cls = 'sp-part-card' + (selected ? ' sp-part-card-selected' : '');
+function PartCard({ part, selected, onSelect, onStart, locked }) {
+  const cls = 'sp-part-card'
+    + (selected ? ' sp-part-card-selected' : '')
+    + (locked ? ' sp-part-card-locked' : '');
   return (
     <article className={cls} onClick={onSelect}>
-      {selected && <div className="sp-part-card-tag">Recommended for you</div>}
+      {locked && (
+        <div
+          className="sp-part-card-tag"
+          style={{ background: 'hsl(38 92% 92%)', color: 'hsl(38 92% 30%)' }}
+        >
+          Premium · Monthly & Exam Pack
+        </div>
+      )}
+      {!locked && selected && <div className="sp-part-card-tag">Recommended for you</div>}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <PartIcon partId={part.id} />
         <span
@@ -159,7 +190,9 @@ function PartCard({ part, selected, onSelect, onStart }) {
         className={selected ? 'sp-btn-primary' : 'sp-btn-secondary'}
         style={{ width: '100%', marginTop: 24 }}
       >
-        {selected ? `Start ${part.label} →` : `Start ${part.label}`}
+        {locked
+          ? `Unlock ${part.label}`
+          : (selected ? `Start ${part.label} →` : `Start ${part.label}`)}
       </button>
     </article>
   );
@@ -172,7 +205,11 @@ export default function PartSelector({
   topics,
   onToggleTopic,
   onClearTopics,
+  lockedParts,
 }) {
+  const lockedSet = lockedParts instanceof Set
+    ? lockedParts
+    : new Set(lockedParts || []);
   return (
     <section
       style={{
@@ -270,6 +307,7 @@ export default function PartSelector({
             <PartCard
               key={part.id}
               part={part}
+              locked={lockedSet.has(part.id)}
               selected={selectedPart === part.id}
               onSelect={() => onSelectPart(part.id)}
               onStart={() => { onSelectPart(part.id); onStart(part.id); }}
