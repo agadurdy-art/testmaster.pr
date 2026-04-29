@@ -1,0 +1,352 @@
+[
+  {
+    "id": "cc-001",
+    "topic": "People",
+    "prompt": "Describe a person who has influenced you.",
+    "bullets": ["who this person is", "how you know them", "what they are like"],
+    "andExplain": "why they have influenced you."
+  },
+  {
+    "id": "cc-002",
+    "topic": "People",
+    "prompt": "Describe a teacher you remember well.",
+    "bullets": ["who the teacher was", "what subject they taught", "how they taught"],
+    "andExplain": "why you remember them well."
+  },
+  {
+    "id": "cc-003",
+    "topic": "People",
+    "prompt": "Describe a friend you do not see very often.",
+    "bullets": ["who this friend is", "how you met", "how you stay in touch"],
+    "andExplain": "why you would like to see them more often."
+  },
+  {
+    "id": "cc-004",
+    "topic": "People",
+    "prompt": "Describe a family member you spend a lot of time with.",
+    "bullets": ["who this person is", "what you do together", "how often you see them"],
+    "andExplain": "why you enjoy spending time with them."
+  },
+  {
+    "id": "cc-005",
+    "topic": "People",
+    "prompt": "Describe a person you admire who is not famous.",
+    "bullets": ["who this person is", "how you know them", "what they have done"],
+    "andExplain": "why you admire them."
+  },
+  {
+    "id": "cc-006",
+    "topic": "People",
+    "prompt": "Describe an older person you respect.",
+    "bullets": ["who this person is", "your relationship to them", "what they are like"],
+    "andExplain": "why you respect them."
+  },
+  {
+    "id": "cc-007",
+    "topic": "People",
+    "prompt": "Describe a child you know.",
+    "bullets": ["who this child is", "how often you see them", "what they are like"],
+    "andExplain": "why you enjoy being around them."
+  },
+  {
+    "id": "cc-008",
+    "topic": "People",
+    "prompt": "Describe a person who is good at their job.",
+    "bullets": ["who this person is", "what their job is", "how they do their job"],
+    "andExplain": "why you think they are good at it."
+  },
+  {
+    "id": "cc-009",
+    "topic": "Places",
+    "prompt": "Describe a place near where you live that you enjoy visiting.",
+    "bullets": ["where it is", "how often you go there", "what you do there"],
+    "andExplain": "why you enjoy visiting it."
+  },
+  {
+    "id": "cc-010",
+    "topic": "Places",
+    "prompt": "Describe a city you have visited that impressed you.",
+    "bullets": ["which city it was", "when you went there", "what you did"],
+    "andExplain": "why it impressed you."
+  },
+  {
+    "id": "cc-011",
+    "topic": "Places",
+    "prompt": "Describe a quiet place you like to go.",
+    "bullets": ["where it is", "when you go there", "what you do there"],
+    "andExplain": "why you like the quiet there."
+  },
+  {
+    "id": "cc-012",
+    "topic": "Places",
+    "prompt": "Describe a building you find interesting.",
+    "bullets": ["where the building is", "what it looks like", "what it is used for"],
+    "andExplain": "why you find it interesting."
+  },
+  {
+    "id": "cc-013",
+    "topic": "Places",
+    "prompt": "Describe a park or garden you like.",
+    "bullets": ["where it is", "how often you visit", "what you do there"],
+    "andExplain": "why you like it."
+  },
+  {
+    "id": "cc-014",
+    "topic": "Places",
+    "prompt": "Describe a restaurant or cafe you enjoy.",
+    "bullets": ["where it is", "what kind of food it serves", "who you go with"],
+    "andExplain": "why you enjoy going there."
+  },
+  {
+    "id": "cc-015",
+    "topic": "Places",
+    "prompt": "Describe a place where you would like to live in the future.",
+    "bullets": ["where it is", "what it is like", "what you would do there"],
+    "andExplain": "why you would like to live there."
+  },
+  {
+    "id": "cc-016",
+    "topic": "Events",
+    "prompt": "Describe a memorable journey you have taken.",
+    "bullets": ["where you went", "who you went with", "what you did"],
+    "andExplain": "why it was memorable."
+  },
+  {
+    "id": "cc-017",
+    "topic": "Events",
+    "prompt": "Describe a celebration you attended recently.",
+    "bullets": ["what the celebration was", "where it took place", "who was there"],
+    "andExplain": "why you remember it."
+  },
+  {
+    "id": "cc-018",
+    "topic": "Events",
+    "prompt": "Describe a time you helped someone.",
+    "bullets": ["who you helped", "what the situation was", "what you did"],
+    "andExplain": "how you felt afterwards."
+  },
+  {
+    "id": "cc-019",
+    "topic": "Events",
+    "prompt": "Describe a time you tried something new.",
+    "bullets": ["what you tried", "when and where it happened", "who you were with"],
+    "andExplain": "how you felt about the experience."
+  },
+  {
+    "id": "cc-020",
+    "topic": "Events",
+    "prompt": "Describe a time you got up very early.",
+    "bullets": ["when this was", "why you got up early", "what you did"],
+    "andExplain": "how you felt that day."
+  },
+  {
+    "id": "cc-021",
+    "topic": "Events",
+    "prompt": "Describe a time when you were late for something.",
+    "bullets": ["what you were late for", "why you were late", "what happened"],
+    "andExplain": "how you felt afterwards."
+  },
+  {
+    "id": "cc-022",
+    "topic": "Events",
+    "prompt": "Describe a difficult decision you had to make.",
+    "bullets": ["what the decision was", "when you had to make it", "what you decided"],
+    "andExplain": "why it was difficult."
+  },
+  {
+    "id": "cc-023",
+    "topic": "Events",
+    "prompt": "Describe a piece of good news you received.",
+    "bullets": ["what the news was", "how you heard it", "who you shared it with"],
+    "andExplain": "how it made you feel."
+  },
+  {
+    "id": "cc-024",
+    "topic": "Events",
+    "prompt": "Describe a happy childhood memory.",
+    "bullets": ["what happened", "where you were", "who was with you"],
+    "andExplain": "why it makes you happy now."
+  },
+  {
+    "id": "cc-025",
+    "topic": "Events",
+    "prompt": "Describe a time you were given a gift you really liked.",
+    "bullets": ["what the gift was", "who gave it to you", "why they gave it"],
+    "andExplain": "why you liked it so much."
+  },
+  {
+    "id": "cc-026",
+    "topic": "Events",
+    "prompt": "Describe a meal you cooked or shared with others.",
+    "bullets": ["what the meal was", "who ate with you", "where it was"],
+    "andExplain": "why you remember it."
+  },
+  {
+    "id": "cc-027",
+    "topic": "Events",
+    "prompt": "Describe an occasion when you waited a long time for something.",
+    "bullets": ["what you were waiting for", "where you waited", "how long you waited"],
+    "andExplain": "how you felt during the wait."
+  },
+  {
+    "id": "cc-028",
+    "topic": "Objects",
+    "prompt": "Describe an item of clothing you often wear.",
+    "bullets": ["what it is", "when you wear it", "where you got it"],
+    "andExplain": "why you like wearing it."
+  },
+  {
+    "id": "cc-029",
+    "topic": "Objects",
+    "prompt": "Describe a useful piece of technology you own.",
+    "bullets": ["what it is", "how you use it", "how often you use it"],
+    "andExplain": "why it is useful to you."
+  },
+  {
+    "id": "cc-030",
+    "topic": "Objects",
+    "prompt": "Describe a gift you gave to someone.",
+    "bullets": ["what the gift was", "who you gave it to", "the occasion"],
+    "andExplain": "why you chose this gift."
+  },
+  {
+    "id": "cc-031",
+    "topic": "Objects",
+    "prompt": "Describe a photograph you like.",
+    "bullets": ["what is in the photo", "who took it", "when it was taken"],
+    "andExplain": "why you like it."
+  },
+  {
+    "id": "cc-032",
+    "topic": "Objects",
+    "prompt": "Describe a book you have read more than once.",
+    "bullets": ["what the book is", "what it is about", "when you first read it"],
+    "andExplain": "why you have read it more than once."
+  },
+  {
+    "id": "cc-033",
+    "topic": "Objects",
+    "prompt": "Describe a possession you would not want to lose.",
+    "bullets": ["what it is", "how you got it", "how long you have had it"],
+    "andExplain": "why it is important to you."
+  },
+  {
+    "id": "cc-034",
+    "topic": "Objects",
+    "prompt": "Describe a meal that is special in your culture.",
+    "bullets": ["what the meal is", "when it is eaten", "what is in it"],
+    "andExplain": "why it is special."
+  },
+  {
+    "id": "cc-035",
+    "topic": "Activities",
+    "prompt": "Describe a hobby you enjoy.",
+    "bullets": ["what the hobby is", "how you got started", "how often you do it"],
+    "andExplain": "why you enjoy it."
+  },
+  {
+    "id": "cc-036",
+    "topic": "Activities",
+    "prompt": "Describe a sport you would like to learn.",
+    "bullets": ["what the sport is", "where you would learn it", "what you would need"],
+    "andExplain": "why you want to learn it."
+  },
+  {
+    "id": "cc-037",
+    "topic": "Activities",
+    "prompt": "Describe something you do to relax.",
+    "bullets": ["what you do", "when you do it", "where you do it"],
+    "andExplain": "how it helps you relax."
+  },
+  {
+    "id": "cc-038",
+    "topic": "Activities",
+    "prompt": "Describe a skill you would like to learn.",
+    "bullets": ["what the skill is", "how you would learn it", "how long it would take"],
+    "andExplain": "why you want to learn it."
+  },
+  {
+    "id": "cc-039",
+    "topic": "Activities",
+    "prompt": "Describe something you do online.",
+    "bullets": ["what you do", "when you do it", "what you need to do it"],
+    "andExplain": "why you do it online rather than offline."
+  },
+  {
+    "id": "cc-040",
+    "topic": "Activities",
+    "prompt": "Describe a piece of music you like.",
+    "bullets": ["what kind of music it is", "when you first heard it", "when you listen to it"],
+    "andExplain": "why you like it."
+  },
+  {
+    "id": "cc-041",
+    "topic": "Activities",
+    "prompt": "Describe a film or TV show you would recommend.",
+    "bullets": ["what it is", "what it is about", "where you watched it"],
+    "andExplain": "why you would recommend it."
+  },
+  {
+    "id": "cc-042",
+    "topic": "Abstract",
+    "prompt": "Describe a goal you have set for yourself.",
+    "bullets": ["what the goal is", "when you set it", "what you are doing to achieve it"],
+    "andExplain": "why this goal is important to you."
+  },
+  {
+    "id": "cc-043",
+    "topic": "Abstract",
+    "prompt": "Describe a piece of advice you remember.",
+    "bullets": ["what the advice was", "who gave it to you", "when they gave it"],
+    "andExplain": "why you still remember it."
+  },
+  {
+    "id": "cc-044",
+    "topic": "Abstract",
+    "prompt": "Describe something you learned that changed your life.",
+    "bullets": ["what you learned", "when you learned it", "how you learned it"],
+    "andExplain": "how it changed your life."
+  },
+  {
+    "id": "cc-045",
+    "topic": "Abstract",
+    "prompt": "Describe a habit you want to change.",
+    "bullets": ["what the habit is", "how it started", "what you have tried"],
+    "andExplain": "why you want to change it."
+  },
+  {
+    "id": "cc-046",
+    "topic": "Abstract",
+    "prompt": "Describe a problem you solved.",
+    "bullets": ["what the problem was", "when it happened", "how you solved it"],
+    "andExplain": "what you learned from it."
+  },
+  {
+    "id": "cc-047",
+    "topic": "Events",
+    "prompt": "Describe an interesting conversation you had.",
+    "bullets": ["who you talked to", "where the conversation took place", "what you talked about"],
+    "andExplain": "why it was interesting."
+  },
+  {
+    "id": "cc-048",
+    "topic": "Places",
+    "prompt": "Describe a shop you like to visit.",
+    "bullets": ["where the shop is", "what it sells", "how often you go"],
+    "andExplain": "why you like it."
+  },
+  {
+    "id": "cc-049",
+    "topic": "Events",
+    "prompt": "Describe a time you saw something interesting in the sky.",
+    "bullets": ["what you saw", "when and where", "who was with you"],
+    "andExplain": "why you found it interesting."
+  },
+  {
+    "id": "cc-050",
+    "topic": "Activities",
+    "prompt": "Describe a website or app you use a lot.",
+    "bullets": ["what it is", "what you use it for", "how often you use it"],
+    "andExplain": "why it is useful to you."
+  }
+]

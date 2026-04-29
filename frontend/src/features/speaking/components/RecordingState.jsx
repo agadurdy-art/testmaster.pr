@@ -2,15 +2,19 @@ import React, { useState } from 'react';
 import CueCard from './CueCard';
 import AmpRing from './AmpRing';
 import { formatMMSS } from '../hooks/useSpeakingFlow';
-import { LIVE_TRANSCRIPT_WORDS } from '../constants';
 
 export default function RecordingState({
   recordRemaining,
-  spokenWordCount,
+  spokenWordCount, // currently unused — live STT not yet streamed to UI
   onStopEarly,
+  cueCard,
 }) {
   const [cueOpen, setCueOpen] = useState(true);
-  const visibleWords = LIVE_TRANSCRIPT_WORDS.slice(0, spokenWordCount);
+  // Live transcript is intentionally empty: there is no real-time STT wired
+  // here yet, and showing canned mock words ("aunt Mai…") makes it look like
+  // the mic isn't capturing. Real transcript appears in ResultsState after
+  // /api/speaking/evaluate returns.
+  const visibleWords = [];
 
   return (
     <section
@@ -169,7 +173,7 @@ export default function RecordingState({
               Cue card · {cueOpen ? 'tap to minimise' : 'tap to show'}
             </span>
           </button>
-          {cueOpen && <CueCard variant="mini" style={{ maxWidth: 820 }} />}
+          {cueOpen && <CueCard variant="mini" style={{ maxWidth: 820 }} card={cueCard} />}
         </div>
 
         {/* Orb */}

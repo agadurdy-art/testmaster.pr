@@ -1,0 +1,672 @@
+/* ==========================================================================
+   D8 Liz Tutor — scoped stylesheet
+   --------------------------------------------------------------------------
+   All rules scoped under `.liz-scope` so they cannot leak into the rest of
+   the app. Token names mirror the D8 handoff (HSL channels, no rgb()).
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+.liz-scope {
+  --liz-brand: 160 84% 39%;
+  --liz-brand-dark: 160 84% 28%;
+  --liz-sky: 199 89% 60%;
+  --liz-gold: 43 96% 56%;
+  --liz-rose: 350 70% 58%;
+
+  --liz-ink: 220 25% 12%;
+  --liz-muted: 220 10% 45%;
+  --liz-fainter: 220 10% 65%;
+  --liz-bg: 210 20% 98%;
+  --liz-surface: 0 0% 100%;
+  --liz-border: 220 15% 90%;
+  --liz-border-soft: 220 15% 94%;
+
+  --liz-radius-sm: 0.5rem;
+  --liz-radius: 1rem;
+  --liz-radius-lg: 1.5rem;
+
+  --liz-shadow-sm: 0 1px 2px hsl(220 15% 20% / 0.04), 0 1px 3px hsl(220 15% 20% / 0.06);
+  --liz-shadow: 0 4px 16px hsl(220 15% 20% / 0.08);
+  --liz-shadow-lg: 0 12px 40px hsl(220 15% 20% / 0.12);
+
+  --liz-font-display: "Playfair Display", Georgia, serif;
+  --liz-font-sans: "Inter", system-ui, sans-serif;
+  --liz-font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --liz-nav-h: 64px;
+  --liz-left-w: 288px;
+  --liz-right-w: 340px;
+
+  font-family: var(--liz-font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  color: hsl(var(--liz-ink));
+  background: hsl(var(--liz-bg));
+  min-height: 100vh;
+}
+
+.liz-scope *, .liz-scope *::before, .liz-scope *::after { box-sizing: border-box; }
+.liz-scope button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+.liz-scope input, .liz-scope textarea { font: inherit; }
+.liz-scope a { color: inherit; }
+
+/* ===== APP SHELL NAV ===== */
+.liz-scope .appshell-nav {
+  position: sticky; top: 0; z-index: 20;
+  height: var(--liz-nav-h);
+  display: flex; align-items: center; gap: 24px;
+  padding: 0 28px;
+  background: hsl(var(--liz-surface) / 0.88);
+  backdrop-filter: saturate(1.2) blur(10px);
+  border-bottom: 1px solid hsl(var(--liz-border));
+}
+.liz-scope .brand {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--liz-font-display);
+  font-size: 19px; font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+.liz-scope .brand-mark {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: linear-gradient(135deg, hsl(var(--liz-brand)) 0%, hsl(var(--liz-sky)) 100%);
+  box-shadow: inset 0 -2px 0 hsl(var(--liz-brand-dark) / 0.4);
+}
+.liz-scope .brand-sub {
+  font-family: var(--liz-font-sans);
+  font-weight: 400;
+  font-size: 11px;
+  color: hsl(var(--liz-muted));
+  margin-left: 2px;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+}
+.liz-scope .nav-links { display: flex; gap: 4px; margin-left: 12px; }
+.liz-scope .nav-link {
+  padding: 8px 12px; border-radius: 10px;
+  font-size: 14px; font-weight: 500;
+  color: hsl(var(--liz-muted));
+  text-decoration: none;
+}
+.liz-scope .nav-link:hover { background: hsl(var(--liz-border-soft)); color: hsl(var(--liz-ink)); }
+.liz-scope .nav-link[aria-current="page"] {
+  color: hsl(var(--liz-brand-dark));
+  background: hsl(var(--liz-brand) / 0.08);
+}
+.liz-scope .nav-spacer { flex: 1; }
+
+.liz-scope .plan-chip {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 12px 7px 10px;
+  background: hsl(var(--liz-surface));
+  border: 1px solid hsl(var(--liz-border));
+  border-radius: 999px;
+  font-size: 13px;
+  box-shadow: var(--liz-shadow-sm);
+}
+.liz-scope .plan-chip .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: hsl(var(--liz-brand));
+  box-shadow: 0 0 0 3px hsl(var(--liz-brand) / 0.18);
+}
+.liz-scope .plan-chip b { font-weight: 600; }
+.liz-scope .plan-chip .meter {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: hsl(var(--liz-muted));
+}
+
+.liz-scope .avatar-me {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: linear-gradient(135deg, hsl(var(--liz-gold)) 0%, hsl(var(--liz-rose)) 100%);
+  display: grid; place-items: center;
+  font-size: 13px; font-weight: 600; color: white;
+  border: 2px solid hsl(var(--liz-surface));
+  box-shadow: var(--liz-shadow-sm);
+}
+
+/* ===== MAIN LAYOUT ===== */
+.liz-scope .liz-layout {
+  display: grid;
+  grid-template-columns: var(--liz-left-w) 1fr var(--liz-right-w);
+  gap: 18px;
+  padding: 18px 22px 32px;
+  max-width: 1480px;
+  margin: 0 auto;
+  min-height: calc(100vh - var(--liz-nav-h));
+}
+.liz-scope .panel {
+  background: hsl(var(--liz-surface));
+  border: 1px solid hsl(var(--liz-border));
+  border-radius: var(--liz-radius-lg);
+  padding: 20px;
+  box-shadow: var(--liz-shadow-sm);
+}
+
+/* ===== LEFT PANEL — Today with Liz ===== */
+.liz-scope .panel-left { display: flex; flex-direction: column; gap: 16px; }
+.liz-scope .today-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 14px;
+}
+.liz-scope .today-head .label {
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: hsl(var(--liz-muted)); font-weight: 600;
+}
+.liz-scope .today-head .date {
+  font-family: var(--liz-font-display); font-size: 22px; font-weight: 600;
+  line-height: 1.1;
+}
+.liz-scope .today-head .exam-left { font-size: 12px; color: hsl(var(--liz-muted)); }
+.liz-scope .today-head .exam-left b { color: hsl(var(--liz-brand-dark)); font-weight: 600; }
+
+.liz-scope .focus-card {
+  padding: 14px;
+  background: hsl(var(--liz-brand) / 0.06);
+  border: 1px solid hsl(var(--liz-brand) / 0.18);
+  border-radius: var(--liz-radius);
+  margin-bottom: 14px;
+}
+.liz-scope .focus-card .kicker {
+  font-size: 11px; color: hsl(var(--liz-brand-dark));
+  font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.liz-scope .focus-card h3 {
+  font-family: var(--liz-font-display); font-size: 17px;
+  margin: 4px 0 6px; font-weight: 600; line-height: 1.25;
+}
+.liz-scope .focus-card p { margin: 0 0 12px; font-size: 13px; color: hsl(var(--liz-ink) / 0.78); }
+.liz-scope .focus-card .liz-note {
+  display: flex; gap: 8px; align-items: flex-start;
+  padding: 10px 12px;
+  background: hsl(var(--liz-surface));
+  border-radius: 10px;
+  font-size: 12px; color: hsl(var(--liz-muted));
+  font-style: italic;
+}
+
+.liz-scope .lesson-steps { margin: 0; padding: 0; list-style: none; }
+.liz-scope .lesson-step {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 10px 0;
+  border-top: 1px dashed hsl(var(--liz-border));
+  font-size: 13px;
+}
+.liz-scope .lesson-step:first-child { border-top: 0; }
+.liz-scope .lesson-step .step-dot {
+  flex: 0 0 18px;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: hsl(var(--liz-surface));
+  border: 2px solid hsl(var(--liz-border));
+  margin-top: 2px;
+  position: relative;
+}
+.liz-scope .lesson-step[data-state="done"] .step-dot {
+  background: hsl(var(--liz-brand));
+  border-color: hsl(var(--liz-brand));
+}
+.liz-scope .lesson-step[data-state="done"] .step-dot::after {
+  content: "✓"; position: absolute; inset: 0;
+  display: grid; place-items: center;
+  font-size: 11px; color: white; font-weight: 700;
+}
+.liz-scope .lesson-step[data-state="active"] .step-dot {
+  background: hsl(var(--liz-brand) / 0.18);
+  border-color: hsl(var(--liz-brand));
+  box-shadow: 0 0 0 4px hsl(var(--liz-brand) / 0.14);
+}
+.liz-scope .lesson-step .step-label { font-weight: 500; }
+.liz-scope .lesson-step .step-meta { color: hsl(var(--liz-muted)); font-size: 12px; }
+
+.liz-scope .streak-chip {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px;
+  background: hsl(var(--liz-gold) / 0.12);
+  border-radius: var(--liz-radius);
+  font-size: 13px;
+}
+.liz-scope .streak-chip .flame { font-size: 18px; }
+.liz-scope .streak-chip b { font-weight: 600; }
+
+/* ===== CENTER CANVAS ===== */
+.liz-scope .canvas {
+  position: relative;
+  display: flex; flex-direction: column;
+  background: hsl(var(--liz-surface));
+  border: 1px solid hsl(var(--liz-border));
+  border-radius: var(--liz-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--liz-shadow-sm);
+  transition: background 400ms ease;
+  min-height: 720px;
+}
+.liz-scope .canvas[data-mode="teaching"]  { background: linear-gradient(180deg, hsl(var(--liz-brand) / 0.04) 0%, hsl(var(--liz-surface)) 280px); }
+.liz-scope .canvas[data-mode="listening"] { background: linear-gradient(180deg, hsl(var(--liz-sky) / 0.06) 0%, hsl(var(--liz-surface)) 280px); }
+.liz-scope .canvas[data-mode="reviewing"] { background: linear-gradient(180deg, hsl(var(--liz-gold) / 0.06) 0%, hsl(var(--liz-surface)) 280px); }
+.liz-scope .canvas[data-mode="coaching"]  { background: hsl(var(--liz-surface)); }
+
+.liz-scope .canvas-head {
+  display: flex; align-items: center; gap: 18px;
+  padding: 22px 26px 6px;
+}
+.liz-scope .liz-avatar-d8 {
+  position: relative;
+  width: 72px; height: 72px; border-radius: 50%;
+  background: linear-gradient(135deg, hsl(var(--liz-brand)) 0%, hsl(var(--liz-sky)) 100%);
+  display: grid; place-items: center;
+  color: white; font-family: var(--liz-font-display); font-weight: 700; font-size: 30px;
+  border: 3px solid hsl(var(--liz-surface));
+  box-shadow: 0 6px 18px hsl(var(--liz-brand) / 0.25);
+  animation: lizBreath 4.4s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes lizBreath {
+  0%,100% { transform: scale(1); }
+  50%     { transform: scale(1.02); }
+}
+.liz-scope .liz-avatar-d8::after {
+  content: ""; position: absolute; inset: -6px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: border-color 400ms;
+}
+.liz-scope .canvas[data-mode="teaching"]  .liz-avatar-d8::after { border-color: hsl(var(--liz-brand) / 0.35); }
+.liz-scope .canvas[data-mode="listening"] .liz-avatar-d8::after { border-color: hsl(var(--liz-sky) / 0.55); animation: liz-modeRing 1.6s ease-out infinite; }
+.liz-scope .canvas[data-mode="reviewing"] .liz-avatar-d8::after { border-color: hsl(var(--liz-gold) / 0.55); }
+@keyframes liz-modeRing {
+  0%   { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+.liz-scope .liz-name {
+  font-family: var(--liz-font-display); font-size: 26px; font-weight: 600; letter-spacing: -0.01em;
+  line-height: 1; margin: 0;
+}
+.liz-scope .liz-role {
+  font-size: 13px; color: hsl(var(--liz-muted));
+  margin-top: 4px;
+}
+.liz-scope .liz-role .presence {
+  display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+  background: hsl(var(--liz-brand)); margin-right: 6px; vertical-align: middle;
+  box-shadow: 0 0 0 3px hsl(var(--liz-brand) / 0.2);
+}
+.liz-scope .canvas-head .head-actions { margin-left: auto; display: flex; gap: 8px; }
+.liz-scope .icon-btn {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: grid; place-items: center;
+  border: 1px solid hsl(var(--liz-border));
+  background: hsl(var(--liz-surface));
+  color: hsl(var(--liz-muted));
+  transition: all 150ms;
+}
+.liz-scope .icon-btn:hover { color: hsl(var(--liz-ink)); border-color: hsl(var(--liz-border) / 0.5); background: hsl(var(--liz-border-soft)); }
+
+/* ===== Conversation stream (teacher notes, not bubbles) ===== */
+.liz-scope .conversation {
+  flex: 1;
+  padding: 8px 26px 18px;
+  overflow-y: auto;
+  display: flex; flex-direction: column; gap: 2px;
+  max-height: 60vh;
+}
+.liz-scope .turn {
+  padding: 18px 0;
+  border-top: 1px solid hsl(var(--liz-border-soft));
+}
+.liz-scope .turn:first-child { border-top: 0; }
+.liz-scope .turn-meta {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: hsl(var(--liz-muted));
+}
+.liz-scope .turn-meta .who { font-weight: 600; color: hsl(var(--liz-ink)); }
+.liz-scope .turn-meta .mini-avatar {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: linear-gradient(135deg, hsl(var(--liz-brand)) 0%, hsl(var(--liz-sky)) 100%);
+  display: grid; place-items: center;
+  font-size: 11px; color: white; font-weight: 700;
+}
+.liz-scope .turn-meta .mini-avatar-me {
+  background: linear-gradient(135deg, hsl(var(--liz-gold)) 0%, hsl(var(--liz-rose)) 100%);
+}
+.liz-scope .turn-meta .listen-inline {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 10px; border-radius: 999px;
+  background: hsl(var(--liz-brand) / 0.08);
+  color: hsl(var(--liz-brand-dark));
+  font-weight: 500;
+  margin-left: auto;
+  transition: background 150ms;
+}
+.liz-scope .turn-meta .listen-inline:hover { background: hsl(var(--liz-brand) / 0.16); }
+.liz-scope .turn-meta .listen-inline svg { width: 11px; height: 11px; }
+.liz-scope .turn-body {
+  font-size: 15px; line-height: 1.62;
+  color: hsl(var(--liz-ink));
+  padding-left: 32px;
+  white-space: pre-wrap;
+}
+.liz-scope .turn-body p { margin: 0 0 8px; }
+.liz-scope .turn-body p:last-child { margin-bottom: 0; }
+.liz-scope .turn[data-speaker="student"] .turn-body { color: hsl(var(--liz-ink) / 0.82); }
+
+/* Pronunciation underlines (speaking review) */
+.liz-scope .pron { position: relative; padding: 0 1px; }
+.liz-scope .pron[data-q="good"] { border-bottom: 2px solid hsl(var(--liz-brand) / 0.65); }
+.liz-scope .pron[data-q="ok"]   { border-bottom: 2px solid hsl(var(--liz-gold) / 0.8); }
+.liz-scope .pron[data-q="bad"]  { border-bottom: 2px dashed hsl(var(--liz-rose) / 0.85); cursor: help; }
+
+/* ===== Composer ===== */
+.liz-scope .composer {
+  position: relative;
+  margin: 0 18px 18px;
+  padding: 12px 14px;
+  background: hsl(var(--liz-surface));
+  border: 1px solid hsl(var(--liz-border));
+  border-radius: var(--liz-radius);
+  box-shadow: var(--liz-shadow-sm);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.liz-scope .composer textarea {
+  width: 100%; border: 0; resize: none; outline: 0;
+  min-height: 40px; max-height: 160px;
+  background: transparent;
+  font-size: 15px; line-height: 1.5;
+  color: hsl(var(--liz-ink));
+  font-family: inherit;
+}
+.liz-scope .composer textarea::placeholder { color: hsl(var(--liz-fainter)); }
+.liz-scope .composer-row { display: flex; align-items: center; gap: 8px; }
+.liz-scope .composer-row .hint {
+  font-size: 12px; color: hsl(var(--liz-muted));
+  margin-right: auto;
+}
+.liz-scope .composer-row .hint kbd {
+  padding: 1px 6px; border-radius: 4px;
+  background: hsl(var(--liz-border-soft));
+  font-size: 11px; font-family: var(--liz-font-mono);
+  border: 1px solid hsl(var(--liz-border));
+}
+.liz-scope .liz-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 14px; border-radius: 10px;
+  font-size: 14px; font-weight: 500;
+  transition: all 150ms;
+}
+.liz-scope .liz-btn svg { width: 15px; height: 15px; }
+.liz-scope .liz-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.liz-scope .btn-ghost { color: hsl(var(--liz-muted)); }
+.liz-scope .btn-ghost:hover:not(:disabled) { background: hsl(var(--liz-border-soft)); color: hsl(var(--liz-ink)); }
+.liz-scope .btn-primary {
+  background: hsl(var(--liz-brand));
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 2px 0 hsl(var(--liz-brand-dark)), 0 4px 14px hsl(var(--liz-brand) / 0.28);
+}
+.liz-scope .btn-primary:hover:not(:disabled) { background: hsl(var(--liz-brand-dark)); }
+.liz-scope .btn-voice {
+  background: hsl(var(--liz-sky) / 0.12);
+  color: hsl(199 90% 35%);
+  font-weight: 600;
+  border: 1px solid hsl(var(--liz-sky) / 0.4);
+}
+.liz-scope .btn-voice:hover:not(:disabled) { background: hsl(var(--liz-sky) / 0.22); }
+
+.liz-scope .listen-cta {
+  align-self: flex-start;
+  margin: 8px 26px 0;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: hsl(var(--liz-brand) / 0.08);
+  color: hsl(var(--liz-brand-dark));
+  font-weight: 600;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13px;
+}
+.liz-scope .listen-cta:hover { background: hsl(var(--liz-brand) / 0.16); }
+.liz-scope .listen-cta svg { width: 13px; height: 13px; }
+
+/* ===== RIGHT PANEL ===== */
+.liz-scope .panel-right { display: flex; flex-direction: column; gap: 16px; }
+.liz-scope .liz-card {
+  background: hsl(var(--liz-surface));
+  border: 1px solid hsl(var(--liz-border));
+  border-radius: var(--liz-radius);
+  padding: 16px;
+}
+.liz-scope .liz-card h4 {
+  margin: 0 0 10px;
+  font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: hsl(var(--liz-muted)); font-weight: 600;
+}
+.liz-scope .memory-list { margin: 0; padding: 0; list-style: none; font-size: 13px; }
+.liz-scope .memory-list li {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 8px 0;
+  border-top: 1px dashed hsl(var(--liz-border));
+}
+.liz-scope .memory-list li:first-child { border-top: 0; }
+.liz-scope .memory-list .memo-icon {
+  flex: 0 0 22px;
+  width: 22px; height: 22px; border-radius: 6px;
+  display: grid; place-items: center;
+  background: hsl(var(--liz-brand) / 0.12);
+  color: hsl(var(--liz-brand-dark));
+  font-size: 11px;
+}
+.liz-scope .memory-list .memo-icon[data-type="win"]  { background: hsl(var(--liz-brand) / 0.14); color: hsl(var(--liz-brand-dark)); }
+.liz-scope .memory-list .memo-icon[data-type="gap"]  { background: hsl(var(--liz-gold) / 0.18); color: hsl(35 70% 30%); }
+.liz-scope .memory-list .memo-icon[data-type="habit"]{ background: hsl(var(--liz-sky) / 0.18); color: hsl(199 90% 30%); }
+.liz-scope .memory-list .memo-body b { font-weight: 600; }
+.liz-scope .memory-list .memo-body .since { color: hsl(var(--liz-muted)); font-size: 12px; }
+
+.liz-scope .quick-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  margin-top: 4px;
+}
+.liz-scope .quick-tile {
+  padding: 12px; border-radius: var(--liz-radius-sm);
+  border: 1px solid hsl(var(--liz-border));
+  background: hsl(var(--liz-surface));
+  display: flex; flex-direction: column; gap: 6px;
+  text-align: left;
+  transition: all 150ms;
+}
+.liz-scope .quick-tile:hover { border-color: hsl(var(--liz-brand)); background: hsl(var(--liz-brand) / 0.04); }
+.liz-scope .quick-tile .qt-icon {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: hsl(var(--liz-brand) / 0.12);
+  display: grid; place-items: center;
+  color: hsl(var(--liz-brand-dark));
+  font-weight: 700;
+}
+.liz-scope .quick-tile .qt-title { font-weight: 600; font-size: 13px; }
+.liz-scope .quick-tile .qt-sub { font-size: 11px; color: hsl(var(--liz-muted)); }
+.liz-scope .quick-tile[data-state="soon"] { opacity: 0.6; cursor: help; }
+.liz-scope .quick-tile[data-state="soon"] .qt-icon { background: hsl(var(--liz-border)); color: hsl(var(--liz-muted)); }
+
+.liz-scope .plan-summary {
+  padding: 14px;
+  background: linear-gradient(135deg, hsl(var(--liz-brand) / 0.08), hsl(var(--liz-sky) / 0.08));
+  border-radius: var(--liz-radius);
+  font-size: 13px;
+}
+.liz-scope .plan-summary .ps-kicker {
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: hsl(var(--liz-brand-dark)); font-weight: 600;
+}
+.liz-scope .plan-summary h4 {
+  font-family: var(--liz-font-display);
+  font-size: 17px; font-weight: 600;
+  margin: 4px 0 6px;
+  text-transform: none; letter-spacing: 0;
+  color: hsl(var(--liz-ink));
+}
+.liz-scope .plan-summary p { margin: 0; color: hsl(var(--liz-ink) / 0.8); }
+
+/* ===== VOICE OVERLAY (ElevenLabs Liz) ===== */
+.liz-scope .voice-overlay {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at top, hsl(var(--liz-sky) / 0.08) 0%, hsl(var(--liz-surface)) 60%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 40px 20px;
+  animation: liz-voiceIn 240ms ease-out;
+  z-index: 10;
+}
+@keyframes liz-voiceIn { from { opacity: 0; } to { opacity: 1; } }
+
+.liz-scope .voice-orb {
+  position: relative;
+  width: 220px; height: 220px; border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, hsl(var(--liz-brand)) 0%, hsl(var(--liz-sky)) 60%, hsl(199 90% 38%) 100%);
+  box-shadow: 0 16px 60px hsl(var(--liz-brand) / 0.3), inset 0 0 40px hsl(255 100% 100% / 0.2);
+  display: grid; place-items: center;
+  font-family: var(--liz-font-display); font-size: 72px; font-weight: 700; color: white;
+  animation: liz-orbFloat 5s ease-in-out infinite;
+}
+@keyframes liz-orbFloat {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-6px); }
+}
+.liz-scope .voice-orb::before, .liz-scope .voice-orb::after {
+  content: ""; position: absolute; inset: -14px;
+  border-radius: 50%;
+  border: 2px solid hsl(var(--liz-brand) / 0.5);
+  animation: liz-orbRing 2.4s ease-out infinite;
+}
+.liz-scope .voice-orb::after { animation-delay: 1.2s; }
+@keyframes liz-orbRing {
+  0%   { transform: scale(1);    opacity: 0.6; }
+  100% { transform: scale(1.45); opacity: 0; }
+}
+.liz-scope .voice-orb[data-state="speaking"] {
+  box-shadow: 0 16px 80px hsl(var(--liz-sky) / 0.45), inset 0 0 50px hsl(255 100% 100% / 0.3);
+}
+.liz-scope .voice-orb[data-state="listening"] {
+  box-shadow: 0 16px 60px hsl(var(--liz-brand) / 0.3), inset 0 0 30px hsl(255 100% 100% / 0.15);
+}
+
+.liz-scope .voice-bars {
+  display: flex; align-items: flex-end; gap: 4px;
+  margin-top: 28px; height: 40px;
+}
+.liz-scope .voice-bars span {
+  display: block; width: 4px; border-radius: 2px;
+  background: hsl(var(--liz-brand));
+  animation: liz-bar 1.2s ease-in-out infinite;
+}
+.liz-scope .voice-bars span:nth-child(1) { height: 12px; animation-delay: 0s; }
+.liz-scope .voice-bars span:nth-child(2) { height: 28px; animation-delay: 0.1s; }
+.liz-scope .voice-bars span:nth-child(3) { height: 22px; animation-delay: 0.2s; }
+.liz-scope .voice-bars span:nth-child(4) { height: 36px; animation-delay: 0.3s; }
+.liz-scope .voice-bars span:nth-child(5) { height: 16px; animation-delay: 0.4s; }
+.liz-scope .voice-bars span:nth-child(6) { height: 30px; animation-delay: 0.5s; }
+.liz-scope .voice-bars span:nth-child(7) { height: 20px; animation-delay: 0.6s; }
+@keyframes liz-bar {
+  0%,100% { transform: scaleY(0.4); }
+  50%     { transform: scaleY(1); }
+}
+.liz-scope .voice-bars[data-paused="true"] span { animation-play-state: paused; }
+
+.liz-scope .voice-transcript {
+  max-width: 560px; text-align: center; margin-top: 22px;
+  font-family: var(--liz-font-display); font-size: 20px; line-height: 1.4;
+  color: hsl(var(--liz-ink));
+  min-height: 56px;
+}
+.liz-scope .voice-transcript .caret {
+  display: inline-block; width: 2px; height: 20px; background: hsl(var(--liz-brand));
+  vertical-align: text-bottom; margin-left: 2px;
+  animation: liz-caret 1s step-end infinite;
+}
+@keyframes liz-caret { 50% { opacity: 0; } }
+
+.liz-scope .voice-status {
+  margin-top: 10px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: hsl(var(--liz-muted));
+  font-family: var(--liz-font-mono);
+}
+
+.liz-scope .voice-quota {
+  margin-top: 4px;
+  font-size: 12px;
+  color: hsl(var(--liz-muted));
+  font-family: var(--liz-font-mono);
+}
+
+.liz-scope .voice-controls { display: flex; gap: 10px; margin-top: 34px; }
+.liz-scope .voice-controls .liz-btn { padding: 12px 18px; }
+
+.liz-scope .voice-error {
+  margin-top: 18px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: hsl(var(--liz-rose) / 0.08);
+  border: 1px solid hsl(var(--liz-rose) / 0.3);
+  color: hsl(350 60% 35%);
+  font-size: 13px;
+  max-width: 480px;
+  text-align: center;
+}
+
+/* ===== WELCOME OVERLAY ===== */
+.liz-scope .welcome-overlay {
+  position: absolute; inset: 0;
+  background: hsl(var(--liz-surface) / 0.95);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 40px;
+  z-index: 9;
+}
+.liz-scope .welcome-card {
+  max-width: 480px; width: 100%;
+  padding: 36px 32px 28px;
+  border-radius: var(--liz-radius-lg);
+  background: hsl(var(--liz-surface));
+  border: 1px solid hsl(var(--liz-border));
+  box-shadow: var(--liz-shadow-lg);
+  text-align: center;
+}
+.liz-scope .welcome-card .liz-avatar-d8 {
+  margin: 0 auto 18px;
+  width: 96px; height: 96px; font-size: 42px;
+}
+.liz-scope .welcome-card h2 {
+  font-family: var(--liz-font-display);
+  font-size: 28px; font-weight: 600; letter-spacing: -0.01em;
+  margin: 0 0 10px;
+}
+.liz-scope .welcome-card p { margin: 0 0 22px; color: hsl(var(--liz-ink) / 0.8); }
+.liz-scope .welcome-card .w-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+/* ===== UPGRADE GATE (free / non-premium can chat but not voice) ===== */
+.liz-scope .voice-upgrade {
+  position: absolute; inset: 0;
+  background: hsl(var(--liz-surface) / 0.96);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 40px;
+  z-index: 10;
+}
+.liz-scope .voice-upgrade .uc {
+  max-width: 460px; text-align: center;
+  padding: 36px 28px;
+  border-radius: var(--liz-radius-lg);
+  background: hsl(var(--liz-surface));
+  border: 1px solid hsl(var(--liz-border));
+  box-shadow: var(--liz-shadow);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1180px) {
+  .liz-scope .liz-layout { grid-template-columns: 1fr; }
+  .liz-scope .panel-left, .liz-scope .panel-right { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .liz-scope *, .liz-scope *::before, .liz-scope *::after { animation-duration: 0.001ms !important; }
+}

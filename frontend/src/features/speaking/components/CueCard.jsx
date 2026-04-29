@@ -1,12 +1,19 @@
 import React from 'react';
-import { CUE_CARD } from '../constants';
+import { CUE_CARD as DEFAULT_CARD } from '../constants';
 
 /**
  * Cue card in two layouts:
  *   variant="full"   — S2 preparation (big prompt, bullets, andExplain)
  *   variant="mini"   — S3 recording reference (compact inline bullets)
+ *
+ * `card` is the cue card payload ({prompt, bullets, andExplain, stamp}).
+ * Falls back to the legacy DEFAULT_CARD constant for surfaces that haven't
+ * threaded a card through yet (sample page demo).
  */
-export default function CueCard({ variant = 'full', style }) {
+export default function CueCard({ variant = 'full', style, card }) {
+  const data = card || DEFAULT_CARD;
+  const bullets = Array.isArray(data?.bullets) ? data.bullets : [];
+  const andExplain = data?.andExplain || '';
   if (variant === 'mini') {
     return (
       <div
@@ -17,7 +24,7 @@ export default function CueCard({ variant = 'full', style }) {
           className="sp-font-display sp-cue-ink-heading"
           style={{ fontSize: 19, fontWeight: 500, lineHeight: 1.2 }}
         >
-          {CUE_CARD.prompt}
+          {data.prompt}
         </p>
         <p className="sp-cue-ink-meta" style={{ marginTop: 12 }}>
           You should say
@@ -32,10 +39,12 @@ export default function CueCard({ variant = 'full', style }) {
             fontSize: 14.5,
           }}
         >
-          {CUE_CARD.bullets.map(b => (
+          {bullets.map(b => (
             <span key={b}>— {b}</span>
           ))}
-          <span>— and {CUE_CARD.andExplain.replace(/\.$/, '')}</span>
+          {andExplain && (
+            <span>— and {andExplain.replace(/\.$/, '')}</span>
+          )}
         </div>
       </div>
     );
@@ -58,7 +67,7 @@ export default function CueCard({ variant = 'full', style }) {
           marginBottom: 24,
         }}
       >
-        <span className="sp-cue-stamp">{CUE_CARD.stamp}</span>
+        <span className="sp-cue-stamp">{data.stamp}</span>
         <span
           className="sp-font-mono"
           style={{
@@ -76,7 +85,7 @@ export default function CueCard({ variant = 'full', style }) {
         className="sp-font-display sp-cue-ink-heading"
         style={{ fontSize: 30, lineHeight: 1.25, fontWeight: 500 }}
       >
-        Describe a person who has <span style={{ fontStyle: 'italic' }}>influenced</span> you.
+        {data.prompt}
       </p>
 
       <p className="sp-cue-ink-meta" style={{ marginTop: 32 }}>
@@ -86,24 +95,26 @@ export default function CueCard({ variant = 'full', style }) {
         className="sp-cue-ink-body"
         style={{ marginTop: 12, listStyle: 'none', padding: 0, fontSize: 18, lineHeight: 1.55 }}
       >
-        {CUE_CARD.bullets.map(b => (
+        {bullets.map(b => (
           <li key={b} style={{ display: 'flex', gap: 12, marginBottom: 8 }}>
             <span className="sp-cue-ink-dash" style={{ marginTop: 2 }}>—</span>
             {b}
           </li>
         ))}
       </ul>
-      <div style={{ marginTop: 20 }}>
-        <span
-          className="sp-cue-ink-meta"
-          style={{ display: 'block', marginBottom: 4 }}
-        >
-          And explain
-        </span>
-        <span className="sp-cue-ink-body" style={{ fontSize: 18, lineHeight: 1.55 }}>
-          {CUE_CARD.andExplain}
-        </span>
-      </div>
+      {andExplain && (
+        <div style={{ marginTop: 20 }}>
+          <span
+            className="sp-cue-ink-meta"
+            style={{ display: 'block', marginBottom: 4 }}
+          >
+            And explain
+          </span>
+          <span className="sp-cue-ink-body" style={{ fontSize: 18, lineHeight: 1.55 }}>
+            {andExplain}
+          </span>
+        </div>
+      )}
 
       <div
         style={{

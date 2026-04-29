@@ -426,16 +426,27 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load speaking QB routes: {e}")
 
-# Import Liz Live (Gemini Live API WebSocket proxy) — Faz 3.
-# Active for Smart Practice Part 1 + Part 3 conversational entry. Part 2
-# remains a monologue (no Live wiring). Disabled if google-genai is missing
-# or GEMINI_API_KEY is unset; the route handler short-circuits gracefully.
+# Liz Live (Gemini) was removed 2026-04-29. The replacement is ElevenLabs
+# Conversational AI mounted below. The route handles both signed-URL minting
+# (xi-api-key never reaches the browser) and post-fetch transcript pulls.
 try:
-    from routes.liz_live import router as liz_live_router
-    app.include_router(liz_live_router)
-    print("✅ Liz Live (Gemini Live) WebSocket route loaded")
+    from routes.liz_eleven import (
+        router as liz_eleven_router,
+        set_db as set_liz_eleven_db,
+        init_indexes as init_liz_eleven_indexes,
+    )
+    set_liz_eleven_db(db)
+    app.include_router(liz_eleven_router)
+
+    @app.on_event("startup")
+    async def _bootstrap_liz_eleven_indexes():
+        await init_liz_eleven_indexes()
+
+    print("✅ Liz ElevenLabs Conversational routes loaded")
 except Exception as e:
-    print(f"⚠️  Could not load Liz Live route: {e}")
+    print(f"⚠️  Could not load Liz ElevenLabs routes: {e}")
+    import traceback
+    traceback.print_exc()
 
 # Import full test mode routes
 try:

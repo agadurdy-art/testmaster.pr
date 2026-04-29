@@ -9,6 +9,8 @@ export default function PreparationState({
   onSkipPrep,
   onStartRecording,
   onExit,
+  onChangeCard,
+  cueCard,
 }) {
   const pct = Math.round((prepRemaining / prepTotal) * 100);
   const lowTime = prepRemaining <= 10;
@@ -72,28 +74,48 @@ export default function PreparationState({
             </button>
             <span>·</span>
             <span>Part 2 · Cue card</span>
-            <span>·</span>
-            <span>Topic: <span style={{ color: 'var(--sp-foreground)' }}>People</span></span>
+            {cueCard?.topic && (
+              <>
+                <span>·</span>
+                <span>Topic: <span style={{ color: 'var(--sp-foreground)' }}>{cueCard.topic}</span></span>
+              </>
+            )}
           </div>
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 8,
+              gap: 16,
               fontSize: 12,
               color: 'var(--sp-muted-fg)',
             }}
           >
-            <span
-              style={{
-                display: 'inline-block',
-                width: 8,
-                height: 8,
-                borderRadius: 9999,
-                background: 'var(--sp-secondary)',
-              }}
-            />
-            Mic ready · built‑in microphone
+            {onChangeCard && (
+              <button
+                className="sp-btn-ghost"
+                onClick={onChangeCard}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="23 4 23 10 17 10" />
+                  <polyline points="1 20 1 14 7 14" />
+                  <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                </svg>
+                Different card
+              </button>
+            )}
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+              <span
+                style={{
+                  display: 'inline-block',
+                  width: 8,
+                  height: 8,
+                  borderRadius: 9999,
+                  background: 'var(--sp-secondary)',
+                }}
+              />
+              Mic ready · built‑in microphone
+            </span>
           </div>
         </div>
 
@@ -107,7 +129,7 @@ export default function PreparationState({
           className="sp-prep-grid"
         >
           <div className="sp-prep-main">
-            <CueCard variant="full" />
+            <CueCard variant="full" card={cueCard} />
 
             {/* Actions */}
             <div
@@ -230,27 +252,24 @@ export default function PreparationState({
                 }}
               >
                 <div className="sp-mono-label">Notes — optional</div>
-                <span style={{ fontSize: 11, color: 'var(--sp-muted-fg)' }}>3 lines used</span>
+                <span style={{ fontSize: 11, color: 'var(--sp-muted-fg)' }}>1 minute</span>
               </div>
-              <div
+              <textarea
                 className="sp-font-hand"
+                placeholder={`Jot down a few words about\n${cueCard?.prompt || 'your topic'}…`}
                 style={{
                   fontSize: 20,
                   lineHeight: '28px',
                   color: 'hsl(222 40% 22%)',
                   minHeight: 196,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 10,
+                  width: '100%',
+                  background: 'transparent',
+                  border: 'none',
+                  outline: 'none',
+                  resize: 'none',
+                  fontFamily: 'inherit',
                 }}
-              >
-                <div>• my aunt Mai — Ha Noi, 2018</div>
-                <div>• kind, stubborn, honest</div>
-                <div>• taught me to teach my brother</div>
-                <div style={{ color: 'var(--sp-muted-fg)', opacity: 0.6 }}>
-                  •<span className="sp-caret" />
-                </div>
-              </div>
+              />
               <div
                 style={{
                   marginTop: 12,

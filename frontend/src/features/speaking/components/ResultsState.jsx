@@ -24,11 +24,14 @@ function fmtMMSS(seconds) {
   return `${m}:${String(s).padStart(2, '0')}`;
 }
 
+const PLAYER_SPEEDS = [0.75, 1, 1.5];
+
 function AudioPlayer({ src, fallbackDurationLabel }) {
   const audioRef = useRef(null);
   const [playing, setPlaying] = useState(false);
   const [current, setCurrent] = useState(0);
   const [total, setTotal] = useState(0);
+  const [speedIdx, setSpeedIdx] = useState(1); // default 1x
 
   useEffect(() => {
     const a = audioRef.current;
@@ -52,6 +55,11 @@ function AudioPlayer({ src, fallbackDurationLabel }) {
     };
   }, [src]);
 
+  useEffect(() => {
+    const a = audioRef.current;
+    if (a) a.playbackRate = PLAYER_SPEEDS[speedIdx];
+  }, [speedIdx, src]);
+
   if (!src) {
     return (
       <span
@@ -70,6 +78,12 @@ function AudioPlayer({ src, fallbackDurationLabel }) {
     else a.pause();
   };
 
+  const seek = (delta) => {
+    const a = audioRef.current;
+    if (!a || !total) return;
+    a.currentTime = Math.max(0, Math.min(total, (a.currentTime || 0) + delta));
+  };
+
   const pct = total > 0 ? Math.min(100, (current / total) * 100) : 0;
   const totalLabel = total > 0 ? fmtMMSS(total) : (fallbackDurationLabel || '—');
 
@@ -78,7 +92,7 @@ function AudioPlayer({ src, fallbackDurationLabel }) {
       style={{
         display: 'flex',
         alignItems: 'center',
-        gap: 12,
+        gap: 10,
         background: 'var(--sp-muted)',
         borderRadius: 9999,
         padding: '4px 12px 4px 4px',
@@ -112,6 +126,36 @@ function AudioPlayer({ src, fallbackDurationLabel }) {
           </svg>
         )}
       </button>
+      <button
+        onClick={() => seek(-5)}
+        title="Back 5 seconds"
+        aria-label="Back 5 seconds"
+        style={{
+          width: 24, height: 24, borderRadius: 9999,
+          background: 'transparent',
+          border: '1px solid var(--sp-border)',
+          color: 'var(--sp-foreground)',
+          fontSize: 9, fontWeight: 600,
+          cursor: 'pointer',
+        }}
+      >
+        −5
+      </button>
+      <button
+        onClick={() => seek(5)}
+        title="Forward 5 seconds"
+        aria-label="Forward 5 seconds"
+        style={{
+          width: 24, height: 24, borderRadius: 9999,
+          background: 'transparent',
+          border: '1px solid var(--sp-border)',
+          color: 'var(--sp-foreground)',
+          fontSize: 9, fontWeight: 600,
+          cursor: 'pointer',
+        }}
+      >
+        +5
+      </button>
       <div
         onClick={(e) => {
           const a = audioRef.current;
@@ -121,7 +165,7 @@ function AudioPlayer({ src, fallbackDurationLabel }) {
           a.currentTime = Math.max(0, Math.min(total, ratio * total));
         }}
         style={{
-          width: 96,
+          width: 120,
           height: 4,
           background: 'hsl(222 47% 11% / 0.18)',
           borderRadius: 9999,
@@ -141,10 +185,27 @@ function AudioPlayer({ src, fallbackDurationLabel }) {
       </div>
       <span
         className="sp-font-mono"
-        style={{ fontSize: 11, color: 'var(--sp-muted-fg)', fontVariantNumeric: 'tabular-nums' }}
+        style={{ fontSize: 11, color: 'var(--sp-muted-fg)', fontVariantNumeric: 'tabular-nums', minWidth: 64, textAlign: 'right' }}
       >
         {fmtMMSS(current)} / {totalLabel}
       </span>
+      <button
+        onClick={() => setSpeedIdx((i) => (i + 1) % PLAYER_SPEEDS.length)}
+        title="Playback speed"
+        aria-label={`Playback speed ${PLAYER_SPEEDS[speedIdx]}x`}
+        className="sp-font-mono"
+        style={{
+          padding: '3px 8px', borderRadius: 9999,
+          background: 'transparent',
+          border: '1px solid var(--sp-border)',
+          color: 'var(--sp-foreground)',
+          fontSize: 11,
+          cursor: 'pointer',
+          minWidth: 38,
+        }}
+      >
+        {PLAYER_SPEEDS[speedIdx]}×
+      </button>
     </div>
   );
 }
