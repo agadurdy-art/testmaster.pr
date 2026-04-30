@@ -397,22 +397,32 @@
 }
 .liz-scope .liz-btn svg { width: 15px; height: 15px; }
 .liz-scope .liz-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.liz-scope .btn-ghost { color: hsl(var(--liz-muted)); }
-.liz-scope .btn-ghost:hover:not(:disabled) { background: hsl(var(--liz-border-soft)); color: hsl(var(--liz-ink)); }
-.liz-scope .btn-primary {
+.liz-scope .liz-btn-ghost { color: hsl(var(--liz-muted)); }
+.liz-scope .liz-btn-ghost:hover:not(:disabled) { background: hsl(var(--liz-border-soft)); color: hsl(var(--liz-ink)); }
+.liz-scope .liz-btn-primary {
   background: hsl(var(--liz-brand));
   color: white;
   font-weight: 600;
   box-shadow: 0 2px 0 hsl(var(--liz-brand-dark)), 0 4px 14px hsl(var(--liz-brand) / 0.28);
 }
-.liz-scope .btn-primary:hover:not(:disabled) { background: hsl(var(--liz-brand-dark)); }
-.liz-scope .btn-voice {
+.liz-scope .liz-btn-primary:hover:not(:disabled) { background: hsl(var(--liz-brand-dark)); }
+.liz-scope .liz-btn-voice {
   background: hsl(var(--liz-sky) / 0.12);
   color: hsl(199 90% 35%);
   font-weight: 600;
   border: 1px solid hsl(var(--liz-sky) / 0.4);
 }
-.liz-scope .btn-voice:hover:not(:disabled) { background: hsl(var(--liz-sky) / 0.22); }
+.liz-scope .liz-btn-voice:hover:not(:disabled) { background: hsl(var(--liz-sky) / 0.22); }
+.liz-scope .liz-btn-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: hsl(var(--liz-brand-dark));
+  letter-spacing: 0.02em;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 150ms;
+}
+.liz-scope .liz-btn-link:hover { background: hsl(var(--liz-brand) / 0.08); }
 
 .liz-scope .listen-cta {
   align-self: flex-start;
@@ -660,6 +670,87 @@
   background: hsl(var(--liz-surface));
   border: 1px solid hsl(var(--liz-border));
   box-shadow: var(--liz-shadow);
+}
+
+/* ===== Side panel section headings ===== */
+.liz-scope .panel-section-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin: 18px 0 10px;
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: hsl(var(--liz-muted)); font-weight: 600;
+}
+.liz-scope .panel-section-head:first-child { margin-top: 0; }
+
+/* ===== Memory list empty state ===== */
+.liz-scope .memory-empty {
+  border-top: 0;
+  font-size: 12px;
+  color: hsl(var(--liz-fainter));
+  font-style: italic;
+}
+
+/* ===== Plan summary rows (right-panel plan card) ===== */
+.liz-scope .plan-summary .plan-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 0;
+  font-size: 13px;
+  color: hsl(var(--liz-ink) / 0.78);
+}
+.liz-scope .plan-summary .plan-row + .plan-row {
+  border-top: 1px dashed hsl(var(--liz-border) / 0.6);
+}
+.liz-scope .plan-summary .plan-row b { color: hsl(var(--liz-ink)); font-weight: 600; }
+
+/* ===== Homework / quick-card grid ===== */
+.liz-scope .quick-card {
+  padding: 10px 12px;
+  border-radius: var(--liz-radius-sm);
+  border: 1px solid hsl(var(--liz-border));
+  background: hsl(var(--liz-surface));
+  display: flex; flex-direction: column; gap: 4px;
+  text-align: left;
+}
+.liz-scope .quick-card[data-state="reviewed"] {
+  background: hsl(var(--liz-brand) / 0.05);
+  border-color: hsl(var(--liz-brand) / 0.25);
+}
+.liz-scope .quick-card .qc-title {
+  font-size: 13px; font-weight: 600;
+  color: hsl(var(--liz-ink));
+  line-height: 1.3;
+}
+.liz-scope .quick-card .qc-meta {
+  font-size: 11px;
+  color: hsl(var(--liz-muted));
+  letter-spacing: 0.02em;
+}
+.liz-scope .quick-empty {
+  grid-column: 1 / -1;
+  font-size: 12px; font-style: italic;
+  color: hsl(var(--liz-fainter));
+  padding: 8px 0;
+}
+
+/* ===== Pronunciation words inline (speaking review turn body) ===== */
+.liz-scope .turn-pron {
+  margin: 0 0 8px;
+  line-height: 1.7;
+  font-family: var(--liz-font-mono);
+  font-size: 14px;
+}
+
+/* ===== Voice overlay clock / meta line ===== */
+.liz-scope .voice-meta {
+  display: flex; align-items: center; gap: 16px;
+  margin-top: 12px;
+  font-family: var(--liz-font-mono);
+  font-size: 12px;
+  color: hsl(var(--liz-muted));
+}
+.liz-scope .voice-meta .voice-clock {
+  color: hsl(var(--liz-ink));
+  font-weight: 600;
+  letter-spacing: 0.06em;
 }
 
 /* ===== RESPONSIVE ===== */
