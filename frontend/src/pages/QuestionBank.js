@@ -15,6 +15,24 @@ import { useGoBack } from '../hooks/useGoBack';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
+// D9 handoff visual tokens — port-only, no data changes
+const T = {
+  brand: '160 84% 39%',
+  brandDark: '160 84% 28%',
+  sky: '199 89% 60%',
+  gold: '43 96% 56%',
+  rose: '350 70% 58%',
+  ink: '220 25% 12%',
+  muted: '220 10% 45%',
+  fainter: '220 10% 65%',
+  bg: '210 20% 98%',
+  surface: '0 0% 100%',
+  border: '220 15% 90%',
+  borderSoft: '220 15% 94%',
+};
+const FONT_DISPLAY = '"Playfair Display", Georgia, serif';
+const FONT_SANS = '"Inter", system-ui, sans-serif';
+
 // Section times and questions for Full Test modal
 const SECTION_TIMES = {
   listening: '40 minutes',
@@ -322,250 +340,317 @@ export default function QuestionBank({ user }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div style={{ minHeight: '100vh', background: `hsl(${T.bg})`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{
+          width: 48, height: 48, borderRadius: '50%',
+          border: `2px solid hsl(${T.border})`, borderBottomColor: `hsl(${T.brand})`,
+          animation: 'spin 0.9s linear infinite',
+        }} />
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     );
   }
 
+  const completionPct = completionStats?.total_full_available
+    ? Math.round((completionStats.total_full_completed / completionStats.total_full_available) * 100)
+    : 0;
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-emerald-500 via-teal-500 to-sky-500 text-white py-12 px-6">
-        <div className="max-w-7xl mx-auto">
-          <Button
-            variant="ghost"
-            onClick={goBack}
-            className="text-white/80 hover:text-white hover:bg-white/10 mb-4"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" /> Back
-          </Button>
-          
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
-              <Layers className="w-8 h-8" />
+    <div style={{ minHeight: '100vh', background: `hsl(${T.bg})`, fontFamily: FONT_SANS, color: `hsl(${T.ink})` }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '28px 24px 48px' }}>
+
+        {/* Back */}
+        <button
+          onClick={goBack}
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+            padding: '6px 0', marginBottom: 14,
+            background: 'none', border: 0, cursor: 'pointer',
+            color: `hsl(${T.muted})`, fontSize: 13, fontWeight: 500,
+          }}
+        >
+          <ArrowLeft style={{ width: 14, height: 14 }} /> Back
+        </button>
+
+        {/* Page Head */}
+        <header style={{
+          display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between',
+          gap: 20, marginBottom: 22, flexWrap: 'wrap',
+        }}>
+          <div>
+            <div style={{ fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase', color: `hsl(${T.brandDark})`, fontWeight: 600 }}>
+              Practice
             </div>
-            <div>
-              <h1 className="text-3xl md:text-4xl font-bold">IELTS Question Bank</h1>
-              <p className="text-white/80 text-lg">Cambridge IELTS compatible, AI-powered question bank</p>
-            </div>
+            <h1 style={{ fontFamily: FONT_DISPLAY, fontSize: 36, fontWeight: 600, letterSpacing: '-0.01em', margin: '4px 0 0' }}>
+              Question Bank
+            </h1>
+            <p style={{ margin: '6px 0 0', color: `hsl(${T.muted})`, maxWidth: 520 }}>
+              Cambridge IELTS compatible practice — pick a skill, set your band, and Liz scores everything.
+            </p>
           </div>
 
-          {/* Quick Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-8">
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4" data-testid="stat-total-questions">
-              <div className="text-2xl font-bold">{stats?.total_questions || 0}</div>
-              <div className="text-white/70 text-sm">Total Questions</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4" data-testid="stat-full-tests">
-              <div className="text-2xl font-bold">{stats?.full_tests || 0}</div>
-              <div className="text-white/70 text-sm">Full Tests</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4" data-testid="stat-skill-areas">
-              <div className="text-2xl font-bold">{stats?.practice_sets || 4}</div>
-              <div className="text-white/70 text-sm">Skill Areas</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4" data-testid="stat-topics">
-              <div className="text-2xl font-bold">{stats?.topics_count || 0}</div>
-              <div className="text-white/70 text-sm">Topics</div>
-            </div>
-            {/* Completion Rate - 5th stat box */}
-            <div 
-              className="bg-white/20 backdrop-blur rounded-xl p-4 cursor-pointer hover:bg-white/25 transition-colors relative"
-              data-testid="stat-completion-rate"
-              onClick={() => setShowCompletionDetail(!showCompletionDetail)}
-            >
-              <div className="text-2xl font-bold">
-                {completionStats ? `${completionStats.total_full_completed}/${completionStats.total_full_available}` : '0/20'}
+          {/* Stat chips — preserves real data from /api/question-bank/stats and completion-stats */}
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            {[
+              { label: 'Questions', value: stats?.total_questions || 0, testId: 'stat-total-questions' },
+              { label: 'Full Tests', value: stats?.full_tests || 0, testId: 'stat-full-tests' },
+              { label: 'Topics', value: stats?.topics_count || 0, testId: 'stat-topics' },
+            ].map((chip) => (
+              <div key={chip.label} data-testid={chip.testId} style={{
+                display: 'flex', alignItems: 'center', gap: 8,
+                padding: '8px 14px', borderRadius: 999,
+                background: `hsl(${T.surface})`, border: `1px solid hsl(${T.border})`,
+                fontSize: 13,
+                boxShadow: `0 1px 2px hsl(220 15% 20% / 0.04)`,
+              }}>
+                <span style={{ fontFamily: FONT_DISPLAY, fontWeight: 600, color: `hsl(${T.ink})` }}>{chip.value}</span>
+                <span style={{ color: `hsl(${T.muted})` }}>{chip.label}</span>
               </div>
-              <div className="text-white/70 text-sm">Completed</div>
-              {completionStats?.total_full_completed > 0 && (
-                <div className="mt-1.5 w-full bg-white/20 rounded-full h-1.5">
-                  <div 
-                    className="bg-emerald-400 h-1.5 rounded-full transition-all duration-500"
-                    style={{ width: `${Math.round((completionStats.total_full_completed / completionStats.total_full_available) * 100)}%` }}
-                  />
-                </div>
-              )}
-            </div>
+            ))}
+            {completionStats && (
+              <button
+                data-testid="stat-completion-rate"
+                onClick={() => setShowCompletionDetail(!showCompletionDetail)}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 8,
+                  padding: '8px 14px', borderRadius: 999,
+                  background: `hsl(${T.brand} / 0.10)`, border: `1px solid hsl(${T.brand} / 0.32)`,
+                  fontSize: 13, cursor: 'pointer', color: `hsl(${T.brandDark})`,
+                }}
+              >
+                <span style={{ width: 8, height: 8, borderRadius: '50%', background: `hsl(${T.brand})`, boxShadow: `0 0 0 3px hsl(${T.brand} / 0.18)` }} />
+                <span style={{ fontFamily: FONT_DISPLAY, fontWeight: 600 }}>
+                  {completionStats.total_full_completed}/{completionStats.total_full_available}
+                </span>
+                <span>completed</span>
+              </button>
+            )}
           </div>
+        </header>
 
-          {/* Completion Breakdown Popup */}
-          {showCompletionDetail && completionStats && (
-            <div className="mt-4 bg-white/15 backdrop-blur-lg rounded-xl p-5 border border-white/20" data-testid="completion-breakdown">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-semibold text-sm">Completion Breakdown</h3>
-                <button onClick={() => setShowCompletionDetail(false)} className="text-white/60 hover:text-white">
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-                <div className="bg-white/10 rounded-lg p-3">
-                  <div className="flex items-center gap-2 mb-1">
-                    <BookMarked className="w-4 h-4 text-red-300" />
-                    <span className="text-xs font-medium text-white/80">Cambridge</span>
-                  </div>
-                  <div className="text-lg font-bold">{completionStats.cambridge.completed}/{completionStats.cambridge.total}</div>
-                  <div className="mt-1 w-full bg-white/20 rounded-full h-1">
-                    <div className="bg-red-400 h-1 rounded-full" style={{ width: `${(completionStats.cambridge.completed / completionStats.cambridge.total) * 100}%` }} />
-                  </div>
-                </div>
-                <div className="bg-white/10 rounded-lg p-3">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Zap className="w-4 h-4 text-indigo-300" />
-                    <span className="text-xs font-medium text-white/80">AI Academic</span>
-                  </div>
-                  <div className="text-lg font-bold">{completionStats.ai_academic.completed}/{completionStats.ai_academic.total}</div>
-                  <div className="mt-1 w-full bg-white/20 rounded-full h-1">
-                    <div className="bg-indigo-400 h-1 rounded-full" style={{ width: `${(completionStats.ai_academic.completed / completionStats.ai_academic.total) * 100}%` }} />
-                  </div>
-                </div>
-                <div className="bg-white/10 rounded-lg p-3">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Zap className="w-4 h-4 text-purple-300" />
-                    <span className="text-xs font-medium text-white/80">AI General</span>
-                  </div>
-                  <div className="text-lg font-bold">{completionStats.ai_general.completed}/{completionStats.ai_general.total}</div>
-                  <div className="mt-1 w-full bg-white/20 rounded-full h-1">
-                    <div className="bg-purple-400 h-1 rounded-full" style={{ width: `${(completionStats.ai_general.completed / completionStats.ai_general.total) * 100}%` }} />
-                  </div>
-                </div>
-              </div>
-              {/* Practice Stats */}
-              {completionStats.practice && Object.keys(completionStats.practice).length > 0 && (
-                <div className="border-t border-white/15 pt-3">
-                  <p className="text-xs font-medium text-white/60 mb-2">Practice Sessions</p>
-                  <div className="flex flex-wrap gap-2">
-                    {Object.entries(completionStats.practice).map(([skill, count]) => (
-                      <span key={skill} className="bg-white/10 rounded-lg px-3 py-1.5 text-xs font-medium">
-                        {skill.charAt(0).toUpperCase() + skill.slice(1)}: {count}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-              {completionStats.total_full_completed === 0 && Object.keys(completionStats.practice || {}).length === 0 && (
-                <p className="text-xs text-white/50 text-center">No tests completed yet. Start practicing to see your progress!</p>
-              )}
+        {/* Completion Breakdown Popup — preserved, restyled */}
+        {showCompletionDetail && completionStats && (
+          <div style={{
+            background: `hsl(${T.surface})`, border: `1px solid hsl(${T.border})`,
+            borderRadius: 16, padding: 18, marginBottom: 22,
+            boxShadow: `0 4px 16px hsl(220 15% 20% / 0.06)`,
+          }} data-testid="completion-breakdown">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+              <h3 style={{ fontFamily: FONT_DISPLAY, fontSize: 16, fontWeight: 600, margin: 0 }}>Completion Breakdown</h3>
+              <button onClick={() => setShowCompletionDetail(false)} style={{ background: 'none', border: 0, color: `hsl(${T.muted})`, cursor: 'pointer', padding: 4 }}>
+                <X style={{ width: 16, height: 16 }} />
+              </button>
             </div>
-          )}
-        </div>
-      </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12, marginBottom: 12 }}>
+              {[
+                { key: 'cambridge', label: 'Cambridge', icon: BookMarked, accent: T.sky },
+                { key: 'ai_academic', label: 'AI Academic', icon: Zap, accent: T.brand },
+                { key: 'ai_general', label: 'AI General', icon: Zap, accent: T.gold },
+              ].map(({ key, label, icon: Icon, accent }) => {
+                const c = completionStats[key];
+                const pct = c?.total ? (c.completed / c.total) * 100 : 0;
+                return (
+                  <div key={key} style={{
+                    padding: 12, borderRadius: 10,
+                    background: `hsl(${T.borderSoft})`,
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                      <Icon style={{ width: 14, height: 14, color: `hsl(${accent})` }} />
+                      <span style={{ fontSize: 12, fontWeight: 500, color: `hsl(${T.muted})` }}>{label}</span>
+                    </div>
+                    <div style={{ fontFamily: FONT_DISPLAY, fontSize: 18, fontWeight: 600 }}>{c?.completed || 0}/{c?.total || 0}</div>
+                    <div style={{ marginTop: 6, width: '100%', background: `hsl(${T.border})`, borderRadius: 999, height: 4 }}>
+                      <div style={{ background: `hsl(${accent})`, height: 4, borderRadius: 999, width: `${pct}%`, transition: 'width 250ms' }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            {completionStats.practice && Object.keys(completionStats.practice).length > 0 && (
+              <div style={{ borderTop: `1px solid hsl(${T.border})`, paddingTop: 12 }}>
+                <p style={{ fontSize: 11, fontWeight: 600, color: `hsl(${T.fainter})`, letterSpacing: '0.06em', textTransform: 'uppercase', margin: '0 0 8px' }}>
+                  Practice Sessions
+                </p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                  {Object.entries(completionStats.practice).map(([skill, count]) => (
+                    <span key={skill} style={{
+                      background: `hsl(${T.borderSoft})`, padding: '4px 10px', borderRadius: 999,
+                      fontSize: 12, fontWeight: 500, color: `hsl(${T.muted})`,
+                    }}>
+                      {skill.charAt(0).toUpperCase() + skill.slice(1)}: {count}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+            {completionStats.total_full_completed === 0 && Object.keys(completionStats.practice || {}).length === 0 && (
+              <p style={{ fontSize: 12, color: `hsl(${T.fainter})`, textAlign: 'center', margin: 0 }}>
+                No tests completed yet. Start practicing to see your progress!
+              </p>
+            )}
+          </div>
+        )}
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Tab Navigation — simplified to 2 tabs per 2026-04-19 design decision.
-            'Smart Practice' bundles the old Browse + Practice surfaces (skill/
-            topic/band filters feed straight into practice sessions). 'Full
-            Tests' is the timed Cambridge/AI mock test catalog. Progress lives
-            on the /progress route now, not inside the QB. */}
-        <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
+        {/* Tabs — D9 underline style */}
+        <div style={{
+          display: 'flex', gap: 2,
+          borderBottom: `1px solid hsl(${T.border})`,
+          marginBottom: 24, padding: '0 4px',
+          overflowX: 'auto',
+        }}>
           {[
             { id: 'overview', label: 'Smart Practice', icon: Target },
             { id: 'tests', label: 'Full Tests', icon: Award },
           ].map(tab => {
             const Icon = tab.icon;
+            const selected = activeTab === tab.id;
             return (
-              <Button
+              <button
                 key={tab.id}
-                variant={activeTab === tab.id ? 'default' : 'outline'}
                 onClick={() => setActiveTab(tab.id)}
-                className={activeTab === tab.id ? 'bg-emerald-600 hover:bg-emerald-700' : ''}
+                style={{
+                  padding: '12px 18px',
+                  borderRadius: '8px 8px 0 0',
+                  fontSize: 14, fontWeight: selected ? 600 : 500,
+                  color: selected ? `hsl(${T.brandDark})` : `hsl(${T.muted})`,
+                  background: 'none', border: 0, cursor: 'pointer',
+                  position: 'relative',
+                  display: 'inline-flex', alignItems: 'center', gap: 8,
+                  whiteSpace: 'nowrap',
+                }}
               >
-                <Icon className="w-4 h-4 mr-2" /> {tab.label}
-              </Button>
+                <Icon style={{ width: 14, height: 14 }} /> {tab.label}
+                {selected && (
+                  <span style={{ position: 'absolute', left: 0, right: 0, bottom: -1, height: 2, background: `hsl(${T.brand})`, borderRadius: 2 }} />
+                )}
+              </button>
             );
           })}
         </div>
 
         {/* Overview Tab */}
         {activeTab === 'overview' && (
-          <div className="space-y-6">
-            {/* Compact Filter Bar */}
-            <div className="flex flex-wrap items-center gap-3 bg-white rounded-xl px-4 py-3 shadow-sm border border-slate-100">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Filter</span>
-              <div className="h-5 w-px bg-slate-200" />
-              {/* Band pills */}
-              <div className="flex gap-1.5">
-                {bandLevels.map(band => (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
+            {/* Filter Bar — D9 chip style */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
+              <span style={{ fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: `hsl(${T.fainter})`, fontWeight: 600, marginRight: 4 }}>
+                Band
+              </span>
+              {bandLevels.map(band => {
+                const active = selectedBand === band.id;
+                return (
                   <button
                     key={band.id}
-                    onClick={() => { setSelectedBand(selectedBand === band.id ? null : band.id); setSelectedTopic(null); }}
-                    className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
-                      selectedBand === band.id
-                        ? 'bg-emerald-600 text-white shadow-sm'
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                    }`}
+                    onClick={() => { setSelectedBand(active ? null : band.id); setSelectedTopic(null); }}
+                    style={{
+                      display: 'inline-flex', alignItems: 'center', gap: 6,
+                      padding: '7px 12px', borderRadius: 999,
+                      background: active ? `hsl(${T.brand} / 0.10)` : `hsl(${T.surface})`,
+                      border: `1px solid ${active ? `hsl(${T.brand} / 0.5)` : `hsl(${T.border})`}`,
+                      fontSize: 13, fontWeight: 500,
+                      color: active ? `hsl(${T.brandDark})` : `hsl(${T.muted})`,
+                      cursor: 'pointer', transition: 'all 150ms',
+                    }}
                   >
-                    <span className="inline-block w-1.5 h-1.5 rounded-full mr-1.5" style={{ backgroundColor: band.color }} />
+                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: band.color }} />
                     {band.name}
                   </button>
-                ))}
-              </div>
-              <div className="h-5 w-px bg-slate-200" />
-              {/* Topic dropdown */}
-              <div className="relative">
+                );
+              })}
+
+              <span style={{ width: 8 }} />
+              <span style={{ fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: `hsl(${T.fainter})`, fontWeight: 600, marginRight: 4 }}>
+                Topic
+              </span>
+              <div style={{ position: 'relative' }}>
                 <button
                   onClick={() => {
                     const el = document.getElementById('topic-dropdown');
                     if (el) el.classList.toggle('hidden');
                   }}
-                  className={`px-3 py-1 rounded-full text-xs font-medium transition-all flex items-center gap-1 ${
-                    selectedTopic
-                      ? 'bg-purple-100 text-purple-700'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                  }`}
                   data-testid="topic-filter-btn"
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 6,
+                    padding: '7px 12px', borderRadius: 999,
+                    background: selectedTopic ? `hsl(${T.brand} / 0.10)` : `hsl(${T.surface})`,
+                    border: `1px solid ${selectedTopic ? `hsl(${T.brand} / 0.5)` : `hsl(${T.border})`}`,
+                    fontSize: 13, fontWeight: 500,
+                    color: selectedTopic ? `hsl(${T.brandDark})` : `hsl(${T.muted})`,
+                    cursor: 'pointer',
+                  }}
                 >
                   {selectedTopic ? (topics.find(t => t.id === selectedTopic)?.name || 'Topic') : 'All Topics'}
-                  <Filter className="w-3 h-3" />
+                  <Filter style={{ width: 12, height: 12 }} />
                 </button>
-                <div id="topic-dropdown" className="hidden absolute top-full left-0 mt-1 w-72 bg-white rounded-xl border border-slate-200 shadow-xl z-50 py-2 max-h-64 overflow-y-auto" data-testid="topic-dropdown">
+                <div id="topic-dropdown" data-testid="topic-dropdown" className="hidden" style={{
+                  position: 'absolute', top: '100%', left: 0, marginTop: 4,
+                  width: 288, background: `hsl(${T.surface})`,
+                  borderRadius: 12, border: `1px solid hsl(${T.border})`,
+                  boxShadow: `0 12px 40px hsl(220 15% 20% / 0.12)`,
+                  zIndex: 50, padding: '8px 0', maxHeight: 256, overflowY: 'auto',
+                }}>
                   <button
                     onClick={() => { setSelectedTopic(null); document.getElementById('topic-dropdown')?.classList.add('hidden'); }}
-                    className="w-full px-3 py-1.5 text-left text-xs hover:bg-indigo-50 text-slate-600 font-medium"
+                    style={{
+                      width: '100%', padding: '6px 12px', textAlign: 'left',
+                      fontSize: 12, fontWeight: 500, color: `hsl(${T.muted})`,
+                      background: 'none', border: 0, cursor: 'pointer',
+                    }}
                   >
                     All Topics
                   </button>
-                  <div className="border-t border-slate-100 my-1" />
-                  {topics.map(topic => (
-                    <button
-                      key={topic.id}
-                      onClick={() => { setSelectedTopic(topic.id); document.getElementById('topic-dropdown')?.classList.add('hidden'); }}
-                      className={`w-full px-3 py-1.5 text-left text-xs hover:bg-indigo-50 truncate ${
-                        selectedTopic === topic.id ? 'bg-indigo-50 text-indigo-700 font-medium' : 'text-slate-600'
-                      }`}
-                    >
-                      <span className="mr-1.5">{topic.icon}</span>{topic.name}
-                    </button>
-                  ))}
+                  <div style={{ borderTop: `1px solid hsl(${T.borderSoft})`, margin: '4px 0' }} />
+                  {topics.map(topic => {
+                    const isSel = selectedTopic === topic.id;
+                    return (
+                      <button
+                        key={topic.id}
+                        onClick={() => { setSelectedTopic(topic.id); document.getElementById('topic-dropdown')?.classList.add('hidden'); }}
+                        style={{
+                          width: '100%', padding: '6px 12px', textAlign: 'left',
+                          fontSize: 12, color: isSel ? `hsl(${T.brandDark})` : `hsl(${T.muted})`,
+                          background: isSel ? `hsl(${T.brand} / 0.08)` : 'none',
+                          fontWeight: isSel ? 600 : 400,
+                          border: 0, cursor: 'pointer',
+                          whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                        }}
+                      >
+                        <span style={{ marginRight: 6 }}>{topic.icon}</span>{topic.name}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
-              {/* Clear */}
+
               {(selectedBand || selectedTopic) && (
-                <>
-                  <div className="h-5 w-px bg-slate-200" />
-                  <button
-                    onClick={() => { setSelectedBand(null); setSelectedTopic(null); }}
-                    className="text-xs text-slate-400 hover:text-red-500 flex items-center gap-1 transition-colors"
-                  >
-                    <X className="w-3 h-3" /> Clear
-                  </button>
-                </>
+                <button
+                  onClick={() => { setSelectedBand(null); setSelectedTopic(null); }}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 4,
+                    fontSize: 12, color: `hsl(${T.fainter})`,
+                    background: 'none', border: 0, cursor: 'pointer',
+                    marginLeft: 8,
+                  }}
+                >
+                  <X style={{ width: 12, height: 12 }} /> Clear
+                </button>
               )}
             </div>
 
-            {/* Skills Grid - compact */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            {/* Skill cards — D9 q-card style; clicks preserve existing modal/route handlers */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+              gap: 14,
+            }}>
               {skills.map(skill => {
                 const Icon = skillIcons[skill.id] || BookOpen;
-                const colors = {
-                  reading: { bg: 'bg-blue-500', light: 'bg-blue-50 hover:bg-blue-100 border-blue-200', text: 'text-blue-600' },
-                  listening: { bg: 'bg-purple-500', light: 'bg-purple-50 hover:bg-purple-100 border-purple-200', text: 'text-purple-600' },
-                  writing: { bg: 'bg-emerald-500', light: 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200', text: 'text-emerald-600' },
-                  speaking: { bg: 'bg-orange-500', light: 'bg-orange-50 hover:bg-orange-100 border-orange-200', text: 'text-orange-600' },
-                };
-                const c = colors[skill.id] || colors.reading;
+                const accent = {
+                  reading: T.sky,
+                  listening: T.gold,
+                  writing: T.brand,
+                  speaking: T.rose,
+                }[skill.id] || T.brand;
                 return (
                   <button
                     key={skill.id}
@@ -576,16 +661,57 @@ export default function QuestionBank({ user }) {
                       else if (skill.id === 'speaking') setShowSpeakingModal(true);
                       else { setSelectedSkill(skill.id); setActiveTab('practice'); }
                     }}
-                    className={`${c.light} border rounded-xl p-4 text-left transition-all hover:shadow-md group`}
                     data-testid={`skill-${skill.id}`}
+                    style={{
+                      background: `hsl(${T.surface})`,
+                      border: `1px solid hsl(${T.border})`,
+                      borderRadius: 16,
+                      padding: 18,
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      transition: 'all 180ms',
+                      display: 'flex', flexDirection: 'column', gap: 10,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = `hsl(${accent} / 0.5)`;
+                      e.currentTarget.style.boxShadow = '0 4px 16px hsl(220 15% 20% / 0.08)';
+                      e.currentTarget.style.transform = 'translateY(-1px)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = `hsl(${T.border})`;
+                      e.currentTarget.style.boxShadow = 'none';
+                      e.currentTarget.style.transform = 'none';
+                    }}
                   >
-                    <div className={`${c.bg} w-10 h-10 rounded-lg flex items-center justify-center mb-3`}>
-                      <Icon className="w-5 h-5 text-white" />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                      <div style={{
+                        width: 38, height: 38, borderRadius: 10,
+                        background: `hsl(${accent} / 0.12)`,
+                        display: 'grid', placeItems: 'center',
+                      }}>
+                        <Icon style={{ width: 18, height: 18, color: `hsl(${accent})` }} />
+                      </div>
+                      <span style={{
+                        fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase',
+                        fontWeight: 600, color: `hsl(${T.muted})`,
+                      }}>
+                        Skill
+                      </span>
                     </div>
-                    <h3 className="font-bold text-sm text-slate-800">{skill.name}</h3>
-                    <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-1">{skill.description}</p>
-                    <div className={`flex items-center ${c.text} text-xs font-medium mt-2 group-hover:gap-1 transition-all`}>
-                      Start <ChevronRight className="w-3.5 h-3.5" />
+                    <div style={{ fontFamily: FONT_DISPLAY, fontSize: 19, fontWeight: 600, color: `hsl(${T.ink})` }}>
+                      {skill.name}
+                    </div>
+                    <p style={{ margin: 0, color: `hsl(${T.muted})`, fontSize: 13, lineHeight: 1.4 }}>
+                      {skill.description}
+                    </p>
+                    <div style={{
+                      marginTop: 'auto',
+                      paddingTop: 10, borderTop: `1px dashed hsl(${T.border})`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                      color: `hsl(${T.brandDark})`, fontSize: 13, fontWeight: 600,
+                    }}>
+                      <span>Start</span>
+                      <ChevronRight style={{ width: 14, height: 14 }} />
                     </div>
                   </button>
                 );
