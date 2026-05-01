@@ -11,10 +11,13 @@ from typing import Optional, List, Dict, Any
 import os
 import base64
 import asyncio
+import logging
 import re
 import io
 from pathlib import Path
 from elevenlabs import ElevenLabs, VoiceSettings
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/listening", tags=["Listening Question Bank"])
 
@@ -697,57 +700,93 @@ async def evaluate_listening_answers(
         raise HTTPException(status_code=404, detail=f"Listening set '{set_id}' not found")
     
     # Create response map
-    response_map = {r["question_id"]: r.get("answer", "") for r in responses}
-    
+    # Index responses by both raw and stringified question id so int<->str
+    # mismatches between content and frontend payloads don't drop answers.
+    response_map: Dict[Any, Any] = {}
+    for r in responses:
+        qid = r.get("question_id")
+        ans = r.get("answer", "")
+        response_map[qid] = ans
+        response_map[str(qid)] = ans
+
     # Evaluate each question
     correct = 0
     total = len(listening_set["questions"])
     mistakes = []
     detailed_results = []
-    
+
     for q in listening_set["questions"]:
         q_id = q["id"]
-        user_answer = response_map.get(q_id, "").strip()
-        
+        raw_user_answer = response_map.get(q_id, response_map.get(str(q_id), ""))
+        # Preserve list/dict shape for multi-MCQ and matching; only strip
+        # plain strings. Calling .strip()/.lower() on a list previously
+        # raised AttributeError and silently scored a 0.
+        if isinstance(raw_user_answer, str):
+            user_answer = raw_user_answer.strip()
+        else:
+            user_answer = raw_user_answer
+
         # Handle different question types
         if q["type"] == "matching":
             # For matching, answers is a dict
             correct_answers = q.get("answers", {})
             user_answers = {}
-            # Parse user's matching answers
             if isinstance(user_answer, dict):
                 user_answers = user_answer
-            
+
             is_correct = user_answers == correct_answers
-            correct_answer_display = str(correct_answers)
+            correct_answer_display = correct_answers
+        elif q["type"] in ("multiple_selection", "multi_mcq", "select_two", "select_three"):
+            # IELTS "select TWO/THREE" — set equality, no partial credit.
+            # See task #140: this case used to fall through the string
+            # branch and crash on user_answer.lower().
+            correct_answers_list = q.get("answers") or q.get("answer") or []
+            if not isinstance(correct_answers_list, list):
+                correct_answers_list = [correct_answers_list]
+            user_list = user_answer if isinstance(user_answer, list) else (
+                [user_answer] if user_answer else []
+            )
+
+            def _norm(x: Any) -> str:
+                return str(x).strip().lower().replace(".", "").replace(",", "")
+
+            is_correct = (
+                bool(correct_answers_list)
+                and {_norm(a) for a in user_list} == {_norm(a) for a in correct_answers_list}
+            )
+            correct_answer_display = correct_answers_list
         else:
-            # For other types, compare with answer variants
+            # Single-answer types (multiple_choice, fill_blank, short_answer,
+            # note_completion, etc). Honour answer_variants for spelling/format
+            # tolerance; both sides are normalised the same way.
             correct_answer = q.get("answer", "")
-            answer_variants = q.get("answer_variants", [correct_answer])
-            
-            # Normalize and compare
-            user_normalized = user_answer.lower().strip()
-            is_correct = any(
-                user_normalized == v.lower().strip() 
-                for v in answer_variants
+            answer_variants = q.get("answer_variants") or [correct_answer]
+
+            def _norm(x: Any) -> str:
+                return str(x).strip().lower().replace(".", "").replace(",", "")
+
+            user_normalized = _norm(user_answer)
+            is_correct = (
+                bool(user_normalized)
+                and any(_norm(v) == user_normalized for v in answer_variants)
             )
             correct_answer_display = correct_answer
-        
+
         if is_correct:
             correct += 1
         else:
             mistakes.append({
                 "question_id": q_id,
                 "question": q["question"],
-                "user_answer": user_answer or "(no answer)",
+                "user_answer": user_answer if user_answer not in (None, "", []) else "(no answer)",
                 "correct_answer": correct_answer_display,
                 "explanation": generate_explanation(q, user_answer, correct_answer_display)
             })
-        
+
         detailed_results.append({
             "question_id": q_id,
             "is_correct": is_correct,
-            "user_answer": user_answer or "(no answer)",
+            "user_answer": user_answer if user_answer not in (None, "", []) else "(no answer)",
             "correct_answer": correct_answer_display,
             "skill_tested": q.get("skill_tested", [])
         })
@@ -770,7 +809,34 @@ async def evaluate_listening_answers(
         recommended_lessons=recommended_lessons,
         root_cause_analysis=root_cause_analysis,
     )
-    
+
+    # Optional Sonnet enrichment (#146). Gated by SONNET_QB_ANALYSIS_ENABLED.
+    # Falls back to the deterministic blocks above on any failure so a slow
+    # or broken LLM never breaks an evaluation response.
+    try:
+        from services.sonnet_qb_advisor import sonnet_root_cause_and_plan
+        sonnet_block = await sonnet_root_cause_and_plan(
+            skill="listening",
+            mistakes=mistakes,
+            weak_skills=weak_skills,
+            correct=correct,
+            total=total,
+            percentage=percentage,
+            estimated_band=estimated_band,
+        )
+        if sonnet_block:
+            # Preserve recommended-lesson route hints from the deterministic
+            # roadmap step #1 (Sonnet has no lesson registry visibility).
+            primary_lesson = recommended_lessons[0] if recommended_lessons else {}
+            if primary_lesson.get("lesson_path") and sonnet_block["study_plan"].get("roadmap_steps"):
+                sonnet_block["study_plan"]["roadmap_steps"][0].setdefault(
+                    "route", primary_lesson["lesson_path"]
+                )
+            root_cause_analysis = sonnet_block["root_cause_analysis"]
+            study_plan = sonnet_block["study_plan"]
+    except Exception as exc:  # pragma: no cover
+        logger.warning("Sonnet QB advisor failed for listening: %s", exc)
+
     return {
         "success": True,
         "skill": "listening",

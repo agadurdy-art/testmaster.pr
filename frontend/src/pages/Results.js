@@ -462,7 +462,20 @@ export default function Results({ user }) {
         )}
 
         {/* Question-by-Question Results - For Reading/Listening */}
-        {(result.test_type === 'reading' || result.test_type === 'listening') && result.feedback?.question_results?.length > 0 && (
+        {(result.test_type === 'reading' || result.test_type === 'listening') && result.feedback?.question_results?.length > 0 && (() => {
+          // Group questions by passage (reading) or part (listening). Falls
+          // back to a single "All questions" group when the field is missing
+          // — keeps mastery-set results (which have a single passage) flat.
+          const groupKey = result.test_type === 'reading' ? 'passage' : 'part';
+          const groupLabel = result.test_type === 'reading' ? 'Passage' : 'Part';
+          const groups = result.feedback.question_results.reduce((acc, q) => {
+            const key = q[groupKey] ?? null;
+            if (!acc.has(key)) acc.set(key, []);
+            acc.get(key).push(q);
+            return acc;
+          }, new Map());
+          const showGroupHeaders = groups.size > 1 || (groups.size === 1 && [...groups.keys()][0] !== null);
+          return (
           <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
@@ -485,15 +498,32 @@ export default function Results({ user }) {
                 </span>
               </div>
             </div>
-            
-            {/* Questions List */}
-            <div className="space-y-3 max-h-[600px] overflow-y-auto pr-2">
-              {result.feedback.question_results.map((q, idx) => (
-                <div 
-                  key={idx} 
+
+            {/* Questions List — grouped by passage/part when the data carries
+                a passage or part field. Listening Cambridge tests have 4
+                parts; Reading Cambridge tests have 3 passages. Mastery
+                modules render flat (single group, no header). */}
+            <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
+              {[...groups.entries()].map(([groupId, items]) => {
+                const groupCorrect = items.filter((q) => q.is_correct).length;
+                return (
+                <div key={`group-${groupId ?? 'all'}`} className="space-y-3">
+                  {showGroupHeaders && groupId !== null && (
+                    <div className="sticky top-0 z-10 -mx-2 px-2 py-2 bg-white/95 backdrop-blur border-b border-gray-100 flex items-center justify-between">
+                      <h4 className="text-sm font-semibold text-gray-700">
+                        {groupLabel} {groupId}
+                      </h4>
+                      <span className="text-xs text-gray-500">
+                        {groupCorrect}/{items.length} {t('correct').toLowerCase()}
+                      </span>
+                    </div>
+                  )}
+                  {items.map((q, idx) => (
+                <div
+                  key={`q-${groupId ?? 'all'}-${q.question_id ?? idx}`}
                   className={`p-4 rounded-xl border-l-4 ${
-                    q.is_correct 
-                      ? 'bg-green-50 border-green-500' 
+                    q.is_correct
+                      ? 'bg-green-50 border-green-500'
                       : 'bg-red-50 border-red-500'
                   }`}
                 >
@@ -519,23 +549,39 @@ export default function Results({ user }) {
                         <div>
                           <span className="text-gray-500">{t('yourAnswer')}: </span>
                           <span className={`font-semibold ${q.is_correct ? 'text-green-700' : 'text-red-700'}`}>
-                            {q.user_answer || t('noAnswer')}
+                            {Array.isArray(q.user_answer) ? q.user_answer.join(', ') : (q.user_answer || t('noAnswer'))}
                           </span>
                         </div>
                         <div>
                           <span className="text-gray-500">{t('correctAnswer')}: </span>
-                          <span className="font-semibold text-green-700">{q.correct_answer}</span>
+                          <span className="font-semibold text-green-700">
+                            {Array.isArray(q.correct_answer) ? q.correct_answer.join(', ') : q.correct_answer}
+                          </span>
                         </div>
                       </div>
-                      
-                      {/* Locate in Passage */}
-                      {q.passage_excerpt && (
+
+                      {/* Reason chip — surfaces classify_reason_code() output
+                          for incorrect answers (e.g. "Distractor", "Form
+                          mismatch"). Cambridge backend emits these; mastery
+                          modules don't, so the chip is conditional. */}
+                      {!q.is_correct && q.reason_label && (
+                        <div className="mb-2">
+                          <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 border border-rose-200">
+                            {q.reason_label}
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Locate in Passage — accept either passage_excerpt
+                          (legacy field) or evidence_text (new reading_qb /
+                          cambridge field name). */}
+                      {(q.passage_excerpt || q.evidence_text) && (
                         <div className="mt-3 p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
                           <div className="flex items-start gap-2">
                             <MapPin className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
                             <div>
                               <p className="text-xs font-semibold text-yellow-700 mb-1">{t('locateInPassage') || 'Located in Passage'}</p>
-                              <p className="text-sm text-gray-700 italic leading-relaxed">&ldquo;...{q.passage_excerpt}...&rdquo;</p>
+                              <p className="text-sm text-gray-700 italic leading-relaxed">&ldquo;...{q.passage_excerpt || q.evidence_text}...&rdquo;</p>
                             </div>
                           </div>
                         </div>
@@ -570,25 +616,52 @@ export default function Results({ user }) {
                   </div>
                 </div>
               ))}
+                </div>
+                );
+              })}
             </div>
 
-            {/* Summary Stats */}
+            {/* Listening transcript reveal — surfaces the full transcript
+                after submit so students can read along with the audio they
+                just heard (task #143). Reading already shows passages
+                inline above answers, so this is listening-only. */}
+            {result.test_type === 'listening' && result.feedback?.transcript && (
+              <details className="mt-4 group">
+                <summary className="cursor-pointer text-sm font-semibold text-indigo-600 hover:text-indigo-700 flex items-center gap-2 select-none">
+                  <FileText className="w-4 h-4" />
+                  {getText('Show full transcript', 'Hiển thị bản ghi đầy đủ', 'Tam dökümü göster')}
+                </summary>
+                <div className="mt-3 p-4 bg-gray-50 rounded-xl border border-gray-200 max-h-80 overflow-y-auto">
+                  <p className="text-sm text-gray-700 whitespace-pre-line leading-relaxed">
+                    {result.feedback.transcript}
+                  </p>
+                </div>
+              </details>
+            )}
+
+            {/* Summary Stats — read from authoritative server totals
+                (result.feedback.correct/total/percentage), NOT from a client-
+                side filter on question_results. The question_results array
+                is binary (is_correct true/false) and disagrees with the
+                server when partial credit applies (multi-MCQ "select TWO"
+                type), which produced 3 divergent totals on the page. */}
             <div className="mt-4 pt-4 border-t border-gray-200 grid grid-cols-3 gap-4 text-center">
               <div className="p-3 bg-green-50 rounded-lg">
-                <p className="text-2xl font-bold text-green-600">{result.feedback.question_results.filter(q => q.is_correct).length}</p>
+                <p className="text-2xl font-bold text-green-600">{result.feedback.correct ?? 0}</p>
                 <p className="text-xs text-green-700">{t('correct')}</p>
               </div>
               <div className="p-3 bg-red-50 rounded-lg">
-                <p className="text-2xl font-bold text-red-600">{result.feedback.question_results.filter(q => !q.is_correct).length}</p>
+                <p className="text-2xl font-bold text-red-600">{(result.feedback.total ?? 0) - (result.feedback.correct ?? 0)}</p>
                 <p className="text-xs text-red-700">{t('incorrect')}</p>
               </div>
               <div className="p-3 bg-blue-50 rounded-lg">
-                <p className="text-2xl font-bold text-blue-600">{Math.round(result.feedback.percentage)}%</p>
+                <p className="text-2xl font-bold text-blue-600">{Math.round(result.feedback.percentage ?? (result.feedback.total ? (result.feedback.correct / result.feedback.total) * 100 : 0))}%</p>
                 <p className="text-xs text-blue-700">{t('accuracy')}</p>
               </div>
             </div>
           </Card>
-        )}
+          );
+        })()}
 
         {/* Skill Breakdown - Phase 4 */}
         {result.feedback?.skill_breakdown && Object.keys(result.feedback.skill_breakdown).length > 0 && (

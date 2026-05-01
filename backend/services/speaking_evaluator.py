@@ -434,6 +434,50 @@ def _format_problem_words(word_results: List[Dict[str, Any]]) -> str:
 # ─── Public entry point ──────────────────────────────────────────────────────
 
 
+def _build_deep_feedback_bundle(
+    azure: Dict[str, Any],
+) -> Tuple[Optional[Dict[str, Any]], Optional[List[Dict[str, Any]]]]:
+    """Map the raw Azure pronunciation dict into the
+    PremiumPronunciationDrawer contract (frontend reads
+    `pronunciation_analysis.azure_scores` + `word_level_results[].accuracy_score`
+    + `word_level_results[].problem_phonemes`).
+
+    Returns (pronunciation_analysis, word_level_results). Either may be None
+    if Azure data is unavailable / malformed."""
+    if not azure or "error" in azure:
+        return None, None
+
+    azure_scores = {
+        "pronunciation": float(azure.get("pron_score", 0) or 0),
+        "accuracy": float(azure.get("accuracy_score", 0) or 0),
+        "fluency": float(azure.get("fluency_score", 0) or 0),
+        "prosody": float(azure.get("prosody_score", 0) or 0),
+        "completeness": float(azure.get("completeness_score", 0) or 0),
+    }
+    pronunciation_analysis: Dict[str, Any] = {"azure_scores": azure_scores}
+
+    raw_words = azure.get("word_results") or []
+    word_level_results: List[Dict[str, Any]] = []
+    for w in raw_words:
+        # Only surface phonemes that scored low — the drawer renders these as
+        # call-out chips, so a clean word doesn't need any phoneme detail.
+        problem_phonemes = [
+            {"phoneme": p.get("phoneme", ""), "score": p.get("score", 0)}
+            for p in (w.get("phonemes") or [])
+            if (p.get("score") or 0) < 60
+        ]
+        word_level_results.append(
+            {
+                "word": w.get("word", ""),
+                "accuracy_score": float(w.get("accuracy", 0) or 0),
+                "error_type": w.get("error_type", "None"),
+                "problem_phonemes": problem_phonemes,
+            }
+        )
+
+    return pronunciation_analysis, word_level_results
+
+
 def _build_azure_block(azure: Dict[str, Any]) -> str:
     return (
         "## Azure word-level pronunciation (top problem words)\n"
@@ -596,13 +640,27 @@ async def evaluate_speaking(
     duration = float(req.duration_seconds or 0.0)
     fluency = compute_fluency(transcript, duration)
 
-    return await _run_evaluator_llm(
+    result = await _run_evaluator_llm(
         req=req,
         transcript=transcript,
         fluency=fluency,
         azure_block=_build_azure_block(azure),
         mode_instruction="",
     )
+
+    # Attach the Azure deep-feedback bundle so the frontend's
+    # PremiumPronunciationDrawer can render the per-word + phoneme detail.
+    # Sonnet's transcript_tokens already carry the highlighted summary;
+    # this is the deluxe complement (5-score grid + drillable problem words).
+    pron_analysis, word_results = _build_deep_feedback_bundle(azure)
+    if pron_analysis is not None or word_results is not None:
+        result = result.model_copy(
+            update={
+                "pronunciation_analysis": pron_analysis,
+                "word_level_results": word_results,
+            }
+        )
+    return result
 
 
 async def evaluate_speaking_basic(

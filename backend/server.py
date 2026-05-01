@@ -389,6 +389,14 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load listening QB routes: {e}")
 
+# Import reading question bank routes (parity with listening — task #139).
+try:
+    from routes.reading_qb import router as reading_qb_router
+    app.include_router(reading_qb_router)
+    print("✅ Reading QB routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load reading QB routes: {e}")
+
 # Import unified speaking evaluation route FIRST so its /evaluate, /topics,
 # and other endpoints take precedence over the legacy ones in
 # routes/speaking_qb.py (FastAPI resolves the first-registered match). Both

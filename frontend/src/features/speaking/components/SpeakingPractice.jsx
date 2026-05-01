@@ -9,6 +9,7 @@ import ProcessingState from './ProcessingState';
 import ErrorState from './ErrorState';
 import { useSpeakingFlow } from '../hooks/useSpeakingFlow';
 import { pickRandomCueCard } from '../lib/pickCueCard';
+import { adaptSpeakingResult } from '../lib/adaptSpeakingResult';
 import useElevenLabsLiz from '../../liz/hooks/useElevenLabsLiz';
 import VoiceOverlay from '../../liz/components/VoiceOverlay';
 import FullTestFlow from './FullTestFlow';
@@ -129,11 +130,20 @@ function LiveConversation({ part, user, onExit }) {
   }
 
   if (phase === 'results') {
+    // Route Liz Live's response through the same adapter the rest of the
+    // surfaces use (Results.js, useSpeakingFlow). Without this the Azure
+    // deep bundle and CEFR vocabulary_profile flow through, but the
+    // defensive copy + legacy-shape fallback are skipped — easy way to
+    // get parity drift between Liz Live and the cue-card flow (task #138).
+    const adapted = adaptSpeakingResult(scoreResult, {
+      targetBand: user?.target_band,
+      durationSeconds: liz.elapsedSeconds,
+    }) || scoreResult;
     return (
       <>
         <SpeakingHeader />
         <ResultsState
-          data={scoreResult}
+          data={adapted}
           onRetryCard={handleClose}
           onNewCard={handleClose}
         />
