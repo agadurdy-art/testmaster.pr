@@ -21,8 +21,14 @@ router = APIRouter(prefix="/api/listening", tags=["Listening Question Bank"])
 # ElevenLabs client
 ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY")
 
-# Audio cache directory
-AUDIO_CACHE_DIR = Path("/app/backend/static/audio/listening")
+# Audio cache directory. Resolve relative to this file so the router boots in
+# any environment (Emergent pod = /app/backend, local dev = /private/tmp/...)
+# without import-time mkdir failures that silently 404 every QB endpoint.
+_BACKEND_DIR = Path(__file__).resolve().parent.parent
+AUDIO_CACHE_DIR = Path(os.environ.get(
+    "LISTENING_AUDIO_CACHE_DIR",
+    str(_BACKEND_DIR / "static/audio/listening"),
+))
 AUDIO_CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 # ============ IELTS-QUALITY VOICE CONFIGURATION ============

@@ -110,15 +110,34 @@ export default function SpeakingPracticeQB({ user }) {
     try {
       let url = `${API_URL}/api/speaking/modules?track=${filterTrack}`;
       if (filterBand) url += `&band=${filterBand}`;
-      
+
       const res = await fetch(url);
+      // TODO(backend): /api/speaking/modules is served by routes/speaking_qb.py
+      // and depends on content/speaking/speaking_sets.py being importable +
+      // populated. If the import fails, the route itself 404s and modules
+      // stay empty. The previous code silently ignored non-2xx responses,
+      // leaving the page blank with no toast — confusing for users.
+      if (!res.ok) {
+        console.error('Speaking modules HTTP error', res.status);
+        toast.error(`Speaking topics unavailable (${res.status}). Try again shortly.`);
+        setModules([]);
+        return;
+      }
       const data = await res.json();
-      
-      if (data.success) {
-        setModules(data.modules);
+
+      if (data?.success) {
+        const list = Array.isArray(data.modules) ? data.modules : [];
+        setModules(list);
+        if (list.length === 0) {
+          toast.info('No speaking topics matched this track yet.');
+        }
         if (initialSetId) {
           selectModule(initialSetId);
         }
+      } else {
+        console.warn('Speaking modules response missing success flag', data);
+        setModules([]);
+        toast.error(data?.error || 'Failed to load speaking topics.');
       }
     } catch (error) {
       console.error('Error loading modules:', error);
@@ -688,11 +707,32 @@ export default function SpeakingPracticeQB({ user }) {
               </Card>
             </div>
 
-            <Card className="p-4 bg-amber-50 border-amber-200">
-              <p className="text-xs text-amber-800">
-                <strong>Tip:</strong> Want the full simulated exam (all 3 parts back-to-back)?
-                Use <span className="font-semibold">Cambridge Full Test</span> instead.
-              </p>
+            {/* Full Test — all 3 parts back-to-back. Navigates to the unified
+                /speaking-premium surface which hosts the FullTestFlow orchestrator.
+                Tier gating happens there (Monthly + Exam Pack only). */}
+            <Card
+              className="p-5 cursor-pointer hover:shadow-md transition-all border-2 hover:border-amber-400 bg-gradient-to-r from-amber-50 via-orange-50 to-amber-50"
+              onClick={() => navigate('/speaking-premium')}
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg flex items-center justify-center shrink-0">
+                  <Award className="w-6 h-6 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Badge className="bg-amber-600 text-white">Full Test</Badge>
+                    <span className="text-xs text-amber-700 font-medium">Monthly · Exam Pack</span>
+                  </div>
+                  <h3 className="font-bold text-gray-900">All 3 parts back-to-back</h3>
+                  <p className="text-sm text-gray-600 mt-0.5">
+                    Simulate the full exam in one sitting — Part 1 → Part 2 → Part 3 with one shared theme.
+                  </p>
+                </div>
+                <div className="text-right shrink-0">
+                  <div className="text-xs text-gray-500">~11–14 min</div>
+                  <ChevronRight className="w-5 h-5 text-amber-700 ml-auto mt-1" />
+                </div>
+              </div>
             </Card>
           </div>
         )}

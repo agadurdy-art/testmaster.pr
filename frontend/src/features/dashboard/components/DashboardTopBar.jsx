@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import ThemeToggle from "../../../components/ThemeToggle";
+import LanguageSwitcher from "../../../components/LanguageSwitcher";
+import BrandLogo from "../../../components/BrandLogo";
 
 /**
  * Sticky top bar for the authenticated dashboard.
@@ -25,16 +27,7 @@ export default function DashboardTopBar({
     >
       <div className="max-w-[1160px] mx-auto px-6 md:px-10 h-[68px] flex items-center justify-between">
         <div className="flex items-center gap-10">
-          <a href="/dashboard" className="flex items-center gap-2.5">
-            <div className="logomark" aria-hidden="true">
-              <img src="/brand/ielts-ace-logo.jpg" alt="IELTS Ace" />
-            </div>
-            <div className="leading-tight">
-              <div className="font-display text-[17px] font-semibold tracking-tight">
-                IELTS Ace
-              </div>
-            </div>
-          </a>
+          <BrandLogo size="sm" href="/dashboard" />
           <nav className="desktop-nav items-center gap-6 flex">
             <NavLink href="/dashboard" active={activeSection === "dashboard"}>
               Dashboard
@@ -57,12 +50,12 @@ export default function DashboardTopBar({
                 {
                   label: "Cambridge full mocks",
                   hint: "Real past papers · full timing",
-                  href: "/full-test",
+                  href: "/question-bank?fulltests=cambridge",
                 },
                 {
                   label: "AI fresh mocks",
                   hint: "New prompts · weak-skill calibrated",
-                  href: "/full-test?source=ai",
+                  href: "/question-bank?fulltests=ai",
                 },
               ]}
             />
@@ -94,6 +87,7 @@ export default function DashboardTopBar({
           </nav>
         </div>
         <div className="flex items-center gap-4">
+          <LanguageSwitcher iconOnly />
           <ThemeToggle className="hidden md:inline-flex" />
           {/* Notifications bell removed — the feature doesn't exist yet and a
               dead button looks broken. Add back as a dropdown or /notifications

@@ -7,6 +7,7 @@ import { loginWithEmergentSession } from './lib/api';
 import { toast } from 'sonner';
 import { Toaster } from './components/ui/sonner';
 import MobileBottomNav from './components/MobileBottomNav';
+import useStudyTimeTracking from './hooks/useStudyTimeTracking';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AudioProvider } from './contexts/AudioContext';
 import { useI18n } from './lib/i18n';
@@ -313,6 +314,10 @@ function AppWithSessionHandler() {
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Heartbeat-based study-time tracking. Mounted once at the top of the
+  // routed app so every authenticated route is counted toward Total Study.
+  useStudyTimeTracking(user?.id);
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user');

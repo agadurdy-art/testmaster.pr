@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { LIZ_AVATAR_URL } from "../../../lib/brand";
 
 // Tab key -> route. Keep in sync with App.js routes. If a parent supplies its
 // own `onNavigate`, we prefer that — otherwise fall back to this map so taps
@@ -61,13 +62,23 @@ export default function DashboardBottomNav({ active = "home", onNavigate }) {
         <button
           type="button"
           onClick={() => go("liz")}
-          className="relative -mt-5 w-14 h-14 rounded-full flex items-center justify-center text-white"
-          style={{ background: "hsl(var(--primary))" }}
+          className="relative -mt-5 w-14 h-14 rounded-full flex items-center justify-center overflow-hidden"
+          style={{
+            background: "hsl(var(--primary))",
+            // 3px brand-color ring around the avatar so the raised "Ask Liz"
+            // button still reads as the action anchor on glassy backdrops.
+            boxShadow: "0 0 0 3px hsl(var(--primary)), 0 6px 16px hsl(var(--primary) / 0.35)",
+          }}
           aria-label="Ask Liz"
+          data-testid="dashboard-bottom-liz"
         >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-          </svg>
+          <img
+            src={LIZ_AVATAR_URL}
+            alt=""
+            loading="lazy"
+            draggable={false}
+            className="w-full h-full object-cover"
+          />
         </button>
         <BottomItem
           label="Courses"

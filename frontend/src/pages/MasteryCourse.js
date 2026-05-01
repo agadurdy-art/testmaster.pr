@@ -59,6 +59,7 @@ export default function MasteryCourse({ user }) {
   // Check for preview mode and lesson from URL
   const isPreviewMode = searchParams.get('preview') === 'true';
   const lessonIdFromUrl = searchParams.get('lesson');
+  const focusFromUrl = searchParams.get('focus'); // e.g., 'grammar' (from GrammarBlueprint deep-link)
   
   // English-only notice for this IELTS-level module
   const englishNotice = getEnglishOnlyNotice(language);
@@ -156,9 +157,19 @@ export default function MasteryCourse({ user }) {
         }
         setSelectedModule(targetModule);
         setView('module-detail');
+        // Deep-link focus: jump to a specific section (grammar | vocabulary | reading | listening | speaking | writing | quiz)
+        const validFocus = ['grammar', 'vocabulary', 'reading', 'listening', 'speaking', 'writing', 'quiz'];
+        if (validFocus.includes(focusFromUrl)) {
+          setCurrentSection(focusFromUrl);
+          const scrollToSection = () => {
+            document.getElementById(`${focusFromUrl}-section`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          };
+          setTimeout(scrollToSection, 250);
+          setTimeout(scrollToSection, 700);
+        }
       }
     }
-  }, [lessonIdFromUrl, modules]);
+  }, [lessonIdFromUrl, focusFromUrl, modules]);
 
   const fetchModules = async () => {
     try {
@@ -889,7 +900,7 @@ export default function MasteryCourse({ user }) {
 
   // Grammar Section
   const renderGrammar = () => (
-    <Card className="p-6 bg-white border-0 shadow-lg">
+    <Card id="grammar-section" className="p-6 bg-white border-0 shadow-lg scroll-mt-24">
       <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
         <Languages className="w-5 h-5 text-purple-600" /> {selectedModule.grammar?.title}
       </h3>

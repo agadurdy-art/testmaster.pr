@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Home, ClipboardList, GraduationCap, BookOpen, User } from 'lucide-react';
+import { LIZ_AVATAR_URL } from '../lib/brand';
 
 /**
  * App-level mobile bottom nav, shown on every authenticated page except
@@ -47,13 +48,19 @@ export default function MobileBottomNav({ currentPath = '' }) {
                 type="button"
                 aria-label={tab.label}
                 onClick={() => navigate(tab.path)}
-                className="relative -mt-5 w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg transition-transform active:scale-95"
+                className="relative -mt-5 w-14 h-14 rounded-full flex items-center justify-center overflow-hidden shadow-lg transition-transform active:scale-95"
                 style={{
                   background: 'linear-gradient(135deg, #14b8a6 0%, #0d9488 100%)',
                   boxShadow: '0 8px 20px -4px rgba(20,184,166,0.45)',
                 }}
               >
-                <Icon className="w-6 h-6" />
+                <img
+                  src={LIZ_AVATAR_URL}
+                  alt=""
+                  loading="lazy"
+                  draggable={false}
+                  className="w-full h-full object-cover"
+                />
               </button>
             );
           }

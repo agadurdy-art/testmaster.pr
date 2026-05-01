@@ -12,7 +12,16 @@ import {
   LizNote,
 } from "../features/dashboard";
 import { isSpeakingPremiumUser } from "../lib/planAccess";
-import { Sparkles, Lock } from "lucide-react";
+import { Sparkles, Lock, BookOpen, Headphones, PenLine, Mic } from "lucide-react";
+
+// Skill → background watermark icon for the Cambridge mock cards.
+const SKILL_ICON = {
+  Reading: BookOpen,
+  Listening: Headphones,
+  Writing: PenLine,
+  Speaking: Mic,
+};
+import StudyTimeDrilldown from "../features/dashboard/components/StudyTimeDrilldown";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 const SKILL_KEYS = ["Listening", "Reading", "Writing", "Speaking"];
@@ -33,6 +42,7 @@ export default function DashboardPage({ user, onLogout }) {
   const [summary, setSummary] = useState(null);
   // eslint-disable-next-line no-unused-vars
   const [summaryError, setSummaryError] = useState(null);
+  const [studyDrilldownOpen, setStudyDrilldownOpen] = useState(false);
 
   useEffect(() => {
     if (!user?.id) return;
@@ -233,9 +243,15 @@ export default function DashboardPage({ user, onLogout }) {
         <StreakDial
           minutes={weekStudyMinutes}
           empty={!hasStreakDay && weekStudyMinutes === 0}
-          onClick={goto("/progress")}
+          onClick={() => setStudyDrilldownOpen(true)}
         />
       </section>
+
+      <StudyTimeDrilldown
+        userId={user?.id}
+        open={studyDrilldownOpen}
+        onClose={() => setStudyDrilldownOpen(false)}
+      />
 
       {/* 3. Bands strip — wide Current Band (with skill rows inside) + small Target + small Days */}
       <section className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-4 mb-12 md:mb-16">
@@ -431,7 +447,7 @@ function StreakDial({ minutes = 0, empty, onClick }) {
     <button
       type="button"
       onClick={onClick}
-      aria-label={empty ? "Begin a streak" : `${count}-day streak — ${WEEK_DAYS[todayIdx].name}`}
+      aria-label={empty ? "Begin a streak" : `${hours}h ${mins}m studied this week — ${WEEK_DAYS[todayIdx].name}`}
       className="mx-auto md:mx-0 hover:-translate-y-0.5 transition-transform"
       style={{
         width: "100%",
@@ -1052,7 +1068,7 @@ function SmartPracticeList({ skills, user, onPick, onSpeakingPremium }) {
                   </div>
                   <div className="text-xs text-muted">
                     {isPremium
-                      ? "Live conversation with Liz · Gemini 2.5 voice tutor"
+                      ? "Live conversation with Liz · ElevenLabs voice tutor"
                       : "Real-time Liz examiner conversation — upgrade to unlock"}
                   </div>
                 </div>
@@ -1121,19 +1137,35 @@ function MockTestFrameWith4Grid({
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
         {cambridge.map((c) => {
           const tone = SKILL_TONE[c.key];
+          const Icon = SKILL_ICON[c.key];
           return (
             <button
               key={c.key}
               type="button"
               onClick={() => navigate(c.route)}
-              className="aspect-square p-4 text-left transition-transform hover:-translate-y-0.5"
+              className="aspect-square p-4 text-left transition-transform hover:-translate-y-0.5 relative overflow-hidden"
               style={{
                 background: `linear-gradient(160deg, hsl(${tone} / .10) 0%, hsl(var(--surface) / .9) 70%)`,
                 border: `1px solid hsl(${tone} / .25)`,
                 borderRadius: "1rem",
               }}
             >
-              <div className="flex flex-col h-full justify-between">
+              {Icon && (
+                <Icon
+                  aria-hidden="true"
+                  className="absolute pointer-events-none"
+                  style={{
+                    color: `hsl(${tone})`,
+                    opacity: 0.18,
+                    top: "18%",
+                    right: "-12%",
+                    width: "62%",
+                    height: "62%",
+                    strokeWidth: 1.4,
+                  }}
+                />
+              )}
+              <div className="flex flex-col h-full justify-between relative">
                 <div className="label" style={{ color: `hsl(${tone})` }}>
                   {c.key}
                 </div>

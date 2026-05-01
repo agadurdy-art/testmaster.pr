@@ -20,9 +20,16 @@ export default function TipsPage({ user, onLogout }) {
   const loadTips = async () => {
     try {
       const data = await getTips();
-      setTips(data);
+      // Backend route is GET /api/tips reading db.tips — collection is often
+      // unseeded in local/preview environments. We don't toast.error in that
+      // case; the empty state below handles it gracefully.
+      setTips(Array.isArray(data) ? data : []);
     } catch (error) {
-      toast.error('Failed to load tips');
+      // TODO(backend): seed db.tips with reading/listening/writing/speaking
+      // entries so this page is useful. Until then we soft-fail to the
+      // "coming soon" empty state instead of erroring out the whole page.
+      console.warn('TipsPage: getTips() failed, showing empty state', error);
+      setTips([]);
     } finally {
       setLoading(false);
     }
@@ -105,7 +112,15 @@ export default function TipsPage({ user, onLogout }) {
           </div>
         ) : (
           <Card className="p-12 text-center">
-            <p className="text-gray-600">No tips available for this category</p>
+            <div className="max-w-md mx-auto">
+              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-sky-100 to-cyan-100 flex items-center justify-center mx-auto mb-4">
+                <Trophy className="w-7 h-7 text-sky-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-1">Tips are coming soon</h3>
+              <p className="text-sm text-gray-600">
+                Liz is curating per-skill strategies for {selectedCategory === 'all' ? 'every section' : selectedCategory}. Check back shortly — meanwhile her live feedback inside any course already covers the same ground.
+              </p>
+            </div>
           </Card>
         )}
       </div>

@@ -67,7 +67,7 @@ function SpeakingPremiumLocked({ user, onUpgrade }) {
             </div>
             <div className="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur px-3 py-1 text-[12px] font-medium">
               <Sparkles className="w-3.5 h-3.5" />
-              Liz Live · Gemini 2.5
+              Liz Live · ElevenLabs
             </div>
             <h1
               className="mt-4 text-[28px] sm:text-[34px] leading-tight font-semibold tracking-tight"

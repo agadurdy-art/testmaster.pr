@@ -357,7 +357,7 @@ export default function Dashboard({ user, onLogout }) {
           
           <nav className="flex items-center space-x-2">
             <ThemeToggle />
-            <LanguageSwitcher compact />
+            <LanguageSwitcher iconOnly />
             <div className="hidden md:flex items-center space-x-1">
               <Button variant="ghost" onClick={() => navigate('/progress')} className={`${textSecondary} hover:text-violet-600 ${isDark ? 'hover:bg-violet-900/30' : 'hover:bg-violet-50'}`}>
                 <BarChart3 className="w-4 h-4 mr-2" />{getText('Progress', 'Tiến độ', 'İlerleme')}
@@ -371,7 +371,7 @@ export default function Dashboard({ user, onLogout }) {
                 <Mail className="w-4 h-4 mr-2" />{getText('Contact', 'Liên hệ', 'İletişim')}
               </Button>
               <Button variant="ghost" onClick={() => navigate('/profile')} className={`${textSecondary} hover:text-violet-600 ${isDark ? 'hover:bg-violet-900/30' : 'hover:bg-violet-50'}`}>
-                <User className="w-4 h-4 mr-2" />{user.name}
+                <User className="w-4 h-4 mr-2" /><span data-lang-sample>{user.name}</span>
               </Button>
               <Button variant="ghost" onClick={onLogout} className={`text-red-500 hover:text-red-600 ${isDark ? 'hover:bg-red-900/30' : 'hover:bg-red-50'}`}>
                 <LogOut className="w-4 h-4 mr-2" />{t('navLogout')}
@@ -444,7 +444,7 @@ export default function Dashboard({ user, onLogout }) {
         
         {/* Welcome + Continue Section — personalized from onboarding */}
         <div className="mb-6">
-          <h1 className={`text-2xl sm:text-3xl font-bold ${textPrimary} mb-1`}>
+          <h1 className={`text-2xl sm:text-3xl font-bold ${textPrimary} mb-1`} data-lang-sample>
             {getText(
               `Welcome back, ${userDetails?.name?.split(' ')[0] || user.name?.split(' ')[0] || 'Student'}!`,
               `Chào mừng trở lại, ${userDetails?.name?.split(' ')[0] || user.name?.split(' ')[0] || 'Học viên'}!`,

@@ -14,8 +14,14 @@ import uuid
 
 router = APIRouter(prefix="/api/recordings", tags=["recordings"])
 
-# Directory for user recordings
-RECORDINGS_DIR = Path("/app/backend/static/audio/user_recordings")
+# Directory for user recordings. Resolve relative to this file so the router
+# boots in any environment (Emergent pod = /app/backend, local dev =
+# /private/tmp/.../backend) without import-time mkdir failures.
+_BACKEND_DIR = Path(__file__).resolve().parent.parent
+RECORDINGS_DIR = Path(os.environ.get(
+    "USER_RECORDINGS_DIR",
+    str(_BACKEND_DIR / "static/audio/user_recordings"),
+))
 RECORDINGS_DIR.mkdir(parents=True, exist_ok=True)
 
 class RecordingMetadata(BaseModel):

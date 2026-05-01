@@ -11,7 +11,7 @@ from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Optional, Dict, Any, Union
 import uuid
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone, timedelta, time
 import hashlib
 import bcrypt
 import hmac
@@ -495,6 +495,13 @@ try:
     print("✅ Recordings routes loaded")
 except Exception as e:
     print(f"⚠️  Could not load Recordings routes: {e}")
+
+# Study-time tracking (heartbeat + summary for the dashboard StreakDial)
+try:
+    from routes.study_time import router as study_time_router
+    app.include_router(study_time_router)
+except Exception as e:
+    print(f"⚠️  Could not load Study Time routes: {e}")
 
 # Audio streaming routes
 try:
@@ -2328,6 +2335,23 @@ async def get_dashboard_summary(user_id: str):
             "href": NEW_USER_TASK["mock_section_href"],
         }
 
+    # --- Weekly study time (Monday 00:00 UTC → now) ---
+    # Source = study_time_intervals (heartbeat-tracked active time across the
+    # whole site), not just test attempts. The dial used to read 0h 0m for
+    # everyone because we only summed completed-test durations.
+    week_start = datetime.combine(
+        today - timedelta(days=today.weekday()), time.min, tzinfo=timezone.utc
+    )
+    week_seconds = 0
+    async for row in db.study_time_intervals.aggregate(
+        [
+            {"$match": {"user_id": user_id, "ts": {"$gte": week_start, "$lte": now}}},
+            {"$group": {"_id": None, "total": {"$sum": "$seconds"}}},
+        ]
+    ):
+        week_seconds = int(row.get("total", 0))
+    total_study_minutes_week = week_seconds // 60
+
     # --- Days to exam ---
     exam_date = user.get("exam_date")
     days_remaining = None
@@ -2354,6 +2378,7 @@ async def get_dashboard_summary(user_id: str):
         "weakest_skill": weakest_skill,
         "streak": streak_iso,
         "recent_sessions": recent_sessions,
+        "total_study_minutes_week": total_study_minutes_week,
         "today_task": today_block,
         "liz_message": liz_message,
         "mock_recommendation": mock_recommendation,

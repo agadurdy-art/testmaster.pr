@@ -131,13 +131,29 @@ export default function AdvancedMasteryCourse({ user }) {
         }
         setSelectedModule(targetModule);
         setView('module-detail');
-        if (focusFromUrl === 'vocabulary') {
-          setCurrentSection('vocabulary');
-          // Scroll after render so the vocabulary card is centred without the header overlap.
-          setTimeout(() => {
-            document.getElementById('vocabulary-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 250);
+        // Deep-link focus: vocabulary | writing | reading | listening | speaking | grammar
+        const validFocus = ['vocabulary', 'writing', 'reading', 'listening', 'speaking', 'grammar'];
+        if (validFocus.includes(focusFromUrl)) {
+          setCurrentSection(focusFromUrl);
+          // Scroll after render so the section card is centred without the header overlap.
+          // Two scrolls — first at 250ms (fast renders), second at 700ms (slower
+          // hydration when section data resolves from network). Section ID
+          // convention: `${focus}-section` (only `vocabulary-section` exists today;
+          // others will scroll-to-top fallback if missing, which is fine since
+          // setCurrentSection already swaps the rendered card).
+          const scrollToSection = () => {
+            const el = document.getElementById(`${focusFromUrl}-section`);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          };
+          setTimeout(scrollToSection, 250);
+          setTimeout(scrollToSection, 700);
         }
+      } else {
+        // Theme N from /vocabulary deep-linked here but no matching module came
+        // back from /api/advanced-mastery/modules — usually means the local
+        // backend hasn't seeded that theme. Tell the user instead of silently
+        // landing them on the module list with no explanation.
+        toast.info(`Lesson ${lessonIdFromUrl} isn't available yet — pick a theme from the list below.`);
       }
     }
   }, [lessonIdFromUrl, focusFromUrl, modules]);
@@ -1018,7 +1034,7 @@ export default function AdvancedMasteryCourse({ user }) {
 
   // Render grammar section
   const renderGrammar = () => (
-    <Card className="p-6 bg-white border-0 shadow-lg">
+    <Card id="grammar-section" className="p-6 bg-white border-0 shadow-lg scroll-mt-24">
       <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
         <Brain className="w-5 h-5 text-purple-600" /> {selectedModule.grammar?.title}
       </h3>
@@ -1183,7 +1199,7 @@ export default function AdvancedMasteryCourse({ user }) {
 
   // Render reading section with Dual-Track Support
   const renderReading = () => (
-    <Card className="p-6 bg-white border-0 shadow-lg">
+    <Card id="reading-section" className="p-6 bg-white border-0 shadow-lg scroll-mt-24">
       <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
         <Target className="w-5 h-5 text-blue-600" /> Advanced Reading
       </h3>
@@ -1438,7 +1454,7 @@ export default function AdvancedMasteryCourse({ user }) {
 
   // Render speaking section
   const renderSpeaking = () => (
-    <Card className="p-6 bg-white border-0 shadow-lg">
+    <Card id="speaking-section" className="p-6 bg-white border-0 shadow-lg scroll-mt-24">
       <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
         <Mic className="w-5 h-5 text-emerald-600" /> Speaking Practice
       </h3>
@@ -1715,7 +1731,7 @@ export default function AdvancedMasteryCourse({ user }) {
 
   // Render writing section
   const renderWriting = () => (
-    <Card className="p-6 bg-white border-0 shadow-lg">
+    <Card id="writing-section" className="p-6 bg-white border-0 shadow-lg scroll-mt-24">
       <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
         <PenTool className="w-5 h-5 text-orange-600" /> Advanced Writing
       </h3>
@@ -2059,7 +2075,7 @@ export default function AdvancedMasteryCourse({ user }) {
     
     if (!listening) {
       return (
-        <Card className={`p-6 ${bgCard} border-0 shadow-lg`}>
+        <Card id="listening-section" className={`p-6 ${bgCard} border-0 shadow-lg scroll-mt-24`}>
           <h3 className={`text-xl font-bold ${textPrimary} mb-4 flex items-center gap-2`}>
             <Headphones className="w-5 h-5 text-purple-600" /> Academic Listening
           </h3>
@@ -2091,7 +2107,7 @@ export default function AdvancedMasteryCourse({ user }) {
     }
     
     return (
-      <Card className={`p-6 ${bgCard} border-0 shadow-lg`}>
+      <Card id="listening-section" className={`p-6 ${bgCard} border-0 shadow-lg scroll-mt-24`}>
         <h3 className={`text-xl font-bold ${textPrimary} mb-4 flex items-center gap-2`}>
           <Headphones className="w-5 h-5 text-purple-600" /> {listening.title || 'Academic Listening'}
         </h3>
