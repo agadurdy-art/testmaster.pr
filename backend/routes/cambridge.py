@@ -441,9 +441,13 @@ async def evaluate_cambridge_full_test(
     Returns: skill_breakdown, teacher_feedback, recommended_lessons
     Matches the existing QB Results page format
     """
-    if not EMERGENT_LLM_KEY:
-        raise HTTPException(status_code=500, detail="Evaluation service not configured")
-    
+    # LLM is OPTIONAL: deterministic scoring + per-question results
+    # (drilldown data) all work without it. Only `teacher_feedback`
+    # depends on the LLM. Without a key we still return scores +
+    # question_results so the frontend renders the full drilldown
+    # instead of falling back to a basic-only path that hides it.
+    llm_available = bool(EMERGENT_LLM_KEY)
+
     try:
         from services.llm_compat import LlmChat, UserMessage
         
@@ -522,21 +526,34 @@ Generate personalized feedback in JSON format:
 
 Be specific, constructive, and mention actual question types by name."""
 
-        chat = LlmChat(
-            api_key=EMERGENT_LLM_KEY,
-            session_id=str(uuid.uuid4()),
-            system_message="You are an IELTS teacher. Respond only with valid JSON."
-        )
-        
-        feedback_response = await chat.send_message(user_message=UserMessage(text=feedback_prompt))
-        
-        response_text = str(feedback_response)
-        if "```json" in response_text:
-            response_text = response_text.split("```json")[1].split("```")[0]
-        elif "```" in response_text:
-            response_text = response_text.split("```")[1].split("```")[0]
-        
-        teacher_feedback = json.loads(response_text.strip())
+        teacher_feedback: Dict[str, str]
+        if llm_available:
+            try:
+                chat = LlmChat(
+                    api_key=EMERGENT_LLM_KEY,
+                    session_id=str(uuid.uuid4()),
+                    system_message="You are an IELTS teacher. Respond only with valid JSON."
+                )
+                feedback_response = await chat.send_message(user_message=UserMessage(text=feedback_prompt))
+                response_text = str(feedback_response)
+                if "```json" in response_text:
+                    response_text = response_text.split("```json")[1].split("```")[0]
+                elif "```" in response_text:
+                    response_text = response_text.split("```")[1].split("```")[0]
+                teacher_feedback = json.loads(response_text.strip())
+            except Exception as llm_exc:
+                # LLM failure shouldn't break the whole evaluation — fall back
+                # to a deterministic short summary so the page still renders.
+                print(f"Cambridge teacher_feedback LLM failed (non-fatal): {llm_exc}")
+                teacher_feedback = _stub_teacher_feedback(
+                    listening_results, reading_results, weak_summary, strong_summary,
+                )
+        else:
+            # No LLM key configured — return a deterministic short summary
+            # built from the same numbers the LLM would have seen.
+            teacher_feedback = _stub_teacher_feedback(
+                listening_results, reading_results, weak_summary, strong_summary,
+            )
         
         # ============ RECOMMENDED LESSONS ============
         recommended_lessons = generate_lesson_recommendations(skill_breakdown, "academic")
@@ -750,6 +767,34 @@ def _get_passage_texts(section_data: dict) -> dict:
         pnum = passage.get("passage_number", 1)
         texts[pnum] = passage.get("passage_text", "") or passage.get("text", "") or ""
     return texts
+
+
+def _stub_teacher_feedback(
+    listening_results: Dict,
+    reading_results: Dict,
+    weak_summary: str,
+    strong_summary: str,
+) -> Dict[str, str]:
+    """Deterministic teacher_feedback stub used when the LLM key is missing
+    or the call fails. Same shape as the LLM JSON response so the frontend
+    template renders unchanged."""
+    l_pct = listening_results.get("percentage", 0)
+    r_pct = reading_results.get("percentage", 0)
+    short = (
+        f"Listening {listening_results.get('correct', 0)}/"
+        f"{listening_results.get('total', 0)} ({l_pct:.0f}%) and "
+        f"Reading {reading_results.get('correct', 0)}/"
+        f"{reading_results.get('total', 0)} ({r_pct:.0f}%). "
+        f"Strong: {strong_summary}. Focus next on: {weak_summary}."
+    )
+    detailed = (
+        "Review every wrong item with the explanation and skill tip below. "
+        f"The drilldown lists each question, your answer, the correct answer, "
+        f"and the reason category — start with items tagged as the easiest "
+        f"to fix. Spend the next session on {weak_summary} specifically. "
+        "Re-test on a fresh set to verify the gain holds on unfamiliar material."
+    )
+    return {"short": short, "detailed": detailed}
 
 
 def calculate_section_results(section: str, user_answers: Dict, correct_answers: Dict, test_data: Dict) -> Dict:
