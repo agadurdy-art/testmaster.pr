@@ -365,6 +365,25 @@ async def evaluate(
         book_id=book_id,
         test_id=test_id,
     )
+    # Mirror to test_attempts so Progress page + Liz see speaking practice.
+    try:
+        from server import persist_attempt as _persist_test_attempt
+        _scores = (result_dump or {}).get("scores") or {}
+        _band = float(_scores.get("overall") or 0.0)
+        await _persist_test_attempt(
+            user_id=user_id,
+            test_id=test_id or f"speaking_{req.part.value}_{question_id or set_id or 'practice'}",
+            test_type="speaking",
+            band_score=_band,
+            feedback={
+                "source": "speaking_unified",
+                "context": context,
+                "part": req.part.value,
+                "scores": _scores,
+            },
+        )
+    except Exception as _e:
+        logger.warning("persist_attempt mirror skipped (speaking /evaluate): %s", _e)
     await record_speaking_eval(db, user, decision)
     await speaking_idempotency.store(
         db,
@@ -826,6 +845,24 @@ async def evaluate_fulltest(
         decision=decision,
         test_id=test_id,
     )
+    # Mirror to test_attempts so Progress + Liz see the holistic full test.
+    try:
+        from server import persist_attempt as _persist_test_attempt
+        _scores = (result_dump or {}).get("scores") or {}
+        _band = float(_scores.get("overall") or 0.0)
+        await _persist_test_attempt(
+            user_id=user_id,
+            test_id=test_id or "speaking_full_test",
+            test_type="speaking",
+            band_score=_band,
+            feedback={
+                "source": "speaking_fulltest",
+                "scores": _scores,
+                "target_band": req.target_band,
+            },
+        )
+    except Exception as _e:
+        logger.warning("persist_attempt mirror skipped (speaking fulltest): %s", _e)
     await record_speaking_eval(db, user, decision)
     await speaking_idempotency.store(
         db,

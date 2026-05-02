@@ -163,6 +163,7 @@ async def evaluate_reading_answers(
     module_id: str = Body(...),
     responses: List[Dict[str, Any]] = Body(...),
     band_range: Optional[str] = Body(None),
+    user_id: Optional[str] = Body(None),
 ):
     """
     Evaluate reading answers server-side and return a feedback bundle
@@ -241,8 +242,19 @@ async def evaluate_reading_answers(
             # Prefer the curated per-question explanation when present;
             # fall back to the generic cambridge generator.
             if not detail["explanation"]:
-                detail["explanation"] = cambridge_generate_explanation(q_type, correct_answer, is_correct)
-            detail["skill_tip"] = get_skill_tip("reading", q_type, 1 if is_correct else 0)
+                detail["explanation"] = cambridge_generate_explanation(
+                    q_type, correct_answer, is_correct,
+                    user_answer=user_answer,
+                    question_text=detail["question_text"],
+                    reason_code=detail["reason_code"],
+                )
+            detail["skill_tip"] = get_skill_tip(
+                "reading", q_type, 1 if is_correct else 0,
+                question_text=detail["question_text"],
+                correct_ans=correct_answer,
+                user_answer=user_answer,
+                reason_code=detail["reason_code"],
+            )
 
         if not is_correct:
             mistakes.append({
@@ -303,6 +315,26 @@ async def evaluate_reading_answers(
     except Exception as exc:  # pragma: no cover
         logger.warning("Sonnet QB advisor failed for reading: %s", exc)
 
+    # Persist to test_attempts so Progress page + Liz see this attempt.
+    try:
+        from server import persist_attempt
+        await persist_attempt(
+            user_id=user_id,
+            test_id=f"qb_reading_{module_id}",
+            test_type="reading",
+            band_score=float(estimated_band or 0.0),
+            score=float(round(percentage, 1)),
+            feedback={
+                "source": "reading_qb",
+                "module_id": module_id,
+                "correct": correct,
+                "total": total,
+                "weak_skills": weak_skills,
+            },
+        )
+    except Exception as _e:
+        logger.warning("persist_attempt skipped (reading_qb): %s", _e)
+
     return {
         "success": True,
         "skill": "reading",
@@ -326,25 +358,11 @@ async def evaluate_reading_answers(
 # ---------- Helpers (private) ----------
 
 def _fallback_reading_band(percentage: float) -> float:
-    """Percentage→band fallback when cambridge helpers cannot be imported.
-    Calibrated to roughly match calculate_band_from_percentage."""
-    if percentage >= 90:
-        return 8.5
-    if percentage >= 80:
-        return 8.0
-    if percentage >= 70:
-        return 7.0
-    if percentage >= 60:
-        return 6.5
-    if percentage >= 50:
-        return 6.0
-    if percentage >= 40:
-        return 5.5
-    if percentage >= 30:
-        return 5.0
-    if percentage >= 20:
-        return 4.5
-    return 4.0
+    """Routes through the official IELTS Academic Reading raw-score table
+    (services.ielts_band_tables). Kept as a thin wrapper so callers that
+    import `_fallback_reading_band` directly still work."""
+    from services.ielts_band_tables import band_for_reading_pct
+    return band_for_reading_pct(percentage, "academic")
 
 
 def _identify_weak_skills(results: List[Dict[str, Any]]) -> List[str]:

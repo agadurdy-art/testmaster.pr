@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { 
   CheckCircle, XCircle, ArrowLeft, BookOpen, Headphones, PenTool, Mic,
-  TrendingUp, Award, Target, BarChart3, ChevronDown, ChevronUp, Lightbulb,
-  BookMarked, GraduationCap, RefreshCw, MapPin, Eye, FileText, Home, ChevronRight,
-  AlertTriangle, Zap, Info, Activity, Dumbbell, MessageCircle, Loader2
+  TrendingUp, Award, Target, BarChart3, Lightbulb,
+  BookMarked, GraduationCap, RefreshCw, MapPin, Eye, Home, ChevronRight,
+  AlertTriangle, Zap, Info, Activity, Dumbbell, MessageCircle, Loader2, X
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { getRecommendedLessonPath } from '../lib/recommendationRouting';
@@ -16,19 +16,39 @@ import {
   adaptSpeakingResult,
   LegacySpeakingDetailDrawer,
 } from '../features/speaking';
+import { ReadingListeningDrilldown } from '../features/results';
 import '../features/speaking/speaking.css';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
+
+// Read the current user.id from localStorage (matches FullTestInterface /
+// CambridgeTestInterface pattern). Returns null when nobody is logged in
+// — backend persist_attempt() skips silently in that case.
+const _getUserId = () => {
+  try { return JSON.parse(localStorage.getItem('user'))?.id || null; } catch { return null; }
+};
+
+// iOS 26 design tokens — same vocabulary as D9 Question Bank so this page
+// feels like the same surface, not a different one.
+const T = {
+  brand: '160 84% 39%',
+  brandDark: '160 84% 28%',
+  ink: '220 25% 12%',
+  muted: '220 10% 45%',
+  fainter: '220 10% 65%',
+  surface: '0 0% 100%',
+  border: '220 15% 90%',
+};
 
 export default function CambridgeTestResults() {
   const { bookId, testId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [loading, setLoading] = useState(true);
   const [evaluating, setEvaluating] = useState(false);
   const [results, setResults] = useState(null);
-  const [expandedSection, setExpandedSection] = useState(null);
   const [writingViewTab, setWritingViewTab] = useState('feedback');
   
   // AI Feedback state
@@ -39,6 +59,11 @@ export default function CambridgeTestResults() {
   const [fastestGain, setFastestGain] = useState([]);
   const [integrityWarnings, setIntegrityWarnings] = useState([]);
   const [showBandTooltip, setShowBandTooltip] = useState(null);
+  // Holistic insight cards (Root Cause, Why You Lost Marks, Fastest Gain,
+  // Personal Feedback, Recommended Lessons, Study Roadmap) collapse to a
+  // tile grid; clicking a tile opens the full card content in a slide-in
+  // drawer. Keeps the Overview tab scannable instead of overwhelming.
+  const [openInsight, setOpenInsight] = useState(null);
   const [reasonSummary, setReasonSummary] = useState({});
   const [rootCauseAnalysis, setRootCauseAnalysis] = useState([]);
   const [studyPlan, setStudyPlan] = useState(null);
@@ -73,15 +98,24 @@ export default function CambridgeTestResults() {
     
     try {
       // Call the comprehensive evaluation endpoint
+      // When `mode === 'skill'` we send the skill filter so the backend
+      // short-circuits the other section entirely (no useless scoring,
+      // no spurious "all unanswered" integrity warning for the section
+      // the user never attempted).
+      const requestBody = {
+        book_id: bookId,
+        test_id: testId,
+        answers: answers,
+        user_plan: 'free',
+        user_id: _getUserId(),
+      };
+      if (mode === 'skill' && (skill === 'reading' || skill === 'listening')) {
+        requestBody.skill = skill;
+      }
       const res = await fetch(`${API_URL}/api/cambridge/evaluate/full-test`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          book_id: bookId,
-          test_id: testId,
-          answers: answers,
-          user_plan: 'free'
-        })
+        body: JSON.stringify(requestBody)
       });
       
       const data = await res.json();
@@ -489,7 +523,8 @@ export default function CambridgeTestResults() {
             book_id: bookId,
             test_id: testId,
             task_number: 1,
-            response: task1Response
+            response: task1Response,
+            user_id: _getUserId(),
           })
         });
         const data1 = await res1.json();
@@ -516,7 +551,8 @@ export default function CambridgeTestResults() {
             book_id: bookId,
             test_id: testId,
             task_number: 2,
-            response: task2Response
+            response: task2Response,
+            user_id: _getUserId(),
           })
         });
         const data2 = await res2.json();
@@ -599,6 +635,31 @@ export default function CambridgeTestResults() {
   // Calculate strengths and weaknesses from skill breakdown
   const strengths = skillBreakdown.filter(s => s.total > 0 && (s.correct / s.total) >= 0.7);
   const weaknesses = skillBreakdown.filter(s => s.total > 0 && (s.correct / s.total) < 0.5);
+
+  // Reading/Listening-only mode hides Writing + Speaking sections entirely.
+  // The user only attempted R/L, so the Writing/Speaking pending cards are
+  // pure noise. Full Test (mode === 'full') still shows everything.
+  const rlOnly = mode === 'skill' && (skill === 'reading' || skill === 'listening');
+
+  // SceneBar tab state.
+  // - Full mode: 5 tabs (overview default + reading/listening/writing/speaking).
+  //   Tab persisted in URL `?tab=` so refresh + bookmark survives.
+  // - Skill-only mode (rlOnly): no SceneBar; the page renders that one
+  //   skill's detail directly. activeTab is forced to the skill name so
+  //   the per-skill render branches still match.
+  const fullMode = mode !== 'skill';
+  const requestedTab = searchParams.get('tab');
+  const validTabs = ['overview', 'reading', 'listening', 'writing', 'speaking'];
+  const activeTab = rlOnly
+    ? skill
+    : (fullMode && validTabs.includes(requestedTab))
+      ? requestedTab
+      : (fullMode ? 'overview' : skill);
+  const setActiveTab = (t) => {
+    const next = new URLSearchParams(searchParams);
+    next.set('tab', t);
+    setSearchParams(next, { replace: true });
+  };
 
   // Skill-mode speaking only — render the D7 SpeakingResultsState alone,
   // no listening/reading/writing cards, no full-test header.
@@ -699,117 +760,468 @@ export default function CambridgeTestResults() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-violet-50/30 to-gray-100 py-8 px-4 sm:px-6">
-      <div className="max-w-4xl mx-auto">
-        <Button variant="ghost" onClick={() => navigate('/question-bank')} className="mb-6 text-gray-600 hover:text-violet-600">
-          <ArrowLeft className="w-4 h-4 mr-2" /> Back to Question Bank
-        </Button>
+    <div className="min-h-screen" style={{
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 25%, #8b5cf6 50%, #a855f7 75%, #c084fc 100%)',
+      animation: 'gradientShift 20s ease infinite',
+    }}>
+      <style jsx>{`
+        @keyframes gradientShift {
+          0%, 100% { background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #8b5cf6 50%, #a855f7 75%, #c084fc 100%); }
+          25% { background: linear-gradient(135deg, #764ba2 0%, #8b5cf6 25%, #a855f7 50%, #c084fc 75%, #e879f9 100%); }
+          50% { background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 25%, #c084fc 50%, #e879f9 75%, #fbbf24 100%); }
+          75% { background: linear-gradient(135deg, #a855f7 0%, #c084fc 25%, #e879f9 50%, #fbbf24 75%, #667eea 100%); }
+        }
+      `}</style>
+      <div className="relative">
+        <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 py-8">
+          <button
+            onClick={() => navigate('/question-bank')}
+            className="mb-6 flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-md rounded-xl border border-white/30 text-white hover:bg-white/30 transition-all duration-300 hover:scale-105"
+          >
+            <ArrowLeft className="w-4 h-4" /> Back to Question Bank
+          </button>
 
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className={`w-24 h-24 mx-auto mb-6 rounded-3xl ${getBandBgClass(results?.overall || 5)} flex items-center justify-center shadow-2xl`}>
-            <Award className="w-12 h-12 text-white" />
+        {/* Hero Section - Glassmorphism Design */}
+        <div
+          className="relative mb-6 p-8 rounded-3xl border border-white/20 overflow-hidden"
+          style={{
+            background: 'rgba(255, 255, 255, 0.15)',
+            backdropFilter: 'blur(20px)',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+          }}
+        >
+          {/* Animated background patterns */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute -top-4 -right-4 w-24 h-24 bg-white/10 rounded-full animate-pulse"></div>
+            <div className="absolute top-1/3 -left-8 w-16 h-16 bg-purple-300/20 rounded-full animate-bounce"></div>
+            <div className="absolute bottom-4 right-1/4 w-12 h-12 bg-blue-300/20 rounded-full animate-ping"></div>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Test Complete!</h1>
-          <p className="text-xl text-gray-500">{testData.title || `Cambridge IELTS ${bookId?.toUpperCase()} - ${testId}`}</p>
-        </div>
 
-        {/* Main Score Card */}
-        <Card className="p-8 mb-6 bg-white border-0 shadow-lg rounded-2xl text-center">
-          <p className="text-gray-500 mb-2 text-lg">Your Estimated Band Score</p>
-          <p className={`text-8xl font-bold mb-4 ${getBandColorClass(results?.overall || 5)}`}>{results?.overall || '-'}</p>
-          
-          {/* Band Calculation Tooltip */}
-          <div className="mb-6">
-            <button 
-              data-testid="band-transparency-toggle"
-              onClick={() => setShowBandTooltip(!showBandTooltip)} 
-              className="text-sm text-gray-400 hover:text-violet-600 transition-colors flex items-center gap-1 mx-auto"
-            >
-              <Info className="w-3.5 h-3.5" /> How is this calculated?
-            </button>
-            {showBandTooltip && (
-              <div data-testid="band-calculation-breakdown" className="mt-3 mx-auto max-w-md bg-gray-50 rounded-xl p-4 text-left border">
-                <h4 className="font-semibold text-gray-800 text-sm mb-3">Band Score Mapping</h4>
-                <div className="space-y-2 text-sm">
-                  {results?.listening && (
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-600 flex items-center gap-1.5"><Headphones className="w-3.5 h-3.5 text-blue-500" /> Listening</span>
-                      <span className="text-gray-800">{results.listening.correct}/{results.listening.total} ({Math.round(results.listening.percentage)}%) <span className="font-bold text-blue-600 ml-1">= Band {results.listening.band}</span></span>
-                    </div>
-                  )}
-                  {results?.reading && (
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-600 flex items-center gap-1.5"><BookOpen className="w-3.5 h-3.5 text-green-500" /> Reading</span>
-                      <span className="text-gray-800">{results.reading.correct}/{results.reading.total} ({Math.round(results.reading.percentage)}%) <span className="font-bold text-green-600 ml-1">= Band {results.reading.band}</span></span>
-                    </div>
-                  )}
-                  {results?.writing?.evaluated && results.writing.score && (
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-600 flex items-center gap-1.5"><PenTool className="w-3.5 h-3.5 text-purple-500" /> Writing</span>
-                      <span className="font-bold text-purple-600">Band {results.writing.score}</span>
-                    </div>
-                  )}
-                  <div className="pt-2 mt-2 border-t border-gray-200 flex justify-between items-center">
-                    <span className="text-gray-800 font-medium">Overall (average, rounded to nearest 0.5)</span>
-                    <span className={`font-bold text-lg ${getBandColorClass(results?.overall || 5)}`}>Band {results?.overall}</span>
+          <div className="relative z-10">
+            {/* Header */}
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold text-white mb-2">Your IELTS Results</h1>
+              <p className="text-white/80">{testData.title || `Cambridge IELTS ${bookId?.toUpperCase()} - ${testId}`}</p>
+            </div>
+
+            {/* Band Score Showcase */}
+            <div className="flex justify-center mb-8">
+              <div className="relative">
+                <div
+                  className="w-32 h-32 rounded-full flex items-center justify-center"
+                  style={{
+                    background: results?.overall >= 7 ? 'linear-gradient(135deg, #10b981, #059669)' :
+                               results?.overall >= 6 ? 'linear-gradient(135deg, #3b82f6, #1d4ed8)' :
+                               results?.overall >= 5 ? 'linear-gradient(135deg, #f59e0b, #d97706)' :
+                               'linear-gradient(135deg, #ef4444, #dc2626)',
+                    boxShadow: '0 0 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2)',
+                    animation: 'glow 3s ease-in-out infinite alternate'
+                  }}
+                >
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-white">{results?.overall || '-'}</div>
+                    <div className="text-sm text-white/90 font-medium">BAND SCORE</div>
                   </div>
                 </div>
-                <p className="text-xs text-gray-400 mt-3">Based on official IELTS band descriptors and raw score conversion tables.</p>
-              </div>
-            )}
-          </div>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-gray-100">
-            {[
-              { label: 'Listening', band: results?.listening?.band, pct: results?.listening?.percentage, icon: Headphones, color: 'blue', correct: results?.listening?.correct, total: results?.listening?.total },
-              { label: 'Reading', band: results?.reading?.band, pct: results?.reading?.percentage, icon: BookOpen, color: 'green', correct: results?.reading?.correct, total: results?.reading?.total },
-              { label: 'Writing', band: results?.writing?.score, pct: null, icon: PenTool, color: 'purple' },
-              { label: 'Speaking', band: results?.speaking?.score, pct: null, icon: Mic, color: 'orange' },
-            ].map(s => {
-              const Icon = s.icon;
-              return (
-                <div key={s.label} className={`p-3 rounded-xl bg-${s.color}-50/50 border border-${s.color}-100`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className={`w-8 h-8 rounded-lg bg-${s.color}-500 flex items-center justify-center`}>
-                      <Icon className="w-4 h-4 text-white" />
-                    </div>
-                    <span className="text-xs font-medium text-gray-500">{s.label}</span>
-                  </div>
-                  <p className={`text-2xl font-bold ${getBandColorClass(s.band || 0)}`}>{s.band || '-'}</p>
-                  {s.pct != null && (
-                    <div className="mt-1.5">
-                      <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
-                        <div className={`h-full bg-${s.color}-500 rounded-full transition-all duration-700`} style={{width: `${Math.round(s.pct)}%`}} />
-                      </div>
-                      <p className="text-[10px] text-gray-400 mt-0.5">{s.correct}/{s.total} correct</p>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </Card>
-
-        {/* Integrity Warnings */}
-        {integrityWarnings.length > 0 && (
-          <Card data-testid="integrity-warnings" className="p-4 mb-6 bg-amber-50 border border-amber-200 rounded-2xl">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
-              <div>
-                <h3 className="font-semibold text-amber-800 text-sm">Submission Integrity</h3>
-                <div className="mt-1 space-y-1">
-                  {integrityWarnings.map((w, idx) => (
-                    <p key={idx} className="text-sm text-amber-700">{w.message}</p>
-                  ))}
-                </div>
-                <p className="text-xs text-amber-500 mt-2">Tip: Always review unanswered questions before submitting. Even a guess is better than blank.</p>
+                <button
+                  data-testid="band-transparency-toggle"
+                  onClick={() => setShowBandTooltip(!showBandTooltip)}
+                  className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full border border-white/30 text-xs text-white hover:bg-white/30 transition-all duration-300"
+                >
+                  <Info className="w-3 h-3 inline mr-1" /> How calculated?
+                </button>
               </div>
             </div>
-          </Card>
+
+            {/* Skills Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { id: 'listening', label: 'Listening', band: results?.listening?.band, pct: results?.listening?.percentage, icon: Headphones, color: '#3b82f6', correct: results?.listening?.correct, total: results?.listening?.total },
+                { id: 'reading', label: 'Reading', band: results?.reading?.band, pct: results?.reading?.percentage, icon: BookOpen, color: '#10b981', correct: results?.reading?.correct, total: results?.reading?.total },
+                { id: 'writing', label: 'Writing', band: results?.writing?.score, pct: null, icon: PenTool, color: '#8b5cf6' },
+                { id: 'speaking', label: 'Speaking', band: results?.speaking?.score, pct: null, icon: Mic, color: '#f59e0b' },
+              ].map((s, index) => {
+                const Icon = s.icon;
+                const clickable = fullMode;
+                const isActive = activeTab === s.id;
+                const Wrapper = clickable ? 'button' : 'div';
+                return (
+                  <Wrapper
+                    key={s.label}
+                    onClick={clickable ? () => setActiveTab(s.id) : undefined}
+                    data-testid={clickable ? `hero-skill-${s.id}` : undefined}
+                    className={`relative p-4 rounded-2xl border border-white/20 backdrop-blur-md transition-all duration-500 ${
+                      clickable ? 'cursor-pointer hover:scale-105 hover:bg-white/25' : ''
+                    } ${isActive ? 'bg-white/30 scale-105' : 'bg-white/15'}`}
+                    style={{
+                      animationDelay: `${index * 100}ms`,
+                      animation: 'slideUp 600ms ease-out forwards'
+                    }}
+                  >
+                    <div className="text-center">
+                      <div
+                        className="w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center"
+                        style={{
+                          background: s.color,
+                          boxShadow: `0 4px 20px ${s.color}40`
+                        }}
+                      >
+                        <Icon className="w-6 h-6 text-white" />
+                      </div>
+                      <div className="text-white font-medium text-sm mb-1">{s.label}</div>
+                      <div className="text-2xl font-bold text-white mb-2">{s.band || '-'}</div>
+                      {s.pct != null ? (
+                        <>
+                          <div className="w-full h-2 bg-white/20 rounded-full mb-1 overflow-hidden">
+                            <div
+                              className="h-full rounded-full transition-all duration-1000 delay-500"
+                              style={{
+                                width: `${Math.round(s.pct)}%`,
+                                background: s.color
+                              }}
+                            />
+                          </div>
+                          <div className="text-xs text-white/80">{s.correct}/{s.total}</div>
+                        </>
+                      ) : (
+                        <div className="text-xs text-white/60">Not scored</div>
+                      )}
+                      {clickable && (
+                        <div className="text-xs text-white/80 mt-2 flex items-center justify-center gap-1">
+                          View Details <ChevronRight className="w-3 h-3" />
+                        </div>
+                      )}
+                    </div>
+                  </Wrapper>
+                );
+              })}
+            </div>
+          </div>
+
+          <style jsx>{`
+            @keyframes glow {
+              0%, 100% { box-shadow: 0 0 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2); }
+              50% { box-shadow: 0 0 80px rgba(0,0,0,0.4), 0 0 40px currentColor, inset 0 1px 0 rgba(255,255,255,0.3); }
+            }
+            @keyframes slideUp {
+              0% { opacity: 0; transform: translateY(20px); }
+              100% { opacity: 1; transform: translateY(0); }
+            }
+          `}</style>
+        </div>
+
+
+        {/* Band Calculation Tooltip */}
+        {showBandTooltip && (
+          <div
+            data-testid="band-calculation-breakdown"
+            className="mb-6 p-4 rounded-2xl border border-white/20"
+            style={{
+              background: 'rgba(255, 255, 255, 0.15)',
+              backdropFilter: 'blur(20px)',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+            }}
+          >
+            <h4 className="font-semibold text-white text-sm mb-3">Band Score Breakdown</h4>
+            <div className="space-y-3 text-sm">
+              {results?.listening && (
+                <div className="flex justify-between items-center p-3 bg-white/10 rounded-xl">
+                  <span className="text-white flex items-center gap-2">
+                    <Headphones className="w-4 h-4 text-blue-300" /> Listening
+                  </span>
+                  <span className="text-white">
+                    {results.listening.correct}/{results.listening.total} ({Math.round(results.listening.percentage)}%)
+                    <span className="font-bold text-blue-300 ml-2">Band {results.listening.band}</span>
+                  </span>
+                </div>
+              )}
+              {results?.reading && (
+                <div className="flex justify-between items-center p-3 bg-white/10 rounded-xl">
+                  <span className="text-white flex items-center gap-2">
+                    <BookOpen className="w-4 h-4 text-green-300" /> Reading
+                  </span>
+                  <span className="text-white">
+                    {results.reading.correct}/{results.reading.total} ({Math.round(results.reading.percentage)}%)
+                    <span className="font-bold text-green-300 ml-2">Band {results.reading.band}</span>
+                  </span>
+                </div>
+              )}
+              {results?.writing?.evaluated && results.writing.score && (
+                <div className="flex justify-between items-center p-3 bg-white/10 rounded-xl">
+                  <span className="text-white flex items-center gap-2">
+                    <PenTool className="w-4 h-4 text-purple-300" /> Writing
+                  </span>
+                  <span className="font-bold text-purple-300">Band {results.writing.score}</span>
+                </div>
+              )}
+              <div className="pt-3 mt-3 border-t border-white/20">
+                <div className="flex justify-between items-center text-white font-medium">
+                  <span>Overall Score (averaged)</span>
+                  <span className="text-xl font-bold">Band {results?.overall}</span>
+                </div>
+              </div>
+            </div>
+            <p className="text-xs text-white/70 mt-3 text-center">
+              Based on official IELTS band descriptors and scoring tables
+            </p>
+          </div>
         )}
 
-        {rootCauseAnalysis.length > 0 && (
+        {/* Navigation Tabs */}
+        {fullMode && (
+          <div className="flex justify-center mb-6">
+            <div
+              className="inline-flex gap-1 p-1 rounded-2xl border border-white/20"
+              style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                backdropFilter: 'blur(20px)',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+              }}
+            >
+              {[
+                { id: 'overview', label: 'Overview', icon: Award },
+                { id: 'reading', label: 'Reading', icon: BookOpen },
+                { id: 'listening', label: 'Listening', icon: Headphones },
+                { id: 'writing', label: 'Writing', icon: PenTool },
+                { id: 'speaking', label: 'Speaking', icon: Mic },
+              ].map((tab) => {
+                const Icon = tab.icon;
+                const selected = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    data-testid={`results-tab-${tab.id}`}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`relative px-4 py-2 rounded-xl font-medium text-sm transition-all duration-300 flex items-center gap-2 whitespace-nowrap ${
+                      selected
+                        ? 'text-purple-900 bg-white shadow-lg'
+                        : 'text-white/80 hover:text-white hover:bg-white/10'
+                    }`}
+                    style={{
+                      transform: selected ? 'translateY(-1px)' : 'translateY(0)',
+                    }}
+                  >
+                    <Icon className="w-4 h-4" strokeWidth={selected ? 2.5 : 2} />
+                    {tab.label}
+                    {selected && (
+                      <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-400/20 to-pink-400/20 animate-pulse"></div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Holistic / cross-skill analysis cards.
+            - Full mode: shown only on Overview tab.
+            - Skill-only mode (rlOnly): all this analysis IS about that one
+              skill (backend skill-gating filters scoring), so show it
+              directly on the skill page since there is no SceneBar/Overview. */}
+        {/* Integrity Warnings */}
+        {(activeTab === 'overview' || rlOnly) && integrityWarnings.length > 0 && (
+          <div
+            data-testid="integrity-warnings"
+            className="p-4 mb-6 rounded-2xl border border-orange-300/30"
+            style={{
+              background: 'linear-gradient(135deg, rgba(251, 146, 60, 0.15), rgba(245, 101, 101, 0.15))',
+              backdropFilter: 'blur(10px)',
+              boxShadow: '0 4px 20px rgba(251, 146, 60, 0.1)',
+            }}
+          >
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0">
+                <AlertTriangle className="w-4 h-4 text-white" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-white text-sm mb-2">Submission Alert</h3>
+                <div className="space-y-1 mb-3">
+                  {integrityWarnings.map((w, idx) => (
+                    <p key={idx} className="text-white/90 text-sm">{w.message}</p>
+                  ))}
+                </div>
+                <div className="p-3 bg-white/10 rounded-xl">
+                  <p className="text-xs text-white/80">
+                    💡 <strong>Pro tip:</strong> Always review unanswered questions before submitting. Even a guess is better than blank.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Holistic insights — tile grid (collapsed) + drawer (full content).
+            Aga: "su ozellikler cards icinde dursa, basinca drawer seklinde
+            acilsa. simdi bu kadar seyi okumak zor ve bogucu" — show only
+            tile summaries on Overview, full body opens in a slide-in
+            drawer when a tile is clicked. Tile is hidden when its data is
+            empty so the grid never renders empty placeholders. */}
+        {(activeTab === 'overview' || rlOnly) && (() => {
+          const allWrong = [...(questionResults.listening || []), ...(questionResults.reading || [])].filter(q => !q.is_correct);
+          const wrongCount = allWrong.length;
+          const tiles = [
+            { id: 'root_cause', label: 'Root Cause Analysis', summary: rootCauseAnalysis.length ? `${rootCauseAnalysis.length} pattern${rootCauseAnalysis.length === 1 ? '' : 's'} flagged` : null, icon: AlertTriangle, brand: 'rose', available: rootCauseAnalysis.length > 0 },
+            { id: 'why_lost', label: 'Why You Lost Marks', summary: wrongCount ? `${wrongCount} mistake${wrongCount === 1 ? '' : 's'} — tap to retry` : null, icon: AlertTriangle, brand: 'orange', available: Object.keys(reasonSummary).length > 0 },
+            { id: 'fastest_gain', label: 'Fastest Score Gain', summary: fastestGain.length ? `+${fastestGain.reduce((a, x) => a + (x.wrong_count || 0), 0)} possible across ${fastestGain.length} area${fastestGain.length === 1 ? '' : 's'}` : null, icon: Zap, brand: 'emerald', available: fastestGain.length > 0 },
+            { id: 'feedback', label: 'Your Personal Feedback', summary: teacherFeedback ? (teacherFeedback.short || 'AI analysis ready').slice(0, 90) + ((teacherFeedback.short || '').length > 90 ? '…' : '') : null, icon: MessageCircle, brand: 'blue', available: !!teacherFeedback },
+            { id: 'lessons', label: 'Recommended Lessons', summary: recommendedLessons.length ? `${recommendedLessons.length} lesson${recommendedLessons.length === 1 ? '' : 's'} for your weak areas` : null, icon: GraduationCap, brand: 'indigo', available: recommendedLessons.length > 0 },
+            { id: 'roadmap', label: 'Study Roadmap', summary: studyPlan?.roadmap_steps?.length ? `${studyPlan.roadmap_steps.length}-step path · target Band ${studyPlan.target_band}` : null, icon: MapPin, brand: 'violet', available: studyPlan?.roadmap_steps?.length > 0 },
+          ].filter(t => t.available);
+
+          if (tiles.length === 0) return null;
+
+          const brandClasses = {
+            rose:    { bg: 'bg-rose-50',    border: 'border-rose-100',    iconBg: 'bg-rose-500',    text: 'text-rose-700' },
+            orange:  { bg: 'bg-orange-50',  border: 'border-orange-100',  iconBg: 'bg-orange-500',  text: 'text-orange-700' },
+            emerald: { bg: 'bg-emerald-50', border: 'border-emerald-100', iconBg: 'bg-emerald-500', text: 'text-emerald-700' },
+            blue:    { bg: 'bg-blue-50',    border: 'border-blue-100',    iconBg: 'bg-blue-500',    text: 'text-blue-700' },
+            indigo:  { bg: 'bg-indigo-50',  border: 'border-indigo-100',  iconBg: 'bg-indigo-500',  text: 'text-indigo-700' },
+            violet:  { bg: 'bg-violet-50',  border: 'border-violet-100',  iconBg: 'bg-violet-500',  text: 'text-violet-700' },
+          };
+
+          return (
+            <div
+              data-testid="insights-tile-grid"
+              className="p-6 mb-6 rounded-2xl border border-white/20"
+              style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                backdropFilter: 'blur(20px)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className="text-lg font-bold text-white">Performance Insights</h3>
+                  <p className="text-sm text-white/70">Tap any card for detailed analysis</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {tiles.map((tile, index) => {
+                  const Icon = tile.icon;
+                  const gradientColors = {
+                    rose: 'from-rose-400 to-pink-500',
+                    orange: 'from-orange-400 to-red-500',
+                    emerald: 'from-emerald-400 to-teal-500',
+                    blue: 'from-blue-400 to-indigo-500',
+                    indigo: 'from-indigo-400 to-purple-500',
+                    violet: 'from-violet-400 to-purple-600',
+                  };
+                  const gradientClass = gradientColors[tile.brand] || gradientColors.blue;
+
+                  return (
+                    <button
+                      key={tile.id}
+                      data-testid={`insight-tile-${tile.id}`}
+                      onClick={() => setOpenInsight(tile.id)}
+                      className="group relative p-4 rounded-xl border border-white/20 backdrop-blur-md transition-all duration-500 hover:scale-105 hover:bg-white/20 text-left"
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.1)',
+                        animationDelay: `${index * 100}ms`,
+                        animation: 'fadeInUp 600ms ease-out forwards'
+                      }}
+                    >
+                      <div className="relative z-10">
+                        <div
+                          className={`w-10 h-10 rounded-xl bg-gradient-to-br ${gradientClass} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300`}
+                          style={{
+                            boxShadow: '0 4px 20px rgba(0,0,0,0.2)'
+                          }}
+                        >
+                          <Icon className="w-5 h-5 text-white" />
+                        </div>
+                        <h4 className="text-white font-semibold text-sm mb-1 group-hover:text-white transition-colors">
+                          {tile.label}
+                        </h4>
+                        {tile.summary && (
+                          <p className="text-white/70 text-xs leading-relaxed mb-2 group-hover:text-white/80 transition-colors">
+                            {tile.summary}
+                          </p>
+                        )}
+                        <div className="flex items-center text-xs text-white/60 group-hover:text-white/80 transition-colors">
+                          <span>View Details</span>
+                          <ChevronRight className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform duration-300" />
+                        </div>
+                      </div>
+
+                      {/* Hover glow effect */}
+                      <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${gradientClass} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <style jsx>{`
+                @keyframes fadeInUp {
+                  0% { opacity: 0; transform: translateY(20px); }
+                  100% { opacity: 1; transform: translateY(0); }
+                }
+              `}</style>
+            </div>
+          );
+        })()}
+
+        {/* Insight Drawer — slide-in panel that holds the full content of
+            whichever holistic card the user opened. Each card body below
+            renders only when openInsight matches its id, so they appear
+            inside this drawer instead of stacking on the page. */}
+        {openInsight && (
+          <div
+            data-testid="insight-drawer"
+            className="fixed inset-0 z-50 flex"
+            style={{
+              animation: 'fadeIn 300ms ease-out',
+            }}
+          >
+            <div
+              className="absolute inset-0 bg-black/40 backdrop-blur-md"
+              style={{
+                transition: 'opacity 300ms ease-out',
+                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)',
+              }}
+              onClick={() => setOpenInsight(null)}
+            />
+            <aside
+              className="relative ml-auto h-full w-full sm:max-w-2xl bg-gray-50 overflow-y-auto shadow-2xl rounded-l-3xl"
+              style={{
+                animation: 'slideInRight 400ms cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: '-20px 0 60px rgba(0,0,0,0.20), -10px 0 30px rgba(0,0,0,0.10)',
+                background: 'linear-gradient(135deg, rgba(249,250,251,0.98) 0%, rgba(243,244,246,0.98) 100%)',
+              }}
+            >
+              <div
+                className="sticky top-0 z-10 flex items-center justify-between px-5 py-3 backdrop-blur-xl"
+                style={{
+                  borderBottom: `1px solid hsl(${T.border})`,
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.95) 100%)',
+                  backdropFilter: 'blur(20px)',
+                  WebkitBackdropFilter: 'blur(20px)',
+                }}
+              >
+                <p className="text-sm font-semibold text-gray-700">Insight detail</p>
+                <button
+                  data-testid="insight-drawer-close"
+                  onClick={() => setOpenInsight(null)}
+                  className="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center text-gray-500 transition-all duration-200 hover:scale-105"
+                  aria-label="Close"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="p-5">
+              <style jsx>{`
+                @keyframes fadeIn {
+                  from { opacity: 0; }
+                  to { opacity: 1; }
+                }
+                @keyframes slideInRight {
+                  from { transform: translateX(100%); }
+                  to { transform: translateX(0); }
+                }
+              `}</style>
+
+        {openInsight === 'root_cause' && rootCauseAnalysis.length > 0 && (
           <Card className="p-6 mb-6 bg-gradient-to-br from-rose-50 to-orange-50 border-rose-200 rounded-2xl">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500 to-orange-500 flex items-center justify-center shadow-lg">
@@ -840,7 +1252,7 @@ export default function CambridgeTestResults() {
         )}
 
         {/* Mistake Analysis & Targeted Retry (merged) */}
-        {Object.keys(reasonSummary).length > 0 && (
+        {openInsight === 'why_lost' && Object.keys(reasonSummary).length > 0 && (
           <Card data-testid="reason-summary-card" className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center shadow-lg">
@@ -939,7 +1351,7 @@ export default function CambridgeTestResults() {
         )}
 
         {/* Fastest Score Gain Card */}
-        {fastestGain.length > 0 && (
+        {openInsight === 'fastest_gain' && fastestGain.length > 0 && (
           <Card data-testid="fastest-gain-card" className="p-6 mb-6 bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-2xl">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg">
@@ -990,8 +1402,8 @@ export default function CambridgeTestResults() {
           </Card>
         )}
 
-        {/* AI Teacher Feedback Card */}
-        {teacherFeedback && (
+        {/* AI Teacher Feedback Card — Overview's centerpiece (Liz holistic) */}
+        {openInsight === 'feedback' && teacherFeedback && (
           <Card className="p-6 mb-6 bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200 rounded-2xl">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg">
@@ -1076,7 +1488,7 @@ export default function CambridgeTestResults() {
         )}
 
         {/* Recommended Lessons Card */}
-        {recommendedLessons.length > 0 && (
+        {openInsight === 'lessons' && recommendedLessons.length > 0 && (
           <Card className="p-6 mb-6 bg-gradient-to-br from-indigo-50 to-purple-50 border-indigo-200 rounded-2xl">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg">
@@ -1117,7 +1529,7 @@ export default function CambridgeTestResults() {
           </Card>
         )}
 
-        {studyPlan?.roadmap_steps?.length > 0 && (
+        {openInsight === 'roadmap' && studyPlan?.roadmap_steps?.length > 0 && (
           <Card className="p-6 mb-6 bg-gradient-to-br from-violet-50 to-indigo-50 border-violet-200 rounded-2xl">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center shadow-lg">
@@ -1177,254 +1589,44 @@ export default function CambridgeTestResults() {
           </Card>
         )}
 
-        {/* Listening Results - Detailed with Explanations */}
-        {questionResults.listening?.length > 0 && (
-          <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
-            <div 
-              className="flex items-center justify-between cursor-pointer"
-              onClick={() => setExpandedSection(expandedSection === 'listening' ? null : 'listening')}
-            >
-              <div className="flex items-center gap-3 flex-1 min-w-0">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg flex-shrink-0">
-                  <Headphones className="w-5 h-5 text-white" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-lg font-semibold text-gray-900">Listening</h3>
-                  <div className="flex items-center gap-2 mt-0.5">
-                    <div className="h-1.5 flex-1 max-w-[120px] bg-gray-200 rounded-full overflow-hidden">
-                      <div className="h-full bg-blue-500 rounded-full" style={{width: `${Math.round(results?.listening?.percentage || 0)}%`}} />
-                    </div>
-                    <span className="text-xs text-gray-500">{results?.listening?.correct}/{results?.listening?.total}</span>
-                  </div>
-                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Badge className={`text-sm px-2.5 py-0.5 ${getBandLightBg(results?.listening?.band || 5)}`}>
-                  {results?.listening?.band || '-'}
-                </Badge>
-                {expandedSection === 'listening' ? <ChevronUp className="w-5 h-5 text-gray-400" /> : <ChevronDown className="w-5 h-5 text-gray-400" />}
-              </div>
-            </div>
-            
-            {expandedSection === 'listening' && (
-              <div className="mt-6 space-y-3 max-h-[500px] overflow-y-auto pr-2">
-                {questionResults.listening.map((q, idx) => (
-                  <div 
-                    key={idx} 
-                    className={`p-4 rounded-xl border-l-4 ${
-                      q.is_correct 
-                        ? 'bg-green-50 border-green-500' 
-                        : 'bg-red-50 border-red-500'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2 mb-2 flex-wrap">
-                      <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold ${
-                        q.is_correct ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-                      }`}>
-                        {q.question_id}
-                      </span>
-                      <span className="text-xs px-2 py-0.5 rounded bg-gray-200 text-gray-600">
-                        {q.question_type?.replace(/_/g, ' ') || 'Question'}
-                      </span>
-                      {q.is_correct ? (
-                        <CheckCircle className="w-5 h-5 text-green-600" />
-                      ) : (
-                        <XCircle className="w-5 h-5 text-red-600" />
-                      )}
-                      {q.reason_code && !q.is_correct && (
-                        <span data-testid={`reason-badge-listening-${q.question_id}`} className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                          q.reason_code === 'UNANSWERED' ? 'bg-gray-200 text-gray-700' :
-                          q.reason_code === 'TFNG_CONFUSION' || q.reason_code === 'YNNG_CONFUSION' ? 'bg-orange-100 text-orange-700' :
-                          q.reason_code === 'SPELLING_ERROR' ? 'bg-amber-100 text-amber-700' :
-                          q.reason_code === 'DISTRACTOR_TRAP' ? 'bg-rose-100 text-rose-700' :
-                          q.reason_code === 'NEAR_MISS' ? 'bg-yellow-100 text-yellow-700' :
-                          'bg-red-100 text-red-700'
-                        }`}>
-                          {q.reason_label}
-                        </span>
-                      )}
-                    </div>
-                    
-                    <div className="flex flex-wrap gap-4 text-sm mb-2">
-                      <div>
-                        <span className="text-gray-500">Your Answer: </span>
-                        <span className={`font-semibold ${q.is_correct ? 'text-green-700' : 'text-red-700'}`}>
-                          {q.user_answer || 'No answer'}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-gray-500">Correct: </span>
-                        <span className="font-semibold text-green-700">{q.correct_answer}</span>
-                      </div>
-                    </div>
-                    
-                    {/* Explanation */}
-                    {q.explanation && (
-                      <div className="mt-3 p-3 bg-blue-50 rounded-lg border-l-4 border-blue-400">
-                        <div className="flex items-start gap-2">
-                          <Lightbulb className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                          <div>
-                            <p className="text-xs font-semibold text-blue-700 mb-1">Explanation</p>
-                            <p className="text-sm text-gray-700 leading-relaxed">{q.explanation}</p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    
-                    {/* Skill Tip */}
-                    {q.skill_tip && !q.is_correct && (
-                      <div className="mt-3 p-3 bg-purple-50 rounded-lg border-l-4 border-purple-400">
-                        <div className="flex items-start gap-2">
-                          <GraduationCap className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
-                          <div>
-                            <p className="text-xs font-semibold text-purple-700 mb-1">Skill Tip</p>
-                            <p className="text-sm text-gray-700 leading-relaxed">{q.skill_tip}</p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-          </Card>
+            </aside>
+          </div>
         )}
+        {/* End insight drawer */}
 
-        {/* Reading Results - Detailed with Locate & Explain */}
-        {questionResults.reading?.length > 0 && (
-          <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
-            <div 
-              className="flex items-center justify-between cursor-pointer"
-              onClick={() => setExpandedSection(expandedSection === 'reading' ? null : 'reading')}
-            >
-              <div className="flex items-center gap-3 flex-1 min-w-0">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-lg flex-shrink-0">
-                  <BookOpen className="w-5 h-5 text-white" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-lg font-semibold text-gray-900">Reading</h3>
-                  <div className="flex items-center gap-2 mt-0.5">
-                    <div className="h-1.5 flex-1 max-w-[120px] bg-gray-200 rounded-full overflow-hidden">
-                      <div className="h-full bg-green-500 rounded-full" style={{width: `${Math.round(results?.reading?.percentage || 0)}%`}} />
-                    </div>
-                    <span className="text-xs text-gray-500">{results?.reading?.correct}/{results?.reading?.total}</span>
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Badge className={`text-sm px-2.5 py-0.5 ${getBandLightBg(results?.reading?.band || 5)}`}>
-                  {results?.reading?.band || '-'}
-                </Badge>
-                {expandedSection === 'reading' ? <ChevronUp className="w-5 h-5 text-gray-400" /> : <ChevronDown className="w-5 h-5 text-gray-400" />}
-              </div>
-            </div>
-            
-            {expandedSection === 'reading' && (
-              <div className="mt-6 space-y-3 max-h-[500px] overflow-y-auto pr-2">
-                {questionResults.reading.map((q, idx) => (
-                  <div 
-                    key={idx} 
-                    className={`p-4 rounded-xl border-l-4 ${
-                      q.is_correct 
-                        ? 'bg-green-50 border-green-500' 
-                        : 'bg-red-50 border-red-500'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2 mb-2 flex-wrap">
-                      <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold ${
-                        q.is_correct ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-                      }`}>
-                        {q.question_id}
-                      </span>
-                      <span className="text-xs px-2 py-0.5 rounded bg-gray-200 text-gray-600">
-                        {q.question_type?.replace(/_/g, ' ') || 'Question'}
-                      </span>
-                      {q.is_correct ? (
-                        <CheckCircle className="w-5 h-5 text-green-600" />
-                      ) : (
-                        <XCircle className="w-5 h-5 text-red-600" />
-                      )}
-                      {q.reason_code && !q.is_correct && (
-                        <span data-testid={`reason-badge-reading-${q.question_id}`} className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                          q.reason_code === 'UNANSWERED' ? 'bg-gray-200 text-gray-700' :
-                          q.reason_code === 'TFNG_CONFUSION' || q.reason_code === 'YNNG_CONFUSION' ? 'bg-orange-100 text-orange-700' :
-                          q.reason_code === 'SPELLING_ERROR' ? 'bg-amber-100 text-amber-700' :
-                          q.reason_code === 'DISTRACTOR_TRAP' ? 'bg-rose-100 text-rose-700' :
-                          q.reason_code === 'NEAR_MISS' ? 'bg-yellow-100 text-yellow-700' :
-                          'bg-red-100 text-red-700'
-                        }`}>
-                          {q.reason_label}
-                        </span>
-                      )}
-                    </div>
-                    
-                    <div className="flex flex-wrap gap-4 text-sm mb-2">
-                      <div>
-                        <span className="text-gray-500">Your Answer: </span>
-                        <span className={`font-semibold ${q.is_correct ? 'text-green-700' : 'text-red-700'}`}>
-                          {q.user_answer || 'No answer'}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-gray-500">Correct: </span>
-                        <span className="font-semibold text-green-700">{q.correct_answer}</span>
-                      </div>
-                    </div>
-                    
-                    {/* Evidence from Passage */}
-                    {q.evidence_text && !q.is_correct && (
-                      <div data-testid={`evidence-reading-${q.question_id}`} className="mt-3 p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
-                        <div className="flex items-start gap-2">
-                          <Eye className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
-                          <div>
-                            <p className="text-xs font-semibold text-yellow-700 mb-1">Evidence in Passage</p>
-                            <p className="text-sm text-gray-700 italic leading-relaxed">"...{q.evidence_text}..."</p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    {!q.evidence_text && !q.is_correct && (
-                      <div className="mt-3 p-3 bg-gray-50 rounded-lg border-l-4 border-gray-300">
-                        <div className="flex items-start gap-2">
-                          <Eye className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-xs text-gray-500">Evidence not available for this question</p>
-                        </div>
-                      </div>
-                    )}
-                    
-                    {/* Explanation */}
-                    {q.explanation && (
-                      <div className="mt-3 p-3 bg-blue-50 rounded-lg border-l-4 border-blue-400">
-                        <div className="flex items-start gap-2">
-                          <Lightbulb className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                          <div>
-                            <p className="text-xs font-semibold text-blue-700 mb-1">Explanation</p>
-                            <p className="text-sm text-gray-700 leading-relaxed">{q.explanation}</p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    
-                    {/* Skill Tip */}
-                    {q.skill_tip && !q.is_correct && (
-                      <div className="mt-3 p-3 bg-purple-50 rounded-lg border-l-4 border-purple-400">
-                        <div className="flex items-start gap-2">
-                          <GraduationCap className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
-                          <div>
-                            <p className="text-xs font-semibold text-purple-700 mb-1">Skill Tip</p>
-                            <p className="text-sm text-gray-700 leading-relaxed">{q.skill_tip}</p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-          </Card>
+        {/* Listening / Reading drilldowns — D7 polished view, ported from
+            features/results/ReadingListeningDrilldown so this page renders
+            the same passage/part grouping, evidence cards, transcript reveal
+            and reason chips as Results.js. The old inline mapping (with its
+            collapsed-header expand toggle and the divergent skill breakdown
+            panel) was deleted — the sticky group headers inside the shared
+            component already handle navigation through long lists. */}
+        {activeTab === 'listening' && questionResults.listening?.length > 0 && (
+          <ReadingListeningDrilldown
+            testType="listening"
+            feedback={{
+              question_results: questionResults.listening,
+              correct: results?.listening?.correct ?? 0,
+              total: results?.listening?.total ?? 0,
+              percentage: results?.listening?.percentage ?? 0,
+              transcript: results?.listening?.transcript,
+            }}
+          />
         )}
-
+        {activeTab === 'reading' && questionResults.reading?.length > 0 && (
+          <ReadingListeningDrilldown
+            testType="reading"
+            feedback={{
+              question_results: questionResults.reading,
+              correct: results?.reading?.correct ?? 0,
+              total: results?.reading?.total ?? 0,
+              percentage: results?.reading?.percentage ?? 0,
+            }}
+          />
+        )}
         {/* Writing Evaluation Section */}
+        {activeTab === 'writing' && (
         <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
@@ -1531,10 +1733,11 @@ export default function CambridgeTestResults() {
             </div>
           )}
         </Card>
+        )}
 
         {/* Speaking Section — D7 ResultsState header + drawer with legacy
              per-response detail. Pending state shown when no evaluations yet. */}
-        {(() => {
+        {activeTab === 'speaking' && (() => {
           const evalEntries = Object.entries(speakingEvaluations || {});
           const hasEvals = evalEntries.length > 0;
 
@@ -1634,7 +1837,7 @@ export default function CambridgeTestResults() {
         })()}
 
         {/* ============ SPEAKING P2 FEATURES ============ */}
-        {Object.keys(speakingEvaluations).length > 0 && (
+        {activeTab === 'speaking' && Object.keys(speakingEvaluations).length > 0 && (
           <>
             {/* 1. Fluency Insights Card */}
             <Card data-testid="fluency-insights-card" className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
@@ -1864,44 +2067,8 @@ export default function CambridgeTestResults() {
           </>
         )}
 
-        {/* Skill Breakdown Chart */}
-        {skillBreakdown.length > 0 && (
-          <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <BarChart3 className="w-5 h-5 text-violet-600" />
-              Skill Breakdown
-            </h3>
-            <div className="space-y-3">
-              {skillBreakdown.map((skill, idx) => {
-                const accuracy = skill.total > 0 ? (skill.correct / skill.total) * 100 : 0;
-                return (
-                  <div key={idx} className="flex items-center gap-4">
-                    <div className="w-48 text-sm text-gray-700 truncate">{skill.label}</div>
-                    <div className="flex-1 bg-gray-200 rounded-full h-3">
-                      <div 
-                        className={`h-3 rounded-full transition-all ${
-                          accuracy >= 70 ? 'bg-green-500' : accuracy >= 50 ? 'bg-yellow-500' : 'bg-red-500'
-                        }`}
-                        style={{ width: `${accuracy}%` }}
-                      />
-                    </div>
-                    <div className="w-16 text-right text-sm font-medium">
-                      {skill.correct}/{skill.total}
-                    </div>
-                    <div className={`w-12 text-right text-sm font-bold ${
-                      accuracy >= 70 ? 'text-green-600' : accuracy >= 50 ? 'text-yellow-600' : 'text-red-600'
-                    }`}>
-                      {Math.round(accuracy)}%
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </Card>
-        )}
-
         {/* ============ ONE NEXT STEP CTA ============ */}
-        {results && (() => {
+        {(activeTab === 'overview' || rlOnly) && results && (() => {
           const plan = computeNextStepPlan();
           if (!plan) return null;
           
@@ -1975,6 +2142,7 @@ export default function CambridgeTestResults() {
           >
             <RefreshCw className="w-4 h-4 mr-2" /> Retake Full Test
           </Button>
+        </div>
         </div>
       </div>
     </div>

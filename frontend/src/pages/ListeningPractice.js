@@ -183,13 +183,15 @@ export default function ListeningPractice({ user }) {
         answer: answer
       }));
 
+      const _userId = (() => { try { return JSON.parse(localStorage.getItem('user'))?.id || null; } catch { return null; } })();
       const res = await fetch(`${API_URL}/api/listening/evaluate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           set_id: selectedModule,
           responses: responses,
-          band_range: filterBand || moduleContent.band_range
+          band_range: filterBand || moduleContent.band_range,
+          user_id: _userId,
         })
       });
 

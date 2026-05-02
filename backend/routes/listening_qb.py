@@ -680,7 +680,8 @@ async def get_cache_status():
 async def evaluate_listening_answers(
     set_id: str = Body(...),
     responses: List[Dict[str, Any]] = Body(...),
-    band_range: Optional[str] = Body(None)
+    band_range: Optional[str] = Body(None),
+    user_id: Optional[str] = Body(None),
 ):
     """
     Evaluate user's listening answers.
@@ -837,6 +838,26 @@ async def evaluate_listening_answers(
     except Exception as exc:  # pragma: no cover
         logger.warning("Sonnet QB advisor failed for listening: %s", exc)
 
+    # Persist to test_attempts so Progress page + Liz see this attempt.
+    try:
+        from server import persist_attempt
+        await persist_attempt(
+            user_id=user_id,
+            test_id=f"qb_listening_{set_id}",
+            test_type="listening",
+            band_score=float(estimated_band or 0.0),
+            score=float(round(percentage, 1)),
+            feedback={
+                "source": "listening_qb",
+                "set_id": set_id,
+                "correct": correct,
+                "total": total,
+                "weak_skills": weak_skills,
+            },
+        )
+    except Exception as _e:
+        logger.warning("persist_attempt skipped (listening_qb): %s", _e)
+
     return {
         "success": True,
         "skill": "listening",
@@ -881,25 +902,11 @@ def generate_explanation(question: Dict, user_answer: str, correct_answer: str) 
 
 
 def calculate_listening_band(percentage: float) -> float:
-    """Calculate estimated IELTS band from percentage score."""
-    if percentage >= 90:
-        return 8.5
-    elif percentage >= 80:
-        return 8.0
-    elif percentage >= 70:
-        return 7.0
-    elif percentage >= 60:
-        return 6.5
-    elif percentage >= 50:
-        return 6.0
-    elif percentage >= 40:
-        return 5.5
-    elif percentage >= 30:
-        return 5.0
-    elif percentage >= 20:
-        return 4.5
-    else:
-        return 4.0
+    """Estimated IELTS Listening band. Routes through the official 40-question
+    raw-score table (services.ielts_band_tables) — the previous percentage
+    buckets undershot real scores by half a band in the 60-90 range."""
+    from services.ielts_band_tables import band_for_listening_pct
+    return band_for_listening_pct(percentage)
 
 
 def identify_weak_skills(results: List[Dict]) -> List[str]:

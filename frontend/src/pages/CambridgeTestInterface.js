@@ -1227,10 +1227,19 @@ export default function CambridgeTestInterface() {
           {currentPartData.questions?.map((q, qIdx) => {
             // Multiple Selection Questions (e.g., Q21-22)
             if (q.type === 'multiple_selection') {
-              const questionKey = `listening_${q.number}`;
+              // Persist the answer array under every question_id in the group
+              // (same array reused) so per-question results can resolve a
+              // user_answer for each member, not just the first. Backend
+              // scoring is group-aware (Bug #150) — this fixes display side.
+              const groupNumbers = q.items
+                ? q.items.map(i => i.number)
+                : String(q.number).includes('-')
+                  ? (() => { const [s, e] = String(q.number).split('-').map(n => parseInt(n, 10)); return Array.from({ length: e - s + 1 }, (_, i) => s + i); })()
+                  : [q.number];
+              const questionKey = `listening_${groupNumbers[0]}`;
               const currentAnswers = Array.isArray(answers[questionKey]) ? answers[questionKey] : [];
               const maxSelections = q.select_count || q.answer_count || 2;
-              
+
               return (
                 <div key={qIdx} className="mb-6 p-4 bg-white border rounded-lg">
                   <p className="text-xs text-blue-600 font-medium mb-1">{q.instruction}</p>
@@ -1239,7 +1248,7 @@ export default function CambridgeTestInterface() {
                     {q.options?.map((opt, optIdx) => {
                       const optValue = opt.charAt(0);
                       const isChecked = currentAnswers.includes(optValue);
-                      
+
                       return (
                         <label key={optIdx} className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer border transition-colors ${isChecked ? 'bg-blue-50 border-blue-300' : 'hover:bg-gray-50'}`}>
                           <input
@@ -1257,11 +1266,12 @@ export default function CambridgeTestInterface() {
                               } else {
                                 newAnswers = currentAnswers.filter(v => v !== optValue);
                               }
-                              // Store as array directly without splitting
-                              setAnswers(prev => ({
-                                ...prev,
-                                [questionKey]: newAnswers
-                              }));
+                              // Mirror the array under every grouped question_id.
+                              setAnswers(prev => {
+                                const next = { ...prev };
+                                groupNumbers.forEach(n => { next[`listening_${n}`] = newAnswers; });
+                                return next;
+                              });
                             }}
                             className="w-4 h-4 text-blue-600 rounded"
                           />
@@ -2062,14 +2072,23 @@ export default function CambridgeTestInterface() {
                   )}
                   <div className="space-y-2">
                     {(() => {
-                      const answerKey = q.items ? `reading_${q.items[0].number}` : `reading_${q.number}`;
+                      // Persist the same answer array under every question_id in
+                      // the group so per-question results (Your answer: ...) can
+                      // resolve, not just the first item. Backend scoring is
+                      // group-aware (Bug #150) — this fixes the display side.
+                      const groupNumbers = q.items
+                        ? q.items.map(i => i.number)
+                        : String(q.number).includes('-')
+                          ? (() => { const [s, e] = String(q.number).split('-').map(n => parseInt(n, 10)); return Array.from({ length: e - s + 1 }, (_, i) => s + i); })()
+                          : [q.number];
+                      const answerKey = `reading_${groupNumbers[0]}`;
                       const currentAnswers = Array.isArray(answers[answerKey]) ? answers[answerKey] : [];
                       const maxSelections = q.select_count || 2;
-                      
+
                       return q.options?.map((opt, oIdx) => {
                         const optValue = opt.charAt(0);
                         const isChecked = currentAnswers.includes(optValue);
-                        
+
                         return (
                           <label key={oIdx} className={`flex items-center gap-3 p-2 rounded cursor-pointer ${isChecked ? 'bg-green-50 border border-green-300' : 'hover:bg-gray-50'}`}>
                             <input
@@ -2087,10 +2106,11 @@ export default function CambridgeTestInterface() {
                                 } else {
                                   newAnswers = currentAnswers.filter(v => v !== optValue);
                                 }
-                                setAnswers(prev => ({
-                                  ...prev,
-                                  [answerKey]: newAnswers
-                                }));
+                                setAnswers(prev => {
+                                  const next = { ...prev };
+                                  groupNumbers.forEach(n => { next[`reading_${n}`] = newAnswers; });
+                                  return next;
+                                });
                               }}
                               className="w-4 h-4 text-green-600 rounded"
                             />

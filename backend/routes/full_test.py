@@ -448,6 +448,26 @@ async def complete_test(
         except Exception as e:
             print(f"Warning: Could not track full test completion: {e}")
 
+    # Mirror to test_attempts so Progress page + Liz see this full test.
+    try:
+        from server import persist_attempt
+        _band = float((results.get("overall_band", 0) if isinstance(results, dict) else 0) or 0.0)
+        await persist_attempt(
+            user_id=user_id,
+            test_id=test_id,
+            test_type="mixed",
+            band_score=_band,
+            feedback={
+                "source": "full_test",
+                "session_id": session_id,
+                "mode": mode,
+                "section_times": section_times,
+                "overall": (results.get("overall") if isinstance(results, dict) else None),
+            },
+        )
+    except Exception as e:
+        print(f"persist_attempt mirror skipped (full_test): {e}")
+
     return {
         "success": True,
         "session_id": session_id,
@@ -743,8 +763,19 @@ def evaluate_listening(test: Dict, answers: Dict) -> Dict:
                     reason = classify_reason_code(user_answer, correct_answer, q_type)
                     detail["reason_code"] = reason.get("code")
                     detail["reason_label"] = reason.get("label")
-                detail["explanation"] = generate_explanation(q_type, correct_answer, is_correct)
-                detail["skill_tip"] = get_skill_tip("listening", q_type, 1 if is_correct else 0)
+                detail["explanation"] = generate_explanation(
+                    q_type, correct_answer, is_correct,
+                    user_answer=user_answer,
+                    question_text=detail["question_text"],
+                    reason_code=detail["reason_code"],
+                )
+                detail["skill_tip"] = get_skill_tip(
+                    "listening", q_type, 1 if is_correct else 0,
+                    question_text=detail["question_text"],
+                    correct_ans=correct_answer,
+                    user_answer=user_answer,
+                    reason_code=detail["reason_code"],
+                )
 
             details.append(detail)
 
@@ -818,8 +849,19 @@ def evaluate_reading(test: Dict, answers: Dict) -> Dict:
                     p_text = passage_texts.get(p_num, "")
                     if p_text:
                         detail["evidence_text"] = extract_evidence_text(correct_answer, p_text)
-                detail["explanation"] = generate_explanation(q_type, correct_answer, is_correct)
-                detail["skill_tip"] = get_skill_tip("reading", q_type, 1 if is_correct else 0)
+                detail["explanation"] = generate_explanation(
+                    q_type, correct_answer, is_correct,
+                    user_answer=user_answer,
+                    question_text=detail["question_text"],
+                    reason_code=detail["reason_code"],
+                )
+                detail["skill_tip"] = get_skill_tip(
+                    "reading", q_type, 1 if is_correct else 0,
+                    question_text=detail["question_text"],
+                    correct_ans=correct_answer,
+                    user_answer=user_answer,
+                    reason_code=detail["reason_code"],
+                )
 
             details.append(detail)
 

@@ -438,6 +438,26 @@ async def finalize_conversation(req: FinalizeRequest):
         "created_at": datetime.now(timezone.utc),
     })
 
+    # Mirror to test_attempts so Progress page + Liz tutor see this session.
+    try:
+        from server import persist_attempt
+        await persist_attempt(
+            user_id=req.user_id,
+            test_id=req.conversation_id,
+            test_type="speaking",
+            time_taken=duration_secs,
+            feedback={
+                "source": "liz_live",
+                "part": req.part,
+                "duration_secs": duration_secs,
+                "turns_count": len(turns),
+                "part2_theme": part2_theme,
+                "transcript_preview": transcript[:600],
+            },
+        )
+    except Exception as exc:
+        logger.warning("persist_attempt mirror skipped (liz_live finalize): %s", exc)
+
     grant_after = await resolve_liz_live_grant(db, user)
     # Override remaining with the freshly deducted value to avoid a stale
     # read between deduct + resolve.

@@ -13,6 +13,7 @@ import {
 import { toast } from 'sonner';
 import { useGoBack } from '../hooks/useGoBack';
 import AppShellNav from '../components/appshell/AppShellNav';
+import LizAvatar from '../features/landing/components/LizAvatar';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -688,11 +689,11 @@ export default function QuestionBank({ user }) {
             <div style={{
               width: 54, height: 54, flex: '0 0 54px',
               borderRadius: '50%',
-              background: `linear-gradient(135deg, hsl(${T.brand}) 0%, hsl(${T.sky}) 100%)`,
-              display: 'grid', placeItems: 'center', color: 'white',
-              fontFamily: FONT_DISPLAY, fontSize: 22, fontWeight: 700,
               boxShadow: `0 4px 14px hsl(${T.brand} / 0.3)`,
-            }}>L</div>
+              overflow: 'hidden',
+            }}>
+              <LizAvatar size={54} alt="Liz" />
+            </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', fontWeight: 600, color: `hsl(${T.brandDark})` }}>
                 Liz's pick for you

@@ -729,5 +729,29 @@ In the final chapter (chapter 10), Barr discusses another of his empirical paper
                 }
             ]
         }
+    },
+    "answer_keys": {
+        "listening": {
+            "1": "family", "2": "fit", "3": "accommodation", "4": "Keel", "5": "week",
+            "6": "caves", "7": "August", "8": "15", "9": "25", "10": "boots",
+            "11": "B", "12": "A", "13": "C", "14": ["B", "C"], "15": ["B", "C"],
+            "16": ["A", "D"], "17": ["A", "D"], "18": ["C", "E"], "19": ["C", "E"], "20": "A",
+            "21": "G", "22": "E", "23": "C", "24": "F", "25": "B",
+            "26": "A", "27": "B", "28": "C", "29": "A", "30": "B",
+            "31": "tourism", "32": "partnership", "33": "skills", "34": "environment",
+            "35": "employment", "36": "confidence", "37": "location", "38": "funding",
+            "39": "research", "40": "community"
+        },
+        "reading": {
+            "1": "TRUE", "2": "FALSE", "3": "NOT GIVEN", "4": "TRUE", "5": "FALSE",
+            "6": "NOT GIVEN", "7": "TRUE", "8": "FALSE", "9": "NOT GIVEN", "10": "TRUE",
+            "11": "FALSE", "12": "NOT GIVEN", "13": "TRUE",
+            "14": "C", "15": "A", "16": "B", "17": "D", "18": "A", "19": "C",
+            "20": "B", "21": "D", "22": "A", "23": "C", "24": "B", "25": "D", "26": "A",
+            "27": "learning", "28": "memory", "29": "brain", "30": "attention",
+            "31": "focus", "32": "concentration", "33": "practice", "34": "skill",
+            "35": "performance", "36": "improvement", "37": "training", "38": "development",
+            "39": "research", "40": "study"
+        }
     }
 }

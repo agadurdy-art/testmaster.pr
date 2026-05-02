@@ -1423,6 +1423,9 @@ Find 3-5 sentences with errors. Copy exact sentence → write corrected version 
         ).with_model("openai", "gpt-4o")
         
         result = await llm.send_message(UserMessage(text=evaluation_prompt))
+        # Rate limiting: prevent Claude API Usage Policy violations
+        import asyncio
+        await asyncio.sleep(1.0)
         
         # Parse the JSON response
         result_text = result.strip()
