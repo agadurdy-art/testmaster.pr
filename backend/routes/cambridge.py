@@ -563,12 +563,27 @@ async def evaluate_cambridge_full_test(
         weak_summary = ", ".join([s["label"] for s in weak_areas[:3]]) if weak_areas else "None identified"
         strong_summary = ", ".join([s["label"] for s in strong_areas[:3]]) if strong_areas else "Keep practicing"
         
-        feedback_prompt = f"""You are an experienced IELTS teacher providing feedback on a Cambridge IELTS practice test.
+        # Build section-aware results lines so we don't tell the LLM about
+        # a section the user never took (e.g. reading-only test).
+        section_lines = []
+        if listening_results['total'] > 0:
+            section_lines.append(f"- Listening: {listening_results['correct']}/{listening_results['total']} ({listening_results['percentage']:.1f}%)")
+        if reading_results['total'] > 0:
+            section_lines.append(f"- Reading: {reading_results['correct']}/{reading_results['total']} ({reading_results['percentage']:.1f}%)")
+        if listening_results['total'] > 0 and reading_results['total'] > 0:
+            section_lines.append(f"- Overall: {total_correct}/{total_questions} ({overall_percentage:.1f}%)")
+        section_block = "\n".join(section_lines) if section_lines else "(no sections completed)"
+
+        skill_label = (
+            "Reading" if skill_norm == "reading" else
+            "Listening" if skill_norm == "listening" else
+            "Reading + Listening"
+        )
+
+        feedback_prompt = f"""You are Liz, an experienced IELTS teacher giving warm, specific feedback on a Cambridge IELTS {skill_label} practice test.
 
 TEST RESULTS:
-- Listening: {listening_results['correct']}/{listening_results['total']} ({listening_results['percentage']:.1f}%)
-- Reading: {reading_results['correct']}/{reading_results['total']} ({reading_results['percentage']:.1f}%)
-- Overall: {total_correct}/{total_questions} ({overall_percentage:.1f}%)
+{section_block}
 
 WEAK AREAS: {weak_summary}
 STRONG AREAS: {strong_summary}
@@ -576,17 +591,19 @@ STRONG AREAS: {strong_summary}
 DETAILED BREAKDOWN:
 {json.dumps(skill_breakdown, indent=2)}
 
-Generate personalized feedback in JSON format:
-{{
-    "short": "2-3 sentence summary of performance with encouragement",
-    "detailed": "4-5 sentences with specific study recommendations based on weak areas"
-}}
+Write feedback as Liz speaking directly to the student. Mention only the section(s) above — do NOT reference any section that isn't listed. Reference the specific question types they struggled with by name (T/F/NG, matching headings, MCQ, etc.).
 
-Be specific, constructive, and mention actual question types by name."""
+Respond with ONLY a JSON object, no prose, no markdown:
+{{
+    "short": "2-3 sentences. Open with the actual score in plain words, name the strongest pattern, name the next thing to fix.",
+    "detailed": "4-5 sentences. Explain what the wrong-answer pattern shows, give one concrete drill for the weakest question type, end with how to verify the gain."
+}}"""
 
         teacher_feedback: Dict[str, str]
-        # Skip teacher_feedback LLM call for Reading/Listening only tests to save costs
-        skip_llm_for_rl = skill_norm in ("reading", "listening") and user_plan in ("free", "")
+        # Previously we skipped LLM for free reading/listening tests; that
+        # produced templated stub text the user complained about. We now
+        # always run the LLM when available so the feedback feels real.
+        skip_llm_for_rl = False
 
         # Simple caching based on performance pattern
         cache_key = f"{listening_results['percentage']:.0f}L_{reading_results['percentage']:.0f}R_{len(weak_areas)}W"
@@ -900,23 +917,62 @@ def _stub_teacher_feedback(
 ) -> Dict[str, str]:
     """Deterministic teacher_feedback stub used when the LLM key is missing
     or the call fails. Same shape as the LLM JSON response so the frontend
-    template renders unchanged."""
+    template renders unchanged. Section-aware: only mention sections that
+    were actually taken (total > 0)."""
+    l_total = listening_results.get("total", 0) or 0
+    r_total = reading_results.get("total", 0) or 0
+    l_correct = listening_results.get("correct", 0) or 0
+    r_correct = reading_results.get("correct", 0) or 0
     l_pct = listening_results.get("percentage", 0)
     r_pct = reading_results.get("percentage", 0)
-    short = (
-        f"Listening {listening_results.get('correct', 0)}/"
-        f"{listening_results.get('total', 0)} ({l_pct:.0f}%) and "
-        f"Reading {reading_results.get('correct', 0)}/"
-        f"{reading_results.get('total', 0)} ({r_pct:.0f}%). "
-        f"Strong: {strong_summary}. Focus next on: {weak_summary}."
-    )
-    detailed = (
-        "Review every wrong item with the explanation and skill tip below. "
-        f"The drilldown lists each question, your answer, the correct answer, "
-        f"and the reason category — start with items tagged as the easiest "
-        f"to fix. Spend the next session on {weak_summary} specifically. "
-        "Re-test on a fresh set to verify the gain holds on unfamiliar material."
-    )
+
+    # Build section-aware score line — skip sections with 0 questions.
+    parts = []
+    if l_total > 0:
+        parts.append(f"Listening {l_correct}/{l_total} ({l_pct:.0f}%)")
+    if r_total > 0:
+        parts.append(f"Reading {r_correct}/{r_total} ({r_pct:.0f}%)")
+    score_line = " and ".join(parts) if parts else "No sections completed"
+
+    # Pick a tone based on the dominant section's accuracy.
+    if r_total > 0 and l_total == 0:
+        primary_pct = r_pct
+        primary_name = "reading"
+    elif l_total > 0 and r_total == 0:
+        primary_pct = l_pct
+        primary_name = "listening"
+    else:
+        primary_pct = (l_pct + r_pct) / 2 if (l_total or r_total) else 0
+        primary_name = "test"
+
+    if primary_pct >= 75:
+        opener = f"Strong {primary_name} performance — you scored {score_line}."
+    elif primary_pct >= 55:
+        opener = f"Decent {primary_name} run at {score_line} — there's clear room to push higher."
+    elif primary_pct > 0:
+        opener = f"This {primary_name} attempt landed at {score_line} — let's pinpoint what tripped you up."
+    else:
+        opener = f"Your {primary_name} result: {score_line}."
+
+    strong_clause = f" You handled {strong_summary} well." if strong_summary and strong_summary != "Keep practicing" else ""
+    weak_clause = f" The biggest gain will come from working on {weak_summary}." if weak_summary and weak_summary != "None identified" else ""
+    short = f"{opener}{strong_clause}{weak_clause}".strip()
+
+    # Pull the single weakest skill name (first in the comma list) for a
+    # tighter, less list-y sentence. The stub is intentionally short — the
+    # rich drilldown + Skill Breakdown panel already shows the numbers.
+    primary_weak = (weak_summary.split(",")[0].strip() if weak_summary and weak_summary != "None identified" else "")
+    if primary_weak:
+        detailed = (
+            f"The pattern in your wrong answers points to {primary_weak} as the single biggest leak. "
+            f"Open one wrong item at a time, read the evidence sentence, and decide whether you missed a paraphrase, a synonym, or a number/word-form clue. "
+            f"Once you can name the cause for each one, retry a fresh passage and you should see the score move."
+        )
+    else:
+        detailed = (
+            "Open each wrong item one at a time, read the evidence sentence, and decide whether you missed a paraphrase, a synonym, or a word-form clue. "
+            "Once you can name the cause for each one, a fresh passage should show the score move."
+        )
     return {"short": short, "detailed": detailed}
 
 
@@ -1114,7 +1170,10 @@ def calculate_section_results(section: str, user_answers: Dict, correct_answers:
                                 question_metadata[str(cell["number"])] = {"type": qtype, "text": "", "passage": passage_num}
                 # Handle individual or range questions
                 elif qnum and "-" not in qnum:
-                    question_metadata[qnum] = {"type": qtype, "text": q.get("question_text", q.get("question", "")), "passage": passage_num}
+                    md = {"type": qtype, "text": q.get("question_text", q.get("question", "")), "passage": passage_num}
+                    if isinstance(q.get("options"), list) and q.get("options"):
+                        md["options"] = [str(o) for o in q["options"]]
+                    question_metadata[qnum] = md
                 elif "-" in qnum:
                     try:
                         start, end = qnum.split("-")
@@ -1123,21 +1182,34 @@ def calculate_section_results(section: str, user_answers: Dict, correct_answers:
                         parent_text = q.get("question_text") or q.get("question", "")
                         if not parent_text and isinstance(q.get("summary"), dict):
                             parent_text = q["summary"].get("text", "")
+                        opts = [str(o) for o in q["options"]] if isinstance(q.get("options"), list) and q.get("options") else None
                         for n in range(int(start), int(end) + 1):
-                            question_metadata[str(n)] = {"type": qtype, "text": parent_text, "passage": passage_num}
-                        question_metadata[qnum] = {"type": qtype, "text": parent_text, "passage": passage_num}
+                            md = {"type": qtype, "text": parent_text, "passage": passage_num}
+                            if opts:
+                                md["options"] = opts
+                            question_metadata[str(n)] = md
+                        md_compound = {"type": qtype, "text": parent_text, "passage": passage_num}
+                        if opts:
+                            md_compound["options"] = opts
+                        question_metadata[qnum] = md_compound
                     except ValueError:
                         question_metadata[qnum] = {"type": qtype, "text": q.get("question_text", ""), "passage": passage_num}
     
+    # Track which compound multi-MCQ keys we've already expanded so we
+    # don't emit duplicate per-sub-id rows when both the compound key
+    # AND per-sub keys are present in correct_answers.
+    _expanded_groups: set = set()
+
     # Evaluate each answer
     for qnum, correct_ans in correct_answers.items():
         qnum_str = str(qnum)
         group_id = group_for_qnum.get(qnum_str)
         if group_id is not None:
-            # Multi-MCQ group: score the whole group via set equality, then
-            # mirror the verdict onto each item. Both items either pass or
-            # both fail — official IELTS "Choose TWO" is set-equality, no
-            # partial credit (matches listening_qb / reading_qb #140 fix).
+            # Multi-MCQ group: per-item SET-MEMBERSHIP scoring (Aga
+            # 2026-05-02). Each correct option = 1 mark IF user picked
+            # that letter — regardless of click order. Replaces the old
+            # all-or-nothing rule: clicking [D,E] vs correct [B,E] now
+            # yields Q26 ✓ (E matched) + Q25 ✗ (B missed) instead of 0/2.
             grp = multi_groups[group_id]
             raw_user = user_answers.get(grp["user_key"], [])
             if isinstance(raw_user, list):
@@ -1147,8 +1219,99 @@ def calculate_section_results(section: str, user_answers: Dict, correct_answers:
             else:
                 user_list = []
             user_set = {str(x).strip().lower().replace(".", "").replace(",", "") for x in user_list}
-            is_correct = bool(grp["correct_set"]) and user_set == grp["correct_set"]
+
+            # Compound key like "25-26" with list answer ["B","E"] — emit
+            # ONE row per sub-id, each scored on its own letter.
+            if isinstance(correct_ans, list) and ("-" in qnum_str or "," in qnum_str):
+                if group_id in _expanded_groups:
+                    continue
+                _expanded_groups.add(group_id)
+                try:
+                    sub_ids = [str(n) for n in (
+                        range(int(qnum_str.split("-")[0]), int(qnum_str.split("-")[1]) + 1)
+                        if "-" in qnum_str else
+                        [int(x.strip()) for x in qnum_str.split(",")]
+                    )]
+                except (ValueError, IndexError):
+                    sub_ids = [qnum_str]
+                user_display = ", ".join(str(x).upper() for x in user_list) if user_list else "-"
+                for idx, sub_id in enumerate(sub_ids):
+                    sub_correct_letter = correct_ans[idx] if idx < len(correct_ans) else ""
+                    sub_correct_norm = str(sub_correct_letter).strip().lower().replace(".", "").replace(",", "")
+                    is_correct_sub = bool(sub_correct_norm) and sub_correct_norm in user_set
+
+                    sub_meta = question_metadata.get(sub_id) or question_metadata.get(qnum_str, {})
+                    sub_qtype = sub_meta.get("type", "unknown")
+
+                    results["total"] += 1
+                    if is_correct_sub:
+                        results["correct"] += 1
+                    if sub_qtype not in results["by_type"]:
+                        results["by_type"][sub_qtype] = {"correct": 0, "total": 0}
+                    results["by_type"][sub_qtype]["total"] += 1
+                    if is_correct_sub:
+                        results["by_type"][sub_qtype]["correct"] += 1
+
+                    sub_reason = None
+                    if not is_correct_sub:
+                        sub_reason = classify_reason_code(user_list, sub_correct_letter, sub_qtype)
+                    sub_evidence = ""
+                    if section == "reading":
+                        passage_num = sub_meta.get("passage", 1)
+                        passage_texts = _get_passage_texts(section_data)
+                        p_text = passage_texts.get(passage_num, "")
+                        if p_text:
+                            search_input = _resolve_mcq_search_input(
+                                sub_correct_letter, sub_meta.get("options"),
+                            ) if "multiple" in (sub_qtype or "") else sub_correct_letter
+                            sub_evidence = extract_evidence_text(search_input, p_text)
+
+                    results["details"].append({
+                        "question_id": int(sub_id) if str(sub_id).isdigit() else sub_id,
+                        "question_type": sub_qtype,
+                        "question_text": sub_meta.get("text", ""),
+                        "user_answer": user_display,
+                        "correct_answer": str(sub_correct_letter).upper(),
+                        "is_correct": is_correct_sub,
+                        "reason_code": sub_reason.get("code") if sub_reason else None,
+                        "reason_label": sub_reason.get("label") if sub_reason else None,
+                        "evidence_text": sub_evidence if sub_evidence else None,
+                        "explanation": generate_explanation(
+                            sub_qtype, sub_correct_letter, is_correct_sub,
+                            user_answer=user_list,
+                            question_text=sub_meta.get("text", ""),
+                            reason_code=sub_reason.get("code") if sub_reason else None,
+                        ),
+                        "skill_tip": get_skill_tip(
+                            section, sub_qtype, 1 if is_correct_sub else 0,
+                            question_text=sub_meta.get("text", ""),
+                            correct_ans=sub_correct_letter,
+                            user_answer=user_list,
+                            reason_code=sub_reason.get("code") if sub_reason else None,
+                        ),
+                    })
+                continue  # compound-key branch fully emitted its rows
+
+            # Per-qnum entry inside a multi-MCQ group. Two sub-shapes:
+            #   (a) Scalar: {"23":"C", "24":"D"} → correct_ans is "C" / "D"
+            #   (b) Mirrored list: {"23":["C","D"], "24":["C","D"]} → list
+            # For (b), pick THIS qnum's expected letter via position in the
+            # group's ordered qnums (Q23 → idx 0 → "C", Q24 → idx 1 → "D").
+            qnums_list = grp.get("qnums") or []
+            if isinstance(correct_ans, list):
+                try:
+                    pos = qnums_list.index(qnum_str)
+                except ValueError:
+                    pos = 0
+                this_letter = correct_ans[pos] if 0 <= pos < len(correct_ans) else ""
+            else:
+                this_letter = correct_ans
+            this_correct_norm = str(this_letter).strip().lower().replace(".", "").replace(",", "") if this_letter else ""
+            is_correct = bool(this_correct_norm) and this_correct_norm in user_set
             user_ans = list(user_list) if user_list else ""
+            # Override iteration var so display_correct shows just THIS row's
+            # letter (e.g. "D") not the combined list ("C, D").
+            correct_ans = str(this_letter).upper() if this_letter else correct_ans
         else:
             user_key = f"{section}_{qnum}"
             user_ans = user_answers.get(user_key, "")
@@ -1192,7 +1355,10 @@ def calculate_section_results(section: str, user_answers: Dict, correct_answers:
             passage_texts = _get_passage_texts(section_data)
             p_text = passage_texts.get(passage_num, "")
             if p_text:
-                evidence_text = extract_evidence_text(correct_ans, p_text)
+                search_input = _resolve_mcq_search_input(
+                    correct_ans, meta.get("options"),
+                ) if "multiple" in (qtype or "") else correct_ans
+                evidence_text = extract_evidence_text(search_input, p_text)
             
         results["details"].append({
             "question_id": qnum,
@@ -1306,6 +1472,43 @@ def _find_letter_paragraph(passage_text: str, letter: str) -> str:
                     body = body[:320].rstrip() + "…"
             return body
     return ""
+
+
+def _resolve_mcq_search_input(correct_ans, options):
+    """For MCQ questions whose correct answer is just an option LETTER,
+    return the option's TEXT so extract_evidence_text can locate it in
+    the passage. Returns the original `correct_ans` when options aren't
+    available or the answer doesn't look like a single-letter pick.
+    """
+    if not options or not isinstance(options, list):
+        return correct_ans
+    label_re = re.compile(r"^\s*([A-Za-z])\s*[:.\-)]\s*(.+)$")
+
+    def _text_for(letter: str) -> str:
+        L = str(letter).strip().upper()
+        if not L:
+            return ""
+        # Match "B: text", "B. text", "B) text", etc.
+        for o in options:
+            s = str(o).strip()
+            m = label_re.match(s)
+            if m and m.group(1).upper() == L:
+                return m.group(2).strip()
+        # Fallback: positional (A=index 0, B=1, …)
+        idx = ord(L) - ord("A")
+        if 0 <= idx < len(options):
+            s = str(options[idx]).strip()
+            m = label_re.match(s)
+            return (m.group(2).strip() if m else s)
+        return ""
+
+    if isinstance(correct_ans, list):
+        expanded = [t for t in (_text_for(c) for c in correct_ans) if t]
+        return expanded if expanded else correct_ans
+    if isinstance(correct_ans, str) and len(correct_ans.strip()) == 1 and correct_ans.strip().isalpha():
+        t = _text_for(correct_ans)
+        return t if t else correct_ans
+    return correct_ans
 
 
 def extract_evidence_text(correct_ans, passage_text: str) -> str:

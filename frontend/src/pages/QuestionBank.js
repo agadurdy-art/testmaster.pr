@@ -444,24 +444,33 @@ export default function QuestionBank({ user }) {
     part2: ['part 2', 'part2', 'cue card', 'long turn'],
     part3: ['part 3', 'part3', 'discussion'],
   };
-  const filteredPrompts = topics.filter((t) => {
-    if (selectedTopic && t.id !== selectedTopic) return false;
-    if (searchQuery) {
-      const q = searchQuery.toLowerCase();
-      const name = (t.name || '').toLowerCase();
-      const desc = (t.description || '').toLowerCase();
-      if (!name.includes(q) && !desc.includes(q)) return false;
-    }
-    if (typeFilter !== 'all') {
-      const tags = [t.type, t.task, t.part, t.category].filter(Boolean).map(String).map(s => s.toLowerCase());
-      const hay = `${t.name || ''} ${t.description || ''}`.toLowerCase();
-      const kws = typeKeywords[typeFilter] || [typeFilter];
-      const tagMatch = tags.some(tag => kws.some(k => tag.includes(k.replace(/\s+/g, ''))));
-      const textMatch = kws.some(k => hay.includes(k));
-      if (!tagMatch && !textMatch) return false;
-    }
-    return true;
-  });
+  // Prompt grid is sourced from Advanced Mastery modules so each card is a
+  // course title ("The Digital Frontier", "The Educational Paradigm", …)
+  // and clicking it deep-links into that lesson's writing/reading/etc.
+  // section via /advanced-mastery?lesson=N&focus={skillTab}. We map module
+  // shape → the {id, name, description, module_number} the grid expects.
+  const filteredPrompts = (advancedModules || [])
+    .map((m) => ({
+      id: `am-${m.module_number}`,
+      name: m.title || '',
+      description: m.subtitle || '',
+      module_number: m.module_number,
+      level: m.level,
+    }))
+    .filter((t) => {
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        const name = (t.name || '').toLowerCase();
+        const desc = (t.description || '').toLowerCase();
+        if (!name.includes(q) && !desc.includes(q)) return false;
+      }
+      if (typeFilter !== 'all') {
+        const hay = `${t.name || ''} ${t.description || ''}`.toLowerCase();
+        const kws = typeKeywords[typeFilter] || [typeFilter];
+        if (!kws.some((k) => hay.includes(k))) return false;
+      }
+      return true;
+    });
 
   return (
     <div className="appshell-page" style={{ fontFamily: FONT_SANS, color: `hsl(${T.ink})` }}>
@@ -1470,17 +1479,12 @@ export default function QuestionBank({ user }) {
                     }[skillTab] || T.brand;
                     const done = !!(completionStats?.practice?.[skillTab] && completionStats.practice[skillTab] > 0);
                     if (hideDone && done) return null;
-                    // Prompt cards (e.g. "The Digital Frontier") map 1:1 to
-                    // Advanced Mastery modules by name. Deep-link to
-                    // /advanced-mastery?lesson=N&focus={skillTab} so the user
-                    // lands directly inside the matching course section for
-                    // whichever skill tab is active (writing/reading/listening/speaking).
+                    // Each prompt card IS an Advanced Mastery module (data
+                    // source above); deep-link straight into that lesson's
+                    // active-skill section.
                     const handlePromptClick = () => {
-                      const match = advancedModules.find(
-                        (m) => (m.title || '').toLowerCase() === (prompt.name || '').toLowerCase()
-                      );
-                      if (match?.module_number) {
-                        navigate(`/advanced-mastery?lesson=${match.module_number}&focus=${skillTab}`);
+                      if (prompt.module_number) {
+                        navigate(`/advanced-mastery?lesson=${prompt.module_number}&focus=${skillTab}`);
                         return;
                       }
                       openSkillModal(skillTab);

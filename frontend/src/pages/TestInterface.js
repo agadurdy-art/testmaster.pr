@@ -467,7 +467,12 @@ function ElevenLabsExaminer() {
       }
       
       const formattedAnswers = Object.entries(answers).map(([questionId, answer]) => ({
-        question_id: parseInt(questionId),
+        // Combined "Choose TWO" question IDs ("20-21") must keep their string
+        // form; parseInt strips the dash and the backend can't match the
+        // answer_key entry, dropping 4 questions from the result page.
+        question_id: (questionId.includes('-') || questionId.includes(','))
+          ? questionId
+          : parseInt(questionId),
         answer: answer
       }));
 

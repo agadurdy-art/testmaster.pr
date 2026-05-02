@@ -94,6 +94,10 @@ export default function CambridgeTestInterface() {
   const [sectionTimeLeft, setSectionTimeLeft] = useState(SECTION_TIMES[skillParam] || SECTION_TIMES.listening);
   const [testStarted, setTestStarted] = useState(false);
   const [showInstructions, setShowInstructions] = useState(true);
+
+  // Per-section elapsed minutes captured on submit. Powers the
+  // Time Management card on the results page (e.g. "42 / 60 min").
+  const [sectionDurations, setSectionDurations] = useState({});
   
   // UI state
   const [showSubmitModal, setShowSubmitModal] = useState(false);
@@ -229,17 +233,25 @@ export default function CambridgeTestInterface() {
 
   const handleSubmitSection = () => {
     setCompletedSections(prev => [...prev, currentSection]);
-    
+
+    // Capture elapsed minutes for THIS section before we move on. The
+    // timer counts down from SECTION_TIMES[section]; elapsed = budget − left.
+    const budgetSec = SECTION_TIMES[currentSection] || 0;
+    const elapsedMin = Math.max(0, Math.round((budgetSec - sectionTimeLeft) / 60));
+    const updatedDurations = { ...sectionDurations, [currentSection]: elapsedMin };
+    setSectionDurations(updatedDurations);
+
     // In skill mode, go directly to results after submitting the single section
     if (isSkillMode) {
-      navigate(`/cambridge-test/${bookId}/${testId}/results`, { 
-        state: { 
-          answers, 
+      navigate(`/cambridge-test/${bookId}/${testId}/results`, {
+        state: {
+          answers,
           testData,
           mode: 'skill',
           skill: skillParam,
-          speakingEvaluations: questionEvaluations
-        } 
+          speakingEvaluations: questionEvaluations,
+          sectionDurations: updatedDurations,
+        }
       });
       return;
     }
@@ -273,8 +285,14 @@ export default function CambridgeTestInterface() {
           }).catch(() => {});
         }
       } catch {}
-      navigate(`/cambridge-test/${bookId}/${testId}/results`, { 
-        state: { answers, testData, mode: 'full', speakingEvaluations: questionEvaluations } 
+      navigate(`/cambridge-test/${bookId}/${testId}/results`, {
+        state: {
+          answers,
+          testData,
+          mode: 'full',
+          speakingEvaluations: questionEvaluations,
+          sectionDurations: updatedDurations,
+        }
       });
     }
   };

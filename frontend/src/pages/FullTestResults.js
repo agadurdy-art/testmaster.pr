@@ -129,6 +129,56 @@ export default function FullTestResults() {
   const strengths = skillBreakdown.filter(s => s.total > 0 && (s.correct / s.total) >= 0.7);
   const weaknesses = skillBreakdown.filter(s => s.total > 0 && (s.correct / s.total) < 0.5);
 
+  // Reading-only render (sample-mockup parity). Skip the SceneBar/hero so the
+  // analytics surface matches /Desktop/design-handoffs/ReadingResults_Editable.html.
+  if (activeTab === 'reading' && questionResults.reading?.length > 0) {
+    const rawPassages =
+      results?.passages ||
+      results?.sections?.reading?.passages ||
+      [];
+    const readingPassages = rawPassages.map((p, i) => ({
+      id: p.passage_number ?? p.id ?? i + 1,
+      title: p.title || `Passage ${i + 1}`,
+      text: p.passage_text || p.text || '',
+      start_q: p.start_question_number ?? p.start_q,
+      end_q: p.end_question_number ?? p.end_q,
+    }));
+    return (
+      <ReadingResultsLayout
+        standalone
+        feedback={{
+          question_results: questionResults.reading,
+          correct: results.sections?.reading?.correct ?? 0,
+          total: results.sections?.reading?.total ?? 0,
+          percentage: results.sections?.reading?.percentage ?? 0,
+          teacher_feedback: teacherFeedback,
+          passages: readingPassages,
+        }}
+        band={results.sections?.reading?.band ?? results.overall_band}
+        user={(() => { try { return JSON.parse(localStorage.getItem('user') || 'null'); } catch { return null; } })()}
+        testMeta={{
+          title: 'Full Test',
+          subtitle: results.session_id ? `Session ${String(results.session_id).slice(0, 8)}` : '',
+          durationMin: results.sections?.reading?.duration_minutes,
+          allowedMin: 60,
+          targetBand: results?.target_band || 7.0,
+        }}
+        insights={{
+          rootCauseAnalysis,
+          fastestGain,
+          reasonSummary,
+          recommendedLessons,
+        }}
+        onPracticePriority={(p) => {
+          const typeMap = { tfng: 'true_false_ng', fill: 'sentence_completion', mc: 'multiple_choice', match: 'matching_information', heading: 'matching_headings' };
+          const qtype = typeMap[p?.key];
+          navigate(qtype ? `/question-bank/reading/practice?type=${qtype}` : '/question-bank/reading/academic');
+        }}
+        onBack={() => navigate('/dashboard')}
+      />
+    );
+  }
+
   return (
     <div data-testid="full-test-results" className="min-h-screen bg-gradient-to-b from-gray-50 via-slate-50/30 to-gray-100 py-8 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
@@ -739,7 +789,11 @@ export default function FullTestResults() {
               reasonSummary,
               recommendedLessons,
             }}
-            onPracticePriority={(p) => navigate(`/question-bank?skill=reading&type=${p?.key || ''}`)}
+            onPracticePriority={(p) => {
+          const typeMap = { tfng: 'true_false_ng', fill: 'sentence_completion', mc: 'multiple_choice', match: 'matching_information', heading: 'matching_headings' };
+          const qtype = typeMap[p?.key];
+          navigate(qtype ? `/question-bank/reading/practice?type=${qtype}` : '/question-bank/reading/academic');
+        }}
             backHref="/dashboard"
           />
         )}

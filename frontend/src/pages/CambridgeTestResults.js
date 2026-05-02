@@ -76,7 +76,7 @@ export default function CambridgeTestResults() {
   const [loadingModels, setLoadingModels] = useState({});
   
   // Get data from navigation state
-  const { answers = {}, testData = {}, mode = 'full', skill = null, speakingEvaluations = {} } = location.state || {};
+  const { answers = {}, testData = {}, mode = 'full', skill = null, speakingEvaluations = {}, sectionDurations = {} } = location.state || {};
 
   useEffect(() => {
     if (!location.state) {
@@ -127,13 +127,15 @@ export default function CambridgeTestResults() {
             correct: data.scores.listening.correct,
             total: data.scores.listening.total,
             band: data.scores.listening.band,
-            percentage: data.scores.listening.percentage
+            percentage: data.scores.listening.percentage,
+            duration_minutes: sectionDurations?.listening,
           },
           reading: {
             correct: data.scores.reading.correct,
             total: data.scores.reading.total,
             band: data.scores.reading.band,
-            percentage: data.scores.reading.percentage
+            percentage: data.scores.reading.percentage,
+            duration_minutes: sectionDurations?.reading,
           },
           writing: { score: null, evaluated: false, tasks: [] },
           speaking: { score: null, evaluated: false, parts: [] },
@@ -756,6 +758,55 @@ export default function CambridgeTestResults() {
           {speakingBody}
         </div>
       </div>
+    );
+  }
+
+  // Reading-only render — sample-mockup parity. When the user is on the
+  // Reading tab (skill mode or full-mode tab) we skip the giant purple
+  // wrapper, hero, and SceneBar entirely so the analytics surface owns
+  // the page (matches /Desktop/design-handoffs/ReadingResults_Editable.html).
+  if (activeTab === 'reading' && questionResults.reading?.length > 0) {
+    const readingPassages = (testData?.sections?.reading?.passages || []).map((p, i) => ({
+      id: p.passage_number ?? p.id ?? i + 1,
+      title: p.title || `Passage ${i + 1}`,
+      text: p.passage_text || p.text || '',
+      start_q: p.start_question_number ?? p.start_q,
+      end_q: p.end_question_number ?? p.end_q,
+    }));
+    return (
+      <ReadingResultsLayout
+        standalone
+        feedback={{
+          question_results: questionResults.reading,
+          correct: results?.reading?.correct ?? 0,
+          total: results?.reading?.total ?? 0,
+          percentage: results?.reading?.percentage ?? 0,
+          teacher_feedback: teacherFeedback,
+          passages: readingPassages,
+        }}
+        band={results?.reading?.band ?? results?.overall_band}
+        user={(() => { try { return JSON.parse(localStorage.getItem('user') || 'null'); } catch { return null; } })()}
+        testMeta={{
+          title: results?.test_book ? `Cambridge ${results.test_book}` : `Cambridge`,
+          subtitle: `Test ${testId}`,
+          durationMin: results?.reading?.duration_minutes,
+          allowedMin: 60,
+          targetBand: results?.target_band || 7.0,
+        }}
+        insights={{
+          rootCauseAnalysis,
+          fastestGain,
+          reasonSummary,
+          recommendedLessons,
+        }}
+        onRetry={() => navigate(`/cambridge-test/${bookId}/${testId}?skill=reading`)}
+        onPracticePriority={(p) => {
+          const typeMap = { tfng: 'true_false_ng', fill: 'sentence_completion', mc: 'multiple_choice', match: 'matching_information', heading: 'matching_headings' };
+          const qtype = typeMap[p?.key];
+          navigate(qtype ? `/question-bank/reading/practice?type=${qtype}` : '/question-bank/reading/academic');
+        }}
+        onBack={() => navigate(rlOnly ? '/dashboard' : `/cambridge-test/${bookId}/${testId}/results`)}
+      />
     );
   }
 
@@ -1639,7 +1690,11 @@ export default function CambridgeTestResults() {
               recommendedLessons,
             }}
             onRetry={() => navigate(`/cambridge-test/${bookId}/${testId}?skill=reading`)}
-            onPracticePriority={(p) => navigate(`/question-bank?skill=reading&type=${p?.key || ''}`)}
+            onPracticePriority={(p) => {
+          const typeMap = { tfng: 'true_false_ng', fill: 'sentence_completion', mc: 'multiple_choice', match: 'matching_information', heading: 'matching_headings' };
+          const qtype = typeMap[p?.key];
+          navigate(qtype ? `/question-bank/reading/practice?type=${qtype}` : '/question-bank/reading/academic');
+        }}
             backHref="/dashboard"
           />
         )}

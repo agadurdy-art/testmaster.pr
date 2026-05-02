@@ -1402,11 +1402,23 @@ async def submit_test(submission: SubmitAnswers):
         
         # Create a map of question id to question text
         question_text_map = {}
+        question_options_map: Dict[Any, List[str]] = {}
         for q in test.get("questions", []):
             q_id = q.get("id")
             if q_id is not None:
                 # Store with original ID (can be int or string like "20-21")
                 question_text_map[q_id] = q.get("question", "")
+                opts = q.get("options") or []
+                if isinstance(opts, list) and opts:
+                    question_options_map[q_id] = [str(o) for o in opts]
+                    # Mirror onto sub-IDs so combined "20-21" reaches Q20/Q21.
+                    if isinstance(q_id, str) and ('-' in q_id or ',' in q_id):
+                        try:
+                            for sub_id in [int(x.strip()) for x in q_id.replace(',', '-').split('-')]:
+                                question_options_map[sub_id] = [str(o) for o in opts]
+                                question_options_map[str(sub_id)] = [str(o) for o in opts]
+                        except ValueError:
+                            pass
 
         # Create explanation map from answer_key
         explanation_map = {}
@@ -1457,9 +1469,52 @@ async def submit_test(submission: SubmitAnswers):
                     return True
             
             return False
-        
+
+        # ───── Multi-MCQ pre-processing ─────────────────────────────────
+        # When a "Choose TWO" question is stored in answer_key as a combined
+        # ID like "20-21" with answer ["A","B"], the test interface often
+        # submits the two picks as separate Q20/Q21 entries (string answers).
+        # Without merging them into the combined-key shape the scoring loop
+        # below expects, both rows are skipped and 4 questions go missing
+        # from question_results — surfacing as "8/36" or "8/38" totals on
+        # the results page even though the test always has 40 questions.
+        combined_keys = [k for k in answer_key_map.keys()
+                          if isinstance(k, str) and ('-' in k or ',' in k)]
+        if combined_keys:
+            sub_answer_lookup: Dict[str, Any] = {}
+            for ans in submission.answers:
+                qid = ans.get("question_id") or ans.get("id")
+                if qid is not None:
+                    sub_answer_lookup[str(qid)] = ans.get("answer", "")
+            merged_answers = list(submission.answers)
+            for ck in combined_keys:
+                # Already submitted as combined list — keep as-is.
+                existing = sub_answer_lookup.get(ck)
+                if isinstance(existing, list):
+                    continue
+                try:
+                    sub_ids = [int(x.strip()) for x in ck.replace(',', '-').split('-')]
+                except ValueError:
+                    continue
+                gathered: List[str] = []
+                for sub_id in sub_ids:
+                    v = sub_answer_lookup.get(str(sub_id), "")
+                    if isinstance(v, list):
+                        gathered.extend(str(x) for x in v if x)
+                    elif v:
+                        gathered.append(str(v))
+                if not gathered:
+                    continue
+                drop_ids = {str(s) for s in sub_ids} | {ck}
+                merged_answers = [a for a in merged_answers
+                                   if str(a.get("question_id") or a.get("id")) not in drop_ids]
+                merged_answers.append({"question_id": ck, "answer": gathered})
+            submission_answers_iter = merged_answers
+        else:
+            submission_answers_iter = submission.answers
+
         # Comparison with support for multiple correct answers and explanations
-        for ans in submission.answers:
+        for ans in submission_answers_iter:
             qid = ans.get("question_id") or ans.get("id")
             if qid is None:
                 continue
@@ -1499,24 +1554,32 @@ async def submit_test(submission: SubmitAnswers):
                     start_id = individual_q_ids[0] if individual_q_ids else 1
                     individual_q_ids = list(range(start_id, start_id + len(correct_answer)))
                 
-                # Create separate result entries for each answer
+                # Create separate result entries for each answer.
+                # IELTS "Choose TWO" scoring is SET-BASED (order doesn't matter):
+                # each correct option = 1 mark if user picked that letter,
+                # regardless of click order. Positional matching incorrectly
+                # marked [B,C] vs [B,E] as 0/2 when user clicked C before B
+                # (rotated to [C,B] vs [B,E]).
                 user_upper = [str(a).strip().upper() for a in user_answer]
                 correct_upper = [str(a).strip().upper() for a in correct_answer]
-                
+                user_set = set(user_upper)
+                user_display = ", ".join([u for u in user_upper if u]) or ""
+
                 for idx, (q_id, correct_ans) in enumerate(zip(individual_q_ids, correct_upper)):
-                    # Check if user provided an answer for this position
-                    user_ans = user_upper[idx] if idx < len(user_upper) else ""
-                    is_correct_individual = user_ans == correct_ans
-                    
+                    is_correct_individual = correct_ans in user_set
+
                     if is_correct_individual:
                         correct += 1
-                    
-                    # Add individual question result
+
+                    # Add individual question result. user_answer keeps the
+                    # full pick set so the row UI reads "Your: B,C | Correct: B"
+                    # (clarifies WHICH option this row represents while still
+                    # showing the user's complete submission).
                     question_results.append({
                         "question_id": q_id,
                         "question_text": question_text_map.get(qid_normalized, f"Question {q_id}"),
                         "question_type": q_type,
-                        "user_answer": user_ans,
+                        "user_answer": user_display,
                         "correct_answer": correct_ans,
                         "is_correct": is_correct_individual,
                         "explanation": explanation_map.get(qid_normalized, ""),
@@ -1574,9 +1637,114 @@ async def submit_test(submission: SubmitAnswers):
 
         score_percentage = (correct / total * 100) if total > 0 else 0
         band_score = calculate_band_score(score_percentage)
-        
+
         # Sort question results by question_id for proper display order
         question_results.sort(key=lambda x: x.get("question_id", 0))
+
+        # ───── Guarantee 40-row results + passage attachment ─────────────
+        # Every IELTS reading/listening test has 40 questions. If the user
+        # skipped some (or the frontend dropped them), still emit a row so
+        # the results UI shows "(no answer)" instead of silently dropping
+        # to "8/36" totals.
+        covered_qids = {str(qr.get("question_id")) for qr in question_results}
+
+        def _expand_combined(qid):
+            if isinstance(qid, str) and ('-' in qid or ',' in qid):
+                try:
+                    parts = [int(x.strip()) for x in qid.replace(',', '-').split('-')]
+                    return parts
+                except ValueError:
+                    return [qid]
+            return [qid]
+
+        for ak_qid, correct_ans in answer_key_map.items():
+            sub_ids = _expand_combined(ak_qid)
+            q_type = question_type_map.get(ak_qid, "unknown")
+            if isinstance(correct_ans, list):
+                # Combined "Choose TWO" — emit one row per sub-id
+                for idx, sub_id in enumerate(sub_ids):
+                    if str(sub_id) in covered_qids:
+                        continue
+                    sub_correct = correct_ans[idx] if idx < len(correct_ans) else ""
+                    question_results.append({
+                        "question_id": sub_id,
+                        "question_text": question_text_map.get(ak_qid, f"Question {sub_id}"),
+                        "question_type": q_type,
+                        "user_answer": "",
+                        "correct_answer": sub_correct,
+                        "is_correct": False,
+                        "explanation": explanation_map.get(ak_qid, ""),
+                    })
+                    covered_qids.add(str(sub_id))
+                    skey = _make_skill_key(test_type, q_type)
+                    if skey not in skill_stats:
+                        skill_stats[skey] = {
+                            "skill_id": skey,
+                            "test_type": test_type,
+                            "question_type": q_type,
+                            "label": _skill_label(test_type, q_type),
+                            "correct": 0,
+                            "total": 0,
+                        }
+            else:
+                if str(ak_qid) in covered_qids:
+                    continue
+                question_results.append({
+                    "question_id": ak_qid,
+                    "question_text": question_text_map.get(ak_qid, f"Question {ak_qid}"),
+                    "question_type": q_type,
+                    "user_answer": "",
+                    "correct_answer": correct_ans,
+                    "is_correct": False,
+                    "explanation": explanation_map.get(ak_qid, ""),
+                })
+                covered_qids.add(str(ak_qid))
+
+        # Recalculate skill totals from the authoritative answer_key (each
+        # combined "20-21" key contributes len(answer) sub-questions). The
+        # earlier init counted combined keys as 1, undercounting totals.
+        for sstats in skill_stats.values():
+            sstats["total"] = 0
+        for ak_qid, correct_ans in answer_key_map.items():
+            q_type = question_type_map.get(ak_qid, "unknown")
+            skey = _make_skill_key(test_type, q_type)
+            if skey not in skill_stats:
+                skill_stats[skey] = {
+                    "skill_id": skey,
+                    "test_type": test_type,
+                    "question_type": q_type,
+                    "label": _skill_label(test_type, q_type),
+                    "correct": 0,
+                    "total": 0,
+                }
+            n_sub = len(correct_ans) if isinstance(correct_ans, list) else 1
+            skill_stats[skey]["total"] += n_sub
+
+        # Build passage map: each test question carries a "passage" field
+        # (1/2/3). Combined IDs like "20-21" map to both sub-IDs.
+        passage_map: Dict[str, Any] = {}
+        for q in test.get("questions", []):
+            qid = q.get("id") or q.get("question_id")
+            passage_val = q.get("passage")
+            if qid is None or passage_val is None:
+                continue
+            if isinstance(qid, str) and ('-' in qid or ',' in qid):
+                for sub_id in _expand_combined(qid):
+                    passage_map[str(sub_id)] = passage_val
+                passage_map[str(qid)] = passage_val
+            else:
+                passage_map[str(qid)] = passage_val
+
+        for qr in question_results:
+            qid_str = str(qr.get("question_id"))
+            if qid_str in passage_map:
+                qr["passage"] = passage_map[qid_str]
+
+        question_results.sort(
+            key=lambda x: int(x["question_id"]) if isinstance(x.get("question_id"), int)
+            or (isinstance(x.get("question_id"), str) and x["question_id"].isdigit())
+            else 9999
+        )
 
         # Build teacher-style feedback per skill
         skill_breakdown: List[Dict[str, Any]] = []
@@ -1721,6 +1889,210 @@ async def submit_test(submission: SubmitAnswers):
             )
         detailed_teacher_feedback = " ".join(detailed_parts)
 
+        # ───── Insight pipeline (reading + listening) ─────────────────────
+        # Tag each wrong question with a reason_code, build reason_summary,
+        # root_cause_analysis, fastest_gain (top weak skills) and a lesson
+        # recommendation list. The reading results layout reads these keys
+        # to populate the 6 insight tiles ("Root Cause", "Fastest Gain"…).
+        try:
+            from routes.cambridge import (
+                classify_reason_code as _classify_reason_code,
+                build_root_cause_analysis as _build_root_cause_analysis,
+                extract_evidence_text as _extract_evidence_text,
+                get_skill_tip as _get_skill_tip,
+            )
+        except Exception:
+            _classify_reason_code = None
+            _build_root_cause_analysis = None
+            _extract_evidence_text = None
+            _get_skill_tip = None
+
+        # Passage text lookup: passage_id (1/2/3) -> full text
+        passage_text_map: Dict[Any, str] = {}
+        for p in (test.get("passages") or []):
+            pid = p.get("id") or p.get("passage_id")
+            if pid is not None:
+                passage_text_map[pid] = p.get("text", "") or ""
+                passage_text_map[str(pid)] = p.get("text", "") or ""
+
+        reason_summary: Dict[str, int] = {}
+        for qr in question_results:
+            if qr.get("is_correct"):
+                continue
+            ua = qr.get("user_answer")
+            ca = qr.get("correct_answer")
+            qt = qr.get("question_type") or "unknown"
+            if _classify_reason_code is not None:
+                try:
+                    rc = _classify_reason_code(ua, ca, qt)
+                    code = rc.get("code", "WRONG_ANSWER")
+                    qr["reason_code"] = code
+                    qr["reason_label"] = rc.get("label")
+                except Exception:
+                    code = "UNANSWERED" if not ua else "WRONG_ANSWER"
+                    qr["reason_code"] = code
+            else:
+                code = "UNANSWERED" if not ua else "WRONG_ANSWER"
+                qr["reason_code"] = code
+            reason_summary[code] = reason_summary.get(code, 0) + 1
+
+            # Evidence text for "Locate in Text" — only meaningful for reading
+            if test_type == "reading" and _extract_evidence_text is not None:
+                p_text = passage_text_map.get(qr.get("passage")) \
+                    or passage_text_map.get(str(qr.get("passage")))
+                if p_text:
+                    # For MCQ-style questions the answer is just an option
+                    # letter (e.g. "B" or ["B","E"]), which can't be located
+                    # verbatim in the passage. Substitute the option TEXT for
+                    # those letters so the evidence search can find it.
+                    search_input = ca
+                    is_mcq = isinstance(qt, str) and "multiple_choice" in qt
+                    if is_mcq:
+                        opts = question_options_map.get(qr.get("question_id")) \
+                            or question_options_map.get(str(qr.get("question_id"))) \
+                            or question_options_map.get(qid_normalized)
+                        if opts:
+                            def _opt_text_for(letter: str) -> str:
+                                L = str(letter).strip().upper()
+                                for o in opts:
+                                    s = str(o).strip()
+                                    # Match "B: text", "B. text", "B) text" or "B text"
+                                    m = re.match(r"^\s*([A-Za-z])\s*[:.\-)]\s*(.+)$", s)
+                                    if m and m.group(1).upper() == L:
+                                        return m.group(2).strip()
+                                    if s[:1].upper() == L and len(s) > 1 and not s[1:2].isalpha():
+                                        return s[1:].lstrip(" :.-)").strip()
+                                # Fallback: index by alphabetical order if no label prefix
+                                idx_alpha = ord(L) - ord('A')
+                                if 0 <= idx_alpha < len(opts):
+                                    s = str(opts[idx_alpha]).strip()
+                                    m = re.match(r"^\s*([A-Za-z])\s*[:.\-)]\s*(.+)$", s)
+                                    return (m.group(2).strip() if m else s)
+                                return ""
+                            if isinstance(ca, list):
+                                expanded = [t for t in (_opt_text_for(c) for c in ca) if t]
+                                if expanded:
+                                    search_input = expanded
+                            elif isinstance(ca, str) and len(ca.strip()) == 1 and ca.strip().isalpha():
+                                t = _opt_text_for(ca)
+                                if t:
+                                    search_input = t
+                    try:
+                        evidence = _extract_evidence_text(search_input, p_text)
+                        if evidence:
+                            qr["evidence_text"] = evidence
+                    except Exception:
+                        pass
+
+            # Skill tip — reason-code aware tip for the user's specific mistake
+            if _get_skill_tip is not None:
+                try:
+                    qr["skill_tip"] = _get_skill_tip(
+                        section=test_type,
+                        qtype=qt,
+                        accuracy=0.0,
+                        question_text=qr.get("question_text", ""),
+                        correct_ans=ca,
+                        user_answer=ua,
+                        reason_code=code,
+                    )
+                except Exception:
+                    pass
+
+        if _build_root_cause_analysis is not None:
+            try:
+                root_cause_analysis = _build_root_cause_analysis(
+                    reason_summary, {test_type: question_results}
+                )
+            except Exception:
+                root_cause_analysis = []
+        else:
+            root_cause_analysis = []
+
+        # Fastest gain: top weak skills sorted by wrong_count desc
+        fastest_gain = []
+        for s in skill_breakdown:
+            wrong_count = max(0, (s.get("total", 0) or 0) - (s.get("correct", 0) or 0))
+            if wrong_count <= 0:
+                continue
+            fastest_gain.append({
+                "skill_id": s.get("skill_id"),
+                "label": s.get("label"),
+                "question_type": s.get("question_type"),
+                "wrong_count": wrong_count,
+                "total": s.get("total", 0),
+                "correct": s.get("correct", 0),
+                "expected_recovery": max(1, int(round(wrong_count * 0.7))),
+            })
+        fastest_gain.sort(key=lambda x: x["wrong_count"], reverse=True)
+        fastest_gain = fastest_gain[:3]
+
+        # Recommended lessons — local map keyed by question_type (matches
+        # the skill_breakdown items rather than cambridge.py's underscore
+        # naming convention).
+        _LESSON_MAP = {
+            "true_false_notgiven": ("tfng-mastery", "True/False/Not Given Mastery",
+                                    "/mastery?section=reading&lesson=tfng",
+                                    "IELTS Reading Mastery"),
+            "yes_no_notgiven": ("ynng-mastery", "Yes/No/Not Given Strategies",
+                                "/mastery?section=reading&lesson=ynng",
+                                "IELTS Reading Mastery"),
+            "matching_headings": ("headings-mastery", "Matching Headings Technique",
+                                  "/mastery?section=reading&lesson=headings",
+                                  "IELTS Reading Mastery"),
+            "matching_information": ("matching-info", "Matching Information Practice",
+                                     "/mastery?section=reading&lesson=matching",
+                                     "IELTS Reading Mastery"),
+            "sentence_completion": ("sentence-comp", "Sentence Completion Skills",
+                                    "/mastery?section=reading&lesson=sentence",
+                                    "IELTS Reading Mastery"),
+            "summary_completion": ("summary-comp", "Summary Completion Strategy",
+                                   "/mastery?section=reading&lesson=summary",
+                                   "IELTS Reading Mastery"),
+            "note_completion": ("note-comp", "Note Completion Listening",
+                                "/mastery?section=listening&lesson=notes",
+                                "IELTS Listening Mastery"),
+            "form_completion": ("form-comp", "Form Completion Skills",
+                                "/mastery?section=listening&lesson=forms",
+                                "IELTS Listening Mastery"),
+            "map_labeling": ("map-labeling", "Map / Diagram Labelling",
+                             "/mastery?section=listening&lesson=map",
+                             "IELTS Listening Mastery"),
+            "multiple_choice": ("mc-strategy", "Multiple Choice Strategy",
+                                "/mastery?section=skills&lesson=mc",
+                                "IELTS Skills Mastery"),
+            "multiple_choice_two": ("mc-two-strategy", "Multiple Choice (Choose Two)",
+                                    "/mastery?section=skills&lesson=mc-two",
+                                    "IELTS Skills Mastery"),
+            "matching": ("matching-features", "Matching Features",
+                         "/mastery?section=listening&lesson=matching",
+                         "IELTS Listening Mastery"),
+        }
+        recommended_lessons: List[Dict[str, Any]] = []
+        weak_for_recs = [s for s in skill_breakdown
+                         if (s.get("total", 0) or 0) > 0
+                         and ((s.get("correct", 0) or 0) / s["total"]) < 0.7]
+        weak_for_recs.sort(key=lambda s: (s.get("correct", 0) or 0) / max(1, s.get("total", 1)))
+        for s in weak_for_recs[:5]:
+            qt = s.get("question_type") or ""
+            lm = _LESSON_MAP.get(qt)
+            if not lm:
+                continue
+            lesson_id, title, route, course = lm
+            tot = s.get("total", 0) or 0
+            cor = s.get("correct", 0) or 0
+            ratio = (cor / tot) if tot else 0
+            recommended_lessons.append({
+                "lesson_id": lesson_id,
+                "title": title,
+                "course": course,
+                "route": route,
+                "reason": f"Your {s.get('label','this skill')} accuracy is {cor}/{tot} ({int(ratio*100)}%)",
+                "priority": "high" if ratio < 0.4 else "medium",
+            })
+
+        duration_minutes = round((submission.time_taken or 0) / 60)
+
         attempt = TestAttempt(
             user_id=submission.user_id,
             test_id=submission.test_id,
@@ -1739,6 +2111,15 @@ async def submit_test(submission: SubmitAnswers):
                     "detailed": detailed_teacher_feedback,
                 },
                 "question_results": question_results,
+                "reason_summary": reason_summary,
+                "root_cause_analysis": root_cause_analysis,
+                "fastest_gain": fastest_gain,
+                "recommended_lessons": recommended_lessons,
+                "duration_minutes": duration_minutes,
+                "passages": [
+                    {"id": p.get("id"), "title": p.get("title"), "text": p.get("text", "")}
+                    for p in (test.get("passages") or [])
+                ],
             },
             time_taken=submission.time_taken,
         )
@@ -1794,6 +2175,8 @@ async def submit_test(submission: SubmitAnswers):
     # Save attempt
     doc = attempt.model_dump()
     doc["completed_at"] = doc["completed_at"].isoformat()
+    if submission.test_type in ("listening", "reading"):
+        doc["duration_minutes"] = round((submission.time_taken or 0) / 60)
     await db.test_attempts.insert_one(doc)
 
     # Update user history
