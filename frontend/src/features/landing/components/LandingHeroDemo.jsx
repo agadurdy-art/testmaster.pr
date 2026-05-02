@@ -17,7 +17,7 @@ import LizAvatar from './LizAvatar';
 const TABS = [
   { key: 'writing',   label: 'Writing',   href: '/samples/writing/band-6-5-task2', cta: 'See writing sample',     available: true  },
   { key: 'speaking',  label: 'Speaking',  href: '/samples/speaking/band-6-5-part2', cta: 'See sample speaking',    available: true  },
-  { key: 'reading',   label: 'Reading',   href: '#',                                cta: 'Reading — coming soon',  available: false },
+  { key: 'reading',   label: 'Reading',   href: '/samples/reading/band-6-0-academic.html', cta: 'See reading sample',     available: true  },
   { key: 'listening', label: 'Listening', href: '#',                                cta: 'Listening — coming soon',available: false },
 ];
 
@@ -128,7 +128,7 @@ export default function LandingHeroDemo() {
           {active === 'speaking' && (
             <SpeakingDemo />
           )}
-          {active === 'reading' && <PlaceholderDemo label="Reading" />}
+          {active === 'reading' && <ReadingDemo />}
           {active === 'listening' && <PlaceholderDemo label="Listening" />}
         </div>
       </div>
@@ -249,6 +249,69 @@ function SpeakingDemo() {
         </div>
         <a href="/samples/speaking/band-6-5-part2" className="sample-preview-cta">
           See sample speaking →
+        </a>
+      </div>
+    </div>
+  );
+}
+
+function ReadingDemo() {
+  return (
+    <div className="sample-preview">
+      <div className="sample-preview-head">
+        <div>
+          <div className="sample-preview-eyebrow">Academic · Sample report</div>
+          <div className="sample-preview-title">Reading Test — 3 passages, 40 questions</div>
+        </div>
+        <div className="sample-preview-band">
+          <div className="sample-preview-band-num">6.0</div>
+          <div className="sample-preview-band-label">Estimated band</div>
+        </div>
+      </div>
+      <div className="sample-preview-body">
+        <div className="sample-preview-annotated">
+          <p>
+            <b>Q5 · True / False / Not Given</b> —{' '}
+            <span className="margin-tag" title="Strategy">¹</span>
+            <i>"Snow leopards primarily hunt at night."</i>
+          </p>
+          <p>
+            <span style={{ color: '#dc2626' }}>Your answer: <b>False</b></span>{' '}
+            <span style={{ color: '#059669' }}>· Correct: <b>Not Given</b></span>
+          </p>
+          <p>
+            <b>Q24 · Fill in the blank</b> —{' '}
+            <span className="margin-tag" title="Synonym">²</span>"Cities use ____ data to redesign streets."
+          </p>
+          <p>
+            <span style={{ color: '#dc2626' }}>Your answer: <b>traffic</b></span>{' '}
+            <span style={{ color: '#059669' }}>· Correct: <b>movement</b></span>
+          </p>
+        </div>
+        <div className="sample-preview-margin">
+          <div className="sample-preview-note">
+            <b>¹ T/F/NG · Trap</b>
+            If the passage doesn't address it, it's <i>Not Given</i> — even if the claim feels false.
+          </div>
+          <div className="sample-preview-note">
+            <b>² Fill-in · Exact word</b>
+            Fill-ins almost always require the exact word from the passage. Don't paraphrase.
+          </div>
+          <div className="sample-preview-note">
+            <b>Priority Fix</b>
+            7 of your 16 mistakes come from T/F/NG — mastering this one skill is worth +1.0 band.
+          </div>
+        </div>
+      </div>
+      <div className="sample-preview-footer">
+        <div className="sample-preview-criteria">
+          <div className="sample-preview-criterion"><span className="sample-preview-criterion-name">Passage 1</span><span className="sample-preview-criterion-val">10/13</span></div>
+          <div className="sample-preview-criterion"><span className="sample-preview-criterion-name">Passage 2</span><span className="sample-preview-criterion-val">8/13</span></div>
+          <div className="sample-preview-criterion"><span className="sample-preview-criterion-name">Passage 3</span><span className="sample-preview-criterion-val">6/14</span></div>
+          <div className="sample-preview-criterion"><span className="sample-preview-criterion-name">Total</span><span className="sample-preview-criterion-val">24/40</span></div>
+        </div>
+        <a href="/samples/reading/band-6-0-academic.html" className="sample-preview-cta">
+          See the full report →
         </a>
       </div>
     </div>
