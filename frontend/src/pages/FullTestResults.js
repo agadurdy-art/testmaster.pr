@@ -15,7 +15,7 @@ import {
   adaptSpeakingResult,
   LegacySpeakingDetailDrawer,
 } from '../features/speaking';
-import { ReadingListeningDrilldown } from '../features/results';
+import { ReadingListeningDrilldown, ReadingResultsLayout } from '../features/results';
 import '../features/speaking/speaking.css';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -716,14 +716,31 @@ export default function FullTestResults() {
 
         {/* Reading Results - Detailed */}
         {activeTab === 'reading' && questionResults.reading?.length > 0 && (
-          <ReadingListeningDrilldown
-            testType="reading"
+          <ReadingResultsLayout
             feedback={{
               question_results: questionResults.reading,
               correct: results.sections?.reading?.correct ?? 0,
               total: results.sections?.reading?.total ?? 0,
               percentage: results.sections?.reading?.percentage ?? 0,
+              teacher_feedback: teacherFeedback,
             }}
+            band={results.sections?.reading?.band ?? results.overall_band}
+            user={(() => { try { return JSON.parse(localStorage.getItem('user') || 'null'); } catch { return null; } })()}
+            testMeta={{
+              title: 'Full Test',
+              subtitle: results.session_id ? `Session ${String(results.session_id).slice(0, 8)}` : '',
+              durationMin: results.sections?.reading?.duration_minutes,
+              allowedMin: 60,
+              targetBand: results?.target_band || 7.0,
+            }}
+            insights={{
+              rootCauseAnalysis,
+              fastestGain,
+              reasonSummary,
+              recommendedLessons,
+            }}
+            onPracticePriority={(p) => navigate(`/question-bank?skill=reading&type=${p?.key || ''}`)}
+            backHref="/dashboard"
           />
         )}
 

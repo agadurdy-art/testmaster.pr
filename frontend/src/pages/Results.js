@@ -9,7 +9,7 @@ import SkillBreakdown from '../components/SkillBreakdown';
 import LocateExplain from '../components/test/LocateExplain';
 import ProgressAnalytics from '../components/test/ProgressAnalytics';
 import { ResultsState as SpeakingResultsState, adaptSpeakingResult } from '../features/speaking';
-import { ReadingListeningDrilldown } from '../features/results';
+import { ReadingListeningDrilldown, ReadingResultsLayout } from '../features/results';
 import '../features/speaking/speaking.css';
 
 export default function Results({ user }) {
@@ -104,8 +104,9 @@ export default function Results({ user }) {
           </div>
         </Card>
 
-        {/* Teacher Feedback Card - For Reading/Listening */}
-        {(result.test_type === 'reading' || result.test_type === 'listening') && result.feedback?.teacher_feedback && (
+        {/* Teacher Feedback Card - Listening only.
+            Reading uses ReadingResultsLayout which includes a Liz tutor card. */}
+        {result.test_type === 'listening' && result.feedback?.teacher_feedback && (
           <Card className="p-6 mb-6 bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200 rounded-2xl">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg">
@@ -462,12 +463,32 @@ export default function Results({ user }) {
           </Card>
         )}
 
-        {/* Question-by-Question Results - For Reading/Listening.
-            Extracted into the shared ReadingListeningDrilldown component
-            (features/results/) so Cambridge full-test + Full Test results
-            pages render the same D7 UI without duplicating ~200 lines. */}
-        {(result.test_type === 'reading' || result.test_type === 'listening') && (
-          <ReadingListeningDrilldown testType={result.test_type} feedback={result.feedback} />
+        {/* Question-by-Question Results.
+            Reading → rich ReadingResultsLayout (greeting + insight tiles + scrollable drilldown + Liz card).
+            Listening → simple drilldown (Cambridge/Full Test paths handle their own listening UI). */}
+        {result.test_type === 'reading' && (
+          <ReadingResultsLayout
+            feedback={result.feedback}
+            band={result.band_score}
+            user={user}
+            testMeta={{
+              title: result.test_name || 'Practice Test',
+              subtitle: result.attempt_label || '',
+              durationMin: result.duration_minutes,
+              allowedMin: 60,
+              targetBand: user?.target_band || 7.0,
+            }}
+            insights={{
+              rootCauseAnalysis: result.feedback?.root_cause_analysis,
+              fastestGain: result.feedback?.fastest_gain,
+              reasonSummary: result.feedback?.reason_summary,
+              recommendedLessons: result.feedback?.recommended_lessons,
+            }}
+            backHref="/dashboard"
+          />
+        )}
+        {result.test_type === 'listening' && (
+          <ReadingListeningDrilldown testType="listening" feedback={result.feedback} />
         )}
 
         {/* Skill Breakdown - Phase 4 */}
