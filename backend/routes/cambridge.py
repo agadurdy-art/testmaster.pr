@@ -780,7 +780,8 @@ Respond with ONLY a JSON object, no prose, no markdown:
                     "correct": listening_results["correct"],
                     "total": listening_results["total"],
                     "percentage": listening_results["percentage"],
-                    "band": listening_band
+                    "band": listening_band,
+                    "transcripts": (test_data.get("sections", {}) or {}).get("listening", {}).get("transcripts") or {},
                 },
                 "reading": {
                     "correct": reading_results["correct"],
@@ -1088,7 +1089,18 @@ def calculate_section_results(section: str, user_answers: Dict, correct_answers:
     group_for_qnum, multi_groups = _build_multi_selection_groups(
         section, section_data, correct_answers
     )
-    
+
+    # Listening: build {part_num: transcript_text} so per-question evidence
+    # excerpts can be located in the right part's audioscript.
+    listening_transcripts: Dict[int, str] = {}
+    if section == "listening":
+        raw_transcripts = section_data.get("transcripts") or {}
+        for k, v in raw_transcripts.items():
+            try:
+                listening_transcripts[int(k)] = str(v or "")
+            except (TypeError, ValueError):
+                continue
+
     if section == "listening":
         for part in section_data.get("parts", []):
             part_num = part.get("part_number", 1)
@@ -1359,7 +1371,18 @@ def calculate_section_results(section: str, user_answers: Dict, correct_answers:
                     correct_ans, meta.get("options"),
                 ) if "multiple" in (qtype or "") else correct_ans
                 evidence_text = extract_evidence_text(search_input, p_text)
-            
+        elif section == "listening":
+            part_num = meta.get("part", 1)
+            p_text = listening_transcripts.get(part_num, "")
+            # Only extract for question types where the answer is a real word
+            # in the transcript (note/short/sentence completion). MCQ/matching
+            # answers are letter codes that won't appear verbatim.
+            if p_text and qtype and not any(
+                k in qtype for k in ("multiple", "matching", "multi_select")
+            ):
+                evidence_text = extract_evidence_text(correct_ans, p_text)
+
+
         results["details"].append({
             "question_id": qnum,
             "question_type": qtype,

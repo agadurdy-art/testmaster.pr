@@ -16,7 +16,7 @@ import {
   adaptSpeakingResult,
   LegacySpeakingDetailDrawer,
 } from '../features/speaking';
-import { ReadingListeningDrilldown, ReadingResultsLayout } from '../features/results';
+import { ReadingListeningDrilldown, ReadingResultsLayout, ListeningResultsLayout } from '../features/results';
 import '../features/speaking/speaking.css';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -129,6 +129,7 @@ export default function CambridgeTestResults() {
             band: data.scores.listening.band,
             percentage: data.scores.listening.percentage,
             duration_minutes: sectionDurations?.listening,
+            transcript: data.scores.listening.transcripts || {},
           },
           reading: {
             correct: data.scores.reading.correct,
@@ -758,6 +759,47 @@ export default function CambridgeTestResults() {
           {speakingBody}
         </div>
       </div>
+    );
+  }
+
+  // Listening-only render — same sample-mockup parity treatment as Reading.
+  // ListeningResultsLayout owns the page (band dial + Liz card + part cards
+  // P1-P4 + insight tiles + audioscript modal), skipping the purple wrapper.
+  if (activeTab === 'listening' && questionResults.listening?.length > 0) {
+    return (
+      <ListeningResultsLayout
+        standalone
+        feedback={{
+          question_results: questionResults.listening,
+          correct: results?.listening?.correct ?? 0,
+          total: results?.listening?.total ?? 0,
+          percentage: results?.listening?.percentage ?? 0,
+          transcript: results?.listening?.transcript,
+          teacher_feedback: teacherFeedback,
+        }}
+        band={results?.listening?.band ?? results?.overall_band}
+        user={(() => { try { return JSON.parse(localStorage.getItem('user') || 'null'); } catch { return null; } })()}
+        testMeta={{
+          title: results?.test_book ? `Cambridge ${results.test_book}` : `Cambridge`,
+          subtitle: `Test ${testId}`,
+          durationMin: results?.listening?.duration_minutes,
+          allowedMin: 30,
+          targetBand: results?.target_band || 7.0,
+        }}
+        insights={{
+          rootCauseAnalysis,
+          fastestGain,
+          reasonSummary,
+          recommendedLessons,
+        }}
+        onRetry={() => navigate(`/cambridge-test/${bookId}/${testId}?skill=listening`)}
+        onPracticePriority={(p) => {
+          const typeMap = { note: 'note_completion', mc: 'multiple_choice', match: 'matching', multi: 'multi_select', short: 'short_answer' };
+          const qtype = typeMap[p?.key];
+          navigate(qtype ? `/question-bank/listening/practice?type=${qtype}` : '/question-bank/listening');
+        }}
+        onBack={() => navigate(rlOnly ? '/dashboard' : `/cambridge-test/${bookId}/${testId}/results`)}
+      />
     );
   }
 

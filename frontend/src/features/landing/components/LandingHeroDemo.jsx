@@ -18,7 +18,7 @@ const TABS = [
   { key: 'writing',   label: 'Writing',   href: '/samples/writing/band-6-5-task2', cta: 'See writing sample',     available: true  },
   { key: 'speaking',  label: 'Speaking',  href: '/samples/speaking/band-6-5-part2', cta: 'See sample speaking',    available: true  },
   { key: 'reading',   label: 'Reading',   href: '/samples/reading/band-6-0-academic.html', cta: 'See reading sample',     available: true  },
-  { key: 'listening', label: 'Listening', href: '#',                                cta: 'Listening — coming soon',available: false },
+  { key: 'listening', label: 'Listening', href: '/samples/listening/band-5-5-listening.html', cta: 'See listening sample', available: true  },
 ];
 
 const LIZ_LINES = [
@@ -129,7 +129,7 @@ export default function LandingHeroDemo() {
             <SpeakingDemo />
           )}
           {active === 'reading' && <ReadingDemo />}
-          {active === 'listening' && <PlaceholderDemo label="Listening" />}
+          {active === 'listening' && <ListeningDemo />}
         </div>
       </div>
     </section>
@@ -311,6 +311,71 @@ function ReadingDemo() {
           <div className="sample-preview-criterion"><span className="sample-preview-criterion-name">Total</span><span className="sample-preview-criterion-val">24/40</span></div>
         </div>
         <a href="/samples/reading/band-6-0-academic.html" className="sample-preview-cta">
+          See the full report →
+        </a>
+      </div>
+    </div>
+  );
+}
+
+function ListeningDemo() {
+  return (
+    <div className="sample-preview">
+      <div className="sample-preview-head">
+        <div>
+          <div className="sample-preview-eyebrow">Mock Test 4 · Sample report</div>
+          <div className="sample-preview-title">Listening Test — 4 parts, 40 questions</div>
+        </div>
+        <div className="sample-preview-band">
+          <div className="sample-preview-band-num">5.5</div>
+          <div className="sample-preview-band-label">Estimated band</div>
+        </div>
+      </div>
+      <div className="sample-preview-body">
+        <div className="sample-preview-annotated">
+          <p>
+            <b>Q7 · Note completion</b> —{' '}
+            <span className="margin-tag" title="Synonym trap">¹</span>
+            <i>"…allergic to ____"</i>
+          </p>
+          <p>
+            <span style={{ color: '#dc2626' }}>Your answer: <b>dirt</b></span>{' '}
+            <span style={{ color: '#059669' }}>· Correct: <b>dust</b></span>
+          </p>
+          <p>
+            <b>Q14 · Multiple choice</b> —{' '}
+            <span className="margin-tag" title="Distractor trap">²</span>
+            <i>"What unexpected benefit did Dunwich Hotel notice?"</i>
+          </p>
+          <p>
+            <span style={{ color: '#dc2626' }}>Your answer: <b>A · fall in complaints</b></span>{' '}
+            <span style={{ color: '#059669' }}>· Correct: <b>C · rise in spending</b></span>
+          </p>
+        </div>
+        <div className="sample-preview-margin">
+          <div className="sample-preview-note">
+            <b>¹ Note completion · Synonym trap</b>
+            You heard the right idea but wrote a synonym. IELTS marks the EXACT word from the recording.
+          </div>
+          <div className="sample-preview-note">
+            <b>² MCQ · Distractor trap</b>
+            "Not only X but also Y" — the unexpected benefit is Y, not the obvious X.
+          </div>
+          <div className="sample-preview-note">
+            <b>Priority Fix</b>
+            Part 4 lecture cost 7 marks. Pause-and-write drills push you from 5.5 to 6.5.
+          </div>
+        </div>
+      </div>
+      <div className="sample-preview-footer">
+        <div className="sample-preview-criteria">
+          <div className="sample-preview-criterion"><span className="sample-preview-criterion-name">Part 1</span><span className="sample-preview-criterion-val">8/10</span></div>
+          <div className="sample-preview-criterion"><span className="sample-preview-criterion-name">Part 2</span><span className="sample-preview-criterion-val">6/10</span></div>
+          <div className="sample-preview-criterion"><span className="sample-preview-criterion-name">Part 3</span><span className="sample-preview-criterion-val">4/10</span></div>
+          <div className="sample-preview-criterion"><span className="sample-preview-criterion-name">Part 4</span><span className="sample-preview-criterion-val">3/10</span></div>
+          <div className="sample-preview-criterion"><span className="sample-preview-criterion-name">Total</span><span className="sample-preview-criterion-val">21/40</span></div>
+        </div>
+        <a href="/samples/listening/band-5-5-listening.html" className="sample-preview-cta">
           See the full report →
         </a>
       </div>

@@ -346,3 +346,13 @@ IELTS18_TEST4 = {
         "reading": {"1": "D", "2": "C", "3": "E", "4": "B", "5": "D", "6": "energy", "7": "food", "8": "gardening", "9": "obesity", "10": "C", "11": "D", "12": "A", "13": "D", "14": "B", "15": "C", "16": "D", "17": "C", "18": "B", "19": "A", "20": "E", "21": "B", "22": "D", "23": "YES", "24": "NO", "25": "NOT GIVEN", "26": "YES", "27": "YES", "28": "YES", "29": "NO", "30": "NOT GIVEN", "31": "I", "32": "F", "33": "A", "34": "C", "35": "H", "36": "E", "37": "D", "38": "C", "39": "A", "40": "C"}
     }
 }
+
+
+# Attach official Cambridge audioscripts to the listening section so the
+# results page can render the "Audioscript" modal + per-part panels.
+try:
+    from .audioscripts import IELTS18_AUDIOSCRIPTS as _A
+except ImportError:
+    from audioscripts import IELTS18_AUDIOSCRIPTS as _A
+IELTS18_TEST4["sections"]["listening"]["transcripts"] = _A.get(4, {})
+del _A

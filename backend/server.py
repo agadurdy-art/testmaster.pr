@@ -956,6 +956,45 @@ def verify_password(password: str, password_hash: str) -> bool:
 
 # ============ Helper Functions ============
 
+def _resolve_listening_transcripts(test: Dict[str, Any]) -> Dict[int, str]:
+    """Return a {part_number: transcript_text} map for a listening test.
+
+    Sources, in order:
+      1. test["transcripts"] / test["sections"]["listening"]["transcripts"] —
+         used when the test data itself carries audioscripts (e.g. Cambridge
+         book content modules).
+      2. Title-based fallback for tests seeded into db.tests before transcripts
+         existed (Cambridge IELTS 19 Test 1 / Test 2 dashboard listening tests).
+    """
+    direct = test.get("transcripts")
+    if not direct:
+        try:
+            direct = (test.get("sections") or {}).get("listening", {}).get("transcripts")
+        except (AttributeError, TypeError):
+            direct = None
+    if direct:
+        out: Dict[int, str] = {}
+        for k, v in direct.items():
+            try:
+                out[int(k)] = str(v or "")
+            except (TypeError, ValueError):
+                continue
+        if out:
+            return out
+
+    title = (test.get("title") or "").lower()
+    if "cambridge ielts 19" in title or "ielts 19" in title:
+        try:
+            from content.cambridge_tests.ielts19.audioscripts import IELTS19_AUDIOSCRIPTS
+            if "test 1" in title:
+                return dict(IELTS19_AUDIOSCRIPTS.get(1, {}))
+            if "test 2" in title:
+                return dict(IELTS19_AUDIOSCRIPTS.get(2, {}))
+        except ImportError:
+            pass
+    return {}
+
+
 def calculate_band_score(percentage: float) -> float:
     """Convert percentage to IELTS band score (1-9)"""
     if percentage >= 95:
@@ -1418,11 +1457,24 @@ async def submit_test(submission: SubmitAnswers):
         # Create a map of question id to question text
         question_text_map = {}
         question_options_map: Dict[Any, List[str]] = {}
+        question_section_map: Dict[Any, int] = {}
         for q in test.get("questions", []):
             q_id = q.get("id")
             if q_id is not None:
                 # Store with original ID (can be int or string like "20-21")
                 question_text_map[q_id] = q.get("question", "")
+                # Track section/part number so listening evidence excerpts can
+                # be looked up in the correct part's transcript.
+                sec = q.get("section") or q.get("part")
+                if sec is not None:
+                    try:
+                        question_section_map[q_id] = int(sec)
+                        if isinstance(q_id, str) and ('-' in q_id or ',' in q_id):
+                            for sub_id in [int(x.strip()) for x in q_id.replace(',', '-').split('-')]:
+                                question_section_map[sub_id] = int(sec)
+                                question_section_map[str(sub_id)] = int(sec)
+                    except (TypeError, ValueError):
+                        pass
                 opts = q.get("options") or []
                 if isinstance(opts, list) and opts:
                     question_options_map[q_id] = [str(o) for o in opts]
@@ -1930,6 +1982,37 @@ async def submit_test(submission: SubmitAnswers):
                 passage_text_map[pid] = p.get("text", "") or ""
                 passage_text_map[str(pid)] = p.get("text", "") or ""
 
+        # Listening evidence pre-pass — attach audioscript excerpts to each
+        # listening question (correct AND wrong) so the "Locate in Audioscript"
+        # panel works for the dashboard listening tests, mirroring the
+        # cambridge.py route behavior.
+        listening_transcripts_map: Dict[int, str] = {}
+        if test_type == "listening" and _extract_evidence_text is not None:
+            listening_transcripts_map = _resolve_listening_transcripts(test)
+            if listening_transcripts_map:
+                for qr in question_results:
+                    qt_lk = (qr.get("question_type") or "").lower()
+                    if not qt_lk or any(
+                        k in qt_lk for k in ("multiple", "matching", "multi_select")
+                    ):
+                        continue
+                    qid = qr.get("question_id")
+                    part_num = (
+                        question_section_map.get(qid)
+                        or question_section_map.get(str(qid))
+                        or 1
+                    )
+                    p_text = listening_transcripts_map.get(part_num) or ""
+                    if not p_text:
+                        continue
+                    ca = qr.get("correct_answer")
+                    try:
+                        ev = _extract_evidence_text(ca, p_text)
+                        if ev:
+                            qr["evidence_text"] = ev
+                    except Exception:
+                        pass
+
         reason_summary: Dict[str, int] = {}
         for qr in question_results:
             if qr.get("is_correct"):
@@ -2135,6 +2218,7 @@ async def submit_test(submission: SubmitAnswers):
                     {"id": p.get("id"), "title": p.get("title"), "text": p.get("text", "")}
                     for p in (test.get("passages") or [])
                 ],
+                "transcript": listening_transcripts_map,
             },
             time_taken=submission.time_taken,
         )

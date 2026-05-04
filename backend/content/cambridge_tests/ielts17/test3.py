@@ -755,3 +755,13 @@ In the final chapter (chapter 10), Barr discusses another of his empirical paper
         }
     }
 }
+
+
+# Attach official Cambridge audioscripts to the listening section so the
+# results page can render the "Audioscript" modal + per-part panels.
+try:
+    from .audioscripts import IELTS17_AUDIOSCRIPTS as _A
+except ImportError:
+    from audioscripts import IELTS17_AUDIOSCRIPTS as _A
+IELTS17_TEST3["sections"]["listening"]["transcripts"] = _A.get(3, {})
+del _A

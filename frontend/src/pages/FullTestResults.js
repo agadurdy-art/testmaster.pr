@@ -15,7 +15,8 @@ import {
   adaptSpeakingResult,
   LegacySpeakingDetailDrawer,
 } from '../features/speaking';
-import { ReadingListeningDrilldown, ReadingResultsLayout } from '../features/results';
+import { ReadingListeningDrilldown, ReadingResultsLayout, ListeningResultsLayout } from '../features/results';
+import WritingEvaluatorResult from '../features/evaluator/components/WritingEvaluatorResult';
 import '../features/speaking/speaking.css';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -60,6 +61,15 @@ export default function FullTestResults() {
   const setActiveTab = (t) => {
     const next = new URLSearchParams(searchParams);
     next.set('tab', t);
+    setSearchParams(next, { replace: true });
+  };
+  // Writing sub-tab state (T1/T2) for the Writing tab. URL-synced so refresh
+  // keeps the user on the same task. Defaults to task 1.
+  const requestedWtask = searchParams.get('wtask');
+  const activeWtask = (requestedWtask === '2' ? 2 : 1);
+  const setActiveWtask = (n) => {
+    const next = new URLSearchParams(searchParams);
+    next.set('wtask', String(n));
     setSearchParams(next, { replace: true });
   };
 
@@ -129,55 +139,10 @@ export default function FullTestResults() {
   const strengths = skillBreakdown.filter(s => s.total > 0 && (s.correct / s.total) >= 0.7);
   const weaknesses = skillBreakdown.filter(s => s.total > 0 && (s.correct / s.total) < 0.5);
 
-  // Reading-only render (sample-mockup parity). Skip the SceneBar/hero so the
-  // analytics surface matches /Desktop/design-handoffs/ReadingResults_Editable.html.
-  if (activeTab === 'reading' && questionResults.reading?.length > 0) {
-    const rawPassages =
-      results?.passages ||
-      results?.sections?.reading?.passages ||
-      [];
-    const readingPassages = rawPassages.map((p, i) => ({
-      id: p.passage_number ?? p.id ?? i + 1,
-      title: p.title || `Passage ${i + 1}`,
-      text: p.passage_text || p.text || '',
-      start_q: p.start_question_number ?? p.start_q,
-      end_q: p.end_question_number ?? p.end_q,
-    }));
-    return (
-      <ReadingResultsLayout
-        standalone
-        feedback={{
-          question_results: questionResults.reading,
-          correct: results.sections?.reading?.correct ?? 0,
-          total: results.sections?.reading?.total ?? 0,
-          percentage: results.sections?.reading?.percentage ?? 0,
-          teacher_feedback: teacherFeedback,
-          passages: readingPassages,
-        }}
-        band={results.sections?.reading?.band ?? results.overall_band}
-        user={(() => { try { return JSON.parse(localStorage.getItem('user') || 'null'); } catch { return null; } })()}
-        testMeta={{
-          title: 'Full Test',
-          subtitle: results.session_id ? `Session ${String(results.session_id).slice(0, 8)}` : '',
-          durationMin: results.sections?.reading?.duration_minutes,
-          allowedMin: 60,
-          targetBand: results?.target_band || 7.0,
-        }}
-        insights={{
-          rootCauseAnalysis,
-          fastestGain,
-          reasonSummary,
-          recommendedLessons,
-        }}
-        onPracticePriority={(p) => {
-          const typeMap = { tfng: 'true_false_ng', fill: 'sentence_completion', mc: 'multiple_choice', match: 'matching_information', heading: 'matching_headings' };
-          const qtype = typeMap[p?.key];
-          navigate(qtype ? `/question-bank/reading/practice?type=${qtype}` : '/question-bank/reading/academic');
-        }}
-        onBack={() => navigate('/dashboard')}
-      />
-    );
-  }
+  // Reading no longer early-returns — it renders inside the standard
+  // FullTestResults shell so the SceneBar stays visible across all skill
+  // tabs (consistent navigation). The hero card is hidden on non-overview
+  // tabs so each skill layout's own band dial isn't duplicated.
 
   return (
     <div data-testid="full-test-results" className="min-h-screen bg-gradient-to-b from-gray-50 via-slate-50/30 to-gray-100 py-8 px-4 sm:px-6">
@@ -187,7 +152,10 @@ export default function FullTestResults() {
         </Button>
 
         {/* Compact Hero — band score + per-skill mini cards in one row.
-            iOS 26 glass card; no oversized icons or vertical empty space. */}
+            iOS 26 glass card; no oversized icons or vertical empty space.
+            ONLY shown on Overview tab — skill tabs render their layout's own
+            band dial, so duplicating the FullTest hero would clutter the UI. */}
+        {activeTab === 'overview' && (
         <Card data-testid="overall-score-card" className="px-5 py-4 mb-5 bg-white border-0 shadow-sm rounded-2xl" style={{ border: `1px solid hsl(${T.border})` }}>
           <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-5 items-center">
             {/* Band block */}
@@ -293,6 +261,7 @@ export default function FullTestResults() {
             </div>
           )}
         </Card>
+        )}
 
         {/* SceneBar — iOS 26 segmented pill (D9 pattern) */}
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
@@ -750,16 +719,36 @@ export default function FullTestResults() {
         )}
         {/* End insight drawer */}
 
-        {/* Listening Results - Detailed */}
+        {/* Listening Results - Detailed (rich layout, mirror of Reading) */}
         {activeTab === 'listening' && questionResults.listening?.length > 0 && (
-          <ReadingListeningDrilldown
-            testType="listening"
+          <ListeningResultsLayout
             feedback={{
               question_results: questionResults.listening,
               correct: results.sections?.listening?.correct ?? 0,
               total: results.sections?.listening?.total ?? 0,
               percentage: results.sections?.listening?.percentage ?? 0,
               transcript: results.sections?.listening?.transcript,
+              teacher_feedback: teacherFeedback,
+            }}
+            band={results.sections?.listening?.band ?? results.overall_band}
+            user={(() => { try { return JSON.parse(localStorage.getItem('user') || 'null'); } catch { return null; } })()}
+            testMeta={{
+              title: 'Full Test',
+              subtitle: results.session_id ? `Session ${String(results.session_id).slice(0, 8)}` : '',
+              durationMin: results.sections?.listening?.duration_minutes,
+              allowedMin: 30,
+              targetBand: results?.target_band || 7.0,
+            }}
+            insights={{
+              rootCauseAnalysis,
+              fastestGain,
+              reasonSummary,
+              recommendedLessons,
+            }}
+            onPracticePriority={(p) => {
+              const typeMap = { note: 'note_completion', mc: 'multiple_choice', match: 'matching', multi: 'multi_select', short: 'short_answer' };
+              const qtype = typeMap[p?.key];
+              navigate(qtype ? `/question-bank/listening/practice?type=${qtype}` : '/question-bank/listening');
             }}
           />
         )}
@@ -798,62 +787,104 @@ export default function FullTestResults() {
           />
         )}
 
-        {/* Writing Results */}
-        {activeTab === 'writing' && results.sections?.writing && results.sections.writing.band > 0 && (
-          <Card data-testid="writing-results-card" className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-violet-500 flex items-center justify-center shadow-lg">
-                <PenTool className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900">Writing</h3>
-                <p className="text-sm text-gray-500">Band {results.sections.writing.band}</p>
-              </div>
-            </div>
-            
-            {results.sections.writing.tasks?.map((task) => (
-              <div key={task.task} className="mb-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-medium text-gray-900">Task {task.task}</h4>
-                  <Badge className={getBandLightBg(task.band)}>Band {task.band}</Badge>
+        {/* Writing Results — V4 "Liz's Margin" per task, with sub-tabs for T1/T2.
+            Each task renders the full WritingEvaluatorResult component
+            (ScoreStrip + annotated essay + margin notes + CoachingPanel +
+            Liz Take). Falls back to a pending card when the eval payload is
+            absent (e.g. backend still scoring). */}
+        {activeTab === 'writing' && results.sections?.writing && (() => {
+          const writingTasks = Array.isArray(results.sections.writing.tasks)
+            ? results.sections.writing.tasks
+            : [];
+          if (writingTasks.length === 0) {
+            return (
+              <Card data-testid="writing-pending-card" className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-violet-500 flex items-center justify-center shadow-lg">
+                    <PenTool className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900">Writing</h3>
+                    <p className="text-sm text-gray-500">{results.sections.writing.error || 'Liz is still scoring your essays…'}</p>
+                  </div>
                 </div>
-                
-                {task.criteria && (
-                  <div className="grid grid-cols-2 gap-2 mb-3">
-                    {Object.entries(task.criteria).map(([key, value]) => (
-                      <div key={key} className="text-sm">
-                        <span className="text-gray-500 capitalize">{key.replace(/_/g, ' ')}: </span>
-                        <span className="font-medium text-gray-900">{value}</span>
-                      </div>
-                    ))}
+                <div className="mt-3 flex items-center gap-2 text-sm text-gray-500">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Hang tight — V4 evaluation usually takes ~30 seconds per task.
+                </div>
+              </Card>
+            );
+          }
+
+          // Pick active task; default to first available.
+          const t1 = writingTasks.find((t) => t.task === 1);
+          const t2 = writingTasks.find((t) => t.task === 2);
+          const activeTask = (activeWtask === 2 ? t2 : t1) || writingTasks[0];
+
+          const buildLizMessage = (task) => {
+            const v4 = task?.evaluator_v2;
+            if (v4?.response_diagnosis?.main_issue) {
+              return `Main issue: ${v4.response_diagnosis.main_issue}. Quick win: ${v4.response_diagnosis.quick_win || 'see margin notes'}.`;
+            }
+            return task?.feedback || 'Liz reviewed your essay — see annotations and coaching plan below.';
+          };
+
+          return (
+            <div data-testid="writing-results-card">
+              {/* Sub-tabs for Task 1 / Task 2 (only show when both exist) */}
+              {writingTasks.length > 1 && (
+                <div className="flex gap-2 mb-4 px-1">
+                  {writingTasks.map((task) => {
+                    const isActive = activeTask?.task === task.task;
+                    const taskColor = task.task === 1 ? 'orange' : 'violet';
+                    return (
+                      <button
+                        key={task.task}
+                        data-testid={`writing-subtab-${task.task}`}
+                        onClick={() => setActiveWtask(task.task)}
+                        className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
+                          isActive
+                            ? `bg-${taskColor}-500 text-white shadow-sm`
+                            : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
+                        }`}
+                      >
+                        Task {task.task}
+                        {task.band > 0 && <span className="ml-1.5 opacity-90">· Band {task.band}</span>}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Active task body */}
+              {activeTask?.evaluator_v2 ? (
+                <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
+                  <WritingEvaluatorResult
+                    result={activeTask.evaluator_v2}
+                    essayText={activeTask.essay_text || ''}
+                    prompt={activeTask.prompt || ''}
+                    lizMessage={buildLizMessage(activeTask)}
+                    onRewrite={() => navigate('/writing-practice')}
+                    onPracticeMore={() => navigate('/writing-practice')}
+                    className="bg-transparent"
+                  />
+                </div>
+              ) : (
+                <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-violet-500 flex items-center justify-center shadow-lg">
+                      <PenTool className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900">Task {activeTask?.task} — Pending</h3>
+                      <p className="text-sm text-gray-500">{activeTask?.feedback || activeTask?.error || 'No evaluation data available.'}</p>
+                    </div>
                   </div>
-                )}
-                
-                {task.strengths?.length > 0 && (
-                  <div className="mb-2">
-                    <p className="text-sm font-medium text-green-600 mb-1">Strengths:</p>
-                    <ul className="text-sm text-gray-600 list-disc list-inside">
-                      {task.strengths.map((s, i) => <li key={i}>{s}</li>)}
-                    </ul>
-                  </div>
-                )}
-                
-                {task.weaknesses?.length > 0 && (
-                  <div className="mb-2">
-                    <p className="text-sm font-medium text-amber-600 mb-1">Areas for Improvement:</p>
-                    <ul className="text-sm text-gray-600 list-disc list-inside">
-                      {task.weaknesses.map((w, i) => <li key={i}>{w}</li>)}
-                    </ul>
-                  </div>
-                )}
-                
-                {task.feedback && (
-                  <div className="p-3 bg-white rounded border"><p className="text-sm text-gray-700">{task.feedback}</p></div>
-                )}
-              </div>
-            ))}
-          </Card>
-        )}
+                </Card>
+              )}
+            </div>
+          );
+        })()}
 
         {/* Speaking Results — D7 ResultsState + drawer with legacy examiner detail.
              When the eval hasn't returned yet (band missing) we show a pending

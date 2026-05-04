@@ -9,7 +9,7 @@ import SkillBreakdown from '../components/SkillBreakdown';
 import LocateExplain from '../components/test/LocateExplain';
 import ProgressAnalytics from '../components/test/ProgressAnalytics';
 import { ResultsState as SpeakingResultsState, adaptSpeakingResult } from '../features/speaking';
-import { ReadingListeningDrilldown, ReadingResultsLayout } from '../features/results';
+import { ReadingListeningDrilldown, ReadingResultsLayout, ListeningResultsLayout } from '../features/results';
 import '../features/speaking/speaking.css';
 
 export default function Results({ user }) {
@@ -94,6 +94,43 @@ export default function Results({ user }) {
               const typeMap = { tfng: 'true_false_ng', fill: 'sentence_completion', mc: 'multiple_choice', match: 'matching_information', heading: 'matching_headings' };
               const qtype = typeMap[p?.key];
               navigate(qtype ? `/question-bank/reading/practice?type=${qtype}` : '/question-bank/reading/academic');
+            }}
+            backHref="/dashboard"
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // Listening → standalone rich layout. Mirrors the reading branch above:
+  // ListeningResultsLayout provides band dial, Liz card, insight tiles,
+  // part cards (P1-P4), audioscript modal, and quick actions itself.
+  if (result.test_type === 'listening') {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-violet-50/30 to-gray-100 py-8 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto">
+          <ListeningResultsLayout
+            feedback={result.feedback}
+            band={result.band_score}
+            user={user}
+            testMeta={{
+              title: result.test_name || 'Practice Test',
+              subtitle: result.attempt_label || '',
+              durationMin: result.duration_minutes,
+              allowedMin: 30,
+              targetBand: user?.target_band || 7.0,
+            }}
+            insights={{
+              rootCauseAnalysis: result.feedback?.root_cause_analysis,
+              fastestGain: result.feedback?.fastest_gain,
+              reasonSummary: result.feedback?.reason_summary,
+              recommendedLessons: result.feedback?.recommended_lessons,
+            }}
+            onRetry={() => navigate(`/test/${result.test_type}`)}
+            onPracticePriority={(p) => {
+              const typeMap = { note: 'note_completion', mc: 'multiple_choice', match: 'matching', multi: 'multi_select', short: 'short_answer' };
+              const qtype = typeMap[p?.key];
+              navigate(qtype ? `/question-bank/listening/practice?type=${qtype}` : '/question-bank/listening');
             }}
             backHref="/dashboard"
           />
