@@ -750,9 +750,9 @@ function AppWithSessionHandler() {
           path="/full-test/take/:testId" 
           element={user ? <FullTestInterface user={user} /> : <Navigate to="/" />} 
         />
-        <Route 
-          path="/full-test/results/:sessionId" 
-          element={user ? <FullTestResults user={user} /> : <Navigate to="/" />} 
+        <Route
+          path="/full-test/results/:sessionId"
+          element={<FullTestResults user={user} />}
         />
         {/* Cambridge IELTS Tests */}
         <Route 

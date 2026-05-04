@@ -49,6 +49,18 @@ export default function FullTestResults() {
   const [results, setResults] = useState(location.state?.results || null);
   const [loading, setLoading] = useState(!location.state?.results);
   const [showBandTooltip, setShowBandTooltip] = useState(false);
+  const [shareCopied, setShareCopied] = useState(false);
+
+  const handleCopyShareLink = async () => {
+    try {
+      const url = `${window.location.origin}/full-test/results/${sessionId}`;
+      await navigator.clipboard.writeText(url);
+      setShareCopied(true);
+      setTimeout(() => setShareCopied(false), 2000);
+    } catch (err) {
+      console.error('Copy failed', err);
+    }
+  };
   // Holistic insight cards collapse to a tile grid; clicking a tile opens
   // the full card content in a slide-in drawer. Same pattern as
   // CambridgeTestResults — keeps Overview scannable.
@@ -147,9 +159,24 @@ export default function FullTestResults() {
   return (
     <div data-testid="full-test-results" className="min-h-screen bg-gradient-to-b from-gray-50 via-slate-50/30 to-gray-100 py-8 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
-        <Button data-testid="back-to-qb-btn" variant="ghost" onClick={() => navigate('/question-bank')} className="mb-6 text-gray-600 hover:text-slate-600">
-          <ArrowLeft className="w-4 h-4 mr-2" /> Back to Question Bank
-        </Button>
+        <div className="flex items-center justify-between mb-6">
+          <Button data-testid="back-to-qb-btn" variant="ghost" onClick={() => navigate('/question-bank')} className="text-gray-600 hover:text-slate-600">
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Question Bank
+          </Button>
+          <Button
+            data-testid="copy-share-link-btn"
+            variant="outline"
+            size="sm"
+            onClick={handleCopyShareLink}
+            className="text-xs gap-1.5"
+          >
+            {shareCopied ? (
+              <><CheckCircle className="w-3.5 h-3.5 text-emerald-600" /> Link copied</>
+            ) : (
+              <>Copy share link</>
+            )}
+          </Button>
+        </div>
 
         {/* Compact Hero — band score + per-skill mini cards in one row.
             iOS 26 glass card; no oversized icons or vertical empty space.

@@ -102,6 +102,23 @@ class Fluency(BaseModel):
     duration: str = Field(..., min_length=1, max_length=20)
     words: int = Field(..., ge=0)
 
+    @field_validator("wpm", mode="before")
+    @classmethod
+    def clamp_wpm(cls, v: Any) -> int:
+        # Sonnet occasionally hallucinates absurd WPM values (e.g. 1200) when
+        # the audio is short or noisy. Clamp into the valid range instead of
+        # 422-failing the whole evaluation. 400 WPM is well above any human
+        # ceiling (~300); anything higher is a model artefact.
+        try:
+            n = int(round(float(v)))
+        except (TypeError, ValueError):
+            return 0
+        if n < 0:
+            return 0
+        if n > 400:
+            return 400
+        return n
+
 
 # ---------- Vocabulary profile (CEFR distribution) ----------
 
