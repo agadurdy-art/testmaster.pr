@@ -1,0 +1,514 @@
+{
+  "chapter_id": "vocabulary_improvement_plan",
+  "chapter_number": 6,
+  "skill": "vocabulary",
+  "title": "IELTS Vocabulary Improvement Plan",
+  "subtitle": "",
+  "source_pages": [
+    230,
+    237
+  ],
+  "extraction_status": "complete",
+  "lessons": [
+    {
+      "lesson_id": "three_step_overview",
+      "lesson_number": 1,
+      "title": "The 3-Step Process",
+      "source_pages": [
+        230,
+        231
+      ],
+      "liz_intro": "Word lists alone don't move your band. The PDF lays out a three-step process that does — and the next pages walk through each step exactly as Chris teaches it.",
+      "liz_outro": "Read & Listen, Record, Review. Three steps. We'll take them one at a time.",
+      "slides": [
+        {
+          "type": "hero",
+          "title": "IELTS Vocabulary Improvement Plan",
+          "page": 230
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "3 STEP PROCESS",
+          "eyebrow_tone": "default",
+          "title": "3 Step Process",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "BookOpen",
+              "title": "Read and Listen",
+              "body": "Studies have shown that the number one way for learners to improve their vocabulary is through reading and listening to genuine sources of English."
+            },
+            {
+              "number": 2,
+              "icon": "Pencil",
+              "title": "Record",
+              "body": "You must record any new words you hear or read. There are lots of ways to do this, so that you will remember them effectively."
+            },
+            {
+              "number": 3,
+              "icon": "RefreshCw",
+              "title": "Review",
+              "body": "It is essential that you regularly review these new words and phrases in order to retain them in your memory."
+            }
+          ],
+          "page": 231
+        }
+      ]
+    },
+    {
+      "lesson_id": "step_1_reading",
+      "lesson_number": 2,
+      "title": "Step 1 — Reading",
+      "source_pages": [
+        232,
+        232
+      ],
+      "liz_intro": "Step 1 has two halves — reading and listening. Reading first. Pick something you actually want to read; that's where new vocabulary sticks.",
+      "liz_outro": "Same idea applies to listening — coming up next.",
+      "slides": [
+        {
+          "type": "split_visual",
+          "image_position": "left",
+          "eyebrow": "STEP 1A — READING",
+          "eyebrow_tone": "default",
+          "title": "Read something you are passionate about",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Don't read long lists of boring words. Read something you are passionate about. You will learn more effectively if you enjoy the topic you are reading."
+            }
+          ],
+          "page": 232
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "READING",
+          "eyebrow_tone": "default",
+          "title": "Reading",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "Highlighter",
+              "title": "Spot new words or phrases",
+              "body": "When you see a new word or phrase, underline it or write it down."
+            },
+            {
+              "icon": "Lightbulb",
+              "title": "Guess BEFORE you check",
+              "body": "When you see a new word, guess its meaning **from context first** — then look it up. **Why?** Because the IELTS Reading test gives you exactly this skill — you'll meet unfamiliar words in passages and have to infer meaning from surrounding sentences. Every time you guess (even wrongly) you're training that exact muscle. Looking the word up *first* skips the workout."
+            },
+            {
+              "icon": "Globe",
+              "title": "Use free resources",
+              "body": "There are millions of free blogs, websites, news sites, and eBooks for you to choose from. See my guide at the end."
+            },
+            {
+              "icon": "Calendar",
+              "title": "Read every day",
+              "body": "Make reading in English part of your daily routine and you will soon improve."
+            }
+          ],
+          "page": 232
+        }
+      ]
+    },
+    {
+      "lesson_id": "step_1_listening",
+      "lesson_number": 3,
+      "title": "Step 1 — Listening",
+      "source_pages": [
+        233,
+        233
+      ],
+      "liz_intro": "Now the listening half of Step 1 — same principle, different input. Football, fashion, gaming — pick whatever you'll listen to long enough to absorb the language.",
+      "liz_outro": "You've found the words. Step 2 is what stops you from forgetting them.",
+      "slides": [
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "STEP 1B — LISTEN",
+          "eyebrow_tone": "default",
+          "title": "Listen",
+          "blocks": [],
+          "page": 233
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "LISTEN",
+          "eyebrow_tone": "default",
+          "title": "Listen",
+          "columns": 1,
+          "cards": [
+            {
+              "icon": "Heart",
+              "title": "Listen to something you love",
+              "body": "Just like reading, you will learn much more if you listen to something you enjoy. If you like football, listen to football commentary or shows. If you like fashion, listen to a podcast about the latest trends. When you hear a new word or phrase, write it down."
+            },
+            {
+              "icon": "Youtube",
+              "title": "Use Free Resources",
+              "body": "YouTube has billions of hours of clips for you to listen to. Simply search for things you are interested in and listen. Podcasts are also a great way to improve your vocabulary and listening skills. Again, they are free. These are just a couple of examples from many."
+            },
+            {
+              "icon": "Headphones",
+              "title": "Listen on the go",
+              "body": "Put your ear buds in and listen to your favourite Podcast while you walk, work out, travel or work. The possibilities are endless.\n\nThere will always be time for you to listen. You can then write down your new words or phrases when you get home."
+            }
+          ],
+          "page": 233
+        },
+        {
+          "type": "callout",
+          "tone": "info",
+          "eyebrow": "STARTER LISTENING — TODAY",
+          "title": "Don't know where to begin? Pick ONE of these and play it tonight.",
+          "body": "*'Listen to what you love'* is good advice but useless when you're staring at YouTube wondering what to type. Concrete starters by IELTS-relevant topic:\n\n• **News & current affairs** → BBC 6 Minute English (free, IELTS-pitched), BBC Global News Podcast, NPR Up First.\n• **Science & technology** → TED Talks Daily, Science Vs (Spotify), Radiolab.\n• **Business & society** → The Economist Podcasts, Planet Money, Stuff You Should Know.\n• **Casual / interview style** → The Diary of a CEO, Modern Wisdom, Hidden Brain.\n• **English-learner specific** → 'IELTS Energy Podcast', 'All Ears English', 'Luke's English Podcast'.\n\n**Today's task:** Pick **one** podcast from above. Listen to a 10-minute episode tonight. Write down **5 new words or phrases**. That's Step 1 done. Tomorrow, do it again with a different episode. Within a week you'll have 30+ real words from real native speakers — and they'll start showing up in IELTS Listening.",
+          "page": 233
+        }
+      ]
+    },
+    {
+      "lesson_id": "step_2_record",
+      "lesson_number": 4,
+      "title": "Step 2 — Record",
+      "source_pages": [
+        234,
+        234
+      ],
+      "liz_intro": "Hearing a word once and never writing it down is the fastest way to lose it. Step 2 is about building a personal book of new words and phrases.",
+      "liz_outro": "Recorded. The most-skipped step is next: review.",
+      "slides": [
+        {
+          "type": "split_visual",
+          "image_position": "left",
+          "eyebrow": "STEP 2 — RECORD",
+          "eyebrow_tone": "default",
+          "title": "A complete book of new words and phrases",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Soon you will have a huge number of new words and phrases that will become part of your vocabulary."
+            }
+          ],
+          "page": 234
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "RECORD",
+          "eyebrow_tone": "default",
+          "title": "Record",
+          "columns": 1,
+          "cards": [
+            {
+              "icon": "Bookmark",
+              "title": "Buy a notebook",
+              "body": "It does not need to be an expensive notebook. Anything that allows you to record lots of new words or phrases is good."
+            },
+            {
+              "icon": "Smartphone",
+              "title": "Use your phone",
+              "body": "There are a huge number of apps, like Memrise, that allow you to record lists."
+            },
+            {
+              "icon": "Layers",
+              "title": "Add things to help you remember",
+              "body": "Don't just write the meaning. You can write collocations, synonyms, antonyms, pronunciation, example sentences, pictures etc."
+            }
+          ],
+          "page": 234
+        },
+        {
+          "type": "callout",
+          "tone": "info",
+          "eyebrow": "QUICK GLOSSARY",
+          "title": "What 'collocation', 'synonym', 'antonym', 'register' actually mean.",
+          "body": "Most students skip recording these because they don't know what they are. Here's the 30-second version with the word **'significant'** as an example:\n\n• **Collocation** — words that *naturally go together* with your word. Native speakers say *'a significant impact'* not *'a big impact'* in academic English. Record: **'a significant impact / improvement / increase / role'**.\n\n• **Synonym** — a word with the *same or similar meaning*. For *'significant'* → *important, major, considerable, substantial*. Record 2–3, not 10.\n\n• **Antonym** — a word with the *opposite meaning*. For *'significant'* → *insignificant, minor, negligible*. Useful for Writing Task 2 contrast sentences.\n\n• **Register** — how *formal or informal* a word is. *'Significant'* = formal (Writing Task 2, Speaking Part 3). *'Big'* = neutral. *'Massive'* = informal (Speaking Part 1 only). Mark each word **F** (formal), **N** (neutral), or **I** (informal) — using formal words in Speaking Part 1 sounds robotic; using informal words in Writing Task 2 costs you LR band.\n\n• **Example sentence** — a sentence using the word *in context*. Don't invent one — copy the one you found it in (book, podcast, article).\n\n**Notebook template per word:** Word → Meaning → Register (F/N/I) → 3 collocations → 2 synonyms → 1 antonym → 1 real example sentence. Anything more is overkill; anything less is too thin.",
+          "page": 234
+        }
+      ]
+    },
+    {
+      "lesson_id": "step_3_review",
+      "lesson_number": 5,
+      "title": "Step 3 — Review",
+      "source_pages": [
+        235,
+        235
+      ],
+      "liz_intro": "Most learners record words but never go back to them. Without review, recording is just a hobby. Five to ten minutes a day — that's all this step asks.",
+      "liz_outro": "Three steps complete. Next page: Chris's go-to free resources to fuel the loop.",
+      "slides": [
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "STEP 3 — REVIEW",
+          "eyebrow_tone": "default",
+          "title": "Make it part of your routine",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "It is much more effective to review your new words for 5–10 minutes per day than to leave it all until the day before your test."
+            }
+          ],
+          "page": 235
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "REVIEW",
+          "eyebrow_tone": "default",
+          "title": "Review",
+          "columns": 1,
+          "cards": [
+            {
+              "icon": "Calendar",
+              "title": "Do it regularly",
+              "body": "One week, two weeks and one month after you first learn a new word should be enough."
+            },
+            {
+              "icon": "Smile",
+              "title": "Make it fun",
+              "body": "There are many word games that you can play on Memrise or Quizlet. You can also get creative and tell stories with your new words."
+            },
+            {
+              "icon": "PenTool",
+              "title": "Use them",
+              "body": "Try to use your new words in the same way you would in the speaking or writing tests. You can include them in your answers when appropriate to do so."
+            }
+          ],
+          "page": 235
+        },
+        {
+          "type": "callout",
+          "tone": "info",
+          "eyebrow": "REVIEW IN 10 MINUTES — DAILY DRILL",
+          "title": "Exactly what to do for review (so it actually sticks).",
+          "body": "Saying *'review your words'* is too vague — most students stare at the page for 2 minutes and call it review. Here's the concrete daily drill:\n\n**Minute 1–2 — Cover & recall.**  Cover the meaning column. Say each word out loud and recall its meaning + one collocation. Tick the words you got right.\n\n**Minute 3–5 — Speak in a sentence.**  Take the 5 words you struggled with. **Say a Part-1-style sentence** using each one (out loud, not in your head). E.g., *'It's had a significant impact on my career.'*\n\n**Minute 6–8 — Write in a sentence.**  Same 5 words. Now **write** one sentence each in your notebook. Different sentence from the spoken one.\n\n**Minute 9–10 — Spaced repetition.**  Schedule the next review using 1-week / 2-week / 1-month spacing. Apps like Anki, Quizlet, Memrise do the spacing math for you.\n\n**Why this drill works:** active recall (covering) + production (speaking + writing) + spacing — the three ingredients memory research has identified as the only ones that actually move words from passive recognition to active use. Reading the list silently does almost nothing.",
+          "page": 235
+        }
+      ]
+    },
+    {
+      "lesson_id": "online_resources",
+      "lesson_number": 6,
+      "title": "Online Resources",
+      "source_pages": [
+        236,
+        236
+      ],
+      "liz_intro": "Chris's eight go-to free sources. Some you'll know; some you might not. All free, all useful for the read-and-listen step.",
+      "liz_outro": "External sources fuel the loop. Next, how to run the same loop inside IELTS Ace.",
+      "slides": [
+        {
+          "type": "split_visual",
+          "image_position": "left",
+          "eyebrow": "ONLINE RESOURCES",
+          "eyebrow_tone": "default",
+          "title": "It's all free!",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "You do not need to spend any money to improve your vocabulary. All of the resources you need are freely available on the internet."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Here is a list of my favourite sites, but there are millions more that will help you. Simply use Google to find something that interests you."
+            }
+          ],
+          "page": 236
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "FREE RESOURCES",
+          "eyebrow_tone": "default",
+          "title": "Free Resources",
+          "columns": 3,
+          "cards": [
+            {
+              "icon": "Newspaper",
+              "title": "BBC News",
+              "body": "All of the common IELTS topics are covered on a daily basis. Listen or read."
+            },
+            {
+              "icon": "Youtube",
+              "title": "YouTube",
+              "body": "An endless supply of videos."
+            },
+            {
+              "icon": "Smartphone",
+              "title": "Memrise",
+              "body": "Nice app for recording and reviewing vocabulary. Makes reviewing vocab fun."
+            },
+            {
+              "icon": "Newspaper",
+              "title": "The Guardian",
+              "body": "They have a great selection of news articles and podcasts."
+            },
+            {
+              "icon": "Mic",
+              "title": "Ted Talks",
+              "body": "Fun, interesting talks by leading thinkers — but be picky. **Choose IELTS-aligned topics**: education, environment, health, technology, urbanisation, work-life balance. A talk on quantum physics builds great vocabulary you'll never use on the test. Aim for 12–18 minute talks on familiar IELTS themes."
+            },
+            {
+              "icon": "BookOpen",
+              "title": "eBooks",
+              "body": "Hundreds of thousands of books are now available to read online for free."
+            },
+            {
+              "icon": "Headphones",
+              "title": "Spotify / Apple Podcasts",
+              "body": "Both have free tiers and host the IELTS-friendly podcasts mentioned earlier — search by topic (e.g., 'environment podcast') and download an episode for the commute."
+            },
+            {
+              "icon": "Layers",
+              "title": "Quizlet",
+              "body": "Simple tools for learning anything."
+            }
+          ],
+          "page": 236
+        },
+        {
+          "type": "quiz",
+          "eyebrow": "QUICK CHECK",
+          "eyebrow_tone": "default",
+          "title": "Quick Check: The 3-Step Process",
+          "intro": "Five questions to confirm the vocabulary system before you start running it daily.",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "What's the single most effective way to grow real vocabulary, according to the research cited?",
+              "options": [
+                { "letter": "A", "text": "Memorising IELTS-specific word-lists every morning." },
+                { "letter": "B", "text": "Reading and listening to genuine sources of English." },
+                { "letter": "C", "text": "Watching IELTS YouTube tip videos." },
+                { "letter": "D", "text": "Translating Turkish phrases into English." }
+              ],
+              "answer": "B",
+              "explanation": "Step 1: Read and Listen. Words learnt in genuine context stick — and you absorb collocations, register, and natural usage that lists can't teach."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Name the three steps of the vocabulary process, in order. (comma-separated, one or two words each)",
+              "answer": "Read and Listen, Record, Review",
+              "accept": [
+                "Read and Listen, Record, Review",
+                "read and listen, record, review",
+                "Read & Listen, Record, Review",
+                "Reading and Listening, Record, Review",
+                "read, record, review",
+                "Read, Record, Review"
+              ],
+              "explanation": "Step 1: Read & Listen. Step 2: Record. Step 3: Review. Skipping any step breaks the loop — exposure without recording is forgotten; recording without review fades."
+            },
+            {
+              "kind": "mcq",
+              "stem": "You meet a useful new word in an article. The plan says you should:",
+              "options": [
+                { "letter": "A", "text": "Trust your memory — useful words stick on their own." },
+                { "letter": "B", "text": "Record it with the sentence it appeared in, so the context survives." },
+                { "letter": "C", "text": "Translate it into Turkish and move on." },
+                { "letter": "D", "text": "Wait until the end of the week and try to remember it." }
+              ],
+              "answer": "B",
+              "explanation": "Step 2 — Record. Capture the word AND the sentence/context. Bare word-lists strip away the meaning that made the word useful in the first place."
+            },
+            {
+              "kind": "mcq",
+              "stem": "Why is regular review (Step 3) non-negotiable?",
+              "options": [
+                { "letter": "A", "text": "Because the IELTS test asks you to recite your notes." },
+                { "letter": "B", "text": "Because without spaced review, even well-recorded words fade and never become active vocabulary." },
+                { "letter": "C", "text": "Because reviewing impresses the examiner." },
+                { "letter": "D", "text": "Because it replaces the need for reading and listening." }
+              ],
+              "answer": "B",
+              "explanation": "Recording without review = forgotten by the test. Spaced review is what moves a word from passive recognition to active production in Speaking and Writing."
+            },
+            {
+              "kind": "mcq",
+              "stem": "A learner spends 90 minutes a day reading IELTS word-lists with translations. Where does this fail the 3-step process?",
+              "options": [
+                { "letter": "A", "text": "It does all three steps and is fine." },
+                { "letter": "B", "text": "It skips genuine reading/listening (Step 1) and review with context (Step 3) — the words won't transfer to real performance." },
+                { "letter": "C", "text": "It only fails because the lists aren't long enough." },
+                { "letter": "D", "text": "It fails because translations should never be used." }
+              ],
+              "answer": "B",
+              "explanation": "Word-lists with translations do a weak version of Step 2 only — no genuine context (Step 1) and no spaced contextual review (Step 3). That's why memorised lists rarely raise band scores."
+            },
+            {
+              "kind": "mcq",
+              "stem": "**Register** in vocabulary means:",
+              "options": [
+                { "letter": "A", "text": "How loud or quiet you say a word." },
+                { "letter": "B", "text": "How formal or casual a word is, and whether it suits the situation (Part 1 chat vs. Part 3 discussion vs. Task 2 essay)." },
+                { "letter": "C", "text": "Whether a word is in your active or passive vocabulary." },
+                { "letter": "D", "text": "The number of syllables a word has." }
+              ],
+              "answer": "B",
+              "explanation": "Register = the formality level of a word. *'Magnificent'* is too formal for a casual Part 1 answer about your weekend; *'loads of'* is too casual for a Part 3 discussion. Recording register notes (formal/neutral/casual) next to each word is what turns vocabulary into a *score-raising* tool instead of a *score-lowering* one."
+            }
+          ],
+          "page": 236
+        }
+      ]
+    },
+    {
+      "lesson_id": "inside_ielts_ace",
+      "lesson_number": 7,
+      "title": "Run It Inside IELTS Ace",
+      "source_pages": [
+        237,
+        237
+      ],
+      "liz_intro": "You don't have to leave the app to run the three-step process. Each surface inside IELTS Ace already feeds the loop — read, record, review — and logs it for you.",
+      "liz_outro": "That's the system. Open the Vocabulary Tracker when you're ready to start.",
+      "slides": [
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "INSIDE IELTS ACE",
+          "eyebrow_tone": "default",
+          "title": "Run the 3-Step Process Without Leaving the App",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "BookOpen",
+              "title": "Read — Reading Question Bank",
+              "body": "Real Cambridge passages on the topics that actually appear in the test. Save any phrase as you go."
+            },
+            {
+              "icon": "Headphones",
+              "title": "Listen — Listening Question Bank",
+              "body": "Native-speed audio across IELTS topic clusters. Pause, re-listen, capture new phrases."
+            },
+            {
+              "icon": "Bookmark",
+              "title": "Record — Vocabulary Tracker",
+              "body": "Save phrases with collocations, pronunciation and example sentences attached automatically."
+            },
+            {
+              "icon": "RefreshCw",
+              "title": "Review — Liz Reuses Your Words",
+              "body": "Liz weaves your saved vocabulary back into speaking and writing practice so you actually use the words."
+            }
+          ],
+          "page": 237
+        },
+        {
+          "type": "callout",
+          "tone": "success",
+          "eyebrow": "YOUR PLAN FOR TOMORROW",
+          "title": "Run the loop for the first time — 30 minutes total.",
+          "body": "Don't close this chapter and forget. Block 30 minutes tomorrow and run the loop end-to-end **once** — that's how the system locks in.\n\n**Morning (15 min) — Read + Record:**\n• Open Reading Question Bank → pick **one** passage on a familiar IELTS topic (education / environment / health).\n• Read it once for gist. Underline 5–7 unfamiliar phrases as you go.\n• For each, **guess the meaning from context first**, then check.\n• Open Vocabulary Tracker → save each phrase with: meaning, register (F/N/I), 2 collocations, 1 example sentence from the passage.\n\n**Evening (15 min) — Listen + Review:**\n• Open Listening Question Bank → pick **one** 5–8 minute audio on the same topic.\n• Capture 3–5 new phrases the same way.\n• Before bed: open Vocabulary Tracker → review the morning's words. Cover meanings, test yourself, mark the ones you forgot.\n\n**Day 2 onwards:** repeat with new content but keep reviewing yesterday's list. After 7 days you'll have ~50 active phrases — enough to feel the difference in Speaking Part 3 and Writing Task 2.\n\nThis is the entire system. Stop reading. Start running it.",
+          "page": 237
+        }
+      ]
+    }
+  ]
+}

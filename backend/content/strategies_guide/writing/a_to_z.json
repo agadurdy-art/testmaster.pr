@@ -1,0 +1,1579 @@
+{
+  "chapter_id": "writing_a_to_z",
+  "chapter_number": 7,
+  "skill": "writing",
+  "title": "The Complete A-to-Z Guide to IELTS Writing",
+  "subtitle": "Five colour-coded essay blueprints + the planning, drafting, and checking workflow that turns each one into a high-band essay.",
+  "source_pages": [
+    203,
+    229
+  ],
+  "extraction_status": "complete",
+  "lessons": [
+    {
+      "lesson_id": "welcome_and_how_to_use",
+      "lesson_number": 1,
+      "title": "Welcome & How to Use This Guide",
+      "source_pages": [
+        203,
+        205
+      ],
+      "liz_intro": "Five essay types cover almost every Task 2 question you'll see. This A-to-Z gives you a colour-coded blueprint for each one — plus the planning, drafting and checking workflow that turns the blueprint into a high-band essay.",
+      "liz_outro": "Now you know what's inside and how to use it. Next: the important notes — what these structures will do for you, and what they won't.",
+      "slides": [
+        {
+          "type": "hero",
+          "title": "The Complete A-to-Z Guide to IELTS Writing",
+          "subtitle": "Five essay structures. One repeatable workflow. No tricks, no shortcuts — just clear, systematic blueprints that work on any Task 2 question.",
+          "image_layout": "none",
+          "page": 203
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "WHAT'S INSIDE",
+          "eyebrow_tone": "default",
+          "title": "Each structure includes",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "Layers",
+              "title": "Colour-coded paragraph breakdowns",
+              "body": "Every paragraph element shown in its own colour so you can see at a glance how the essay fits together."
+            },
+            {
+              "icon": "FileText",
+              "title": "Worked examples with real content",
+              "body": "Populated structures using authentic IELTS-style topics — not abstract placeholders."
+            },
+            {
+              "icon": "GitBranch",
+              "title": "Process workflows",
+              "body": "Planning → Drafting → Checking — the exact order to think and write in for each essay type."
+            },
+            {
+              "icon": "ListChecks",
+              "title": "Self-evaluation checklists",
+              "body": "Spot weaknesses in planning, writing, and checking before an examiner does."
+            }
+          ],
+          "page": 204
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "HOW TO USE THIS GUIDE",
+          "eyebrow_tone": "default",
+          "title": "How to Use This Guide",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "Search",
+              "title": "Choose Your Essay Type",
+              "body": "Identify which question type you're working with. Each structure is designed specifically for one essay type — using the wrong structure is one of the most common mistakes students make."
+            },
+            {
+              "number": 2,
+              "icon": "Compass",
+              "title": "Follow the Planning Stage",
+              "body": "Don't skip this. The flowcharts show you exactly what to think about before you write. Good planning makes writing faster and easier."
+            },
+            {
+              "number": 3,
+              "icon": "Layers",
+              "title": "Use the Structure",
+              "body": "Follow the colour-coded framework. Notice how each paragraph has a clear purpose and every element has its place."
+            },
+            {
+              "number": 4,
+              "icon": "ClipboardCheck",
+              "title": "Self-Evaluate with the Checklist",
+              "body": "After writing, run your essay through the planning / writing / checking columns. The mistakes you spot now are the ones an examiner won't get to."
+            }
+          ],
+          "page": 205
+        }
+      ]
+    },
+    {
+      "lesson_id": "important_notes_and_promises",
+      "lesson_number": 2,
+      "title": "Important Notes — Templates, Not Formulas",
+      "source_pages": [
+        206,
+        208
+      ],
+      "liz_intro": "Before the structures, three things you need to internalise. These templates only work if you bring real ideas, real practice, and real self-evaluation to them.",
+      "liz_outro": "Templates handle the architecture. You bring the substance. That's the deal.",
+      "slides": [
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "IMPORTANT NOTES",
+          "eyebrow_tone": "warm",
+          "title": "Three Things to Internalise First",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "Layers",
+              "title": "These structures are templates, not formulas",
+              "body": "You still need to generate your own ideas and use your own language. The structure simply organises your thinking and ensures you include everything examiners expect to see."
+            },
+            {
+              "icon": "Target",
+              "title": "Quality over speed",
+              "body": "It's better to write one excellent essay using these structures than to rush through ten mediocre ones. Take time to understand each element."
+            },
+            {
+              "icon": "FileEdit",
+              "title": "Practise with real questions",
+              "body": "These structures work because they're based on what IELTS actually tests. Use them with genuine past questions to see real results."
+            }
+          ],
+          "page": 206
+        },
+        {
+          "type": "comparison",
+          "eyebrow": "WHAT THIS GUIDE WILL & WON'T DO",
+          "eyebrow_tone": "default",
+          "title": "What This Guide Will and Won't Do for You",
+          "intro": "Be honest with yourself about the bargain. The structure is leverage — it isn't a substitute for the work.",
+          "columns": [
+            {
+              "label": "What it WILL do",
+              "tone": "positive",
+              "marker": "check",
+              "items": [
+                "Give you a proven framework to organise your thinking",
+                "Show you exactly what examiners expect in each essay type",
+                "Help you avoid the most common structural mistakes",
+                "Make writing faster once you've practised the templates",
+                "Map every paragraph slot to a specific role you can audit"
+              ]
+            },
+            {
+              "label": "What it WON'T do",
+              "tone": "negative",
+              "marker": "x",
+              "items": [
+                "Write your essays for you",
+                "Replace the need for genuine practice",
+                "Compensate for weak grammar or limited vocabulary",
+                "Guarantee a specific band score on its own"
+              ]
+            }
+          ],
+          "callout": {
+            "tone": "warm",
+            "title": "The honest deal",
+            "body": "The framework + your practice + honest self-evaluation = a clearer, better-organised essay that meets IELTS requirements."
+          },
+          "page": 207
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "YOUR NEXT STEPS",
+          "eyebrow_tone": "warm",
+          "title": "Your Next Steps",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "Bookmark",
+              "title": "Save this guide where you can access it easily",
+              "body": "Pin it in IELTS Ace so you can pull up any structure mid-practice without losing your flow."
+            },
+            {
+              "number": 2,
+              "icon": "Pencil",
+              "title": "Choose one structure and practise it with 3–5 different questions",
+              "body": "Repetition on one essay type wires the framework into muscle memory before you switch to the next."
+            },
+            {
+              "number": 3,
+              "icon": "Target",
+              "title": "Master one type before moving to the next",
+              "body": "Don't rotate types every essay — depth beats breadth at this stage."
+            },
+            {
+              "number": 4,
+              "icon": "ClipboardCheck",
+              "title": "Review the checklists after every practice essay",
+              "body": "Self-mark using the planning / writing / checking columns. The mistakes you spot now are the ones an examiner won't get to."
+            }
+          ],
+          "page": 208
+        }
+      ]
+    },
+    {
+      "lesson_id": "inside_ielts_ace",
+      "lesson_number": 3,
+      "title": "Where to Go Inside IELTS Ace",
+      "source_pages": [
+        209
+      ],
+      "liz_intro": "If a structure starts to feel abstract, you don't need to leave the app. Every part of this guide hooks into a surface inside IELTS Ace where you can see it work in real time.",
+      "liz_outro": "Pick the surface that matches what you're stuck on, then come back to the structure that fits the question.",
+      "slides": [
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "INSIDE IELTS ACE",
+          "eyebrow_tone": "warm",
+          "title": "Where to Go When You Get Stuck",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "PenTool",
+              "title": "Writing Task 2 — Walkthroughs",
+              "body": "Liz walks you through each structure on a real prompt, paragraph by paragraph, in the writing surface."
+            },
+            {
+              "icon": "MessageSquare",
+              "title": "Liz Live — Ask About a Structure",
+              "body": "Stuck on which structure fits a question? Ask Liz directly inside the writing room — she knows all five blueprints in this guide."
+            },
+            {
+              "icon": "FileEdit",
+              "title": "Diagnostic Essay",
+              "body": "Submit a Task 2 essay and get band feedback on Task Response, Coherence, Lexical Resource and Grammar — mapped back to the relevant structure."
+            },
+            {
+              "icon": "BookOpen",
+              "title": "Strategies Guide — Reading & Listening A-to-Z",
+              "body": "Same structure-first approach for the other skills, all inside the app."
+            }
+          ],
+          "page": 209
+        }
+      ]
+    },
+    {
+      "lesson_id": "advantages_disadvantages",
+      "lesson_number": 4,
+      "title": "Advantages and Disadvantages Essay",
+      "source_pages": [
+        210,
+        213
+      ],
+      "liz_intro": "When the question asks \"What are the advantages and disadvantages?\" — this is the structure. Two body paragraphs, one for each side, no opinion required.",
+      "liz_outro": "Blank → populated → process → checklist. Same four-step rhythm for every essay type in this guide.",
+      "slides": [
+        {
+          "type": "figure",
+          "eyebrow": "ADVANTAGES AND DISADVANTAGES ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Advantages and Disadvantages Essay — Blank Structure",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 0,
+          "intro": "The empty skeleton — every paragraph type and the colour-coded slots that go inside it.",
+          "image": "/static/strategies/writing/essays/advdis_blank.png",
+          "alt": "Advantages and Disadvantages essay Blank Structure diagram",
+          "caption": "**Adv/Dis trap:** No side-taking allowed. Discuss both sides fairly — opinion-style advocacy here costs you Task Response. *Colour code:* teal = paragraph anchors, peach = Main Idea 1 thread, green = Main Idea 2 thread, light-blue = conclusion. Every essay type reuses these colours."
+        },
+        {
+          "type": "figure",
+          "eyebrow": "ADVANTAGES AND DISADVANTAGES ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Advantages and Disadvantages Essay — Populated Structure",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 1,
+          "intro": "The same skeleton filled with a real Band 9 example — see how each slot holds an actual sentence.",
+          "image": "/static/strategies/writing/essays/advdis_populated.png",
+          "alt": "Advantages and Disadvantages essay Populated Structure diagram",
+          "caption": "Notice how the colour threads carry one main idea from intro → supporting paragraph → conclusion without ever crossing. That coherence is what scores Band 9 on Cohesion."
+        },
+        {
+          "type": "figure",
+          "eyebrow": "ADVANTAGES AND DISADVANTAGES ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Advantages and Disadvantages Essay — Flowchart",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 2,
+          "intro": "Your end-to-end timeline: Planning → Writing → Concluding → Polishing.",
+          "image": "/static/strategies/writing/essays/advdis_flowchart.png",
+          "alt": "Advantages and Disadvantages essay Flowchart diagram",
+          "caption": "Spend the planning minutes — they pay back four times over in the writing. Don't start typing until every box on the left is filled in. *(Colour code: teal = paragraph anchors · peach = Main Idea 1 thread · green = Main Idea 2 thread · light-blue = conclusion.)*"
+        },
+        {
+          "type": "figure",
+          "eyebrow": "ADVANTAGES AND DISADVANTAGES ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Advantages and Disadvantages Essay — Checklist",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 3,
+          "intro": "Final-pass quality control before you submit — content, structure, language.",
+          "image": "/static/strategies/writing/essays/advdis_checklist.png",
+          "alt": "Advantages and Disadvantages essay Checklist diagram",
+          "caption": "Run this list before time's up. Each unchecked box is a band-score risk you can still erase. *(Colour code: teal = paragraph anchors · peach = Main Idea 1 thread · green = Main Idea 2 thread · light-blue = conclusion.)*"
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "ADV/DIS · BLANK STRUCTURE",
+          "eyebrow_tone": "default",
+          "title": "Advantages and Disadvantages Essay — Blank Structure",
+          "intro": "Four paragraphs. Each colour maps to a paragraph role you'll keep using throughout the essay. Treat this as the skeleton — every component slot is something the examiner expects to see.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "FileText",
+              "title": "Introduction Paragraph",
+              "body": "**Paraphrase** the question.\n**Briefly state 2 advantages** (pink — Advantages thread).\n**Briefly state 2 disadvantages** (green — Disadvantages thread)."
+            },
+            {
+              "number": 2,
+              "icon": "Layers",
+              "title": "1st Supporting Paragraph (Advantages)",
+              "body": "**Topic Sentence 1** — State Advantage 1. *Explain Advantage 1.*\n**Topic Sentence 2** — State Advantage 2. *Explain Advantage 2 + give one example.*"
+            },
+            {
+              "number": 3,
+              "icon": "Layers",
+              "title": "2nd Supporting Paragraph (Disadvantages)",
+              "body": "**Topic Sentence 1** — State Disadvantage 1. *Explain Disadvantage 1.*\n**Topic Sentence 2** — State Disadvantage 2. *Explain Disadvantage 2 + give one example.*"
+            },
+            {
+              "number": 4,
+              "icon": "CheckCircle",
+              "title": "Concluding Paragraph",
+              "body": "**\"In conclusion,\"**\n**Summarise both advantages.**\n**Summarise both disadvantages.**"
+            }
+          ],
+          "page": 210
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "ADV/DIS · WORKED EXAMPLE",
+          "eyebrow_tone": "warm",
+          "title": "Worked Example — Imported Food",
+          "intro": "**Question:** *In many countries, it is now possible to buy food that has been imported from all over the world. What are the advantages and disadvantages of this development?*",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "FileText",
+              "title": "Introduction Paragraph",
+              "body": "**Paraphrase** the question.\n*Advantages:* The availability of products + more markets open for producers.\n*Disadvantages:* Carbon emissions + higher prices."
+            },
+            {
+              "number": 2,
+              "icon": "Layers",
+              "title": "1st Supporting Paragraph (Advantages)",
+              "body": "**TS1** — *The availability of products.* Can eat fruit all year round because not dependent on climate.\n**TS2** — *More markets open for producers.* Can sell all over the world e.g. corn in USA."
+            },
+            {
+              "number": 3,
+              "icon": "Layers",
+              "title": "2nd Supporting Paragraph (Disadvantages)",
+              "body": "**TS1** — *Carbon emissions.* Long-distance shipping requires burning of fossil fuels.\n**TS2** — *Higher prices.* Shipping costs increase prices e.g. dragon fruit from Vietnam."
+            },
+            {
+              "number": 4,
+              "icon": "CheckCircle",
+              "title": "Concluding Paragraph",
+              "body": "**\"In conclusion,\"** the availability of products + more markets open for producers, *while* carbon emissions + higher prices are the main disadvantages."
+            }
+          ],
+          "page": 211
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "ADV/DIS · PROCESS FLOWCHART",
+          "eyebrow_tone": "default",
+          "title": "Prewriting → Drafting → Polishing",
+          "intro": "The order to think and write in. Same workflow shape across every essay type — only the prewriting questions change.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "Compass",
+              "title": "Prewriting",
+              "body": "**What are the advantages?** → **What are the disadvantages?** → **Populate Your Structure** → ready for Essay Writing.\n\nBrainstorm both lists in full before you commit to the structure — better to cut a weak idea than build a paragraph around one."
+            },
+            {
+              "number": 2,
+              "icon": "Pencil",
+              "title": "Drafting",
+              "body": "**Write Your Introduction** → **Write 2 Main Body Paragraphs** (Advantages first, then Disadvantages) → **Look at Your Introduction** → **Write Your Conclusion**.\n\nUse the populated structure to now write your essay. Use your introduction to write your conclusion — they should mirror."
+            },
+            {
+              "number": 3,
+              "icon": "ClipboardCheck",
+              "title": "Polishing",
+              "body": "**Vocabulary** — vary any repeated words, replace lower-level vocabulary with higher-level vocabulary.\n**Grammar** — correct any grammar mistakes.\nThen move to Task 1."
+            }
+          ],
+          "page": 212
+        },
+        {
+          "type": "icon_grid",
+          "variant": "checklist",
+          "eyebrow": "ADV/DIS · CHECKLIST",
+          "eyebrow_tone": "default",
+          "title": "Self-Evaluation Checklist",
+          "intro": "Three columns to run every practice essay through before you submit. Spot the weak slot before an examiner does.",
+          "columns": 3,
+          "cards": [
+            {
+              "icon": "Compass",
+              "title": "Planning",
+              "body": "• Did I read and understand the question?\n• Did I think about how to write the question statement in my own words?\n• Did I think of 2 advantages?\n• Did I think of 2 disadvantages?\n• Did I think of explanations and examples?\n• Do my advantages, disadvantages, explanations and examples make sense?\n• Did I follow the exact structure suggested?\n• Did I populate my structure appropriately?\n• Did I use my structure during the writing process?"
+            },
+            {
+              "icon": "Pencil",
+              "title": "Writing",
+              "body": "• Does the first sentence mean the same as the question statement?\n• Have I varied my language enough in the first sentence?\n• Are advantages clearly outlined in the introduction?\n• Are disadvantages clearly outlined in the introduction?\n• Do my topic sentences match the main ideas in my introduction?\n• Have I explained each main idea?\n• Have I provided 1 example in each main body paragraph?\n• Have I clearly summarised my advantages and disadvantages in the conclusion?\n• Do main ideas expressed in the conclusion match the introduction?"
+            },
+            {
+              "icon": "ClipboardCheck",
+              "title": "Checking",
+              "body": "• Have I checked my work for grammar mistakes?\n• Have I fixed as many grammar mistakes as possible?\n• Have I varied my vocabulary as much as possible?\n• Have I changed as many simple words to higher-level words as possible?\n• Have I checked for spelling and meaning errors?"
+            }
+          ],
+          "page": 213
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Adv/Dis Essay",
+          "intro": "Test that the structure has stuck.",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "An Adv/Dis essay question asks 'What are the advantages and disadvantages?' Should you give your personal opinion?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "Yes, always state your opinion in the conclusion."
+                },
+                {
+                  "letter": "B",
+                  "text": "No — Adv/Dis is neutral. Your personal stance is not required."
+                },
+                {
+                  "letter": "C",
+                  "text": "Only if the question asks 'Do you think the advantages outweigh the disadvantages?' "
+                }
+              ],
+              "answer": "B",
+              "explanation": "Plain Adv/Dis = neutral analysis. Only when the prompt adds 'do the advantages outweigh…' do you take a side."
+            },
+            {
+              "kind": "mcq",
+              "stem": "How many body paragraphs in this structure, and what does each cover?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "Two — one for advantages, one for disadvantages."
+                },
+                {
+                  "letter": "B",
+                  "text": "One long paragraph mixing both."
+                },
+                {
+                  "letter": "C",
+                  "text": "Four — one per advantage and one per disadvantage."
+                }
+              ],
+              "answer": "A",
+              "explanation": "The skeleton is fixed: 1 intro, 2 body (advantages, then disadvantages), 1 conclusion."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Each body paragraph should contain at least one _______ to support the topic sentence.",
+              "answer": "example",
+              "accept": [
+                "example",
+                "specific example",
+                "real example"
+              ],
+              "explanation": "Examples lift Task Achievement and prevent the essay from sounding abstract."
+            }
+          ],
+          "page": 213
+        }
+      ]
+    },
+    {
+      "lesson_id": "discuss_both_views",
+      "lesson_number": 5,
+      "title": "Discuss Both Views Essay",
+      "source_pages": [
+        214,
+        217
+      ],
+      "liz_intro": "When the question gives you two views and asks you to discuss both and give your own opinion. This is where candidates lose marks by forgetting either the discussion or the opinion — the structure makes both unmissable.",
+      "liz_outro": "Same rhythm. Same colour map. Different paragraph roles — negative view vs positive view, with a clear opinion threaded through.",
+      "slides": [
+        {
+          "type": "figure",
+          "eyebrow": "DISCUSS BOTH VIEWS ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Discuss Both Views Essay — Blank Structure",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 0,
+          "intro": "The empty skeleton — every paragraph type and the colour-coded slots that go inside it.",
+          "image": "/static/strategies/writing/essays/dbv_blank.png",
+          "alt": "Discuss Both Views essay Blank Structure diagram",
+          "caption": "**DBV trap:** Cover **both views fully** before showing your stance. If you spend 2 lines on view 1 and 8 lines on view 2, you've lost balance — TR penalty. Your opinion sits *inside* a fair discussion, not on top of it. *Colour code:* teal = paragraph anchors, peach = Main Idea 1 thread, green = Main Idea 2 thread, light-blue = conclusion."
+        },
+        {
+          "type": "figure",
+          "eyebrow": "DISCUSS BOTH VIEWS ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Discuss Both Views Essay — Populated Structure",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 1,
+          "intro": "The same skeleton filled with a real Band 9 example — see how each slot holds an actual sentence.",
+          "image": "/static/strategies/writing/essays/dbv_populated.png",
+          "alt": "Discuss Both Views essay Populated Structure diagram",
+          "caption": "Notice how the colour threads carry one main idea from intro → supporting paragraph → conclusion without ever crossing. That coherence is what scores Band 9 on Cohesion."
+        },
+        {
+          "type": "figure",
+          "eyebrow": "DISCUSS BOTH VIEWS ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Discuss Both Views Essay — Flowchart",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 2,
+          "intro": "Your end-to-end timeline: Planning → Writing → Concluding → Polishing.",
+          "image": "/static/strategies/writing/essays/dbv_flowchart.png",
+          "alt": "Discuss Both Views essay Flowchart diagram",
+          "caption": "Spend the planning minutes — they pay back four times over in the writing. Don't start typing until every box on the left is filled in. *(Colour code: teal = paragraph anchors · peach = Main Idea 1 thread · green = Main Idea 2 thread · light-blue = conclusion.)*"
+        },
+        {
+          "type": "figure",
+          "eyebrow": "DISCUSS BOTH VIEWS ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Discuss Both Views Essay — Checklist",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 3,
+          "intro": "Final-pass quality control before you submit — content, structure, language.",
+          "image": "/static/strategies/writing/essays/dbv_checklist.png",
+          "alt": "Discuss Both Views essay Checklist diagram",
+          "caption": "Run this list before time's up. Each unchecked box is a band-score risk you can still erase. *(Colour code: teal = paragraph anchors · peach = Main Idea 1 thread · green = Main Idea 2 thread · light-blue = conclusion.)*"
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "DISCUSS BOTH VIEWS · BLANK STRUCTURE",
+          "eyebrow_tone": "default",
+          "title": "Discuss Both Views Essay — Blank Structure",
+          "intro": "Four paragraphs. Each colour maps to a paragraph role you'll keep using throughout the essay. Treat this as the skeleton — every component slot is something the examiner expects to see.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "FileText",
+              "title": "Introduction Paragraph",
+              "body": "**Paraphrase** stating both views.\n**Main Idea 1** — the negative view (pink).\n**Main Idea 2** — the positive view (green).\n**Your opinion** — clearly stated."
+            },
+            {
+              "number": 2,
+              "icon": "Layers",
+              "title": "1st Supporting Paragraph (View 1)",
+              "body": "**Topic Sentence** — restate Main Idea 1.\n*Explain* the view fully.\n*Example* that illustrates it.\n*Position-relative close:* if you agreed with this view in your intro, **reinforce**; if you disagreed, **push back politely**. The closing sentence aligns with the opinion you already stated — never the other way round."
+            },
+            {
+              "number": 3,
+              "icon": "Layers",
+              "title": "2nd Supporting Paragraph (View 2)",
+              "body": "**Topic Sentence** — restate Main Idea 2.\n*Explain* the view fully.\n*Example* that illustrates it.\n*Position-relative close:* same rule — reinforce the side you backed in the intro, push back on the side you didn't. Stance must stay consistent across both bodies."
+            },
+            {
+              "number": 4,
+              "icon": "CheckCircle",
+              "title": "Concluding Paragraph",
+              "body": "**\"In conclusion,\"**\n*Echo* Main Idea 1 (with your stance).\n*Echo* Main Idea 2 (with your stance).\nState your opinion one last time."
+            }
+          ],
+          "page": 214
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "DISCUSS BOTH VIEWS · WORKED EXAMPLE",
+          "eyebrow_tone": "warm",
+          "title": "Worked Example — Retirement Funding",
+          "intro": "**Question:** *Some think individuals should support themselves after retirement, while others believe the government should be responsible for providing them with financial assistance. Discuss both views and give your own opinion.*",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "FileText",
+              "title": "Introduction Paragraph",
+              "body": "**Paraphrase:** *While some believe governments should provide retired citizens with financial aid, others are of the opinion that retirees should make provisions for themselves.*\n*Main Idea 1:* Promotes a culture of hard work in society.\n*Main Idea 2:* More equal.\n*Opinion:* I agree that government should do it because it is fairer."
+            },
+            {
+              "number": 2,
+              "icon": "Layers",
+              "title": "1st Supporting Paragraph (Negative — Self-Funded)",
+              "body": "**TS:** *Promotes a culture of hard work in society.*\n*Explain:* If people know they have no help, they will have to work harder.\n*Example:* United States.\n*Disagree:* Hard work does not always lead to more money."
+            },
+            {
+              "number": 3,
+              "icon": "Layers",
+              "title": "2nd Supporting Paragraph (Positive — Government-Funded)",
+              "body": "**TS:** *More equal.*\n*Explain:* The majority of people do not have high-paying jobs.\n*Example:* UK.\n*Agree:* It's fair."
+            },
+            {
+              "number": 4,
+              "icon": "CheckCircle",
+              "title": "Concluding Paragraph",
+              "body": "**\"In conclusion,\"** although it may make some people work harder, hard work doesn't ensure wealth. It's fairer that the government provides a retirement income for everyone."
+            }
+          ],
+          "page": 215
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "DISCUSS BOTH VIEWS · PROCESS FLOWCHART",
+          "eyebrow_tone": "default",
+          "title": "Prewriting → Drafting → Polishing",
+          "intro": "The order to think and write in. Same workflow shape across every essay type — only the prewriting questions change.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "Compass",
+              "title": "Prewriting",
+              "body": "**What are the two views?** → **What is your opinion?** → **Populate Your Structure** → ready for Essay Writing.\n\nDecide your opinion before you start writing. Trying to commit mid-essay creates a structurally incoherent paragraph."
+            },
+            {
+              "number": 2,
+              "icon": "Pencil",
+              "title": "Drafting",
+              "body": "**Write Your Introduction** (with both views + opinion) → **Write 2 Main Body Paragraphs** (Negative View, then Positive View) → **Look at Your Introduction** → **Write Your Conclusion**.\n\nThe same loop used for Adv/Dis — different content, same workflow."
+            },
+            {
+              "number": 3,
+              "icon": "ClipboardCheck",
+              "title": "Polishing",
+              "body": "**Vocabulary** — vary any repeated words, replace lower-level vocabulary with higher-level vocabulary.\n**Grammar** — correct any grammar mistakes.\nThen move to Task 1."
+            }
+          ],
+          "page": 216
+        },
+        {
+          "type": "icon_grid",
+          "variant": "checklist",
+          "eyebrow": "DISCUSS BOTH VIEWS · CHECKLIST",
+          "eyebrow_tone": "default",
+          "title": "Self-Evaluation Checklist",
+          "intro": "Three columns to run every practice essay through before you submit. Spot the weak slot before an examiner does.",
+          "columns": 3,
+          "cards": [
+            {
+              "icon": "Compass",
+              "title": "Planning",
+              "body": "• Did I read and understand the question?\n• Did I think about how to write the question statement in my own words?\n• Did I identify both views clearly?\n• Did I decide on my own opinion?\n• Did I think of explanations and examples for each view?\n• Do both views, explanations and examples make sense?\n• Did I follow the exact structure suggested?\n• Did I populate my structure appropriately?\n• Did I use my structure during the writing process?"
+            },
+            {
+              "icon": "Pencil",
+              "title": "Writing",
+              "body": "• Does the first sentence mean the same as the question statement?\n• Have I varied my language enough in the first sentence?\n• Are both views clearly outlined in the introduction?\n• Is my opinion clearly stated in the introduction?\n• Do my topic sentences match the main ideas in my introduction?\n• Have I explained each view fully?\n• Have I provided 1 example for each view?\n• Have I taken a clear stance (agree/disagree) at the end of each body paragraph?\n• Have I restated my opinion clearly in the conclusion?"
+            },
+            {
+              "icon": "ClipboardCheck",
+              "title": "Checking",
+              "body": "• Have I checked my work for grammar mistakes?\n• Have I fixed as many grammar mistakes as possible?\n• Have I varied my vocabulary as much as possible?\n• Have I changed as many simple words to higher-level words as possible?\n• Have I checked for spelling and meaning errors?"
+            }
+          ],
+          "page": 217
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Discuss Both Views",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "A 'Discuss both views and give your own opinion' question is asked. Where should your opinion appear?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "Only in the conclusion."
+                },
+                {
+                  "letter": "B",
+                  "text": "In the introduction AND restated in the conclusion."
+                },
+                {
+                  "letter": "C",
+                  "text": "Nowhere — only discuss views, not opinion."
+                }
+              ],
+              "answer": "B",
+              "explanation": "Examiners look for a clear stance from the start. Introduce your opinion in para 1, restate in the conclusion."
+            },
+            {
+              "kind": "mcq",
+              "stem": "If your opinion is that the negative view is stronger, which body paragraph should come SECOND?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "The positive view."
+                },
+                {
+                  "letter": "B",
+                  "text": "The negative view (your supported side)."
+                },
+                {
+                  "letter": "C",
+                  "text": "Either, it doesn't matter."
+                }
+              ],
+              "answer": "B",
+              "explanation": "Place YOUR supported side last so the conclusion flows naturally from it. The opposing view comes first."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Each body paragraph in a Discuss Both Views essay must include explanation AND a specific _______.",
+              "answer": "example",
+              "accept": [
+                "example",
+                "real-world example",
+                "evidence"
+              ],
+              "explanation": "Without examples, the essay reads as opinion not analysis. Examples lift Task Response."
+            }
+          ],
+          "page": 217
+        }
+      ]
+    },
+    {
+      "lesson_id": "two_part_double_question",
+      "lesson_number": 6,
+      "title": "Two-Part / Double Question Essay",
+      "source_pages": [
+        218,
+        221
+      ],
+      "liz_intro": "Two questions in one prompt — usually \"Why is X happening? Is it positive or negative?\" The structure forces you to answer both, in order, in the introduction and again in the body.",
+      "liz_outro": "If you only answer one of the two questions you cap your Task Response at Band 5. This structure is the safety net.",
+      "slides": [
+        {
+          "type": "figure",
+          "eyebrow": "TWO-PART / DOUBLE QUESTION ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Two-Part / Double Question Essay — Blank Structure",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 0,
+          "intro": "The empty skeleton — every paragraph type and the colour-coded slots that go inside it.",
+          "image": "/static/strategies/writing/essays/tpdq_blank.png",
+          "alt": "Two-Part / Double Question essay Blank Structure diagram",
+          "caption": "**Two-Part trap:** Both questions must be answered — fully. One question answered brilliantly + the other half-ignored = automatic TR ceiling. Body 1 = Question 1, Body 2 = Question 2. Don't merge them. *Colour code:* teal = paragraph anchors, peach = Question 1 answer thread, green = Question 2 answer thread, light-blue = conclusion."
+        },
+        {
+          "type": "figure",
+          "eyebrow": "TWO-PART / DOUBLE QUESTION ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Two-Part / Double Question Essay — Populated Structure",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 1,
+          "intro": "The same skeleton filled with a real Band 9 example — see how each slot holds an actual sentence.",
+          "image": "/static/strategies/writing/essays/tpdq_populated.png",
+          "alt": "Two-Part / Double Question essay Populated Structure diagram",
+          "caption": "Notice how the colour threads carry one main idea from intro → supporting paragraph → conclusion without ever crossing. That coherence is what scores Band 9 on Cohesion."
+        },
+        {
+          "type": "figure",
+          "eyebrow": "TWO-PART / DOUBLE QUESTION ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Two-Part / Double Question Essay — Flowchart",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 2,
+          "intro": "Your end-to-end timeline: Planning → Writing → Concluding → Polishing.",
+          "image": "/static/strategies/writing/essays/tpdq_flowchart.png",
+          "alt": "Two-Part / Double Question essay Flowchart diagram",
+          "caption": "Spend the planning minutes — they pay back four times over in the writing. Don't start typing until every box on the left is filled in. *(Colour code: teal = paragraph anchors · peach = Main Idea 1 thread · green = Main Idea 2 thread · light-blue = conclusion.)*"
+        },
+        {
+          "type": "figure",
+          "eyebrow": "TWO-PART / DOUBLE QUESTION ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Two-Part / Double Question Essay — Checklist",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 3,
+          "intro": "Final-pass quality control before you submit — content, structure, language.",
+          "image": "/static/strategies/writing/essays/tpdq_checklist.png",
+          "alt": "Two-Part / Double Question essay Checklist diagram",
+          "caption": "Run this list before time's up. Each unchecked box is a band-score risk you can still erase. *(Colour code: teal = paragraph anchors · peach = Main Idea 1 thread · green = Main Idea 2 thread · light-blue = conclusion.)*"
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "TWO-PART · BLANK STRUCTURE",
+          "eyebrow_tone": "default",
+          "title": "Two-Part / Double Question Essay — Blank Structure",
+          "intro": "Four paragraphs. Each colour maps to a paragraph role you'll keep using throughout the essay. Treat this as the skeleton — every component slot is something the examiner expects to see.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "FileText",
+              "title": "Introduction Paragraph",
+              "body": "**Paraphrase** the question.\n**Direct answer to Question 1** (red — Q1 thread).\n**Direct answer to Question 2** (green — Q2 thread)."
+            },
+            {
+              "number": 2,
+              "icon": "Layers",
+              "title": "1st Supporting Paragraph (Question 1)",
+              "body": "**Topic Sentence** — answer to Q1.\n*Explain* the cause / reason.\n*Explain further* — extend the reasoning.\n*Example* that demonstrates the answer."
+            },
+            {
+              "number": 3,
+              "icon": "Layers",
+              "title": "2nd Supporting Paragraph (Question 2)",
+              "body": "**Topic Sentence** — answer to Q2.\n*Explain* the position.\n*Explain further* — extend the reasoning.\n*Example* that demonstrates the position."
+            },
+            {
+              "number": 4,
+              "icon": "CheckCircle",
+              "title": "Concluding Paragraph",
+              "body": "**\"In conclusion,\"**\n*Restate answer to Question 1.*\n*Restate answer to Question 2.*"
+            }
+          ],
+          "page": 218
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "TWO-PART · WORKED EXAMPLE",
+          "eyebrow_tone": "warm",
+          "title": "Worked Example — Choosing Not to Have Children",
+          "intro": "**Question:** *In some countries, an increasing number of people are choosing not to have children. Why do you think this is happening? Is this a positive or negative development?*",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "FileText",
+              "title": "Introduction Paragraph",
+              "body": "**Paraphrase** the question.\n*1st Q answer:* Prepare for retirement.\n*2nd Q answer:* Positive because do not feel guilt."
+            },
+            {
+              "number": 2,
+              "icon": "Layers",
+              "title": "1st Supporting Paragraph (Why)",
+              "body": "**TS:** *Prepare for retirement.*\nIn the past it was financially viable to have children and prepare for retirement.\n*Explain further:* Living expenses have now increased.\n*Example:* UK increased retirement age."
+            },
+            {
+              "number": 3,
+              "icon": "Layers",
+              "title": "2nd Supporting Paragraph (Positive/Negative)",
+              "body": "**TS:** *Positive — Do not feel guilt.*\nMany people feel pressure from family and society.\n*Explain further:* Now people accept this as a pragmatic decision.\n*Example:* Single mothers in western countries."
+            },
+            {
+              "number": 4,
+              "icon": "CheckCircle",
+              "title": "Concluding Paragraph",
+              "body": "**\"In conclusion,\"**\n*Q1:* Prepare for retirement.\n*Q2:* Positive — do not feel guilty."
+            }
+          ],
+          "page": 219
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "TWO-PART · PROCESS FLOWCHART",
+          "eyebrow_tone": "default",
+          "title": "Prewriting → Drafting → Polishing",
+          "intro": "The order to think and write in. Same workflow shape across every essay type — only the prewriting questions change.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "Compass",
+              "title": "Prewriting",
+              "body": "**What is the answer to Q1?** → **What is the answer to Q2?** → **Populate Your Structure** → ready for Essay Writing.\n\nResist the temptation to merge Q1 and Q2 — examiners want to see two distinct, fully-developed answers."
+            },
+            {
+              "number": 2,
+              "icon": "Pencil",
+              "title": "Drafting",
+              "body": "**Write Your Introduction** (paraphrase + both answers) → **Write 2 Main Body Paragraphs** (Q1, then Q2) → **Look at Your Introduction** → **Write Your Conclusion**.\n\nEvery paragraph should serve exactly one of the two questions, never both at once."
+            },
+            {
+              "number": 3,
+              "icon": "ClipboardCheck",
+              "title": "Polishing",
+              "body": "**Vocabulary** — vary any repeated words, replace lower-level vocabulary with higher-level vocabulary.\n**Grammar** — correct any grammar mistakes.\nThen move to Task 1."
+            }
+          ],
+          "page": 220
+        },
+        {
+          "type": "icon_grid",
+          "variant": "checklist",
+          "eyebrow": "TWO-PART · CHECKLIST",
+          "eyebrow_tone": "default",
+          "title": "Self-Evaluation Checklist",
+          "intro": "Three columns to run every practice essay through before you submit. Spot the weak slot before an examiner does.",
+          "columns": 3,
+          "cards": [
+            {
+              "icon": "Compass",
+              "title": "Planning",
+              "body": "• Did I read and understand the question?\n• Did I identify both questions in the prompt?\n• Did I think of an answer to Q1?\n• Did I think of an answer to Q2?\n• Did I think of explanations and examples for each answer?\n• Do my answers, explanations and examples make sense?\n• Did I follow the exact structure suggested?\n• Did I populate my structure appropriately?\n• Did I use my structure during the writing process?"
+            },
+            {
+              "icon": "Pencil",
+              "title": "Writing",
+              "body": "• Does the first sentence mean the same as the question statement?\n• Have I varied my language enough in the first sentence?\n• Are both answers clearly outlined in the introduction?\n• Do my topic sentences match the answers in my introduction?\n• Have I explained each answer fully?\n• Have I provided 1 example for each answer?\n• Have I dedicated one body paragraph to each question?\n• Have I clearly summarised both answers in the conclusion?\n• Do main ideas expressed in the conclusion match the introduction?"
+            },
+            {
+              "icon": "ClipboardCheck",
+              "title": "Checking",
+              "body": "• Have I checked my work for grammar mistakes?\n• Have I fixed as many grammar mistakes as possible?\n• Have I varied my vocabulary as much as possible?\n• Have I changed as many simple words to higher-level words as possible?\n• Have I checked for spelling and meaning errors?"
+            }
+          ],
+          "page": 221
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Two-Part / Double Question",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "A Two-Part question asks: 'Why has this happened? Should something be done?' How should you organise the body?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "One paragraph mixing both questions."
+                },
+                {
+                  "letter": "B",
+                  "text": "Two body paragraphs — one per question."
+                },
+                {
+                  "letter": "C",
+                  "text": "Three paragraphs: one for each question and one merging them."
+                }
+              ],
+              "answer": "B",
+              "explanation": "One paragraph per question keeps each answer fully developed. Mixing them blurs Task Response."
+            },
+            {
+              "kind": "mcq",
+              "stem": "Which is a common Two-Part trap?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "Answering only one of the two questions."
+                },
+                {
+                  "letter": "B",
+                  "text": "Repeating the question word-for-word."
+                },
+                {
+                  "letter": "C",
+                  "text": "Both A and B."
+                }
+              ],
+              "answer": "C",
+              "explanation": "Missing one question = automatic Task Response cap. Failing to paraphrase = Lexical Resource hit. Avoid both."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Both questions must appear answered in the _______ as well as the body.",
+              "answer": "introduction",
+              "accept": [
+                "introduction",
+                "intro",
+                "introduction and conclusion"
+              ],
+              "explanation": "Brief answers to both questions belong in the introduction so the examiner sees a full response from sentence 2."
+            }
+          ],
+          "page": 221
+        }
+      ]
+    },
+    {
+      "lesson_id": "opinion_essay",
+      "lesson_number": 7,
+      "title": "Opinion Essay",
+      "source_pages": [
+        222,
+        225
+      ],
+      "liz_intro": "\"To what extent do you agree or disagree?\" — opinion essays. State a clear opinion in the introduction, defend it through two main ideas, restate it in the conclusion. No fence-sitting.",
+      "liz_outro": "Pick one stance and commit. Trying to argue both sides in an opinion essay caps your Task Response.",
+      "slides": [
+        {
+          "type": "figure",
+          "eyebrow": "OPINION ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Opinion Essay — Blank Structure",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 0,
+          "intro": "The empty skeleton — every paragraph type and the colour-coded slots that go inside it.",
+          "image": "/static/strategies/writing/essays/opinion_blank.png",
+          "alt": "Opinion essay Blank Structure diagram",
+          "caption": "**Opinion trap:** Your stance is the spine — every paragraph has to reinforce it. No fence-sitting; no \"on the one hand / on the other hand\" hedging. Pick a side in the intro, stay there to the conclusion. *Colour code:* teal = paragraph anchors, peach = supporting reason 1, green = supporting reason 2, light-blue = conclusion."
+        },
+        {
+          "type": "figure",
+          "eyebrow": "OPINION ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Opinion Essay — Populated Structure",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 1,
+          "intro": "The same skeleton filled with a real Band 9 example — see how each slot holds an actual sentence.",
+          "image": "/static/strategies/writing/essays/opinion_populated.png",
+          "alt": "Opinion essay Populated Structure diagram",
+          "caption": "Notice how the colour threads carry one main idea from intro → supporting paragraph → conclusion without ever crossing. That coherence is what scores Band 9 on Cohesion."
+        },
+        {
+          "type": "figure",
+          "eyebrow": "OPINION ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Opinion Essay — Flowchart",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 2,
+          "intro": "Your end-to-end timeline: Planning → Writing → Concluding → Polishing.",
+          "image": "/static/strategies/writing/essays/opinion_flowchart.png",
+          "alt": "Opinion essay Flowchart diagram",
+          "caption": "Spend the planning minutes — they pay back four times over in the writing. Don't start typing until every box on the left is filled in. *(Colour code: teal = paragraph anchors · peach = Main Idea 1 thread · green = Main Idea 2 thread · light-blue = conclusion.)*"
+        },
+        {
+          "type": "figure",
+          "eyebrow": "OPINION ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Opinion Essay — Checklist",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 3,
+          "intro": "Final-pass quality control before you submit — content, structure, language.",
+          "image": "/static/strategies/writing/essays/opinion_checklist.png",
+          "alt": "Opinion essay Checklist diagram",
+          "caption": "Run this list before time's up. Each unchecked box is a band-score risk you can still erase. *(Colour code: teal = paragraph anchors · peach = Main Idea 1 thread · green = Main Idea 2 thread · light-blue = conclusion.)*"
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "OPINION · BLANK STRUCTURE",
+          "eyebrow_tone": "default",
+          "title": "Opinion Essay — Blank Structure",
+          "intro": "Four paragraphs. Each colour maps to a paragraph role you'll keep using throughout the essay. Treat this as the skeleton — every component slot is something the examiner expects to see.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "FileText",
+              "title": "Introduction Paragraph",
+              "body": "**Paraphrase** the question.\n**Clear opinion** — agree or disagree, no hedging.\n**Main Idea 1** that supports your opinion.\n**Main Idea 2** that supports your opinion."
+            },
+            {
+              "number": 2,
+              "icon": "Layers",
+              "title": "1st Supporting Paragraph (Main Idea 1)",
+              "body": "**Topic Sentence** — restate Main Idea 1.\n*Explanation* — why this supports your opinion.\n*Explain further* — extend the reasoning.\n*Example* that demonstrates the idea."
+            },
+            {
+              "number": 3,
+              "icon": "Layers",
+              "title": "2nd Supporting Paragraph (Main Idea 2)",
+              "body": "**Topic Sentence** — restate Main Idea 2.\n*Explanation* — why this supports your opinion.\n*Explain further* — extend the reasoning.\n*Example* that demonstrates the idea."
+            },
+            {
+              "number": 4,
+              "icon": "CheckCircle",
+              "title": "Concluding Paragraph",
+              "body": "**\"I agree with this because…\"** (restate opinion).\n*Summarise Main Idea 1.*\n*Summarise Main Idea 2.*"
+            }
+          ],
+          "page": 222
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "OPINION · WORKED EXAMPLE",
+          "eyebrow_tone": "warm",
+          "title": "Worked Example — Music Across Cultures",
+          "intro": "**Question:** *Some people say that music is a good way of bringing people of different cultures and ages together. Do you agree or disagree?*",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "FileText",
+              "title": "Introduction Paragraph",
+              "body": "**Paraphrase:** *It is often claimed that music is an effective means of uniting those of varying backgrounds and age ranges together.*\n*Opinion:* I agree.\n*Main Idea 1:* Shared interests.\n*Main Idea 2:* Can teach other people about your culture."
+            },
+            {
+              "number": 2,
+              "icon": "Layers",
+              "title": "1st Supporting Paragraph (Shared Interests)",
+              "body": "**TS:** *People from many different countries are fans of the same artists.*\n*Explain:* This gives people something in common.\n*Explain further:* Despite differences, they will have something they both love and will bond over this.\n*Example:* K-Pop being popular in many different countries."
+            },
+            {
+              "number": 3,
+              "icon": "Layers",
+              "title": "2nd Supporting Paragraph (Teaching Culture)",
+              "body": "**TS:** *When you meet someone new, you can teach them about your culture through music.*\n*Explain:* Each country has a unique musical heritage.\n*Explain further:* It is very interesting to learn about different types of music and this brings people together.\n*Example:* Ireland has a unique style of music, instruments and language."
+            },
+            {
+              "number": 4,
+              "icon": "CheckCircle",
+              "title": "Concluding Paragraph",
+              "body": "**\"I agree with this because…\"**\n*Commonalities.*\n*Teaching about unique musical culture.*"
+            }
+          ],
+          "page": 223
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "OPINION · PROCESS FLOWCHART",
+          "eyebrow_tone": "default",
+          "title": "Prewriting → Drafting → Polishing",
+          "intro": "The order to think and write in. Same workflow shape across every essay type — only the prewriting questions change.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "Compass",
+              "title": "Prewriting",
+              "body": "**What is your opinion?** → **What main ideas support it?** → **Populate Your Structure** → ready for Essay Writing.\n\nDecide opinion first, then brainstorm main ideas that support it. Don't try to argue both sides — pick one and commit."
+            },
+            {
+              "number": 2,
+              "icon": "Pencil",
+              "title": "Drafting",
+              "body": "**Write Your Introduction** (paraphrase + opinion + 2 main ideas) → **Write 2 Main Body Paragraphs** (Main Idea 1, then Main Idea 2) → **Look at Your Introduction** → **Write Your Conclusion**.\n\nYour stance should be unmissable in the intro and reinforced again in the conclusion."
+            },
+            {
+              "number": 3,
+              "icon": "ClipboardCheck",
+              "title": "Polishing",
+              "body": "**Vocabulary** — vary any repeated words, replace lower-level vocabulary with higher-level vocabulary.\n**Grammar** — correct any grammar mistakes.\nThen move to Task 1."
+            }
+          ],
+          "page": 224
+        },
+        {
+          "type": "icon_grid",
+          "variant": "checklist",
+          "eyebrow": "OPINION · CHECKLIST",
+          "eyebrow_tone": "default",
+          "title": "Self-Evaluation Checklist",
+          "intro": "Three columns to run every practice essay through before you submit. Spot the weak slot before an examiner does.",
+          "columns": 3,
+          "cards": [
+            {
+              "icon": "Compass",
+              "title": "Planning",
+              "body": "• Did I read and understand the question?\n• Did I think about how to write the question statement in my own words?\n• Did I decide my opinion clearly?\n• Did I think of 2 main ideas that support my opinion?\n• Did I think of explanations and examples for each main idea?\n• Do my opinion, main ideas, explanations and examples make sense?\n• Did I follow the exact structure suggested?\n• Did I populate my structure appropriately?\n• Did I use my structure during the writing process?"
+            },
+            {
+              "icon": "Pencil",
+              "title": "Writing",
+              "body": "• Does the first sentence mean the same as the question statement?\n• Have I varied my language enough in the first sentence?\n• Is my opinion stated unambiguously in the introduction?\n• Are both main ideas clearly outlined in the introduction?\n• Do my topic sentences match the main ideas in my introduction?\n• Have I explained each main idea?\n• Have I provided 1 example in each main body paragraph?\n• Have I restated my opinion in the conclusion?\n• Is my stance consistent across both body paragraphs?"
+            },
+            {
+              "icon": "ClipboardCheck",
+              "title": "Checking",
+              "body": "• Have I checked my work for grammar mistakes?\n• Have I fixed as many grammar mistakes as possible?\n• Have I varied my vocabulary as much as possible?\n• Have I changed as many simple words to higher-level words as possible?\n• Have I checked for spelling and meaning errors?"
+            }
+          ],
+          "page": 225
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Opinion Essay",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "An Opinion essay prompt is 'To what extent do you agree or disagree?' Should you sit on the fence?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "Yes — partial agreement is safest."
+                },
+                {
+                  "letter": "B",
+                  "text": "No — take a clear position and defend it consistently."
+                },
+                {
+                  "letter": "C",
+                  "text": "Yes — examiners reward balance."
+                }
+              ],
+              "answer": "B",
+              "explanation": "Wishy-washy stances cap Task Response. State your position clearly and stay consistent through both body paragraphs."
+            },
+            {
+              "kind": "mcq",
+              "stem": "How many main ideas should a strong Opinion essay develop?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "Five — the more the better."
+                },
+                {
+                  "letter": "B",
+                  "text": "Two well-developed main ideas, one per body paragraph."
+                },
+                {
+                  "letter": "C",
+                  "text": "Just one big idea."
+                }
+              ],
+              "answer": "B",
+              "explanation": "Two ideas, fully explained with examples, score higher than five surface-level points. Depth beats breadth."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Your stance must be _______ across the introduction, both body paragraphs, and conclusion.",
+              "answer": "consistent",
+              "accept": [
+                "consistent",
+                "the same",
+                "unchanged"
+              ],
+              "explanation": "Switching stances mid-essay (e.g. agreeing in para 1 but qualifying in para 3) destroys cohesion and Task Response."
+            }
+          ],
+          "page": 225
+        }
+      ]
+    },
+    {
+      "lesson_id": "problem_and_solution",
+      "lesson_number": 8,
+      "title": "Problem and Solution Essay",
+      "source_pages": [
+        226,
+        229
+      ],
+      "liz_intro": "When the question gives you a situation and asks for problems associated with it plus possible solutions. Two body paragraphs — one builds the problems case, the other builds the solutions case.",
+      "liz_outro": "Same rhythm. Same colour map. The trap here: students under-develop the solutions paragraph because they spent all their planning on the problems. Don't.",
+      "slides": [
+        {
+          "type": "figure",
+          "eyebrow": "PROBLEM AND SOLUTION ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Problem and Solution Essay — Blank Structure",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 0,
+          "intro": "The empty skeleton — every paragraph type and the colour-coded slots that go inside it.",
+          "image": "/static/strategies/writing/essays/problem_blank.png",
+          "alt": "Problem and Solution essay Blank Structure diagram",
+          "caption": "**Problem-Solution trap:** Each solution must address a *specific* problem you raised. Drifting solutions — answers that don't tie back to a stated problem — kill Coherence & Cohesion. Keep the threads paired: problem 1 → solution 1, problem 2 → solution 2. *Colour code:* teal = paragraph anchors, peach = problem-and-its-solution thread 1, green = problem-and-its-solution thread 2, light-blue = conclusion."
+        },
+        {
+          "type": "figure",
+          "eyebrow": "PROBLEM AND SOLUTION ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Problem and Solution Essay — Populated Structure",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 1,
+          "intro": "The same skeleton filled with a real Band 9 example — see how each slot holds an actual sentence.",
+          "image": "/static/strategies/writing/essays/problem_populated.png",
+          "alt": "Problem and Solution essay Populated Structure diagram",
+          "caption": "Notice how the colour threads carry one main idea from intro → supporting paragraph → conclusion without ever crossing. That coherence is what scores Band 9 on Cohesion."
+        },
+        {
+          "type": "figure",
+          "eyebrow": "PROBLEM AND SOLUTION ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Problem and Solution Essay — Flowchart",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 2,
+          "intro": "Your end-to-end timeline: Planning → Writing → Concluding → Polishing.",
+          "image": "/static/strategies/writing/essays/problem_flowchart.png",
+          "alt": "Problem and Solution essay Flowchart diagram",
+          "caption": "Spend the planning minutes — they pay back four times over in the writing. Don't start typing until every box on the left is filled in. *(Colour code: teal = paragraph anchors · peach = Main Idea 1 thread · green = Main Idea 2 thread · light-blue = conclusion.)*"
+        },
+        {
+          "type": "figure",
+          "eyebrow": "PROBLEM AND SOLUTION ESSAY",
+          "eyebrow_tone": "soft",
+          "title": "Problem and Solution Essay — Checklist",
+          "stages": [
+            "Blank Structure",
+            "Populated Structure",
+            "Flowchart",
+            "Checklist"
+          ],
+          "stage_index": 3,
+          "intro": "Final-pass quality control before you submit — content, structure, language.",
+          "image": "/static/strategies/writing/essays/problem_checklist.png",
+          "alt": "Problem and Solution essay Checklist diagram",
+          "caption": "Run this list before time's up. Each unchecked box is a band-score risk you can still erase. *(Colour code: teal = paragraph anchors · peach = Main Idea 1 thread · green = Main Idea 2 thread · light-blue = conclusion.)*"
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "PROBLEM & SOLUTION · BLANK STRUCTURE",
+          "eyebrow_tone": "default",
+          "title": "Problem and Solution Essay — Blank Structure",
+          "intro": "Four paragraphs. Each colour maps to a paragraph role you'll keep using throughout the essay. Treat this as the skeleton — every component slot is something the examiner expects to see.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "FileText",
+              "title": "Introduction Paragraph",
+              "body": "**Paraphrase** the question.\n**Briefly state 2 problems** (pink — Problems thread).\n**Briefly state 2 solutions** (green — Solutions thread)."
+            },
+            {
+              "number": 2,
+              "icon": "Layers",
+              "title": "1st Supporting Paragraph (Problems)",
+              "body": "**Topic Sentence 1** — State Problem 1. *Explain Problem 1.*\n**Topic Sentence 2** — State Problem 2. *Explain Problem 2 + give one example.*"
+            },
+            {
+              "number": 3,
+              "icon": "Layers",
+              "title": "2nd Supporting Paragraph (Solutions)",
+              "body": "**Topic Sentence 1** — State Solution 1. *Explain Solution 1.*\n**Topic Sentence 2** — State Solution 2. *Explain Solution 2 + give one example.*"
+            },
+            {
+              "number": 4,
+              "icon": "CheckCircle",
+              "title": "Concluding Paragraph",
+              "body": "**\"In conclusion,\"**\n**Summarise both problems.**\n**Summarise both solutions.**"
+            }
+          ],
+          "page": 226
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "PROBLEM & SOLUTION · WORKED EXAMPLE",
+          "eyebrow_tone": "warm",
+          "title": "Worked Example — Online Shopping",
+          "intro": "**Question:** *More and more people are buying products online. What problems are associated with this, and what are some possible solutions?*",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "FileText",
+              "title": "Introduction Paragraph",
+              "body": "**Paraphrase** the question.\n*Problems:* Increase in credit card fraud and low-quality products.\n*Solutions:* Improve online security and transparent customer complaints."
+            },
+            {
+              "number": 2,
+              "icon": "Layers",
+              "title": "1st Supporting Paragraph (Problems)",
+              "body": "**TS1** — *Increase in credit card fraud.* Online shopping requires the use of credit cards which can be targeted by criminals.\n**TS2** — *Some online shops sell fake products.* Easy to trick people online by showing fake items e.g. luxury handbags."
+            },
+            {
+              "number": 3,
+              "icon": "Layers",
+              "title": "2nd Supporting Paragraph (Solutions)",
+              "body": "**TS1** — *Improve cyber security.* Third party verification.\n**TS2** — *Publish real customer complaints on website.* This will alert new customers to problems e.g. 5 star rating system."
+            },
+            {
+              "number": 4,
+              "icon": "CheckCircle",
+              "title": "Concluding Paragraph",
+              "body": "**\"In conclusion,\"** the increase in credit card fraud and low-quality products are the main problems, *while* improving online security and providing transparent customer complaints are the most workable solutions."
+            }
+          ],
+          "page": 227
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "PROBLEM & SOLUTION · PROCESS FLOWCHART",
+          "eyebrow_tone": "default",
+          "title": "Prewriting → Drafting → Polishing",
+          "intro": "The order to think and write in. Same workflow shape across every essay type — only the prewriting questions change.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "Compass",
+              "title": "Prewriting",
+              "body": "**What are the problems?** → **What are the solutions?** → **Populate Your Structure** → ready for Essay Writing.\n\nUse these to populate your structure, which will guide your essay writing. Don't shortcut the solutions brainstorm."
+            },
+            {
+              "number": 2,
+              "icon": "Pencil",
+              "title": "Drafting",
+              "body": "**Write Your Introduction** → **Write 2 Main Body Paragraphs** (Problems first, then Solutions) → **Look at Your Introduction** → **Write Your Conclusion**.\n\nUse the populated structure to now write your essay. Use your introduction to write your conclusion."
+            },
+            {
+              "number": 3,
+              "icon": "ClipboardCheck",
+              "title": "Polishing",
+              "body": "**Vocabulary** — vary any repeated words, replace lower-level vocabulary with higher-level vocabulary.\n**Grammar** — correct any grammar mistakes.\nThen move to Task 1."
+            }
+          ],
+          "page": 228
+        },
+        {
+          "type": "icon_grid",
+          "variant": "checklist",
+          "eyebrow": "PROBLEM & SOLUTION · CHECKLIST",
+          "eyebrow_tone": "default",
+          "title": "Self-Evaluation Checklist",
+          "intro": "Three columns to run every practice essay through before you submit. Spot the weak slot before an examiner does.",
+          "columns": 3,
+          "cards": [
+            {
+              "icon": "Compass",
+              "title": "Planning",
+              "body": "• Did I read and understand the question?\n• Did I think about how to write the question statement in my own words?\n• Did I think of 2 problems?\n• Did I pick 2 solutions?\n• Did I think of explanations and examples?\n• Do my problems, solutions, explanations and examples make sense?\n• Did I follow the exact structure suggested?\n• Did I populate my structure appropriately?\n• Did I use my structure during the writing process?"
+            },
+            {
+              "icon": "Pencil",
+              "title": "Writing",
+              "body": "• Does the first sentence mean the same as the question statement?\n• Have I varied my language enough in the first sentence?\n• Are problems clearly outlined in the introduction?\n• Are solutions clearly outlined in the introduction?\n• Do my topic sentences match the main ideas in my introduction?\n• Have I explained each main idea?\n• Have I provided 1 example in each main body paragraph?\n• Have I clearly summarised my problems and solutions in the conclusion?\n• Do main ideas expressed in the conclusion match the introduction?"
+            },
+            {
+              "icon": "ClipboardCheck",
+              "title": "Checking",
+              "body": "• Have I checked my work for grammar mistakes?\n• Have I fixed as many grammar mistakes as possible?\n• Have I varied my vocabulary as much as possible?\n• Have I changed as many simple words to higher-level words as possible?\n• Have I checked for spelling and meaning errors?"
+            }
+          ],
+          "page": 229
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Problem and Solution",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "How should the body paragraphs of a Problem & Solution essay be structured?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "Para 1: all problems / Para 2: all solutions."
+                },
+                {
+                  "letter": "B",
+                  "text": "Para 1: problem 1 + solution 1 / Para 2: problem 2 + solution 2."
+                },
+                {
+                  "letter": "C",
+                  "text": "Either is acceptable depending on the prompt."
+                }
+              ],
+              "answer": "C",
+              "explanation": "Both organisations work. The 'problems-then-solutions' split is cleaner; the 'paired' approach is more cohesive when each problem has a distinct solution."
+            },
+            {
+              "kind": "mcq",
+              "stem": "A common Problem/Solution mistake is…",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "Listing too many problems with no real solutions."
+                },
+                {
+                  "letter": "B",
+                  "text": "Using too many examples."
+                },
+                {
+                  "letter": "C",
+                  "text": "Writing too many topic sentences."
+                }
+              ],
+              "answer": "A",
+              "explanation": "Many candidates pile up problems but their 'solutions' are vague platitudes. Each solution must be specific and tied to a stated problem."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Each solution should be linked back to the _______ it solves.",
+              "answer": "problem",
+              "accept": [
+                "problem",
+                "specific problem",
+                "stated problem"
+              ],
+              "explanation": "An unlinked solution reads as a generic suggestion. Tying solution to problem makes the essay coherent and answers the prompt."
+            }
+          ],
+          "page": 229
+        }
+      ]
+    }
+  ]
+}

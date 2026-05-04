@@ -1,0 +1,935 @@
+{
+  "chapter_id": "listening_segment_slides",
+  "chapter_number": 1,
+  "skill": "listening",
+  "title": "IELTS Listening: What Successful Students Do Differently",
+  "subtitle": "Based on 10+ years working with thousands of Band 7, 8 & 9 students",
+  "source_pages": [
+    3,
+    25
+  ],
+  "extraction_status": "complete",
+  "lessons": [
+    {
+      "lesson_id": "overview",
+      "lesson_number": 0,
+      "title": "Overview",
+      "source_pages": [
+        3,
+        7
+      ],
+      "liz_intro": "Let's start with the big picture. In this section we'll look at which students reach Band 8-9 and why — and which habits hold the rest of you back.",
+      "liz_outro": "Now we'll unpack each of those three game-changing habits one by one.",
+      "slides": [
+        {
+          "type": "hero",
+          "title": "IELTS Listening: What Successful Students Do Differently",
+          "subtitle": "Based on 10+ years working with thousands of Band 7, 8 & 9 students",
+          "image_layout": "stacked",
+          "page": 3,
+          "images": [
+            "/static/strategies/listening/intro/u01_overview_hero_classroom.jpg",
+            "/static/strategies/listening/intro/u02_overview_hero_group.jpg"
+          ]
+        },
+        {
+          "type": "split_visual",
+          "image_position": "left",
+          "eyebrow": "TEST FORMAT",
+          "eyebrow_tone": "default",
+          "title": "IELTS Listening Test Format",
+          "blocks": [
+            {
+              "kind": "card_list",
+              "cards": [
+                {
+                  "title": "30 Minutes",
+                  "body": "Plus 10 minutes to transfer answers"
+                },
+                {
+                  "title": "4 Sections",
+                  "body": "40 questions total, progressively harder"
+                },
+                {
+                  "title": "One Chance",
+                  "body": "You hear each recording ONLY ONCE"
+                },
+                {
+                  "title": "8 Question Types",
+                  "body": "Perfect spelling required throughout"
+                }
+              ]
+            }
+          ],
+          "page": 4,
+          "image": "/static/strategies/listening/intro/u04_overview_split.jpg"
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "title": "Why Students Struggle",
+          "intro": "You must do all of these AT THE SAME TIME:",
+          "columns": 3,
+          "cards": [
+            {
+              "icon": "Eye",
+              "title": "Read Questions",
+              "body": "Quickly scan and understand what's being asked whilst staying focused"
+            },
+            {
+              "icon": "Ear",
+              "title": "Listen Carefully",
+              "body": "Catch every word and nuance without missing critical information"
+            },
+            {
+              "icon": "Pencil",
+              "title": "Write Answers",
+              "body": "Record responses accurately with perfect spelling under pressure"
+            },
+            {
+              "icon": "Brain",
+              "title": "Think & Predict",
+              "body": "Anticipate what's coming next and identify synonyms on the fly"
+            },
+            {
+              "icon": "Clock",
+              "title": "Manage Time",
+              "body": "Keep pace without getting stuck on difficult questions"
+            }
+          ],
+          "page": 5
+        },
+        {
+          "type": "photo_hero",
+          "title": "What Successful Students Know",
+          "intro": "Focus on getting **100% in Sections 1, 2 & 3** first. Section 4's harder questions are designed to separate Band 8s from Band 9s.",
+          "body": [
+            {
+              "kind": "icon_grid_inline",
+              "variant": "circular_badge",
+              "columns": 2,
+              "cards": [
+                {
+                  "icon": "Users",
+                  "title": "Section 1",
+                  "body": "Master the basics"
+                },
+                {
+                  "icon": "FileText",
+                  "title": "Section 2",
+                  "body": "Build confidence"
+                },
+                {
+                  "icon": "UserCheck",
+                  "title": "Section 3",
+                  "body": "Secure your score"
+                },
+                {
+                  "icon": "Star",
+                  "title": "Section 4",
+                  "body": "Bonus points"
+                }
+              ]
+            }
+          ],
+          "footer": "Don't panic about hard questions when you should be securing easier ones. This strategic approach reduces stress and maximises your score potential.",
+          "image": "/static/strategies/listening/intro/p06_top.jpg",
+          "page": 6
+        },
+        {
+          "type": "big_typography",
+          "eyebrow": "GAME CHANGERS",
+          "eyebrow_tone": "default",
+          "title": "3 Things Successful Students Do Differently",
+          "items": [
+            {
+              "number": "01",
+              "title": "Listen Actively, Not Passively"
+            },
+            {
+              "number": "02",
+              "title": "Use Different Strategy for Each Question Type"
+            },
+            {
+              "number": "03",
+              "title": "Listen Just Once in Practice"
+            }
+          ],
+          "page": 7
+        }
+      ]
+    },
+    {
+      "lesson_id": "listen_actively",
+      "lesson_number": 1,
+      "title": "Game Changer #1 — Listen Actively, Not Passively",
+      "source_pages": [
+        8,
+        9
+      ],
+      "liz_intro": "Game changer #1: active, not passive listening. You need to see the difference clearly — otherwise you'll spend hours watching TED talks and your IELTS score won't move.",
+      "liz_outro": "You've seen how active listening folds into a daily routine. Next: a different strategy for every question type.",
+      "slides": [
+        {
+          "type": "comparison",
+          "eyebrow": "#1",
+          "eyebrow_tone": "outlined",
+          "title": "Listen Actively, Not Passively",
+          "columns": [
+            {
+              "label": "Passive Listening",
+              "tone": "negative",
+              "marker": "x",
+              "items": [
+                "Watching Netflix for entertainment",
+                "Listening to music in the background",
+                "Just trying to understand the general meaning",
+                "No specific task or goal"
+              ],
+              "image": "/static/strategies/listening/intro/p08_left.jpg"
+            },
+            {
+              "label": "Active Listening",
+              "tone": "positive",
+              "marker": "check",
+              "items": [
+                "Predicting answers before you hear them",
+                "Looking for specific keywords",
+                "Identifying synonyms and paraphrasing",
+                "Writing whilst listening simultaneously",
+                "Answering questions with purpose"
+              ],
+              "image": "/static/strategies/listening/intro/p08_right.jpg"
+            }
+          ],
+          "page": 8
+        },
+        {
+          "type": "split_visual",
+          "image_position": "left",
+          "title": "Active Listening = Doing Something Whilst You Listen",
+          "blocks": [
+            {
+              "kind": "card_list",
+              "cards": [
+                {
+                  "title": "Taking Notes During TED Talks",
+                  "body": "Write down key points, vocabulary, and main arguments as the speaker presents"
+                },
+                {
+                  "title": "Answering Questions During Podcasts",
+                  "body": "Create your own comprehension questions or use guided listening activities"
+                },
+                {
+                  "title": "Practising with IELTS Tests",
+                  "body": "Complete actual exam questions under realistic time constraints"
+                },
+                {
+                  "title": "Focusing on Specific Skills",
+                  "body": "Target vocabulary acquisition, synonym recognition, and spelling accuracy"
+                }
+              ]
+            }
+          ],
+          "page": 9,
+          "image": "/static/strategies/listening/intro/u03_listen_actively.jpg"
+        }
+      ]
+    },
+    {
+      "lesson_id": "different_strategy",
+      "lesson_number": 2,
+      "title": "Game Changer #2 — Different Strategy for Each Question Type",
+      "source_pages": [
+        10,
+        11
+      ],
+      "liz_intro": "There are 8 question types, and if you attack them all with the same approach you lose. The sports analogy makes this click.",
+      "liz_outro": "You'll see how this logic plays out on a real question in the worked example next.",
+      "slides": [
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "#2",
+          "eyebrow_tone": "outlined",
+          "title": "Different Strategy for Each Question Type",
+          "blocks": [
+            {
+              "kind": "accent_quote",
+              "body": "8 Question Types = 8 Different Strategies"
+            },
+            {
+              "kind": "chevron_steps",
+              "steps": [
+                {
+                  "number": 1,
+                  "icon": "Users",
+                  "title": "Multiple Choice",
+                  "body": "Differentiating keywords and eliminating distractors"
+                },
+                {
+                  "number": 2,
+                  "icon": "FileEdit",
+                  "title": "Form Completion",
+                  "body": "Predict word type and focus on specific information"
+                },
+                {
+                  "number": 3,
+                  "icon": "Map",
+                  "title": "Map Labelling",
+                  "body": "Signposting language and spatial visualisation"
+                },
+                {
+                  "number": 4,
+                  "icon": "AlignLeft",
+                  "title": "Sentence Completion",
+                  "body": "Grammar analysis and contextual prediction"
+                }
+              ]
+            },
+            {
+              "kind": "callout",
+              "tone": "critical",
+              "body": "**Critical point:** Using the same approach for everything = FAILURE. Each question type demands its own tactical approach."
+            }
+          ],
+          "page": 10,
+          "image": "/static/strategies/listening/intro/u10_different_strategy.jpg"
+        },
+        {
+          "type": "analogy_3up",
+          "title": "You Wouldn't Use the Same Strategy for Every Sport",
+          "items": [
+            {
+              "title": "Football",
+              "body": "Team coordination, positioning, passing strategies",
+              "image": "/static/strategies/listening/intro/u06_football.jpg"
+            },
+            {
+              "title": "Basketball",
+              "body": "Fast breaks, zone defence, individual plays",
+              "image": "/static/strategies/listening/intro/u07_basketball.jpg"
+            },
+            {
+              "title": "Tennis",
+              "body": "Serve and volley, baseline rallies, court coverage",
+              "image": "/static/strategies/listening/intro/u08_tennis.jpg"
+            }
+          ],
+          "footer": "Different games = Different strategies\nSame principle applies to IELTS question types",
+          "page": 11
+        }
+      ]
+    },
+    {
+      "lesson_id": "listen_once",
+      "lesson_number": 3,
+      "title": "Game Changer #3 — Listen Just Once in Practice",
+      "source_pages": [
+        12,
+        12
+      ],
+      "liz_intro": "In class you might listen 3-4 times and feel comfortable. You don't get that luxury in the real test. You need to bake this into your practice habit starting today.",
+      "liz_outro": "Next we'll walk through how these three principles play out on a real IELTS question, step by step.",
+      "slides": [
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "#3",
+          "eyebrow_tone": "outlined",
+          "title": "Listen Just Once in Practice",
+          "blocks": [
+            {
+              "kind": "two_col_bullets",
+              "columns": [
+                {
+                  "label": "In English Class",
+                  "items": [
+                    "Listen 3-4 times ✓",
+                    "Feels comfortable ✓",
+                    "Builds false confidence",
+                    "Doesn't reflect exam reality"
+                  ]
+                },
+                {
+                  "label": "In Real Test",
+                  "items": [
+                    "Listen ONCE",
+                    "No rewind button",
+                    "No second chance",
+                    "No time to relax"
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "accent_quote_titled",
+              "title": "\"Train Hard, Fight Easy\"",
+              "body": "Make your practice sessions more challenging than the actual test, and exam day will feel manageable."
+            }
+          ],
+          "page": 12,
+          "image": "/static/strategies/listening/intro/u09_listen_once_soldier.jpg"
+        }
+      ]
+    },
+    {
+      "lesson_id": "worked_example",
+      "lesson_number": 4,
+      "title": "Worked Example — Multiple Choice Strategy",
+      "source_pages": [
+        13,
+        18
+      ],
+      "liz_intro": "Now we'll work through a real IELTS Multiple Choice question step by step. This is what \"different strategy\" actually looks like in practice.",
+      "liz_outro": "Take this with you: 8 question types, each needing its own strategy. Next section: how to practise correctly.",
+      "slides": [
+        {
+          "type": "split_visual",
+          "image_position": "left",
+          "eyebrow": "STRATEGY DEMO",
+          "eyebrow_tone": "default",
+          "title": "Example: Multiple Choice Strategy",
+          "subtitle": "Let me show you what \"different strategy\" actually means in practice. We'll walk through a real IELTS question step by step.",
+          "blocks": [
+            {
+              "kind": "chevron_steps",
+              "steps": [
+                {
+                  "number": 1,
+                  "title": "See the Question"
+                },
+                {
+                  "number": 2,
+                  "title": "Learn the Strategy"
+                },
+                {
+                  "number": 3,
+                  "title": "Apply It"
+                }
+              ]
+            }
+          ],
+          "page": 13,
+          "image": "/static/strategies/listening/intro/u05_worked_example_split.jpg"
+        },
+        {
+          "type": "example",
+          "title": "Sample Question",
+          "intro": "Here's an authentic IELTS multiple choice question. Take a moment to read both questions carefully.",
+          "questions": [
+            {
+              "prompt": "Type of insurance chosen:",
+              "options": [
+                "A. Economy",
+                "B. Standard",
+                "C. Premium"
+              ]
+            },
+            {
+              "prompt": "Customer wants goods delivered to:",
+              "options": [
+                "A. Port",
+                "B. Home",
+                "C. Depot"
+              ]
+            }
+          ],
+          "callout": {
+            "tone": "info",
+            "body": "Notice how each question has three options. Your task is to identify the correct answer whilst listening to the recording just once."
+          },
+          "page": 14
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "title": "5-Step Strategy for Multiple Choice",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "FileText",
+              "title": "Read Instructions Carefully",
+              "body": "Check how many answers to choose and any specific requirements"
+            },
+            {
+              "number": 2,
+              "icon": "Search",
+              "title": "Identify Differentiating Keywords",
+              "body": "Find the words that make each option unique from the others"
+            },
+            {
+              "number": 3,
+              "icon": "Lightbulb",
+              "title": "Think of Synonyms & Paraphrasing",
+              "body": "The recording will use different words with the same meaning"
+            },
+            {
+              "number": 4,
+              "icon": "Ear",
+              "title": "Listen to the WHOLE Section",
+              "body": "Don't jump to conclusions — the answer might come at the end"
+            },
+            {
+              "number": 5,
+              "icon": "FastForward",
+              "title": "Keep Moving",
+              "body": "If you miss one, move on immediately to avoid missing the next question"
+            }
+          ],
+          "page": 15
+        },
+        {
+          "type": "comparison",
+          "title": "Step 2: Look at the Differences",
+          "intro": "Understanding the relationships between answer options helps you listen more strategically.",
+          "columns": [
+            {
+              "label": "Economy & Standard",
+              "tone": "neutral",
+              "items": [
+                "Similar meaning",
+                "Basic service level",
+                "Lower cost options",
+                "Minimal features"
+              ]
+            },
+            {
+              "label": "Premium",
+              "tone": "neutral",
+              "items": [
+                "Opposite meaning",
+                "Higher service level",
+                "Higher cost option",
+                "Enhanced features"
+              ]
+            }
+          ],
+          "callout": {
+            "tone": "info",
+            "body": "Notice how Economy and Standard are similar, whilst Premium stands apart. This pattern appears frequently in IELTS."
+          },
+          "page": 16
+        },
+        {
+          "type": "icon_grid",
+          "variant": "topline_icon",
+          "title": "Step 3: Predict Synonyms",
+          "intro": "They won't say \"Premium\" directly in the recording.",
+          "columns": 2,
+          "cards": [
+            {
+              "title": "\"First Class\"",
+              "body": "Suggests top tier"
+            },
+            {
+              "title": "\"VIP Service\"",
+              "body": "Implies exclusivity"
+            },
+            {
+              "title": "\"Highest Level\"",
+              "body": "Indicates superiority"
+            },
+            {
+              "title": "\"Most Expensive\"",
+              "body": "References cost"
+            },
+            {
+              "title": "\"Best Quality\"",
+              "body": "Emphasises excellence"
+            },
+            {
+              "title": "\"Top Package\"",
+              "body": "Suggests completeness"
+            }
+          ],
+          "footer": "Training yourself to anticipate synonyms dramatically improves your listening accuracy. This skill separates Band 6 from Band 8 students.",
+          "page": 17
+        },
+        {
+          "type": "photo_hero",
+          "eyebrow": "IMPORTANT",
+          "eyebrow_tone": "default",
+          "title": "This Is Just ONE Question Type",
+          "body": [
+            {
+              "kind": "factboard_inline",
+              "variant": "big_number",
+              "facts": [
+                {
+                  "value": "8",
+                  "label": "Question Types",
+                  "body": "Each with unique characteristics"
+                },
+                {
+                  "value": "8",
+                  "label": "Strategies",
+                  "body": "Specific approaches for each type"
+                },
+                {
+                  "value": "100%",
+                  "label": "Coverage",
+                  "body": "Complete system available"
+                }
+              ]
+            }
+          ],
+          "footer": "We've covered multiple choice in detail, but there are map labelling, form completion, sentence completion, matching, and many more. Each one has its own step-by-step strategy in the Listening A-to-Z chapter that follows.",
+          "image": "/static/strategies/listening/intro/p18_top.jpg",
+          "page": 18
+        }
+      ]
+    },
+    {
+      "lesson_id": "practise_correctly",
+      "lesson_number": 5,
+      "title": "How to Practise Correctly",
+      "source_pages": [
+        19,
+        25
+      ],
+      "liz_intro": "Knowing strategies on its own gets you nowhere. The real difference shows up in how you practise. This section is about simulating real exam conditions at home.",
+      "liz_outro": "By the end of this guide you have a complete system: three game-changing habits, practice under real exam conditions, and a method to analyse every mistake. Head to the A-to-Z guide next to unpack each question type.",
+      "slides": [
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "CRITICAL",
+          "eyebrow_tone": "critical",
+          "title": "The Biggest Problem",
+          "subtitle": "How You Practise Matters More Than What You Know",
+          "blocks": [
+            {
+              "kind": "accent_quote",
+              "body": "Knowing strategies ≠ Success"
+            },
+            {
+              "kind": "paragraph",
+              "body": "You must practise **CORRECTLY** to see real improvement. Most students sabotage their progress with poor practice habits."
+            }
+          ],
+          "page": 19,
+          "image": "/static/strategies/listening/intro/u11_practise_problem.jpg"
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "numbered_card",
+          "title": "What Most Students Do Wrong",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Don't Practise at All",
+              "body": "Hoping to improve through passive exposure alone"
+            },
+            {
+              "number": 2,
+              "title": "Use Fake YouTube Tests",
+              "body": "Unrealistic questions that don't match actual exam format"
+            },
+            {
+              "number": 3,
+              "title": "Listen Multiple Times",
+              "body": "Creating false confidence that collapses in the real test"
+            },
+            {
+              "number": 4,
+              "title": "Never Practise Under Exam Conditions",
+              "body": "Taking breaks, checking answers, using notes and dictionaries"
+            },
+            {
+              "number": 5,
+              "title": "Don't Analyse Mistakes",
+              "body": "Repeating the same errors without understanding why"
+            }
+          ],
+          "page": 20
+        },
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "WARNING",
+          "eyebrow_tone": "warning",
+          "title": "Problem: Fake Practice Tests",
+          "blocks": [
+            {
+              "kind": "card_list",
+              "label": "Why Fake Tests Damage Your Progress",
+              "marker": "x",
+              "cards": [
+                {
+                  "title": "Too Easy",
+                  "body": "Don't reflect actual exam difficulty"
+                },
+                {
+                  "title": "Nothing Like Real Test",
+                  "body": "Different format and question styles"
+                },
+                {
+                  "title": "Misleading Questions",
+                  "body": "Train you for the wrong exam"
+                },
+                {
+                  "title": "Wrong Format",
+                  "body": "Waste your valuable study time"
+                }
+              ]
+            },
+            {
+              "kind": "bullets",
+              "label": "Trusted Sources",
+              "items": [
+                "Official IELTS.org",
+                "British Council",
+                "IDP Education",
+                "Cambridge English books"
+              ]
+            }
+          ],
+          "page": 21,
+          "image": "/static/strategies/listening/intro/u12_practise_mistakes.jpg"
+        },
+        {
+          "type": "icon_grid",
+          "variant": "circular_badge",
+          "title": "How Successful Students Practise",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "Inbox",
+              "title": "Official Materials Only",
+              "body": "Cambridge IELTS books and authentic sources"
+            },
+            {
+              "icon": "Clock",
+              "title": "Always Exam Conditions",
+              "body": "No notes, internet, or breaks — full simulation"
+            },
+            {
+              "icon": "Ear",
+              "title": "Listen Once",
+              "body": "Never rewind or repeat during practice"
+            },
+            {
+              "icon": "FileText",
+              "title": "Mark Accurately",
+              "body": "Spelling and format must be perfect"
+            },
+            {
+              "icon": "Search",
+              "title": "Analyse Every Mistake",
+              "body": "Understand patterns and fix weaknesses"
+            },
+            {
+              "icon": "TrendingUp",
+              "title": "Build Endurance",
+              "body": "Complete full tests regularly without stopping"
+            }
+          ],
+          "page": 22
+        },
+        {
+          "type": "timeline_zigzag",
+          "title": "Practise Under REAL Exam Conditions",
+          "intro": "Make practice harder than the test, and exam day becomes manageable.",
+          "nodes": [
+            {
+              "number": 1,
+              "title": "No Notes",
+              "body": "Work from memory",
+              "side": "left"
+            },
+            {
+              "number": 2,
+              "title": "No Internet",
+              "body": "Offline only",
+              "side": "right"
+            },
+            {
+              "number": 3,
+              "title": "No Breaks",
+              "body": "30 minutes straight",
+              "side": "left"
+            },
+            {
+              "number": 4,
+              "title": "Listen Once",
+              "body": "No second chances",
+              "side": "right"
+            },
+            {
+              "number": 5,
+              "title": "Complete Test",
+              "body": "All 40 questions",
+              "side": "left"
+            }
+          ],
+          "footer": "Simulate the pressure, time constraints, and mental fatigue you'll experience on test day. This builds resilience and eliminates surprises.",
+          "page": 23
+        },
+        {
+          "type": "icon_grid",
+          "variant": "topline_icon",
+          "eyebrow": "ANALYSIS",
+          "eyebrow_tone": "default",
+          "title": "Analyse Every Mistake",
+          "intro": "The difference between Band 6 and Band 8 isn't talent — it's systematic error analysis.",
+          "columns": 3,
+          "cards": [
+            {
+              "icon": "Wand2",
+              "title": "Was It Spelling?",
+              "body": "Review commonly misspelt words and create a personal spelling list"
+            },
+            {
+              "icon": "BookA",
+              "title": "Was It Vocabulary?",
+              "body": "Did you miss synonyms or paraphrasing? Build your synonym database"
+            },
+            {
+              "icon": "FileText",
+              "title": "Did I Misread the Instructions?",
+              "body": "Check word limits, plural/singular requirements, and question type"
+            },
+            {
+              "icon": "User",
+              "title": "Did I Lose Focus?",
+              "body": "Identify when concentration drops and build stamina through practice"
+            },
+            {
+              "icon": "Grid3x3",
+              "title": "What's the Pattern?",
+              "body": "Track recurring mistakes and create targeted improvement strategies"
+            }
+          ],
+          "callout": {
+            "tone": "critical",
+            "body": "**Then fix the pattern.** Don't just note your mistakes — actively work to eliminate them through focused practice."
+          },
+          "page": 24
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Listening Game-Changers",
+          "intro": "Five short questions to lock in the principles before you tackle the A-to-Z strategies.",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "What is Game-Changer #1?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "Memorising answer keys for past tests."
+                },
+                {
+                  "letter": "B",
+                  "text": "Active listening — predicting and processing as you hear."
+                },
+                {
+                  "letter": "C",
+                  "text": "Listening to the audio multiple times."
+                }
+              ],
+              "answer": "B",
+              "explanation": "Passive listening is the #1 reason candidates lose answers — Game-Changer #1 is active prediction-driven listening."
+            },
+            {
+              "kind": "mcq",
+              "stem": "Why does the guide recommend a different strategy for each question type?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "Because each type tests a different sub-skill (gap-filling, gist, detail, etc.)."
+                },
+                {
+                  "letter": "B",
+                  "text": "Because the IELTS rules require it."
+                },
+                {
+                  "letter": "C",
+                  "text": "Because it makes the test feel longer."
+                }
+              ],
+              "answer": "A",
+              "explanation": "Different question types test different sub-skills. A one-size-fits-all approach gives mediocre results across the board."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "In the real exam, the audio plays exactly _______ time(s).",
+              "answer": "one",
+              "accept": [
+                "one",
+                "1",
+                "once"
+              ],
+              "explanation": "Practice should mirror reality — 'one-listen mode' is non-negotiable. Hearing the audio twice during practice creates false confidence."
+            },
+            {
+              "kind": "mcq",
+              "stem": "Which is the WORST way to practise?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "Cambridge-grade sections in exam conditions."
+                },
+                {
+                  "letter": "B",
+                  "text": "Free fan-made YouTube tests with unverified accuracy."
+                },
+                {
+                  "letter": "C",
+                  "text": "Reviewing every wrong answer to find the cause."
+                }
+              ],
+              "answer": "B",
+              "explanation": "Fake/unverified tests teach the wrong patterns. Stick to authentic Cambridge-style material."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "After every practice session, you should look at each wrong answer and ask 'what's the _______?'",
+              "answer": "pattern",
+              "accept": [
+                "pattern",
+                "cause",
+                "root cause",
+                "reason"
+              ],
+              "explanation": "Mistakes cluster — spelling errors, missed signposts, or focus lapses. Identifying the pattern lets you fix the cause, not just the symptom."
+            }
+          ],
+          "page": 25
+        },
+        {
+          "type": "checklist",
+          "variant": "outline_box",
+          "eyebrow": "INSIDE IELTS ACE",
+          "eyebrow_tone": "default",
+          "title": "Everything You Need to Practise Correctly",
+          "items": [
+            {
+              "title": "Listening Question Bank",
+              "body": "Authentic Cambridge-style sections with one-listen mode and full answer explanations."
+            },
+            {
+              "title": "Full Practice Tests",
+              "body": "Complete 4-section tests under real exam conditions, marked instantly."
+            },
+            {
+              "title": "Exam Conditions Mode",
+              "body": "Simulates the real test environment — no rewind, no notes, no breaks."
+            },
+            {
+              "title": "Mistake Analysis",
+              "body": "Liz tags every wrong answer (spelling / vocabulary / instructions / focus) so you fix the pattern."
+            },
+            {
+              "title": "Listening A-to-Z Strategy Guide",
+              "body": "Step-by-step strategies for all 8 question types — the next chapter."
+            }
+          ],
+          "footer": "Open the **Listening Question Bank** to start, then come back here for the A-to-Z strategies.",
+          "page": 25
+        }
+      ]
+    }
+  ]
+}

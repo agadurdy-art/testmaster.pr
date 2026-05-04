@@ -1,0 +1,1001 @@
+{
+  "chapter_id": "writing_segment_slides",
+  "chapter_number": 5,
+  "skill": "writing",
+  "title": "IELTS Writing Task 2: The Complete Crash Course",
+  "subtitle": "Master the essential strategies to achieve your target band score",
+  "source_pages": [
+    176,
+    202
+  ],
+  "extraction_status": "complete",
+  "lessons": [
+    {
+      "lesson_id": "overview",
+      "lesson_number": 1,
+      "title": "Why Task 2 Matters",
+      "source_pages": [
+        176,
+        178
+      ],
+      "liz_intro": "Task 2 is two-thirds of your writing score and where most candidates lose marks. The good news: it doesn't need to be intimidating. Let's start with what you'll master today.",
+      "liz_outro": "Now we'll tackle the three problems that wreck most Task 2 essays — and the solutions that fix them.",
+      "slides": [
+        {
+          "type": "hero",
+          "title": "IELTS Writing Task 2: The Complete Crash Course",
+          "subtitle": "Master the essential strategies to achieve your target band score with confidence and clarity.",
+          "image_layout": "stacked",
+          "page": 176,
+          "images": [
+            "/static/strategies/writing/intro/u01_classroom_writing.jpg",
+            "/static/strategies/writing/intro/u07_planning_journal.jpg"
+          ]
+        },
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "ESSENTIAL SKILLS",
+          "eyebrow_tone": "default",
+          "title": "Why Task 2 Matters",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "**Quick orientation:** IELTS Writing has two tasks. **Task 1 (20 minutes)** is a short data-summary report — chart, graph, map, or process diagram. **Task 2 (40 minutes)** is the argumentative essay. This entire guide focuses on Task 2, because Task 2 is worth **two-thirds of your Writing score** and is where most candidates lose the most marks."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Writing Task 2 represents **two-thirds** of your overall writing score, making it the most significant component of the writing test."
+            },
+            {
+              "kind": "paragraph",
+              "text": "It's also the section that generates the most anxiety amongst test-takers and where candidates frequently struggle to achieve their required scores."
+            },
+            {
+              "kind": "paragraph",
+              "text": "**The good news?** Task 2 doesn't need to be intimidating. There are fundamental principles that are quite straightforward to grasp. The challenge lies in practical application — which is why we'll demonstrate exactly what to do and how to verify you're doing it correctly."
+            }
+          ],
+          "image": "/static/strategies/writing/intro/u02_stressed_papers.jpg",
+          "page": 177
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "COURSE OVERVIEW",
+          "eyebrow_tone": "default",
+          "title": "What You'll Master Today",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "Search",
+              "title": "01. Question Analysis",
+              "body": "Learn to identify question types and understand precisely what's being asked of you."
+            },
+            {
+              "icon": "Layers",
+              "title": "02. Essay Structure",
+              "body": "Master a simple, reliable framework that works for every question type."
+            },
+            {
+              "icon": "Sparkles",
+              "title": "03. Paragraph Development",
+              "body": "Discover the Birthday Cake Strategy for creating fully developed, high-scoring paragraphs."
+            },
+            {
+              "icon": "ListChecks",
+              "title": "04. Complete Framework",
+              "body": "Apply the 9-step system that consistently delivers Band 7, 8, and 9 results."
+            }
+          ],
+          "page": 178
+        },
+        {
+          "type": "callout",
+          "tone": "danger",
+          "eyebrow": "NON-NEGOTIABLE",
+          "title": "Minimum 250 words. No exceptions.",
+          "body": "An essay under 250 words is automatically penalised under **Task Response** — it doesn't matter how brilliant the argument is. Aim for **270–310 words**: enough to give yourself a 20–60 word safety buffer, not so long that you sacrifice precision. Counting on test day wastes time, so practise hitting 280 words by feel.",
+          "page": 178
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "HOW YOU'RE GRADED",
+          "eyebrow_tone": "default",
+          "title": "The 4 Marking Criteria — what TR, CC, LR, GRA actually mean",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "Target",
+              "title": "Task Response (TR)",
+              "body": "Are you answering the *exact* question asked? Is your position clear and consistent? Do you cover all parts (e.g. both sides of a discussion)? Word count under 250 = automatic TR penalty."
+            },
+            {
+              "icon": "Link2",
+              "title": "Coherence & Cohesion (CC)",
+              "body": "Is the essay organised into clear paragraphs with one main idea each? Do ideas flow with linkers (*however, in addition, as a result*)? Can the examiner follow your logic without re-reading?"
+            },
+            {
+              "icon": "BookOpen",
+              "title": "Lexical Resource (LR)",
+              "body": "Is your word choice **accurate and appropriate** for the topic? Range matters, but precision matters more — using *sophisticated* words wrongly hurts more than using simple words correctly."
+            },
+            {
+              "icon": "Sigma",
+              "title": "Grammatical Range & Accuracy (GRA)",
+              "body": "Do you use a variety of structures (conditionals, passives, complex sentences) **and** keep them error-free? A complex sentence with three errors scores lower than a simple sentence done right."
+            }
+          ],
+          "page": 178
+        },
+        {
+          "type": "callout",
+          "tone": "info",
+          "eyebrow": "WHY THIS MATTERS",
+          "title": "Each criterion is worth 25% of your Task 2 score.",
+          "body": "When you get feedback saying 'TR 6.5, CC 7, LR 6, GRA 7' — that's your scorecard against these four boxes. Every lesson in this guide trains one or more of them. We'll flag which criterion you're working on as we go.",
+          "page": 178
+        }
+      ]
+    },
+    {
+      "lesson_id": "problem_1_misunderstanding_question",
+      "lesson_number": 2,
+      "title": "Problem #1 — Misunderstanding the Question",
+      "source_pages": [
+        179,
+        182
+      ],
+      "liz_intro": "Most candidates spot a keyword and start writing everything they know about that topic. That's the fastest way to wreck your Task Response score.",
+      "liz_outro": "Identify the question type first. Now: structure.",
+      "slides": [
+        {
+          "type": "big_typography",
+          "eyebrow": "PROBLEM #1",
+          "eyebrow_tone": "warning",
+          "title": "Misunderstanding the Question",
+          "items": [
+            {
+              "number": "",
+              "title": "Most candidates rush straight into writing without thoroughly analysing the question. They spot keywords and immediately begin writing everything they know about that topic, missing the specific requirements entirely."
+            },
+            {
+              "number": "",
+              "title": "**Critical insight:** IELTS questions have precise requirements. They're asking you to perform a specific task, not simply write about a general topic."
+            }
+          ],
+          "page": 179
+        },
+        {
+          "type": "comparison",
+          "title": "The Costly Mistake",
+          "columns": [
+            {
+              "label": "Wrong Approach",
+              "tone": "negative",
+              "marker": "x",
+              "items": [
+                "Seeing keywords like \"environment\" or \"education\"",
+                "Writing everything you know about those topics",
+                "Never addressing the specific question"
+              ]
+            },
+            {
+              "label": "Missing Element",
+              "tone": "neutral",
+              "marker": "dot",
+              "items": [
+                "Failing to identify the question type",
+                "Cannot structure your response appropriately",
+                "Cannot fulfil the actual task requirements"
+              ]
+            },
+            {
+              "label": "Ultimate Result",
+              "tone": "negative",
+              "marker": "x",
+              "items": [
+                "If you don't answer the actual question being asked, nothing else you write matters",
+                "Your Task Response score will be severely limited"
+              ]
+            }
+          ],
+          "page": 180
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "SOLUTION #1",
+          "eyebrow_tone": "default",
+          "title": "Master Question Analysis",
+          "intro": "Before writing a single word, complete three essential steps that determine the success of your entire essay.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "Tag",
+              "title": "Identify the Question Type",
+              "body": "Recognise whether it's opinion, discussion, problem-solution, advantages-disadvantages, or two-part."
+            },
+            {
+              "number": 2,
+              "icon": "Pencil",
+              "title": "Underline Key Parts",
+              "body": "Mark the instruction words and specific focus areas that define your task."
+            },
+            {
+              "number": 3,
+              "icon": "Compass",
+              "title": "Decide Your Approach",
+              "body": "Determine exactly what you're being asked to do before planning your response."
+            }
+          ],
+          "page": 181
+        },
+        {
+          "type": "callout",
+          "tone": "info",
+          "eyebrow": "EXACTLY WHAT TO UNDERLINE",
+          "title": "Three things — every prompt, no exceptions.",
+          "body": "When the audit step says **'underline key parts'**, here's what to actually circle on the question paper:\n\n**(1) The TASK words** — *agree/disagree, discuss, advantages, problems, solutions, why, to what extent.* These tell you the **question type** and the **structure** you must use.\n\n**(2) The TOPIC noun phrase** — the *thing* the essay is about. *'Working from home', 'university tuition fees', 'public transport'.* Stay on this exact topic — don't drift into 'office work' or 'student loans'.\n\n**(3) Any LIMITS or QUALIFIERS** — *young people, in developing countries, in the future, more than before.* Miss these and you answer the wrong question.\n\n**Worked example:** *\"Some people think that **young people** in **developed countries** should be **forced to do unpaid community work**. **To what extent do you agree or disagree?**\"*\n\n→ Task: opinion essay (agree/disagree).  \n→ Topic: forced unpaid community work.  \n→ Limits: young people / developed countries.  \n→ If you write about adults in poor countries, you fail Task Response no matter how good your English is.",
+          "page": 181
+        },
+        {
+          "type": "split_visual",
+          "image_position": "left",
+          "eyebrow": "WHY IT MATTERS",
+          "eyebrow_tone": "default",
+          "title": "Question Types Determine Everything",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "The question type fundamentally shapes your entire approach, structure, and content. Understanding this distinction is crucial:"
+            },
+            {
+              "kind": "card_list",
+              "cards": [
+                {
+                  "title": "Opinion",
+                  "body": "*Signal:* \"To what extent do you agree or disagree?\" / \"What is your opinion?\"\n*Example prompt:* **\"Working from home is more productive than working in an office. To what extent do you agree or disagree?\"**\n→ Pick a side, defend it for 2 body paragraphs."
+                },
+                {
+                  "title": "Discussion (DBV)",
+                  "body": "*Signal:* \"Discuss both views and give your own opinion.\"\n*Example prompt:* **\"Some people believe working from home boosts productivity, while others argue it weakens collaboration. Discuss both views and give your own opinion.\"**\n→ Cover both sides fairly *then* state your stance."
+                },
+                {
+                  "title": "Problem-Solution",
+                  "body": "*Signal:* \"What are the problems… and what solutions can be suggested?\" / \"Why is this happening and what can be done?\"\n*Example prompt:* **\"In many cities, traffic congestion is worsening. What are the main causes, and what solutions can be suggested?\"**\n→ Pair each solution to a specific problem."
+                },
+                {
+                  "title": "Advantages-Disadvantages",
+                  "body": "*Signal:* \"Discuss the advantages and disadvantages.\" / \"Do the advantages outweigh the disadvantages?\"\n*Example prompt:* **\"More and more people are choosing to work from home. Discuss the advantages and disadvantages.\"**\n→ Two-sided analysis, no advocacy unless 'outweigh' wording asks."
+                },
+                {
+                  "title": "Two-Part / Double Question",
+                  "body": "*Signal:* Two distinct questions in the prompt.\n*Example prompt:* **\"Many young people choose careers based on income rather than passion. Why is this the case, and is it a positive or negative development?\"**\n→ Body 1 = answer Question 1; Body 2 = answer Question 2."
+                }
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Each type demands a different structural approach and content focus."
+            }
+          ],
+          "image": "/static/strategies/writing/intro/u03_coral_sweater_laptop.jpg",
+          "page": 182
+        }
+      ]
+    },
+    {
+      "lesson_id": "problem_2_structure",
+      "lesson_number": 3,
+      "title": "Problem #2 — Poor Essay Structure",
+      "source_pages": [
+        183,
+        184
+      ],
+      "liz_intro": "Either no structure at all, or some over-engineered framework from YouTube that falls apart under exam pressure. Neither works.",
+      "liz_outro": "Simple structure. Now the part where most marks are lost: paragraph development.",
+      "slides": [
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "WHY MOST ESSAYS LOSE MARKS",
+          "eyebrow_tone": "warning",
+          "title": "The Structure Problem",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Many candidates either lack any clear structure whatsoever, or they attempt to implement complicated frameworks found online that don't actually function effectively in exam conditions."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Your essay requires a **clear, logical structure** that the examiner can follow effortlessly. This means having the right components in the right places, with appropriate content in each section."
+            },
+            {
+              "kind": "paragraph",
+              "text": "*The simple 4-paragraph model on the next slide is what an examiner expects to see at Band 7+. It's not a 'trick' — it's how clear academic argument is built.*"
+            }
+          ],
+          "image": "/static/strategies/writing/intro/u04_templates_wall_frustration.jpg",
+          "page": 183
+        },
+        {
+          "type": "timeline_zigzag",
+          "eyebrow": "SOLUTION #2",
+          "eyebrow_tone": "default",
+          "title": "Use a Simple, Reliable Structure",
+          "intro": "Stop searching for complicated structures. What consistently works is straightforward and proven.",
+          "nodes": [
+            {
+              "number": 1,
+              "title": "Introduction",
+              "body": "Paraphrase the question and briefly state your answer or position.",
+              "side": "left"
+            },
+            {
+              "number": 2,
+              "title": "Main Body Paragraph 1",
+              "body": "Present your first main idea and develop it fully with explanation and example.",
+              "side": "right"
+            },
+            {
+              "number": 3,
+              "title": "Main Body Paragraph 2",
+              "body": "Present your second main idea and develop it fully with explanation and example.",
+              "side": "left"
+            },
+            {
+              "number": 4,
+              "title": "Conclusion",
+              "body": "Summarise your main ideas and clearly restate your answer to the question.",
+              "side": "right"
+            }
+          ],
+          "page": 184
+        },
+        {
+          "type": "big_typography",
+          "eyebrow": "REMEMBER",
+          "eyebrow_tone": "default",
+          "title": "That's the complete structure.",
+          "items": [
+            {
+              "number": "",
+              "title": "Don't overcomplicate it."
+            }
+          ],
+          "page": 184
+        }
+      ]
+    },
+    {
+      "lesson_id": "problem_3_paragraph_development",
+      "lesson_number": 4,
+      "title": "Problem #3 — Weak Paragraph Development",
+      "source_pages": [
+        185,
+        188
+      ],
+      "liz_intro": "This is where most marks are lost. Students give an idea, throw in an example, then move on — skipping the layer that actually scores.",
+      "liz_outro": "Three layers, every paragraph. Now the full 9-step framework.",
+      "slides": [
+        {
+          "type": "split_visual",
+          "image_position": "left",
+          "eyebrow": "WHERE MOST MARKS ARE LOST",
+          "eyebrow_tone": "critical",
+          "title": "The Paragraph Development Problem",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "This is the **single biggest reason** Band-6 essays don't reach Band-7."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Students write a main idea, then immediately jump to the next point without properly explaining or supporting the first one. Or they provide examples that don't genuinely support their argument."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Some candidates attempt to include three or four ideas in one paragraph rather than developing a single idea comprehensively. The examiner wants to see **depth of development, not superficial breadth**."
+            }
+          ],
+          "image": "/static/strategies/writing/intro/u05_bridge_sunrise.jpg",
+          "page": 185
+        },
+        {
+          "type": "callout",
+          "tone": "info",
+          "eyebrow": "THE METAPHOR THAT MAKES IT CLICK",
+          "title": "Layer 2 is the BRIDGE between your idea and your example.",
+          "body": "Look at the photo on the previous slide — a bridge connecting two banks. That's exactly what your **explanation (Layer 2)** does for the examiner:\n\n• **Bank 1 = your main idea** (Layer 1, the topic sentence).  \n• **Bank 2 = your example** (Layer 3, the concrete evidence).  \n• **The bridge = your reasoning** that connects them.\n\nMost students leap from Bank 1 straight to Bank 2 — *'Working from home increases productivity. For example, my friend works from home.'* The examiner has to *guess* the connection, and Coherence & Cohesion drops to Band 5.\n\nYour bridge sentences answer: ***Why* does the idea cause the example?** Walk the examiner across the gap step by step.",
+          "page": 185
+        },
+        {
+          "type": "photo_hero",
+          "eyebrow": "SOLUTION #3",
+          "eyebrow_tone": "default",
+          "title": "The Birthday Cake Strategy",
+          "intro": "Think of paragraph development like decorating a birthday cake. You don't simply slap on icing and call it finished — you build layers deliberately.",
+          "image": "/static/strategies/writing/intro/u06_birthday_cake.jpg",
+          "page": 186
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "THE THREE ESSENTIAL LAYERS",
+          "eyebrow_tone": "default",
+          "title": "Build Every Paragraph in Three Layers",
+          "intro": "Every paragraph needs all three layers in this order. Most students provide the main idea and example but skip the explanation — or give explanation without a clear example. You need all three.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "Square",
+              "title": "Layer 1 — The Cake",
+              "body": "Your main idea — the foundation of everything that follows."
+            },
+            {
+              "number": 2,
+              "icon": "Sparkles",
+              "title": "Layer 2 — The Icing",
+              "body": "**2–3 sentences** of explanation. Don't stop at 'this is important because it affects society' — that's the trap. Move from the abstract idea toward a concrete consequence: *'Why does this matter? → What happens because of it? → Who feels it?'* If your explanation could be slotted into any other essay, it's too generic. **This is your Coherence & Cohesion (CC) work** — examiners grade how well one idea develops into the next."
+            },
+            {
+              "number": 3,
+              "icon": "Star",
+              "title": "Layer 3 — The Decorations",
+              "body": "Your specific example or evidence that demonstrates and supports your explanation."
+            }
+          ],
+          "page": 187
+        },
+        {
+          "type": "comparison",
+          "title": "Common Development Mistakes",
+          "columns": [
+            {
+              "label": "Jumping Too Quickly",
+              "tone": "negative",
+              "marker": "x",
+              "items": [
+                "Moving to the next main idea before fully developing the current one with proper explanation."
+              ]
+            },
+            {
+              "label": "Irrelevant Examples",
+              "tone": "negative",
+              "marker": "x",
+              "items": [
+                "Providing examples that don't actually support or illustrate the point being made."
+              ]
+            },
+            {
+              "label": "Multiple Ideas",
+              "tone": "negative",
+              "marker": "x",
+              "items": [
+                "Cramming three or four different ideas into one paragraph instead of developing one thoroughly."
+              ]
+            },
+            {
+              "label": "Missing Explanation",
+              "tone": "negative",
+              "marker": "x",
+              "items": [
+                "The most common error — giving main idea and example but omitting the crucial explanation layer."
+              ]
+            }
+          ],
+          "page": 188
+        }
+      ]
+    },
+    {
+      "lesson_id": "nine_step_framework",
+      "lesson_number": 5,
+      "title": "The 9-Step Framework",
+      "source_pages": [
+        189,
+        195
+      ],
+      "liz_intro": "Here's a process that reliably works — *because* you'll bend it to your question, not the other way around. Nine steps to give your essay a spine; you decide what flesh it carries.",
+      "liz_outro": "That's the full framework. Now: how to actually apply it.",
+      "slides": [
+        {
+          "type": "big_typography",
+          "eyebrow": "COMPLETE SYSTEM",
+          "eyebrow_tone": "default",
+          "title": "The 9-Step Framework",
+          "items": [
+            {
+              "number": "",
+              "title": "A process that reliably works for any Task 2 question type — because you'll adapt it. The nine steps give you a spine; the *thinking* is still yours. People learn by breaking scaffolds, not by clinging to them."
+            }
+          ],
+          "page": 189
+        },
+        {
+          "type": "callout",
+          "tone": "warning",
+          "eyebrow": "READ THIS BEFORE STEP 1",
+          "title": "Use the steps as a checklist, not a script.",
+          "body": "The 9 steps tell you **what to do**, not **what to write**. Adapt every step to your specific question. If a step feels forced, your idea is right and the formula is wrong — trust the idea.",
+          "page": 189
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "BAND-7 OPENING — TEACHER MODEL",
+          "eyebrow_tone": "default",
+          "title": "Plan Before You Write",
+          "intro": "**Critical reminder:** Don't skip the planning phase. Five minutes of planning will save you fifteen minutes of confused, unfocused writing.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "Eye",
+              "title": "Read Carefully",
+              "body": "Read the question thoroughly, paying attention to every word and instruction."
+            },
+            {
+              "number": 2,
+              "icon": "Tag",
+              "title": "Identify Question Type",
+              "body": "Determine what type of question it is and precisely what it's asking you to do."
+            },
+            {
+              "number": 3,
+              "icon": "ListChecks",
+              "title": "Plan Two Main Ideas",
+              "body": "Plan your two main ideas — and only two main ideas. Don't try to cover everything."
+            }
+          ],
+          "page": 190
+        },
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "STEPS 4–5 — INTRODUCTION",
+          "eyebrow_tone": "numbered",
+          "title": "Open With Clarity",
+          "blocks": [
+            {
+              "kind": "card_list",
+              "cards": [
+                {
+                  "title": "1. Paraphrase the Question",
+                  "body": "Rewrite the question in your own words — but **keep the meaning and tone identical**. *Trap:* over-paraphrasing changes what the question is asking. \"Working from home is better\" → \"Remote labour arrangements optimise productivity\" is wrong: you've shifted from a lifestyle claim to an economic one. Swap 2–3 nouns and verbs for synonyms; keep the proposition intact."
+                },
+                {
+                  "title": "2. State Your Answer",
+                  "body": "Answer the question briefly in one or two clear sentences. Tell the examiner exactly what your position is."
+                }
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "This isn't the time for explanation — that comes in the body paragraphs. This section is solely for clearly stating your answer or position."
+            }
+          ],
+          "image": "/static/strategies/writing/intro/u07_planning_journal.jpg",
+          "page": 191
+        },
+        {
+          "type": "callout",
+          "tone": "info",
+          "eyebrow": "HOW TO STATE YOUR POSITION (BY QUESTION TYPE)",
+          "title": "Step 5 changes shape depending on the question type.",
+          "body": "**Opinion** — *'In my view, [position] because [headline reason 1] and [headline reason 2].'*  \n→ Pick a clear side. **No fence-sitting.**\n\n**Discussion (DBV)** — *'While [side A] argue [headline], [side B] believe [headline]. **In my view, [your stance] is more convincing**, as the rest of this essay will show.'*  \n→ **DBV position signal:** your stance MUST appear in the introduction, not just the conclusion. Examiners look for a clear opinion early.\n\n**Advantages-Disadvantages (no 'outweigh')** — *'This essay will examine both [main advantage] and [main disadvantage].'*  \n→ No stance — both sides equally.\n\n**Adv-Dis ('outweigh')** — *'Although there are [headline disadvantage], the [headline advantages] are far more significant.'*  \n→ Take a side ON the outweigh question.\n\n**Problem-Solution** — *'This essay will identify [headline problem] and propose [headline solution].'*  \n→ Pair-preview: each problem will get a matching solution.\n\n**Two-Part** — *'This essay will explain [Q1 short answer] and argue that this is a [positive/negative] development.'*  \n→ Both questions previewed, in order.",
+          "page": 191
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "BAND-7 SUPPORT — TEACHER MODEL",
+          "eyebrow_tone": "numbered",
+          "title": "Build Each Body Paragraph",
+          "intro": "Then repeat Steps 6–8 for your second main body paragraph. Two paragraphs, two main ideas, both fully developed with all three layers.",
+          "steps": [
+            {
+              "number": 6,
+              "icon": "Square",
+              "title": "First Main Idea",
+              "body": "Begin your first main body paragraph with your first main idea stated clearly in a topic sentence."
+            },
+            {
+              "number": 7,
+              "icon": "Sparkles",
+              "title": "Explain Thoroughly",
+              "body": "**Aim for 2–3 sentences** moving from idea → consequence. Generic explanations (\"this is important for society\") score Band 5. A Band-7 explanation tracks a chain: *cause → effect → who's affected*. Forces you to think — which is the whole point."
+            },
+            {
+              "number": 8,
+              "icon": "Star",
+              "title": "Specific Example",
+              "body": "Provide a specific example that supports your explanation. Not vague — specific. Not \"many people\" — tell who, where, when, what happened."
+            }
+          ],
+          "page": 192
+        },
+        {
+          "type": "split_visual",
+          "image_position": "left",
+          "eyebrow": "BAND-7 CLOSING — TEACHER MODEL",
+          "eyebrow_tone": "warning",
+          "title": "Where Students Lose Marks in Step 7",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "*Band-7 reference: this is the level you're aiming for. The technique below is what an examiner would expect to see at Band 7+.*"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Step 7 is where most candidates struggle significantly. They don't explain enough — they state an idea and immediately jump to an example."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Your explanation needs to develop the idea thoroughly:"
+            },
+            {
+              "kind": "card_list",
+              "cards": [
+                {
+                  "title": "Why does this matter?",
+                  "body": "Why does this idea matter to the question?"
+                },
+                {
+                  "title": "How does it connect?",
+                  "body": "How does it connect to the broader topic?"
+                },
+                {
+                  "title": "What are the implications?",
+                  "body": "What are the consequences of this point?"
+                },
+                {
+                  "title": "Why should they care?",
+                  "body": "Why should the reader care about this point?"
+                }
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "This explanation layer is what demonstrates **critical thinking** and earns higher band scores. Don't rush past it."
+            }
+          ],
+          "image": "/static/strategies/writing/intro/u08_whiteboard_struggle.jpg",
+          "page": 193
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "WORKED EXAMPLE — STEP 7",
+          "title": "Weak vs strong explanation, side by side",
+          "intro": "Same main idea, same example. The difference is **Step 7** — how the explanation walks the examiner from idea to evidence.",
+          "stimulus": {
+            "label": "Topic sentence (Step 6)",
+            "text": "**Main idea:** Working from home increases employee productivity."
+          },
+          "question": {
+            "label": "Compare two versions of the explanation that follows the topic sentence",
+            "items": [
+              { "n": 1, "stem": "**Weak (Band 5–6):** *'This is important for society. Many people prefer it. For example, my friend Tom works from home and he is very productive.'*" },
+              { "n": 2, "stem": "**Strong (Band 7+):** *'When employees skip a long commute, they reclaim 60–90 minutes a day that would otherwise be spent in traffic — time that often shifts directly into focused work in the morning. The home environment also removes the constant low-level interruptions of an open-plan office: drop-by questions, ambient conversation, impromptu meetings. Together, these two factors mean a remote worker can produce in five hours what an office worker produces in seven. For example, a 2023 Stanford study of 16,000 employees at a Fortune 500 firm found that those working from home completed 13% more tasks per week than their office-based counterparts.'*" }
+            ]
+          },
+          "thinking_steps": [
+            "**Why the weak version fails:** It's three claims with no chain — it doesn't *explain* why working from home increases productivity. The example ('my friend Tom') is anecdotal and unverifiable. There is no reasoning to grade.",
+            "**What the strong version does:** It tracks a chain — *cause (no commute) → effect (recovered time) → mechanism (focused morning hours)* — then adds a second causal link (*home → no interruptions*) before the example.",
+            "**The example is specific:** Stanford / 16,000 employees / Fortune 500 / 13% more tasks. The example *supports* the explanation; it doesn't replace it.",
+            "**Length check:** Strong = 3 sentences of explanation, then 1 sentence of example. That's the Layer-2 / Layer-3 ratio Step 7 wants."
+          ],
+          "answer": {
+            "value": "Strong version = Band 7+ Task Response. Weak version caps at Band 5.5.",
+            "explanation": "The Step-7 explanation must answer **'why does the main idea cause this outcome?'** with a chain of reasoning, not a list of vague claims. If you can delete your explanation and the paragraph still makes the same point, your explanation is doing no work — rewrite it."
+          },
+          "page": 193
+        },
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "STEP 9 — CONCLUSION",
+          "eyebrow_tone": "numbered",
+          "title": "Close It Cleanly",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Summarise your two main ideas and clearly answer the question one final time."
+            },
+            {
+              "kind": "card_list",
+              "cards": [
+                {
+                  "title": "Don't introduce new information",
+                  "body": "Save new ideas for body paragraphs."
+                },
+                {
+                  "title": "Don't write three long sentences",
+                  "body": "Keep it tight."
+                },
+                {
+                  "title": "Don't repeat your introduction",
+                  "body": "Word-for-word repetition wastes the examiner's time."
+                }
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "**Two concise sentences** is usually sufficient for an effective conclusion."
+            }
+          ],
+          "image": "/static/strategies/writing/intro/u09_finish_line_ribbon.jpg",
+          "page": 194
+        },
+        {
+          "type": "timeline_zigzag",
+          "title": "Framework Summary",
+          "intro": "The whole system in five movements.",
+          "nodes": [
+            {
+              "number": 1,
+              "title": "Pre-Writing (Steps 1–3)",
+              "body": "Analyse question, identify type, plan two main ideas.",
+              "side": "left"
+            },
+            {
+              "number": 2,
+              "title": "Introduction (Steps 4–5)",
+              "body": "Paraphrase question, state your answer.",
+              "side": "right"
+            },
+            {
+              "number": 3,
+              "title": "Body Paragraph 1 (Steps 6–8)",
+              "body": "Main idea, explanation, specific example.",
+              "side": "left"
+            },
+            {
+              "number": 4,
+              "title": "Body Paragraph 2 (Steps 6–8)",
+              "body": "Main idea, explanation, specific example.",
+              "side": "right"
+            },
+            {
+              "number": 5,
+              "title": "Conclusion (Step 9)",
+              "body": "Summarise and clearly answer the question.",
+              "side": "left"
+            }
+          ],
+          "page": 195
+        },
+        {
+          "type": "quiz",
+          "eyebrow": "QUICK CHECK",
+          "eyebrow_tone": "default",
+          "title": "Quick Check: The Writing Framework",
+          "intro": "Five questions to lock in the 9-step framework, the Birthday Cake Strategy, and the three-layer paragraph rule.",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "Which step in the 9-step framework MUST come before you write a single sentence of the introduction?",
+              "options": [
+                { "letter": "A", "text": "Write a memorised opening line." },
+                { "letter": "B", "text": "Read the question carefully, identify the question type, and plan two main ideas." },
+                { "letter": "C", "text": "Count your words to estimate timing." },
+                { "letter": "D", "text": "Translate the prompt into your first language." }
+              ],
+              "answer": "B",
+              "explanation": "Steps 1–3 (read carefully, identify type, plan two ideas) are pre-writing. Skipping them is Problem #1 — misunderstanding the question."
+            },
+            {
+              "kind": "mcq",
+              "stem": "In the Birthday Cake Strategy, what does each layer represent?",
+              "options": [
+                { "letter": "A", "text": "Cake = vocabulary, icing = grammar, decorations = punctuation." },
+                { "letter": "B", "text": "Cake = main idea, icing = explanation, decorations = specific example." },
+                { "letter": "C", "text": "Cake = introduction, icing = body, decorations = conclusion." },
+                { "letter": "D", "text": "Cake = Task 1, icing = Task 2, decorations = Speaking." }
+              ],
+              "answer": "B",
+              "explanation": "Layer 1 (Cake) = main idea / topic sentence. Layer 2 (Icing) = explanation. Layer 3 (Decorations) = specific example. Every body paragraph needs all three."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "How many main ideas should you plan for a Task 2 essay before writing? (one digit)",
+              "answer": "2",
+              "accept": ["2", "two", "Two", "TWO"],
+              "explanation": "Two main ideas — one per body paragraph. More than two and you can't develop them in 250 words; one alone leaves the essay underdeveloped."
+            },
+            {
+              "kind": "mcq",
+              "stem": "A student writes a body paragraph that's just a topic sentence followed by three more general claims. What's missing?",
+              "options": [
+                { "letter": "A", "text": "Nothing — that's a complete paragraph." },
+                { "letter": "B", "text": "The icing (explanation) and decorations (specific example) — only the cake is there." },
+                { "letter": "C", "text": "A second introduction." },
+                { "letter": "D", "text": "More academic vocabulary." }
+              ],
+              "answer": "B",
+              "explanation": "This is Problem #3 — weak paragraph development. Topic sentence alone is only the cake. You need explanation + a specific example to score Band 7+ on Task Response."
+            },
+            {
+              "kind": "mcq",
+              "stem": "What's the right approach for the conclusion (Step 9)?",
+              "options": [
+                { "letter": "A", "text": "Introduce one new idea to show range." },
+                { "letter": "B", "text": "Two concise sentences that summarise and clearly answer the question." },
+                { "letter": "C", "text": "A 5-sentence paragraph repeating each body paragraph in detail." },
+                { "letter": "D", "text": "Skip it if you're running out of time — examiners ignore conclusions." }
+              ],
+              "answer": "B",
+              "explanation": "Two concise sentences is usually sufficient — restate your answer and summarise. No new ideas, no padding, but never skip it: a missing conclusion costs marks on Task Response and Coherence."
+            }
+          ],
+          "page": 195
+        }
+      ]
+    },
+    {
+      "lesson_id": "apply_inside_ielts_ace",
+      "lesson_number": 6,
+      "title": "Apply It Inside IELTS Ace",
+      "source_pages": [
+        196,
+        202
+      ],
+      "liz_intro": "You've got the framework. Now the only thing that moves your score is **specific feedback on your specific essays**. Here's how IELTS Ace turns this guide into actual band gains.",
+      "liz_outro": "That's it — system in your head, surfaces ready to use. Open the writing tab when you're ready to start.",
+      "slides": [
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "INSIDE IELTS ACE",
+          "eyebrow_tone": "default",
+          "title": "Where to Practise the Framework",
+          "intro": "You learnt the system. These are the surfaces inside IELTS Ace where you actually apply it — every essay you write here is graded against the same Band 7/8/9 criteria.",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "PenTool",
+              "title": "Writing Question Bank",
+              "body": "Every Task 2 question type — opinion, discussion, problem-solution, advantages-disadvantages, two-part — with a fresh prompt each time."
+            },
+            {
+              "icon": "Sparkles",
+              "title": "Per-Essay Sonnet Evaluation",
+              "body": "Submit any essay and get a band score against all four criteria, with the exact sentences you need to fix highlighted."
+            },
+            {
+              "icon": "MessageCircle",
+              "title": "Liz Writing Coach",
+              "body": "Stuck on Step 7 explanation? Liz reads your draft, names what's missing, and walks you through the rewrite."
+            },
+            {
+              "icon": "TrendingUp",
+              "title": "Mistake Analysis",
+              "body": "Your recurring writing mistakes are tracked across essays so you can practise the 3–4 errors actually holding your band back."
+            }
+          ],
+          "page": 196
+        },
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "WEEKLY PACK",
+          "eyebrow_tone": "default",
+          "title": "Diagnose AND Fix — In One Week",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "A one-off diagnostic tells you what's wrong. The IELTS Ace **Weekly Pack** does the diagnosis *and* gives you the seven days of guided practice to actually fix it."
+            },
+            {
+              "kind": "card_list",
+              "cards": [
+                {
+                  "title": "Write Your First Essay",
+                  "body": "Use the framework you just learnt. Submit it inside the app."
+                },
+                {
+                  "title": "Sonnet Grades It",
+                  "body": "Calibrated to IELTS examiner descriptors — not inflated scores. You get a band, the four-criteria breakdown, and the exact sentences losing marks."
+                },
+                {
+                  "title": "20 Liz Sessions to Fix It",
+                  "body": "A full week of unlimited writing eval + 20 Liz coaching messages to rewrite your weakest paragraphs and lock in the framework."
+                }
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "**Why Weekly beats a one-off diagnostic:** clarity is only useful if you act on it within days, while the patterns are still fresh. A week of guided rewrites is what actually moves your band."
+            }
+          ],
+          "image": "/static/strategies/writing/intro/u10_diagnostic_monitor.jpg",
+          "page": 199
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "WHAT THE EVALUATION REVEALS",
+          "eyebrow_tone": "default",
+          "title": "Specific Feedback. Not Generic Advice.",
+          "intro": "Most students waste months practising the wrong things. They repeat the same mistakes because nobody has shown them specifically what's wrong with their writing. The Weekly Pack eliminates the guesswork.",
+          "columns": 3,
+          "cards": [
+            {
+              "icon": "Target",
+              "title": "Where You're Losing Marks",
+              "body": "The specific bands and exact sentences where your writing isn't meeting requirements."
+            },
+            {
+              "icon": "Search",
+              "title": "Hidden Mistakes",
+              "body": "Errors you're repeating that you don't even realise are problems."
+            },
+            {
+              "icon": "ListChecks",
+              "title": "What to Focus On",
+              "body": "The 3–4 fixes that will move your band the fastest — prioritised, not generic."
+            }
+          ],
+          "page": 200
+        },
+        {
+          "type": "big_typography",
+          "eyebrow": "WHY IT MATTERS",
+          "eyebrow_tone": "default",
+          "title": "It's the difference between hoping you're improving and knowing you're improving in the right direction.",
+          "items": [
+            {
+              "number": "",
+              "title": "Most students waste months on the wrong things. A week of specific, evaluator-graded feedback beats months of unsupervised practice."
+            }
+          ],
+          "page": 201
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "YOUR ACTION PLAN",
+          "eyebrow_tone": "default",
+          "title": "Recommended Next Steps",
+          "intro": "That's how you actually improve — not by watching endless random videos, but by getting specific feedback on your specific mistakes and practising strategically.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "RefreshCw",
+              "title": "Review This Framework",
+              "body": "Re-read this material until all nine steps feel automatic."
+            },
+            {
+              "number": 2,
+              "icon": "PenTool",
+              "title": "Write Your First Essay",
+              "body": "Open the Writing Question Bank and apply the framework on a real Task 2 prompt."
+            },
+            {
+              "number": 3,
+              "icon": "Sparkles",
+              "title": "Get Your Sonnet Evaluation",
+              "body": "See where you stand against the four criteria and which 3–4 errors are costing you the most."
+            },
+            {
+              "number": 4,
+              "icon": "TrendingUp",
+              "title": "Take the Weekly Pack",
+              "body": "Seven days of guided rewrites + Liz coaching to actually fix what the evaluation surfaced."
+            }
+          ],
+          "page": 202
+        },
+        {
+          "type": "callout",
+          "tone": "info",
+          "eyebrow": "YOUR FIRST 7 DAYS",
+          "title": "What to do, day by day.",
+          "body": "**Day 1 — Diagnose.**  Open the Writing Question Bank, pick a Task 2 prompt, and write a full essay using the 9 steps. Submit it for Sonnet evaluation. Read the band breakdown twice.  \n\n**Day 2 — Triage.**  From your evaluation, pick the **3 lowest-scoring sentences**. Ask Liz: *'How would a Band-7 candidate rewrite this sentence?'* Save her rewrites in the Vocabulary Tracker.\n\n**Day 3 — Rebuild ONE paragraph.**  Take the weakest body paragraph from Day 1. Rewrite it using **Birthday Cake layers** (cake → icing → decorations). Submit just the paragraph for a quick Liz check.\n\n**Day 4 — New essay, same question type.**  Pick a different prompt of the *same type* (e.g., another opinion essay). Apply Day 1–3 lessons. Submit. Compare scores.\n\n**Day 5 — Switch question type.**  Try a different question type (DBV, Adv-Dis, etc.). Use the question-type cards from Step 5 to set up your introduction.\n\n**Day 6 — Mistake review.**  Open Mistake Analysis. Look for the 1–2 errors that appear in *every* essay. Drill them with Liz.\n\n**Day 7 — Full timed essay.**  40 minutes, no help. Submit. The score from Day 7 vs Day 1 is your real progress signal.\n\n**Then repeat with new prompts.** This is how Band 6 becomes Band 7.",
+          "page": 202
+        }
+      ]
+    }
+  ]
+}

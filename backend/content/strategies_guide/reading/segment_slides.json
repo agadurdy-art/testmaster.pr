@@ -1,0 +1,1064 @@
+{
+  "chapter_id": "reading_segment_slides",
+  "chapter_number": 3,
+  "skill": "reading",
+  "title": "IELTS Reading: Why Most Advice Is Wrong",
+  "subtitle": "Based on 10+ years working with thousands of Band 7, 8 & 9 students",
+  "source_pages": [
+    66,
+    81
+  ],
+  "extraction_status": "complete",
+  "lessons": [
+    {
+      "lesson_id": "overview",
+      "lesson_number": 1,
+      "title": "Overview",
+      "source_pages": [
+        66,
+        69
+      ],
+      "liz_intro": "Welcome to the Reading guide. Most advice you've heard about IELTS Reading is wrong — and following it is what's keeping your score stuck. Let's fix that.",
+      "liz_outro": "Now we'll expose the three biggest myths holding your reading score back.",
+      "slides": [
+        {
+          "type": "hero",
+          "title": "IELTS Reading Crash Course",
+          "subtitle": "Why Most Advice Is Wrong (And What Actually Works)",
+          "image_layout": "stacked",
+          "page": 66,
+          "images": [
+            "/static/strategies/reading/intro/u01_cozy_desk.jpg",
+            "/static/strategies/reading/intro/u16_strategies_notebook.jpg"
+          ]
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "OUR APPROACH",
+          "eyebrow_tone": "default",
+          "title": "Why This Guide Is Different",
+          "columns": 3,
+          "cards": [
+            {
+              "icon": "Target",
+              "title": "Strategy Per Question Type",
+              "body": "A specific method for matching headings, true/false/not given, and every other type — not one generic skim-scan approach."
+            },
+            {
+              "icon": "Zap",
+              "title": "Wired Into Practice",
+              "body": "Every strategy connects directly to the Reading Question Bank, so you apply what you learn the same session."
+            },
+            {
+              "icon": "AlertCircle",
+              "title": "Mistakes Get Tracked",
+              "body": "Wrong answers feed Mistake Analysis so the same trap doesn't catch you twice."
+            }
+          ],
+          "page": 67
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "title": "What You'll Discover Today",
+          "columns": 3,
+          "cards": [
+            {
+              "icon": "AlertTriangle",
+              "title": "Why Common Advice Fails",
+              "body": "Discover the myths that actually make your reading score *worse*, not better."
+            },
+            {
+              "icon": "Target",
+              "title": "The Real Difference",
+              "body": "Learn what truly separates Band 6 students from those achieving Band 7, 8, and 9."
+            },
+            {
+              "icon": "Star",
+              "title": "Proven Strategy",
+              "body": "Walk away with one complete strategy you can apply to your very next practice test."
+            }
+          ],
+          "page": 68
+        },
+        {
+          "type": "big_typography",
+          "eyebrow": "WHAT DOESN'T WORK",
+          "eyebrow_tone": "warning",
+          "title": "Let's expose the myths holding you back from your target score.",
+          "items": [],
+          "page": 69
+        }
+      ]
+    },
+    {
+      "lesson_id": "myth_practice_more",
+      "lesson_number": 2,
+      "title": "Myth #1 — Just Practise More",
+      "source_pages": [
+        70,
+        73
+      ],
+      "liz_intro": "The most popular IELTS advice is also the most dangerous. Practising without correction doesn't make you better — it makes you worse. Let's see why with the story of two learners.",
+      "liz_outro": "If practice alone worked, every learner with hours of test attempts would have Band 9. They don't. The next myth explains why even structured practice can fail you.",
+      "slides": [
+        {
+          "type": "photo_hero",
+          "eyebrow": "MYTH #1",
+          "eyebrow_tone": "critical",
+          "title": "Just Practise More!",
+          "intro": "This is the most dangerous advice in IELTS preparation. Here's why it's completely wrong.",
+          "image": "/static/strategies/reading/intro/u02_papers_flying.jpg",
+          "page": 70
+        },
+        {
+          "type": "comparison",
+          "title": "A Tale of Two Learners",
+          "columns": [
+            {
+              "label": "Johnny",
+              "tone": "negative",
+              "marker": "x",
+              "items": [
+                "Five years driving on the farm",
+                "No professional instructor",
+                "Loads of practice time",
+                "Confident in his abilities"
+              ],
+              "image": "/static/strategies/reading/intro/u03_offroad_suv.jpg"
+            },
+            {
+              "label": "Emma",
+              "tone": "positive",
+              "marker": "check",
+              "items": [
+                "Never driven before",
+                "Hired a professional instructor",
+                "Took proper structured lessons",
+                "Followed expert guidance"
+              ]
+            }
+          ],
+          "page": 71
+        },
+        {
+          "type": "comparison",
+          "title": "Who Passed the Test First?",
+          "columns": [
+            {
+              "label": "Emma ✓",
+              "tone": "positive",
+              "marker": "check",
+              "items": [
+                "Passed on her very first attempt with flying colours."
+              ]
+            },
+            {
+              "label": "Johnny ✗",
+              "tone": "negative",
+              "marker": "x",
+              "items": [
+                "Failed five times despite all his \"experience\" and practice."
+              ]
+            }
+          ],
+          "page": 72
+        },
+        {
+          "type": "big_typography",
+          "eyebrow": "THE LESSON",
+          "eyebrow_tone": "critical",
+          "title": "Practise Without Correction = Reinforcing Bad Habits",
+          "items": [
+            {
+              "number": "",
+              "title": "Every time you practise incorrectly, you're actually making it harder to improve. Your brain is learning the wrong patterns, and they become more difficult to unlearn with each repetition."
+            }
+          ],
+          "page": 73
+        }
+      ]
+    },
+    {
+      "lesson_id": "myth_time_management",
+      "lesson_number": 3,
+      "title": "Myth #2 — It's Just Time Management",
+      "source_pages": [
+        74,
+        76
+      ],
+      "liz_intro": "If you think you just need to read faster, you're treating the symptom — not the disease. The next analogy will show you what's really going on.",
+      "liz_outro": "Speed is a *result* of skill, not a substitute for it. Once we've buried Myth #2, the third — and biggest — myth is next.",
+      "slides": [
+        {
+          "type": "big_typography",
+          "eyebrow": "MYTH #2",
+          "eyebrow_tone": "critical",
+          "title": "It's Just Time Management",
+          "items": [
+            {
+              "number": "",
+              "title": "If you believe this, you're focusing on the wrong problem entirely."
+            }
+          ],
+          "page": 74
+        },
+        {
+          "type": "photo_hero",
+          "eyebrow": "THE WRONG DIAGNOSIS",
+          "eyebrow_tone": "warning",
+          "title": "The Wrong Diagnosis",
+          "intro": "Do the runners behind Usain Bolt have a *time management* problem... or a *running* problem?",
+          "image": "/static/strategies/reading/intro/u05_bolt_sprint.jpg",
+          "page": 75
+        },
+        {
+          "type": "split_visual",
+          "image_position": "left",
+          "eyebrow": "THE REAL PROBLEM",
+          "eyebrow_tone": "critical",
+          "title": "You Don't Have a TIME Problem — You Have a SKILLS Problem",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "When you develop the right reading skills, speed follows naturally. Trying to read faster without improving your skills is like trying to drive faster without learning how to control the car."
+            }
+          ],
+          "image": "/static/strategies/reading/intro/u04_stopwatch_clock.jpg",
+          "page": 76
+        }
+      ]
+    },
+    {
+      "lesson_id": "myth_skim_scan",
+      "lesson_number": 4,
+      "title": "Myth #3 — Just Skim and Scan",
+      "source_pages": [
+        77,
+        82
+      ],
+      "liz_intro": "Every IELTS teacher tells you to skim and scan. They're not wrong — they're just incomplete. The missing third skill is what gets you from Band 6 to Band 7+.",
+      "liz_outro": "Now you know what *doesn't* work and what most teachers miss. Next, we'll build the system that *actually* gets results.",
+      "slides": [
+        {
+          "type": "photo_hero",
+          "eyebrow": "MYTH #3",
+          "eyebrow_tone": "critical",
+          "title": "Just Skim and Scan!",
+          "intro": "This advice is incomplete. It's not wrong, but it's only part of the story — and the missing piece is costing you marks.",
+          "image": "/static/strategies/reading/intro/u06_flipping_pages.jpg",
+          "page": 77
+        },
+        {
+          "type": "comparison",
+          "title": "Understanding the Techniques",
+          "columns": [
+            {
+              "label": "Skimming — what it actually looks like",
+              "tone": "neutral",
+              "marker": "dot",
+              "items": [
+                "Read the **first sentence** of each paragraph (this is usually the topic sentence — the main idea)",
+                "Read the **last sentence** if the paragraph is long",
+                "Look at any **headings, bold words, or numbers**",
+                "Goal: in 60 seconds, know *what each paragraph is about* — not the details"
+              ]
+            },
+            {
+              "label": "Scanning — what it actually looks like",
+              "tone": "neutral",
+              "marker": "dot",
+              "items": [
+                "**Hold one keyword in your head** (e.g. *'pollution'* from the question)",
+                "Sweep your eyes down the page hunting for that word **OR a synonym** (*'pollution'* could appear as *'contamination'*, *'damage to the environment'*)",
+                "When you spot it, *stop* — that's where the answer lives",
+                "Goal: locate the right paragraph in under 30 seconds, then close-read it"
+              ]
+            }
+          ],
+          "page": 78
+        },
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "STEP 1",
+          "eyebrow_tone": "numbered",
+          "title": "Skimming",
+          "subtitle": "Task: Find the McDonald's in Times Square",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "From this height, you can see the general area — but can you spot the exact location? This is what skimming gives you: the **big picture**."
+            }
+          ],
+          "image": "/static/strategies/reading/intro/u07_nyc_aerial.jpg",
+          "page": 79
+        },
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "STEP 2",
+          "eyebrow_tone": "numbered",
+          "title": "Scanning",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "You've found the location now. You can see Times Square clearly. But there are **multiple McDonald's locations** here. Which one is correct?"
+            }
+          ],
+          "image": "/static/strategies/reading/intro/u08_times_square_crowd.jpg",
+          "page": 80
+        },
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "STEP 3",
+          "eyebrow_tone": "numbered",
+          "title": "Close Reading",
+          "subtitle": "Now find the CORRECT McDonald's",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "At street level, you need to read signs carefully, check addresses, and identify the exact location. This is **close reading** — the skill that actually gets you the answer."
+            }
+          ],
+          "image": "/static/strategies/reading/intro/u09_mcdonalds_close.jpg",
+          "page": 81
+        },
+        {
+          "type": "big_typography",
+          "eyebrow": "THE SECRET",
+          "eyebrow_tone": "critical",
+          "title": "Most Teachers Only Teach Skim and Scan",
+          "subtitle": "Close Reading Is the Secret",
+          "items": [
+            {
+              "number": "",
+              "title": "This is the missing skill that separates Band 6 students from Band 7+ achievers. Without it, you're like someone searching Times Square from the air — you'll never find the precise answer."
+            }
+          ],
+          "page": 82
+        }
+      ]
+    },
+    {
+      "lesson_id": "what_actually_works",
+      "lesson_number": 5,
+      "title": "What Actually Works",
+      "source_pages": [
+        83,
+        90
+      ],
+      "liz_intro": "Now we shift from what's broken to what's proven. This is the foundation Band 7+ students build on — and it starts in a place most learners never look.",
+      "liz_outro": "The system is clear. The next step is seeing it applied to a real question type — Matching Headings.",
+      "slides": [
+        {
+          "type": "big_typography",
+          "eyebrow": "THE PROVEN SYSTEM",
+          "eyebrow_tone": "default",
+          "title": "What ACTUALLY Works",
+          "items": [
+            {
+              "number": "",
+              "title": "Now let's explore the proven system that creates real results."
+            }
+          ],
+          "page": 83
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "THE FOUNDATION",
+          "eyebrow_tone": "default",
+          "title": "The Five-Level Pyramid",
+          "intro": "This pyramid represents the true foundation of IELTS Reading success. The wider the base, the more critical it is to your score. Most students make a fatal mistake with this pyramid.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "Lightbulb",
+              "title": "Tips",
+              "body": "Quick fixes, shortcuts, and last-minute advice."
+            },
+            {
+              "number": 2,
+              "icon": "Map",
+              "title": "Strategy",
+              "body": "Question-type-specific approaches."
+            },
+            {
+              "number": 3,
+              "icon": "Target",
+              "title": "Skills",
+              "body": "Skimming, scanning, close reading."
+            },
+            {
+              "number": 4,
+              "icon": "BookOpen",
+              "title": "Vocabulary",
+              "body": "The fuel that powers everything else."
+            },
+            {
+              "number": 5,
+              "icon": "Brain",
+              "title": "Mindset",
+              "body": "The base everything is built on."
+            }
+          ],
+          "page": 84
+        },
+        {
+          "type": "split_visual",
+          "image_position": "left",
+          "eyebrow": "THE INVERSION",
+          "eyebrow_tone": "critical",
+          "title": "Where Most Students Go Wrong",
+          "blocks": [
+            {
+              "kind": "card_list",
+              "cards": [
+                {
+                  "title": "1. Most Students Start Here",
+                  "body": "TIPS — Quick fixes, shortcuts, and last-minute advice."
+                },
+                {
+                  "title": "2. You Should Start Here",
+                  "body": "MINDSET — The foundation that supports everything else."
+                }
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "Building from tips down is like constructing a house from the roof. It might look impressive at first, but it will collapse."
+            }
+          ],
+          "image": "/static/strategies/reading/intro/u10_classroom_pyramid.jpg",
+          "page": 85
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "title": "The Five Essential Reading Skills",
+          "columns": 3,
+          "cards": [
+            {
+              "icon": "Search",
+              "title": "01. Understand the Question",
+              "body": "Know exactly what's being asked before you start searching for answers."
+            },
+            {
+              "icon": "Eye",
+              "title": "02. Skimming",
+              "body": "Quickly grasp the overall meaning, structure, and main themes of the passage."
+            },
+            {
+              "icon": "Target",
+              "title": "03. Scanning",
+              "body": "Locate keywords and identify the specific area containing your answer."
+            },
+            {
+              "icon": "BookOpen",
+              "title": "04. Close Reading",
+              "body": "Carefully analyse the relevant section to extract precise information."
+            },
+            {
+              "icon": "Check",
+              "title": "05. Deciding the Correct Answer",
+              "body": "Use evidence from the text to confidently select or write your answer."
+            }
+          ],
+          "page": 86
+        },
+        {
+          "type": "split_visual",
+          "image_position": "left",
+          "eyebrow": "DIFFERENT QUESTIONS, DIFFERENT SKILLS",
+          "eyebrow_tone": "default",
+          "title": "Different Question Types Test Different Skills",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Just as different road signs require different responses, each IELTS question type demands a specific combination of these five skills."
+            },
+            {
+              "kind": "accent_quote",
+              "text": "Would you take the same route to five completely different destinations?"
+            },
+            {
+              "kind": "paragraph",
+              "text": "Of course not. Yet this is exactly what most students do with IELTS Reading — they use one generic approach for every question type."
+            }
+          ],
+          "image": "/static/strategies/reading/intro/u11_journey_map.jpg",
+          "page": 87
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "title": "Three Very Different Challenges",
+          "columns": 3,
+          "cards": [
+            {
+              "icon": "ListChecks",
+              "title": "Matching Headings",
+              "body": "**Question:** Choose the correct heading for each paragraph from a list of options.\n\n**Requires:** Understanding main ideas and paragraph structure"
+            },
+            {
+              "icon": "Check",
+              "title": "True/False/Not Given",
+              "body": "**Question:** Does the statement agree with the information in the passage?\n\n**Requires:** Precise close reading and logical analysis"
+            },
+            {
+              "icon": "Hash",
+              "title": "Multiple Choice",
+              "body": "**Question:** Choose the correct answer from several options.\n\n**Requires:** Careful comparison and elimination of distractors"
+            }
+          ],
+          "page": 89
+        },
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "THE BIG IDEA",
+          "eyebrow_tone": "outlined",
+          "title": "Different Questions = Different Strategies",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Each question type is testing different skills in different ways. Using the same approach for all of them guarantees you'll underperform. Now let's see exactly how this works in practice."
+            }
+          ],
+          "image": "/static/strategies/reading/intro/u12_toolbox.jpg",
+          "page": 90
+        }
+      ]
+    },
+    {
+      "lesson_id": "worked_example",
+      "lesson_number": 6,
+      "title": "Worked Example — Matching Headings Strategy",
+      "source_pages": [
+        91,
+        99
+      ],
+      "liz_intro": "Time to move from theory to action. We'll demo the Matching Headings question — the one most students lose marks on — first the wrong way, then the right way.",
+      "liz_outro": "That's one question type cracked. The same logic applies to every other type — but vocabulary is what makes all of it possible, and that's what we'll cover next.",
+      "slides": [
+        {
+          "type": "big_typography",
+          "eyebrow": "STRATEGY DEMONSTRATION",
+          "eyebrow_tone": "default",
+          "title": "Matching Headings",
+          "items": [
+            {
+              "number": "",
+              "title": "Watch how the wrong approach wastes time whilst the right strategy finds answers efficiently."
+            }
+          ],
+          "page": 91
+        },
+        {
+          "type": "split_visual",
+          "image_position": "left",
+          "eyebrow": "EXAMPLE QUESTION",
+          "eyebrow_tone": "default",
+          "title": "Example Question",
+          "subtitle": "Task: Match each paragraph (A-E) with the correct heading (i-viii) from the list below.",
+          "blocks": [
+            {
+              "kind": "callout",
+              "tone": "warning",
+              "body": "This is one of the most challenging question types because there are always **extra headings** designed to confuse you. Many headings sound similar, and choosing incorrectly costs you marks."
+            }
+          ],
+          "image": "/static/strategies/reading/intro/u13_ielts_book_open.jpg",
+          "page": 92
+        },
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "THE WRONG WAY",
+          "eyebrow_tone": "critical",
+          "title": "What Most Students Do…",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Before we show you the proven method, let's look at the trap most students fall into."
+            }
+          ],
+          "image": "/static/strategies/reading/intro/u14_stressed_paper.jpg",
+          "page": 93
+        },
+        {
+          "type": "timeline_zigzag",
+          "title": "The Recipe for Failure",
+          "intro": "Each step here makes the next one worse — and you end up guessing at the end.",
+          "nodes": [
+            {
+              "number": 1,
+              "title": "Read All Headings First",
+              "body": "Become immediately confused by similar-sounding options",
+              "side": "left"
+            },
+            {
+              "number": 2,
+              "title": "Read First 1-2 Sentences Only",
+              "body": "Miss the main idea, which often comes later in the paragraph",
+              "side": "right"
+            },
+            {
+              "number": 3,
+              "title": "Try to Match Immediately",
+              "body": "Make rushed decisions based on incomplete information",
+              "side": "left"
+            },
+            {
+              "number": 4,
+              "title": "OR Read Every Single Word",
+              "body": "Waste precious time and lose focus on what matters",
+              "side": "right"
+            },
+            {
+              "number": 5,
+              "title": "Run Out of Time",
+              "body": "End up guessing on the final questions",
+              "side": "left"
+            }
+          ],
+          "page": 94
+        },
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "THE RIGHT WAY",
+          "eyebrow_tone": "default",
+          "title": "Our Proven Strategy",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "This **six-step method** has helped thousands of students improve their scores. It works because it mirrors how skilled readers naturally process information."
+            }
+          ],
+          "image": "/static/strategies/reading/intro/u15_annotated_reading.jpg",
+          "page": 95
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "title": "Steps 1 & 2 — Create Your Own Headings",
+          "intro": "This forces you to truly understand each paragraph instead of just scanning for keywords.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "X",
+              "title": "DON'T look at the headings yet",
+              "body": "Avoid confusion and stay focused on understanding the text itself."
+            },
+            {
+              "number": 2,
+              "icon": "Pencil",
+              "title": "Read each paragraph completely",
+              "body": "Then write YOUR heading in just 1-2 words summarising the main idea."
+            }
+          ],
+          "page": 96
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "title": "Steps 3 & 4 — Match With Confidence",
+          "intro": "By this stage, you'll typically have **60-70% of answers** with complete confidence.",
+          "steps": [
+            {
+              "number": 3,
+              "icon": "Eye",
+              "title": "NOW look at the actual headings",
+              "body": "Read each one carefully and underline the keywords in every heading."
+            },
+            {
+              "number": 4,
+              "icon": "Check",
+              "title": "Compare and match obvious ones",
+              "body": "Match your headings with the actual options. The obvious matches will jump out immediately."
+            }
+          ],
+          "page": 97
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "title": "Steps 5 & 6 — Solve the Difficult Ones",
+          "intro": "This systematic elimination ensures you're never just guessing — you're making evidence-based decisions.",
+          "steps": [
+            {
+              "number": 5,
+              "icon": "ListChecks",
+              "title": "Write 2-3 possibilities",
+              "body": "For remaining paragraphs, note which headings could potentially match."
+            },
+            {
+              "number": 6,
+              "icon": "Search",
+              "title": "Close read and decide",
+              "body": "Go back to the paragraph, read carefully, and use evidence to choose the correct answer."
+            }
+          ],
+          "page": 98
+        },
+        {
+          "type": "big_typography",
+          "eyebrow": "RESULT",
+          "eyebrow_tone": "default",
+          "title": "Strategy in Action",
+          "items": [
+            {
+              "number": "",
+              "title": "Six steps. Every paragraph mapped. No guessing."
+            }
+          ],
+          "page": 99
+        }
+      ]
+    },
+    {
+      "lesson_id": "reading_is_vocab",
+      "lesson_number": 7,
+      "title": "The Reading Test is NOT a Reading Test",
+      "source_pages": [
+        101,
+        103
+      ],
+      "liz_intro": "Strategies only get you so far if you don't know the words. The IELTS Reading test is, more than anything, a vocabulary test. Let's fix vocabulary the smart way.",
+      "liz_outro": "Strategies plus vocabulary is the system. The last step is knowing exactly what to do tomorrow morning.",
+      "slides": [
+        {
+          "type": "big_typography",
+          "eyebrow": "THE BIG INSIGHT",
+          "eyebrow_tone": "default",
+          "title": "The Reading Test is NOT a Reading Test",
+          "items": [
+            {
+              "number": "",
+              "title": "It's a vocabulary test in disguise — and most students get this wrong."
+            }
+          ],
+          "page": 101
+        },
+        {
+          "type": "comparison",
+          "title": "Synonyms and Paraphrasing in IELTS Reading",
+          "intro": "The same idea is almost never written the same way. Here's what that looks like in real IELTS Reading passages.",
+          "columns": [
+            {
+              "label": "Question Words",
+              "tone": "neutral",
+              "marker": "dot",
+              "items": [
+                "civil calendar",
+                "months were in equal length",
+                "divided the day into two equal halves",
+                "a new cabinet shape",
+                "to organise public events"
+              ]
+            },
+            {
+              "label": "Words in the Text",
+              "tone": "neutral",
+              "marker": "dot",
+              "items": [
+                "municipal calendar",
+                "12 months of 30 days",
+                "split the day into two 12-hour periods",
+                "a new floor-standing case design",
+                "to co-ordinate communal activities"
+              ]
+            }
+          ],
+          "page": 101
+        },
+        {
+          "type": "comparison",
+          "title": "Vocabulary: The Smart Way",
+          "columns": [
+            {
+              "label": "The Boring Way",
+              "tone": "negative",
+              "marker": "x",
+              "items": [
+                "Memorising word lists",
+                "Flashcards with no context",
+                "Forgetting everything quickly",
+                "Feeling demotivated"
+              ]
+            },
+            {
+              "label": "The Effective Way",
+              "tone": "positive",
+              "marker": "check",
+              "items": [
+                "Reading what you genuinely enjoy",
+                "Learning words in context",
+                "Retaining vocabulary naturally",
+                "Actually looking forward to practice"
+              ],
+              "image": "/static/strategies/reading/intro/u17_reading_window.jpg"
+            }
+          ],
+          "page": 102
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "title": "Vocabulary Improvement Plan",
+          "intro": "A simple five-step routine you can start today and run for life.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "BookOpen",
+              "title": "Read Daily",
+              "body": "Choose something you genuinely enjoy — articles, books, blogs. Just **10-15 minutes per day**."
+            },
+            {
+              "number": 2,
+              "icon": "Pencil",
+              "title": "Note New Words",
+              "body": "Write down unfamiliar words as you encounter them, keeping a simple vocabulary journal."
+            },
+            {
+              "number": 3,
+              "icon": "Lightbulb",
+              "title": "Guess From Context",
+              "body": "Before checking the dictionary, use surrounding words to guess the meaning."
+            },
+            {
+              "number": 4,
+              "icon": "Check",
+              "title": "Verify Your Guess",
+              "body": "Check the definition and see how close you were — this builds your context skills."
+            },
+            {
+              "number": 5,
+              "icon": "Repeat",
+              "title": "Review Regularly",
+              "body": "Revisit your vocabulary journal weekly to reinforce what you've learnt."
+            }
+          ],
+          "page": 103
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Reading Principles",
+          "intro": "Five short questions to lock in what makes a strong reading test-taker before you move into the question-type strategies.",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "Why does 'just practising more' often fail to raise reading scores?",
+              "options": [
+                { "letter": "A", "text": "Because more tests automatically mean lower attention." },
+                { "letter": "B", "text": "Because practice without analysis just reinforces the same mistakes." },
+                { "letter": "C", "text": "Because IELTS limits the number of practice tests." }
+              ],
+              "answer": "B",
+              "explanation": "Volume without correction = repeated mistakes at higher speed. Quality of review beats quantity of practice."
+            },
+            {
+              "kind": "mcq",
+              "stem": "Which of these is the BIGGEST time-management trap in IELTS Reading?",
+              "options": [
+                { "letter": "A", "text": "Spending too much time on one difficult question instead of moving on." },
+                { "letter": "B", "text": "Reading the passage twice." },
+                { "letter": "C", "text": "Underlining keywords." }
+              ],
+              "answer": "A",
+              "explanation": "Time blown on one stuck question costs 2-3 easier questions later. Skip, mark, return at the end."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "The IELTS Reading test is, more than anything, a _______ test in disguise.",
+              "answer": "vocabulary",
+              "accept": ["vocabulary", "vocab"],
+              "explanation": "Strategies only work if you understand the words. Vocabulary growth is the highest-leverage long-term investment."
+            },
+            {
+              "kind": "mcq",
+              "stem": "What's the smart way to grow reading vocabulary?",
+              "options": [
+                { "letter": "A", "text": "Memorising long word lists by heart." },
+                { "letter": "B", "text": "Reading material you genuinely enjoy and learning words in context." },
+                { "letter": "C", "text": "Translating every unknown word as you read." }
+              ],
+              "answer": "B",
+              "explanation": "Words learned in context stick. Context-free flashcard memorisation is forgotten quickly and demoralising."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Synonyms and paraphrasing mean the question almost never uses the _______ words as the passage.",
+              "answer": "same",
+              "accept": ["same", "exact same", "exact", "identical"],
+              "explanation": "IELTS deliberately rewords ideas. Train your eye to spot semantic equivalents, not surface-level word matches."
+            }
+          ],
+          "page": 103
+        }
+      ]
+    },
+    {
+      "lesson_id": "next_steps",
+      "lesson_number": 8,
+      "title": "Your Next Steps",
+      "source_pages": [
+        104,
+        109
+      ],
+      "liz_intro": "You now have one complete strategy and a vocabulary plan. Let's lock in what you learned and turn it into a daily habit inside IELTS Ace.",
+      "liz_outro": "Reading is mastered through practice — and now you have the system, the strategy, and the place to apply both.",
+      "slides": [
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "title": "What You Now Know",
+          "columns": 3,
+          "cards": [
+            {
+              "icon": "AlertTriangle",
+              "title": "Why Common Advice Fails",
+              "body": "Practice without correction, focusing on time instead of skills, and incomplete skim-scan techniques all hold you back."
+            },
+            {
+              "icon": "Star",
+              "title": "The Real Difference",
+              "body": "Band 7+ students master close reading, use specific strategies for each question type, and build from a strong foundation."
+            },
+            {
+              "icon": "ListChecks",
+              "title": "One Complete Strategy",
+              "body": "You now have a proven six-step method for matching headings questions that you can use immediately."
+            }
+          ],
+          "page": 104
+        },
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "BUT WAIT",
+          "eyebrow_tone": "warning",
+          "title": "There Are 10+ Question Types — You Need Strategies for ALL of Them",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Matching headings is just the beginning. To consistently score Band 7+, you need a specific strategy for **True/False/Not Given**, **Multiple Choice**, **Sentence Completion**, **Matching Information**, and every other question type."
+            }
+          ],
+          "image": "/static/strategies/reading/intro/u18_ipad_qtypes.jpg",
+          "page": 105
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "INSIDE IELTS ACE",
+          "eyebrow_tone": "default",
+          "title": "Continue Your Reading Practice",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "BookOpen",
+              "title": "Reading Question Bank",
+              "body": "Authentic IELTS-style questions for every question type, with explanations for every answer."
+            },
+            {
+              "icon": "FileText",
+              "title": "Full Reading Tests",
+              "body": "Timed, exam-condition reading tests with instant scoring and band feedback."
+            },
+            {
+              "icon": "Sparkles",
+              "title": "Vocabulary Tracker",
+              "body": "Build your personal word journal as you read, with spaced review built in."
+            },
+            {
+              "icon": "Target",
+              "title": "Mistake Analysis",
+              "body": "Every error is logged so you can see your patterns and fix the 3-4 mistakes limiting your score."
+            }
+          ],
+          "page": 106
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "INSIDE IELTS ACE",
+          "eyebrow_tone": "default",
+          "title": "Your Reading Course Is Already Here",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "ListChecks",
+              "title": "Practice Questions",
+              "body": "Authentic IELTS-style questions covering every question type, with full explanations on every answer."
+            },
+            {
+              "icon": "BookOpen",
+              "title": "Step-by-Step Lessons",
+              "body": "Strategy walkthroughs that build progressively from foundation skills to question-specific mastery."
+            },
+            {
+              "icon": "MessageCircle",
+              "title": "Practise With Liz",
+              "body": "Run any question through Liz so the strategy lands, not just the answer."
+            },
+            {
+              "icon": "TrendingUp",
+              "title": "Band 6 → 7+ Roadmap",
+              "body": "A clear sequence of what to focus on at each stage, so you always know the next move."
+            }
+          ],
+          "page": 107
+        },
+        {
+          "type": "split_visual",
+          "image_position": "left",
+          "eyebrow": "BAND 6 → BAND 7+",
+          "eyebrow_tone": "default",
+          "title": "Band 6 → Band 7 Isn't About Talent. It's About Having the Right System.",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Every student we've helped from Band 6 to Band 7+ had one thing in common: they stopped relying on generic advice and started using **proven, question-specific strategies**. Talent is not required. The right system is."
+            }
+          ],
+          "image": "/static/strategies/reading/intro/u19_stairs_progress.jpg",
+          "page": 108
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "YOUR NEXT STEPS",
+          "eyebrow_tone": "default",
+          "title": "Your Next Steps",
+          "intro": "Three things to do this week — in this order.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "Target",
+              "title": "Open the Reading Question Bank",
+              "body": "Find a Matching Headings question and run the six-step method end-to-end. Time yourself, but don't rush the strategy."
+            },
+            {
+              "number": 2,
+              "icon": "RefreshCw",
+              "title": "Master One Type Before Moving On",
+              "body": "Stay on Matching Headings until you're consistently confident, then move to True/False/Not Given — one type at a time."
+            },
+            {
+              "number": 3,
+              "icon": "MessageCircle",
+              "title": "Bring Liz In When You Get Stuck",
+              "body": "Any time a question type confuses you, ask Liz to walk you through the strategy live."
+            }
+          ],
+          "page": 109
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,862 @@
+{
+  "chapter_id": "speaking_segment_slides",
+  "chapter_number": 4,
+  "skill": "speaking",
+  "title": "IELTS Speaking: 5 Principles That Actually Matter",
+  "subtitle": "Master the strategies that beat memorised perfection",
+  "source_pages": [
+    152,
+    175
+  ],
+  "extraction_status": "complete",
+  "lessons": [
+    {
+      "lesson_id": "overview",
+      "lesson_number": 1,
+      "title": "Test Overview",
+      "source_pages": [
+        152,
+        154
+      ],
+      "liz_intro": "Welcome to the Speaking guide. The test is short — 11 to 14 minutes — but every part demands a different mindset. Let's walk through the structure first.",
+      "liz_outro": "Now you know the structure and what's being marked. Next: the five principles that decide your score.",
+      "slides": [
+        {
+          "type": "hero",
+          "title": "IELTS Speaking Crash Course",
+          "subtitle": "Master the strategies that truly matter",
+          "image_layout": "stacked",
+          "page": 152,
+          "images": [
+            "/static/strategies/speaking/intro/u01_part1_interview.jpg",
+            "/static/strategies/speaking/intro/u05_part3_interview.jpg"
+          ]
+        },
+        {
+          "type": "big_typography",
+          "eyebrow": "TEST OVERVIEW",
+          "eyebrow_tone": "default",
+          "title": "IELTS Speaking Test Structure",
+          "items": [
+            {
+              "number": "",
+              "title": "The complete test takes 11–14 minutes and consists of three distinct parts, each requiring a different approach and strategy."
+            }
+          ],
+          "page": 153
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "THREE DISTINCT PARTS",
+          "eyebrow_tone": "default",
+          "title": "Part 1 · Part 2 · Part 3",
+          "columns": 3,
+          "cards": [
+            {
+              "icon": "MessageCircle",
+              "title": "Part 1 — 4–5 minutes",
+              "body": "Simple questions about YOU. Work and studies, hometown and family, hobbies and interests."
+            },
+            {
+              "icon": "Mic",
+              "title": "Part 2 — up to 4 minutes total",
+              "body": "**1 minute prep + 1–2 minutes speaking + 1 minute rounding-up questions.** You get a topic card and 1 minute to make notes; then you speak alone for **1 to 2 minutes** (don't stop early — aim for the full 2). The examiner asks 1–2 short follow-ups after."
+            },
+            {
+              "icon": "Brain",
+              "title": "Part 3 — 4–5 minutes",
+              "body": "Abstract discussion questions. Deeper thinking, complex ideas, critical analysis."
+            }
+          ],
+          "page": 153
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "FOUR MARKING CRITERIA",
+          "eyebrow_tone": "default",
+          "title": "Your Score Breaks Down Like This",
+          "intro": "Your performance is evaluated equally across four key areas. Understanding these criteria is essential for targeted improvement.",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "Waves",
+              "title": "1. Fluency & Coherence",
+              "body": "How smoothly and logically you speak."
+            },
+            {
+              "icon": "BookOpen",
+              "title": "2. Vocabulary",
+              "body": "Range and accuracy of words used."
+            },
+            {
+              "icon": "Type",
+              "title": "3. Grammar",
+              "body": "Variety and correctness of grammar."
+            },
+            {
+              "icon": "Volume2",
+              "title": "4. Pronunciation",
+              "body": "Clarity and natural speech patterns."
+            }
+          ],
+          "page": 154
+        }
+      ]
+    },
+    {
+      "lesson_id": "principle_1_different_strategy",
+      "lesson_number": 2,
+      "title": "Principle #1 — Different Strategy for Each Part",
+      "source_pages": [
+        155,
+        158
+      ],
+      "liz_intro": "Most candidates use the same approach for all three parts. That's why their score plateaus. Each part needs its own playbook.",
+      "liz_outro": "Different parts, different rules. Now we get to the most counter-intuitive principle of all.",
+      "slides": [
+        {
+          "type": "big_typography",
+          "eyebrow": "PRINCIPLE #1",
+          "eyebrow_tone": "default",
+          "title": "Different Strategy for Each Part",
+          "items": [
+            {
+              "number": "",
+              "title": "Each part of the IELTS Speaking test demands a unique approach. What works in Part 1 won't serve you well in Part 3."
+            }
+          ],
+          "page": 155
+        },
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "PART 1 STRATEGY",
+          "eyebrow_tone": "default",
+          "title": "Simple & Conversational",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Part 1 is designed to put you at ease. Keep your answers natural, brief, and focused on personal information."
+            },
+            {
+              "kind": "card_list",
+              "cards": [
+                {
+                  "title": "Answer Length",
+                  "body": "2–3 sentences per answer."
+                },
+                {
+                  "title": "Content Focus",
+                  "body": "Questions about YOU and your life."
+                },
+                {
+                  "title": "Approach",
+                  "body": "Answer **directly**, keep it **brief**, and **add one reason or example**. No prepared stories, no overthinking — but don't ramble either. Two-to-three sentences per answer is the sweet spot."
+                }
+              ]
+            }
+          ],
+          "image": "/static/strategies/speaking/intro/u03_man_laptop_smile.jpg",
+          "page": 156
+        },
+        {
+          "type": "split_visual",
+          "image_position": "left",
+          "eyebrow": "PART 1 EXAMPLE",
+          "eyebrow_tone": "default",
+          "title": "\"What do you do?\"",
+          "blocks": [
+            {
+              "kind": "quote",
+              "text": "I'm a software engineer. I work for a tech company developing mobile apps. I've been doing it for about three years now."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Notice how this answer is direct, relevant, and conversational — exactly what Part 1 requires."
+            }
+          ],
+          "image": "/static/strategies/speaking/intro/u01_part1_interview.jpg",
+          "page": 156
+        },
+        {
+          "type": "comparison",
+          "title": "Part 2 — Your 2-Minute Speech",
+          "intro": "Many students misunderstand Part 2. Here's what actually matters versus the common misconception.",
+          "columns": [
+            {
+              "label": "Common Mistake",
+              "tone": "negative",
+              "marker": "x",
+              "items": [
+                "Must cover every bullet point on the card",
+                "Tick each prompt mechanically",
+                "Stop the moment you've answered all four"
+              ]
+            },
+            {
+              "label": "Actual Requirement",
+              "tone": "positive",
+              "marker": "check",
+              "items": [
+                "Talk about the TOPIC at the top",
+                "Keep your speech flowing for 2 minutes",
+                "Tell stories, give specific examples — show, don't just tell"
+              ]
+            }
+          ],
+          "page": 157
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "PART 3 STRATEGY",
+          "eyebrow_tone": "default",
+          "title": "Show Depth of Thinking",
+          "intro": "Part 3 tests your ability to discuss abstract ideas. Use this simple three-part structure for every answer.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "Target",
+              "title": "Direct Answer",
+              "body": "State your position clearly."
+            },
+            {
+              "number": 2,
+              "icon": "MessageSquare",
+              "title": "Explanation",
+              "body": "Develop your reasoning."
+            },
+            {
+              "number": 3,
+              "icon": "Lightbulb",
+              "title": "Example",
+              "body": "Illustrate with specifics."
+            }
+          ],
+          "page": 158
+        },
+        {
+          "type": "callout",
+          "tone": "info",
+          "eyebrow": "DECISION TREE — WHICH PART, WHICH MOVE",
+          "title": "When the examiner speaks, run THIS check first.",
+          "body": "**Step 1 — Which part are you in?**\n\n• *4–5 minutes in, short personal questions ('What's your job?', 'Do you like cooking?')* → **Part 1** → Answer in **2–3 sentences**. Direct + one reason. No stories.\n\n• *Examiner hands you a cue card with bullet points* → **Part 2** → Use **1 minute** to plan, then speak for **2 minutes**. Tell a story. Don't worry about hitting every bullet — stay on topic.\n\n• *Abstract questions starting with 'Why…?', 'How…?', 'Do you think…?'* → **Part 3** → Use **Direct Answer → Explanation → Example**. Speak for 30–45 seconds per answer.\n\n**Step 2 — When in doubt, ask yourself:** *'Is this about me, or about ideas?'* About me = Part 1 style (short, personal). About ideas = Part 3 style (longer, opinion + example).",
+          "page": 158
+        },
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "PART 3 EXAMPLE",
+          "eyebrow_tone": "default",
+          "title": "\"Why do people enjoy travelling?\"",
+          "blocks": [
+            {
+              "kind": "card_list",
+              "cards": [
+                {
+                  "title": "Direct Answer",
+                  "body": "People travel to experience something different from their daily routine."
+                },
+                {
+                  "title": "Explanation",
+                  "body": "Everything feels fresh and exciting when you're in a new place — the food, the culture, even the way people interact."
+                },
+                {
+                  "title": "Example",
+                  "body": "When I visited Japan, even ordering coffee became an adventure because of the language barrier and different customs."
+                }
+              ]
+            }
+          ],
+          "image": "/static/strategies/speaking/intro/u05_part3_interview.jpg",
+          "page": 158
+        }
+      ]
+    },
+    {
+      "lesson_id": "principle_2_be_natural",
+      "lesson_number": 3,
+      "title": "Principle #2 — Be Natural, Not Perfect",
+      "source_pages": [
+        159,
+        162
+      ],
+      "liz_intro": "This is the principle most students refuse to believe. Trying to sound perfect is exactly what makes you sound worse.",
+      "liz_outro": "Authenticity beats rehearsed perfection. Now: why fluency matters more than accuracy.",
+      "slides": [
+        {
+          "type": "big_typography",
+          "eyebrow": "PRINCIPLE #2",
+          "eyebrow_tone": "default",
+          "title": "Be Natural, Not Perfect",
+          "items": [
+            {
+              "number": "",
+              "title": "Authenticity trumps perfection every time. The examiner values genuine communication over rehearsed performances."
+            }
+          ],
+          "page": 159
+        },
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "BAND 9 — NATURAL RESPONSE",
+          "eyebrow_tone": "default",
+          "title": "What High Scorers Actually Sound Like",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "Watch how high-scoring students speak naturally and confidently, making small mistakes but maintaining excellent fluency and coherence throughout."
+            },
+            {
+              "kind": "paragraph",
+              "text": "**Notice:** Even Band 9 students pause, correct themselves occasionally, and don't use complex vocabulary in every sentence. What matters is the overall impression of natural, effortless communication."
+            }
+          ],
+          "image": "/static/strategies/speaking/intro/u08_natural_conversation.jpg",
+          "page": 160
+        },
+        {
+          "type": "split_visual",
+          "image_position": "left",
+          "eyebrow": "WARNING — MEMORISED RESPONSE",
+          "eyebrow_tone": "warning",
+          "title": "Sounds Rehearsed",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "This is what examiners are trained to detect: overly perfect responses that lack natural speech patterns and authentic interaction."
+            },
+            {
+              "kind": "paragraph",
+              "text": "**Warning Signs:** unnatural vocabulary choices, zero hesitation, lack of self-correction, and responses that don't quite match the question being asked."
+            },
+            {
+              "kind": "paragraph",
+              "text": "**What to do instead — three concrete habits:** *(1)* leave **natural pauses** to think (\"Hmm, let me think...\", \"That's an interesting one\"); *(2)* **self-correct openly** when you misspeak (\"...I goes — I mean, I went...\") — examiners reward this, it's a Band 7 marker; *(3)* let your voice **respond** to the question, not recite at it. Look at the examiner. React to what they say."
+            }
+          ],
+          "image": "/static/strategies/speaking/intro/u06_mic_paper_rehearsed.jpg",
+          "page": 161
+        },
+        {
+          "type": "big_typography",
+          "eyebrow": "INSIDE IELTS ACE",
+          "eyebrow_tone": "default",
+          "title": "Hear the difference for yourself.",
+          "items": [
+            {
+              "number": "",
+              "title": "Liz can interview you in the same conversational style examiners use — then play back what sounded natural and what sounded rehearsed."
+            }
+          ],
+          "page": 162
+        }
+      ]
+    },
+    {
+      "lesson_id": "principle_3_fluency_beats_perfection",
+      "lesson_number": 4,
+      "title": "Principle #3 — Fluency Beats Perfection",
+      "source_pages": [
+        163,
+        164
+      ],
+      "liz_intro": "If you have to choose between speaking smoothly with a few mistakes or stopping every sentence to be perfect — choose smooth. Every time.",
+      "liz_outro": "Fluency over accuracy. Now let's tackle the vocabulary myth that's wrecking thousands of speaking scores.",
+      "slides": [
+        {
+          "type": "big_typography",
+          "eyebrow": "PRINCIPLE #3",
+          "eyebrow_tone": "default",
+          "title": "Fluency Beats Perfection",
+          "items": [
+            {
+              "number": "",
+              "title": "The ability to keep speaking smoothly is more valuable than grammatically perfect but hesitant speech."
+            },
+            {
+              "number": "",
+              "title": "**Where this matters most:** Part 2 (long turn) — you have to keep speaking for two minutes; pausing to fix grammar mid-sentence kills your fluency score. In Part 1 short answers, accuracy still matters because each answer is so short there's no flow to protect."
+            }
+          ],
+          "page": 163
+        },
+        {
+          "type": "callout",
+          "tone": "info",
+          "eyebrow": "WHAT 'LONG TURN' MEANS",
+          "title": "Part 2 = the 'long turn'.",
+          "body": "**Long turn** is the official IELTS name for **Part 2** of the speaking test:\n\n• You receive a cue card with a topic.\n• You get **1 minute** to prepare and make notes.\n• You then speak **alone** — no examiner questions, no help — for **1 to 2 minutes**.\n\nIt's called a 'long turn' because *you* hold the floor the whole time. This is where most candidates panic and stop talking. Fluency strategies (linking words, filler phrases, mini-stories) exist to help you fill those 2 minutes without freezing.",
+          "page": 163
+        },
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "FLUENCY > ACCURACY",
+          "eyebrow_tone": "default",
+          "title": "What High Scorers Do",
+          "blocks": [
+            {
+              "kind": "card_list",
+              "cards": [
+                {
+                  "title": "Keep flowing",
+                  "body": "Their speech moves naturally — no abrupt full stops."
+                },
+                {
+                  "title": "Use natural pauses",
+                  "body": "Only pause to think, not to search for the \"perfect\" word."
+                },
+                {
+                  "title": "Connect smoothly",
+                  "body": "Linking words bridge ideas instead of breaking them."
+                },
+                {
+                  "title": "Move past mistakes",
+                  "body": "Accept small slips and keep going."
+                }
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "**Remember:** native speakers make grammatical mistakes constantly. The examiner expects some errors — they're looking for natural communication ability."
+            }
+          ],
+          "image": "/static/strategies/speaking/intro/u04_cafe_couple_chat.jpg",
+          "page": 164
+        }
+      ]
+    },
+    {
+      "lesson_id": "principle_4_real_vocabulary",
+      "lesson_number": 5,
+      "title": "Principle #4 — Real Vocabulary (Not Lists)",
+      "source_pages": [
+        165,
+        168
+      ],
+      "liz_intro": "Vocabulary lists are the comfort food of IELTS prep — easy to teach, easy to sell, and almost completely useless. Here's what works instead.",
+      "liz_outro": "Words live in context. Lists die in your head. Now: the final principle, and the hardest one to do alone.",
+      "slides": [
+        {
+          "type": "big_typography",
+          "eyebrow": "PRINCIPLE #4",
+          "eyebrow_tone": "default",
+          "title": "Real Vocabulary (Not Lists)",
+          "items": [
+            {
+              "number": "",
+              "title": "Stop memorising vocabulary lists. Start learning words the way native speakers do."
+            },
+            {
+              "number": "",
+              "title": "**Where this matters most:** Part 3 (discussion) — abstract topics reward natural **collocations** (*words that naturally go together: \"discuss thoroughly\" not \"discuss deeply\"; \"make a decision\" not \"do a decision\"*) and topic-specific vocab. In Part 1, formal words like 'magnificent' for 'a nice weekend' will *lower* your score for inappropriate register."
+            }
+          ],
+          "page": 165
+        },
+        {
+          "type": "split_visual",
+          "image_position": "left",
+          "eyebrow": "COMMON MISTAKES",
+          "eyebrow_tone": "warning",
+          "title": "What Doesn't Work",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "These popular study methods seem logical but often lead to unnatural language use and lower scores."
+            },
+            {
+              "kind": "card_list",
+              "cards": [
+                {
+                  "title": "✗ \"Band 9 Vocabulary Lists\"",
+                  "body": "Decontextualised words you'll misuse."
+                },
+                {
+                  "title": "✗ Idiom in every sentence",
+                  "body": "Sounds forced and unnatural."
+                },
+                {
+                  "title": "✗ Never repeating words",
+                  "body": "Creates awkward, unnatural speech."
+                },
+                {
+                  "title": "✗ Academic word lists for *Part 1*",
+                  "body": "Wrong register for casual chat (\"What's your favourite food?\" doesn't need 'gastronomically'). **But:** Part 3 abstract questions *do* reward precise, sometimes academic-feeling vocabulary used in context — \"juxtapose\", \"paradigm\" are fine if they fit the idea. The fault isn't the word — it's the register mismatch."
+                },
+                {
+                  "title": "✗ Topic-based vocabulary lists",
+                  "body": "Leads to memorised, scripted answers."
+                }
+              ]
+            },
+            {
+              "kind": "paragraph",
+              "text": "**Why these methods persist:** easy to teach ≠ actually works. They're popular because they're simple to create and sell, not because they produce results."
+            }
+          ],
+          "image": "/static/strategies/speaking/intro/u07_vocab_list_stressed.jpg",
+          "page": 166
+        },
+        {
+          "type": "callout",
+          "tone": "warning",
+          "eyebrow": "REGISTER = MATCHING THE WORD TO THE MOMENT",
+          "title": "Same idea, different parts. Wrong register = lower score.",
+          "body": "**Register** is how formal or casual your word choice is. IELTS examiners *reward* matching register and *penalise* mismatch. Same idea, different register:\n\n• *'I had a good weekend'* — fine for Part 1 (casual chat). ✅\n• *'I had a magnificent weekend'* — wrong register for Part 1 — sounds memorised. ❌\n• *'It's a really popular sport here'* — fine for Part 1. ✅\n• *'It's an extraordinarily prevalent recreational pursuit'* — wrong register for Part 1. ❌\n• *'In contemporary society, individuals increasingly prioritise…'* — fine for Part 3 (abstract discussion). ✅\n• *'Loads of people these days care a lot about…'* — too casual for Part 3. ❌\n\n**Rule of thumb:** Part 1 = how you'd talk to a colleague at lunch. Part 3 = how you'd talk on a podcast about a serious topic. Same person, different setting.",
+          "page": 166
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "WHAT ACTUALLY WORKS",
+          "eyebrow_tone": "default",
+          "title": "Effective Vocabulary Strategies",
+          "intro": "Evidence-based vocabulary acquisition strategies that mirror how successful language learners naturally develop their skills.",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "Headphones",
+              "title": "01. Learn Through Reading & Listening",
+              "body": "Encounter words in natural contexts repeatedly."
+            },
+            {
+              "icon": "Sparkles",
+              "title": "02. Master Pronunciation + Collocations + Usage",
+              "body": "Know how to say it, what goes with it, and when to use it."
+            },
+            {
+              "icon": "ShieldCheck",
+              "title": "03. Use Words You Understand 100%",
+              "body": "Confidence matters more than complexity."
+            },
+            {
+              "icon": "PenTool",
+              "title": "04. Practise in Your Own Sentences",
+              "body": "Make the vocabulary personally meaningful."
+            }
+          ],
+          "page": 167
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "INSIDE IELTS ACE",
+          "eyebrow_tone": "default",
+          "title": "Build Vocabulary the Way That Actually Works",
+          "intro": "Skip the dead-end word lists. Use the surfaces inside IELTS Ace that grow your vocabulary in context.",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "Bookmark",
+              "title": "Vocabulary Tracker",
+              "body": "Save real phrases as you encounter them in Liz's lessons, with collocations and usage notes already attached."
+            },
+            {
+              "icon": "MessageCircle",
+              "title": "Liz Speaking Practice",
+              "body": "Liz reuses your saved phrases in conversation so you actually use them — not just recognise them."
+            },
+            {
+              "icon": "Headphones",
+              "title": "Listening + Reading Question Bank",
+              "body": "Real Cambridge passages give you words in the natural contexts that make them stick."
+            },
+            {
+              "icon": "PenTool",
+              "title": "Mistake Analysis",
+              "body": "Every word you misuse in writing or speaking is logged so you can practise it back into your active vocabulary."
+            }
+          ],
+          "page": 168
+        }
+      ]
+    },
+    {
+      "lesson_id": "principle_5_professional_feedback",
+      "lesson_number": 6,
+      "title": "Principle #5 — Get Professional Feedback",
+      "source_pages": [
+        169,
+        172
+      ],
+      "liz_intro": "You can't fix what you can't hear. Most candidates have no idea which 3–4 errors are holding them back. That's where targeted feedback wins.",
+      "liz_outro": "Five principles. Now let's bring them all together.",
+      "slides": [
+        {
+          "type": "big_typography",
+          "eyebrow": "PRINCIPLE #5",
+          "eyebrow_tone": "default",
+          "title": "Get Professional Feedback",
+          "items": [
+            {
+              "number": "",
+              "title": "Self-study can only take you so far. Professional guidance identifies blind spots and accelerates improvement."
+            }
+          ],
+          "page": 169
+        },
+        {
+          "type": "callout",
+          "tone": "info",
+          "eyebrow": "NO TEACHER YET? DO THIS THIS WEEK.",
+          "title": "The 4-step self-feedback workflow.",
+          "body": "Until you have a teacher (or Liz Live), this is how to find your own 3–4 repeating mistakes:\n\n**(1)** Pick a Part 2 cue card. Record yourself for **2 minutes** on your phone — no script.  \n**(2)** Listen back and **transcribe it word-for-word** (yes, every 'um', every restart). This is uncomfortable; do it anyway.  \n**(3)** Highlight every error: grammar slip, wrong word, repeated filler. Look for **patterns** — the same mistake 3+ times.  \n**(4)** Pick the **top 3 patterns**. Drill *only* those for one week. Then re-record the same cue card and compare.\n\n**Why this works:** Band 6.5 → 7 is usually about killing 3–4 repeating errors. You can't fix what you haven't *seen* in writing.",
+          "page": 170
+        },
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "PITFALLS TO AVOID",
+          "eyebrow_tone": "warning",
+          "title": "Three Common Mistakes",
+          "intro": "These errors can severely limit your score, even if other aspects of your speaking are strong.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "AlertTriangle",
+              "title": "Common Grammar Errors",
+              "body": "Most students have no idea they are making the same errors over and over again."
+            },
+            {
+              "number": 2,
+              "icon": "BookOpen",
+              "title": "Inappropriate Vocabulary",
+              "body": "Using \"magnificent\" or \"splendid\" in casual conversation sounds unnatural and actually hurts your score."
+            },
+            {
+              "number": 3,
+              "icon": "HelpCircle",
+              "title": "Not Answering the Question",
+              "body": "Showing off vocabulary instead of addressing what was asked demonstrates poor communication skills."
+            }
+          ],
+          "page": 170
+        },
+        {
+          "type": "split_visual",
+          "image_position": "left",
+          "eyebrow": "THE PROBLEM",
+          "eyebrow_tone": "critical",
+          "title": "You Don't Know YOUR Specific Mistakes",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "And that's what's holding you back from your target band score."
+            },
+            {
+              "kind": "paragraph",
+              "text": "**The truth about band improvement:** Band 6.5 → Band 7 typically requires fixing just **3–4 consistent errors**. But which 3–4 errors are holding YOU back? You need someone trained to identify them."
+            },
+            {
+              "kind": "paragraph",
+              "text": "Self-assessment has limits. Professional feedback reveals patterns you can't see on your own."
+            }
+          ],
+          "image": "/static/strategies/speaking/intro/u09_practice_test_stress.jpg",
+          "page": 171
+        },
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "INSIDE IELTS ACE",
+          "eyebrow_tone": "default",
+          "title": "Practise With Liz — Your Always-On Speaking Coach",
+          "intro": "Real-time speaking practice with Liz, plus a Sonnet evaluation that names the 3–4 errors actually holding you back.",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "Mic",
+              "title": "Liz Live — Real-Time Speaking",
+              "body": "Voice conversation with Liz that mirrors a real examiner: Part 1, Part 2 cue card, and Part 3 follow-ups."
+            },
+            {
+              "icon": "Search",
+              "title": "Identify YOUR 3–4 Errors",
+              "body": "Every session is evaluated against the four marking criteria so the patterns surface — not vague advice."
+            },
+            {
+              "icon": "Target",
+              "title": "Targeted Feedback",
+              "body": "Specific phrases to fix, specific habits to drop. No generic tips."
+            },
+            {
+              "icon": "TrendingUp",
+              "title": "Track Progress Over Time",
+              "body": "Your speaking history is saved so you can see fluency, vocabulary range and pronunciation improve session by session."
+            }
+          ],
+          "page": 172
+        }
+      ]
+    },
+    {
+      "lesson_id": "recap_next_steps",
+      "lesson_number": 7,
+      "title": "Recap & Next Steps",
+      "source_pages": [
+        173,
+        175
+      ],
+      "liz_intro": "Five principles. That's the entire system.",
+      "liz_outro": "Now you know what works. The next step is using it.",
+      "slides": [
+        {
+          "type": "strategy_steps",
+          "variant": "icon_circle",
+          "eyebrow": "RECAP",
+          "eyebrow_tone": "default",
+          "title": "The 5 Principles",
+          "intro": "These fundamental principles form the foundation of successful IELTS Speaking performance.",
+          "steps": [
+            {
+              "number": 1,
+              "icon": "Layers",
+              "title": "Different Strategy for Each Part",
+              "body": "Part 1 needs brevity, Part 2 needs flow, Part 3 needs depth."
+            },
+            {
+              "number": 2,
+              "icon": "Heart",
+              "title": "Be Natural, Not Perfect",
+              "body": "Authenticity and genuine communication beat rehearsed perfection."
+            },
+            {
+              "number": 3,
+              "icon": "Waves",
+              "title": "Fluency Beats Perfection",
+              "body": "Keep speaking smoothly — minor errors are acceptable."
+            },
+            {
+              "number": 4,
+              "icon": "BookOpen",
+              "title": "Learn Vocabulary Through Context",
+              "body": "Real reading and listening, not memorised lists."
+            },
+            {
+              "number": 5,
+              "icon": "Search",
+              "title": "Get Professional Feedback",
+              "body": "You can't identify your own blind spots."
+            }
+          ],
+          "page": 173
+        },
+        {
+          "type": "big_typography",
+          "eyebrow": "REMEMBER",
+          "eyebrow_tone": "default",
+          "title": "5 Things. Not 50.",
+          "items": [
+            {
+              "number": "",
+              "title": "Less, but better."
+            }
+          ],
+          "page": 174
+        },
+        {
+          "type": "quiz",
+          "eyebrow": "QUICK CHECK",
+          "eyebrow_tone": "default",
+          "title": "Quick Check: Speaking Principles",
+          "intro": "Five quick questions to lock in the principles before you walk into the test room.",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "What's the right approach to Part 1 vs. Part 3 answers?",
+              "options": [
+                { "letter": "A", "text": "Same length and depth — examiners want consistency." },
+                { "letter": "B", "text": "Part 1: short and natural; Part 3: longer, opinion-led, with reasoning." },
+                { "letter": "C", "text": "Memorise template answers and reuse them across all three parts." },
+                { "letter": "D", "text": "Part 1: long and detailed; Part 3: short to save time." }
+              ],
+              "answer": "B",
+              "explanation": "Part 1 rewards brevity and natural rhythm; Part 3 rewards depth, opinion, and reasoning. Different parts demand different strategies."
+            },
+            {
+              "kind": "mcq",
+              "stem": "A candidate has memorised a polished 'family' answer and recites it word-for-word. The examiner is most likely to:",
+              "options": [
+                { "letter": "A", "text": "Reward them for fluency and vocabulary." },
+                { "letter": "B", "text": "Detect rehearsed language and lower the score." },
+                { "letter": "C", "text": "Skip the rest of Part 1 to save time." },
+                { "letter": "D", "text": "Ask them to repeat it more slowly." }
+              ],
+              "answer": "B",
+              "explanation": "Examiners are trained to spot memorised responses. Authentic, natural answers — even slightly imperfect — score better than rehearsed perfection."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Complete the principle: '________ beats perfection.' (one word)",
+              "answer": "Fluency",
+              "accept": ["fluency", "Fluency", "FLUENCY"],
+              "explanation": "Keep speaking. Smooth delivery with minor grammar slips outscores hesitant, perfectly-formed sentences."
+            },
+            {
+              "kind": "mcq",
+              "stem": "What's the best way to grow your real Speaking vocabulary?",
+              "options": [
+                { "letter": "A", "text": "Memorise IELTS word-lists and 'high-band' phrases." },
+                { "letter": "B", "text": "Read and listen to authentic English so words stick in context." },
+                { "letter": "C", "text": "Use the longest synonym you can think of in every answer." },
+                { "letter": "D", "text": "Translate Turkish idioms directly into English." }
+              ],
+              "answer": "B",
+              "explanation": "Vocabulary that lives in context — from real reading and listening — sounds natural. Memorised phrases sound forced and often get misused."
+            },
+            {
+              "kind": "mcq",
+              "stem": "Why can't you reliably self-assess your own speaking?",
+              "options": [
+                { "letter": "A", "text": "Your accent always sounds bad to you." },
+                { "letter": "B", "text": "Recording yourself is technically too hard." },
+                { "letter": "C", "text": "You can't hear your own consistent 3–4 errors — it takes a trained ear or calibrated evaluator." },
+                { "letter": "D", "text": "Self-assessment is fine — professional feedback is overrated." }
+              ],
+              "answer": "C",
+              "explanation": "Band 6.5 → 7 usually requires fixing just 3–4 consistent errors — but you can't see your own blind spots. Professional or examiner-calibrated feedback names them."
+            }
+          ],
+          "page": 174
+        },
+        {
+          "type": "split_visual",
+          "image_position": "right",
+          "eyebrow": "INSIDE IELTS ACE",
+          "eyebrow_tone": "default",
+          "title": "Practise Speaking with Liz",
+          "blocks": [
+            {
+              "kind": "paragraph",
+              "text": "You've got the principles. Now apply them in real conversation — Liz interviews you across all three parts and points out exactly which of the five principles needs work."
+            },
+            {
+              "kind": "card_list",
+              "cards": [
+                {
+                  "title": "Part 1, 2 & 3 in one session",
+                  "body": "A full mock that mirrors the real test format."
+                },
+                {
+                  "title": "Sonnet-graded feedback",
+                  "body": "Calibrated to IELTS examiner descriptors — not inflated scores."
+                },
+                {
+                  "title": "Saved to your dashboard",
+                  "body": "Watch fluency, vocabulary and pronunciation improve session by session."
+                }
+              ]
+            }
+          ],
+          "image": "/static/strategies/speaking/intro/u10_study_partners_laptop.jpg",
+          "page": 175
+        }
+      ]
+    }
+  ]
+}

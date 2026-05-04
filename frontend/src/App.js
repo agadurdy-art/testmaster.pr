@@ -27,7 +27,7 @@ import Dashboard from './pages/Dashboard';
 // All other pages - lazy loaded on demand
 const TestInterface = lazy(() => import('./pages/TestInterface'));
 const Results = lazy(() => import('./pages/Results'));
-const TipsPage = lazy(() => import('./pages/TipsPage'));
+const StrategiesGuide = lazy(() => import('./features/strategies/StrategiesGuide'));
 const CoursesPage = lazy(() => import('./pages/CoursesPage'));
 const CourseDetail = lazy(() => import('./pages/CourseDetail'));
 const Profile = lazy(() => import('./pages/Profile'));
@@ -432,9 +432,13 @@ function AppWithSessionHandler() {
           path="/results/:attemptId" 
           element={user ? <Results user={user} /> : <Navigate to="/" />} 
         />
-        <Route 
-          path="/tips" 
-          element={user ? <TipsPage user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
+        <Route
+          path="/tips"
+          element={user ? <StrategiesGuide user={user} onLogout={handleLogout} /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/strategies"
+          element={user ? <StrategiesGuide user={user} onLogout={handleLogout} /> : <Navigate to="/" />}
         />
         <Route 
           path="/courses" 

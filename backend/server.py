@@ -341,6 +341,13 @@ else:
     app.mount("/static/visuals", StaticFiles(directory=str(static_visuals_path)), name="visuals")
     print("✅ Static visual files directory created and mounted")
 
+# Mount static files for strategies guide (ported PDF imagery)
+static_strategies_path = ROOT_DIR / "static" / "strategies"
+os.makedirs(static_strategies_path, exist_ok=True)
+app.mount("/api/static/strategies", StaticFiles(directory=str(static_strategies_path)), name="strategies_api")
+app.mount("/static/strategies", StaticFiles(directory=str(static_strategies_path)), name="strategies")
+print("✅ Static strategies images mounted at /api/static/strategies and /static/strategies")
+
 # Import learning platform routes
 try:
     from learning_platform_routes import router as learning_platform_router
@@ -372,6 +379,14 @@ try:
     print("✅ Lesson Registry routes loaded")
 except Exception as e:
     print(f"⚠️  Could not load lesson registry routes: {e}")
+
+# Strategies Guide (faithful port of the Complete IELTS Preparation Guide)
+try:
+    from routes.strategies import router as strategies_router
+    app.include_router(strategies_router)
+    print("✅ Strategies Guide routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load strategies routes: {e}")
 
 # Import dual-track course routes
 try:
