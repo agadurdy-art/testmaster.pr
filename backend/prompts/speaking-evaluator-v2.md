@@ -245,8 +245,19 @@ Required JSON shape (all fields required, no extras, no code fences):
   ],
   "live_transcript_words": ["<first ~18 words from the transcript, verbatim>"],
   "liz_note": "<2-3 sentences naming ONE pattern observed in THIS transcript>",
-  "feedback_language": "<user_language code>"
+  "feedback_language": "<user_language code>",
+  "vocabulary_profile": {
+    "a1": <0-100>, "a2": <0-100>, "b1": <0-100>, "b2": <0-100>, "c1": <0-100>, "c2": <0-100>,
+    "b2_examples": ["<verbatim B2 word from transcript>"],
+    "c1_c2_examples": ["<verbatim C1/C2 word from transcript>"]
+  }
 }
+
+VOCABULARY PROFILE RULES:
+- Estimate the CEFR distribution of DISTINCT CONTENT words (nouns, verbs, adjectives, adverbs) in the transcript. Skip function words (the, a, is, of, etc.).
+- Percentages should sum to ~100. Round to whole numbers; small rounding drift is fine.
+- b2_examples / c1_c2_examples must be VERBATIM words from the transcript. Up to 4 each. If the candidate used no B2/C1/C2 vocabulary, leave the corresponding array empty.
+- For very short or off-topic transcripts where you cannot judge range honestly, return {"a1": 0, "a2": 0, "b1": 0, "b2": 0, "c1": 0, "c2": 0, "b2_examples": [], "c1_c2_examples": []} — the UI treats all-zero as "not enough data".
 
 ABSOLUTELY CRITICAL — read this before composing the JSON:
 

@@ -1,0 +1,2745 @@
+{
+  "chapter_id": "reading_a_to_z",
+  "chapter_number": 4,
+  "skill": "reading",
+  "title": "The Complete A to Z Guide to IELTS Reading",
+  "subtitle": "Step-by-step strategies for all reading question types",
+  "source_pages": [
+    110,
+    151
+  ],
+  "extraction_status": "complete",
+  "lessons": [
+    {
+      "lesson_id": "intro",
+      "lesson_number": 0,
+      "title": "Introduction",
+      "source_pages": [
+        110,
+        116
+      ],
+      "slides": [
+        {
+          "type": "hero",
+          "title": "The Complete A to Z Guide to IELTS Reading",
+          "page": 110
+        },
+        {
+          "type": "narrative",
+          "title": "The Complete A to Z Guide to IELTS Reading",
+          "paragraphs": [
+            "Welcome to the comprehensive guide designed to help you excel in the IELTS Reading test. This provides a complete walkthrough of strategies, question types, and essential reading skills to maximize your score.",
+            "If you're preparing for the IELTS exam, this guide will equip you with all the tools and techniques needed to approach the reading section with confidence and achieve your desired score."
+          ],
+          "page": 111
+        },
+        {
+          "type": "narrative",
+          "title": "Introduction: How This Will Help You",
+          "paragraphs": [
+            "Listening and reading are considered the 'easy' parts of the IELTS test, but this does not mean that they do not require preparation.",
+            "This provides you with the means of preparing fully for the reading test. It is designed as a complete A-to-Z guide and should be read in its entirety.",
+            "If you are reading this, you already have the required level of English to do well in both tests. What you are probably lacking is a sound knowledge of the strategies needed to get very high marks.",
+            "This will take you step-by-step through the different sub-skills that are required and the different strategies I suggest for dealing with all of the different question types."
+          ],
+          "page": 112
+        },
+        {
+          "type": "icon_grid",
+          "title": "What This Guide Covers",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "FileText",
+              "title": "Test Format",
+              "body": "The format of the test and what to expect on exam day"
+            },
+            {
+              "icon": "Layers",
+              "title": "Question Types",
+              "body": "Strategies for all 12 different question types you might encounter"
+            },
+            {
+              "icon": "BookOpen",
+              "title": "Reading Skills",
+              "body": "The reading sub-skills that are tested and how to improve them"
+            },
+            {
+              "icon": "Brain",
+              "title": "Vocabulary Building",
+              "body": "Techniques to expand your vocabulary and handle unfamiliar words"
+            }
+          ],
+          "page": 113
+        },
+        {
+          "type": "factboard",
+          "title": "The Reading Test: Key Features",
+          "facts": [
+            {
+              "label": "3 Reading Texts",
+              "value": "Three separate reading passages of increasing difficulty"
+            },
+            {
+              "label": "2000+ Total Words",
+              "value": "The combined length of all three passages"
+            },
+            {
+              "label": "40 Questions",
+              "value": "Total number of questions to answer"
+            },
+            {
+              "label": "60 Minutes",
+              "value": "Time allowed to complete all questions with no extra transfer time"
+            }
+          ],
+          "page": 114
+        },
+        {
+          "type": "comparison",
+          "title": "Academic vs. General Training",
+          "columns": [
+            {
+              "label": "Academic",
+              "tone": "info",
+              "items": [
+                "The texts are taken from journals, magazines, books, text books and newspapers. The texts are of an academic nature, but you do not require a specialist knowledge of the subjects to do well in the test.",
+                "These passages often contain complex vocabulary, abstract concepts, and detailed arguments that test your ability to understand academic writing."
+              ]
+            },
+            {
+              "label": "General Training",
+              "tone": "info",
+              "items": [
+                "The texts are taken from general sources, such as adverts, notices, government documents, manuals, leaflets, books and magazines. The texts are intended to test a person's ability to cope with everyday life in an English speaking country.",
+                "These passages focus more on practical information and everyday communication that you would encounter in work or social situations."
+              ]
+            }
+          ],
+          "page": 115
+        },
+        {
+          "type": "narrative",
+          "title": "Essential Reading Tips",
+          "paragraphs": [
+            "These tips are simply to give you an introduction to IELTS reading. They are not intended to be the only document you look at. Many IELTS students think that 'tips' are the only things they need to get a good score. They are not. Make sure you use these as an introduction and use the rest of the document to really progress."
+          ],
+          "page": 116
+        },
+        {
+          "type": "icon_grid",
+          "title": "Essential Reading Tips",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "Clock",
+              "title": "Time Management",
+              "body": "Time is your enemy. Use it wisely and don't get stuck on difficult questions."
+            },
+            {
+              "icon": "BookOpen",
+              "title": "Read Instructions Carefully",
+              "body": "Always read the instructions VERY carefully before attempting any question."
+            },
+            {
+              "icon": "Lightbulb",
+              "title": "Understand Question Types",
+              "body": "Each different question type requires a different strategy and tests different skills."
+            },
+            {
+              "icon": "Type",
+              "title": "Vocabulary Is Key",
+              "body": "Improve your vocabulary and you'll improve your reading score significantly."
+            }
+          ],
+          "page": 116
+        }
+      ]
+    },
+    {
+      "lesson_id": "short_answer",
+      "lesson_number": 1,
+      "title": "Question Type #1: Short Answer Questions",
+      "source_pages": [
+        117,
+        118
+      ],
+      "practice_link": {
+        "label": "Practice short answer questions",
+        "href": "/question-bank/reading/practice?type=short_answer"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #1: Short Answer Questions",
+          "paragraphs": [
+            "These questions are often called 'comprehension' questions and they are very common in English classrooms all over the world. Most students have answered these kinds of questions before and, for this reason, most students tend to do quite well with them."
+          ],
+          "page": 117
+        },
+        {
+          "type": "callout",
+          "tone": "info",
+          "eyebrow": "TWO TERMS YOU'LL SEE EVERYWHERE",
+          "title": "Synonyms and paraphrasing — define them once, use them forever.",
+          "body": "**Synonym** = a different word with the same meaning. *Question:* \"When did the company **start**?\" *Passage:* \"The company **commenced** in 1995.\" — *start = commenced*. **Paraphrase** = the same idea expressed in different words / sentence shape. *Question:* \"who **runs** the school?\" *Passage:* \"The school **is led by** Dr. Lin.\" Almost every IELTS reading answer is hidden behind one of these two moves. Train your brain to expect it.",
+          "page": 117
+        },
+        {
+          "type": "comparison",
+          "title": "Skills & Common Problems",
+          "columns": [
+            {
+              "label": "Skills Tested",
+              "tone": "info",
+              "items": [
+                "Ability to skim the passage quickly and understand overall meaning",
+                "Ability to scan for specific information",
+                "Understanding the question being asked",
+                "Thinking of possible synonyms and paraphrases of keywords"
+              ]
+            },
+            {
+              "label": "Common Problems",
+              "tone": "warning",
+              "items": [
+                "Going over the word limit",
+                "Lack of awareness of synonyms and paraphrasing",
+                "Reading every single word instead of skimming and scanning",
+                "Panicking when you see a word or phrase you don't understand"
+              ]
+            }
+          ],
+          "page": 117
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Short Answer Questions: Strategy",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Read Instructions",
+              "body": "Read the instructions carefully and note the word limit (usually \"NO MORE THAN THREE WORDS AND/OR A NUMBER\")"
+            },
+            {
+              "number": 2,
+              "title": "Understand Questions",
+              "body": "Read and understand the questions. Think about the information you will need to find"
+            },
+            {
+              "number": 3,
+              "title": "Identify Keywords",
+              "body": "Underline any keywords in the questions and think about synonyms or paraphrases for these keywords"
+            },
+            {
+              "number": 4,
+              "title": "Locate Information",
+              "body": "Find the part of the text the question relates to (answers appear in the same order as the text)"
+            },
+            {
+              "number": 5,
+              "title": "Read Carefully",
+              "body": "Read the section containing the answer carefully and identify the exact answer"
+            }
+          ],
+          "page": 118
+        },
+        {
+          "type": "narrative",
+          "paragraphs": [
+            "Remember: The answers do not need to be grammatically correct, just short answers. Don't give your opinion, just give the answer that is in the text."
+          ],
+          "page": 118
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "WORKED EXAMPLE",
+          "title": "Let's solve one together",
+          "intro": "Short answer = use words from the passage, exact wording, within the word limit.",
+          "stimulus": {
+            "label": "Passage extract",
+            "text": "In 1928, Alexander Fleming returned from holiday to find that one of his bacterial cultures had been contaminated by a mould. Instead of throwing the dish away, he noticed that the mould — later identified as Penicillium notatum — had killed the bacteria around it. This accidental observation laid the foundation for modern antibiotics, though it took more than a decade before penicillin could be mass-produced for medical use."
+          },
+          "question": {
+            "label": "Answer the question with NO MORE THAN THREE WORDS from the passage",
+            "stem": "What contaminated Fleming's bacterial culture?"
+          },
+          "thinking_steps": [
+            "Check the word limit: NO MORE THAN THREE WORDS — even four words = 0 marks.",
+            "Identify the question's keywords: 'contaminated' + 'bacterial culture' + 'Fleming'.",
+            "Scan for synonyms in the passage: find 'contaminated' literally — second sentence: '…had been contaminated by a mould.'",
+            "Extract the exact answer: the thing that contaminated it was 'a mould'. Within 3 words: 'a mould' (2 words) ✓ or 'Penicillium notatum' (2 words) — both correct, but the first sentence directly answers it.",
+            "Copy the exact words from the passage. Don't paraphrase. Don't add your own words."
+          ],
+          "answer": {
+            "value": "a mould",
+            "explanation": "Direct answer from the second sentence. 'Penicillium notatum' would also be accepted (specific name from later in the passage), but 'a mould' is the simplest exact-wording answer. Both are within the 3-word limit."
+          },
+          "page": 118
+        },
+        {
+          "type": "quiz",
+          "eyebrow": "CHECK YOURSELF",
+          "title": "Quick self-test",
+          "intro": "Three short questions before practice.",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "The instruction says 'NO MORE THAN THREE WORDS AND/OR A NUMBER'. Which answer is acceptable?",
+              "options": [
+                { "letter": "A", "text": "approximately one hundred and fifty years" },
+                { "letter": "B", "text": "150 years ago" },
+                { "letter": "C", "text": "150" },
+                { "letter": "D", "text": "Both B and C" }
+              ],
+              "answer": "D",
+              "explanation": "'150 years ago' = 3 words including a number (counts as one). '150' alone = 1 number. Both fit. Option A = 6 words → 0 marks even if correct meaning."
+            },
+            {
+              "kind": "mcq",
+              "stem": "In short answer questions, the answers appear in the passage…",
+              "options": [
+                { "letter": "A", "text": "in random order" },
+                { "letter": "B", "text": "in the same order as the questions" },
+                { "letter": "C", "text": "always in the first paragraph" }
+              ],
+              "answer": "B",
+              "explanation": "Answers appear in the SAME order as the questions — so once you find Q3's answer, Q4 will be after it, not before."
+            },
+            {
+              "kind": "mcq",
+              "stem": "Should you ever rephrase the answer in your own words?",
+              "options": [
+                { "letter": "A", "text": "Yes — paraphrase shows good English." },
+                { "letter": "B", "text": "No — copy the exact wording from the passage." }
+              ],
+              "answer": "B",
+              "explanation": "Short answers must come from the passage. Don't give opinions or rephrase. Copy the exact words."
+            }
+          ],
+          "page": 118
+        },
+        {
+          "type": "common_mistakes",
+          "eyebrow": "WATCH OUT",
+          "title": "Three traps that cost most students marks",
+          "intro": "These map directly to the PDF's 'Common Problems' list.",
+          "pairs": [
+            {
+              "wrong": "Writing a 4-word answer because it 'sounds more complete'.",
+              "right": "Stay within the limit. 'NO MORE THAN THREE WORDS' = 3 max. One extra word = zero marks, even if the meaning is right."
+            },
+            {
+              "wrong": "Reading every sentence trying to fully understand the passage.",
+              "right": "Skim for overall meaning, then SCAN for keyword synonyms. You don't need to comprehend everything — just find the answer's location."
+            },
+            {
+              "wrong": "Panicking when you hit an unknown word and freezing up.",
+              "right": "Skip it. Move on. The answer often doesn't depend on that exact word — and you can come back later if time permits."
+            }
+          ],
+          "page": 118
+        }
+      ]
+    },
+    {
+      "lesson_id": "multiple_choice",
+      "lesson_number": 2,
+      "title": "Question Type #2: Multiple Choice Questions",
+      "source_pages": [
+        119,
+        120
+      ],
+      "practice_link": {
+        "label": "Practice multiple choice",
+        "href": "/question-bank/reading/practice?type=multiple_choice"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #2: Multiple Choice Questions",
+          "paragraphs": [
+            "On both the academic and general IELTS reading papers you are likely to be asked multiple choice questions (MCQs). Your job is to simply choose the correct answer from a list of possible choices."
+          ],
+          "page": 119
+        },
+        {
+          "type": "comparison",
+          "title": "Skills & Common Problems",
+          "columns": [
+            {
+              "label": "Skills Tested",
+              "tone": "info",
+              "items": [
+                "Understanding the main ideas contained in a text",
+                "Ability to scan for specific information",
+                "Reading in detail for understanding",
+                "Differentiating between two or more possible answers"
+              ]
+            },
+            {
+              "label": "Common Problems",
+              "tone": "warning",
+              "items": [
+                "Not answering the questions at all",
+                "Reading the text before looking at the questions",
+                "Being tricked by 'distractors', such as qualifying words",
+                "Not reading the questions or text carefully"
+              ]
+            }
+          ],
+          "page": 119
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Multiple Choice Questions: Strategy",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Read Questions First",
+              "body": "Read the questions carefully before looking at the text"
+            },
+            {
+              "number": 2,
+              "title": "Skim the Text",
+              "body": "Quickly skim the text to get the general meaning"
+            },
+            {
+              "number": 3,
+              "title": "Identify Keywords",
+              "body": "Underline keywords in both questions and answer choices, thinking about possible synonyms"
+            },
+            {
+              "number": 4,
+              "title": "Predict Answers",
+              "body": "Try to predict the correct answer before finding it in the text"
+            },
+            {
+              "number": 5,
+              "title": "Locate and Analyze",
+              "body": "Find the relevant section of text and read it carefully, considering how each option might be wrong"
+            }
+          ],
+          "page": 120
+        },
+        {
+          "type": "narrative",
+          "paragraphs": [
+            "Always write an answer. It is better to guess than not answer at all. Try to narrow the choices down to 2 or 3 out of the 4 possible answers to increase your odds."
+          ],
+          "page": 120
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "Worked Example",
+          "title": "Eliminating distractors step by step",
+          "intro": "Watch how predicting the answer and ruling out distractors leads to the right choice — even when two options look plausible.",
+          "stimulus": {
+            "label": "Passage",
+            "text": "The decline of bee populations in Europe has been studied extensively over the past two decades. While many researchers initially blamed pesticides as the sole cause, recent evidence suggests that habitat loss and climate change are equally, if not more, responsible. A 2019 meta-analysis concluded that no single factor can fully explain the trend, and that conservation efforts must address all three drivers simultaneously."
+          },
+          "question": {
+            "label": "Question",
+            "stem": "According to the passage, what does the 2019 meta-analysis suggest about the decline of bee populations?",
+            "options": [
+              { "letter": "A", "text": "Pesticides are the primary cause." },
+              { "letter": "B", "text": "Climate change is more important than habitat loss." },
+              { "letter": "C", "text": "The decline cannot be blamed on one factor alone." },
+              { "letter": "D", "text": "Conservation efforts have so far been unsuccessful." }
+            ]
+          },
+          "thinking_steps": [
+            "Underline keywords in the question: 2019 meta-analysis, suggest, decline.",
+            "Locate the relevant sentence: 'A 2019 meta-analysis concluded that no single factor can fully explain the trend.'",
+            "Eliminate A — the passage says researchers 'initially' blamed pesticides, but the meta-analysis rejects a single cause.",
+            "Eliminate B — the passage says habitat loss and climate change are 'equally' responsible, not that one outweighs the other.",
+            "Eliminate D — the text never claims conservation efforts have failed, only that they must address all drivers.",
+            "C paraphrases 'no single factor can fully explain' → correct."
+          ],
+          "answer": {
+            "value": "C",
+            "explanation": "C is the closest paraphrase of the meta-analysis claim. A, B, and D each contain qualifying words ('primary', 'more important', 'unsuccessful') that the passage does not support — these are the classic distractors MCQs use."
+          },
+          "page": 120
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: MCQ Strategy",
+          "intro": "Three quick questions to lock in the steps.",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "Why should you read the questions before reading the passage?",
+              "options": [
+                { "letter": "A", "text": "To save time by skipping the passage entirely." },
+                { "letter": "B", "text": "To know what information you are looking for as you read." },
+                { "letter": "C", "text": "To memorise the questions word for word." }
+              ],
+              "answer": "B",
+              "explanation": "Reading questions first focuses your scanning so you find relevant sections faster. You still need to read the passage — you do not skip it."
+            },
+            {
+              "kind": "mcq",
+              "stem": "Which of these words inside an MCQ option is most likely to be a distractor signal?",
+              "options": [
+                { "letter": "A", "text": "Often" },
+                { "letter": "B", "text": "Always" },
+                { "letter": "C", "text": "Sometimes" }
+              ],
+              "answer": "B",
+              "explanation": "Absolute qualifiers like 'always', 'never', 'only', 'all' are classic MCQ distractors — academic passages rarely make absolute claims, so options containing them are usually wrong."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "If you have narrowed your MCQ choices down to 2 plausible options and time is running out, you should _______ rather than leave the answer blank.",
+              "answer": "guess",
+              "accept": ["guess", "still guess", "make a guess"],
+              "explanation": "There is no penalty for wrong answers in IELTS Reading — leaving a blank guarantees zero, while a 50/50 guess gives you a real chance."
+            }
+          ],
+          "page": 120
+        },
+        {
+          "type": "common_mistakes",
+          "title": "Common Mistakes vs Smart Moves",
+          "intro": "What candidates do wrong on MCQs — and what to do instead.",
+          "pairs": [
+            {
+              "wrong": "Reading the whole passage carefully before looking at the questions.",
+              "right": "Read the questions first, then skim the passage with the questions in mind so you scan for the right information."
+            },
+            {
+              "wrong": "Picking the option that contains words copied directly from the passage.",
+              "right": "Picking the option that paraphrases the meaning — IELTS deliberately uses the passage's exact words inside wrong options as a trap."
+            },
+            {
+              "wrong": "Choosing an answer because it 'sounds true' based on your own knowledge.",
+              "right": "Choosing the answer that is supported by the passage only — your background knowledge is irrelevant in IELTS Reading."
+            },
+            {
+              "wrong": "Leaving an MCQ blank when you cannot decide between two options.",
+              "right": "Eliminating clearly wrong options first, then guessing from the remaining 2 — there is no penalty for wrong answers."
+            }
+          ],
+          "page": 120
+        }
+      ]
+    },
+    {
+      "lesson_id": "summary_completion",
+      "lesson_number": 3,
+      "title": "Question Type #3: Summary Completion",
+      "source_pages": [
+        121,
+        122
+      ],
+      "practice_link": {
+        "label": "Practice summary completion",
+        "href": "/question-bank/reading/practice?type=summary_completion"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #3: Summary Completion",
+          "paragraphs": [
+            "You will be given a summary of information from the text and there will be some gaps in that summary. You will either be given a list of words to fill the gaps with, or asked to find the answers in the reading text. Your job is to insert some of the words from the list into the gaps, or, if asked, to fill the gaps with words from the text. There will be more words in the list than required to fill the gaps."
+          ],
+          "page": 121
+        },
+        {
+          "type": "comparison",
+          "title": "Skills & Common Problems",
+          "columns": [
+            {
+              "label": "Skills Tested",
+              "tone": "info",
+              "items": [
+                "Scanning for the correct information in the text",
+                "Being able to identify synonyms and paraphrases",
+                "Understanding the general meaning of the summary"
+              ]
+            },
+            {
+              "label": "Common Problems",
+              "tone": "warning",
+              "items": [
+                "Not being aware of synonyms and paraphrasing",
+                "Trying to fully understand every part of the text",
+                "Ignoring correct use of grammar",
+                "Copying words from the text instead of using synonyms or paraphrase"
+              ]
+            }
+          ],
+          "page": 121
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Summary Completion: Strategy",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Check Instructions",
+              "body": "Note how many words you can write and if you should get the words from the reading text or a list"
+            },
+            {
+              "number": 2,
+              "title": "Understand the Summary",
+              "body": "Skim the summary to grasp the overall meaning before attempting to fill gaps"
+            },
+            {
+              "number": 3,
+              "title": "Predict Answers",
+              "body": "Try to predict what might fit in each gap, considering word type (noun, verb, adjective)"
+            },
+            {
+              "number": 4,
+              "title": "Locate Information",
+              "body": "Find which part of the reading text the summary relates to by scanning for synonyms"
+            },
+            {
+              "number": 5,
+              "title": "Check Grammar",
+              "body": "Ensure your chosen word makes the sentence grammatically correct"
+            }
+          ],
+          "page": 122
+        },
+        {
+          "type": "narrative",
+          "paragraphs": [
+            "If you have a list of words, try to eliminate those that can't be correct based on meaning or grammar. This narrows down your options."
+          ],
+          "page": 122
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "WORKED EXAMPLE",
+          "title": "Let's solve one together",
+          "intro": "A short passage extract followed by a summary with one gap — we'll walk through it the way an examiner-trained reader does.",
+          "stimulus": {
+            "label": "Passage extract",
+            "text": "Recent research into urban beekeeping has revealed surprising findings. While many assumed that city environments would be hostile to bees, the variety of flowering plants in parks and private gardens actually provides a more diverse food source than the monoculture fields of rural agricultural areas. Honey produced by city hives often shows greater complexity of flavour as a direct result of this botanical diversity."
+          },
+          "question": {
+            "label": "Complete the summary using ONE word from the passage",
+            "stem": "Contrary to expectations, urban bees benefit from the ____________ of flowering plants found in city gardens, which gives their honey a richer flavour than rural honey."
+          },
+          "thinking_steps": [
+            "Read the gap-sentence in context: the summary paraphrases the passage. The gap describes a quality of city flowering plants that gives bees an advantage.",
+            "Predict the word type: after 'the' and before 'of flowering plants' → it's a **singular noun**.",
+            "Scan for the synonym in the passage: the passage uses 'variety', 'diverse food source', and 'botanical diversity'. The summary's 'richer flavour' paraphrases 'greater complexity of flavour' — so we're in the right area.",
+            "Match meaning + grammar: singular noun meaning 'variety' = 'diversity'. The passage uses the **exact word 'diversity'** in 'botanical diversity'.",
+            "Verify: the question said 'ONE word from the passage'. 'diversity' appears in the passage AND fits the singular-noun slot AND matches the meaning."
+          ],
+          "answer": {
+            "value": "diversity",
+            "explanation": "Direct match — the passage explicitly uses 'botanical diversity'. 'Variety' would be a paraphrase, but the instruction said 'ONE word from the passage', so we take the exact passage word that fits the noun slot."
+          },
+          "page": 122
+        },
+        {
+          "type": "quiz",
+          "eyebrow": "CHECK YOURSELF",
+          "title": "Quick self-test",
+          "intro": "Three short questions before you head to practice. No marks — just to lock the strategy in.",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "The instructions say 'NO MORE THAN TWO WORDS'. Your best candidate is 'a wide range'. What do you write?",
+              "options": [
+                { "letter": "A", "text": "a wide range" },
+                { "letter": "B", "text": "wide range" },
+                { "letter": "C", "text": "range" },
+                { "letter": "D", "text": "Whichever fits the gap best, ignore the limit" }
+              ],
+              "answer": "B",
+              "explanation": "'a' counts as a word. 'wide range' = 2 words and still expresses the meaning. 'range' alone may lose the qualifier. NEVER exceed the word limit — even one extra word = zero marks."
+            },
+            {
+              "kind": "mcq",
+              "stem": "When the summary uses paraphrased language like 'main concern was...' and the passage uses 'biggest worry was...', what should your gap-fill word usually be?",
+              "options": [
+                { "letter": "A", "text": "Always copy the EXACT word from the passage." },
+                { "letter": "B", "text": "The exact passage word — but only if it grammatically fits the summary sentence." },
+                { "letter": "C", "text": "A synonym you make up yourself." },
+                { "letter": "D", "text": "Skip the question if the wording differs." }
+              ],
+              "answer": "B",
+              "explanation": "If the instruction says 'words from the passage', you must take a passage word — but it must still fit the summary's grammar. Never invent your own synonym, and never skip."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "What is the FIRST thing you should always check before attempting a summary completion task?",
+              "answer": "the instructions",
+              "accept": ["instructions", "the instructions", "instruction", "the instruction", "word limit", "the word limit"],
+              "explanation": "Check the word limit + the source (list vs. passage) first. Strategy step 1 in the PDF: 'Note how many words you can write and if you should get the words from the reading text or a list.'"
+            }
+          ],
+          "page": 122
+        },
+        {
+          "type": "common_mistakes",
+          "eyebrow": "WATCH OUT",
+          "title": "Three traps that cost most students marks",
+          "intro": "These are the errors I see week after week in mock-test reviews — directly mapped to the PDF's 'Common Problems' list.",
+          "pairs": [
+            {
+              "wrong": "Looking for the EXACT same word in the passage that appears in the summary.",
+              "right": "The summary almost always paraphrases. Scan for synonyms ('biggest worry' → 'main concern'), not for matching letters."
+            },
+            {
+              "wrong": "Trying to fully understand every paragraph before answering.",
+              "right": "Locate the relevant section by scanning for keywords/synonyms, then read just that area carefully. You don't need to comprehend the whole passage."
+            },
+            {
+              "wrong": "Writing a word that fits the meaning but breaks the grammar (e.g., a verb where a noun is needed).",
+              "right": "Predict the word TYPE before scanning. After 'a/the/an' → noun. After 'to' → verb. After 'is/was very' → adjective. Wrong type = wrong answer, even with right meaning."
+            }
+          ],
+          "page": 122
+        }
+      ]
+    },
+    {
+      "lesson_id": "matching_sentences",
+      "lesson_number": 4,
+      "title": "Question Type #4: Matching Sentences",
+      "source_pages": [
+        123,
+        124
+      ],
+      "practice_link": {
+        "label": "Practice sentence completion",
+        "href": "/question-bank/reading/practice?type=sentence_completion"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #4: Matching Sentences",
+          "paragraphs": [
+            "You will be given a list of incomplete sentences with no endings and another list with possible endings. Your job is to match the incomplete sentences with the correct ending based on the reading text. This is not one of the more common questions, but should be studied all the same."
+          ],
+          "page": 123
+        },
+        {
+          "type": "comparison",
+          "title": "Skills & Common Problems",
+          "columns": [
+            {
+              "label": "Skills Tested",
+              "tone": "info",
+              "items": [
+                "Prediction",
+                "Being able to identify synonyms and paraphrases",
+                "Understanding how the ideas in the sentences are connected to the main ideas in the reading text"
+              ]
+            },
+            {
+              "label": "Common Problems",
+              "tone": "warning",
+              "items": [
+                "Not being aware of synonyms and paraphrasing",
+                "Not reading or fully understanding the correct parts of the reading text",
+                "Looking for the exact words in the reading text, rather than synonyms",
+                "Trying to complete the sentences using logic or grammar, rather than using the reading text"
+              ]
+            }
+          ],
+          "page": 123
+        },
+        {
+          "type": "callout",
+          "tone": "warning",
+          "eyebrow": "THE TRAP",
+          "title": "Two endings will sound 'almost right'. Only one matches the passage.",
+          "body": "Matching Sentences is built around **paraphrase traps**. The wrong endings are designed to:\n\n• Match your **general knowledge** instead of the passage (e.g., 'Curie won the first Nobel' — true-ish in real life, not stated in the text).\n• Use the **same words** as the passage but twist the meaning (e.g., passage says 'risks were not understood' → wrong option says 'her health was harmed').\n• Sound **grammatically perfect** with the beginning (the test isn't grammar — it's comprehension).\n\n**Rule:** If you can't point to the exact line in the passage that proves your answer, it's wrong.",
+          "page": 124
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Matching Sentences: Strategy",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Read Instructions",
+              "body": "Understand exactly what you need to do"
+            },
+            {
+              "number": 2,
+              "title": "Focus on Incomplete Sentences",
+              "body": "Read these first without looking at the endings, highlighting keywords (especially names, places, dates)"
+            },
+            {
+              "number": 3,
+              "title": "Predict Endings",
+              "body": "Try to anticipate what might complete each sentence before looking at the options"
+            },
+            {
+              "number": 4,
+              "title": "Eliminate Unlikely Matches",
+              "body": "Rule out endings that definitely cannot match based on grammar, collocations, and meaning"
+            },
+            {
+              "number": 5,
+              "title": "Locate and Verify",
+              "body": "Find the relevant text section for each incomplete sentence and confirm the correct match"
+            }
+          ],
+          "page": 124
+        },
+        {
+          "type": "narrative",
+          "paragraphs": [
+            "Remember: The answers are in the same order in the text as they are in the questions. Locate question one first, and then you know where to begin."
+          ],
+          "page": 124
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "Worked Example",
+          "title": "Predict, then match",
+          "intro": "Predicting how a sentence should logically end makes the wrong endings disappear quickly.",
+          "stimulus": {
+            "label": "Passage extract",
+            "text": "Maria Curie's discovery of radium in 1898 transformed both physics and medicine. Although the long-term health risks of radioactive materials were not understood at the time, her work paved the way for cancer therapies that are still in use today. She was awarded two Nobel Prizes — the only person ever to win in two different scientific fields."
+          },
+          "question": {
+            "label": "Match the sentence beginning with the correct ending",
+            "stem": "Maria Curie's discovery of radium…",
+            "options": [
+              { "letter": "A", "text": "led to her becoming the first person to win a Nobel Prize." },
+              { "letter": "B", "text": "had immediate consequences for her own health." },
+              { "letter": "C", "text": "made later cancer treatments possible." },
+              { "letter": "D", "text": "was rejected by the scientific community at the time." }
+            ]
+          },
+          "thinking_steps": [
+            "Underline keywords: 'Curie', 'discovery of radium'.",
+            "Predict an ending: the discovery should connect to 'something that came after it' — medicine, prizes, or risks.",
+            "Eliminate A — passage says she won two Nobels, never claims she was the first.",
+            "Eliminate B — passage says risks were 'not understood at the time', not that her own health was immediately affected.",
+            "Eliminate D — there is nothing about rejection in the passage.",
+            "C paraphrases 'paved the way for cancer therapies' → correct."
+          ],
+          "answer": {
+            "value": "C",
+            "explanation": "The match must come from the passage, not from your background knowledge. C is the only ending that paraphrases information actually stated in the text."
+          },
+          "page": 124
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Matching Sentences",
+          "intro": "Three quick questions on the strategy.",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "If you cannot find the exact words from a sentence beginning in the passage, what should you do?",
+              "options": [
+                { "letter": "A", "text": "Skip the question." },
+                { "letter": "B", "text": "Look for synonyms and paraphrases of the keywords." },
+                { "letter": "C", "text": "Choose any ending that sounds grammatically correct." }
+              ],
+              "answer": "B",
+              "explanation": "IELTS rarely uses the exact same wording in the passage and the question — synonyms and paraphrasing are the norm, so train your eye to spot them."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Sentence-matching answers appear in the passage in the same _______ as the questions.",
+              "answer": "order",
+              "accept": ["order", "sequence", "the same order"],
+              "explanation": "Once you locate the answer to question 1, the answer to question 2 will be after it — never before. Use this to narrow your search."
+            },
+            {
+              "kind": "mcq",
+              "stem": "Which is the WORST way to choose an ending?",
+              "options": [
+                { "letter": "A", "text": "Picking what 'sounds right' grammatically without checking the passage." },
+                { "letter": "B", "text": "Verifying the ending against a specific line in the passage." },
+                { "letter": "C", "text": "Eliminating endings that contradict the text." }
+              ],
+              "answer": "A",
+              "explanation": "Many endings will be grammatically possible but factually wrong — the question tests reading comprehension, not grammar."
+            }
+          ],
+          "page": 124
+        },
+        {
+          "type": "common_mistakes",
+          "title": "Common Mistakes vs Smart Moves",
+          "pairs": [
+            {
+              "wrong": "Trying to complete the sentence using logic or your own knowledge.",
+              "right": "Completing the sentence using only what the passage actually says."
+            },
+            {
+              "wrong": "Searching for the exact words from the question in the passage.",
+              "right": "Searching for synonyms and paraphrases — IELTS deliberately rewords the ideas."
+            },
+            {
+              "wrong": "Reading the endings first and trying to fit them to the beginnings.",
+              "right": "Reading the beginnings first, predicting an ending, then comparing your prediction to the options."
+            }
+          ],
+          "page": 124
+        }
+      ]
+    },
+    {
+      "lesson_id": "sentence_completion",
+      "lesson_number": 5,
+      "title": "Question Type #5: Sentence Completion",
+      "source_pages": [
+        125,
+        126
+      ],
+      "practice_link": {
+        "label": "Practice sentence completion",
+        "href": "/question-bank/reading/practice?type=sentence_completion"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #5: Sentence Completion",
+          "paragraphs": [
+            "You will be given a number of sentences with gaps in them, and asked to complete the sentences with words from the reading text. These questions are as much vocabulary tests as they are reading tests. They require you to be aware of paraphrasing (using different words to repeat a sentence so that it has the same meaning) and synonyms (words with the same or very similar meanings)."
+          ],
+          "page": 125
+        },
+        {
+          "type": "comparison",
+          "title": "Skills & Common Problems",
+          "columns": [
+            {
+              "label": "Skills Tested",
+              "tone": "info",
+              "items": [
+                "Understanding what synonyms and paraphrasing are",
+                "Being able to identify synonyms and paraphrases",
+                "Scanning for the correct answer"
+              ]
+            },
+            {
+              "label": "Common Problems",
+              "tone": "warning",
+              "items": [
+                "Not being aware of synonyms and paraphrasing",
+                "Trying to match words in the question with the exact same words in the reading text",
+                "Not reading the instructions properly",
+                "Reading the text before the question"
+              ]
+            }
+          ],
+          "page": 125
+        },
+        {
+          "type": "callout",
+          "tone": "info",
+          "eyebrow": "DO THIS BEFORE YOU READ THE PASSAGE",
+          "title": "Predict the *type* of word the gap needs.",
+          "body": "Before scanning the text, ask: **what KIND of word fits this gap?**\n\n• 'The reef is being threatened by rising _______.' → must be a **noun** (something that can rise: temperature, sea level, pollution).\n• 'The team _______ the experiment in 2020.' → must be a **past-tense verb** (conducted, completed, abandoned).\n• 'The result was a _______ change in policy.' → must be an **adjective** (significant, dramatic, sudden).\n\nWhen you scan the passage, you'll **skip** any candidate word that's the wrong part of speech — even if the meaning is close. This single habit eliminates half the wrong answers.",
+          "page": 126
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Sentence Completion: Strategy",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Check Word Limit",
+              "body": "Note how many words you can write and if you must use exact words from the text"
+            },
+            {
+              "number": 2,
+              "title": "Analyze Sentences",
+              "body": "Read the incomplete sentences, predict possible answers, and identify keywords"
+            },
+            {
+              "number": 3,
+              "title": "Scan for Location",
+              "body": "Quickly locate where the information appears in the text (answers appear in the same order as questions)"
+            },
+            {
+              "number": 4,
+              "title": "Review Question",
+              "body": "Read the incomplete sentence again to ensure you understand what's needed"
+            },
+            {
+              "number": 5,
+              "title": "Read Carefully",
+              "body": "Study the relevant text section to find the exact answer and check your spelling"
+            }
+          ],
+          "page": 126
+        },
+        {
+          "type": "narrative",
+          "paragraphs": [
+            "Remember that your answer should be grammatically correct. If it says \"no more than two words,\" you can write one or two words. If it says \"no more than three,\" you can write one, two, or three words."
+          ],
+          "page": 126
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "Worked Example",
+          "title": "Use grammar + meaning to find the gap word",
+          "intro": "The missing word must fit the grammar of the sentence AND the meaning of the passage. Use both filters at once.",
+          "stimulus": {
+            "label": "Passage extract",
+            "text": "The Great Barrier Reef stretches for over 2,300 kilometres along the coast of Queensland, Australia. It is the largest living structure on Earth and is home to thousands of marine species. Rising sea temperatures, however, have caused widespread coral bleaching, threatening the long-term survival of the reef."
+          },
+          "question": {
+            "label": "Complete the sentence using NO MORE THAN TWO WORDS from the passage",
+            "stem": "The reef is being threatened by rising _______."
+          },
+          "thinking_steps": [
+            "Note the instruction: NO MORE THAN TWO WORDS — answer must be 1 or 2 words from the passage.",
+            "Predict the answer based on the gap: a noun describing what is rising. Likely 'temperatures' or 'sea levels'.",
+            "Locate the relevant part: 'Rising sea temperatures, however, have caused…'",
+            "Match the gap: 'rising _______' → 'sea temperatures' (2 words, taken directly from text).",
+            "Check spelling and grammar: 'rising sea temperatures' is grammatically correct."
+          ],
+          "answer": {
+            "value": "sea temperatures",
+            "explanation": "Two words, copied exactly from the passage, grammatically agreeing with 'rising'. 'Temperatures' alone would also work, but 'sea temperatures' is more specific and equally allowed under the word limit."
+          },
+          "page": 126
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Sentence Completion",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "The instructions say 'NO MORE THAN THREE WORDS'. The passage uses the phrase 'a small wooden boat'. Which of these answers is INVALID?",
+              "options": [
+                { "letter": "A", "text": "wooden boat" },
+                { "letter": "B", "text": "small wooden boat" },
+                { "letter": "C", "text": "a small wooden boat" }
+              ],
+              "answer": "C",
+              "explanation": "C has 4 words including 'a'. Articles (a, an, the) count as words in IELTS — three words means three words total."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Sentence completion answers must be _______ correct, not just from the passage.",
+              "answer": "grammatically",
+              "accept": ["grammatically", "grammatical"],
+              "explanation": "If a word from the passage doesn't fit the sentence grammar (wrong tense, wrong form), it is wrong — even if the meaning matches."
+            },
+            {
+              "kind": "mcq",
+              "stem": "What is the first thing you should check before answering?",
+              "options": [
+                { "letter": "A", "text": "Whether the passage is academic or general." },
+                { "letter": "B", "text": "The word limit in the instructions." },
+                { "letter": "C", "text": "How many questions there are in total." }
+              ],
+              "answer": "B",
+              "explanation": "Word limit is the number-one disqualifier — exceeding it makes an otherwise correct answer wrong."
+            }
+          ],
+          "page": 126
+        },
+        {
+          "type": "common_mistakes",
+          "title": "Common Mistakes vs Smart Moves",
+          "pairs": [
+            {
+              "wrong": "Writing more words than the limit allows.",
+              "right": "Counting your words including articles (a, an, the) and hyphenated forms — staying within the limit no matter how tempting it is to add detail."
+            },
+            {
+              "wrong": "Paraphrasing the answer in your own words.",
+              "right": "Copying the words exactly from the passage — sentence completion does not allow you to change them."
+            },
+            {
+              "wrong": "Picking a word that fits the meaning but is grammatically wrong (e.g. 'achieve' where 'achievement' is needed).",
+              "right": "Reading the gap with your candidate word inserted — if the grammar feels off, the word is wrong."
+            },
+            {
+              "wrong": "Misspelling the answer.",
+              "right": "Copying the word letter by letter from the passage — misspellings are marked wrong even when the right word is identified."
+            }
+          ],
+          "page": 126
+        }
+      ]
+    },
+    {
+      "lesson_id": "true_false_not_given",
+      "lesson_number": 6,
+      "title": "Question Type #6: True/False/Not Given",
+      "source_pages": [
+        127,
+        129
+      ],
+      "practice_link": {
+        "label": "Practice true/false/not given",
+        "href": "/question-bank/reading/practice?type=true_false_ng"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #6: True/False/Not Given",
+          "paragraphs": [
+            "'True, False, Not Given' questions require you to identify if information in a text is true, not true or not given. You will be given a number of factual statements and you have to check in the text if they are true or not. This is probably the most difficult question type on the reading paper."
+          ],
+          "page": 127
+        },
+        {
+          "type": "callout",
+          "tone": "info",
+          "eyebrow": "ANSWER ORDER (DIFFERENT FROM MATCHING)",
+          "title": "T/F/NG answers appear in the same order as the text.",
+          "body": "Statement 1 is answered before Statement 2 is answered before Statement 3 — always. Use this to narrow your search: if you found Statement 2's answer in paragraph 4, Statement 3's answer is in paragraph 4 or later. **Contrast with Matching Headings (L8) and Matching Information (L11):** *those* do **NOT** follow text order — answers can come from any paragraph in any sequence. Don't apply the T/F/NG \"in-order\" trick to matching tasks.",
+          "page": 127
+        },
+        {
+          "type": "factboard",
+          "title": "What each answer means",
+          "facts": [
+            {
+              "label": "TRUE",
+              "value": "If the text agrees with or confirms the information in the statement"
+            },
+            {
+              "label": "FALSE",
+              "value": "If the text contradicts or is the opposite to the information in the statement"
+            },
+            {
+              "label": "NOT GIVEN",
+              "value": "If there is no information or it is impossible to know from the text"
+            }
+          ],
+          "page": 127
+        },
+        {
+          "type": "icon_grid",
+          "title": "True/False/Not Given: Common Problems",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "AlertCircle",
+              "title": "Misunderstanding \"Not Given\"",
+              "body": "Many students don't understand that \"Not Given\" means the information simply isn't in the text - not that it's difficult to find."
+            },
+            {
+              "icon": "Clock",
+              "title": "Wasting Time",
+              "body": "Spending too much time making sure that something is truly \"Not Given\" instead of moving on."
+            },
+            {
+              "icon": "Eye",
+              "title": "Missing Statement Meaning",
+              "body": "Failing to understand exactly what each statement means, focusing on keywords instead of overall meaning."
+            },
+            {
+              "icon": "Brain",
+              "title": "Using Outside Knowledge",
+              "body": "Bringing in information you know about the topic rather than basing answers solely on the text."
+            }
+          ],
+          "page": 128
+        },
+        {
+          "type": "strategy_steps",
+          "title": "True/False/Not Given: Strategy",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Check Question Type",
+              "body": "Make sure you know if it's TRUE/FALSE/NOT GIVEN (facts) or YES/NO/NOT GIVEN (opinions)"
+            },
+            {
+              "number": 2,
+              "title": "Understand Statements",
+              "body": "Read each statement carefully, focusing on the whole meaning rather than just keywords"
+            },
+            {
+              "number": 3,
+              "title": "Watch for Qualifiers",
+              "body": "Pay special attention to qualifying words like \"some,\" \"all,\" \"mainly,\" \"often,\" \"always\""
+            },
+            {
+              "number": 4,
+              "title": "Locate Information",
+              "body": "Find the relevant section of text (answers appear in the same order as the text)"
+            },
+            {
+              "number": 5,
+              "title": "Compare Carefully",
+              "body": "Read the text section in detail to determine if it confirms, contradicts, or doesn't mention the statement"
+            }
+          ],
+          "page": 129
+        },
+        {
+          "type": "narrative",
+          "paragraphs": [
+            "If you can't find the information after a reasonable search, mark it as \"Not Given\" and move on. Don't waste time looking for something that isn't there."
+          ],
+          "page": 129
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "Worked Example",
+          "title": "True, False, or Not Given?",
+          "intro": "The same passage can produce three different answers depending on what each statement actually claims.",
+          "stimulus": {
+            "label": "Passage",
+            "text": "The first commercial photograph was taken in 1839 in Paris. Early cameras were extremely heavy and required exposure times of up to fifteen minutes, which made portrait photography very difficult. By 1860, technology had advanced enough that exposure times had fallen to a few seconds, and photography studios opened in most major European cities."
+          },
+          "question": {
+            "label": "Decide TRUE, FALSE, or NOT GIVEN for each statement",
+            "items": [
+              { "n": 1, "stem": "The first commercial photograph was taken in France." },
+              { "n": 2, "stem": "Early portrait photography was easy because exposure times were short." },
+              { "n": 3, "stem": "Photography studios in 1860 charged high prices for portraits." }
+            ]
+          },
+          "thinking_steps": [
+            "Statement 1: 'The first commercial photograph was taken in France.' Passage says 'in 1839 in Paris' — Paris is in France. The text confirms it. → TRUE",
+            "Statement 2: 'Early portrait photography was easy because exposure times were short.' Passage says exposure times were 'up to fifteen minutes', which made portraits 'very difficult'. The text contradicts the statement. → FALSE",
+            "Statement 3: 'Photography studios in 1860 charged high prices for portraits.' Passage mentions studios opened by 1860 but says nothing about prices. → NOT GIVEN"
+          ],
+          "answer": {
+            "value": "1=TRUE, 2=FALSE, 3=NOT GIVEN",
+            "explanation": "TRUE = passage confirms it. FALSE = passage contradicts it. NOT GIVEN = passage simply doesn't mention it. Don't use outside knowledge — only what is in the text."
+          },
+          "page": 129
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: TFNG",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "The passage says 'Most students benefit from group study.' The statement is: 'All students benefit from group study.' What is the answer?",
+              "options": [
+                { "letter": "A", "text": "TRUE" },
+                { "letter": "B", "text": "FALSE" },
+                { "letter": "C", "text": "NOT GIVEN" }
+              ],
+              "answer": "B",
+              "explanation": "'Most' and 'all' are not the same. The passage limits the claim to 'most', so the statement saying 'all' contradicts it → FALSE. Watch qualifiers carefully."
+            },
+            {
+              "kind": "mcq",
+              "stem": "You cannot find any information about a statement after a thorough search. What should you do?",
+              "options": [
+                { "letter": "A", "text": "Mark it FALSE since you cannot prove it." },
+                { "letter": "B", "text": "Mark it NOT GIVEN and move on." },
+                { "letter": "C", "text": "Skip the question entirely." }
+              ],
+              "answer": "B",
+              "explanation": "NOT GIVEN means the information simply is not in the text. Never leave a TFNG blank — guess if you must, but mark something."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "TFNG tests _______ (statements of fact); YNNG tests opinions and the writer's claims.",
+              "answer": "facts",
+              "accept": ["facts", "factual", "factual statements"],
+              "explanation": "Knowing which version you're answering matters — TRUE/FALSE/NOT GIVEN is for objective facts in the text, YES/NO/NOT GIVEN is for the writer's opinions."
+            }
+          ],
+          "page": 129
+        },
+        {
+          "type": "common_mistakes",
+          "title": "Common Mistakes vs Smart Moves",
+          "pairs": [
+            {
+              "wrong": "Marking a statement FALSE because you cannot find supporting evidence.",
+              "right": "Marking it NOT GIVEN — FALSE requires a contradiction, not just absence."
+            },
+            {
+              "wrong": "Using your own knowledge to decide if a statement is true.",
+              "right": "Using only the passage — even if a statement is factually true in real life, mark it NOT GIVEN if the passage does not state it."
+            },
+            {
+              "wrong": "Ignoring qualifying words like 'some', 'all', 'always', 'rarely'.",
+              "right": "Treating qualifiers as critical — they often turn a TRUE into a FALSE."
+            },
+            {
+              "wrong": "Spending five minutes searching to confirm NOT GIVEN.",
+              "right": "Searching once methodically; if the info is not there, mark NOT GIVEN and move on."
+            }
+          ],
+          "page": 129
+        }
+      ]
+    },
+    {
+      "lesson_id": "yes_no_not_given",
+      "lesson_number": 7,
+      "title": "Question Type #7: Yes/No/Not Given",
+      "source_pages": [
+        130,
+        131
+      ],
+      "practice_link": {
+        "label": "Practice yes/no/not given",
+        "href": "/question-bank/reading/practice?type=yes_no_ng"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #7: Yes/No/Not Given",
+          "paragraphs": [
+            "Yes/No/NG questions are very similar to T/F/NG questions. The main difference is T/F/NG asks you to look at facts or information in the text, and Y/N/NG questions ask you to assess the writer's opinion. This opinion could be based on a certain section of the text or on the text as a whole."
+          ],
+          "page": 130
+        },
+        {
+          "type": "factboard",
+          "title": "What each answer means",
+          "facts": [
+            {
+              "label": "YES",
+              "value": "If the text agrees with or confirms the writer's opinion"
+            },
+            {
+              "label": "NO",
+              "value": "If the text contradicts or is the opposite to the writer's opinion"
+            },
+            {
+              "label": "NOT GIVEN",
+              "value": "If there is no information or if the statement may or may not be true due to lack of information"
+            }
+          ],
+          "page": 130
+        },
+        {
+          "type": "icon_grid",
+          "title": "Yes/No/Not Given: Tips",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "MessageSquare",
+              "title": "Focus on Writer's Opinion",
+              "body": "Remember that you are only judging the writer's opinion, not facts or other people's opinions mentioned in the text."
+            },
+            {
+              "icon": "Highlighter",
+              "title": "Look for Opinion Markers",
+              "body": "Watch for phrases like \"In my opinion,\" \"I believe,\" or use of comparatives and superlatives that signal the writer's viewpoint."
+            },
+            {
+              "icon": "AlignLeft",
+              "title": "Sequential Order",
+              "body": "The questions are in the same order as the text, which helps you locate the relevant sections."
+            },
+            {
+              "icon": "X",
+              "title": "Definite Contradiction",
+              "body": "If the answer is \"No,\" the statement will clearly contradict the writer's opinion, not just be slightly different."
+            }
+          ],
+          "page": 131
+        },
+        {
+          "type": "narrative",
+          "paragraphs": [
+            "The strategy for Y/N/NG questions is very similar to T/F/NG questions, but with the crucial difference of focusing on opinions rather than facts."
+          ],
+          "page": 131
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "Worked Example",
+          "title": "Spot the writer's opinion vs the writer's report",
+          "intro": "YNNG only judges the writer's own view. If the writer is reporting someone else's opinion, that doesn't count as their position.",
+          "stimulus": {
+            "label": "Passage extract",
+            "text": "Some economists have argued that remote work increases productivity, but I find this claim unconvincing. While individual studies do show short-term gains, the long-term effects on team cohesion and innovation appear to be negative. We should be cautious about adopting policies based on a small body of evidence that may not generalise."
+          },
+          "question": {
+            "label": "Decide YES, NO, or NOT GIVEN for each statement (about the writer's opinion)",
+            "items": [
+              { "n": 1, "stem": "The writer believes remote work boosts productivity in the long run." },
+              { "n": 2, "stem": "The writer thinks remote-work policies should be adopted cautiously." },
+              { "n": 3, "stem": "The writer prefers working from home to working in an office." }
+            ]
+          },
+          "thinking_steps": [
+            "Statement 1: Writer says 'I find this claim unconvincing' and 'long-term effects… appear to be negative'. The writer DISAGREES → NO.",
+            "Statement 2: Writer says 'We should be cautious about adopting policies'. The writer's opinion matches the statement → YES.",
+            "Statement 3: The passage discusses productivity and team cohesion, but never mentions the writer's personal preference for home vs office. → NOT GIVEN."
+          ],
+          "answer": {
+            "value": "1=NO, 2=YES, 3=NOT GIVEN",
+            "explanation": "Look for first-person markers ('I find', 'we should') to identify the writer's voice. Other people's opinions ('Some economists have argued') are reported, not endorsed."
+          },
+          "page": 131
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: YNNG",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "TFNG and YNNG differ mainly in what they test. TFNG tests _______; YNNG tests _______.",
+              "options": [
+                { "letter": "A", "text": "facts; the writer's opinions" },
+                { "letter": "B", "text": "opinions; facts" },
+                { "letter": "C", "text": "vocabulary; grammar" }
+              ],
+              "answer": "A",
+              "explanation": "TFNG = factual statements. YNNG = the writer's own claims/opinions. Confusing the two leads to systematic mistakes."
+            },
+            {
+              "kind": "mcq",
+              "stem": "The passage says: 'Critics have claimed that the policy is harmful, but the evidence is weak.' The statement is: 'The policy is harmful.' What is the answer?",
+              "options": [
+                { "letter": "A", "text": "YES" },
+                { "letter": "B", "text": "NO" },
+                { "letter": "C", "text": "NOT GIVEN" }
+              ],
+              "answer": "B",
+              "explanation": "The writer attributes 'harmful' to critics, then dismisses their evidence as 'weak' — so the writer disagrees → NO. Don't be fooled by reported opinions."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "If the passage doesn't reveal the writer's stance one way or the other, the answer is _______.",
+              "answer": "NOT GIVEN",
+              "accept": ["NOT GIVEN", "not given", "ng"],
+              "explanation": "When the writer's opinion on the specific claim cannot be determined, the answer is NOT GIVEN — even if the topic is discussed."
+            }
+          ],
+          "page": 131
+        },
+        {
+          "type": "common_mistakes",
+          "title": "Common Mistakes vs Smart Moves",
+          "pairs": [
+            {
+              "wrong": "Treating reported opinions ('some scientists say…') as the writer's opinion.",
+              "right": "Identifying the writer's voice via 'I think', 'in my view', or evaluative language ('rightly', 'unfortunately')."
+            },
+            {
+              "wrong": "Confusing YNNG with TFNG and judging factual accuracy.",
+              "right": "Asking 'does the writer agree with this?' instead of 'is this true?'"
+            },
+            {
+              "wrong": "Marking NOT GIVEN as YES because the topic appears in the passage.",
+              "right": "Marking NOT GIVEN unless the writer's specific stance on that claim is stated."
+            }
+          ],
+          "page": 131
+        }
+      ]
+    },
+    {
+      "lesson_id": "matching_headings",
+      "lesson_number": 8,
+      "title": "Question Type #8: Matching Headings",
+      "source_pages": [
+        132,
+        133
+      ],
+      "practice_link": {
+        "label": "Practice matching headings",
+        "href": "/question-bank/reading/practice?type=matching_headings"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #8: Matching Headings",
+          "paragraphs": [
+            "This type of question tests your ability to understand the main idea of each paragraph. Headings are short sentences that summarise the information in a paragraph. You have to pick the one that best summarises the information in a paragraph. You will be given between 5 and 7 headings and asked to match each paragraph in the reading text to one heading. There are always more headings than paragraphs."
+          ],
+          "page": 132
+        },
+        {
+          "type": "callout",
+          "tone": "warning",
+          "eyebrow": "KEY DIFFERENCE FROM T/F/NG",
+          "title": "Matching Headings answers do NOT appear in heading-list order.",
+          "body": "**UNLIKE T/F/NG**, you cannot read straight down the heading list (i, ii, iii, iv…) and expect them to match paragraphs A, B, C, D in that sequence. Heading **iv** could match paragraph A; heading **i** could match paragraph C. Read each *paragraph* first, then hunt for the matching heading in the (scrambled) list. Treat the list as an option pool, not a sequence.",
+          "page": 132
+        },
+        {
+          "type": "comparison",
+          "title": "Skills & Common Problems",
+          "columns": [
+            {
+              "label": "Skills Tested",
+              "tone": "info",
+              "items": [
+                "Understanding the main idea of each paragraph",
+                "Quickly understanding the general meaning of a paragraph without reading every word",
+                "Differentiating between two or more similar headings"
+              ]
+            },
+            {
+              "label": "Common Problems",
+              "tone": "warning",
+              "items": [
+                "Not understanding the statements as a whole",
+                "Lots of information to process and not enough time",
+                "Some of the headings may appear to have the same meaning",
+                "Not understanding the main idea of each paragraph in the text"
+              ]
+            }
+          ],
+          "page": 132
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Matching Headings: Strategy",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Do This First",
+              "body": "If this question type appears, tackle it before others to gain familiarity with the text"
+            },
+            {
+              "number": 2,
+              "title": "Ignore Headings Initially",
+              "body": "Don't look at the headings first; focus on understanding each paragraph"
+            },
+            {
+              "number": 3,
+              "title": "Read Strategically",
+              "body": "Read the first 1-2 sentences and the last sentence of each paragraph to grasp the main idea"
+            },
+            {
+              "number": 4,
+              "title": "Summarize Mentally",
+              "body": "Try to sum up each paragraph in one or two words before looking at the headings"
+            },
+            {
+              "number": 5,
+              "title": "Match and Compare",
+              "body": "Match obvious headings first, then compare similar headings to identify subtle differences"
+            }
+          ],
+          "page": 133
+        },
+        {
+          "type": "narrative",
+          "paragraphs": [
+            "You are not expected to read every word of the text. If there are words you don't understand, don't worry about this. Focus on the general meaning of the paragraph as a whole."
+          ],
+          "page": 133
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "Worked Example",
+          "title": "Find the main idea, then match",
+          "intro": "Headings test the main idea of a paragraph — not a single fact buried inside it. Sum the paragraph up first, then choose.",
+          "stimulus": {
+            "label": "Paragraph",
+            "text": "Although bicycles existed in various forms throughout the nineteenth century, it was the introduction of the safety bicycle in the 1880s that transformed cycling from a daring hobby into mass transportation. With its chain drive, equally-sized wheels, and pneumatic tyres, the safety bicycle was affordable, comfortable and — crucially — safe enough for ordinary people to ride. Within a decade, cycling clubs had spread across Europe and North America."
+          },
+          "question": {
+            "label": "Choose the BEST heading for the paragraph",
+            "options": [
+              { "letter": "A", "text": "The dangers of nineteenth-century cycling" },
+              { "letter": "B", "text": "How the safety bicycle made cycling popular" },
+              { "letter": "C", "text": "The growth of cycling clubs in Europe" },
+              { "letter": "D", "text": "The invention of the pneumatic tyre" }
+            ]
+          },
+          "thinking_steps": [
+            "Sum the paragraph up in one phrase: how the safety bicycle turned cycling into mass transport.",
+            "Eliminate A — dangers are mentioned only as a contrast, not the main topic.",
+            "Eliminate C — clubs are mentioned only at the end as a consequence.",
+            "Eliminate D — pneumatic tyres are listed as a feature, not the focus.",
+            "B captures the whole paragraph's main idea → correct."
+          ],
+          "answer": {
+            "value": "B",
+            "explanation": "Wrong headings (A, C, D) all describe details actually mentioned in the paragraph — that's the trap. The right heading captures the OVERALL idea, not a single sentence."
+          },
+          "page": 133
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Matching Headings",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "Why are wrong matching-heading options often based on details that ARE in the paragraph?",
+              "options": [
+                { "letter": "A", "text": "To save space in the question booklet." },
+                { "letter": "B", "text": "To trap students who match keywords instead of main ideas." },
+                { "letter": "C", "text": "Because the test is poorly designed." }
+              ],
+              "answer": "B",
+              "explanation": "Distractors deliberately use words from the paragraph. If you match by keyword spotting instead of summarising, you'll pick the trap."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Match the _______ headings first, then return to the harder ones once the easy ones are off the list.",
+              "answer": "obvious",
+              "accept": ["obvious", "easy", "easiest", "clear"],
+              "explanation": "Eliminating obvious matches first reduces the pool, making the close calls easier."
+            },
+            {
+              "kind": "mcq",
+              "stem": "Which sentences of a paragraph usually contain its main idea?",
+              "options": [
+                { "letter": "A", "text": "Only the middle sentences." },
+                { "letter": "B", "text": "The first 1–2 sentences and the last sentence." },
+                { "letter": "C", "text": "Every sentence equally." }
+              ],
+              "answer": "B",
+              "explanation": "Topic sentences cluster at the start; conclusions/summaries cluster at the end. Reading these gives you 80% of the main idea."
+            }
+          ],
+          "page": 133
+        },
+        {
+          "type": "common_mistakes",
+          "title": "Common Mistakes vs Smart Moves",
+          "pairs": [
+            {
+              "wrong": "Matching a heading because it mentions a word that appears in the paragraph.",
+              "right": "Matching the heading that captures the overall main idea, not a buried detail."
+            },
+            {
+              "wrong": "Reading every paragraph word by word to be sure.",
+              "right": "Reading the topic sentence + last sentence to extract the main idea quickly."
+            },
+            {
+              "wrong": "Picking between two similar headings without comparing them carefully.",
+              "right": "Asking what differentiates the two — and which fits the paragraph as a whole."
+            }
+          ],
+          "page": 133
+        }
+      ]
+    },
+    {
+      "lesson_id": "labelling_diagram",
+      "lesson_number": 9,
+      "title": "Question Type #9: Labelling a Diagram",
+      "source_pages": [
+        134,
+        135
+      ],
+      "practice_link": {
+        "label": "Practice labelling a diagram",
+        "href": "/question-bank/reading/practice?type=table_completion"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #9: Labelling a Diagram",
+          "paragraphs": [
+            "This type of question tests your ability to understand and label a diagram or plan. There are three kinds of diagrams you might get: a technical drawing of a machine or invention, something from the natural world or a design or plan."
+          ],
+          "page": 134
+        },
+        {
+          "type": "callout",
+          "tone": "info",
+          "eyebrow": "DON'T PANIC ABOUT TECHNICAL WORDS",
+          "title": "You don't need to know what a 'nacelle' or 'turbine' is.",
+          "body": "Diagrams come with **scary-looking technical vocabulary** — wind turbines, water cycles, anatomy, machine parts. Band-6 students often freeze here, thinking *'I don't know engineering, I'll fail this section.'*\n\n**You don't need to.** The answer to every label is a word **already in the passage** — usually a common noun like *blade*, *base*, *valve*, *root*. Your job is to:\n\n1. Match the diagram position to a sentence in the text.\n2. Copy the exact word from that sentence.\n\nThe technical knowledge is irrelevant — only the matching is tested.",
+          "page": 134
+        },
+        {
+          "type": "comparison",
+          "title": "Skills & Common Problems",
+          "columns": [
+            {
+              "label": "Skills Tested",
+              "tone": "info",
+              "items": [
+                "Ability to cope with unfamiliar concepts or processes",
+                "Ability to appreciate the relationship between a text and diagram or plan",
+                "Locating the correct part of the text that contains the pertinent information"
+              ]
+            },
+            {
+              "label": "Common Problems",
+              "tone": "warning",
+              "items": [
+                "Focusing too much on the diagram and trying to understand everything about it",
+                "Failing to locate the paragraphs that contain the information quickly",
+                "Writing the wrong number of words or spelling the word incorrectly",
+                "Getting stuck on one question and wasting time"
+              ]
+            }
+          ],
+          "page": 134
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Labelling a Diagram: Strategy",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Check Word Limit",
+              "body": "Note how many words you're allowed to use for each label"
+            },
+            {
+              "number": 2,
+              "title": "Study Diagram Briefly",
+              "body": "Get a general understanding of what the diagram shows without spending too much time"
+            },
+            {
+              "number": 3,
+              "title": "Identify Keywords",
+              "body": "Note any existing labels or parts of the diagram that might help locate information"
+            },
+            {
+              "number": 4,
+              "title": "Predict Word Types",
+              "body": "Try to determine if you need nouns, verbs, or adjectives for the labels"
+            },
+            {
+              "number": 5,
+              "title": "Scan and Verify",
+              "body": "Locate the relevant text sections and carefully extract the exact words needed"
+            }
+          ],
+          "page": 135
+        },
+        {
+          "type": "narrative",
+          "paragraphs": [
+            "Remember that numbers count as one word and hyphenated words like 'state-of-the-art' count as one word. Do the easiest questions first to build confidence."
+          ],
+          "page": 135
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "Worked Example",
+          "title": "Predict word type, then scan",
+          "intro": "Diagrams are easier than they look once you treat each label as a gap-fill: predict what KIND of word fits, then scan for it.",
+          "stimulus": {
+            "label": "Passage extract",
+            "text": "A typical wind turbine consists of three main components. The rotor blades, usually made of fibreglass, capture wind energy and transfer it to the gearbox housed inside the nacelle. From there, the rotational energy passes to the generator, which converts it into electricity. The whole assembly sits on top of a tall steel tower anchored to a concrete base."
+          },
+          "question": {
+            "label": "Label the diagram with NO MORE THAN TWO WORDS",
+            "items": [
+              { "n": 1, "stem": "Component that captures the wind: ___________" },
+              { "n": 2, "stem": "Component that converts rotational energy into electricity: ___________" },
+              { "n": 3, "stem": "Foundation the tower is anchored to: ___________" }
+            ]
+          },
+          "thinking_steps": [
+            "Predict the word type for each gap: 1 = noun (a component), 2 = noun, 3 = noun.",
+            "Locate Q1 keyword 'captures' or 'wind' → 'rotor blades capture wind energy' → 'rotor blades'.",
+            "Locate Q2 keyword 'converts' → 'the generator, which converts it into electricity' → 'generator'.",
+            "Locate Q3 keyword 'anchored' → 'anchored to a concrete base' → 'concrete base'.",
+            "Check word limit (max 2 words) — all answers fit."
+          ],
+          "answer": {
+            "value": "1=rotor blades, 2=generator, 3=concrete base",
+            "explanation": "Treat each label as a sentence completion: predict the word type, scan for the cue word from the passage, then copy the exact words."
+          },
+          "page": 135
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Labelling a Diagram",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "How long should you spend studying the diagram before reading the text?",
+              "options": [
+                { "letter": "A", "text": "As long as needed to understand every part." },
+                { "letter": "B", "text": "Just enough to get the general layout — under a minute." },
+                { "letter": "C", "text": "Skip the diagram entirely." }
+              ],
+              "answer": "B",
+              "explanation": "You don't need to understand the device — you just need to find words in the passage that match each label position. Don't get sucked into the diagram."
+            },
+            {
+              "kind": "mcq",
+              "stem": "If the limit is THREE words, the phrase 'state-of-the-art design' counts as how many words?",
+              "options": [
+                { "letter": "A", "text": "5 words" },
+                { "letter": "B", "text": "2 words" },
+                { "letter": "C", "text": "1 word" }
+              ],
+              "answer": "B",
+              "explanation": "Hyphenated forms count as one word. So 'state-of-the-art design' = 'state-of-the-art' (1) + 'design' (1) = 2 words."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "If you get stuck on one label, you should _______ it and come back later.",
+              "answer": "skip",
+              "accept": ["skip", "leave", "move on", "skip and"],
+              "explanation": "Stuck on one label? Move on — you'll lose 30 seconds and a question if you don't. The other labels often help."
+            }
+          ],
+          "page": 135
+        },
+        {
+          "type": "common_mistakes",
+          "title": "Common Mistakes vs Smart Moves",
+          "pairs": [
+            {
+              "wrong": "Trying to fully understand the diagram before reading.",
+              "right": "Glancing at the diagram, then matching each label to the text quickly."
+            },
+            {
+              "wrong": "Paraphrasing the answer label.",
+              "right": "Copying the exact words from the passage — diagram labelling does not allow paraphrasing."
+            },
+            {
+              "wrong": "Ignoring the word limit because the answer 'feels right'.",
+              "right": "Counting words; an over-limit answer is marked wrong even when otherwise correct."
+            },
+            {
+              "wrong": "Spending too long on a single label.",
+              "right": "Skipping a stuck label, doing the rest, and using the surrounding answers as clues."
+            }
+          ],
+          "page": 135
+        }
+      ]
+    },
+    {
+      "lesson_id": "matching_names",
+      "lesson_number": 10,
+      "title": "Question Type #10: Matching Names",
+      "source_pages": [
+        136,
+        137
+      ],
+      "practice_link": {
+        "label": "Practice matching names",
+        "href": "/question-bank/reading/practice?type=matching_features"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #10: Matching Names",
+          "paragraphs": [
+            "In this type of question, you are asked to match someone's name, normally an expert's, researcher's or scientist's, to a statement. You are given a list of names and a list of statements. Your job is to read the text and then match the names with the correct statement. The reading text will tell you what that person has said or done (normally research findings) and this will guide you to the correct answer."
+          ],
+          "page": 136
+        },
+        {
+          "type": "comparison",
+          "title": "Skills & Common Problems",
+          "columns": [
+            {
+              "label": "Skills Tested",
+              "tone": "info",
+              "items": [
+                "Scanning for the names in the text",
+                "Reading the appropriate part of the text in detail for understanding",
+                "Appreciating the presence of synonyms or paraphrasing that might help find the correct answer"
+              ]
+            },
+            {
+              "label": "Common Problems",
+              "tone": "warning",
+              "items": [
+                "Reading the whole text and trying to find the names that way",
+                "The names that occur several times will be harder to match than the names that appear only once",
+                "Not reading the appropriate sections in detail",
+                "Trying to find words in the text that match with words in the statement exactly"
+              ]
+            }
+          ],
+          "page": 136
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Matching Names: Strategy",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Read Instructions",
+              "body": "Check if names can be used more than once or if all statements must be matched"
+            },
+            {
+              "number": 2,
+              "title": "Scan for Names",
+              "body": "Quickly locate and underline all instances of the names in the text"
+            },
+            {
+              "number": 3,
+              "title": "Start with Unique Names",
+              "body": "Focus first on names that appear only once in the text as these are easier to match"
+            },
+            {
+              "number": 4,
+              "title": "Read Surrounding Text",
+              "body": "Examine the text before and after each name to find their opinions or research findings"
+            },
+            {
+              "number": 5,
+              "title": "Match and Eliminate",
+              "body": "When you find a match, cross off that statement as each is used only once"
+            }
+          ],
+          "page": 137
+        },
+        {
+          "type": "narrative",
+          "paragraphs": [
+            "Remember that names might be shortened to just a first or last name. For example, 'John Jones' might appear as only 'Jones' in the text."
+          ],
+          "page": 137
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "Worked Example",
+          "title": "Scan for the name, read the surrounding sentence",
+          "intro": "Names are visual anchors — easy to scan for. Once you find each one, the answer is in the sentence around it.",
+          "stimulus": {
+            "label": "Passage extract",
+            "text": "Several researchers have explored the cognitive effects of bilingualism. Dr Patel argues that bilingual children develop superior problem-solving skills compared with monolingual peers. In contrast, Professor Lin claims that bilingualism delays vocabulary growth in the early years. Dr Hofstede has documented improved attention control in adult bilinguals, although she notes that the gains diminish with age."
+          },
+          "question": {
+            "label": "Match each researcher with the correct statement",
+            "items": [
+              { "n": 1, "stem": "Dr Patel" },
+              { "n": 2, "stem": "Professor Lin" },
+              { "n": 3, "stem": "Dr Hofstede" }
+            ],
+            "options": [
+              { "letter": "A", "text": "Reports better focus in bilingual adults but says the benefit fades over time." },
+              { "letter": "B", "text": "Believes bilingual children solve problems better than monolingual children." },
+              { "letter": "C", "text": "Says learning two languages slows down early word learning." },
+              { "letter": "D", "text": "Found that bilingualism has no effect on cognitive development." }
+            ]
+          },
+          "thinking_steps": [
+            "Scan for 'Dr Patel': 'develop superior problem-solving skills' → matches B.",
+            "Scan for 'Professor Lin': 'bilingualism delays vocabulary growth' → matches C.",
+            "Scan for 'Dr Hofstede': 'improved attention control… gains diminish with age' → matches A.",
+            "D is unused — that's normal in matching-names tasks (more options than names)."
+          ],
+          "answer": {
+            "value": "1=B, 2=C, 3=A",
+            "explanation": "Each match comes from one specific sentence in the text. Don't try to read the whole passage first — scan for the names, then read around them."
+          },
+          "page": 137
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Matching Names",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "Which name should you tackle first?",
+              "options": [
+                { "letter": "A", "text": "The one that appears the most times in the text." },
+                { "letter": "B", "text": "The one that appears only once in the text." },
+                { "letter": "C", "text": "The first name listed in the question." }
+              ],
+              "answer": "B",
+              "explanation": "A name that appears once has only one sentence to match — the easiest. Names that appear several times need more reading to disambiguate."
+            },
+            {
+              "kind": "mcq",
+              "stem": "The name 'Maria Gonzalez' is mentioned in the text only as 'Gonzalez'. What should you do?",
+              "options": [
+                { "letter": "A", "text": "Mark it as not present." },
+                { "letter": "B", "text": "Treat 'Gonzalez' as the same person and read around it." },
+                { "letter": "C", "text": "Skip the question." }
+              ],
+              "answer": "B",
+              "explanation": "IELTS commonly shortens names — full name in the question, surname only in the text. Treat them as the same person."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Once you have matched a name to a statement, _______ off that statement so you don't reuse it.",
+              "answer": "cross",
+              "accept": ["cross", "tick", "mark", "strike"],
+              "explanation": "Most matching-name tasks use each statement once. Crossing off used statements makes the remaining matches faster."
+            }
+          ],
+          "page": 137
+        },
+        {
+          "type": "common_mistakes",
+          "title": "Common Mistakes vs Smart Moves",
+          "pairs": [
+            {
+              "wrong": "Reading the whole passage to find names.",
+              "right": "Scanning for capitalised words — names jump out visually."
+            },
+            {
+              "wrong": "Looking for exact word matches between the statement and the text.",
+              "right": "Looking for paraphrases — IELTS rewords every research finding."
+            },
+            {
+              "wrong": "Tackling the most-mentioned name first.",
+              "right": "Tackling unique names first to narrow the pool."
+            }
+          ],
+          "page": 137
+        }
+      ]
+    },
+    {
+      "lesson_id": "matching_information",
+      "lesson_number": 11,
+      "title": "Question Type #11: Matching Information to Paragraphs",
+      "source_pages": [
+        138,
+        139
+      ],
+      "practice_link": {
+        "label": "Practice matching information",
+        "href": "/question-bank/reading/practice?type=matching_information"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #11: Matching Information to Paragraphs",
+          "paragraphs": [
+            "In this kind of question, you are asked to match statements to paragraphs in the reading text. The statements could be reasons, descriptions, summaries, definitions, facts or explanations. You do not need to understand what the whole paragraph is about, just find specific information in the paragraph and match it to one of the statements. The answer will normally be contained in a whole phrase or sentence, rather than a single word."
+          ],
+          "page": 138
+        },
+        {
+          "type": "callout",
+          "tone": "warning",
+          "eyebrow": "KEY DIFFERENCE FROM T/F/NG",
+          "title": "Matching Information answers do NOT come in statement order.",
+          "body": "**UNLIKE T/F/NG** (where statement 1 → statement 2 → statement 3 always advance through the text), Matching Information statements can land anywhere. Statement 1 might match paragraph E; Statement 2 might match paragraph A. Don't read the passage linearly hunting for statement 1 first — scan each paragraph and ask 'which of these statements lives here?'",
+          "page": 138
+        },
+        {
+          "type": "comparison",
+          "title": "Skills & Common Problems",
+          "columns": [
+            {
+              "label": "Skills Tested",
+              "tone": "info",
+              "items": [
+                "Skimming for general meaning of paragraphs",
+                "Finding specific information in a paragraph",
+                "Reading carefully to fully understand the meaning"
+              ]
+            },
+            {
+              "label": "Common Problems",
+              "tone": "warning",
+              "items": [
+                "Having to look at the whole text",
+                "The answers might not be the main idea of each paragraph",
+                "Dealing with lots of irrelevant information",
+                "Not all paragraphs contain an answer, and some contain multiple answers"
+              ]
+            }
+          ],
+          "page": 138
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Matching Information: Strategy",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Do This Last",
+              "body": "Complete other questions first to become familiar with the text"
+            },
+            {
+              "number": 2,
+              "title": "Look for Specific Details",
+              "body": "Focus on names, places, and numbers in the statements as these are easier to locate"
+            },
+            {
+              "number": 3,
+              "title": "Paraphrase Statements",
+              "body": "Try saying each statement in your own words to better recognize synonyms in the text"
+            },
+            {
+              "number": 4,
+              "title": "Skim First",
+              "body": "Quickly read the whole text to understand its general structure"
+            },
+            {
+              "number": 5,
+              "title": "Scan and Verify",
+              "body": "Look for synonyms in paragraphs you think might contain the answer and check carefully"
+            }
+          ],
+          "page": 139
+        },
+        {
+          "type": "narrative",
+          "paragraphs": [
+            "Be aware that there may be synonyms. For example, you might see '34%' in the question, but it might say 'just over a third' or 'about a third' in the text."
+          ],
+          "page": 139
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "Worked Example",
+          "title": "Hunt for the specific detail, ignore the topic",
+          "intro": "Matching-information answers can be hidden anywhere — even in a paragraph that's mostly about something else. Anchor on concrete details (numbers, names) inside the statement.",
+          "stimulus": {
+            "label": "Passage (paragraphs A–D)",
+            "items": [
+              { "letter": "A", "text": "The history of the modern bicycle begins with the high-wheeled penny-farthing, an awkward and dangerous machine ridden mostly by wealthy men in the 1870s." },
+              { "letter": "B", "text": "The 1885 Rover Safety bicycle changed everything. With equally-sized wheels and chain drive, it cut the fatal accident rate by an estimated 80% within ten years." },
+              { "letter": "C", "text": "Cycling clubs grew rapidly in the late nineteenth century, particularly among middle-class women, who saw the bicycle as a tool of independence." },
+              { "letter": "D", "text": "Today, urban cycling is supported by infrastructure investment in many cities, with Copenhagen leading the world in cycle-lane mileage per capita." }
+            ]
+          },
+          "question": {
+            "label": "Match each statement to a paragraph (A–D)",
+            "items": [
+              { "n": 1, "stem": "A specific statistic about reduced injuries" },
+              { "n": 2, "stem": "A reference to social change linked to cycling" },
+              { "n": 3, "stem": "A description of an early model that was hard to ride" }
+            ]
+          },
+          "thinking_steps": [
+            "Statement 1 has 'statistic' + 'reduced injuries'. Scan for numbers — '80%' appears in B → Answer: B.",
+            "Statement 2 has 'social change'. Scan for social context — C mentions 'middle-class women', 'tool of independence' → Answer: C.",
+            "Statement 3 has 'early model' + 'hard to ride'. Scan for early bikes — A mentions 'penny-farthing', 'awkward and dangerous' → Answer: A.",
+            "D is unused — that's normal here."
+          ],
+          "answer": {
+            "value": "1=B, 2=C, 3=A",
+            "explanation": "Anchor on the most concrete element in each statement (number, era, descriptor) — that's your scan target."
+          },
+          "page": 139
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Matching Information",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "When should you do matching-information questions in a Reading test?",
+              "options": [
+                { "letter": "A", "text": "First, before any other question type." },
+                { "letter": "B", "text": "Last, after other question types have made you familiar with the text." },
+                { "letter": "C", "text": "It doesn't matter." }
+              ],
+              "answer": "B",
+              "explanation": "Matching information is one of the slowest question types. Do it last — by then you've already read the passage for other questions, so locating answers is faster."
+            },
+            {
+              "kind": "mcq",
+              "stem": "The question says '34%'. The text says 'just over a third'. What is happening?",
+              "options": [
+                { "letter": "A", "text": "The numbers don't match — keep searching." },
+                { "letter": "B", "text": "This is a paraphrase — they mean the same thing." },
+                { "letter": "C", "text": "The text has a typo." }
+              ],
+              "answer": "B",
+              "explanation": "IELTS paraphrases numbers ('34%' = 'just over a third'), percentages, and quantities constantly. Train yourself to recognise these equivalents."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Not every paragraph contains an answer. Some paragraphs may have _______ answers, and some have none at all.",
+              "answer": "multiple",
+              "accept": ["multiple", "more than one", "several", "two"],
+              "explanation": "Unlike matching headings, the matching-information distribution is uneven. Don't expect 1 statement per paragraph."
+            }
+          ],
+          "page": 139
+        },
+        {
+          "type": "common_mistakes",
+          "title": "Common Mistakes vs Smart Moves",
+          "pairs": [
+            {
+              "wrong": "Looking for the main idea of each paragraph.",
+              "right": "Looking for the specific detail in the statement — it may be buried inside a paragraph about something else."
+            },
+            {
+              "wrong": "Searching for the exact words from the statement in the text.",
+              "right": "Paraphrasing the statement first, then scanning for synonyms ('34%' → 'a third', 'reduced' → 'cut')."
+            },
+            {
+              "wrong": "Assuming every paragraph contains exactly one answer.",
+              "right": "Allowing some paragraphs to contain none and others to contain several."
+            }
+          ],
+          "page": 139
+        }
+      ]
+    },
+    {
+      "lesson_id": "table_completion",
+      "lesson_number": 12,
+      "title": "Question Type #12: Table Completion",
+      "source_pages": [
+        140,
+        141
+      ],
+      "practice_link": {
+        "label": "Practice table completion",
+        "href": "/question-bank/reading/practice?type=table_completion"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #12: Table Completion",
+          "paragraphs": [
+            "For these questions, you will be asked to complete gaps in a table. You may also be asked to complete gaps in a flow chart. You have to complete the gaps using words or phrases from the text."
+          ],
+          "page": 140
+        },
+        {
+          "type": "comparison",
+          "title": "Skills & Common Problems",
+          "columns": [
+            {
+              "label": "Skills Tested",
+              "tone": "info",
+              "items": [
+                "Reading the instructions correctly",
+                "Scanning the text to locate the relevant paragraphs",
+                "Transferring information to the gaps correctly"
+              ]
+            },
+            {
+              "label": "Common Problems",
+              "tone": "warning",
+              "items": [
+                "Not reading the instructions carefully, especially the word limit",
+                "Going over the word limit",
+                "Changing the form of the words from the text",
+                "Spelling errors"
+              ]
+            }
+          ],
+          "page": 140
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Table Completion: Strategy",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Read Instructions",
+              "body": "Pay special attention to the word limit and whether words must be taken exactly as they appear"
+            },
+            {
+              "number": 2,
+              "title": "Understand the Table",
+              "body": "Note the heading and existing information to understand what the table is about"
+            },
+            {
+              "number": 3,
+              "title": "Predict Answers",
+              "body": "Based on the table structure, try to anticipate what type of information is needed"
+            },
+            {
+              "number": 4,
+              "title": "Locate Information",
+              "body": "Scan the text to find the relevant paragraphs containing the answers"
+            },
+            {
+              "number": 5,
+              "title": "Transfer Exactly",
+              "body": "Copy the words precisely as they appear in the text and check your spelling"
+            }
+          ],
+          "page": 141
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "Worked Example",
+          "title": "Use the row/column heading to predict each gap",
+          "intro": "A table is a structured set of sentence completions. The row + column heading tell you what KIND of word goes in each gap before you even read the passage.",
+          "stimulus": {
+            "label": "Passage extract",
+            "text": "Sleep needs vary widely across the lifespan. Newborns typically require 14 to 17 hours of sleep per day, mostly in short bursts. School-aged children need around 9 to 11 hours, ideally in a single overnight block. Adults function best on 7 to 9 hours, while those over 65 often sleep slightly less, around 7 to 8 hours, with frequent night-time waking."
+          },
+          "question": {
+            "label": "Complete the table using NO MORE THAN THREE WORDS for each gap",
+            "table": {
+              "headers": ["Group", "Hours per day", "Pattern"],
+              "rows": [
+                { "cells": ["Newborns", "(1) ___________", "short bursts"] },
+                { "cells": ["School-aged children", "9 to 11 hours", "(2) ___________"] },
+                { "cells": ["Adults aged 65+", "7 to 8 hours", "(3) ___________"] }
+              ]
+            }
+          },
+          "thinking_steps": [
+            "Gap 1 column = 'Hours per day' → predict numbers/range. Newborns → '14 to 17 hours' (3 words).",
+            "Gap 2 column = 'Pattern' → predict description. School-aged → 'a single overnight block' = 4 words → too many. Try 'single overnight block' = 3 words ✓.",
+            "Gap 3 column = 'Pattern' → predict description. 65+ → 'frequent night-time waking' (3 words, hyphenated counts as 1).",
+            "Check word limits: all under 3."
+          ],
+          "answer": {
+            "value": "1=14 to 17 hours, 2=single overnight block, 3=frequent night-time waking",
+            "explanation": "Headers tell you what to look for. Predict, then scan, then count words before you write."
+          },
+          "page": 141
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Table Completion",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "The text says 'invented'. The gap is positioned to need a noun (the table column is 'Invention'). What should you write?",
+              "options": [
+                { "letter": "A", "text": "invented" },
+                { "letter": "B", "text": "invention" },
+                { "letter": "C", "text": "Leave it blank" }
+              ],
+              "answer": "C",
+              "explanation": "Trick! Table completion requires you to copy words EXACTLY from the text. You cannot change 'invented' to 'invention' even if grammar suggests it. If the right form isn't in the text, the gap likely matches a different sentence — keep scanning."
+            },
+            {
+              "kind": "mcq",
+              "stem": "Which is the BEST first thing to read when you see a table-completion task?",
+              "options": [
+                { "letter": "A", "text": "The passage." },
+                { "letter": "B", "text": "The table headers + the word limit instruction." },
+                { "letter": "C", "text": "The first row of the table only." }
+              ],
+              "answer": "B",
+              "explanation": "Headers tell you what kind of word fits each column; the word limit tells you the boundary. Both must be clear before you scan the passage."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Spelling errors in table completion answers are marked _______.",
+              "answer": "wrong",
+              "accept": ["wrong", "incorrect", "as wrong"],
+              "explanation": "Even with the right word, a spelling slip = zero. Always copy letter by letter from the passage."
+            }
+          ],
+          "page": 141
+        },
+        {
+          "type": "common_mistakes",
+          "title": "Common Mistakes vs Smart Moves",
+          "pairs": [
+            {
+              "wrong": "Changing the form of a word so it fits the gap grammatically (e.g. 'invent' → 'invention').",
+              "right": "Copying the exact word from the passage — if no form fits, you have the wrong location in the text."
+            },
+            {
+              "wrong": "Ignoring the word limit because the answer feels right.",
+              "right": "Counting every word; over-limit = wrong, no exceptions."
+            },
+            {
+              "wrong": "Filling table gaps in the order they appear without checking column headers.",
+              "right": "Reading column headers first to know what KIND of information each gap needs."
+            },
+            {
+              "wrong": "Misspelling answers under time pressure.",
+              "right": "Copying letter by letter from the passage — slow down for the last few characters."
+            }
+          ],
+          "page": 141
+        }
+      ]
+    },
+    {
+      "lesson_id": "reading_skills",
+      "lesson_number": 13,
+      "title": "Reading Skills: Overview",
+      "source_pages": [
+        142,
+        145
+      ],
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Reading Skills: Overview",
+          "paragraphs": [
+            "The reading test is a test of your general reading skill, but this is made up of more specific sub-skills. This section will look at all of the most important reading sub-skills. This will give you a greater insight into what is actually being tested in each question."
+          ],
+          "page": 142
+        },
+        {
+          "type": "icon_grid",
+          "title": "The Four Core Reading Skills",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "Zap",
+              "title": "Skimming",
+              "body": "Reading quickly to understand the general meaning of a text"
+            },
+            {
+              "icon": "Search",
+              "title": "Scanning",
+              "body": "Looking for specific information, words or phrases in a text"
+            },
+            {
+              "icon": "BookOpen",
+              "title": "Close Reading",
+              "body": "Reading carefully to understand every detail of a specific section"
+            },
+            {
+              "icon": "Lightbulb",
+              "title": "Inference",
+              "body": "Understanding implied meaning and dealing with unfamiliar vocabulary"
+            }
+          ],
+          "page": 142
+        },
+        {
+          "type": "narrative",
+          "paragraphs": [
+            "A greater awareness of these skills allows you to decide what the best approach to each question is. It will also give you the confidence that you are approaching each question in the correct manner."
+          ],
+          "page": 142
+        },
+        {
+          "type": "narrative",
+          "title": "Skimming: Reading for Gist",
+          "subtitle": "Think about how you do this when reading in your own language.",
+          "paragraphs": [
+            "This is when you quickly read the whole text or a large part of the text, so that you understand the general meaning. In other words, you read quickly to generally understand what it is about.",
+            "When I look at a newspaper, I tend to do this, so that I can quickly understand what the stories are about and if I want to read some of them in more detail. In this way, I can read a whole newspaper in 5-10 minutes because I have not been reading every word of each story, but, instead, just quickly finding out what the general meaning is."
+          ],
+          "page": 143
+        },
+        {
+          "type": "icon_grid",
+          "title": "Skimming Strategies",
+          "columns": 3,
+          "cards": [
+            {
+              "icon": "FileText",
+              "title": "Skimming Strategies",
+              "body": "Read the questions first. This will allow you to know what you are looking for, before starting to skim."
+            },
+            {
+              "icon": "Bookmark",
+              "title": "Use Titles and Headings",
+              "body": "Titles and sub-headings will give you a good idea of the general meaning before you read the actual text."
+            },
+            {
+              "icon": "AlignLeft",
+              "title": "Focus on First and Last Paragraphs",
+              "body": "The first paragraph and last paragraph of a text will normally give you a good idea of what the whole text is about."
+            }
+          ],
+          "page": 143
+        },
+        {
+          "type": "narrative",
+          "title": "Scanning: Finding Specific Information",
+          "subtitle": "This skill does not normally give you the correct answer, but allows you to find where the answer is.",
+          "paragraphs": [
+            "Scanning is when you look for a particular word or phrase. We normally use this skill when we are trying to locate where the correct answer is. This skill alone does not give us the correct answer, rather it tells us the correct location of the correct answer.",
+            "This skill is useful because it means we do not have to read the entire text to find the answer. In that way, it is a time saving skill more than anything else."
+          ],
+          "page": 144
+        },
+        {
+          "type": "icon_grid",
+          "title": "Scanning Strategies",
+          "columns": 3,
+          "cards": [
+            {
+              "icon": "Search",
+              "title": "Scanning Strategies",
+              "body": "Read the questions first. This will allow you to know what you are looking for before starting to scan."
+            },
+            {
+              "icon": "Target",
+              "title": "Focus on Relevant Sections",
+              "body": "Focus on finding the relevant paragraphs or parts of the text, rather than looking at the text as a whole."
+            },
+            {
+              "icon": "Eye",
+              "title": "Avoid Reading Every Word",
+              "body": "Avoid reading every word, or reading line by line. Let your eyes move quickly over the text looking for key terms."
+            }
+          ],
+          "page": 144
+        },
+        {
+          "type": "narrative",
+          "title": "Close Reading: Understanding Details",
+          "paragraphs": [
+            "In this guide, I often refer to this skill as 'reading in detail'. It is the skill that most often allows you to establish the correct answer.",
+            "There is no point in just skimming and scanning without using this skill, because skimming gives us general meaning and scanning gives us location, neither of which give us the correct answer.",
+            "Close reading is when we understand a whole sentence or paragraph, so that we know exactly what it all means. In other words, you understand every word and the meaning of the whole sentence. It takes time and concentration and requires you to think carefully about meaning.",
+            "You will use this skill when deciding the correct answer.",
+            "I use this skill when reading an important email from someone. It is essential that I read and understand every word. If I don't, I could misinterpret something and send the wrong reply.",
+            "Lots of students mention 'skimming' and 'scanning' when asked about reading skills but ignore this, the most important skill."
+          ],
+          "page": 145
+        }
+      ]
+    },
+    {
+      "lesson_id": "dealing_with_new_words",
+      "lesson_number": 14,
+      "title": "Dealing with New Words",
+      "source_pages": [
+        146,
+        147
+      ],
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Dealing with New Words",
+          "paragraphs": [
+            "The key here is not to panic and accept that there will always be 'new' words.",
+            "A 'new' word is a word that you have never seen before. This causes lots of stress because students believe that the new word is key to finding the answer, and not knowing what it means will lose them marks."
+          ],
+          "page": 146
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Dealing with New Words: Strategy",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Assess Importance",
+              "body": "Decide if the new word is actually needed to get the correct answer. If not, ignore it."
+            },
+            {
+              "number": 2,
+              "title": "Use Context",
+              "body": "Look at the words, phrases and sentences around the new word to guess its meaning."
+            },
+            {
+              "number": 3,
+              "title": "Analyze Word Form",
+              "body": "Consider if it's a verb, noun, adjective, etc. to help narrow down possible meanings."
+            },
+            {
+              "number": 4,
+              "title": "Think of Synonyms",
+              "body": "Try to replace the word with one you know that might fit in the context."
+            },
+            {
+              "number": 5,
+              "title": "Move On If Necessary",
+              "body": "If a word is causing too many problems, accept that you won't understand everything and continue."
+            }
+          ],
+          "page": 146
+        },
+        {
+          "type": "comparison",
+          "title": "Topic Sentences and Context",
+          "columns": [
+            {
+              "label": "Topic Sentences",
+              "tone": "info",
+              "items": [
+                "The first line of any paragraph will tell you what the rest of the paragraph is about.",
+                "Topic sentences tell the reader what the main idea of the paragraph is. It acts as a sign post, telling the reader what to expect in the rest of the paragraph.",
+                "A topic sentence is normally made up of two elements: the topic and the idea.",
+                "The topic will normally be a noun or noun phrase. The idea is the sub-context that they will be tackling within the topic."
+              ]
+            },
+            {
+              "label": "Using Context",
+              "tone": "info",
+              "items": [
+                "Context is essential for guessing the meaning of new and unknown words.",
+                "The general meaning of the paragraph will help you when guessing meaning from context. The topic sentence will help you quickly identify the overall meaning.",
+                "What form does the new word take? Is it a verb, a noun or an adjective? This will help you guess the meaning.",
+                "Could you replace the word with a word you already know? This will normally be a synonym of the unknown word."
+              ]
+            }
+          ],
+          "page": 147
+        }
+      ]
+    },
+    {
+      "lesson_id": "vocabulary_building",
+      "lesson_number": 15,
+      "title": "Vocabulary Building",
+      "source_pages": [
+        148
+      ],
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Vocabulary Building",
+          "paragraphs": [
+            "The reading and listening tests are as much vocabulary tests as they are skills tests. It is much easier to get a good score when you have a wide-ranging vocabulary."
+          ],
+          "page": 148
+        },
+        {
+          "type": "icon_grid",
+          "title": "Three Steps to Build Vocabulary",
+          "columns": 3,
+          "cards": [
+            {
+              "icon": "BookOpen",
+              "title": "Read and Listen",
+              "body": "Studies have shown that the number one way for learners to improve their vocabulary is through reading and listening to genuine sources of English."
+            },
+            {
+              "icon": "Pencil",
+              "title": "Record",
+              "body": "You must record any new words you hear or read, so that you will remember them effectively. There are lots of ways to do this."
+            },
+            {
+              "icon": "RefreshCw",
+              "title": "Review",
+              "body": "It is essential that you regularly review these new words and phrases in order to retain them in your memory."
+            }
+          ],
+          "page": 148
+        },
+        {
+          "type": "narrative",
+          "paragraphs": [
+            "When you encounter new words while reading, try to guess their meaning from context before looking them up. This practice strengthens your ability to handle unfamiliar vocabulary during the exam."
+          ],
+          "page": 148
+        }
+      ]
+    },
+    {
+      "lesson_id": "online_resources",
+      "lesson_number": 16,
+      "title": "Online Resources for Practice",
+      "source_pages": [
+        149
+      ],
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Online Resources for Practice",
+          "paragraphs": [
+            "You do not need to spend any money to improve your vocabulary. All of the resources you need are freely available on the internet."
+          ],
+          "page": 149
+        },
+        {
+          "type": "icon_grid",
+          "title": "Online Resources",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "Newspaper",
+              "title": "BBC News",
+              "body": "All of the common IELTS topics are covered on a daily basis. Listen or read."
+            },
+            {
+              "icon": "Newspaper",
+              "title": "The Guardian",
+              "body": "They have a great selection of news articles and podcasts."
+            },
+            {
+              "icon": "FileText",
+              "title": "The Economist",
+              "body": "Economic, as well as political, commentary on current world issues."
+            },
+            {
+              "icon": "Brain",
+              "title": "New Scientist",
+              "body": "A scientific, journal-style magazine that is not only educational, but also very interesting."
+            }
+          ],
+          "page": 149
+        },
+        {
+          "type": "narrative",
+          "paragraphs": [
+            "Other useful resources include Memrise, Wired, Quizlet, and free eBooks. Simply use Google to find something that interests you."
+          ],
+          "page": 149
+        }
+      ]
+    },
+    {
+      "lesson_id": "answer_sheet",
+      "lesson_number": 17,
+      "title": "Filling Out the Answer Sheet",
+      "source_pages": [
+        150
+      ],
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Filling Out the Answer Sheet",
+          "subtitle": "This is not a skill, but is crucially important.",
+          "paragraphs": [
+            "Stop! I know you think this is 'easy' and you know how to do this, but you would not believe the number of good students that throw away marks because they don't fill out the answer sheet properly."
+          ],
+          "page": 150
+        },
+        {
+          "type": "icon_grid",
+          "title": "Answer Sheet Essentials",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "BookOpen",
+              "title": "Read Instructions Carefully",
+              "body": "Use any examples to help you understand exactly what to do. If you don't understand, don't move on until you do."
+            },
+            {
+              "icon": "Type",
+              "title": "Check Spelling and Grammar",
+              "body": "One small mistake and the answer will be marked wrong. Be extremely careful with this."
+            },
+            {
+              "icon": "AlignLeft",
+              "title": "Transfer Answers Methodically",
+              "body": "Try copying your answers section by section rather than all in one go to reduce errors."
+            },
+            {
+              "icon": "Pencil",
+              "title": "Leave No Blanks",
+              "body": "If you have no idea, guess. There's no penalty for wrong answers, so always write something."
+            }
+          ],
+          "page": 150
+        }
+      ]
+    },
+    {
+      "lesson_id": "next_steps_inside_ielts_ace",
+      "lesson_number": 18,
+      "title": "Your Next Steps",
+      "source_pages": [
+        151
+      ],
+      "slides": [
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "INSIDE IELTS ACE",
+          "eyebrow_tone": "default",
+          "title": "Put These Reading Strategies to Work",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "BookOpen",
+              "title": "Reading Question Bank",
+              "body": "Drill one question type at a time — short answer, T/F/NG, matching headings, summary completion — and apply the strategies from this guide."
+            },
+            {
+              "icon": "Clock",
+              "title": "Full Practice Tests",
+              "body": "Sit a full 60-minute reading test with three passages under exam conditions. No transfer time, just like the real exam."
+            },
+            {
+              "icon": "Target",
+              "title": "Mistake Analysis",
+              "body": "Every wrong answer is logged by question type so you can see exactly where skimming, scanning, or close reading is letting you down."
+            },
+            {
+              "icon": "Pencil",
+              "title": "Writing Task 2 Structures",
+              "body": "Up next inside the Strategies tab — proven essay structures for every Writing Task 2 question type."
+            }
+          ],
+          "page": 151
+        },
+        {
+          "type": "callout",
+          "tone": "info",
+          "eyebrow": "YOUR PLAN FOR TOMORROW",
+          "title": "Five steps. One question type. Repeat daily.",
+          "body": "**(1)** Pick ONE question type from the Reading Question Bank (start with the type that scares you most).  \n**(2)** Do 3 practice questions — no timer yet.  \n**(3)** Check answers AND read every explanation.  \n**(4)** Write one line in your notebook: *What exactly did I misread?* (the keyword? the synonym? the scope?)  \n**(5)** Redo the same 3 questions the next day to lock in the fix.\n\nWhen you can do 3 in a row correct, switch to a new question type. **This is how Band 6 becomes Band 7.**",
+          "page": 151
+        }
+      ]
+    }
+  ]
+}

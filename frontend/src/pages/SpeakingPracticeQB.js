@@ -38,6 +38,11 @@ export default function SpeakingPracticeQB({ user }) {
   const [modules, setModules] = useState([]);
   const [selectedModule, setSelectedModule] = useState(null);
   const [moduleContent, setModuleContent] = useState(null);
+  // Per-part picker: after a module loads, the user lands on a chooser screen
+  // (Part 1 / Part 2 / Part 3) instead of being railroaded through all 10
+  // questions. selectedPart=null means the picker is showing; once chosen we
+  // mirror it into currentPart and run only that part's question loop.
+  const [selectedPart, setSelectedPart] = useState(null);
   const [currentPart, setCurrentPart] = useState(1);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [recordingState, setRecordingState] = useState(STATES.IDLE);
@@ -55,6 +60,12 @@ export default function SpeakingPracticeQB({ user }) {
   const [submittingTier, setSubmittingTier] = useState(null);
   const [submitStep, setSubmitStep] = useState('idle');
   const [submitError, setSubmitError] = useState(null);
+  // Object URL of the most-recently-stopped recording. Lets the candidate
+  // press Play to verify their mic actually captured speech before they
+  // commit to the next question / submit. Revoked when a new recording
+  // starts or when the part is left.
+  const [lastRecordingUrl, setLastRecordingUrl] = useState(null);
+  const [isPlayingBack, setIsPlayingBack] = useState(false);
   
   const [timeLeft, setTimeLeft] = useState(0);
   const [prepTime, setPrepTime] = useState(60);
@@ -99,15 +110,34 @@ export default function SpeakingPracticeQB({ user }) {
     try {
       let url = `${API_URL}/api/speaking/modules?track=${filterTrack}`;
       if (filterBand) url += `&band=${filterBand}`;
-      
+
       const res = await fetch(url);
+      // TODO(backend): /api/speaking/modules is served by routes/speaking_qb.py
+      // and depends on content/speaking/speaking_sets.py being importable +
+      // populated. If the import fails, the route itself 404s and modules
+      // stay empty. The previous code silently ignored non-2xx responses,
+      // leaving the page blank with no toast — confusing for users.
+      if (!res.ok) {
+        console.error('Speaking modules HTTP error', res.status);
+        toast.error(`Speaking topics unavailable (${res.status}). Try again shortly.`);
+        setModules([]);
+        return;
+      }
       const data = await res.json();
-      
-      if (data.success) {
-        setModules(data.modules);
+
+      if (data?.success) {
+        const list = Array.isArray(data.modules) ? data.modules : [];
+        setModules(list);
+        if (list.length === 0) {
+          toast.info('No speaking topics matched this track yet.');
+        }
         if (initialSetId) {
           selectModule(initialSetId);
         }
+      } else {
+        console.warn('Speaking modules response missing success flag', data);
+        setModules([]);
+        toast.error(data?.error || 'Failed to load speaking topics.');
       }
     } catch (error) {
       console.error('Error loading modules:', error);
@@ -126,6 +156,7 @@ export default function SpeakingPracticeQB({ user }) {
       if (data.success) {
         setSelectedModule(setId);
         setModuleContent(data.set);
+        setSelectedPart(null);
         setCurrentPart(1);
         setCurrentQuestionIndex(0);
         setRecordingState(STATES.IDLE);
@@ -175,6 +206,15 @@ export default function SpeakingPracticeQB({ user }) {
   }, [getCurrentQuestion, currentPart, moduleContent]);
 
   const handleAudioEnded = () => {
+    // The shared <audio> element drives both prompt playback (auto-advance to
+    // recording) and the user's own recording playback (just stop). Only the
+    // PROMPT_PLAYING phase should kick off recording — playback during
+    // READY_NEXT just rewinds the playback button.
+    if (recordingState === STATES.READY_NEXT) {
+      setIsPlayingBack(false);
+      return;
+    }
+    if (recordingState !== STATES.PROMPT_PLAYING) return;
     if (currentPart === 2) startPrepPhase();
     else setTimeout(() => startRecording(), 500);
   };
@@ -200,6 +240,16 @@ export default function SpeakingPracticeQB({ user }) {
   const startRecording = async () => {
     try {
       audioChunksRef.current = [];
+      // Stop any active playback and free the previous blob URL so the user
+      // doesn't get the prior question's audio still playing while recording.
+      if (audioRef.current) {
+        try { audioRef.current.pause(); } catch (_) { /* ignore */ }
+      }
+      setIsPlayingBack(false);
+      if (lastRecordingUrl) {
+        try { URL.revokeObjectURL(lastRecordingUrl); } catch (_) { /* ignore */ }
+        setLastRecordingUrl(null);
+      }
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
       
@@ -259,9 +309,31 @@ export default function SpeakingPracticeQB({ user }) {
       setAnswers(prev => [...prev, answer]);
       audioChunksRef.current = [];
       mediaRecorderRef.current = null;
+
+      // Expose this question's audio for playback verification. Revoke any
+      // prior URL to avoid leaking blob: handles across questions.
+      setLastRecordingUrl((prev) => {
+        if (prev) {
+          try { URL.revokeObjectURL(prev); } catch (_) { /* ignore */ }
+        }
+        return URL.createObjectURL(audioBlob);
+      });
+
       setRecordingState(STATES.READY_NEXT);
     }
   }, [getCurrentQuestion, currentPart, moduleContent, speakingTime]);
+
+  const togglePlayback = useCallback(() => {
+    if (!audioRef.current || !lastRecordingUrl) return;
+    if (isPlayingBack) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setIsPlayingBack(false);
+      return;
+    }
+    audioRef.current.src = lastRecordingUrl;
+    audioRef.current.play().then(() => setIsPlayingBack(true)).catch(() => setIsPlayingBack(false));
+  }, [lastRecordingUrl, isPlayingBack]);
 
   const transcribeAudio = async (blob, questionId, part) => {
     try {
@@ -279,27 +351,52 @@ export default function SpeakingPracticeQB({ user }) {
     }
   };
 
+  const choosePart = (partNum) => {
+    setSelectedPart(partNum);
+    setCurrentPart(partNum);
+    setCurrentQuestionIndex(0);
+    setRecordingState(STATES.IDLE);
+    setAnswers([]);
+    audioBlobsRef.current = {};
+  };
+
+  const backToParts = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    setSelectedPart(null);
+    setCurrentPart(1);
+    setCurrentQuestionIndex(0);
+    setRecordingState(STATES.IDLE);
+    setIsPrepPhase(false);
+    setAnswers([]);
+    audioBlobsRef.current = {};
+    if (lastRecordingUrl) {
+      try { URL.revokeObjectURL(lastRecordingUrl); } catch (_) { /* ignore */ }
+    }
+    setLastRecordingUrl(null);
+    setIsPlayingBack(false);
+  };
+
+  // Per-part flow: each part ends on its own and triggers the tier modal.
+  // We no longer roll Part 1 → Part 2 → Part 3 automatically; the picker
+  // brings the user back to choose another part (or exit) after results.
   const moveToNext = () => {
     if (currentPart === 1) {
       if (currentQuestionIndex < (moduleContent.part1?.questions?.length || 0) - 1) {
         setCurrentQuestionIndex(prev => prev + 1);
         setRecordingState(STATES.IDLE);
       } else {
-        setCurrentPart(2);
-        setCurrentQuestionIndex(0);
-        setRecordingState(STATES.IDLE);
+        setRecordingState(STATES.COMPLETED);
+        setShowTierModal(true);
       }
     } else if (currentPart === 2) {
-      setCurrentPart(3);
-      setCurrentQuestionIndex(0);
-      setRecordingState(STATES.IDLE);
+      setRecordingState(STATES.COMPLETED);
+      setShowTierModal(true);
     } else if (currentPart === 3) {
       if (currentQuestionIndex < (moduleContent.part3?.questions?.length || 0) - 1) {
         setCurrentQuestionIndex(prev => prev + 1);
         setRecordingState(STATES.IDLE);
       } else {
         setRecordingState(STATES.COMPLETED);
-        // Show tier selection modal instead of auto-submit
         setShowTierModal(true);
       }
     }
@@ -319,82 +416,104 @@ export default function SpeakingPracticeQB({ user }) {
   };
 
   const submitTest = async (tier = 'free') => {
-    // Overlay-driven flow: show the processing screen immediately so the user
-    // sees Liz "thinking" instead of staring at the stale Part 3 question.
-    // Toast-only feedback (the previous implementation) was invisible during
-    // the modal-close→fetch gap and silent on errors that landed after the
-    // user had already navigated away.
+    // Per-part submission. Routes to the unified Sonnet-backed
+    // /api/speaking/evaluate endpoint (same path Smart Practice/Cambridge use).
+    // The legacy /api/speaking/submit required EMERGENT_LLM_KEY and silently
+    // returned `success:true, error:"Evaluation service not configured"` when
+    // the key was missing — which surfaced as "No evaluation data returned"
+    // in the UI. The unified endpoint uses ANTHROPIC_API_KEY (Sonnet)
+    // and auto-tiers from the user's plan instead of free/premium toggle.
     setShowTierModal(false);
     setSubmittingTier(tier);
     setSubmitError(null);
-    setSubmitStep(tier === 'premium' ? 'preparing' : 'evaluating');
+    setSubmitStep('uploading');
 
     try {
-      let preparedAnswers = [...answers];
+      const partAnswers = answers.filter(a => a.part === String(currentPart));
+      const partBlobs = partAnswers
+        .map(a => audioBlobsRef.current[a.question_id])
+        .filter(Boolean);
 
-      if (tier === 'premium') {
-        // Base64-encoding 10 webm blobs can take a couple of seconds on
-        // mid-range phones; keep the user on the 'preparing' step until
-        // the upload starts.
-        preparedAnswers = await Promise.all(answers.map(async (answer) => {
-          const audioBlob = audioBlobsRef.current[answer.question_id];
-          if (audioBlob) {
-            const audioBase64 = await blobToBase64(audioBlob);
-            return { ...answer, audio_data: audioBase64 };
-          }
-          return answer;
-        }));
-        setSubmitStep('uploading');
+      if (partBlobs.length === 0) {
+        setSubmitError('No audio captured for this part. Re-record your answers and try again.');
+        setSubmitStep('error');
+        return;
       }
 
-      const res = await fetch(`${API_URL}/api/speaking/submit`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          set_id: selectedModule,
-          track: filterTrack,
-          band_range: filterBand || moduleContent?.band_range,
-          answers: preparedAnswers,
-          evaluation_tier: tier,
-          user_id: user?.id
-        })
-      });
+      // Concatenate per-question webm fragments into a single blob. Backend
+      // ffmpeg transcoder (speaking_evaluator.py) is robust enough to handle
+      // chained webm payloads; if it ever isn't, the fallback is to record
+      // each part as one continuous MediaRecorder session.
+      const combinedBlob = partBlobs.length === 1
+        ? partBlobs[0]
+        : new Blob(partBlobs, { type: 'audio/webm' });
 
-      // Once bytes are on the wire, the server-side eval (Sonnet + optionally
-      // Azure for premium) is what we're now waiting on.
+      // Build cue card payload appropriate for the part. For Parts 1/3 there's
+      // no real cue card — pass the topic + all questions so the evaluator has
+      // task context. For Part 2 use the actual cue card.
+      let cueCardPrompt = '';
+      let cueCardBullets = '';
+      if (currentPart === 2) {
+        cueCardPrompt = moduleContent?.part2?.cue_card?.topic || 'Cue card monologue';
+        cueCardBullets = (moduleContent?.part2?.cue_card?.bullets || []).join('\n');
+      } else {
+        const partKey = currentPart === 1 ? 'part1' : 'part3';
+        const qs = moduleContent?.[partKey]?.questions || [];
+        const partLabel = currentPart === 1 ? 'Part 1 — Introduction' : 'Part 3 — Discussion';
+        cueCardPrompt = `${partLabel} (${moduleContent?.title || 'Speaking'})`;
+        cueCardBullets = qs.map(q => q.text).filter(Boolean).join('\n');
+      }
+
+      const totalDuration = partAnswers.reduce((s, a) => s + (a.duration || 0), 0);
+
+      const form = new FormData();
+      form.append('audio', combinedBlob, `qb-part${currentPart}-${Date.now()}.webm`);
+      form.append('user_id', user?.id || '');
+      form.append('part', `part${currentPart}`);
+      form.append('cue_card_prompt', cueCardPrompt);
+      form.append('cue_card_bullets', cueCardBullets);
+      form.append('user_language', user?.feedback_language || 'en');
+      form.append('target_band', String(user?.target_band ?? 7.0));
+      form.append('duration_seconds', String(totalDuration || 0));
+      form.append('context', 'qb');
+      if (selectedModule) form.append('set_id', selectedModule);
+
+      const res = await fetch(`${API_URL}/api/speaking/evaluate`, {
+        method: 'POST',
+        body: form,
+      });
       setSubmitStep('evaluating');
 
-      const data = await res.json();
-      if (data.success) {
-        setResults(data);
-        audioBlobsRef.current = {};
-        if (tier === 'premium' && data.remaining_credits !== undefined) {
-          setUserCredits(data.remaining_credits);
-        }
-        setSubmittingTier(null);
-        setSubmitStep('idle');
-      } else {
-        // Stay in the overlay so the user can retry without losing their
-        // answers (audioBlobsRef is intentionally not cleared on error).
-        // Map common Azure / pipeline failures to actionable mic guidance.
-        const rawError = data.error || data.detail?.message || data.detail?.code || 'Evaluation failed';
-        const combined = `${data.detail?.code || ''} ${rawError}`;
+      if (!res.ok) {
+        let detail;
+        try { detail = await res.json(); } catch (_) { detail = await res.text(); }
+        const code = (typeof detail === 'object' && detail?.detail?.code) || '';
+        const rawError = (typeof detail === 'object' && (detail?.detail?.message || detail?.detail)) || (typeof detail === 'string' ? detail : `HTTP ${res.status}`);
+        const combined = `${code} ${rawError}`;
         const isNoMatch = /NoMatch|no\s*match|no_speech|no\s*speech/i.test(combined);
         const isTooShort = /audio_too_short|audio_too_small|too\s*short|too_short|min_seconds|min_bytes/i.test(combined);
-
         let message;
-        if (data.error === 'Insufficient credits for premium evaluation') {
-          message = `Need ${data.credits_needed} credit. You have ${data.current_credits}.`;
+        if (code === 'quota_exhausted') {
+          message = rawError || 'You\'ve used all evaluations for this period.';
         } else if (isTooShort) {
-          message = "One or more answers were shorter than 5 seconds. Re-record your responses, speaking in full sentences for 10–15 seconds each, then submit again.";
+          message = "Your recording was shorter than the minimum. Re-record speaking in full sentences for at least 10–15 seconds, then submit again.";
         } else if (isNoMatch) {
-          message = "We couldn't pick up clear speech from your microphone. Check the lock icon in the URL bar → Microphone = Allow, confirm the right input device is selected (not a Bluetooth headset that's powered off), and re-record speaking in full sentences for at least 5–10 seconds.";
+          message = "We couldn't pick up clear speech from your microphone. Check the lock icon in the URL bar → Microphone = Allow, then re-record speaking in full sentences for 10–15 seconds.";
         } else {
           message = rawError;
         }
         setSubmitError(message);
         setSubmitStep('error');
+        return;
       }
+
+      const data = await res.json();
+      // /evaluate returns the SpeakingEvaluationResult shape directly (no
+      // wrapping `success` flag). Hand it to the existing adapter via setResults.
+      setResults(data);
+      audioBlobsRef.current = {};
+      setSubmittingTier(null);
+      setSubmitStep('idle');
     } catch (error) {
       console.error('Submit error:', error);
       setSubmitError('Could not reach the evaluation server. Check your connection and try again.');
@@ -408,17 +527,18 @@ export default function SpeakingPracticeQB({ user }) {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // Progress is now scoped to the chosen part — when practising Part 1 in
+  // isolation, the user shouldn't see "1/14" counting against the full test.
   const getProgress = () => {
-    let total = 0, current = 0;
-    if (moduleContent) {
-      const p1 = moduleContent.part1?.questions?.length || 0;
-      const p3 = moduleContent.part3?.questions?.length || 0;
-      total = p1 + 1 + p3;
-      if (currentPart === 1) current = currentQuestionIndex;
-      else if (currentPart === 2) current = p1;
-      else if (currentPart === 3) current = p1 + 1 + currentQuestionIndex;
+    if (!moduleContent) return { current: 1, total: 1 };
+    if (currentPart === 1) {
+      return { current: currentQuestionIndex + 1, total: moduleContent.part1?.questions?.length || 1 };
     }
-    return { current: current + 1, total };
+    if (currentPart === 2) return { current: 1, total: 1 };
+    if (currentPart === 3) {
+      return { current: currentQuestionIndex + 1, total: moduleContent.part3?.questions?.length || 1 };
+    }
+    return { current: 1, total: 1 };
   };
 
   if (loading && !moduleContent) {
@@ -502,7 +622,122 @@ export default function SpeakingPracticeQB({ user }) {
           </div>
         )}
 
-        {moduleContent && !results && (
+        {moduleContent && !selectedPart && !results && (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">{moduleContent.title || 'Speaking Module'}</h2>
+                <p className="text-sm text-gray-500 mt-1">
+                  Choose a part to practise. Each part is scored on its own — come back here to try another.
+                </p>
+              </div>
+              <Button variant="outline" size="sm" onClick={() => { setSelectedModule(null); setModuleContent(null); }}>
+                <ArrowLeft className="w-4 h-4 mr-1" /> Modules
+              </Button>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-3">
+              {/* Part 1 */}
+              <Card
+                className="p-5 cursor-pointer hover:shadow-md transition-all border-2 hover:border-green-400 bg-gradient-to-br from-green-50 to-emerald-50"
+                onClick={() => choosePart(1)}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                    <User className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <Badge className="bg-green-600 text-white mb-1">Part 1</Badge>
+                    <h3 className="font-bold text-gray-900">Introduction</h3>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-600 mb-3">
+                  Familiar topic Q&amp;A. Short answers (~25s each).
+                </p>
+                <div className="flex items-center justify-between text-xs text-gray-500">
+                  <span>{moduleContent.part1?.questions?.length || 0} questions</span>
+                  <span>~4–5 min</span>
+                </div>
+              </Card>
+
+              {/* Part 2 */}
+              <Card
+                className="p-5 cursor-pointer hover:shadow-md transition-all border-2 hover:border-blue-400 bg-gradient-to-br from-blue-50 to-sky-50"
+                onClick={() => choosePart(2)}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-sky-600 rounded-lg flex items-center justify-center">
+                    <FileText className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <Badge className="bg-blue-600 text-white mb-1">Part 2</Badge>
+                    <h3 className="font-bold text-gray-900">Long Turn</h3>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-600 mb-3">
+                  Cue-card monologue. 1 min prep, 2 min speaking.
+                </p>
+                <div className="flex items-center justify-between text-xs text-gray-500">
+                  <span className="truncate pr-2">{moduleContent.part2?.cue_card?.topic || 'Cue card'}</span>
+                  <span>~3 min</span>
+                </div>
+              </Card>
+
+              {/* Part 3 */}
+              <Card
+                className="p-5 cursor-pointer hover:shadow-md transition-all border-2 hover:border-purple-400 bg-gradient-to-br from-purple-50 to-indigo-50"
+                onClick={() => choosePart(3)}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg flex items-center justify-center">
+                    <MessageSquare className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <Badge className="bg-purple-600 text-white mb-1">Part 3</Badge>
+                    <h3 className="font-bold text-gray-900">Discussion</h3>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-600 mb-3">
+                  Abstract follow-ups. Longer, opinion-based answers (~75s).
+                </p>
+                <div className="flex items-center justify-between text-xs text-gray-500">
+                  <span>{moduleContent.part3?.questions?.length || 0} questions</span>
+                  <span>~4–5 min</span>
+                </div>
+              </Card>
+            </div>
+
+            {/* Full Test — all 3 parts back-to-back. Navigates to the unified
+                /speaking-premium surface which hosts the FullTestFlow orchestrator.
+                Tier gating happens there (Monthly + Exam Pack only). */}
+            <Card
+              className="p-5 cursor-pointer hover:shadow-md transition-all border-2 hover:border-amber-400 bg-gradient-to-r from-amber-50 via-orange-50 to-amber-50"
+              onClick={() => navigate('/speaking-premium')}
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg flex items-center justify-center shrink-0">
+                  <Award className="w-6 h-6 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Badge className="bg-amber-600 text-white">Full Test</Badge>
+                    <span className="text-xs text-amber-700 font-medium">Monthly · Exam Pack</span>
+                  </div>
+                  <h3 className="font-bold text-gray-900">All 3 parts back-to-back</h3>
+                  <p className="text-sm text-gray-600 mt-0.5">
+                    Simulate the full exam in one sitting — Part 1 → Part 2 → Part 3 with one shared theme.
+                  </p>
+                </div>
+                <div className="text-right shrink-0">
+                  <div className="text-xs text-gray-500">~11–14 min</div>
+                  <ChevronRight className="w-5 h-5 text-amber-700 ml-auto mt-1" />
+                </div>
+              </div>
+            </Card>
+          </div>
+        )}
+
+        {moduleContent && selectedPart && !results && (
           <div className="space-y-6">
             <Card className={`p-4 ${recordingState === STATES.RECORDING ? 'bg-red-50 border-red-200' : isPrepPhase ? 'bg-yellow-50 border-yellow-200' : 'bg-gray-50'}`}>
               <div className="flex items-center justify-between">
@@ -551,16 +786,40 @@ export default function SpeakingPracticeQB({ user }) {
             <div className="flex gap-3 justify-center">
               {recordingState === STATES.IDLE && <Button onClick={playQuestionAudio} className="bg-indigo-600 hover:bg-indigo-700 px-8"><Play className="w-5 h-5 mr-2" /> Start</Button>}
               {recordingState === STATES.RECORDING && <Button onClick={stopRecording} className="bg-red-600 hover:bg-red-700 px-8"><Square className="w-5 h-5 mr-2" /> Stop</Button>}
+              {recordingState === STATES.READY_NEXT && lastRecordingUrl && (
+                <Button onClick={togglePlayback} variant="outline" className="px-6">
+                  {isPlayingBack ? (
+                    <><Square className="w-4 h-4 mr-2" /> Stop playback</>
+                  ) : (
+                    <><Volume2 className="w-4 h-4 mr-2" /> Play my recording</>
+                  )}
+                </Button>
+              )}
               {recordingState === STATES.READY_NEXT && <Button onClick={moveToNext} className="bg-green-600 hover:bg-green-700 px-8"><SkipForward className="w-5 h-5 mr-2" /> Next</Button>}
               {isPrepPhase && <Button onClick={() => { clearInterval(timerRef.current); setIsPrepPhase(false); startRecording(); }} className="bg-blue-600 hover:bg-blue-700 px-8"><Mic className="w-5 h-5 mr-2" /> Start Speaking</Button>}
             </div>
 
-            <Card className="p-4 bg-gray-50">
-              <div className="grid grid-cols-3 gap-4 text-center text-sm">
-                <div className={currentPart === 1 ? 'font-bold text-green-700' : 'text-gray-500'}><p>Part 1</p><p className="text-xs">Introduction</p></div>
-                <div className={currentPart === 2 ? 'font-bold text-blue-700' : 'text-gray-500'}><p>Part 2</p><p className="text-xs">Long Turn</p></div>
-                <div className={currentPart === 3 ? 'font-bold text-purple-700' : 'text-gray-500'}><p>Part 3</p><p className="text-xs">Discussion</p></div>
+            {/* Footer: confirm which part the user is on + escape hatch back
+                to the picker. We don't allow live mid-recording part swaps —
+                the back button only acts when not actively recording. */}
+            <Card className="p-4 bg-gray-50 flex items-center justify-between">
+              <div className="text-sm">
+                <span className="font-semibold text-gray-900">
+                  {currentPart === 1 ? 'Part 1 — Introduction' : currentPart === 2 ? 'Part 2 — Long Turn' : 'Part 3 — Discussion'}
+                </span>
+                <span className="text-gray-500 ml-2">
+                  ({progress.current}/{progress.total})
+                </span>
               </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={backToParts}
+                disabled={recordingState === STATES.RECORDING || recordingState === STATES.PROCESSING}
+                title={recordingState === STATES.RECORDING ? 'Stop recording first' : 'Choose another part'}
+              >
+                <ArrowLeft className="w-4 h-4 mr-1" /> Choose another part
+              </Button>
             </Card>
           </div>
         )}
@@ -690,8 +949,18 @@ export default function SpeakingPracticeQB({ user }) {
                 <div className="speaking-scope rounded-2xl overflow-hidden border border-indigo-100 shadow-sm">
                   <SpeakingResultsState
                     data={adapted}
-                    onRetryCard={() => selectModule(selectedModule)}
-                    onNewCard={() => navigate('/question-bank')}
+                    onRetryCard={() => {
+                      // Re-run the same part with a clean slate.
+                      const part = selectedPart || currentPart;
+                      setResults(null);
+                      choosePart(part);
+                    }}
+                    onNewCard={() => {
+                      // Bounce back to the part picker for this module so the
+                      // user can try a different part without re-fetching.
+                      setResults(null);
+                      backToParts();
+                    }}
                   />
                 </div>
               ) : (
@@ -731,8 +1000,23 @@ export default function SpeakingPracticeQB({ user }) {
               )}
 
               <div className="flex gap-3">
-                <Button variant="outline" onClick={() => selectModule(selectedModule)} className="flex-1"><RotateCcw className="w-4 h-4 mr-2" /> Again</Button>
-                <Button onClick={() => navigate('/question-bank')} className="flex-1 bg-indigo-600">More <ChevronRight className="w-4 h-4 ml-1" /></Button>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    const part = selectedPart || currentPart;
+                    setResults(null);
+                    choosePart(part);
+                  }}
+                  className="flex-1"
+                >
+                  <RotateCcw className="w-4 h-4 mr-2" /> Try this part again
+                </Button>
+                <Button
+                  onClick={() => { setResults(null); backToParts(); }}
+                  className="flex-1 bg-indigo-600"
+                >
+                  Choose another part <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
               </div>
             </div>
           );

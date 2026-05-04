@@ -12,8 +12,28 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useGoBack } from '../hooks/useGoBack';
+import AppShellNav from '../components/appshell/AppShellNav';
+import LizAvatar from '../features/landing/components/LizAvatar';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
+
+// D9 handoff visual tokens — port-only, no data changes
+const T = {
+  brand: '160 84% 39%',
+  brandDark: '160 84% 28%',
+  sky: '199 89% 60%',
+  gold: '43 96% 56%',
+  rose: '350 70% 58%',
+  ink: '220 25% 12%',
+  muted: '220 10% 45%',
+  fainter: '220 10% 65%',
+  bg: '210 20% 98%',
+  surface: '0 0% 100%',
+  border: '220 15% 90%',
+  borderSoft: '220 15% 94%',
+};
+const FONT_DISPLAY = '"Playfair Display", Georgia, serif';
+const FONT_SANS = '"Inter", system-ui, sans-serif';
 
 // Section times and questions for Full Test modal
 const SECTION_TIMES = {
@@ -93,6 +113,21 @@ export default function QuestionBank({ user }) {
   // Completion tracking
   const [completionStats, setCompletionStats] = useState(null);
   const [showCompletionDetail, setShowCompletionDetail] = useState(false);
+
+  // D9 prompt search + Type filter + hide-done toggle
+  const [searchQuery, setSearchQuery] = useState('');
+  const [typeFilter, setTypeFilter] = useState('all');
+  const [hideDone, setHideDone] = useState(false);
+  // D9 active skill tab (writing/speaking/reading/listening)
+  const [skillTab, setSkillTab] = useState('writing');
+  // Advanced Mastery modules — used to deep-link writing prompt cards by topic
+  // name to /advanced-mastery?lesson={module_number}&focus=writing
+  const [advancedModules, setAdvancedModules] = useState([]);
+  // D9 Topic dropdown — controlled by React state instead of DOM class toggle
+  const [topicDropdownOpen, setTopicDropdownOpen] = useState(false);
+  // Band/Topic filter visibility — collapsed by default; opens via Filters pill
+  // (band-level filtering is a power-user feature, hidden until requested)
+  const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -221,6 +256,17 @@ export default function QuestionBank({ user }) {
       
       // Load all topics initially (from Lesson Registry)
       await loadTopicsForBand(null);
+
+      // Load Advanced Mastery modules for prompt-card deep-linking (writing)
+      try {
+        const amRes = await fetch(`${API_URL}/api/advanced-mastery/modules`);
+        if (amRes.ok) {
+          const amData = await amRes.json();
+          setAdvancedModules(Array.isArray(amData) ? amData : []);
+        }
+      } catch (amErr) {
+        console.error('Error loading advanced modules:', amErr);
+      }
     } catch (error) {
       console.error('Error loading data:', error);
       toast.error('Failed to load question bank data');
@@ -322,275 +368,1194 @@ export default function QuestionBank({ user }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="appshell-page" style={{ fontFamily: FONT_SANS, color: `hsl(${T.ink})` }}>
+        <AppShellNav currentPage="practice" user={user} />
+        <div style={{ display: 'grid', placeItems: 'center', padding: '120px 24px' }}>
+          <div style={{
+            width: 48, height: 48, borderRadius: '50%',
+            border: `2px solid hsl(${T.border})`, borderBottomColor: `hsl(${T.brand})`,
+            animation: 'spin 0.9s linear infinite',
+          }} />
+          <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+        </div>
       </div>
     );
   }
 
+  const completionPct = completionStats?.total_full_available
+    ? Math.round((completionStats.total_full_completed / completionStats.total_full_available) * 100)
+    : 0;
+
+  // D9: derive weakest skill from completion stats (lowest completion %).
+  // completionStats.practice is { writing: count, ... } — use as a rough proxy
+  // for "where the user has practised least". Falls back to 'writing'.
+  const weakestSkill = (() => {
+    const practice = completionStats?.practice || {};
+    const candidates = ['writing', 'speaking', 'reading', 'listening'];
+    let lowest = 'writing';
+    let lowestCount = Infinity;
+    for (const c of candidates) {
+      const count = practice[c] ?? 0;
+      if (count < lowestCount) {
+        lowestCount = count;
+        lowest = c;
+      }
+    }
+    return lowest;
+  })();
+
+  // D9: pick a single Liz-recommended prompt from the topics list.
+  // We don't have per-skill prompts wired here yet, so fall back to the
+  // first available topic. This is purely cosmetic — clicking opens the
+  // existing skill modal exactly like the skill cards already do.
+  const lizPickTopic = topics[0] || null;
+  const openSkillModal = (skillId) => {
+    if (skillId === 'writing') setShowWritingModal(true);
+    else if (skillId === 'reading') setShowReadingModal(true);
+    else if (skillId === 'listening') setShowListeningModal(true);
+    else if (skillId === 'speaking') setShowSpeakingModal(true);
+  };
+
+  // D9 Type filter options per skill tab. Only relevant chips are shown.
+  const typeFiltersForSkill = (s) => {
+    if (s === 'writing') return [
+      { id: 'all', label: 'All' },
+      { id: 'task1', label: 'Task 1' },
+      { id: 'task2', label: 'Task 2' },
+    ];
+    if (s === 'speaking') return [
+      { id: 'all', label: 'All' },
+      { id: 'part1', label: 'Part 1' },
+      { id: 'part2', label: 'Part 2' },
+      { id: 'part3', label: 'Part 3' },
+    ];
+    return [{ id: 'all', label: 'All' }];
+  };
+
+  // D9 prompt grid — filters topics by search + selected topic + type filter.
+  // Topic data shape comes from /api/lesson-registry/topics (id/name/icon/
+  // description). Band filtering is already applied via loadTopicsForBand.
+  // Type filter (task1/task2/part1/2/3) narrows by topic.type|task|part if
+  // present in the payload, else by simple name/description keyword match.
+  const typeKeywords = {
+    task1: ['task 1', 'task1'],
+    task2: ['task 2', 'task2', 'essay'],
+    part1: ['part 1', 'part1'],
+    part2: ['part 2', 'part2', 'cue card', 'long turn'],
+    part3: ['part 3', 'part3', 'discussion'],
+  };
+  // Prompt grid is sourced from Advanced Mastery modules so each card is a
+  // course title ("The Digital Frontier", "The Educational Paradigm", …)
+  // and clicking it deep-links into that lesson's writing/reading/etc.
+  // section via /advanced-mastery?lesson=N&focus={skillTab}. We map module
+  // shape → the {id, name, description, module_number} the grid expects.
+  const filteredPrompts = (advancedModules || [])
+    .map((m) => ({
+      id: `am-${m.module_number}`,
+      name: m.title || '',
+      description: m.subtitle || '',
+      module_number: m.module_number,
+      level: m.level,
+    }))
+    .filter((t) => {
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        const name = (t.name || '').toLowerCase();
+        const desc = (t.description || '').toLowerCase();
+        if (!name.includes(q) && !desc.includes(q)) return false;
+      }
+      if (typeFilter !== 'all') {
+        const hay = `${t.name || ''} ${t.description || ''}`.toLowerCase();
+        const kws = typeKeywords[typeFilter] || [typeFilter];
+        if (!kws.some((k) => hay.includes(k))) return false;
+      }
+      return true;
+    });
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-emerald-500 via-teal-500 to-sky-500 text-white py-12 px-6">
-        <div className="max-w-7xl mx-auto">
-          <Button
-            variant="ghost"
-            onClick={goBack}
-            className="text-white/80 hover:text-white hover:bg-white/10 mb-4"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" /> Back
-          </Button>
-          
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
-              <Layers className="w-8 h-8" />
-            </div>
-            <div>
-              <h1 className="text-3xl md:text-4xl font-bold">IELTS Question Bank</h1>
-              <p className="text-white/80 text-lg">Cambridge IELTS compatible, AI-powered question bank</p>
-            </div>
-          </div>
+    <div className="appshell-page" style={{ fontFamily: FONT_SANS, color: `hsl(${T.ink})` }}>
+      <AppShellNav currentPage="practice" user={user} />
 
-          {/* Quick Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-8">
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4" data-testid="stat-total-questions">
-              <div className="text-2xl font-bold">{stats?.total_questions || 0}</div>
-              <div className="text-white/70 text-sm">Total Questions</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4" data-testid="stat-full-tests">
-              <div className="text-2xl font-bold">{stats?.full_tests || 0}</div>
-              <div className="text-white/70 text-sm">Full Tests</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4" data-testid="stat-skill-areas">
-              <div className="text-2xl font-bold">{stats?.practice_sets || 4}</div>
-              <div className="text-white/70 text-sm">Skill Areas</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4" data-testid="stat-topics">
-              <div className="text-2xl font-bold">{stats?.topics_count || 0}</div>
-              <div className="text-white/70 text-sm">Topics</div>
-            </div>
-            {/* Completion Rate - 5th stat box */}
-            <div 
-              className="bg-white/20 backdrop-blur rounded-xl p-4 cursor-pointer hover:bg-white/25 transition-colors relative"
-              data-testid="stat-completion-rate"
-              onClick={() => setShowCompletionDetail(!showCompletionDetail)}
-            >
-              <div className="text-2xl font-bold">
-                {completionStats ? `${completionStats.total_full_completed}/${completionStats.total_full_available}` : '0/20'}
-              </div>
-              <div className="text-white/70 text-sm">Completed</div>
-              {completionStats?.total_full_completed > 0 && (
-                <div className="mt-1.5 w-full bg-white/20 rounded-full h-1.5">
-                  <div 
-                    className="bg-emerald-400 h-1.5 rounded-full transition-all duration-500"
-                    style={{ width: `${Math.round((completionStats.total_full_completed / completionStats.total_full_available) * 100)}%` }}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
+      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '28px 24px 48px' }}>
 
-          {/* Completion Breakdown Popup */}
-          {showCompletionDetail && completionStats && (
-            <div className="mt-4 bg-white/15 backdrop-blur-lg rounded-xl p-5 border border-white/20" data-testid="completion-breakdown">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-semibold text-sm">Completion Breakdown</h3>
-                <button onClick={() => setShowCompletionDetail(false)} className="text-white/60 hover:text-white">
-                  <X className="w-4 h-4" />
-                </button>
+        {/* Back */}
+        <button
+          onClick={goBack}
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+            padding: '6px 0', marginBottom: 14,
+            background: 'none', border: 0, cursor: 'pointer',
+            color: `hsl(${T.muted})`, fontSize: 13, fontWeight: 500,
+          }}
+        >
+          <ArrowLeft style={{ width: 14, height: 14 }} /> Back
+        </button>
+
+        {/* Page Head */}
+        <header style={{ marginBottom: 22 }}>
+          {/* Title row — icon + kicker/title left, smaller stat chips right (same line) */}
+          <div style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            gap: 20, flexWrap: 'wrap',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+              <div style={{
+                width: 56, height: 56, flex: '0 0 56px',
+                borderRadius: 16,
+                background: `linear-gradient(135deg, hsl(${T.brand} / 0.18), hsl(${T.brand} / 0.08))`,
+                border: `1px solid hsl(${T.brand} / 0.22)`,
+                display: 'grid', placeItems: 'center',
+                color: `hsl(${T.brandDark})`,
+                boxShadow: `0 2px 6px hsl(${T.brand} / 0.10)`,
+              }}>
+                <Layers style={{ width: 26, height: 26 }} strokeWidth={1.8} />
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-                <div className="bg-white/10 rounded-lg p-3">
-                  <div className="flex items-center gap-2 mb-1">
-                    <BookMarked className="w-4 h-4 text-red-300" />
-                    <span className="text-xs font-medium text-white/80">Cambridge</span>
-                  </div>
-                  <div className="text-lg font-bold">{completionStats.cambridge.completed}/{completionStats.cambridge.total}</div>
-                  <div className="mt-1 w-full bg-white/20 rounded-full h-1">
-                    <div className="bg-red-400 h-1 rounded-full" style={{ width: `${(completionStats.cambridge.completed / completionStats.cambridge.total) * 100}%` }} />
-                  </div>
+              <div>
+                <div style={{ fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase', color: `hsl(${T.brandDark})`, fontWeight: 600 }}>
+                  Practice
                 </div>
-                <div className="bg-white/10 rounded-lg p-3">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Zap className="w-4 h-4 text-indigo-300" />
-                    <span className="text-xs font-medium text-white/80">AI Academic</span>
-                  </div>
-                  <div className="text-lg font-bold">{completionStats.ai_academic.completed}/{completionStats.ai_academic.total}</div>
-                  <div className="mt-1 w-full bg-white/20 rounded-full h-1">
-                    <div className="bg-indigo-400 h-1 rounded-full" style={{ width: `${(completionStats.ai_academic.completed / completionStats.ai_academic.total) * 100}%` }} />
-                  </div>
-                </div>
-                <div className="bg-white/10 rounded-lg p-3">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Zap className="w-4 h-4 text-purple-300" />
-                    <span className="text-xs font-medium text-white/80">AI General</span>
-                  </div>
-                  <div className="text-lg font-bold">{completionStats.ai_general.completed}/{completionStats.ai_general.total}</div>
-                  <div className="mt-1 w-full bg-white/20 rounded-full h-1">
-                    <div className="bg-purple-400 h-1 rounded-full" style={{ width: `${(completionStats.ai_general.completed / completionStats.ai_general.total) * 100}%` }} />
-                  </div>
-                </div>
+                <h1 style={{ fontFamily: FONT_DISPLAY, fontSize: 36, fontWeight: 600, letterSpacing: '-0.01em', margin: '4px 0 0' }}>
+                  Question Bank
+                </h1>
               </div>
-              {/* Practice Stats */}
-              {completionStats.practice && Object.keys(completionStats.practice).length > 0 && (
-                <div className="border-t border-white/15 pt-3">
-                  <p className="text-xs font-medium text-white/60 mb-2">Practice Sessions</p>
-                  <div className="flex flex-wrap gap-2">
-                    {Object.entries(completionStats.practice).map(([skill, count]) => (
-                      <span key={skill} className="bg-white/10 rounded-lg px-3 py-1.5 text-xs font-medium">
-                        {skill.charAt(0).toUpperCase() + skill.slice(1)}: {count}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-              {completionStats.total_full_completed === 0 && Object.keys(completionStats.practice || {}).length === 0 && (
-                <p className="text-xs text-white/50 text-center">No tests completed yet. Start practicing to see your progress!</p>
-              )}
             </div>
-          )}
-        </div>
-      </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Tab Navigation — simplified to 2 tabs per 2026-04-19 design decision.
-            'Smart Practice' bundles the old Browse + Practice surfaces (skill/
-            topic/band filters feed straight into practice sessions). 'Full
-            Tests' is the timed Cambridge/AI mock test catalog. Progress lives
-            on the /progress route now, not inside the QB. */}
-        <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
-          {[
-            { id: 'overview', label: 'Smart Practice', icon: Target },
-            { id: 'tests', label: 'Full Tests', icon: Award },
-          ].map(tab => {
-            const Icon = tab.icon;
-            return (
-              <Button
-                key={tab.id}
-                variant={activeTab === tab.id ? 'default' : 'outline'}
-                onClick={() => setActiveTab(tab.id)}
-                className={activeTab === tab.id ? 'bg-emerald-600 hover:bg-emerald-700' : ''}
-              >
-                <Icon className="w-4 h-4 mr-2" /> {tab.label}
-              </Button>
-            );
-          })}
-        </div>
-
-        {/* Overview Tab */}
-        {activeTab === 'overview' && (
-          <div className="space-y-6">
-            {/* Compact Filter Bar */}
-            <div className="flex flex-wrap items-center gap-3 bg-white rounded-xl px-4 py-3 shadow-sm border border-slate-100">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Filter</span>
-              <div className="h-5 w-px bg-slate-200" />
-              {/* Band pills */}
-              <div className="flex gap-1.5">
-                {bandLevels.map(band => (
-                  <button
-                    key={band.id}
-                    onClick={() => { setSelectedBand(selectedBand === band.id ? null : band.id); setSelectedTopic(null); }}
-                    className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
-                      selectedBand === band.id
-                        ? 'bg-emerald-600 text-white shadow-sm'
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                    }`}
-                  >
-                    <span className="inline-block w-1.5 h-1.5 rounded-full mr-1.5" style={{ backgroundColor: band.color }} />
-                    {band.name}
-                  </button>
-                ))}
-              </div>
-              <div className="h-5 w-px bg-slate-200" />
-              {/* Topic dropdown */}
-              <div className="relative">
+            {/* Stat chips — right side of title row, smaller iOS 26 style cool tint */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
+              {[
+                { label: 'Questions', value: stats?.total_questions || 0, testId: 'stat-total-questions' },
+                { label: 'Full Tests', value: stats?.full_tests || 0, testId: 'stat-full-tests' },
+                { label: 'Topics', value: stats?.topics_count || 0, testId: 'stat-topics' },
+              ].map((chip) => (
+                <div key={chip.label} data-testid={chip.testId} style={{
+                  display: 'flex', alignItems: 'center', gap: 7,
+                  padding: '7px 14px', borderRadius: 12,
+                  background: 'hsl(210 70% 98%)',
+                  border: '1px solid hsl(210 60% 90%)',
+                  fontSize: 13,
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  boxShadow: '0 1px 2px hsl(210 30% 50% / 0.04)',
+                }}>
+                  <span style={{ fontFamily: FONT_DISPLAY, fontWeight: 700, color: `hsl(${T.ink})`, fontSize: 13 }}>{chip.value}</span>
+                  <span style={{ color: `hsl(${T.muted})` }}>{chip.label}</span>
+                </div>
+              ))}
+              {completionStats && (
                 <button
-                  onClick={() => {
-                    const el = document.getElementById('topic-dropdown');
-                    if (el) el.classList.toggle('hidden');
+                  data-testid="stat-completion-rate"
+                  onClick={() => setShowCompletionDetail(!showCompletionDetail)}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: 7,
+                    padding: '7px 14px', borderRadius: 12,
+                    background: `hsl(${T.brand} / 0.08)`, border: `1px solid hsl(${T.brand} / 0.28)`,
+                    fontSize: 13, cursor: 'pointer', color: `hsl(${T.brandDark})`,
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)',
                   }}
-                  className={`px-3 py-1 rounded-full text-xs font-medium transition-all flex items-center gap-1 ${
-                    selectedTopic
-                      ? 'bg-purple-100 text-purple-700'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                  }`}
-                  data-testid="topic-filter-btn"
                 >
-                  {selectedTopic ? (topics.find(t => t.id === selectedTopic)?.name || 'Topic') : 'All Topics'}
-                  <Filter className="w-3 h-3" />
+                  <span style={{ width: 7, height: 7, borderRadius: '50%', background: `hsl(${T.brand})`, boxShadow: `0 0 0 3px hsl(${T.brand} / 0.18)` }} />
+                  <span style={{ fontFamily: FONT_DISPLAY, fontWeight: 700, fontSize: 13 }}>
+                    {completionStats.total_full_completed}/{completionStats.total_full_available}
+                  </span>
+                  <span>completed</span>
                 </button>
-                <div id="topic-dropdown" className="hidden absolute top-full left-0 mt-1 w-72 bg-white rounded-xl border border-slate-200 shadow-xl z-50 py-2 max-h-64 overflow-y-auto" data-testid="topic-dropdown">
-                  <button
-                    onClick={() => { setSelectedTopic(null); document.getElementById('topic-dropdown')?.classList.add('hidden'); }}
-                    className="w-full px-3 py-1.5 text-left text-xs hover:bg-indigo-50 text-slate-600 font-medium"
-                  >
-                    All Topics
-                  </button>
-                  <div className="border-t border-slate-100 my-1" />
-                  {topics.map(topic => (
-                    <button
-                      key={topic.id}
-                      onClick={() => { setSelectedTopic(topic.id); document.getElementById('topic-dropdown')?.classList.add('hidden'); }}
-                      className={`w-full px-3 py-1.5 text-left text-xs hover:bg-indigo-50 truncate ${
-                        selectedTopic === topic.id ? 'bg-indigo-50 text-indigo-700 font-medium' : 'text-slate-600'
-                      }`}
-                    >
-                      <span className="mr-1.5">{topic.icon}</span>{topic.name}
-                    </button>
+              )}
+            </div>
+          </div>
+
+          {/* Subtitle */}
+          <p style={{ margin: '8px 0 0', color: `hsl(${T.muted})`, maxWidth: 620, fontSize: 14 }}>
+            Hand-picked IELTS prompts with instant Liz feedback. Filter by topic, difficulty, or band level.
+          </p>
+
+          {/* Search bar + Filters pill */}
+          <div style={{ marginTop: 14, display: 'flex', flexWrap: 'wrap', gap: 10, alignItems: 'center' }}>
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: 8,
+              padding: '10px 14px', borderRadius: 999,
+              background: `hsl(${T.surface})`, border: `1px solid hsl(${T.border})`,
+              boxShadow: `0 1px 2px hsl(220 15% 20% / 0.04)`,
+              minWidth: 280, maxWidth: 420, flex: '1 1 280px',
+            }}>
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" style={{ width: 16, height: 16, color: `hsl(${T.muted})`, flex: '0 0 16px' }}>
+                <circle cx="9" cy="9" r="6" />
+                <path d="M14 14l4 4" />
+              </svg>
+              <input
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search topics, keywords…"
+                style={{ border: 0, outline: 0, width: '100%', background: 'transparent', fontSize: 14 }}
+              />
+            </div>
+            {activeTab !== 'tests' && (
+              <button
+                onClick={() => setShowFilters(v => !v)}
+                data-testid="qb-filters-toggle"
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 8,
+                  padding: '10px 14px', borderRadius: 999,
+                  background: (selectedBand || selectedTopic)
+                    ? `hsl(${T.brand} / 0.08)`
+                    : 'hsl(210 40% 97%)',
+                  border: `1px solid ${(selectedBand || selectedTopic) ? `hsl(${T.brand} / 0.32)` : 'hsl(210 30% 92%)'}`,
+                  fontSize: 13, fontWeight: 500,
+                  color: (selectedBand || selectedTopic) ? `hsl(${T.brandDark})` : `hsl(${T.muted})`,
+                  cursor: 'pointer',
+                  flexShrink: 0,
+                }}
+              >
+                <Filter style={{ width: 13, height: 13 }} />
+                Filters
+                {(selectedBand || selectedTopic) && (
+                  <span style={{
+                    fontSize: 11, fontWeight: 700,
+                    padding: '1px 7px', borderRadius: 999,
+                    background: `hsl(${T.brand})`, color: 'white',
+                  }}>
+                    {(selectedBand ? 1 : 0) + (selectedTopic ? 1 : 0)}
+                  </span>
+                )}
+              </button>
+            )}
+          </div>
+        </header>
+
+        {/* Completion Breakdown Popup — preserved, restyled */}
+        {showCompletionDetail && completionStats && (
+          <div style={{
+            background: `hsl(${T.surface})`, border: `1px solid hsl(${T.border})`,
+            borderRadius: 16, padding: 18, marginBottom: 22,
+            boxShadow: `0 4px 16px hsl(220 15% 20% / 0.06)`,
+          }} data-testid="completion-breakdown">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+              <h3 style={{ fontFamily: FONT_DISPLAY, fontSize: 16, fontWeight: 600, margin: 0 }}>Completion Breakdown</h3>
+              <button onClick={() => setShowCompletionDetail(false)} style={{ background: 'none', border: 0, color: `hsl(${T.muted})`, cursor: 'pointer', padding: 4 }}>
+                <X style={{ width: 16, height: 16 }} />
+              </button>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12, marginBottom: 12 }}>
+              {[
+                { key: 'cambridge', label: 'Cambridge', icon: BookMarked, accent: T.sky },
+                { key: 'ai_academic', label: 'AI Academic', icon: Zap, accent: T.brand },
+                { key: 'ai_general', label: 'AI General', icon: Zap, accent: T.gold },
+              ].map(({ key, label, icon: Icon, accent }) => {
+                const c = completionStats[key];
+                const pct = c?.total ? (c.completed / c.total) * 100 : 0;
+                return (
+                  <div key={key} style={{
+                    padding: 12, borderRadius: 10,
+                    background: `hsl(${T.borderSoft})`,
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                      <Icon style={{ width: 14, height: 14, color: `hsl(${accent})` }} />
+                      <span style={{ fontSize: 12, fontWeight: 500, color: `hsl(${T.muted})` }}>{label}</span>
+                    </div>
+                    <div style={{ fontFamily: FONT_DISPLAY, fontSize: 18, fontWeight: 600 }}>{c?.completed || 0}/{c?.total || 0}</div>
+                    <div style={{ marginTop: 6, width: '100%', background: `hsl(${T.border})`, borderRadius: 999, height: 4 }}>
+                      <div style={{ background: `hsl(${accent})`, height: 4, borderRadius: 999, width: `${pct}%`, transition: 'width 250ms' }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            {completionStats.practice && Object.keys(completionStats.practice).length > 0 && (
+              <div style={{ borderTop: `1px solid hsl(${T.border})`, paddingTop: 12 }}>
+                <p style={{ fontSize: 11, fontWeight: 600, color: `hsl(${T.fainter})`, letterSpacing: '0.06em', textTransform: 'uppercase', margin: '0 0 8px' }}>
+                  Practice Sessions
+                </p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                  {Object.entries(completionStats.practice).map(([skill, count]) => (
+                    <span key={skill} style={{
+                      background: `hsl(${T.borderSoft})`, padding: '4px 10px', borderRadius: 999,
+                      fontSize: 12, fontWeight: 500, color: `hsl(${T.muted})`,
+                    }}>
+                      {skill.charAt(0).toUpperCase() + skill.slice(1)}: {count}
+                    </span>
                   ))}
                 </div>
               </div>
-              {/* Clear */}
-              {(selectedBand || selectedTopic) && (
-                <>
-                  <div className="h-5 w-px bg-slate-200" />
-                  <button
-                    onClick={() => { setSelectedBand(null); setSelectedTopic(null); }}
-                    className="text-xs text-slate-400 hover:text-red-500 flex items-center gap-1 transition-colors"
-                  >
-                    <X className="w-3 h-3" /> Clear
-                  </button>
-                </>
-              )}
-            </div>
+            )}
+            {completionStats.total_full_completed === 0 && Object.keys(completionStats.practice || {}).length === 0 && (
+              <p style={{ fontSize: 12, color: `hsl(${T.fainter})`, textAlign: 'center', margin: 0 }}>
+                No tests completed yet. Start practicing to see your progress!
+              </p>
+            )}
+          </div>
+        )}
 
-            {/* Skills Grid - compact */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-              {skills.map(skill => {
-                const Icon = skillIcons[skill.id] || BookOpen;
-                const colors = {
-                  reading: { bg: 'bg-blue-500', light: 'bg-blue-50 hover:bg-blue-100 border-blue-200', text: 'text-blue-600' },
-                  listening: { bg: 'bg-purple-500', light: 'bg-purple-50 hover:bg-purple-100 border-purple-200', text: 'text-purple-600' },
-                  writing: { bg: 'bg-emerald-500', light: 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200', text: 'text-emerald-600' },
-                  speaking: { bg: 'bg-orange-500', light: 'bg-orange-50 hover:bg-orange-100 border-orange-200', text: 'text-orange-600' },
-                };
-                const c = colors[skill.id] || colors.reading;
+        {/* ===== D9 Liz's Pick hero (Practice only) ===== */}
+        {activeTab !== 'tests' && lizPickTopic && (
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: 16,
+            padding: 18, borderRadius: 24,
+            background: `linear-gradient(135deg, hsl(${T.brand} / 0.10), hsl(${T.sky} / 0.10))`,
+            border: `1px solid hsl(${T.brand} / 0.22)`,
+            marginBottom: 22,
+            flexWrap: 'wrap',
+          }}>
+            <div style={{
+              width: 54, height: 54, flex: '0 0 54px',
+              borderRadius: '50%',
+              boxShadow: `0 4px 14px hsl(${T.brand} / 0.3)`,
+              overflow: 'hidden',
+            }}>
+              <LizAvatar size={54} alt="Liz" />
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', fontWeight: 600, color: `hsl(${T.brandDark})` }}>
+                Liz's pick for you
+              </div>
+              <h3 style={{ fontFamily: FONT_DISPLAY, fontSize: 19, fontWeight: 600, margin: '2px 0 4px' }}>
+                {lizPickTopic.icon ? `${lizPickTopic.icon} ` : ''}{lizPickTopic.name}
+              </h3>
+              <p style={{ margin: 0, color: `hsl(${T.ink} / 0.75)`, fontSize: 14 }}>
+                {weakestSkill.charAt(0).toUpperCase() + weakestSkill.slice(1)} ·{' '}
+                <em style={{ color: `hsl(${T.muted})`, fontStyle: 'normal' }}>
+                  chosen because your last sessions skipped {weakestSkill} — let's fix that
+                </em>
+              </p>
+            </div>
+            <button
+              onClick={() => { setSkillTab(weakestSkill); openSkillModal(weakestSkill); }}
+              style={{
+                padding: '10px 18px', borderRadius: 10,
+                background: `hsl(${T.brand})`, color: 'white',
+                fontWeight: 600, fontSize: 13, border: 0, cursor: 'pointer',
+              }}
+            >
+              Start now →
+            </button>
+          </div>
+        )}
+
+        {/* ===== D9 Skill Tabs — centered iOS 26 segmented pill ===== */}
+        {true && (
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 28 }}>
+            <div style={{
+              display: 'inline-flex', gap: 4,
+              padding: 6, borderRadius: 20,
+              background: 'hsl(210 40% 97%)',
+              border: '1px solid hsl(210 30% 92%)',
+              boxShadow: '0 1px 2px hsl(210 30% 50% / 0.04)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)',
+              maxWidth: '100%', overflowX: 'auto',
+            }}>
+              {[
+                { id: 'writing', label: 'Writing', icon: PenTool, count: stats?.by_skill?.writing, suffix: 'prompts' },
+                { id: 'speaking', label: 'Speaking', icon: Mic, count: stats?.by_skill?.speaking, suffix: 'prompts' },
+                { id: 'reading', label: 'Reading', icon: BookOpen, count: stats?.by_skill?.reading, suffix: 'prompts' },
+                { id: 'listening', label: 'Listening', icon: Headphones, count: stats?.by_skill?.listening, suffix: 'prompts' },
+                { id: 'fulltests', label: 'Full Tests', icon: Award, subtitle: 'Cambridge + AI' },
+              ].map(tab => {
+                const Icon = tab.icon;
+                const isFullTests = tab.id === 'fulltests';
+                const selected = isFullTests ? activeTab === 'tests' : (activeTab !== 'tests' && skillTab === tab.id);
                 return (
                   <button
-                    key={skill.id}
+                    key={tab.id}
+                    data-testid={`d9-tab-${tab.id}`}
                     onClick={() => {
-                      if (skill.id === 'writing') setShowWritingModal(true);
-                      else if (skill.id === 'reading') setShowReadingModal(true);
-                      else if (skill.id === 'listening') setShowListeningModal(true);
-                      else if (skill.id === 'speaking') setShowSpeakingModal(true);
-                      else { setSelectedSkill(skill.id); setActiveTab('practice'); }
+                      if (isFullTests) {
+                        setActiveTab('tests');
+                        return;
+                      }
+                      setActiveTab('overview');
+                      setSkillTab(tab.id);
+                      setTypeFilter('all');
                     }}
-                    className={`${c.light} border rounded-xl p-4 text-left transition-all hover:shadow-md group`}
-                    data-testid={`skill-${skill.id}`}
+                    style={{
+                      padding: '10px 18px',
+                      borderRadius: 14,
+                      fontSize: 15, fontWeight: selected ? 600 : 500,
+                      color: selected ? `hsl(${T.brandDark})` : `hsl(${T.muted})`,
+                      background: selected ? 'white' : 'transparent',
+                      border: selected ? '1px solid hsl(210 30% 90%)' : '1px solid transparent',
+                      cursor: 'pointer',
+                      display: 'inline-flex', alignItems: 'center', gap: 8,
+                      whiteSpace: 'nowrap',
+                      boxShadow: selected ? '0 1px 3px hsl(210 30% 50% / 0.10), 0 0 0 1px hsl(210 30% 95%)' : 'none',
+                      transition: 'all 180ms ease',
+                    }}
                   >
-                    <div className={`${c.bg} w-10 h-10 rounded-lg flex items-center justify-center mb-3`}>
-                      <Icon className="w-5 h-5 text-white" />
-                    </div>
-                    <h3 className="font-bold text-sm text-slate-800">{skill.name}</h3>
-                    <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-1">{skill.description}</p>
-                    <div className={`flex items-center ${c.text} text-xs font-medium mt-2 group-hover:gap-1 transition-all`}>
-                      Start <ChevronRight className="w-3.5 h-3.5" />
-                    </div>
+                    <Icon style={{ width: 15, height: 15 }} strokeWidth={selected ? 2 : 1.8} /> {tab.label}
+                    {tab.subtitle && (
+                      <span style={{
+                        fontSize: 12, fontWeight: 500,
+                        color: `hsl(${T.muted})`,
+                        marginLeft: 2,
+                      }}>
+                        {tab.subtitle}
+                      </span>
+                    )}
+                    {tab.count != null && tab.count > 0 && (
+                      <span style={{
+                        fontSize: 11, fontWeight: 600,
+                        padding: '2px 8px', borderRadius: 999,
+                        background: selected ? `hsl(${T.brand} / 0.12)` : `hsl(210 30% 92%)`,
+                        color: selected ? `hsl(${T.brandDark})` : `hsl(${T.muted})`,
+                      }}>
+                        {tab.count} {tab.suffix}
+                      </span>
+                    )}
                   </button>
                 );
               })}
             </div>
+          </div>
+        )}
+
+        {/* Overview Tab — Practice */}
+        {activeTab === 'overview' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
+            {/* Filter Bar — D9 chip style (band + topic) — visible when toggled or active */}
+            {(showFilters || selectedBand || selectedTopic) && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
+              <span style={{ fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: `hsl(${T.fainter})`, fontWeight: 600, marginRight: 4 }}>
+                Band
+              </span>
+              {bandLevels.map(band => {
+                const active = selectedBand === band.id;
+                return (
+                  <button
+                    key={band.id}
+                    onClick={() => { setSelectedBand(active ? null : band.id); setSelectedTopic(null); }}
+                    style={{
+                      display: 'inline-flex', alignItems: 'center', gap: 6,
+                      padding: '7px 12px', borderRadius: 999,
+                      background: active ? `hsl(${T.brand} / 0.10)` : `hsl(${T.surface})`,
+                      border: `1px solid ${active ? `hsl(${T.brand} / 0.5)` : `hsl(${T.border})`}`,
+                      fontSize: 13, fontWeight: 500,
+                      color: active ? `hsl(${T.brandDark})` : `hsl(${T.muted})`,
+                      cursor: 'pointer', transition: 'all 150ms',
+                    }}
+                  >
+                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: band.color }} />
+                    {band.name}
+                  </button>
+                );
+              })}
+
+              <span style={{ width: 8 }} />
+              <span style={{ fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: `hsl(${T.fainter})`, fontWeight: 600, marginRight: 4 }}>
+                Topic
+              </span>
+              <div style={{ position: 'relative' }}>
+                <button
+                  onClick={() => setTopicDropdownOpen((v) => !v)}
+                  data-testid="topic-filter-btn"
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 6,
+                    padding: '7px 12px', borderRadius: 999,
+                    background: selectedTopic ? `hsl(${T.brand} / 0.10)` : `hsl(${T.surface})`,
+                    border: `1px solid ${selectedTopic ? `hsl(${T.brand} / 0.5)` : `hsl(${T.border})`}`,
+                    fontSize: 13, fontWeight: 500,
+                    color: selectedTopic ? `hsl(${T.brandDark})` : `hsl(${T.muted})`,
+                    cursor: 'pointer',
+                  }}
+                >
+                  {selectedTopic ? (topics.find(t => t.id === selectedTopic)?.name || 'Topic') : 'All Topics'}
+                  <Filter style={{ width: 12, height: 12 }} />
+                </button>
+                {topicDropdownOpen && (
+                  <>
+                    {/* outside-click backdrop */}
+                    <div
+                      onClick={() => setTopicDropdownOpen(false)}
+                      style={{ position: 'fixed', inset: 0, zIndex: 49 }}
+                    />
+                    <div data-testid="topic-dropdown" style={{
+                      position: 'absolute', top: '100%', left: 0, marginTop: 4,
+                      width: 288, background: `hsl(${T.surface})`,
+                      borderRadius: 12, border: `1px solid hsl(${T.border})`,
+                      boxShadow: `0 12px 40px hsl(220 15% 20% / 0.12)`,
+                      zIndex: 50, padding: '8px 0', maxHeight: 256, overflowY: 'auto',
+                    }}>
+                      <button
+                        onClick={() => { setSelectedTopic(null); setTopicDropdownOpen(false); }}
+                        style={{
+                          width: '100%', padding: '6px 12px', textAlign: 'left',
+                          fontSize: 12, fontWeight: selectedTopic ? 500 : 600,
+                          color: selectedTopic ? `hsl(${T.muted})` : `hsl(${T.brandDark})`,
+                          background: selectedTopic ? 'none' : `hsl(${T.brand} / 0.08)`,
+                          border: 0, cursor: 'pointer',
+                        }}
+                      >
+                        All Topics
+                      </button>
+                      <div style={{ borderTop: `1px solid hsl(${T.borderSoft})`, margin: '4px 0' }} />
+                      {topics.length === 0 && (
+                        <div style={{ padding: '8px 12px', fontSize: 12, color: `hsl(${T.fainter})` }}>
+                          No topics for this band.
+                        </div>
+                      )}
+                      {topics.map(topic => {
+                        const isSel = selectedTopic === topic.id;
+                        return (
+                          <button
+                            key={topic.id}
+                            onClick={() => { setSelectedTopic(topic.id); setTopicDropdownOpen(false); }}
+                            style={{
+                              width: '100%', padding: '6px 12px', textAlign: 'left',
+                              fontSize: 12, color: isSel ? `hsl(${T.brandDark})` : `hsl(${T.muted})`,
+                              background: isSel ? `hsl(${T.brand} / 0.08)` : 'none',
+                              fontWeight: isSel ? 600 : 400,
+                              border: 0, cursor: 'pointer',
+                              whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                            }}
+                          >
+                            <span style={{ marginRight: 6 }}>{topic.icon}</span>{topic.name}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {(selectedBand || selectedTopic) && (
+                <button
+                  onClick={() => { setSelectedBand(null); setSelectedTopic(null); }}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 4,
+                    fontSize: 12, color: `hsl(${T.fainter})`,
+                    background: 'none', border: 0, cursor: 'pointer',
+                    marginLeft: 8,
+                  }}
+                >
+                  <X style={{ width: 12, height: 12 }} /> Clear
+                </button>
+              )}
+            </div>
+            )}
+
+            {/* Inline skill content — renders the same tiles/links the per-skill
+                modal has (Academic + GT Task 1/2 for Writing, Part 1/2/3 for
+                Speaking, band tiers + question types for Listening, Academic/
+                General passages + question types for Reading). No floating
+                overlay — content is shown directly below the tabs/filters. */}
+
+            {/* WRITING inline */}
+            {skillTab === 'writing' && (
+              <Card className="p-6" data-testid="inline-skill-writing">
+                <h2 className="text-xl font-bold text-gray-900 mb-2 flex items-center gap-2">
+                  <PenTool className="w-5 h-5 text-green-600" /> Writing Practice
+                </h2>
+                <p className="text-gray-500 mb-4">Which task would you like to practice?</p>
+
+                <div className="space-y-3">
+                  <div className="mb-2">
+                    <p className="text-xs font-semibold text-indigo-600 uppercase tracking-wider mb-2 flex items-center gap-2">
+                      <BookOpen className="w-4 h-4" /> Academic IELTS
+                    </p>
+                    <p className="text-xs text-gray-500 mb-3">Course-aligned topics with band filtering</p>
+                  </div>
+
+                  {(selectedTopic || selectedBand) && (
+                    <div className="mb-3 p-3 bg-indigo-50 rounded-lg border border-indigo-100">
+                      <p className="text-xs text-indigo-600 font-medium mb-1">Academic Writing Filters:</p>
+                      <div className="flex gap-2 flex-wrap">
+                        {selectedBand && (
+                          <Badge className="bg-indigo-100 text-indigo-700 text-xs">
+                            Band: {bandLevels.find(b => b.id === selectedBand)?.name || selectedBand}
+                          </Badge>
+                        )}
+                        {selectedTopic && (
+                          <Badge className="bg-purple-100 text-purple-700 text-xs">
+                            Topic: {topics.find(t => t.id === selectedTopic)?.name || selectedTopic}
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  <Card
+                    className="p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-green-300"
+                    onClick={() => {
+                      const params = new URLSearchParams();
+                      if (selectedTopic) params.set('topic', selectedTopic);
+                      if (selectedBand) params.set('band', selectedBand);
+                      navigate(`/question-bank/writing/task1${params.toString() ? '?' + params.toString() : ''}`);
+                    }}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <BarChart3 className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-gray-900">Task 1 - Academic</h3>
+                        <p className="text-sm text-gray-500">Graph, table, process or map description</p>
+                        <div className="flex gap-2 mt-2 flex-wrap">
+                          <Badge className="bg-green-100 text-green-700">150+ words</Badge>
+                          <Badge className="bg-gray-100 text-gray-600">20 minutes</Badge>
+                          {selectedTopic && <Badge className="bg-indigo-100 text-indigo-600">Topic Focused</Badge>}
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+
+                  <Card
+                    className="p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-blue-300"
+                    onClick={() => {
+                      const params = new URLSearchParams();
+                      if (selectedTopic) params.set('topic', selectedTopic);
+                      if (selectedBand) params.set('band', selectedBand);
+                      navigate(`/question-bank/writing/task2${params.toString() ? '?' + params.toString() : ''}`);
+                    }}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Edit3 className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-gray-900">Task 2 - Essay</h3>
+                        <p className="text-sm text-gray-500">Opinion, Discussion, Problem-Solution essay</p>
+                        <div className="flex gap-2 mt-2 flex-wrap">
+                          <Badge className="bg-blue-100 text-blue-700">250+ words</Badge>
+                          <Badge className="bg-gray-100 text-gray-600">40 minutes</Badge>
+                          {selectedTopic && <Badge className="bg-indigo-100 text-indigo-600">Topic Focused</Badge>}
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+
+                  <div className="mt-6 mb-2 pt-4 border-t border-gray-200">
+                    <p className="text-xs font-semibold text-purple-600 uppercase tracking-wider mb-2 flex items-center gap-2">
+                      <FileText className="w-4 h-4" /> General Training IELTS
+                    </p>
+                    <p className="text-xs text-gray-500 mb-3">Letter writing practice, independent of course topics</p>
+                  </div>
+
+                  <div className="mb-3 p-3 bg-purple-50 rounded-lg border border-purple-100">
+                    <p className="text-xs text-purple-600">
+                      General Training letter writing is independent of course topics. It includes 32 different letter scenarios (Formal, Semi-formal, Informal).
+                    </p>
+                  </div>
+
+                  <Card
+                    className="p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-purple-300"
+                    onClick={() => navigate('/question-bank/writing/general/task1')}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <FileText className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-gray-900">Task 1 - Letter Writing</h3>
+                        <p className="text-sm text-gray-500">Formal, Semi-formal, Informal letter writing</p>
+                        <div className="flex gap-2 mt-2 flex-wrap">
+                          <Badge className="bg-purple-100 text-purple-700">150+ words</Badge>
+                          <Badge className="bg-gray-100 text-gray-600">20 minutes</Badge>
+                          <Badge className="bg-amber-100 text-amber-700">32 scenarios</Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+
+                  <Card
+                    className="p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-pink-300"
+                    onClick={() => navigate('/question-bank/writing/general/task2')}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-rose-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Edit3 className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-gray-900">Task 2 - Essay (General)</h3>
+                        <p className="text-sm text-gray-500">Opinion, Discussion, Problem-Solution essays</p>
+                        <div className="flex gap-2 mt-2 flex-wrap">
+                          <Badge className="bg-pink-100 text-pink-700">250+ words</Badge>
+                          <Badge className="bg-gray-100 text-gray-600">40 minutes</Badge>
+                          <Badge className="bg-amber-100 text-amber-700">16 scenarios</Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                </div>
+              </Card>
+            )}
+
+            {/* READING inline */}
+            {skillTab === 'reading' && (
+              <Card className="p-6" data-testid="inline-skill-reading">
+                <div className="flex items-center gap-2 mb-4">
+                  <BookOpen className="w-5 h-5 text-blue-600" />
+                  <h2 className="text-xl font-bold text-gray-900">Reading Practice</h2>
+                </div>
+
+                {(selectedBand || selectedTopic) && (
+                  <div className="mb-4 p-3 bg-blue-50 rounded-lg">
+                    <p className="text-xs text-blue-600 font-medium mb-1">Active Filters:</p>
+                    <div className="flex gap-2 flex-wrap">
+                      {selectedBand && (
+                        <Badge className="bg-blue-100 text-blue-700">
+                          {bandLevels.find(b => b.id === selectedBand)?.name}
+                        </Badge>
+                      )}
+                      {selectedTopic && (
+                        <Badge className="bg-purple-100 text-purple-700">
+                          {topics.find(t => t.id === selectedTopic)?.icon} {topics.find(t => t.id === selectedTopic)?.name}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                <p className="text-sm text-gray-500 mb-6">Select an IELTS Reading type or question type:</p>
+
+                <div className="mb-6 p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-200">
+                  <h4 className="text-sm font-bold text-amber-700 mb-3 flex items-center gap-2">
+                    <HelpCircle className="w-4 h-4" /> PRACTICE BY QUESTION TYPE
+                  </h4>
+                  <p className="text-xs text-amber-600 mb-3">Choose a specific question type to master</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[
+                      { id: 'multiple_choice', name: 'Multiple Choice', icon: '🔘' },
+                      { id: 'true_false_ng', name: 'True/False/NG', icon: '✓✗' },
+                      { id: 'matching_headings', name: 'Matching Headings', icon: '📑' },
+                      { id: 'sentence_completion', name: 'Sentence Completion', icon: '✏️' },
+                      { id: 'summary_completion', name: 'Summary Completion', icon: '📝' },
+                      { id: 'matching_information', name: 'Matching Info', icon: '🔗' },
+                    ].map(qtype => (
+                      <Button
+                        key={qtype.id}
+                        variant="outline"
+                        size="sm"
+                        className="justify-start text-xs hover:bg-amber-100 hover:border-amber-300"
+                        onClick={() => navigate(`/question-bank/reading/practice?type=${qtype.id}`)}
+                      >
+                        <span className="mr-1">{qtype.icon}</span> {qtype.name}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mb-4">
+                  <h4 className="text-sm font-bold text-blue-700 mb-3 flex items-center gap-2">
+                    <BookMarked className="w-4 h-4" /> ACADEMIC IELTS
+                  </h4>
+                  <Card
+                    className="p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-blue-300"
+                    onClick={() => {
+                      const params = new URLSearchParams();
+                      if (selectedTopic) params.append('topic', selectedTopic);
+                      if (selectedBand) params.append('band', selectedBand);
+                      navigate(`/question-bank/reading/academic${params.toString() ? '?' + params.toString() : ''}`);
+                    }}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <BookOpen className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-gray-900">Academic Reading</h3>
+                        <p className="text-sm text-gray-500">Research articles, journals, academic texts</p>
+                        <div className="flex gap-2 mt-2 flex-wrap">
+                          <Badge className="bg-blue-100 text-blue-700">Band 7-9</Badge>
+                          <Badge className="bg-gray-100 text-gray-600">5 Modules</Badge>
+                          <Badge className="bg-indigo-100 text-indigo-700">Advanced</Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                </div>
+
+                <div className="mb-4">
+                  <h4 className="text-sm font-bold text-purple-700 mb-3 flex items-center gap-2">
+                    <Target className="w-4 h-4" /> GENERAL TRAINING IELTS
+                  </h4>
+                  <Card
+                    className="p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-purple-300"
+                    onClick={() => {
+                      const params = new URLSearchParams();
+                      if (selectedTopic) params.append('topic', selectedTopic);
+                      if (selectedBand) params.append('band', selectedBand);
+                      navigate(`/question-bank/reading/general${params.toString() ? '?' + params.toString() : ''}`);
+                    }}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <FileText className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-gray-900">General Training Reading</h3>
+                        <p className="text-sm text-gray-500">Policy documents, contracts, workplace notices</p>
+                        <div className="flex gap-2 mt-2 flex-wrap">
+                          <Badge className="bg-purple-100 text-purple-700">Band 7-9</Badge>
+                          <Badge className="bg-gray-100 text-gray-600">5 Modules</Badge>
+                          <Badge className="bg-pink-100 text-pink-700">Advanced</Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                </div>
+
+                <div className="mb-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-200">
+                  <h4 className="text-sm font-bold text-green-700 mb-3 flex items-center gap-2">
+                    <Award className="w-4 h-4" /> MASTERY LEVEL (Band 6-7)
+                  </h4>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Card
+                      className="p-3 cursor-pointer hover:shadow-md transition-all border hover:border-green-300"
+                      onClick={() => {
+                        const params = new URLSearchParams();
+                        if (selectedTopic) params.append('topic', selectedTopic);
+                        navigate(`/question-bank/reading/mastery/academic${params.toString() ? '?' + params.toString() : ''}`);
+                      }}
+                    >
+                      <div className="flex items-center gap-2">
+                        <BookOpen className="w-5 h-5 text-green-600" />
+                        <div>
+                          <p className="font-medium text-sm text-gray-900">Academic</p>
+                          <p className="text-xs text-gray-500">5 Modules</p>
+                        </div>
+                      </div>
+                    </Card>
+                    <Card
+                      className="p-3 cursor-pointer hover:shadow-md transition-all border hover:border-green-300"
+                      onClick={() => {
+                        const params = new URLSearchParams();
+                        if (selectedTopic) params.append('topic', selectedTopic);
+                        navigate(`/question-bank/reading/mastery/general${params.toString() ? '?' + params.toString() : ''}`);
+                      }}
+                    >
+                      <div className="flex items-center gap-2">
+                        <FileText className="w-5 h-5 text-green-600" />
+                        <div>
+                          <p className="font-medium text-sm text-gray-900">General</p>
+                          <p className="text-xs text-gray-500">4 Modules</p>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                </div>
+              </Card>
+            )}
+
+            {/* LISTENING inline */}
+            {skillTab === 'listening' && (
+              <Card className="p-6" data-testid="inline-skill-listening">
+                <h2 className="text-xl font-bold text-gray-900 mb-2 flex items-center gap-2">
+                  <Headphones className="w-5 h-5 text-purple-600" /> Listening Practice
+                </h2>
+                <p className="text-gray-500 mb-4">Select your band level and start practicing</p>
+
+                <div className="mb-4 p-3 bg-purple-50 rounded-lg border border-purple-100">
+                  <p className="text-xs text-purple-600">
+                    🎧 IELTS Listening has ONE track for both Academic and General Training.
+                    Practice with audio recordings covering Parts 1-4.
+                  </p>
+                </div>
+
+                {(selectedTopic || selectedBand) && (
+                  <div className="mb-4 p-3 bg-indigo-50 rounded-lg border border-indigo-100">
+                    <p className="text-xs text-indigo-600 font-medium mb-1">Selected Filters:</p>
+                    <div className="flex gap-2 flex-wrap">
+                      {selectedBand && (
+                        <Badge className="bg-indigo-100 text-indigo-700 text-xs">
+                          Band: {bandLevels.find(b => b.id === selectedBand)?.name || selectedBand}
+                        </Badge>
+                      )}
+                      {selectedTopic && (
+                        <Badge className="bg-purple-100 text-purple-700 text-xs">
+                          Topic: {topics.find(t => t.id === selectedTopic)?.name || selectedTopic}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                <div className="space-y-3">
+                  <p className="text-sm font-semibold text-gray-700 mb-2">Practice by Band Level:</p>
+                  {[
+                    { id: '4.0-5.0', name: 'Band 4.0-5.0', desc: 'Foundation - Simple conversations', color: 'green', parts: 'Part 1-2' },
+                    { id: '5.5-6.5', name: 'Band 5.5-6.5', desc: 'Intermediate - Discussions & talks', color: 'blue', parts: 'Part 2-3' },
+                    { id: '7.0-9.0', name: 'Band 7.0-9.0', desc: 'Advanced - Academic lectures', color: 'purple', parts: 'Part 3-4' },
+                  ].map(band => (
+                    <Card
+                      key={band.id}
+                      className={`p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-${band.color}-300`}
+                      onClick={() => {
+                        const params = new URLSearchParams();
+                        params.set('band', band.id);
+                        if (selectedTopic) params.set('topic', selectedTopic);
+                        navigate(`/question-bank/listening?${params.toString()}`);
+                      }}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className={`w-10 h-10 bg-gradient-to-br from-${band.color}-500 to-${band.color}-600 rounded-lg flex items-center justify-center flex-shrink-0`}>
+                          <Headphones className="w-5 h-5 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-bold text-gray-900">{band.name}</h3>
+                          <p className="text-sm text-gray-500">{band.desc}</p>
+                          <div className="flex gap-2 mt-2 flex-wrap">
+                            <Badge className={`bg-${band.color}-100 text-${band.color}-700`}>{band.parts}</Badge>
+                            <Badge className="bg-gray-100 text-gray-600">3-4 sets</Badge>
+                          </div>
+                        </div>
+                        <ChevronRight className="w-5 h-5 text-gray-400" />
+                      </div>
+                    </Card>
+                  ))}
+
+                  <div className="mt-4 pt-4 border-t">
+                    <p className="text-sm font-semibold text-gray-700 mb-2">Or practice by Question Type:</p>
+                    <div className="grid grid-cols-2 gap-2">
+                      {[
+                        { id: 'multiple_choice', name: 'Multiple Choice', icon: '🔘' },
+                        { id: 'form_completion', name: 'Form Completion', icon: '📝' },
+                        { id: 'sentence_completion', name: 'Sentence Completion', icon: '✏️' },
+                        { id: 'matching', name: 'Matching', icon: '🔗' },
+                      ].map(qtype => (
+                        <Button
+                          key={qtype.id}
+                          variant="outline"
+                          size="sm"
+                          className="justify-start text-xs hover:bg-purple-50 hover:border-purple-300"
+                          onClick={() => navigate(`/question-bank/listening?question_type=${qtype.id}`)}
+                        >
+                          <span className="mr-1">{qtype.icon}</span> {qtype.name}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Button
+                    className="w-full mt-4 bg-gradient-to-r from-purple-600 to-indigo-600"
+                    onClick={() => navigate('/question-bank/listening')}
+                  >
+                    <Headphones className="w-4 h-4 mr-2" /> View All Listening Practice
+                  </Button>
+                </div>
+              </Card>
+            )}
+
+            {/* SPEAKING inline */}
+            {skillTab === 'speaking' && (
+              <Card className="p-6" data-testid="inline-skill-speaking">
+                <h2 className="text-xl font-bold text-gray-900 mb-2 flex items-center gap-2">
+                  <Mic className="w-5 h-5 text-orange-600" /> Speaking Practice
+                </h2>
+                <p className="text-gray-500 mb-4">IELTS Speaking test practice with AI evaluation</p>
+
+                <div className="mb-4 p-3 bg-orange-50 rounded-lg border border-orange-100">
+                  <p className="text-xs text-orange-600">
+                    🎙️ IELTS Speaking practice includes Part 1 (Interview), Part 2 (Cue Card), and Part 3 (Discussion).
+                    Record your answers and get AI-powered evaluation.
+                  </p>
+                </div>
+
+                {(selectedTopic || selectedBand) && (
+                  <div className="mb-4 p-3 bg-indigo-50 rounded-lg border border-indigo-100">
+                    <p className="text-xs text-indigo-600 font-medium mb-1">Selected Filters:</p>
+                    <div className="flex gap-2 flex-wrap">
+                      {selectedBand && (
+                        <Badge className="bg-indigo-100 text-indigo-700 text-xs">
+                          Band: {bandLevels.find(b => b.id === selectedBand)?.name || selectedBand}
+                        </Badge>
+                      )}
+                      {selectedTopic && (
+                        <Badge className="bg-purple-100 text-purple-700 text-xs">
+                          Topic: {topics.find(t => t.id === selectedTopic)?.name || selectedTopic}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                <div className="space-y-3">
+                  <p className="text-sm font-semibold text-gray-700 mb-2">Select IELTS Track:</p>
+
+                  <Card
+                    className="p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-orange-300"
+                    onClick={() => {
+                      const params = new URLSearchParams();
+                      params.set('track', 'academic');
+                      if (selectedBand) params.set('band', selectedBand);
+                      if (selectedTopic) params.set('topic', selectedTopic);
+                      navigate(`/question-bank/speaking?${params.toString()}`);
+                    }}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <BookOpen className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-gray-900">Academic Speaking</h3>
+                        <p className="text-sm text-gray-500">Academic topics and formal discussion</p>
+                        <div className="flex gap-2 mt-2 flex-wrap">
+                          <Badge className="bg-orange-100 text-orange-700">Part 1-2-3</Badge>
+                          <Badge className="bg-gray-100 text-gray-600">11-14 min</Badge>
+                        </div>
+                      </div>
+                      <ChevronRight className="w-5 h-5 text-gray-400" />
+                    </div>
+                  </Card>
+
+                  <Card
+                    className="p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-yellow-300"
+                    onClick={() => {
+                      const params = new URLSearchParams();
+                      params.set('track', 'general');
+                      if (selectedBand) params.set('band', selectedBand);
+                      if (selectedTopic) params.set('topic', selectedTopic);
+                      navigate(`/question-bank/speaking?${params.toString()}`);
+                    }}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <FileText className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-gray-900">General Training Speaking</h3>
+                        <p className="text-sm text-gray-500">Everyday topics and casual discussion</p>
+                        <div className="flex gap-2 mt-2 flex-wrap">
+                          <Badge className="bg-yellow-100 text-yellow-700">Part 1-2-3</Badge>
+                          <Badge className="bg-gray-100 text-gray-600">11-14 min</Badge>
+                        </div>
+                      </div>
+                      <ChevronRight className="w-5 h-5 text-gray-400" />
+                    </div>
+                  </Card>
+
+                  <div className="mt-4 pt-4 border-t">
+                    <p className="text-sm font-semibold text-gray-700 mb-2">Or select by Band Level:</p>
+                    <div className="grid grid-cols-3 gap-2">
+                      {[
+                        { id: '4.0-5.0', name: 'Band 4-5', color: 'green', desc: 'Shows text' },
+                        { id: '5.5-6.5', name: 'Band 5.5-6.5', color: 'blue', desc: 'Audio only' },
+                        { id: '7.0-9.0', name: 'Band 7-9', color: 'purple', desc: 'Advanced' },
+                      ].map(band => (
+                        <Button
+                          key={band.id}
+                          variant="outline"
+                          size="sm"
+                          className={`flex-col h-auto py-3 hover:bg-${band.color}-50 hover:border-${band.color}-300`}
+                          onClick={() => {
+                            const params = new URLSearchParams();
+                            params.set('band', band.id);
+                            navigate(`/question-bank/speaking?${params.toString()}`);
+                          }}
+                        >
+                          <span className="font-medium">{band.name}</span>
+                          <span className="text-xs text-gray-500 mt-1">{band.desc}</span>
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Button
+                    className="w-full mt-4 bg-gradient-to-r from-orange-600 to-amber-600"
+                    onClick={() => navigate('/question-bank/speaking')}
+                  >
+                    <Mic className="w-4 h-4 mr-2" /> View All Speaking Practice
+                  </Button>
+                </div>
+              </Card>
+            )}
+
+            {/* ===== D9 Prompt grid (search/type/done filtered) ===== */}
+            {filteredPrompts.length > 0 && (
+              <div>
+                <div style={{
+                  fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase',
+                  color: `hsl(${T.fainter})`, fontWeight: 600, marginBottom: 10,
+                }}>
+                  Prompts · {skillTab.charAt(0).toUpperCase() + skillTab.slice(1)}
+                </div>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+                  gap: 14,
+                }}>
+                  {filteredPrompts.slice(0, 20).map((prompt) => {
+                    const SkillIcon = skillIcons[skillTab] || BookOpen;
+                    const accent = {
+                      writing: T.brand, speaking: T.rose,
+                      reading: T.sky, listening: T.gold,
+                    }[skillTab] || T.brand;
+                    const done = !!(completionStats?.practice?.[skillTab] && completionStats.practice[skillTab] > 0);
+                    if (hideDone && done) return null;
+                    // Each prompt card IS an Advanced Mastery module (data
+                    // source above); deep-link straight into that lesson's
+                    // active-skill section.
+                    const handlePromptClick = () => {
+                      if (prompt.module_number) {
+                        navigate(`/advanced-mastery?lesson=${prompt.module_number}&focus=${skillTab}`);
+                        return;
+                      }
+                      openSkillModal(skillTab);
+                    };
+                    return (
+                      <button
+                        key={prompt.id}
+                        onClick={handlePromptClick}
+                        data-testid={`d9-prompt-${prompt.id}`}
+                        style={{
+                          background: `hsl(${T.surface})`,
+                          border: `1px solid hsl(${T.border})`,
+                          borderRadius: 16, padding: 18,
+                          display: 'flex', flexDirection: 'column', gap: 12,
+                          textAlign: 'left', cursor: 'pointer',
+                          transition: 'all 180ms',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = `hsl(${accent} / 0.5)`;
+                          e.currentTarget.style.boxShadow = '0 4px 16px hsl(220 15% 20% / 0.08)';
+                          e.currentTarget.style.transform = 'translateY(-1px)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = `hsl(${T.border})`;
+                          e.currentTarget.style.boxShadow = 'none';
+                          e.currentTarget.style.transform = 'none';
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                          <div style={{
+                            width: 28, height: 28, borderRadius: 8,
+                            background: `hsl(${accent} / 0.12)`,
+                            display: 'grid', placeItems: 'center',
+                          }}>
+                            <SkillIcon style={{ width: 14, height: 14, color: `hsl(${accent})` }} />
+                          </div>
+                          <span style={{
+                            padding: '3px 9px', borderRadius: 6,
+                            background: `hsl(${accent} / 0.12)`, color: `hsl(${accent})`,
+                            fontSize: 11, fontWeight: 600, letterSpacing: '0.03em', textTransform: 'uppercase',
+                          }}>{skillTab}</span>
+                          {typeFilter !== 'all' && (
+                            <span style={{
+                              padding: '3px 9px', borderRadius: 6,
+                              background: `hsl(${T.borderSoft})`, color: `hsl(${T.muted})`,
+                              fontSize: 11, fontWeight: 600, letterSpacing: '0.03em', textTransform: 'uppercase',
+                            }}>{typeFilter}</span>
+                          )}
+                          {done && (
+                            <span style={{
+                              marginLeft: 'auto',
+                              padding: '3px 8px', borderRadius: 999,
+                              background: `hsl(${T.brand} / 0.12)`, color: `hsl(${T.brandDark})`,
+                              fontSize: 11, fontWeight: 600,
+                            }}>✓ Done</span>
+                          )}
+                        </div>
+                        <div style={{ fontFamily: FONT_DISPLAY, fontSize: 17, lineHeight: 1.35, fontWeight: 500, color: `hsl(${T.ink})` }}>
+                          {prompt.icon ? `${prompt.icon} ` : ''}{prompt.name}
+                        </div>
+                        {prompt.description && (
+                          <div style={{ fontSize: 13, color: `hsl(${T.muted})`, lineHeight: 1.4 }}>
+                            {prompt.description}
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -679,7 +1644,7 @@ export default function QuestionBank({ user }) {
           </div>
         )}
 
-        {/* Tests Tab */}
+        {/* Tests Tab — visible on Full Tests scene */}
         {activeTab === 'tests' && (
           <div className="space-y-6">
             

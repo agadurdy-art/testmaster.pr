@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
 import { cn } from "../../../lib/utils";
+import BrandLogo from "../../../components/BrandLogo";
 
 /**
  * Public top nav shown above unauthenticated sample pages.
@@ -17,28 +18,7 @@ export default function PublicNav({ className, ctaHref = "/signup" }) {
       )}
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-8 h-16 flex items-center justify-between">
-        <a href="/" className="flex items-center gap-2.5">
-          <span className="relative w-9 h-9 rounded-xl bg-emerald-600 grid place-items-center shadow-[0_6px_22px_-8px_hsl(160_84%_39%/_0.55)]">
-            <span
-              className="font-bold text-white text-xl leading-none"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              A
-            </span>
-            <span className="absolute -right-1 -top-1 w-2.5 h-2.5 rounded-full bg-amber-400 ring-2 ring-slate-50" />
-          </span>
-          <div className="leading-tight">
-            <div
-              className="font-bold text-[17px] tracking-tight"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              IELTS Ace
-            </div>
-            <div className="text-[11px] text-slate-500 -mt-0.5">
-              testmaster.pro
-            </div>
-          </div>
-        </a>
+        <BrandLogo size="sm" href="/" />
 
         <nav className="hidden md:flex items-center gap-7 text-[14px] text-slate-700">
           <a href="/samples/writing/band-6-5-task2" className="hover:text-slate-900">
@@ -46,6 +26,12 @@ export default function PublicNav({ className, ctaHref = "/signup" }) {
           </a>
           <a href="/samples/speaking/band-6-5-part2" className="hover:text-slate-900">
             Speaking
+          </a>
+          <a href="/samples/reading/band-6-0-academic.html" className="hover:text-slate-900">
+            Reading
+          </a>
+          <a href="/samples/listening/band-5-5-listening.html" className="hover:text-slate-900">
+            Listening
           </a>
           {/* "Samples" is the hub/switcher — sends users to the carousel on
               the landing page where they can pick any writing or speaking

@@ -125,6 +125,82 @@ const MODE_LABEL = {
 };
 
 // ---------------------------------------------------------------------------
+// GB topic → course module wiring
+// Each GB slug can deep-link into Beginner / Mastery / Advanced course grammar
+// sections via `?lesson=N&focus=grammar`. Six abstract slugs (articles,
+// inversion, cleft-sentences, nominalisation, hedging, common-errors) stay
+// GB-only because no course module covers them directly.
+// ---------------------------------------------------------------------------
+const COURSE_ROUTE = {
+  beginner: '/beginner-course',
+  mastery: '/mastery-course',
+  advanced: '/advanced-mastery',
+};
+const COURSE_LABEL = {
+  beginner: 'Beginner Course',
+  mastery: 'Mastery Course',
+  advanced: 'Advanced Mastery',
+};
+const GB_TO_COURSES = {
+  'tenses-overview': [
+    { course: 'beginner', lesson: 1, label: 'L1 · Family — Present Simple & to be' },
+    { course: 'beginner', lesson: 2, label: 'L2 · Daily Life — Present Simple' },
+    { course: 'beginner', lesson: 5, label: 'L5 · Past Simple' },
+    { course: 'mastery', lesson: 1, label: 'M1 · Tense System Overview' },
+    { course: 'mastery', lesson: 2, label: 'M2 · Perfect Tenses' },
+    { course: 'advanced', lesson: 1, label: 'A1 · Advanced Tenses' },
+  ],
+  'countable-uncountable': [
+    { course: 'beginner', lesson: 3, label: 'L3 · Food — Countable / Uncountable' },
+    { course: 'mastery', lesson: 4, label: 'M4 · Determiners & Quantifiers' },
+  ],
+  prepositions: [
+    { course: 'beginner', lesson: 6, label: 'L6 · Prepositions of Place & Time' },
+    { course: 'mastery', lesson: 9, label: 'M9 · Prepositions in Academic English' },
+  ],
+  'subject-verb-agreement': [
+    { course: 'beginner', lesson: 1, label: 'L1 · Subject–Verb basics' },
+    { course: 'mastery', lesson: 5, label: 'M5 · Subject–Verb Agreement' },
+    { course: 'advanced', lesson: 5, label: 'A5 · Tricky SVA cases' },
+  ],
+  conditionals: [
+    { course: 'mastery', lesson: 7, label: 'M7 · Conditionals (0–3 + mixed)' },
+    { course: 'advanced', lesson: 7, label: 'A7 · Mixed & Inverted Conditionals' },
+  ],
+  'passive-voice': [
+    { course: 'mastery', lesson: 6, label: 'M6 · Passive Voice' },
+    { course: 'advanced', lesson: 6, label: 'A6 · Advanced Passive Constructions' },
+  ],
+  'reported-speech': [
+    { course: 'mastery', lesson: 8, label: 'M8 · Reported Speech' },
+    { course: 'advanced', lesson: 8, label: 'A8 · Reporting Verbs & Backshift' },
+  ],
+  'relative-clauses': [
+    { course: 'mastery', lesson: 10, label: 'M10 · Relative Clauses' },
+    { course: 'advanced', lesson: 10, label: 'A10 · Reduced Relative Clauses' },
+  ],
+  'gerunds-infinitives': [
+    { course: 'mastery', lesson: 11, label: 'M11 · Gerunds & Infinitives' },
+    { course: 'advanced', lesson: 11, label: 'A11 · Verb Patterns & Meaning Shifts' },
+  ],
+  modals: [
+    { course: 'beginner', lesson: 9, label: 'L9 · Basic Modals' },
+    { course: 'mastery', lesson: 12, label: 'M12 · Modals of Speculation' },
+    { course: 'advanced', lesson: 12, label: 'A12 · Advanced Modal Nuance' },
+  ],
+  cohesion: [
+    { course: 'mastery', lesson: 14, label: 'M14 · Linking & Cohesion' },
+    { course: 'advanced', lesson: 14, label: 'A14 · Cohesive Devices for Band 8+' },
+  ],
+  'participle-clauses': [
+    { course: 'advanced', lesson: 15, label: 'A15 · Participle Clauses' },
+  ],
+  emphasis: [
+    { course: 'advanced', lesson: 18, label: 'A18 · Emphasis & Fronting' },
+  ],
+};
+
+// ---------------------------------------------------------------------------
 // Landing \u2014 3-module overview + topic grid
 // ---------------------------------------------------------------------------
 
@@ -511,6 +587,31 @@ function TopicView({ slug }) {
                   </div>
                   <div className="mt-3 inline-flex items-center text-sm font-medium" style={{ color: 'hsl(var(--primary-ink))' }}>
                     Start practice <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-0.5 transition-transform" />
+                  </div>
+                </button>
+              ))}
+            </div>
+          </Section>
+        )}
+
+        {/* Practice in courses — deep-link into course grammar sections */}
+        {GB_TO_COURSES[topic.slug] && GB_TO_COURSES[topic.slug].length > 0 && (
+          <Section title="Practice in context">
+            <p className="text-sm text-muted mb-3">
+              This topic also appears inside our courses, where it's woven into vocabulary, listening, and writing tasks. Open any module below to drop straight into its grammar section.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {GB_TO_COURSES[topic.slug].map((target, i) => (
+                <button
+                  key={`${target.course}-${target.lesson}-${i}`}
+                  onClick={() => navigate(`${COURSE_ROUTE[target.course]}?lesson=${target.lesson}&focus=grammar`)}
+                  className="p-4 rounded-xl text-left transition-shadow hover:shadow-md group"
+                  style={{ background: 'hsl(var(--surface) / .9)', border: '1px solid hsl(var(--rule))' }}
+                >
+                  <div className="eyebrow mb-1">{COURSE_LABEL[target.course]}</div>
+                  <div className="display-m text-[15px]" style={{ color: 'hsl(var(--fg))' }}>{target.label}</div>
+                  <div className="mt-3 inline-flex items-center text-sm font-medium" style={{ color: 'hsl(var(--primary-ink))' }}>
+                    Open in course <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-0.5 transition-transform" />
                   </div>
                 </button>
               ))}

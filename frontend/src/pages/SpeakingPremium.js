@@ -6,19 +6,21 @@ import { isSpeakingPremiumUser, getPlanLabel } from '../lib/planAccess';
 import '../features/speaking/speaking.css';
 
 /**
- * Speaking Premium — Liz Gemini Live full AI tutor (gated route).
+ * Speaking Premium — Liz live full AI tutor (gated route).
  *
  * Gate: only `monthly` and `exam` tiers (admins bypass). Free / weekly users
  * see a locked card with a short conversion blurb → /pricing/v2.
  *
  * On unlock, mounts the D7 SpeakingPractice flow which:
- *   - routes Part 1 / Part 3 into the LizLivePanel (Gemini 2.5 Flash Live)
+ *   - 2026-04-29: Part 1 / Part 3 are migrating from Gemini Live to ElevenLabs
+ *     Conversational AI. Until Phase B lands, those parts show a placeholder
+ *     that routes the candidate to Part 2.
  *   - keeps Part 2 on the monologue cue-card flow with Sonnet eval
  *
  * Mounted at /speaking-premium. The `/liz` route mounts a different surface
  * (LizTeacher avatar + chat); these are intentionally separate per Aga
- * 2026-04-28 — premium speaking IS Gemini Live; the Liz button (e.g. on
- * the Dashboard) routes to LizTeacher.
+ * 2026-04-28 — premium speaking IS Liz live conversation; the Liz button
+ * (e.g. on the Dashboard) routes to LizTeacher.
  */
 export default function SpeakingPremium({ user }) {
   const navigate = useNavigate();
@@ -65,7 +67,7 @@ function SpeakingPremiumLocked({ user, onUpgrade }) {
             </div>
             <div className="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur px-3 py-1 text-[12px] font-medium">
               <Sparkles className="w-3.5 h-3.5" />
-              Liz Live · Gemini 2.5
+              Liz Live · ElevenLabs
             </div>
             <h1
               className="mt-4 text-[28px] sm:text-[34px] leading-tight font-semibold tracking-tight"

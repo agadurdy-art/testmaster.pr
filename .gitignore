@@ -534,3 +534,6 @@ credentials.json
 *.pem
 *.key
 .credentials
+
+# Strategies guide — local backup of originals before image crops
+backend/static/strategies/**/_orig_backup/

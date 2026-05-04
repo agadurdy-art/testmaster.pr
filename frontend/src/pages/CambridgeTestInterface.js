@@ -94,6 +94,10 @@ export default function CambridgeTestInterface() {
   const [sectionTimeLeft, setSectionTimeLeft] = useState(SECTION_TIMES[skillParam] || SECTION_TIMES.listening);
   const [testStarted, setTestStarted] = useState(false);
   const [showInstructions, setShowInstructions] = useState(true);
+
+  // Per-section elapsed minutes captured on submit. Powers the
+  // Time Management card on the results page (e.g. "42 / 60 min").
+  const [sectionDurations, setSectionDurations] = useState({});
   
   // UI state
   const [showSubmitModal, setShowSubmitModal] = useState(false);
@@ -229,17 +233,25 @@ export default function CambridgeTestInterface() {
 
   const handleSubmitSection = () => {
     setCompletedSections(prev => [...prev, currentSection]);
-    
+
+    // Capture elapsed minutes for THIS section before we move on. The
+    // timer counts down from SECTION_TIMES[section]; elapsed = budget − left.
+    const budgetSec = SECTION_TIMES[currentSection] || 0;
+    const elapsedMin = Math.max(0, Math.round((budgetSec - sectionTimeLeft) / 60));
+    const updatedDurations = { ...sectionDurations, [currentSection]: elapsedMin };
+    setSectionDurations(updatedDurations);
+
     // In skill mode, go directly to results after submitting the single section
     if (isSkillMode) {
-      navigate(`/cambridge-test/${bookId}/${testId}/results`, { 
-        state: { 
-          answers, 
+      navigate(`/cambridge-test/${bookId}/${testId}/results`, {
+        state: {
+          answers,
           testData,
           mode: 'skill',
           skill: skillParam,
-          speakingEvaluations: questionEvaluations
-        } 
+          speakingEvaluations: questionEvaluations,
+          sectionDurations: updatedDurations,
+        }
       });
       return;
     }
@@ -273,8 +285,14 @@ export default function CambridgeTestInterface() {
           }).catch(() => {});
         }
       } catch {}
-      navigate(`/cambridge-test/${bookId}/${testId}/results`, { 
-        state: { answers, testData, mode: 'full', speakingEvaluations: questionEvaluations } 
+      navigate(`/cambridge-test/${bookId}/${testId}/results`, {
+        state: {
+          answers,
+          testData,
+          mode: 'full',
+          speakingEvaluations: questionEvaluations,
+          sectionDurations: updatedDurations,
+        }
       });
     }
   };
@@ -390,6 +408,16 @@ export default function CambridgeTestInterface() {
   };
 
   const getAnsweredCount = (section) => {
+    if (section === 'speaking') {
+      // Speaking responses live in questionRecordings, not answers{}.
+      // Part 1 = currentPart 0 → keys part0_q*; Part 2 = part1_qpart2 (legacy);
+      // Part 3 = currentPart 2 → keys part2_q*. Count parts with ≥1 recording.
+      const recKeys = Object.keys(questionRecordings || {});
+      const part1Done = recKeys.some(k => /^part0_q\d+$/.test(k));
+      const part2Done = !!questionRecordings?.part1_qpart2;
+      const part3Done = recKeys.some(k => /^part2_q\d+$/.test(k));
+      return [part1Done, part2Done, part3Done].filter(Boolean).length;
+    }
     const prefix = `${section}_`;
     return Object.keys(answers).filter(k => k.startsWith(prefix) && answers[k]).length;
   };
@@ -813,33 +841,84 @@ export default function CambridgeTestInterface() {
       // Fetch the blob from the object URL
       const response = await fetch(recordingUrl);
       const blob = await response.blob();
-      
+
+      // Migrate to unified /api/speaking/evaluate (Sonnet + Azure pronunciation).
+      // The legacy /api/cambridge/speaking/evaluate path used Whisper+GPT-4o
+      // and is deprecated.
+      const partNumber = currentPart + 1; // 1-3
       const formData = new FormData();
       formData.append('audio', blob, 'recording.webm');
-      formData.append('question', questionText);
-      formData.append('part', String(currentPart + 1));
-      formData.append('question_index', String(questionIndex));
-      // Send user plan for premium evaluation (Azure pronunciation analysis)
-      formData.append('user_plan', user?.plan || 'free');
+      formData.append('user_id', user?.id || 'anonymous');
+      formData.append('part', `part${partNumber}`);
+      formData.append('cue_card_prompt', questionText || '');
+      formData.append('cue_card_bullets', '');
+      formData.append('user_language', 'en');
+      formData.append('target_band', String(user?.target_band ?? 7.0));
+      formData.append('duration_seconds', String(recordingTime || 0));
+      formData.append('context', 'cambridge');
+      formData.append('book_id', bookId);
+      formData.append('test_id', testId);
+      formData.append('question_id', `p${partNumber}_q${questionIndex}`);
 
-      const evalResponse = await fetch(`${API_URL}/api/cambridge/speaking/evaluate`, {
+      const evalResponse = await fetch(`${API_URL}/api/speaking/evaluate`, {
         method: 'POST',
-        body: formData
+        body: formData,
       });
 
-      const result = await evalResponse.json();
-
-      if (result.success) {
-        setQuestionEvaluations(prev => ({
-          ...prev,
-          [questionIndex]: result
-        }));
-        setCurrentEvaluation(result);
-        setShowEvaluationModal(true);
-        toast.success('Evaluation complete!');
-      } else {
-        toast.error(result.error || 'Evaluation failed');
+      if (!evalResponse.ok) {
+        let detail = null;
+        try { detail = await evalResponse.json(); } catch {}
+        const message = detail?.detail?.message
+          || detail?.detail
+          || `Evaluation failed (HTTP ${evalResponse.status})`;
+        toast.error(typeof message === 'string' ? message : 'Evaluation failed');
+        return;
       }
+
+      const unified = await evalResponse.json();
+
+      // Adapt unified response → legacy shape consumed by CambridgeTestResults.
+      // Unified: { scores: {overall, fc, lr, gra, pr}, criteria: {fc:{band,...}}, ... }
+      // Legacy:  { overall_band, criteria: {fluency_coherence,...}, transcript, success }
+      const transcript = Array.isArray(unified.transcript_tokens)
+        ? unified.transcript_tokens.map(t => t?.t || '').join('').trim()
+        : (Array.isArray(unified.live_transcript_words)
+            ? unified.live_transcript_words.join(' ')
+            : '');
+
+      const adapted = {
+        success: true,
+        overall_band: unified?.scores?.overall ?? 5,
+        criteria: {
+          fluency_coherence: unified?.criteria?.fc?.band ?? unified?.scores?.fc ?? 5,
+          lexical_resource: unified?.criteria?.lr?.band ?? unified?.scores?.lr ?? 5,
+          grammatical_range: unified?.criteria?.gra?.band ?? unified?.scores?.gra ?? 5,
+          pronunciation: unified?.criteria?.pr?.band ?? unified?.scores?.pr ?? 5,
+        },
+        feedback: unified?.liz_note || '',
+        strengths: [
+          ...(unified?.criteria?.fc?.strengths || []),
+          ...(unified?.criteria?.lr?.strengths || []),
+        ].slice(0, 4),
+        weaknesses: [
+          ...(unified?.criteria?.fc?.weaknesses || []),
+          ...(unified?.criteria?.gra?.weaknesses || []),
+        ].slice(0, 4),
+        tip: unified?.liz_note || '',
+        transcript,
+        word_count: transcript ? transcript.split(/\s+/).filter(Boolean).length : 0,
+        audio_url: unified?.audio_url || null,
+        // Keep raw unified payload for the new D7 UI/drawer downstream.
+        unified,
+      };
+
+      setQuestionEvaluations(prev => ({
+        ...prev,
+        [questionIndex]: adapted,
+      }));
+      setCurrentEvaluation(adapted);
+      setShowEvaluationModal(true);
+      toast.success('Evaluation complete!');
     } catch (error) {
       console.error('Evaluation error:', error);
       toast.error('Could not evaluate response');
@@ -1166,10 +1245,19 @@ export default function CambridgeTestInterface() {
           {currentPartData.questions?.map((q, qIdx) => {
             // Multiple Selection Questions (e.g., Q21-22)
             if (q.type === 'multiple_selection') {
-              const questionKey = `listening_${q.number}`;
+              // Persist the answer array under every question_id in the group
+              // (same array reused) so per-question results can resolve a
+              // user_answer for each member, not just the first. Backend
+              // scoring is group-aware (Bug #150) — this fixes display side.
+              const groupNumbers = q.items
+                ? q.items.map(i => i.number)
+                : String(q.number).includes('-')
+                  ? (() => { const [s, e] = String(q.number).split('-').map(n => parseInt(n, 10)); return Array.from({ length: e - s + 1 }, (_, i) => s + i); })()
+                  : [q.number];
+              const questionKey = `listening_${groupNumbers[0]}`;
               const currentAnswers = Array.isArray(answers[questionKey]) ? answers[questionKey] : [];
               const maxSelections = q.select_count || q.answer_count || 2;
-              
+
               return (
                 <div key={qIdx} className="mb-6 p-4 bg-white border rounded-lg">
                   <p className="text-xs text-blue-600 font-medium mb-1">{q.instruction}</p>
@@ -1178,7 +1266,7 @@ export default function CambridgeTestInterface() {
                     {q.options?.map((opt, optIdx) => {
                       const optValue = opt.charAt(0);
                       const isChecked = currentAnswers.includes(optValue);
-                      
+
                       return (
                         <label key={optIdx} className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer border transition-colors ${isChecked ? 'bg-blue-50 border-blue-300' : 'hover:bg-gray-50'}`}>
                           <input
@@ -1196,11 +1284,12 @@ export default function CambridgeTestInterface() {
                               } else {
                                 newAnswers = currentAnswers.filter(v => v !== optValue);
                               }
-                              // Store as array directly without splitting
-                              setAnswers(prev => ({
-                                ...prev,
-                                [questionKey]: newAnswers
-                              }));
+                              // Mirror the array under every grouped question_id.
+                              setAnswers(prev => {
+                                const next = { ...prev };
+                                groupNumbers.forEach(n => { next[`listening_${n}`] = newAnswers; });
+                                return next;
+                              });
                             }}
                             className="w-4 h-4 text-blue-600 rounded"
                           />
@@ -2001,14 +2090,23 @@ export default function CambridgeTestInterface() {
                   )}
                   <div className="space-y-2">
                     {(() => {
-                      const answerKey = q.items ? `reading_${q.items[0].number}` : `reading_${q.number}`;
+                      // Persist the same answer array under every question_id in
+                      // the group so per-question results (Your answer: ...) can
+                      // resolve, not just the first item. Backend scoring is
+                      // group-aware (Bug #150) — this fixes the display side.
+                      const groupNumbers = q.items
+                        ? q.items.map(i => i.number)
+                        : String(q.number).includes('-')
+                          ? (() => { const [s, e] = String(q.number).split('-').map(n => parseInt(n, 10)); return Array.from({ length: e - s + 1 }, (_, i) => s + i); })()
+                          : [q.number];
+                      const answerKey = `reading_${groupNumbers[0]}`;
                       const currentAnswers = Array.isArray(answers[answerKey]) ? answers[answerKey] : [];
                       const maxSelections = q.select_count || 2;
-                      
+
                       return q.options?.map((opt, oIdx) => {
                         const optValue = opt.charAt(0);
                         const isChecked = currentAnswers.includes(optValue);
-                        
+
                         return (
                           <label key={oIdx} className={`flex items-center gap-3 p-2 rounded cursor-pointer ${isChecked ? 'bg-green-50 border border-green-300' : 'hover:bg-gray-50'}`}>
                             <input
@@ -2026,10 +2124,11 @@ export default function CambridgeTestInterface() {
                                 } else {
                                   newAnswers = currentAnswers.filter(v => v !== optValue);
                                 }
-                                setAnswers(prev => ({
-                                  ...prev,
-                                  [answerKey]: newAnswers
-                                }));
+                                setAnswers(prev => {
+                                  const next = { ...prev };
+                                  groupNumbers.forEach(n => { next[`reading_${n}`] = newAnswers; });
+                                  return next;
+                                });
                               }}
                               className="w-4 h-4 text-green-600 rounded"
                             />
@@ -2794,15 +2893,38 @@ export default function CambridgeTestInterface() {
                   {questionRecordings['part1_qpart2'] && (
                     <div className="mt-4">
                       <p className="text-sm text-green-600 mb-2">Recording saved!</p>
-                      <audio 
-                        src={questionRecordings['part1_qpart2']} 
-                        controls 
+                      <audio
+                        src={questionRecordings['part1_qpart2']}
+                        controls
                         className="mx-auto"
                       />
                     </div>
                   )}
                 </div>
               </div>
+
+              {/* Part 2 → Part 3 navigation (mirrors Part 1/3 flow) */}
+              {questionRecordings['part1_qpart2'] && (
+                <div className="flex justify-end">
+                  <Button
+                    onClick={() => {
+                      if (currentPart < parts.length - 1) {
+                        setCurrentPart(currentPart + 1);
+                        setSpeakingQuestionIndex(0);
+                        setSpeakingState(SPEAKING_STATES.IDLE);
+                        setTtsAudioUrl(null);
+                        setRecordingTime(0);
+                        setIsPreparing(false);
+                      }
+                    }}
+                    className="bg-green-600 hover:bg-green-700"
+                    disabled={currentPart >= parts.length - 1}
+                  >
+                    {currentPart < parts.length - 1 ? 'Go to Next Part' : 'All Questions Done'}
+                    <ChevronRight className="w-4 h-4 ml-1" />
+                  </Button>
+                </div>
+              )}
             </div>
           )}
         </Card>

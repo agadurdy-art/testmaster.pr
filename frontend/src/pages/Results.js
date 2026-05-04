@@ -9,6 +9,7 @@ import SkillBreakdown from '../components/SkillBreakdown';
 import LocateExplain from '../components/test/LocateExplain';
 import ProgressAnalytics from '../components/test/ProgressAnalytics';
 import { ResultsState as SpeakingResultsState, adaptSpeakingResult } from '../features/speaking';
+import { ReadingListeningDrilldown, ReadingResultsLayout, ListeningResultsLayout } from '../features/results';
 import '../features/speaking/speaking.css';
 
 export default function Results({ user }) {
@@ -63,6 +64,81 @@ export default function Results({ user }) {
     );
   }
 
+  // Reading → standalone rich layout. Old summary header / skill-breakdown /
+  // progress analytics / action button strip are intentionally NOT rendered:
+  // ReadingResultsLayout provides band dial, Liz card, insight tiles,
+  // quick actions and back button itself.
+  if (result.test_type === 'reading') {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-violet-50/30 to-gray-100 py-8 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto">
+          <ReadingResultsLayout
+            feedback={result.feedback}
+            band={result.band_score}
+            user={user}
+            testMeta={{
+              title: result.test_name || 'Practice Test',
+              subtitle: result.attempt_label || '',
+              durationMin: result.duration_minutes,
+              allowedMin: 60,
+              targetBand: user?.target_band || 7.0,
+            }}
+            insights={{
+              rootCauseAnalysis: result.feedback?.root_cause_analysis,
+              fastestGain: result.feedback?.fastest_gain,
+              reasonSummary: result.feedback?.reason_summary,
+              recommendedLessons: result.feedback?.recommended_lessons,
+            }}
+            onRetry={() => navigate(`/test/${result.test_type}`)}
+            onPracticePriority={(p) => {
+              const typeMap = { tfng: 'true_false_ng', fill: 'sentence_completion', mc: 'multiple_choice', match: 'matching_information', heading: 'matching_headings' };
+              const qtype = typeMap[p?.key];
+              navigate(qtype ? `/question-bank/reading/practice?type=${qtype}` : '/question-bank/reading/academic');
+            }}
+            backHref="/dashboard"
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // Listening → standalone rich layout. Mirrors the reading branch above:
+  // ListeningResultsLayout provides band dial, Liz card, insight tiles,
+  // part cards (P1-P4), audioscript modal, and quick actions itself.
+  if (result.test_type === 'listening') {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-violet-50/30 to-gray-100 py-8 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto">
+          <ListeningResultsLayout
+            feedback={result.feedback}
+            band={result.band_score}
+            user={user}
+            testMeta={{
+              title: result.test_name || 'Practice Test',
+              subtitle: result.attempt_label || '',
+              durationMin: result.duration_minutes,
+              allowedMin: 30,
+              targetBand: user?.target_band || 7.0,
+            }}
+            insights={{
+              rootCauseAnalysis: result.feedback?.root_cause_analysis,
+              fastestGain: result.feedback?.fastest_gain,
+              reasonSummary: result.feedback?.reason_summary,
+              recommendedLessons: result.feedback?.recommended_lessons,
+            }}
+            onRetry={() => navigate(`/test/${result.test_type}`)}
+            onPracticePriority={(p) => {
+              const typeMap = { note: 'note_completion', mc: 'multiple_choice', match: 'matching', multi: 'multi_select', short: 'short_answer' };
+              const qtype = typeMap[p?.key];
+              navigate(qtype ? `/question-bank/listening/practice?type=${qtype}` : '/question-bank/listening');
+            }}
+            backHref="/dashboard"
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 via-violet-50/30 to-gray-100 py-8 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
@@ -103,8 +179,9 @@ export default function Results({ user }) {
           </div>
         </Card>
 
-        {/* Teacher Feedback Card - For Reading/Listening */}
-        {(result.test_type === 'reading' || result.test_type === 'listening') && result.feedback?.teacher_feedback && (
+        {/* Teacher Feedback Card - Listening only.
+            Reading uses ReadingResultsLayout which includes a Liz tutor card. */}
+        {result.test_type === 'listening' && result.feedback?.teacher_feedback && (
           <Card className="p-6 mb-6 bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200 rounded-2xl">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg">
@@ -461,133 +538,12 @@ export default function Results({ user }) {
           </Card>
         )}
 
-        {/* Question-by-Question Results - For Reading/Listening */}
-        {(result.test_type === 'reading' || result.test_type === 'listening') && result.feedback?.question_results?.length > 0 && (
-          <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg">
-                  <BarChart3 className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900">📝 {t('answerReview')}</h3>
-                  <p className="text-sm text-gray-500">
-                    {result.feedback.correct} {t('correct').toLowerCase()} / {result.feedback.total} {getText('total', 'tổng cộng', 'toplam')}
-                  </p>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <span className="flex items-center gap-1 text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full">
-                  <CheckCircle className="w-3 h-3" /> {t('correct')}
-                </span>
-                <span className="flex items-center gap-1 text-xs px-2 py-1 bg-red-100 text-red-700 rounded-full">
-                  <XCircle className="w-3 h-3" /> {t('incorrect')}
-                </span>
-              </div>
-            </div>
-            
-            {/* Questions List */}
-            <div className="space-y-3 max-h-[600px] overflow-y-auto pr-2">
-              {result.feedback.question_results.map((q, idx) => (
-                <div 
-                  key={idx} 
-                  className={`p-4 rounded-xl border-l-4 ${
-                    q.is_correct 
-                      ? 'bg-green-50 border-green-500' 
-                      : 'bg-red-50 border-red-500'
-                  }`}
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold ${
-                          q.is_correct ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-                        }`}>
-                          {q.question_id}
-                        </span>
-                        <span className="text-xs px-2 py-0.5 rounded bg-gray-200 text-gray-600 capitalize">
-                          {q.question_type?.replace(/_/g, ' ') || 'Question'}
-                        </span>
-                        {q.is_correct ? (
-                          <CheckCircle className="w-5 h-5 text-green-600" />
-                        ) : (
-                          <XCircle className="w-5 h-5 text-red-600" />
-                        )}
-                      </div>
-                      <p className="text-sm text-gray-800 mb-3">{q.question_text}</p>
-                      <div className="flex flex-wrap gap-4 text-sm mb-2">
-                        <div>
-                          <span className="text-gray-500">{t('yourAnswer')}: </span>
-                          <span className={`font-semibold ${q.is_correct ? 'text-green-700' : 'text-red-700'}`}>
-                            {q.user_answer || t('noAnswer')}
-                          </span>
-                        </div>
-                        <div>
-                          <span className="text-gray-500">{t('correctAnswer')}: </span>
-                          <span className="font-semibold text-green-700">{q.correct_answer}</span>
-                        </div>
-                      </div>
-                      
-                      {/* Locate in Passage */}
-                      {q.passage_excerpt && (
-                        <div className="mt-3 p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
-                          <div className="flex items-start gap-2">
-                            <MapPin className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
-                            <div>
-                              <p className="text-xs font-semibold text-yellow-700 mb-1">{t('locateInPassage') || 'Located in Passage'}</p>
-                              <p className="text-sm text-gray-700 italic leading-relaxed">&ldquo;...{q.passage_excerpt}...&rdquo;</p>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                      
-                      {/* Explanation */}
-                      {q.explanation && (
-                        <div className="mt-3 p-3 bg-blue-50 rounded-lg border-l-4 border-blue-400">
-                          <div className="flex items-start gap-2">
-                            <Lightbulb className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                            <div>
-                              <p className="text-xs font-semibold text-blue-700 mb-1">{t('explanation') || 'Explanation'}</p>
-                              <p className="text-sm text-gray-700 leading-relaxed">{q.explanation}</p>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                      
-                      {/* Skill Tip */}
-                      {q.skill_tip && (
-                        <div className="mt-3 p-3 bg-purple-50 rounded-lg border-l-4 border-purple-400">
-                          <div className="flex items-start gap-2">
-                            <GraduationCap className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
-                            <div>
-                              <p className="text-xs font-semibold text-purple-700 mb-1">{t('skillTip') || 'Skill Tip'}</p>
-                              <p className="text-sm text-gray-700 leading-relaxed">{q.skill_tip}</p>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Summary Stats */}
-            <div className="mt-4 pt-4 border-t border-gray-200 grid grid-cols-3 gap-4 text-center">
-              <div className="p-3 bg-green-50 rounded-lg">
-                <p className="text-2xl font-bold text-green-600">{result.feedback.question_results.filter(q => q.is_correct).length}</p>
-                <p className="text-xs text-green-700">{t('correct')}</p>
-              </div>
-              <div className="p-3 bg-red-50 rounded-lg">
-                <p className="text-2xl font-bold text-red-600">{result.feedback.question_results.filter(q => !q.is_correct).length}</p>
-                <p className="text-xs text-red-700">{t('incorrect')}</p>
-              </div>
-              <div className="p-3 bg-blue-50 rounded-lg">
-                <p className="text-2xl font-bold text-blue-600">{Math.round(result.feedback.percentage)}%</p>
-                <p className="text-xs text-blue-700">{t('accuracy')}</p>
-              </div>
-            </div>
-          </Card>
+        {/* Question-by-Question Results.
+            Reading is handled by an early return above (ReadingResultsLayout
+            replaces the entire page chrome). Listening keeps the simple
+            drilldown — Cambridge/Full Test paths render their own listening UI. */}
+        {result.test_type === 'listening' && (
+          <ReadingListeningDrilldown testType="listening" feedback={result.feedback} />
         )}
 
         {/* Skill Breakdown - Phase 4 */}

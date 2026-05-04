@@ -1,0 +1,2372 @@
+{
+  "chapter_id": "listening_a_to_z",
+  "chapter_number": 2,
+  "skill": "listening",
+  "title": "The Complete A-to-Z Guide to IELTS Listening",
+  "subtitle": "Step-by-step strategies for all listening question types",
+  "source_pages": [
+    26,
+    65
+  ],
+  "extraction_status": "complete",
+  "lessons": [
+    {
+      "lesson_id": "intro",
+      "lesson_number": 0,
+      "title": "Introduction",
+      "source_pages": [
+        26,
+        29
+      ],
+      "slides": [
+        {
+          "type": "hero",
+          "title": "The Complete A to Z Guide to IELTS Listening",
+          "page": 26
+        },
+        {
+          "type": "narrative",
+          "title": "Introduction",
+          "subtitle": "How can this book help you with your listening?",
+          "paragraphs": [
+            "Listening and reading are considered the 'easy' parts of the IELTS test, but this does not mean that they do not require preparation.",
+            "This book provides you with the means of preparing fully for the listening test. It is designed as a complete A-to-Z guide and should be read in its entirety.",
+            "If you are reading this book, you already have the required level of English to do well in both tests. What you are probably lacking is a sound knowledge of the strategies needed to get very high marks.",
+            "This book will take you step by step through the different sub skills that are required and the different strategies I suggest for dealing with all of the different question types."
+          ],
+          "page": 27
+        },
+        {
+          "type": "checklist",
+          "title": "The book will show you:",
+          "items": [
+            "The format of the test",
+            "General tips and common mistakes",
+            "Strategies for all question types",
+            "The listening sub-skills that are tested",
+            "How to improve your listening skills",
+            "How to improve your vocabulary"
+          ],
+          "page": 27
+        },
+        {
+          "type": "checklist",
+          "title": "The Listening Test — Key Facts",
+          "items": [
+            "The test is divided into four distinct sections",
+            "Each section contains 10 questions",
+            "The questions get more difficult as the test progresses",
+            "The test lasts approximately 30 minutes",
+            "Each recording is played only once",
+            "You will have 10 minutes at the end to transfer answers"
+          ],
+          "page": 28
+        },
+        {
+          "type": "factboard",
+          "title": "The four sections",
+          "facts": [
+            {
+              "label": "Section 1",
+              "value": "A conversation between two people within a social/everyday context."
+            },
+            {
+              "label": "Section 2",
+              "value": "One person speaking in a social/everyday context."
+            },
+            {
+              "label": "Section 3",
+              "value": "A conversation between two or more people within an education context."
+            },
+            {
+              "label": "Section 4",
+              "value": "A lecture, normally on an academic subject."
+            }
+          ],
+          "page": 28
+        },
+        {
+          "type": "narrative",
+          "title": "Listening Tips",
+          "subtitle": "How to use these...",
+          "paragraphs": [
+            "These tips are simply to give you an introduction to IELTS listening.",
+            "They are not intended to be the only document you look at.",
+            "Many IELTS students think that 'tips' are the only things they need to get a good score. They are not.",
+            "Make sure you use these as an introduction and use the rest of the document to really progress."
+          ],
+          "page": 29
+        },
+        {
+          "type": "icon_grid",
+          "title": "Listening tips",
+          "cards": [
+            {
+              "icon": "Headphones",
+              "body": "Practise listening to both one person and multiple people speaking."
+            },
+            {
+              "icon": "SpellCheck",
+              "body": "Be careful with your spelling."
+            },
+            {
+              "icon": "Clock",
+              "body": "Use the short breaks to move on to the next part of the test."
+            },
+            {
+              "icon": "Lightbulb",
+              "body": "Try to predict the answer before you hear the recording."
+            },
+            {
+              "icon": "X",
+              "body": "If your answers are not grammatically correct, they will be marked as incorrect."
+            },
+            {
+              "icon": "BookOpen",
+              "body": "Read the instructions VERY carefully."
+            },
+            {
+              "icon": "BarChart",
+              "body": "Improve your vocabulary and you'll improve your listening score."
+            },
+            {
+              "icon": "Repeat",
+              "body": "Get used to listening to things only once."
+            }
+          ],
+          "page": 29
+        }
+      ]
+    },
+    {
+      "lesson_id": "summary_completion",
+      "lesson_number": 1,
+      "title": "Question Type #1: Summary Completion",
+      "source_pages": [
+        30,
+        31
+      ],
+      "practice_link": {
+        "label": "Practice summary completion",
+        "href": "/question-bank/listening/practice?type=form_completion"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #1: Summary Completion",
+          "paragraphs": [
+            "When you get to university or start working, two of the key skills you will have to use are summarising and paraphrasing.",
+            "These skills are tested in summary completion questions."
+          ],
+          "page": 30
+        },
+        {
+          "type": "checklist",
+          "title": "What to expect",
+          "items": [
+            "You'll be given a list of sentences that summarise the clip you'll hear.",
+            "The text will be a paraphrase of the recording.",
+            "They have also summarised the listening.",
+            "You should be able to read the text before listening and know what you're going to hear."
+          ],
+          "page": 30
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Summary Completion Strategy",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Read instructions carefully",
+              "body": "Note the word limit for your answers."
+            },
+            {
+              "number": 2,
+              "title": "Read the sentences",
+              "body": "Understand the general meaning of the summary."
+            },
+            {
+              "number": 3,
+              "title": "Predict what you'll hear",
+              "body": "Form expectations about the content of the recording."
+            },
+            {
+              "number": 4,
+              "title": "Think about paraphrasing",
+              "body": "Consider how the sentences have been changed through paraphrasing."
+            },
+            {
+              "number": 5,
+              "title": "Look at the gaps",
+              "body": "Predict what type of words might fill them (nouns, verbs, etc.)."
+            },
+            {
+              "number": 6,
+              "title": "Listen and fill in gaps",
+              "body": "Write the correct answers as you hear them."
+            }
+          ],
+          "page": 31
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "Worked Example",
+          "title": "Predict the gap word, then listen for the paraphrase",
+          "intro": "In listening, you only hear the recording once. Predicting the missing word's TYPE before the audio plays makes the answer obvious when it arrives.",
+          "stimulus": {
+            "label": "Audio transcript (excerpt)",
+            "text": "Tutor: 'Right, so for the field trip on Thursday, students need to bring waterproof boots and a packed lunch. The bus leaves the main campus at half past eight, and we should arrive at the nature reserve by ten. Don't forget a notebook — you'll be recording observations all morning.'"
+          },
+          "question": {
+            "label": "Complete the summary using NO MORE THAN TWO WORDS for each gap",
+            "items": [
+              {
+                "n": 1,
+                "stem": "Students must take waterproof boots and a (1) ___________."
+              },
+              {
+                "n": 2,
+                "stem": "Departure time: (2) ___________."
+              },
+              {
+                "n": 3,
+                "stem": "Students will record (3) ___________ during the morning."
+              }
+            ]
+          },
+          "thinking_steps": [
+            "Gap 1 = noun (something students bring). Predict 'lunch' or 'meal'. Listen for it: 'a packed lunch' → '(1) packed lunch'.",
+            "Gap 2 = time. Predict a number. Listen: 'half past eight' → 8:30 / 'half past eight' (within word limit).",
+            "Gap 3 = plural noun (what they record). Listen: 'recording observations' → '(3) observations'.",
+            "Watch for paraphrase: the summary may say 'depart' while audio says 'leaves'."
+          ],
+          "answer": {
+            "value": "1=packed lunch, 2=half past eight (or 8:30), 3=observations",
+            "explanation": "You predicted word types BEFORE hearing the audio, so when the right word came up you recognised it instantly."
+          },
+          "page": 31
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Summary Completion",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "The summary uses the word 'purchase'. The recording uses the word 'buy'. What does this mean?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "The summary is wrong."
+                },
+                {
+                  "letter": "B",
+                  "text": "The recording paraphrases the summary — they mean the same thing."
+                },
+                {
+                  "letter": "C",
+                  "text": "The summary and recording describe completely different things — there's a contradiction."
+                }
+              ],
+              "answer": "B",
+              "explanation": "Listening summaries always paraphrase the audio. Train your ear to spot synonym pairs (purchase=buy, begin=start, finish=complete)."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Before the audio plays, you should predict each gap's _______ (noun, verb, time, number).",
+              "answer": "type",
+              "accept": [
+                "type",
+                "word type",
+                "part of speech",
+                "kind"
+              ],
+              "explanation": "Predicting the word TYPE narrows what to listen for and prevents you from being distracted by surrounding speech."
+            },
+            {
+              "kind": "mcq",
+              "stem": "You missed an answer in the audio. What should you do?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "Stop listening and write what you can remember."
+                },
+                {
+                  "letter": "B",
+                  "text": "Make a quick guess, mark it, and stay focused on the next gap."
+                },
+                {
+                  "letter": "C",
+                  "text": "Wait for the audio to repeat."
+                }
+              ],
+              "answer": "B",
+              "explanation": "Audio plays once. Missing one answer is fine; missing the next three because you froze is not. Move on immediately."
+            }
+          ],
+          "page": 31
+        },
+        {
+          "type": "common_mistakes",
+          "title": "Common Mistakes vs Smart Moves",
+          "pairs": [
+            {
+              "wrong": "Listening for the exact words from the summary in the audio.",
+              "right": "Listening for synonyms and paraphrases — the summary rewords what you hear."
+            },
+            {
+              "wrong": "Freezing when you miss a single answer.",
+              "right": "Marking it blank, moving on, and returning at the end — never stay stuck during a live listen."
+            },
+            {
+              "wrong": "Ignoring the word limit and writing a full sentence.",
+              "right": "Counting words; over-limit answers are wrong even when meaning is right."
+            }
+          ],
+          "page": 31
+        }
+      ]
+    },
+    {
+      "lesson_id": "multiple_choice",
+      "lesson_number": 2,
+      "title": "Question Type #2: Multiple Choice",
+      "source_pages": [
+        32,
+        34
+      ],
+      "practice_link": {
+        "label": "Practice multiple choice",
+        "href": "/question-bank/listening/practice?type=multiple_choice"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #2: Multiple Choice",
+          "subtitle": "Three different kinds of multiple choice listening questions:",
+          "paragraphs": []
+        },
+        {
+          "type": "checklist",
+          "title": "Three different kinds of multiple choice listening questions:",
+          "items": [
+            "Short Answer",
+            "Sentence completion",
+            "Matching picture"
+          ],
+          "page": 32
+        },
+        {
+          "type": "checklist",
+          "title": "Common problems:",
+          "items": [
+            "Often all of the choices will be mentioned, not just the correct answer. Don't pick the first one you hear.",
+            "The answers will normally be synonyms or paraphrases.",
+            "The three choices often look similar in meaning.",
+            "You must read a lot of information and listen at the same time."
+          ],
+          "page": 32
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Tips for Multiple Choice",
+          "steps": [
+            {
+              "number": 1,
+              "body": "Don't check your answers from the previous section when you have a break. It is important that you read the next multiple choice questions and try to understand them."
+            },
+            {
+              "number": 2,
+              "body": "Highlight keywords. The keyword in the question will help you answer the question correctly. The keywords in the different options are those that differentiate meaning between the choices."
+            },
+            {
+              "number": 3,
+              "body": "Don't write the first answer you hear. Remember that they will try and trick you."
+            },
+            {
+              "number": 4,
+              "body": "Don't spend too much time on one question. If you didn't get the answer or you are unsure, make an educated guess and move on."
+            },
+            {
+              "number": 5,
+              "body": "Be careful if you hear words like 'but' or 'however'. This often means that the speaker is going to qualify or alter a previous statement."
+            },
+            {
+              "number": 6,
+              "body": "Practice makes perfect."
+            },
+            {
+              "number": 7,
+              "body": "Your answer will often be a letter and not a word. Read the instructions to make sure, and be careful when transferring your answers at the end."
+            }
+          ],
+          "page": 33
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Strategy for Multiple Choice",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Read instructions carefully",
+              "body": "Make sure you understand what is required."
+            },
+            {
+              "number": 2,
+              "title": "Read the questions",
+              "body": "Identify what is actually being asked. Highlight the keyword in the question."
+            },
+            {
+              "number": 3,
+              "title": "Analyze options",
+              "body": "Look at the different options and underline any keywords that will help you tell the difference in meaning."
+            },
+            {
+              "number": 4,
+              "title": "Think of synonyms",
+              "body": "Consider any synonyms or paraphrases you might hear."
+            },
+            {
+              "number": 5,
+              "title": "Predict the answer",
+              "body": "Form an expectation of what you might hear."
+            },
+            {
+              "number": 6,
+              "title": "Listen for keywords",
+              "body": "When listening, focus on any keywords and synonyms."
+            },
+            {
+              "number": 7,
+              "title": "Don't rush",
+              "body": "Don't write the first answer you hear. Wait until all options are discussed."
+            },
+            {
+              "number": 8,
+              "title": "Mark potential answers",
+              "body": "If you think an answer is correct, put a tick beside it and keep listening to confirm."
+            },
+            {
+              "number": 9,
+              "title": "Manage your time",
+              "body": "Don't spend more time than necessary. If you miss an answer, make a guess and move on."
+            }
+          ],
+          "page": 34
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "Worked Example",
+          "title": "Don't choose the first option you hear",
+          "intro": "In listening MCQs, the speakers usually mention every option — your job is to wait for the one that's confirmed at the end.",
+          "stimulus": {
+            "label": "Audio transcript (excerpt)",
+            "text": "Student A: 'For our presentation, should we focus on solar power, or maybe wind?' Student B: 'I was thinking solar at first, but actually the data on wind farms is more interesting. Let's go with wind.' Student A: 'Good idea. Wind it is.'"
+          },
+          "question": {
+            "label": "What did the students decide to focus on?",
+            "options": [
+              {
+                "letter": "A",
+                "text": "Solar power"
+              },
+              {
+                "letter": "B",
+                "text": "Wind power"
+              },
+              {
+                "letter": "C",
+                "text": "Both solar and wind"
+              }
+            ]
+          },
+          "thinking_steps": [
+            "Student A first suggests 'solar or wind' — both options are mentioned.",
+            "Student B says 'I was thinking solar AT FIRST, but actually…' — the word 'but' is a signpost that the opinion is changing.",
+            "Final decision: 'Let's go with wind' — confirmed.",
+            "Picking 'solar' (option A) just because you heard it first = the trap."
+          ],
+          "answer": {
+            "value": "B",
+            "explanation": "Watch for 'but', 'however', 'actually' — these signal the speaker is reversing or qualifying. The final decision is what matters, not the first idea."
+          },
+          "page": 34
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Listening MCQ",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "Why are listening MCQ wrong options often mentioned in the audio?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "By accident — the test is sloppy."
+                },
+                {
+                  "letter": "B",
+                  "text": "To trap students who pick the first option they hear."
+                },
+                {
+                  "letter": "C",
+                  "text": "To save time."
+                }
+              ],
+              "answer": "B",
+              "explanation": "Distractor options are deliberately mentioned. Always wait for the speaker's final, confirmed choice."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Words like 'but', 'however', 'actually' often signal that the speaker is _______ a previous statement.",
+              "answer": "changing",
+              "accept": [
+                "changing",
+                "qualifying",
+                "altering",
+                "reversing",
+                "contradicting"
+              ],
+              "explanation": "Words like *but, however, actually* are **signposts** — connector words that flag where the answer is hiding. When you hear one, the answer right after it usually OVERRIDES what was just said. Train your ears to flag these as 'answer-coming' signals."
+            },
+            {
+              "kind": "mcq",
+              "stem": "You think you have the answer halfway through the question. What should you do?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "Mark it and stop listening."
+                },
+                {
+                  "letter": "B",
+                  "text": "Tick it lightly and keep listening — the speaker may change it."
+                },
+                {
+                  "letter": "C",
+                  "text": "Erase what you wrote."
+                }
+              ],
+              "answer": "B",
+              "explanation": "A light tick lets you confirm at the end. The speaker often qualifies or reverses an earlier statement."
+            }
+          ],
+          "page": 34
+        },
+        {
+          "type": "common_mistakes",
+          "title": "Common Mistakes vs Smart Moves",
+          "pairs": [
+            {
+              "wrong": "Selecting the first option you hear in the audio.",
+              "right": "Waiting for the speaker's final, confirmed choice — usually after 'but' or 'however'."
+            },
+            {
+              "wrong": "Ignoring signposts like 'actually', 'on second thoughts'.",
+              "right": "Treating those words as alarm bells — the answer is changing."
+            },
+            {
+              "wrong": "Writing the option text instead of the letter.",
+              "right": "Checking the instructions — most MCQs want the letter (A, B, C), not the words."
+            }
+          ],
+          "page": 34
+        }
+      ]
+    },
+    {
+      "lesson_id": "table_completion",
+      "lesson_number": 3,
+      "title": "Question Type #3: Table Completion",
+      "source_pages": [
+        35,
+        36
+      ],
+      "practice_link": {
+        "label": "Practice table completion",
+        "href": "/question-bank/listening/practice?type=form_completion"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #3: Table Completion",
+          "paragraphs": [
+            "In this task, you will be given a table and asked to fill in gaps in that table.",
+            "This type of question could appear in any section of the test.",
+            "The answers come in order — **but not evenly spaced.** Two or three answers can land in one sentence; then nothing for thirty seconds; then another cluster. If you 'wait' for an answer at a steady pace you'll miss the cluster."
+          ],
+          "page": 35
+        },
+        {
+          "type": "callout",
+          "tone": "warning",
+          "eyebrow": "ANSWER CLUSTERS",
+          "title": "Answers come in order, but they can arrive back-to-back.",
+          "body": "Don't pace yourself like a metronome. If you just heard answer 3, answer 4 might come in the *very next clause* — or it might be 30 seconds away. Keep your pen moving and your eyes scanning ahead.",
+          "page": 35
+        },
+        {
+          "type": "checklist",
+          "title": "Tips for Table Completion",
+          "items": [
+            "Predict the type of word required based on the information on the table e.g. date, name etc.",
+            "Understand the table before the listening begins.",
+            "Always note the word limit.",
+            "You may hear all the answers in one or two sentences, so don't wait for the next answer. Keep listening."
+          ],
+          "page": 35
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Table Completion Strategy",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Read instructions carefully",
+              "body": "Note the word limit for your answers."
+            },
+            {
+              "number": 2,
+              "title": "Analyze the table",
+              "body": "Look at the table and try to understand it using the information already provided. Pay particular attention to the headings."
+            },
+            {
+              "number": 3,
+              "title": "Predict what you'll hear",
+              "body": "Try to predict the type of word you will hear, based on the information provided in the table."
+            },
+            {
+              "number": 4,
+              "title": "Listen and complete",
+              "body": "Listen and fill in the gap with the correct answer."
+            }
+          ],
+          "page": 36
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "Worked Example",
+          "title": "Use column headers to predict each gap",
+          "intro": "A listening table is a structured set of gap-fills. The column header tells you the word type before the audio plays.",
+          "stimulus": {
+            "label": "Audio transcript (excerpt)",
+            "text": "Receptionist: 'For the morning class, we have yoga at 7:30 — that's £8 per session. Pilates is at 9:00, costs £10. And the swimming session begins at 10:30 — that one is £6.'"
+          },
+          "question": {
+            "label": "Complete the table using NO MORE THAN TWO WORDS or A NUMBER for each gap",
+            "table": {
+              "headers": [
+                "Activity",
+                "Start time",
+                "Price"
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    "Yoga",
+                    "(1) ___________",
+                    "£8"
+                  ]
+                },
+                {
+                  "cells": [
+                    "Pilates",
+                    "9:00",
+                    "(2) ___________"
+                  ]
+                },
+                {
+                  "cells": [
+                    "(3) ___________",
+                    "10:30",
+                    "£6"
+                  ]
+                }
+              ]
+            }
+          },
+          "thinking_steps": [
+            "Gap 1 column = 'Start time'. Predict a clock time. Listen → 'yoga at 7:30' → 7:30.",
+            "Gap 2 column = 'Price'. Predict £ + number. Listen → 'Pilates… costs £10' → £10.",
+            "Gap 3 column = 'Activity'. Predict a noun. Listen → 'swimming session begins at 10:30' → swimming.",
+            "Three answers, all in two consecutive sentences — listen tightly."
+          ],
+          "answer": {
+            "value": "1=7:30, 2=£10, 3=swimming",
+            "explanation": "Tables in listening pack multiple answers into a single chunk of audio. Predict every gap before the recording starts."
+          },
+          "page": 36
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Listening Table",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "You hear all three table answers in two consecutive sentences. What does this tell you?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "There's plenty of time between answers."
+                },
+                {
+                  "letter": "B",
+                  "text": "You must stay focused — answers can come back-to-back."
+                },
+                {
+                  "letter": "C",
+                  "text": "Two of the three answers will come back later in slower repetition."
+                }
+              ],
+              "answer": "B",
+              "explanation": "Listening tables often cluster answers tightly. If you wait for natural pauses you'll miss the next gap."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Before the audio plays, study the table _______ to predict word type for each gap.",
+              "answer": "headers",
+              "accept": [
+                "headers",
+                "headings",
+                "column headers",
+                "columns"
+              ],
+              "explanation": "Headers tell you what kind of word fits each column. Predict first, listen second."
+            },
+            {
+              "kind": "mcq",
+              "stem": "The audio mentions a price but you didn't catch it cleanly. What's the best move?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "Pause everything and try to remember."
+                },
+                {
+                  "letter": "B",
+                  "text": "Write your best guess and shift focus to the next gap."
+                },
+                {
+                  "letter": "C",
+                  "text": "Skip the rest of the table."
+                }
+              ],
+              "answer": "B",
+              "explanation": "Best guess + move on. Hesitation costs you the next answer."
+            }
+          ],
+          "page": 36
+        },
+        {
+          "type": "common_mistakes",
+          "title": "Common Mistakes vs Smart Moves",
+          "pairs": [
+            {
+              "wrong": "Reading the table after the audio starts.",
+              "right": "Studying the table during the pre-listen window so you know exactly what to listen for."
+            },
+            {
+              "wrong": "Waiting for a 'cue word' before each answer.",
+              "right": "Following the table left-to-right, top-to-bottom — that's the order the answers come in."
+            },
+            {
+              "wrong": "Writing a full sentence instead of one or two words.",
+              "right": "Sticking to the word limit; over-limit answers are wrong."
+            }
+          ],
+          "page": 36
+        }
+      ]
+    },
+    {
+      "lesson_id": "sentence_completion",
+      "lesson_number": 4,
+      "title": "Question Type #4: Sentence Completion",
+      "source_pages": [
+        37,
+        38
+      ],
+      "practice_link": {
+        "label": "Practice sentence completion",
+        "href": "/question-bank/listening/practice?type=sentence_completion"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #4: Sentence Completion",
+          "paragraphs": [
+            "This is another type of gap fill question.",
+            "You will be given a number of sentences with gaps in them and you will be required to fill in these gaps.",
+            "**Concrete example:** You read the gapped sentence 'The main material used was _______.' Then you listen, and at the matching point you hear '…they made it almost entirely from clay.' Your answer is **clay** — one word, copied exactly, fitting the gap. That's all sentence completion is."
+          ],
+          "page": 37
+        },
+        {
+          "type": "checklist",
+          "title": "Tips for sentence completion",
+          "items": [
+            "Always read and understand the sentences before you listen. This will make your job much easier.",
+            "Predict the type of word(s) that might be needed to complete the sentence.",
+            "Try to guess the word if you can. The listening will then confirm your guess.",
+            "Write the answers exactly as you hear them."
+          ],
+          "page": 37
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Sentence Completion Strategy",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Read instructions carefully",
+              "body": "Note the word limit for your answers."
+            },
+            {
+              "number": 2,
+              "title": "Understand the sentences",
+              "body": "Look at the sentences and understand their meaning."
+            },
+            {
+              "number": 3,
+              "title": "Predict word types",
+              "body": "Predict the type of word you will hear e.g. noun, verb, adjective, name, phone number etc."
+            },
+            {
+              "number": 4,
+              "title": "Make educated guesses",
+              "body": "Try to guess the word, if you can, before you hear the recording."
+            },
+            {
+              "number": 5,
+              "title": "Listen and complete",
+              "body": "Listen and fill in the gaps with the correct answers exactly as you hear them."
+            },
+            {
+              "number": 6,
+              "title": "Check spelling",
+              "body": "Ensure your spelling is correct."
+            },
+            {
+              "number": 7,
+              "title": "Verify grammar",
+              "body": "Make sure each sentence is grammatically correct."
+            }
+          ],
+          "page": 38
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "Worked Example",
+          "title": "Predict, then confirm",
+          "intro": "Sentence completion rewards prediction — half the gaps can be guessed from the sentence alone before the audio plays.",
+          "stimulus": {
+            "label": "Audio transcript (excerpt)",
+            "text": "Lecturer: 'The earliest evidence of writing dates from around 3,200 BCE in southern Mesopotamia. Initially, the symbols were used by accountants to track grain and livestock — not for poetry or storytelling, as is sometimes assumed.'"
+          },
+          "question": {
+            "label": "Complete the sentences using NO MORE THAN THREE WORDS",
+            "items": [
+              {
+                "n": 1,
+                "stem": "The earliest writing comes from around (1) ___________."
+              },
+              {
+                "n": 2,
+                "stem": "It was first used by (2) ___________."
+              },
+              {
+                "n": 3,
+                "stem": "Symbols recorded grain and (3) ___________."
+              }
+            ]
+          },
+          "thinking_steps": [
+            "Gap 1 = a date or year. Listen → '3,200 BCE' (one item, fits limit).",
+            "Gap 2 = a profession (noun, plural likely). Listen → 'accountants' → accountants.",
+            "Gap 3 = a noun in a list with 'grain'. Listen → 'grain and livestock' → livestock.",
+            "Notice the distractor 'poetry or storytelling' is mentioned — but the audio explicitly says 'NOT for poetry'."
+          ],
+          "answer": {
+            "value": "1=3,200 BCE, 2=accountants, 3=livestock",
+            "explanation": "Predicting word types narrows your listening focus. Be ready for negation traps ('NOT for poetry') that mention wrong options."
+          },
+          "page": 38
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Listening Sentence Completion",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "The audio mentions 'poetry' but your sentence asks what symbols were used for. The audio also says 'NOT for poetry'. What is the answer?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "Poetry — it was mentioned."
+                },
+                {
+                  "letter": "B",
+                  "text": "Whatever the audio confirms positively."
+                },
+                {
+                  "letter": "C",
+                  "text": "Both poetry and the confirmed answer."
+                }
+              ],
+              "answer": "B",
+              "explanation": "Audio often mentions a wrong answer with negation ('not poetry') to trap careless listeners. Always note negation words."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "You should write the answer EXACTLY as you _______ it.",
+              "answer": "hear",
+              "accept": [
+                "hear",
+                "heard",
+                "hear it"
+              ],
+              "explanation": "Don't paraphrase — copy the speaker's words. The marker checks for the actual phrase from the audio."
+            },
+            {
+              "kind": "mcq",
+              "stem": "Predicting answers before listening is useful because…",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "…the audio will repeat the answer if you predicted right."
+                },
+                {
+                  "letter": "B",
+                  "text": "…you can listen actively for confirmation rather than passively for words."
+                },
+                {
+                  "letter": "C",
+                  "text": "…it lets you skip the audio."
+                }
+              ],
+              "answer": "B",
+              "explanation": "Active confirmation is the entire point. You stop trying to absorb everything and instead verify a small set of guesses."
+            }
+          ],
+          "page": 38
+        },
+        {
+          "type": "common_mistakes",
+          "title": "Common Mistakes vs Smart Moves",
+          "pairs": [
+            {
+              "wrong": "Treating any word in the audio that matches the gap topic as the answer.",
+              "right": "Listening for negation/contrast ('not', 'rather than') — those words flip a 'mention' into a wrong option."
+            },
+            {
+              "wrong": "Paraphrasing the answer in your own words.",
+              "right": "Copying the speaker's exact words — even idiomatic ones."
+            },
+            {
+              "wrong": "Reading the sentences only after the audio starts.",
+              "right": "Reading them in the pre-listen window so you can predict and stay one step ahead."
+            }
+          ],
+          "page": 38
+        }
+      ]
+    },
+    {
+      "lesson_id": "matching",
+      "lesson_number": 5,
+      "title": "Question Type #5: Matching",
+      "source_pages": [
+        39,
+        40
+      ],
+      "practice_link": {
+        "label": "Practice matching",
+        "href": "/question-bank/listening/practice?type=matching"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #5: Matching",
+          "paragraphs": [
+            "For this type of question, you will be required to match a list of options from the listening test to a number of options on the test paper."
+          ],
+          "page": 39
+        },
+        {
+          "type": "icon_grid",
+          "title": "Variations of matching questions include:",
+          "cards": [
+            {
+              "icon": "Type",
+              "body": "Words"
+            },
+            {
+              "icon": "MessageSquare",
+              "body": "Phrases"
+            },
+            {
+              "icon": "AlignLeft",
+              "body": "Sentences"
+            },
+            {
+              "icon": "Image",
+              "body": "Pictures"
+            }
+          ],
+          "page": 39
+        },
+        {
+          "type": "narrative",
+          "paragraphs": [
+            "This type of task tests your ability to listen for detail.",
+            "You will often have to follow a detailed conversation between two or more people.",
+            "The **questions** are usually presented in the order you hear them — but watch out: the **list of options (A, B, C, …)** is NOT in that order. Don't expect to read straight down the list.",
+            "Options will almost always be expressed differently in the recording through synonyms or paraphrasing — listen for the *idea*, not the exact word."
+          ],
+          "page": 39
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Strategy for Matching",
+          "steps": [
+            {
+              "number": 1,
+              "body": "Read the instructions carefully and note the word limit."
+            },
+            {
+              "number": 2,
+              "body": "Look at the list of options and questions to understand them."
+            },
+            {
+              "number": 3,
+              "body": "Try to predict which ones match, based on what is on the test paper before listening."
+            },
+            {
+              "number": 4,
+              "body": "Predict how the list of options could be expressed differently in the recording."
+            },
+            {
+              "number": 5,
+              "body": "Listen and match the options to the correct questions as you hear them."
+            },
+            {
+              "number": 6,
+              "body": "Eliminate options that can't be correct, in order to narrow down the list of options as you complete the questions."
+            }
+          ],
+          "page": 40
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "Worked Example",
+          "title": "Eliminate as you go",
+          "intro": "Matching questions appear in the order you hear them. Tick options as confirmed, cross out used options, and the last one becomes obvious.",
+          "stimulus": {
+            "label": "Audio transcript (excerpt)",
+            "text": "Tour guide: 'Right, so on Monday we're visiting the natural history museum — that's free entry for students. Tuesday, the city art gallery; you'll need a ten-pound ticket for that one. Wednesday is a guided walking tour of the old town, organised by a local historian. And Thursday is reserved for independent study at the library.'"
+          },
+          "question": {
+            "label": "Match each day with the activity",
+            "items": [
+              {
+                "n": 1,
+                "stem": "Monday"
+              },
+              {
+                "n": 2,
+                "stem": "Tuesday"
+              },
+              {
+                "n": 3,
+                "stem": "Wednesday"
+              },
+              {
+                "n": 4,
+                "stem": "Thursday"
+              }
+            ],
+            "options": [
+              {
+                "letter": "A",
+                "text": "Independent library work"
+              },
+              {
+                "letter": "B",
+                "text": "Free museum visit"
+              },
+              {
+                "letter": "C",
+                "text": "Guided walking tour"
+              },
+              {
+                "letter": "D",
+                "text": "Paid art gallery visit"
+              },
+              {
+                "letter": "E",
+                "text": "Sports activity"
+              }
+            ]
+          },
+          "thinking_steps": [
+            "Monday → 'natural history museum, free entry' → B (Free museum visit). Cross off B.",
+            "Tuesday → 'art gallery… ten-pound ticket' → D (Paid art gallery). Cross off D.",
+            "Wednesday → 'guided walking tour' → C (Guided walking tour). Cross off C.",
+            "Thursday → only A left, and audio confirms 'reserved for independent study at the library' → A.",
+            "E (Sports activity) is unused — extra option, ignore."
+          ],
+          "answer": {
+            "value": "1=B, 2=D, 3=C, 4=A",
+            "explanation": "Order of options matches order of audio. Eliminating used options as you go makes the last match easy."
+          },
+          "page": 40
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Listening Matching",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "There are 5 options but only 4 questions. What does this mean?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "One option will not be used."
+                },
+                {
+                  "letter": "B",
+                  "text": "One option will be used twice."
+                },
+                {
+                  "letter": "C",
+                  "text": "One question has no answer."
+                }
+              ],
+              "answer": "A",
+              "explanation": "Matching tasks usually give you one or two extra options that aren't used. Don't force a match."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "In Listening matching, the **questions** appear in the same _______ as you hear them in the recording.",
+              "answer": "order",
+              "accept": [
+                "order",
+                "sequence"
+              ],
+              "explanation": "Question 1 is answered before question 2 in the audio — use this to anticipate when the next answer is coming. Note: the **option list (A, B, C…)** is NOT in that order — that's the trap."
+            },
+            {
+              "kind": "mcq",
+              "stem": "What's the best move when you confirm a match?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "Cross out the used option so you don't reuse it."
+                },
+                {
+                  "letter": "B",
+                  "text": "Erase it."
+                },
+                {
+                  "letter": "C",
+                  "text": "Leave the list untouched."
+                }
+              ],
+              "answer": "A",
+              "explanation": "Crossing off used options reduces visual noise and reveals the remaining choices instantly."
+            }
+          ],
+          "page": 40
+        },
+        {
+          "type": "common_mistakes",
+          "title": "Common Mistakes vs Smart Moves",
+          "pairs": [
+            {
+              "wrong": "Trying to remember every option as the audio plays.",
+              "right": "Cross-referencing with the printed list and ticking matches as the speaker confirms them."
+            },
+            {
+              "wrong": "Forcing all options to be used.",
+              "right": "Allowing one or two unused options — they're decoys, not missing answers."
+            },
+            {
+              "wrong": "Listening for the exact words in each option.",
+              "right": "Listening for paraphrases ('ten-pound ticket' = 'paid')."
+            }
+          ],
+          "page": 40
+        }
+      ]
+    },
+    {
+      "lesson_id": "labelling_map_or_plan",
+      "lesson_number": 6,
+      "title": "Question Type #6: Labelling a Map or Plan",
+      "source_pages": [
+        41,
+        44
+      ],
+      "practice_link": {
+        "label": "Practice labelling a map or plan",
+        "href": "/question-bank/listening/practice?type=plan_map_labeling"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #6: Labelling a Map or Plan",
+          "paragraphs": [
+            "This type of question could appear in any of the four listening sections, but it is most likely to appear in section 2.",
+            "In section 2, you will listen to just one person talking about a non-academic topic. It is often someone giving information to an audience about an event, or showing them around a building, such as a university or hotel."
+          ],
+          "page": 41
+        },
+        {
+          "type": "checklist",
+          "title": "What to expect",
+          "items": [
+            "You have to identify the different parts of a map or plan by listening to and understanding a description, or by following directions.",
+            "You might be asked to select the answers from a list, or take them from the recording directly.",
+            "An awareness of language for directions is essential.",
+            "The information you need to answer the questions is in the same order as it is on the recording."
+          ],
+          "page": 41
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Common Problems",
+          "steps": [
+            {
+              "number": 1,
+              "body": "Not being familiar with the vocabulary and functional language used to describe locations and directions."
+            },
+            {
+              "number": 2,
+              "body": "Too much information. This question requires you not only to listen, but also to follow a description or directions, understand the map or diagram and write short notes, all at the same time."
+            },
+            {
+              "number": 3,
+              "body": "Spelling. This is a common problem in all IELTS listening questions, but particularly in this type, because you have to do so many things at the same time."
+            },
+            {
+              "number": 4,
+              "body": "Visualisation. This refers to your ability to form mental visual images. You will be sitting in an exam room and the person talking will be describing a plan you have never seen before. Unless you can imagine what it looks like, it is very difficult to answer these questions."
+            }
+          ],
+          "page": 41
+        },
+        {
+          "type": "checklist",
+          "title": "Useful Language",
+          "items": [
+            "at the top/at the bottom",
+            "on the left/on the right/on the far side",
+            "North/South/East/West",
+            "to the north/to the west",
+            "slightly west of",
+            "in the southwest/in the northeast",
+            "in the middle of/in the centre of",
+            "above/below",
+            "inside/outside",
+            "opposite/in front of",
+            "left hand side/right hand side",
+            "clockwise/anticlockwise",
+            "a little beyond",
+            "just past",
+            "before you get to",
+            "adjoining",
+            "enter via",
+            "runs alongside"
+          ],
+          "page": 42
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Strategy for Labelling a Map or Plan (Part 1)",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Read the question carefully",
+              "body": "Understand the map or plan and its features."
+            },
+            {
+              "number": 2,
+              "title": "Analyze spatial relationships",
+              "body": "Ask yourself where things are in relation to the questions. This should help you predict the answers and follow the talk."
+            },
+            {
+              "number": 3,
+              "title": "Identify starting points",
+              "body": "Think about where the person might begin their talk from. What is to their right and left? What is in front of and behind them?"
+            },
+            {
+              "number": 4,
+              "title": "Study major landmarks",
+              "body": "Look at the major parts of the map or plan to help you understand and navigate your way around."
+            },
+            {
+              "number": 5,
+              "title": "Predict answer types",
+              "body": "Predict which type of words might be the answer i.e. will it be a place, room, street, building etc.?"
+            }
+          ],
+          "page": 43
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Strategy for Labelling a Map or Plan (Part 2)",
+          "steps": [
+            {
+              "number": 6,
+              "title": "Listen to the introduction",
+              "body": "Listen to the beginning of the talk carefully, because this will help you understand the context and help you follow the talk more easily."
+            },
+            {
+              "number": 7,
+              "title": "Visualize the space",
+              "body": "Visualise the place they are describing whilst the person is talking. Note down any possible answers, but be careful with distractors e.g. 'this was the library but we decided to move it down to the end of the corridor'."
+            },
+            {
+              "number": 8,
+              "title": "Listen for signposts",
+              "body": "Listen for signposting language like 'The next room we are about to see is...', or 'If you now follow me to....', to help you understand each stage of the talk."
+            },
+            {
+              "number": 9,
+              "title": "Take notes",
+              "body": "Make short notes on the question paper and then transfer your answers at the end, using correct spelling."
+            }
+          ],
+          "page": 44
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "Worked Example",
+          "title": "Anchor on a starting point, then follow directions",
+          "intro": "Maps need spatial visualisation. Always identify where the speaker is standing, then track their movements step by step.",
+          "stimulus": {
+            "label": "Audio transcript (excerpt)",
+            "text": "Guide: 'Welcome to the visitor centre. Now, as you can see on your map, we're standing here at the main entrance, marked X. If you turn left and walk past the gift shop, you'll find the café on your right. Continue past the café and the lecture hall is at the very end of the corridor on the left.'"
+          },
+          "question": {
+            "label": "Label the rooms on the map (A–E given on the diagram)",
+            "items": [
+              {
+                "n": 1,
+                "stem": "Café — letter ___"
+              },
+              {
+                "n": 2,
+                "stem": "Lecture hall — letter ___"
+              }
+            ]
+          },
+          "thinking_steps": [
+            "Anchor: 'we're standing here at the main entrance, marked X'.",
+            "First instruction: 'turn left, past the gift shop, café on your right' — café is the first room past the gift shop on the right side.",
+            "Second instruction: 'past the café… end of the corridor on the left' — lecture hall is the last room on the left.",
+            "Match these to map letters (e.g. café = C, lecture hall = E based on the diagram)."
+          ],
+          "answer": {
+            "value": "Depends on diagram — typically 1=C (café), 2=E (lecture hall)",
+            "explanation": "Track the speaker as if you were walking with them. Use 'left/right/past/end' as movement cues, not single keywords."
+          },
+          "page": 44
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Map/Plan Labelling",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "The speaker says 'this WAS the library, but we decided to move it down to the end of the corridor.' Where is the library now?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "The original location."
+                },
+                {
+                  "letter": "B",
+                  "text": "At the end of the corridor."
+                },
+                {
+                  "letter": "C",
+                  "text": "Both places."
+                }
+              ],
+              "answer": "B",
+              "explanation": "Past tense ('was', 'used to be') signals an outdated location. The current answer is the new spot."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Before the audio plays, identify the speaker's _______ point on the map.",
+              "answer": "starting",
+              "accept": [
+                "starting",
+                "start",
+                "starting point",
+                "anchor"
+              ],
+              "explanation": "Knowing where the speaker is standing lets you visualise every direction they give."
+            },
+            {
+              "kind": "mcq",
+              "stem": "Which of these phrases is MOST likely to introduce a new room/location?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "'If you now follow me to…' "
+                },
+                {
+                  "letter": "B",
+                  "text": "'As I was saying earlier…' "
+                },
+                {
+                  "letter": "C",
+                  "text": "'In conclusion…' "
+                }
+              ],
+              "answer": "A",
+              "explanation": "**Movement signposts** are short phrases the speaker uses to walk you through a place — 'follow me', 'next we have', 'over there', 'just past the…'. Each one triggers the next answer on a map or plan task. Practise listening *for them* rather than fighting through every word."
+            }
+          ],
+          "page": 44
+        },
+        {
+          "type": "common_mistakes",
+          "title": "Common Mistakes vs Smart Moves",
+          "pairs": [
+            {
+              "wrong": "Treating any mentioned room as the answer.",
+              "right": "Tracking the speaker's path; only the room they're currently describing counts."
+            },
+            {
+              "wrong": "Ignoring distractors in past tense ('this was the library').",
+              "right": "Listening for verb tense — past tense often signals a moved or renamed location."
+            },
+            {
+              "wrong": "Skipping the introduction.",
+              "right": "Listening to the intro carefully — that's where the starting point is established."
+            }
+          ],
+          "page": 44
+        }
+      ]
+    },
+    {
+      "lesson_id": "short_answer",
+      "lesson_number": 7,
+      "title": "Question Type #7: Short Answer Questions",
+      "source_pages": [
+        45,
+        46
+      ],
+      "practice_link": {
+        "label": "Practice short answer questions",
+        "href": "/question-bank/listening/practice?type=short_answer"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #7: Short Answer Questions",
+          "paragraphs": [
+            "These questions are similar to the classic listening comprehension questions you might have been asked to do in English class, or even in your own language.",
+            "They ask you a number of questions about the recording and you must give short answers in response."
+          ],
+          "page": 45
+        },
+        {
+          "type": "checklist",
+          "title": "Tips for short answer questions",
+          "items": [
+            "Read the instructions very carefully, especially regarding the word count.",
+            "Read the questions in order to fully understand them before you listen.",
+            "Try to predict what the answer will be before you listen.",
+            "Be aware of synonyms and paraphrasing."
+          ],
+          "page": 45
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Short Answer Questions Strategy",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Read instructions carefully",
+              "body": "Note the word limit for your answers."
+            },
+            {
+              "number": 2,
+              "title": "Understand the questions",
+              "body": "Look at the list of questions to understand them."
+            },
+            {
+              "number": 3,
+              "title": "Predict information types",
+              "body": "Try to predict the type of information required."
+            },
+            {
+              "number": 4,
+              "title": "Consider paraphrasing",
+              "body": "Be aware of how synonyms and paraphrasing might be used."
+            },
+            {
+              "number": 5,
+              "title": "Listen and write answers",
+              "body": "Listen and write the answers in the form that you hear them."
+            },
+            {
+              "number": 6,
+              "title": "Check spelling",
+              "body": "Check spelling when you are finished."
+            }
+          ],
+          "page": 46
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "Worked Example",
+          "title": "Answer in the form you hear",
+          "intro": "Short-answer questions ask 'what/who/where/how many'. Predict the answer's TYPE first, then listen for the precise wording.",
+          "stimulus": {
+            "label": "Audio transcript (excerpt)",
+            "text": "Speaker: 'Our research project, which began in 2018, looked at the effects of urban green spaces on stress levels. We surveyed 350 office workers in central London, and found that those with regular access to parks reported 28% lower stress scores than those without.'"
+          },
+          "question": {
+            "label": "Answer using NO MORE THAN TWO WORDS or A NUMBER",
+            "items": [
+              {
+                "n": 1,
+                "stem": "When did the research project begin?"
+              },
+              {
+                "n": 2,
+                "stem": "How many people were surveyed?"
+              },
+              {
+                "n": 3,
+                "stem": "What did the project measure the effects of urban green spaces on?"
+              }
+            ]
+          },
+          "thinking_steps": [
+            "Q1 type = a year/date. Listen → 'began in 2018' → 2018.",
+            "Q2 type = a number of people. Listen → '350 office workers' → 350.",
+            "Q3 type = a noun phrase. Listen → 'effects of urban green spaces on stress levels' → stress levels (2 words).",
+            "Don't write '28% lower' for Q3 — that's the result, not what was measured."
+          ],
+          "answer": {
+            "value": "1=2018, 2=350, 3=stress levels",
+            "explanation": "The 'wh-' word (when/how many/what) anchors the answer type. Predicting it before the audio is the whole game."
+          },
+          "page": 46
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Short Answer",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "The question begins with 'How many'. What kind of answer should you listen for?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "A description."
+                },
+                {
+                  "letter": "B",
+                  "text": "A number or quantity."
+                },
+                {
+                  "letter": "C",
+                  "text": "A name."
+                }
+              ],
+              "answer": "B",
+              "explanation": "'How many' = number. 'When' = time/date. 'Where' = place. The question word IS the answer-type signal."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Write answers in the _______ form you hear them in the audio.",
+              "answer": "exact",
+              "accept": [
+                "exact",
+                "same",
+                "exactly",
+                "exact same"
+              ],
+              "explanation": "Don't paraphrase or change tense — copy the speaker's words."
+            },
+            {
+              "kind": "mcq",
+              "stem": "The question asks: 'How many students are in the **morning** class?' You hear: 'The morning class usually has about twelve, but it filled up to fifteen this term, and the evening class has eighteen.' What's your answer?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "twelve — that's the first number tied to 'morning'."
+                },
+                {
+                  "letter": "B",
+                  "text": "fifteen — the speaker corrected herself, so this is the current number for the morning class."
+                },
+                {
+                  "letter": "C",
+                  "text": "eighteen — the largest number, so it must be the most recent figure."
+                }
+              ],
+              "answer": "B",
+              "explanation": "Listen for **self-correction signals** ('but', 'actually', 'this term', 'now'). The speaker abandoned 'twelve' and gave the current figure 'fifteen'. 'Eighteen' is for the *evening* class — wrong category. The first/largest-number heuristic is a trap the test deliberately sets."
+            }
+          ],
+          "page": 46
+        },
+        {
+          "type": "common_mistakes",
+          "title": "Common Mistakes vs Smart Moves",
+          "pairs": [
+            {
+              "wrong": "Writing the first relevant-sounding answer.",
+              "right": "Matching the answer type to the 'wh-' word in the question (when=date, how many=number)."
+            },
+            {
+              "wrong": "Paraphrasing the answer.",
+              "right": "Copying the speaker's exact words — including the form (singular/plural)."
+            },
+            {
+              "wrong": "Going over the word limit when explaining.",
+              "right": "Writing exactly the words asked for — extra detail = wrong answer."
+            }
+          ],
+          "page": 46
+        }
+      ]
+    },
+    {
+      "lesson_id": "completing_forms_notes",
+      "lesson_number": 8,
+      "title": "Question Type #8: Completing Forms/Notes",
+      "source_pages": [
+        47,
+        48
+      ],
+      "practice_link": {
+        "label": "Practice form/note completion",
+        "href": "/question-bank/listening/practice?type=form_completion"
+      },
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Question Type #8: Completing Forms/Notes",
+          "paragraphs": [
+            "This type of question often appears in the first section of the test.",
+            "Normally the answers will be one or two words long and will be factual information, such as phone numbers, dates and times.",
+            "These questions may seem relatively simple, but it would surprise you how many students throw away easy marks in this section."
+          ],
+          "page": 47
+        },
+        {
+          "type": "checklist",
+          "title": "Tips for completing forms/notes",
+          "items": [
+            "They will try to trick you by giving you a number of different pieces of information when only one of them is correct.",
+            "One common trick is for the person to give one piece of information and then correct it later in the recording.",
+            "Prediction will allow you to anticipate the type or form of the word(s) required.",
+            "Be aware of synonyms and paraphrasing."
+          ],
+          "page": 47
+        },
+        {
+          "type": "strategy_steps",
+          "title": "Completing Forms/Notes Strategy",
+          "steps": [
+            {
+              "number": 1,
+              "title": "Read instructions carefully",
+              "body": "Note the word limit for your answers."
+            },
+            {
+              "number": 2,
+              "title": "Understand the form",
+              "body": "Look at the form/note and try to understand it, using the information already provided."
+            },
+            {
+              "number": 3,
+              "title": "Predict what you'll hear",
+              "body": "Try to predict the type of word you will hear, based on the information provided in the table."
+            },
+            {
+              "number": 4,
+              "title": "Listen and complete",
+              "body": "Listen and fill in the gaps with the correct answers."
+            }
+          ],
+          "page": 48
+        },
+        {
+          "type": "worked_example",
+          "eyebrow": "Worked Example",
+          "title": "Watch for the speaker's correction",
+          "intro": "Form/note completion appears in Section 1. The classic trap: the speaker gives one piece of information, then changes their mind seconds later.",
+          "stimulus": {
+            "label": "Audio transcript (excerpt)",
+            "text": "Receptionist: 'Can I take your details? Right, and what's your address?' Caller: 'It's 24 Oak Lane — actually, sorry, that's the old one. We moved last month. It's 17 Elm Street now.' Receptionist: 'OK, 17 Elm Street. And a contact number?' Caller: 'It's 0207 — wait, let me check — 0208 449 6231.'"
+          },
+          "question": {
+            "label": "Complete the form",
+            "items": [
+              {
+                "n": 1,
+                "stem": "Address: (1) ___________"
+              },
+              {
+                "n": 2,
+                "stem": "Phone number: (2) ___________"
+              }
+            ]
+          },
+          "thinking_steps": [
+            "Address: caller starts with '24 Oak Lane' but corrects 'that's the old one… 17 Elm Street now' — final answer = 17 Elm Street.",
+            "Phone: caller starts '0207' then says 'wait, let me check' and gives '0208 449 6231' — final answer = 0208 449 6231.",
+            "Trap: writing '24 Oak Lane' or '0207' loses two easy marks."
+          ],
+          "answer": {
+            "value": "1=17 Elm Street, 2=0208 449 6231",
+            "explanation": "Cue words: 'sorry', 'actually', 'wait', 'let me check' all signal the speaker is about to correct themselves. The answer is what comes AFTER, not before."
+          },
+          "page": 48
+        },
+        {
+          "type": "quiz",
+          "title": "Quick Check: Form/Note Completion",
+          "items": [
+            {
+              "kind": "mcq",
+              "stem": "The speaker says 'My number is 555-1234… no wait, 555-4321.' What's the answer?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "555-1234"
+                },
+                {
+                  "letter": "B",
+                  "text": "555-4321"
+                },
+                {
+                  "letter": "C",
+                  "text": "Both numbers"
+                }
+              ],
+              "answer": "B",
+              "explanation": "'No wait' = correction. The corrected version is the final answer."
+            },
+            {
+              "kind": "fill_in",
+              "stem": "Section 1 of listening usually involves _______ information like phone numbers, dates, addresses.",
+              "answer": "factual",
+              "accept": [
+                "factual",
+                "personal",
+                "basic"
+              ],
+              "explanation": "Section 1 = personal/factual details. Spelling and exact transcription matter most here."
+            },
+            {
+              "kind": "mcq",
+              "stem": "Which trick is MOST common in form/note completion?",
+              "options": [
+                {
+                  "letter": "A",
+                  "text": "Speaking in a different language."
+                },
+                {
+                  "letter": "B",
+                  "text": "Giving wrong information first, then correcting it."
+                },
+                {
+                  "letter": "C",
+                  "text": "Reading numbers backwards."
+                }
+              ],
+              "answer": "B",
+              "explanation": "The 'self-correction' trap is the #1 way candidates lose easy Section 1 marks."
+            }
+          ],
+          "page": 48
+        },
+        {
+          "type": "common_mistakes",
+          "title": "Common Mistakes vs Smart Moves",
+          "pairs": [
+            {
+              "wrong": "Writing the first piece of information you hear.",
+              "right": "Listening for the FINAL version — speakers often correct themselves."
+            },
+            {
+              "wrong": "Spelling proper names from memory.",
+              "right": "Listening for the speaker's letter-by-letter spelling ('S-M-I-T-H') — Section 1 always provides it."
+            },
+            {
+              "wrong": "Writing dates inconsistently with the form's existing entries.",
+              "right": "Matching the format already on the form (e.g. if the form has '12 March', use the same style)."
+            }
+          ],
+          "page": 48
+        }
+      ]
+    },
+    {
+      "lesson_id": "prediction",
+      "lesson_number": 9,
+      "title": "Prediction",
+      "source_pages": [
+        49
+      ],
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Prediction",
+          "subtitle": "Prediction is the most tested of the listening sub-skills, and crucially important to getting a high score in the test.",
+          "paragraphs": [
+            "Predicting enables you to not only focus your brain on the part that you will hear, but more importantly, not focus on any other areas."
+          ],
+          "page": 49
+        },
+        {
+          "type": "example",
+          "title": "Example",
+          "passage": "Name: Shaun Rodgers\n\nRoom no. _____________\n\nNumber of occupants: 1\n\nCheck out time: _____________",
+          "explanation": "In this example, we can accurately predict that we are going to hear a room number and time. That means we can completely focus on those two items, making it much easier for us to get the correct answer.",
+          "page": 49
+        },
+        {
+          "type": "narrative",
+          "title": "How to Predict",
+          "paragraphs": [
+            "In the IELTS listening test, there will be between 30-45 seconds of silence before the section of the recording begins. Use this time wisely by predicting what you are going to hear.",
+            "You should think about the following...."
+          ],
+          "page": 49
+        },
+        {
+          "type": "checklist",
+          "title": "Think about...",
+          "items": [
+            "Grammar: noun, verb, adjective, adverb etc.. Often it will be obvious which word form we need to use. If we use a different form of the word, we will get the question wrong.",
+            "Subject: phone number, address, date, business name etc.. This will help us focus on the correct part of the recording and find the correct information more easily.",
+            "Function: list, question, label, instruction etc.."
+          ],
+          "page": 49
+        },
+        {
+          "type": "callout",
+          "tone": "info",
+          "eyebrow": "WORKED WALKTHROUGH — 30 SECONDS OF PREDICTION",
+          "title": "How to actually use those 30 seconds.",
+          "body": "Take the form above. **Gap 1 — \"Room no.\":** grammar = a number, subject = hotel booking, so you ignore everything except numerals. **Gap 2 — \"Check out time\":** grammar = a time (\"11am\", \"midday\"), subject = hotel checkout. *Now you're listening for two specific shapes of word — not 'all the information'.* Practice tip: pause every gap-fill exercise for 20 seconds before pressing play and write down (a) word type and (b) topic for each gap. After two weeks of this drill it becomes automatic.",
+          "page": 49
+        }
+      ]
+    },
+    {
+      "lesson_id": "synonyms_paraphrasing",
+      "lesson_number": 10,
+      "title": "Synonyms and Paraphrasing",
+      "source_pages": [
+        50,
+        51
+      ],
+      "slides": [
+        {
+          "type": "callout",
+          "tone": "warning",
+          "eyebrow": "THE SINGLE MOST IMPORTANT TRICK",
+          "title": "IELTS hides every answer using a different word.",
+          "body": "You read **'cost'**, the audio says **'price'**. You read **'arrival date'**, the audio says **'day you arrive'**. If you sit there waiting to hear the *exact* word from the question, you'll miss every answer. Listen for the **idea**, not the word. This single habit is worth 1–2 bands on the listening section.",
+          "page": 50
+        },
+        {
+          "type": "narrative",
+          "title": "Synonyms and Paraphrasing",
+          "subtitle": "**Synonym** = a word with the same meaning (cost = price). **Paraphrase** = the same idea expressed in different words (\"arrival date\" → \"the day you arrive\").",
+          "paragraphs": [
+            "In the IELTS listening test, it is normal for you to read one word but hear another word with the same meaning. For example, you may read 'cost' but hear 'price'. This is called a synonym and the IELTS listening test has lots of them.",
+            "A common mistake is to read a certain word and try to listen for that word, but then not hear it. That is because the recording used a synonym. For example, you might hear someone making a hotel reservation and you have to note down their details.",
+            "The form might say 'Arrival Date', but you will hear 'day you arrive'. Similarly, you may read 'Departure Date', but you might hear 'day you leave'.",
+            "Make sure you think about the type of information you might hear in the form of synonyms, not just what you read."
+          ],
+          "page": 50
+        },
+        {
+          "type": "narrative",
+          "title": "Synonyms and Paraphrasing Practice",
+          "subtitle": "Practising this skill allows you to improve your listening and vocabulary at the same time.",
+          "paragraphs": [
+            "A good listening resource to help you improve your vocabulary whilst listening is FluentU. This website has a huge range of English videos and bilingual subtitles for most of them. It also has a 'hover-over' dictionary for any words you don't know. Finally, it has a ''learning centre'' where you can study and review the vocabulary that came up in the video.",
+            "My suggestion for FluentU would be to listen to any videos you like and note down any words you don't know. Try to guess the meaning from the context of the listening first, because this is a useful skill to develop for the IELTS test. Then use the 'hover-over' tool to confirm the meaning. Even if you just watch one video a day, your vocabulary will expand quickly.",
+            "A good way to practise synonyms and paraphrasing is to listen to a short video and think about how each sentence or phrase could be paraphrased. If you do this regularly, over time you will get used to common synonyms and this will really help you in all parts of the IELTS test."
+          ],
+          "page": 51
+        }
+      ]
+    },
+    {
+      "lesson_id": "word_limit",
+      "lesson_number": 11,
+      "title": "Word Limit",
+      "source_pages": [
+        52
+      ],
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Word Limit",
+          "subtitle": "What does it mean?",
+          "paragraphs": [
+            "This is often one of the most confusing aspects of the test.",
+            "It is essential that you know the word limit for each question and you stick to it."
+          ],
+          "page": 52
+        },
+        {
+          "type": "comparison",
+          "title": "Word limit examples",
+          "columns": [
+            {
+              "label": "\"NO MORE THAN TWO WORDS\"",
+              "tone": "info",
+              "items": [
+                "Means that you may write one OR two words, but no more."
+              ]
+            },
+            {
+              "label": "\"NOT MORE THAN ONE WORD AND/OR A NUMBER\"",
+              "tone": "info",
+              "items": [
+                "Means that if you write more than one word your answer will be incorrect."
+              ]
+            }
+          ],
+          "page": 52
+        },
+        {
+          "type": "checklist",
+          "title": "\"NOT MORE THAN ONE WORD AND/OR A NUMBER\" means that you can write:",
+          "items": [
+            "One word",
+            "One number",
+            "One word and a number"
+          ],
+          "page": 52
+        }
+      ]
+    },
+    {
+      "lesson_id": "numbers",
+      "lesson_number": 12,
+      "title": "Numbers",
+      "source_pages": [
+        53
+      ],
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Numbers",
+          "subtitle": "You should familiarise yourself with how numbers sound in a range of different accents.",
+          "paragraphs": [
+            "The numbers that often come up are:"
+          ],
+          "page": 53
+        },
+        {
+          "type": "icon_grid",
+          "title": "Common numbers in the test",
+          "cards": [
+            {
+              "icon": "Hash",
+              "body": "13 / 30"
+            },
+            {
+              "icon": "Hash",
+              "body": "14 / 40"
+            },
+            {
+              "icon": "Hash",
+              "body": "15 / 50"
+            },
+            {
+              "icon": "Hash",
+              "body": "16 / 60"
+            },
+            {
+              "icon": "Hash",
+              "body": "17 / 70"
+            },
+            {
+              "icon": "Hash",
+              "body": "18 / 80"
+            },
+            {
+              "icon": "Hash",
+              "body": "19 / 90"
+            }
+          ],
+          "page": 53
+        },
+        {
+          "type": "narrative",
+          "paragraphs": [
+            "These numbers are difficult for many non-native speakers, which is why IELTS like to use them. Practise listening and saying these numbers."
+          ],
+          "page": 53
+        }
+      ]
+    },
+    {
+      "lesson_id": "letters",
+      "lesson_number": 13,
+      "title": "Letters",
+      "source_pages": [
+        54
+      ],
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Letters",
+          "subtitle": "Some letters are more difficult to distinguish than others. The test will normally have the difficult letters.",
+          "paragraphs": [
+            "If there is a word, such as a surname or address, that is unfamiliar to most people, the recording will spell it out.",
+            "Make sure you familiarise yourself with how all the letters sound.",
+            "You could also categorise them by similar sound.",
+            "For example, B, D, E, T, G, P and C all have a similar final sound and may be used to try and trick you."
+          ],
+          "page": 54
+        }
+      ]
+    },
+    {
+      "lesson_id": "addresses",
+      "lesson_number": 14,
+      "title": "Addresses",
+      "source_pages": [
+        55
+      ],
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Addresses",
+          "subtitle": "Each country has a different address format. IELTS will normally use UK or Australian addresses.",
+          "paragraphs": [
+            "It is normally:",
+            "House/Flat Number → Street Name → Town/City Name",
+            "Finally, you might have to write down a post code. These always start and end with one or two letters first (normally the same as the city) and then a series of numbers in between. Make sure you write down both the letters and numbers. Example: M1 4JH"
+          ],
+          "page": 55
+        },
+        {
+          "type": "example",
+          "title": "For example",
+          "passage": "22 South Street\n\nBristol\n\nBS1 5TW",
+          "page": 55
+        }
+      ]
+    },
+    {
+      "lesson_id": "dates",
+      "lesson_number": 15,
+      "title": "Dates",
+      "source_pages": [
+        56
+      ],
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Dates",
+          "subtitle": "Make sure you know how to spell all the difficult days and months.",
+          "paragraphs": [
+            "Make sure you are aware of the spelling of all the days of the week, especially difficult ones like Wednesday. This is also true for months like February. Also, if you don't put a capital letter at the beginning of these words, you will be incorrect.",
+            "Also be aware of some synonyms such as, 'weekend' for Saturday and Sunday or 'fortnight' for two weeks.",
+            "There are also different ways of saying and writing dates, for example:",
+            "'The eleventh of September 2002' could be written as '11 September 2002.'",
+            "Again, pay attention to the word limit in the question and only write under this limit."
+          ],
+          "page": 56
+        }
+      ]
+    },
+    {
+      "lesson_id": "connected_speech",
+      "lesson_number": 16,
+      "title": "Connected Speech",
+      "source_pages": [
+        57,
+        58
+      ],
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Connected Speech",
+          "subtitle": "It is essential that you get used to how 'real' English speakers talk.",
+          "paragraphs": [
+            "Many English teachers speak clearly and slowly to their students, and this can actually harm their progress.",
+            "When you hear how native speakers actually talk, it is often very difficult to hear what is being said. This is mainly to do with connected speech.",
+            "Connected speech is the linking of words and sounds together in a sentence. Watch how *'I have to go to the doctor'* shifts step by step:\n\n  • **Written:** I have to go to the doctor.\n  • **Said slowly (textbook):** I / have / to / go / to / the / doctor.\n  • **Said normally (linked):** I-have-to-go-to-the-doctor.\n  • **What you actually hear:** *'Ivetuh-go-tuh-thuh-doctuh.'*\n\nThree shifts happen: (1) **'have to'** → *'haftuh'* (linked + 't' weakens), (2) **'go to'** → *'gotuh'*, (3) **'the'** → *'thuh'* (vowel reduces).",
+            "Other sounds may appear *weak* or change inside a sentence. *'Do you want to go?'* compresses to **'De-ye-wanna-go?'** because *'do you'* → *'dje'* (sounds blend) and *'want to'* → *'wanna'* (the most common reduction in spoken English)."
+          ],
+          "page": 57
+        },
+        {
+          "type": "narrative",
+          "title": "Connected Speech Practice",
+          "subtitle": "Start off by listening to very short recordings and then build up to longer conversations.",
+          "paragraphs": [
+            "We can practise this by doing something called 'micro-listening'. It involves pausing a sentence you don't understand and replaying it until you have understood all the words. Don't worry about how many times you have to do this, focus on hearing every word and breaking down connected speech into individual words.",
+            "Over time, you will get used to how words link together, so listening to native speakers will become much easier.",
+            "Podcasts are perfect for this because you can pause them and replay them easily. Podcasts are like individual radio shows that you can download and listen to whenever you like. I personally listen to them every day because there are literally millions of them on every topic you can think of. Whatever your interest; there will be a podcast about it."
+          ],
+          "page": 58
+        }
+      ]
+    },
+    {
+      "lesson_id": "signposting",
+      "lesson_number": 17,
+      "title": "Signposting Language",
+      "source_pages": [
+        59,
+        60
+      ],
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Signposting Language",
+          "subtitle": "**Signposting** = phrases like 'first of all', 'on the other hand', 'finally' that tell you what's coming next in a talk. They are *the speaker's roadmap* — and your shortcut to the right answer.",
+          "paragraphs": [
+            "In two of the four parts of the IELTS listening test, you will have to listen to someone speaking by themselves — one in a social context (a tour guide, a host) and one in a lecture style (a tutor, a professor).",
+            "When someone talks in this way they use **signposts**: short phrases that tell the listener what stage of the talk they are at and what is coming next. For example, in a lecture you might hear *'This lecture is divided into three parts'* — then *'First of all...'*, *'Secondly...'*, *'After that...'*, *'Finally...'*. Each one is a signpost.",
+            "If you know how to interpret these signals, the speaker is *literally telling you* when each answer is about to land — listen for the signpost first, write the answer second."
+          ],
+          "page": 59
+        },
+        {
+          "type": "narrative",
+          "title": "Signposting Language Practice",
+          "paragraphs": [
+            "To practise this you can listen to a lecture and simply try to find any signposting language. When you hear some, pause and think about the meaning of the language and predict what you are going to hear next. Continue this until you get to the end of the recording.",
+            "The IELTS listening test is very long and it is impossible, even for native speakers, to concentrate fully 100% of the time. Recognising sign posting allows you to prioritise and focus on the important parts of the listening which contain the answers.",
+            "There are several great sources that have thousands of online lectures including:"
+          ],
+          "page": 60
+        },
+        {
+          "type": "checklist",
+          "title": "Online lecture sources",
+          "items": [
+            "MIT",
+            "University of Wisconsin-Madison",
+            "Ignite",
+            "VideoLectures.net",
+            "RSA Animates"
+          ],
+          "page": 60
+        }
+      ]
+    },
+    {
+      "lesson_id": "vocabulary_building",
+      "lesson_number": 18,
+      "title": "Vocabulary Building",
+      "source_pages": [
+        61,
+        63
+      ],
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Vocabulary Building",
+          "paragraphs": [
+            "It's a vocabulary test. The reading and listening tests are as much vocabulary tests, as they are skills tests. It is much easier to get a good score when you have a wide-ranging vocabulary."
+          ],
+          "page": 61
+        },
+        {
+          "type": "narrative",
+          "title": "Read and Listen",
+          "paragraphs": [
+            "Studies have shown that the number one way for learners to improve their vocabulary is through reading and listening to genuine sources of English."
+          ],
+          "page": 61
+        },
+        {
+          "type": "narrative",
+          "title": "Record",
+          "paragraphs": [
+            "You must record any new words you hear or read. There are lots of ways to do this, so that you will remember them effectively."
+          ],
+          "page": 61
+        },
+        {
+          "type": "narrative",
+          "title": "Review",
+          "paragraphs": [
+            "It is essential that you regularly review these new words and phrases in order to retain them in your memory."
+          ],
+          "page": 61
+        },
+        {
+          "type": "narrative",
+          "title": "Online Resources",
+          "subtitle": "It's all free",
+          "paragraphs": [
+            "You do not need to spend any money to improve your listening skills. All of the resources you need are freely available on the internet.",
+            "Here is a list of my favourite sites, but there are millions more that will help you. Simply use Google to find something that interests you."
+          ],
+          "page": 62
+        },
+        {
+          "type": "icon_grid",
+          "title": "Online resources",
+          "cards": [
+            {
+              "icon": "Newspaper",
+              "title": "BBC News",
+              "body": "All of the common IELTS topics are covered on a daily basis. They have lots of videos and podcasts."
+            },
+            {
+              "icon": "Newspaper",
+              "title": "The Guardian",
+              "body": "They have a great selection of videos and podcasts."
+            },
+            {
+              "icon": "Presentation",
+              "title": "Ted Talks",
+              "body": "These are great for listening to monologues and very interesting. They cover many of the common IELTS topics."
+            },
+            {
+              "icon": "Brain",
+              "title": "Memrise",
+              "body": "Nice app for recording and reviewing vocabulary. Makes reviewing vocab. fun."
+            },
+            {
+              "icon": "Radio",
+              "title": "Podcasts",
+              "body": "There are hundreds of thousands of podcasts for you to listen to. Use an app like Stitcher to listen on your phone."
+            },
+            {
+              "icon": "Youtube",
+              "title": "YouTube",
+              "body": "Millions of hours of video. This is a great way to listen to how native speakers talk."
+            },
+            {
+              "icon": "Radio",
+              "title": "Radio",
+              "body": "Many radio shows just feature people talking with one another. News or sports radio is a great way to hear real conversations."
+            },
+            {
+              "icon": "Tv",
+              "title": "TV and Movies",
+              "body": "Listen to whatever you enjoy. You are more likely to improve your skills if you actually like what you are listening to."
+            }
+          ],
+          "page": 62
+        },
+        {
+          "type": "narrative",
+          "title": "Practice",
+          "subtitle": "Practice makes perfect",
+          "paragraphs": [
+            "Remember that listening is a skill. You should not just practise past exam papers. Listening to anything in English will help you improve your chances of getting the score you need. Here are some sources:"
+          ],
+          "page": 63
+        },
+        {
+          "type": "icon_grid",
+          "title": "Practice sources",
+          "cards": [
+            {
+              "icon": "BookOpen",
+              "title": "Cambridge Past Papers",
+              "body": null
+            },
+            {
+              "icon": "Globe",
+              "title": "British Council, Cambridge and IDP Websites",
+              "body": null
+            },
+            {
+              "icon": "Mic",
+              "title": "Online newspapers, YouTube and podcasts",
+              "body": null
+            },
+            {
+              "icon": "Search",
+              "title": "Google It!",
+              "body": "Search for whatever you're interested in and read it to expand your vocabulary and knowledge."
+            }
+          ],
+          "page": 63
+        }
+      ]
+    },
+    {
+      "lesson_id": "answer_sheet",
+      "lesson_number": 19,
+      "title": "Filling Out the Answer Sheet",
+      "source_pages": [
+        64
+      ],
+      "slides": [
+        {
+          "type": "narrative",
+          "title": "Filling Out the Answer Sheet",
+          "subtitle": "This is not a skill, but is crucially important.",
+          "paragraphs": [
+            "Stop! I know you think this is 'easy' and you know how to do this, but you would not believe the number of good students that throw away marks because they don't fill out the answer sheet properly.",
+            "Read the instructions very carefully for ALL questions. Use any examples to help you. If you don't understand the example or instructions, don't move on until you do.",
+            "You can delete your answer with a single line and then write your new answer beside it.",
+            "Grammar and spelling are crucially important. One small mistake and the answer will be wrong.",
+            "Leave no blanks. If you have no idea, guess."
+          ],
+          "page": 64
+        }
+      ]
+    },
+    {
+      "lesson_id": "next_steps_inside_ielts_ace",
+      "lesson_number": 20,
+      "title": "Your Next Steps",
+      "source_pages": [
+        65
+      ],
+      "slides": [
+        {
+          "type": "icon_grid",
+          "variant": "outline",
+          "eyebrow": "INSIDE IELTS ACE",
+          "eyebrow_tone": "default",
+          "title": "Put These Strategies to Work",
+          "columns": 2,
+          "cards": [
+            {
+              "icon": "Headphones",
+              "title": "Listening Question Bank",
+              "body": "Drill one question type at a time — summary completion, multiple choice, map labelling — and apply the strategies from this guide."
+            },
+            {
+              "icon": "Clock",
+              "title": "Full Practice Tests",
+              "body": "Sit a full 30-minute test under exam conditions. Native-speed audio, single play, ten-minute transfer window."
+            },
+            {
+              "icon": "Target",
+              "title": "Mistake Analysis",
+              "body": "Every wrong answer is logged by question type so you can see exactly where prediction, paraphrasing or spelling is letting you down."
+            },
+            {
+              "icon": "BookOpen",
+              "title": "Reading A-to-Z Strategy Guide",
+              "body": "The same depth of strategy work for the reading test — covered next inside the Strategies tab."
+            }
+          ],
+          "page": 65
+        }
+      ]
+    }
+  ]
+}

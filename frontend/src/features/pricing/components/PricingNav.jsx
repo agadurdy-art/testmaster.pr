@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useI18n } from '../../../lib/i18n';
 import LanguageSwitcher from '../../../components/LanguageSwitcher';
+import BrandLogo from '../../../components/BrandLogo';
 
 export default function PricingNav() {
   const { t } = useI18n();
@@ -23,9 +24,7 @@ export default function PricingNav() {
   return (
     <header className="nav">
       <div className="container nav-inner">
-        <a href="/" className="logo">
-          testmaster<span className="pro">.pro</span>
-        </a>
+        <BrandLogo size="sm" href="/" className="logo" />
         <nav aria-label="Primary">
           <ul className="nav-links">
             <li><a href="/#samples">{t('pricingV2NavSamples')}</a></li>
@@ -63,9 +62,7 @@ export default function PricingNav() {
           <div className="mobile-drawer-backdrop" onClick={close} />
           <div className="mobile-drawer-panel">
             <div className="mobile-drawer-head">
-              <span className="logo">
-                testmaster<span className="pro">.pro</span>
-              </span>
+              <BrandLogo size="sm" href={null} className="logo" />
               <button
                 type="button"
                 className="mobile-drawer-close"

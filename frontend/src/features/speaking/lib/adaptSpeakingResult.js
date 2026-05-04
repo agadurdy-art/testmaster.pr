@@ -417,6 +417,23 @@ function fromCanonical(raw) {
     part: raw.part || null,
     cue_card_prompt: raw.cue_card_prompt || '',
     question_id: raw.question_id || null,
+    // Azure deep-feedback bundle (full-mode evals only). PremiumPronunciation
+    // Drawer in ResultsState reads these directly — pass through unchanged.
+    pronunciation_analysis:
+      raw.pronunciation_analysis && typeof raw.pronunciation_analysis === 'object'
+        ? raw.pronunciation_analysis
+        : null,
+    word_level_results: Array.isArray(raw.word_level_results)
+      ? raw.word_level_results
+      : null,
+    // CEFR vocabulary distribution (task #137). Optional; null means no
+    // estimate (older cached results, or transcripts the LLM judged too
+    // short to score). All-zero percentages are treated by the UI as "not
+    // enough data" — see VocabularyProfile schema docstring.
+    vocabulary_profile:
+      raw.vocabulary_profile && typeof raw.vocabulary_profile === 'object'
+        ? { ...raw.vocabulary_profile }
+        : null,
     _source: 'canonical',
   };
 }

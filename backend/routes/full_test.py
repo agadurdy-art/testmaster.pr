@@ -448,6 +448,26 @@ async def complete_test(
         except Exception as e:
             print(f"Warning: Could not track full test completion: {e}")
 
+    # Mirror to test_attempts so Progress page + Liz see this full test.
+    try:
+        from server import persist_attempt
+        _band = float((results.get("overall_band", 0) if isinstance(results, dict) else 0) or 0.0)
+        await persist_attempt(
+            user_id=user_id,
+            test_id=test_id,
+            test_type="mixed",
+            band_score=_band,
+            feedback={
+                "source": "full_test",
+                "session_id": session_id,
+                "mode": mode,
+                "section_times": section_times,
+                "overall": (results.get("overall") if isinstance(results, dict) else None),
+            },
+        )
+    except Exception as e:
+        print(f"persist_attempt mirror skipped (full_test): {e}")
+
     return {
         "success": True,
         "session_id": session_id,
@@ -743,8 +763,19 @@ def evaluate_listening(test: Dict, answers: Dict) -> Dict:
                     reason = classify_reason_code(user_answer, correct_answer, q_type)
                     detail["reason_code"] = reason.get("code")
                     detail["reason_label"] = reason.get("label")
-                detail["explanation"] = generate_explanation(q_type, correct_answer, is_correct)
-                detail["skill_tip"] = get_skill_tip("listening", q_type, 1 if is_correct else 0)
+                detail["explanation"] = generate_explanation(
+                    q_type, correct_answer, is_correct,
+                    user_answer=user_answer,
+                    question_text=detail["question_text"],
+                    reason_code=detail["reason_code"],
+                )
+                detail["skill_tip"] = get_skill_tip(
+                    "listening", q_type, 1 if is_correct else 0,
+                    question_text=detail["question_text"],
+                    correct_ans=correct_answer,
+                    user_answer=user_answer,
+                    reason_code=detail["reason_code"],
+                )
 
             details.append(detail)
 
@@ -818,8 +849,19 @@ def evaluate_reading(test: Dict, answers: Dict) -> Dict:
                     p_text = passage_texts.get(p_num, "")
                     if p_text:
                         detail["evidence_text"] = extract_evidence_text(correct_answer, p_text)
-                detail["explanation"] = generate_explanation(q_type, correct_answer, is_correct)
-                detail["skill_tip"] = get_skill_tip("reading", q_type, 1 if is_correct else 0)
+                detail["explanation"] = generate_explanation(
+                    q_type, correct_answer, is_correct,
+                    user_answer=user_answer,
+                    question_text=detail["question_text"],
+                    reason_code=detail["reason_code"],
+                )
+                detail["skill_tip"] = get_skill_tip(
+                    "reading", q_type, 1 if is_correct else 0,
+                    question_text=detail["question_text"],
+                    correct_ans=correct_answer,
+                    user_answer=user_answer,
+                    reason_code=detail["reason_code"],
+                )
 
             details.append(detail)
 
@@ -836,107 +878,160 @@ def evaluate_reading(test: Dict, answers: Dict) -> Dict:
     }
 
 
+def _classify_task_type_v4(task: Dict) -> str:
+    """Map a Full Test writing task dict to a V4 TaskType enum value."""
+    task_num = task.get("task_number") or 1
+    ttype = (task.get("type") or "").lower()
+    subtype = (task.get("subtype") or "").lower()
+    tone = (task.get("tone") or "").lower()
+
+    if task_num == 2:
+        # Coarse classification — V4 default is opinion; could be refined later.
+        if "discuss" in ttype or "discuss" in subtype:
+            return "task2_discussion"
+        if "problem" in ttype or "solution" in ttype:
+            return "task2_problem_solution"
+        if "advantage" in ttype or "disadvantage" in ttype:
+            return "task2_advantages_disadvantages"
+        if "direct" in ttype:
+            return "task2_direct_question"
+        return "task2_opinion"
+
+    # Task 1
+    if ttype == "letter" or "letter" in ttype:
+        if "informal" in subtype or "informal" in tone:
+            return "task1_general_informal"
+        if "semi" in subtype or "semi" in tone:
+            return "task1_general_semiformal"
+        return "task1_general_formal"
+
+    if "map" in ttype:
+        return "task1_academic_map"
+    if "process" in ttype:
+        return "task1_academic_process"
+    if "diagram" in ttype:
+        return "task1_academic_diagram"
+    return "task1_academic_chart"
+
+
 async def evaluate_writing_section(test: Dict, answers: Dict) -> Dict:
-    """Evaluate writing section using AI."""
-    # Use GPT-4o for writing evaluation
-    EMERGENT_LLM_KEY = os.environ.get("EMERGENT_LLM_KEY")
-    
-    if not EMERGENT_LLM_KEY:
-        return {
-            "band": 0,
-            "error": "Writing evaluation service not configured",
-            "note": "AI evaluation required for writing"
-        }
-    
+    """Evaluate writing section using the V4 evaluator (Liz's Margin).
+
+    Each task result includes the full V4 payload under ``evaluator_v2`` plus
+    the original ``essay_text`` and ``prompt`` so the frontend can render the
+    rich annotated essay UI. Legacy keys (``criteria``/``feedback``) are kept
+    for back-compat with older results consumers.
+    """
     try:
-        from services.llm_compat import LlmChat, UserMessage
-        
-        test_writing = test["sections"]["writing"]
-        task_results = []
-        
-        for task in test_writing.get("tasks", []):
-            task_num = task["task_number"]
-            user_response = answers.get(f"task{task_num}", "")
-            
-            if not user_response.strip():
-                task_results.append({
-                    "task": task_num,
-                    "band": 0,
-                    "feedback": "No response provided"
-                })
-                continue
-            
-            # Build evaluation prompt
-            prompt = f"""You are an IELTS examiner. Evaluate this Writing {'Task 1' if task_num == 1 else 'Task 2'} response.
-
-PROMPT:
-{task['prompt']}
-
-RESPONSE:
-{user_response}
-
-WORD COUNT: {len(user_response.split())}
-MINIMUM REQUIRED: {task['word_limit']['min']}
-
-Evaluate using IELTS Writing Band Descriptors for:
-1. Task Achievement/Response (TA/TR)
-2. Coherence and Cohesion (CC)
-3. Lexical Resource (LR)
-4. Grammatical Range and Accuracy (GRA)
-
-Respond in JSON format:
-{{
-    "band": <float 0-9, to nearest 0.5>,
-    "criteria": {{
-        "task_achievement": <int 0-9>,
-        "coherence_cohesion": <int 0-9>,
-        "lexical_resource": <int 0-9>,
-        "grammatical_range": <int 0-9>
-    }},
-    "strengths": ["<strength 1>", "<strength 2>"],
-    "weaknesses": ["<weakness 1>", "<weakness 2>"],
-    "feedback": "<2-3 sentences of examiner-style feedback>",
-    "word_count_penalty": <boolean if under minimum>
-}}"""
-            
-            chat = LlmChat(
-                api_key=EMERGENT_LLM_KEY,
-                session_id=str(uuid.uuid4()),
-                system_message="You are an IELTS examiner. Respond only with valid JSON."
-            )
-            response = await chat.send_message(user_message=UserMessage(text=prompt))
-            
-            # Parse response
-            response_text = response
-            if "```json" in response_text:
-                response_text = response_text.split("```json")[1].split("```")[0]
-            elif "```" in response_text:
-                response_text = response_text.split("```")[1].split("```")[0]
-            
-            evaluation = json.loads(response_text.strip())
-            evaluation["task"] = task_num
-            task_results.append(evaluation)
-        
-        # Calculate overall writing band (Task 2 weighted double)
-        if task_results:
-            task1_band = next((t["band"] for t in task_results if t["task"] == 1), 0)
-            task2_band = next((t["band"] for t in task_results if t["task"] == 2), 0)
-            overall_band = (task1_band + (task2_band * 2)) / 3
-            overall_band = round(overall_band * 2) / 2
-        else:
-            overall_band = 0
-        
-        return {
-            "band": overall_band,
-            "tasks": task_results
-        }
-        
-    except Exception as e:
-        print(f"Writing evaluation error: {e}")
+        from services.writing_evaluator_v2 import (
+            evaluate_writing as evaluate_writing_v4,
+            EvaluatorFailure,
+        )
+        from schemas.writing_evaluator import WritingEvaluationRequest, TaskType
+    except ImportError as exc:
         return {
             "band": 0,
-            "error": str(e)
+            "error": f"Writing evaluator unavailable: {exc}",
+            "tasks": [],
         }
+
+    test_writing = (test.get("sections") or {}).get("writing") or {}
+    task_results: List[Dict[str, Any]] = []
+
+    for task in test_writing.get("tasks", []):
+        task_num = task.get("task_number") or 0
+        user_response = (answers or {}).get(f"task{task_num}", "") or ""
+        prompt_text = task.get("prompt") or task.get("question") or ""
+
+        if not user_response.strip():
+            task_results.append({
+                "task": task_num,
+                "band": 0,
+                "essay_text": "",
+                "prompt": prompt_text,
+                "evaluator_v2": None,
+                "feedback": "No response provided",
+            })
+            continue
+
+        # Map task → V4 task_type_hint enum
+        try:
+            task_type_value = _classify_task_type_v4(task)
+            task_type_enum = TaskType(task_type_value)
+        except ValueError:
+            task_type_enum = TaskType.task2_opinion if task_num == 2 else TaskType.task1_academic_chart
+
+        try:
+            req = WritingEvaluationRequest(
+                essay_text=user_response,
+                task_type_hint=task_type_enum,
+                task_prompt=prompt_text,
+                user_language="en",
+            )
+            v4_result = await evaluate_writing_v4(req)
+            v4_dict = (
+                v4_result.model_dump()
+                if hasattr(v4_result, "model_dump")
+                else v4_result.dict()
+            )
+
+            crit = v4_result.criteria
+            task_results.append({
+                "task": task_num,
+                "band": v4_result.overall_band,
+                "essay_text": user_response,
+                "prompt": prompt_text,
+                "evaluator_v2": v4_dict,
+                # Legacy fields for back-compat:
+                "criteria": {
+                    "task_achievement": crit.task_achievement.band,
+                    "coherence_cohesion": crit.coherence_cohesion.band,
+                    "lexical_resource": crit.lexical_resource.band,
+                    "grammatical_range": crit.grammatical_range_accuracy.band,
+                },
+                "strengths": list(crit.task_achievement.strengths or []),
+                "weaknesses": list(crit.task_achievement.weaknesses or []),
+                "feedback": crit.task_achievement.explanation,
+                "word_count_penalty": v4_result.word_count < v4_result.word_count_target,
+            })
+        except EvaluatorFailure as exc:
+            print(f"Writing V4 evaluator failed for task {task_num}: {exc.last_error}")
+            task_results.append({
+                "task": task_num,
+                "band": 0,
+                "essay_text": user_response,
+                "prompt": prompt_text,
+                "evaluator_v2": None,
+                "feedback": f"Evaluation failed after {exc.attempts} attempts",
+                "error": str(exc.last_error or exc),
+            })
+        except Exception as exc:
+            print(f"Writing evaluation error for task {task_num}: {exc}")
+            task_results.append({
+                "task": task_num,
+                "band": 0,
+                "essay_text": user_response,
+                "prompt": prompt_text,
+                "evaluator_v2": None,
+                "feedback": "Evaluation failed",
+                "error": str(exc),
+            })
+
+    # Overall writing band: Task 2 weighted double (matching IELTS scoring)
+    if task_results:
+        t1 = next((t["band"] for t in task_results if t["task"] == 1), 0) or 0
+        t2 = next((t["band"] for t in task_results if t["task"] == 2), 0) or 0
+        if t1 and t2:
+            overall_band = round((t1 + t2 * 2) / 3 * 2) / 2
+        else:
+            overall_band = t2 or t1 or 0
+    else:
+        overall_band = 0
+
+    return {
+        "band": overall_band,
+        "tasks": task_results,
+    }
 
 
 async def evaluate_speaking_section(test: Dict, answers: Dict) -> Dict:

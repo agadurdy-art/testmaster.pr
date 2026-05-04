@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Listening Results — Mock Test 4 · Band 5.5</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script>
+tailwind.config = { theme: { extend: { colors: {
+  'brand': 'hsl(160, 84%, 39%)',
+  'brand-dark': 'hsl(160, 84%, 28%)',
+  'brand-light': 'hsl(160, 84%, 60%)'
+} } } }
+</script>
+<style>
+:root { --brand: 160 84% 39%; --brand-dark: 160 84% 28%; --brand-light: 160 84% 60%; }
+.floating-card { background:white; border-radius:20px; box-shadow:0 4px 30px rgba(0,0,0,0.1); border:1px solid rgba(255,255,255,0.2); transition:all .3s ease; }
+.insight-tile { cursor:pointer; transition:all .3s ease; position:relative; overflow:hidden; }
+.insight-tile:hover { transform:scale(1.02); }
+.progress-ring { transform:rotate(-90deg); }
+.question-row { border:2px solid #e5e7eb; transition:all .3s ease; border-radius:16px; }
+.question-row.expanded { border-color:hsl(var(--brand)); }
+.highlight-evidence { background:#dcfce7; padding:2px 6px; border-radius:6px; font-weight:500; }
+.highlight-evidence.miss { background:#fee2e2; }
+.liz-shimmer { position:relative; display:inline-block; border-radius:50%; cursor:pointer; isolation:isolate; }
+.liz-shimmer::before, .liz-shimmer::after { content:''; position:absolute; border-radius:50%;
+  background: conic-gradient(hsl(160,84%,45%), hsl(199,89%,60%), hsl(260,55%,62%), hsl(290,70%,60%), hsl(160,84%,45%));
+  animation: liz-spin 3s linear infinite; }
+.liz-shimmer::before { inset:-4px; z-index:-1; }
+.liz-shimmer::after  { inset:-10px; filter:blur(14px); opacity:.55; z-index:-2; }
+.liz-shimmer > img { position:relative; display:block; width:100%; height:100%; border-radius:50%; object-fit:cover; border:3px solid white; z-index:1; }
+@keyframes liz-spin { to { transform:rotate(360deg); } }
+.questions-scroll::-webkit-scrollbar { width:8px; }
+.questions-scroll::-webkit-scrollbar-track { background:transparent; }
+.questions-scroll::-webkit-scrollbar-thumb { background:rgba(16,185,129,0.25); border-radius:4px; }
+.questions-scroll::-webkit-scrollbar-thumb:hover { background:rgba(16,185,129,0.5); }
+.questions-scroll { scrollbar-width:thin; scrollbar-color:rgba(16,185,129,0.3) transparent; scroll-behavior:smooth; }
+.modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; display:flex; align-items:center; justify-content:center; opacity:0; visibility:hidden; transition:all .3s ease; }
+.modal.open { opacity:1; visibility:visible; }
+.modal-content { background:white; border-radius:20px; max-width:820px; width:calc(100% - 32px); max-height:90vh; overflow-y:auto; transform:scale(0.9); transition:transform .3s ease; }
+.modal.open .modal-content { transform:scale(1); }
+.audio-row { background:#f8fafc; border:1px dashed #cbd5e1; border-radius:10px; padding:8px 12px; display:inline-flex; align-items:center; gap:8px; font-size:12px; color:#475569; }
+.notes-card { background:#fffdf6; border:1px solid #f5deb3; border-radius:14px; padding:18px 22px; font-family:Georgia,"Times New Roman",serif; line-height:1.85; color:#1f2937; }
+.notes-heading { font-weight:700; text-decoration:underline; margin:8px 0 6px; }
+.notes-sub { font-style:italic; margin:4px 0 2px 12px; }
+.notes-li { margin-left:28px; position:relative; }
+.notes-li::before { content:'•'; position:absolute; left:-14px; color:#6b7280; }
+.blank { display:inline-block; min-width:90px; border-bottom:2px solid #4b5563; padding:0 6px 1px; margin:0 4px; text-align:center; font-family:ui-sans-serif,system-ui,sans-serif; font-style:normal; }
+.blank.right { background:#dcfce7; border-bottom-color:#16a34a; color:#14532d; }
+.blank.wrong { background:#fee2e2; border-bottom-color:#dc2626; color:#7f1d1d; text-decoration:line-through wavy #dc2626; }
+.blank.empty { background:#fef3c7; border-bottom-color:#d97706; color:#92400e; }
+.qnum-pill { display:inline-flex; align-items:center; justify-content:center; min-width:22px; height:22px; padding:0 6px; border-radius:11px; background:#e5e7eb; color:#374151; font-size:11px; font-weight:700; margin-right:4px; }
+.tt-tab { border-bottom:2px solid transparent; }
+.tt-tab.active { border-color:hsl(var(--brand)); color:hsl(var(--brand-dark)); }
+.transcript-line { padding:6px 0; border-left:3px solid transparent; padding-left:10px; }
+.transcript-line.has-q { border-left-color:#a7f3d0; background:#f0fdf4; border-radius:6px; }
+.transcript-line .speaker { font-weight:600; color:#059669; margin-right:6px; }
+.transcript-line .qmark { display:inline-flex; align-items:center; justify-content:center; min-width:24px; height:24px; padding:0 6px; border-radius:12px; background:#10b981; color:white; font-size:11px; font-weight:700; margin:0 4px; cursor:pointer; }
+.view-toggle-btn { padding:6px 14px; border-radius:8px; font-size:13px; font-weight:500; transition:all .2s ease; }
+.view-toggle-btn.active { background:hsl(var(--brand)); color:white; }
+.view-toggle-btn:not(.active) { color:#4b5563; }
+.view-toggle-btn:not(.active):hover { background:rgba(255,255,255,0.6); }
+.safelist-hidden { display:none; }
+</style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 via-blue-50/30 to-violet-50/20 min-h-screen">
+
+<!-- Tailwind safelist for runtime-injected classes -->
+<div class="safelist-hidden">
+  <span class="bg-emerald-50 bg-emerald-100 bg-emerald-200 bg-emerald-500 text-emerald-600 text-emerald-700 text-emerald-800 text-emerald-900 border-emerald-200 border-emerald-300 border-emerald-500 hover:border-emerald-300"></span>
+  <span class="bg-amber-50 bg-amber-100 bg-amber-200 bg-amber-500 text-amber-600 text-amber-700 text-amber-800 text-amber-900 border-amber-200 border-amber-300 border-amber-500 hover:border-amber-300"></span>
+  <span class="bg-orange-50 bg-orange-100 bg-orange-200 bg-orange-500 text-orange-600 text-orange-700 text-orange-800 text-orange-900 border-orange-200 border-orange-300 border-orange-500 hover:border-orange-300"></span>
+  <span class="bg-red-50 bg-red-100 bg-red-200 bg-red-500 text-red-600 text-red-700 text-red-800 text-red-900 border-red-200 border-red-300 border-red-500 hover:border-red-300"></span>
+  <span class="bg-rose-50 bg-rose-100 bg-rose-200 text-rose-700 text-rose-800 text-rose-900 border-rose-200"></span>
+  <span class="bg-purple-50 bg-purple-100 bg-purple-200 text-purple-700 text-purple-800 text-purple-900 border-purple-200"></span>
+  <span class="bg-blue-50 bg-blue-100 bg-blue-200 text-blue-700 text-blue-800 text-blue-900 border-blue-200"></span>
+</div>
+
+<!-- Public Top Nav (matches Writing/Speaking samples) -->
+<header class="sticky top-0 z-50 border-b border-slate-200/70 bg-slate-50/85 backdrop-blur print:hidden">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8 h-16 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-emerald-700"><path d="M12 20l9-5-9-5-9 5 9 5z"/><path d="M12 12l9-5-9-5-9 5 9 5z"/></svg>
+      </span>
+      <span class="leading-tight">
+        <span class="block text-[15px] font-bold text-slate-900">IELTS Ace</span>
+        <span class="block text-[10px] text-slate-500 -mt-0.5">by testmaster.pro</span>
+      </span>
+    </a>
+    <nav class="hidden md:flex items-center gap-7 text-[14px] text-slate-700">
+      <a href="/samples/writing/band-6-5-task2" class="hover:text-slate-900">Writing</a>
+      <a href="/samples/speaking/band-6-5-part2" class="hover:text-slate-900">Speaking</a>
+      <a href="/samples/reading/band-6-0-academic.html" class="hover:text-slate-900">Reading</a>
+      <a href="/samples/listening/band-5-5-listening.html" class="hover:text-slate-900">Listening</a>
+      <a href="/#samples" class="hover:text-slate-900">Samples</a>
+      <a href="/pricing" class="hover:text-slate-900">Pricing</a>
+    </nav>
+    <div class="flex items-center gap-2.5">
+      <a href="/login" class="hidden sm:inline-flex items-center text-[14px] text-slate-700 hover:text-slate-900 px-3 py-2 rounded-lg">Log in</a>
+      <a href="/signup" class="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-[14px] px-4 py-2 rounded-xl shadow-[0_6px_22px_-8px_hsl(160_84%_39%/_0.55)] transition-colors">
+        Try free
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Sample Evaluation Banner -->
+<div class="print:hidden border-b border-emerald-200/70" style="background: linear-gradient(90deg, hsl(160 60% 96%) 0%, hsl(160 60% 97%) 40%, hsl(199 90% 97%) 100%);">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8 py-2.5 flex items-center gap-3 text-[13.5px]">
+    <span class="inline-flex items-center gap-1.5 font-medium text-emerald-800">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4z"/></svg>
+      Sample Evaluation
+    </span>
+    <span class="text-slate-600">— see exactly how <em class="not-italic font-medium text-slate-900">your</em> listening test will be scored. Nothing here is editable.</span>
+    <span class="ml-auto hidden sm:inline-flex items-center gap-2">
+      <a href="/signup" class="text-emerald-800 font-medium hover:underline">Try free →</a>
+    </span>
+  </div>
+</div>
+
+<!-- Context strip: back + analysis title -->
+<div class="bg-white/70 border-b border-gray-200/70 print:hidden">
+  <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between gap-3">
+    <a href="/#samples" class="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-brand transition-colors">
+      <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+      Back to samples
+    </a>
+    <div class="text-right">
+      <span class="text-sm font-semibold text-gray-900">Listening Analysis</span>
+      <span class="text-sm text-gray-500"> · Mock Test 4 · 4 parts · 40 questions</span>
+    </div>
+  </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-6 py-8">
+
+  <div class="mb-6">
+    <div class="floating-card p-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="relative flex items-center gap-6 p-4 rounded-2xl bg-gradient-to-br from-emerald-50 via-white to-sky-50 border border-emerald-100/60">
+          <div class="relative">
+            <div class="w-24 h-24">
+              <svg class="progress-ring w-full h-full" viewBox="0 0 80 80">
+                <circle cx="40" cy="40" r="34" stroke="#e5e7eb" stroke-width="6" fill="none"/>
+                <circle cx="40" cy="40" r="34" stroke="hsl(var(--brand))" stroke-width="6" fill="none" stroke-dasharray="214" stroke-dashoffset="102" stroke-linecap="round"/>
+              </svg>
+              <div class="absolute inset-0 flex items-center justify-center"><span class="text-2xl font-bold text-gray-900">5.5</span></div>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold bg-gradient-to-r from-emerald-700 via-sky-700 to-violet-700 bg-clip-text text-transparent">Mert</h2>
+            <div class="flex items-center gap-2 mt-1 mb-1">
+              <span class="inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200">
+                <i data-lucide="award" class="w-3 h-3"></i>Band 5.5 · Modest User
+              </span>
+            </div>
+            <p class="text-gray-600">21/40 Correct (52.5%)</p>
+            <p class="text-sm text-amber-600">Mock Test 4 · Full Listening</p>
+            <button onclick="showBandTooltip()" class="text-sm text-brand hover:text-brand-dark transition-colors flex items-center gap-1 mt-1">
+              <i data-lucide="info" class="w-4 h-4"></i>Band breakdown
+            </button>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="liz-shimmer w-20 h-20" onclick="openLizModal()">
+            <img src="https://static.prod-images.emergentagent.com/jobs/799d7d0f-0425-4acb-aa13-54128002d580/images/baeb03c8118b149f97024b78f7f053e092a9d4c22d6c09656fd3a17aacf6359b.png" alt="Liz AI Tutor">
+          </div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Liz AI Tutor</h3>
+            <p class="text-sm text-gray-600 mb-3">"You held Part 1 well — 8/10. The cliff is Part 4: only 3/10 on the lecture. Synonym + paraphrase traps are eating your score. Drill note completion under monologue and you're at Band 6.5."</p>
+            <button onclick="openLizModal()" class="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors">View Full Analysis</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6">
+        <div onclick="filterByPart(1)" class="p-4 bg-emerald-50 rounded-lg border-l-4 border-emerald-500 cursor-pointer hover:shadow-md hover:scale-[1.02] transition-all">
+          <div class="flex justify-between items-start mb-2">
+            <div><div class="text-sm text-emerald-700 font-semibold">Part 1</div><div class="text-xs text-emerald-600">Cleaning Services</div></div>
+            <div class="text-right"><div class="text-2xl font-bold text-emerald-600">8/10</div><div class="text-xs text-emerald-600">80%</div></div>
+          </div>
+          <span class="text-[10px] bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded-full">Note completion</span>
+        </div>
+        <div onclick="filterByPart(2)" class="p-4 bg-amber-50 rounded-lg border-l-4 border-amber-500 cursor-pointer hover:shadow-md hover:scale-[1.02] transition-all">
+          <div class="flex justify-between items-start mb-2">
+            <div><div class="text-sm text-amber-700 font-semibold">Part 2</div><div class="text-xs text-amber-600">Hotel Staff Turnover</div></div>
+            <div class="text-right"><div class="text-2xl font-bold text-amber-600">6/10</div><div class="text-xs text-amber-600">60%</div></div>
+          </div>
+          <span class="text-[10px] bg-amber-200 text-amber-800 px-2 py-0.5 rounded-full">MCQ + Matching</span>
+        </div>
+        <div onclick="filterByPart(3)" class="p-4 bg-orange-50 rounded-lg border-l-4 border-orange-500 cursor-pointer hover:shadow-md hover:scale-[1.02] transition-all">
+          <div class="flex justify-between items-start mb-2">
+            <div><div class="text-sm text-orange-700 font-semibold">Part 3</div><div class="text-xs text-orange-600">Sports Equipment</div></div>
+            <div class="text-right"><div class="text-2xl font-bold text-orange-600">4/10</div><div class="text-xs text-orange-600">40%</div></div>
+          </div>
+          <span class="text-[10px] bg-orange-200 text-orange-800 px-2 py-0.5 rounded-full">Multi-select + Match</span>
+        </div>
+        <div onclick="filterByPart(4)" class="p-4 bg-red-50 rounded-lg border-l-4 border-red-500 cursor-pointer hover:shadow-md hover:scale-[1.02] transition-all">
+          <div class="flex justify-between items-start mb-2">
+            <div><div class="text-sm text-red-700 font-semibold">Part 4</div><div class="text-xs text-red-600">Maple Syrup</div></div>
+            <div class="text-right"><div class="text-2xl font-bold text-red-600">3/10</div><div class="text-xs text-red-600">30%</div></div>
+          </div>
+          <span class="text-[10px] bg-red-200 text-red-800 px-2 py-0.5 rounded-full">Note completion</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-8">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-8 h-8 rounded-xl bg-brand/10 flex items-center justify-center"><i data-lucide="zap" class="w-4 h-4 text-brand"></i></div>
+      <h3 class="text-xl font-bold text-gray-900">Performance Insights</h3>
+      <p class="text-sm text-gray-500 ml-auto">Click any card for detailed analysis</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+      <div class="lg:col-span-3">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div class="insight-tile floating-card p-6 bg-gradient-to-br from-rose-500 to-pink-600 text-white" onclick="openModal('root-cause')">
+            <div class="flex items-center justify-between mb-3"><i data-lucide="search" class="w-6 h-6"></i><div class="w-2 h-2 bg-white/50 rounded-full"></div></div>
+            <h4 class="font-semibold text-sm mb-1">Root Cause Analysis</h4>
+            <p class="text-xs text-white/80">3 patterns flagged</p>
+          </div>
+          <div class="insight-tile floating-card p-7 bg-gradient-to-br from-orange-500 to-red-500 text-white" onclick="openModal('why-lost')">
+            <div class="flex items-center justify-between mb-3"><i data-lucide="alert-triangle" class="w-6 h-6"></i><div class="w-2 h-2 bg-white/50 rounded-full"></div></div>
+            <h4 class="font-semibold text-sm mb-1">Why You Lost Marks</h4>
+            <p class="text-xs text-white/80">19 mistakes — tap to retry</p>
+          </div>
+          <div class="insight-tile floating-card p-7 bg-gradient-to-br from-emerald-500 to-teal-600 text-white" onclick="openModal('fastest-gain')">
+            <div class="flex items-center justify-between mb-3"><i data-lucide="trending-up" class="w-6 h-6"></i><div class="w-2 h-2 bg-white/50 rounded-full"></div></div>
+            <h4 class="font-semibold text-sm mb-1">Fastest Score Gain</h4>
+            <p class="text-xs text-white/80">Part 4 drill +1.0 band</p>
+          </div>
+          <div class="insight-tile floating-card p-7 bg-gradient-to-br from-indigo-500 to-purple-600 text-white" onclick="openModal('lessons')">
+            <div class="flex items-center justify-between mb-3"><i data-lucide="graduation-cap" class="w-6 h-6"></i><div class="w-2 h-2 bg-white/50 rounded-full"></div></div>
+            <h4 class="font-semibold text-sm mb-1">Recommended Lessons</h4>
+            <p class="text-xs text-white/80">4 lessons for weak areas</p>
+          </div>
+          <div class="insight-tile floating-card p-7 bg-gradient-to-br from-violet-500 to-purple-600 text-white" onclick="openModal('roadmap')">
+            <div class="flex items-center justify-between mb-3"><i data-lucide="map" class="w-6 h-6"></i><div class="w-2 h-2 bg-white/50 rounded-full"></div></div>
+            <h4 class="font-semibold text-sm mb-1">Study Roadmap</h4>
+            <p class="text-xs text-white/80">3-week improvement plan</p>
+          </div>
+          <div class="insight-tile floating-card p-7 bg-gradient-to-br from-teal-500 to-cyan-600 text-white" onclick="openModal('model-answers')">
+            <div class="flex items-center justify-between mb-3"><i data-lucide="eye" class="w-6 h-6"></i><div class="w-2 h-2 bg-white/50 rounded-full"></div></div>
+            <h4 class="font-semibold text-sm mb-1">Model Answers</h4>
+            <p class="text-xs text-white/80">Compare your responses</p>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-1">
+        <div class="floating-card p-5 h-full">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-5 h-5 rounded-lg bg-brand/10 flex items-center justify-center"><i data-lucide="headphones" class="w-3 h-3 text-brand"></i></div>
+            <h4 class="font-semibold text-base text-gray-900">Audio Skills</h4>
+          </div>
+          <div class="space-y-3">
+            <div>
+              <div class="flex justify-between items-center mb-1"><span class="text-sm text-gray-700">Note completion</span><span class="text-sm font-bold text-amber-600">55%</span></div>
+              <div class="w-full bg-amber-100 rounded-full h-2"><div class="bg-amber-500 h-2 rounded-full" style="width:55%"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between items-center mb-1"><span class="text-sm text-gray-700">Multiple choice</span><span class="text-sm font-bold text-amber-600">50%</span></div>
+              <div class="w-full bg-amber-100 rounded-full h-2"><div class="bg-amber-500 h-2 rounded-full" style="width:50%"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between items-center mb-1"><span class="text-sm text-gray-700">Matching</span><span class="text-sm font-bold text-orange-600">42%</span></div>
+              <div class="w-full bg-orange-100 rounded-full h-2"><div class="bg-orange-500 h-2 rounded-full" style="width:42%"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between items-center mb-1"><span class="text-sm text-gray-700">Multi-select</span><span class="text-sm font-bold text-orange-600">50%</span></div>
+              <div class="w-full bg-orange-100 rounded-full h-2"><div class="bg-orange-500 h-2 rounded-full" style="width:50%"></div></div>
+            </div>
+            <div class="bg-blue-50 rounded-lg p-3">
+              <h6 class="text-xs font-medium text-blue-800 mb-1">Skill Tip</h6>
+              <p class="text-xs text-blue-700">You spell common words well, but synonyms in your head replace the script word. IELTS marks the EXACT word — drill listen-and-write for academic vocab.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+    <div class="lg:col-span-1 space-y-6">
+      <div onclick="openModal('priority-fix')" class="floating-card p-6 border-2 border-red-200 bg-red-50 cursor-pointer hover:shadow-lg hover:scale-[1.02] transition-all group">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-8 h-8 rounded-xl bg-red-100 flex items-center justify-center"><i data-lucide="alert-triangle" class="w-4 h-4 text-red-600"></i></div>
+          <h3 class="text-lg font-bold text-gray-900">Priority Fix</h3>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-3 bg-red-100 rounded-2xl flex items-center justify-center"><i data-lucide="book-open" class="w-8 h-8 text-red-600"></i></div>
+          <h4 class="font-bold text-red-900 mb-2">Part 4 Lecture Capture</h4>
+          <p class="text-sm text-red-700 mb-3">7 missed marks — biggest opportunity</p>
+          <div class="inline-flex items-center gap-1 text-xs font-semibold text-red-700 group-hover:gap-2 transition-all">
+            Learn the strategy<i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </div>
+        </div>
+      </div>
+      <div class="floating-card p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-8 h-8 rounded-xl bg-brand/10 flex items-center justify-center"><i data-lucide="zap" class="w-4 h-4 text-brand"></i></div>
+          <h3 class="text-lg font-bold text-gray-900">Quick Actions</h3>
+        </div>
+        <div class="space-y-3">
+          <button onclick="handleQuickAction('retry')" class="w-full bg-brand text-white py-3 px-4 rounded-xl font-medium hover:bg-brand-dark transition-colors flex items-center justify-center gap-2"><i data-lucide="repeat" class="w-4 h-4"></i>Retry This Test</button>
+          <button onclick="handleQuickAction('practice-part4')" class="w-full bg-blue-600 text-white py-3 px-4 rounded-xl font-medium hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"><i data-lucide="target" class="w-4 h-4"></i>Practice Part 4</button>
+          <button onclick="handleQuickAction('download')" class="w-full bg-gray-100 text-gray-700 py-3 px-4 rounded-xl font-medium hover:bg-gray-200 transition-colors flex items-center justify-center gap-2"><i data-lucide="download" class="w-4 h-4"></i>Download Report</button>
+          <button onclick="handleQuickAction('share')" class="w-full bg-gray-100 text-gray-700 py-3 px-4 rounded-xl font-medium hover:bg-gray-200 transition-colors flex items-center justify-center gap-2"><i data-lucide="share" class="w-4 h-4"></i>Share Results</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="lg:col-span-3">
+      <div class="floating-card p-6">
+        <div class="flex items-center justify-between mb-4 flex-wrap gap-3">
+          <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <i data-lucide="list" class="w-5 h-5 text-brand"></i>
+            Question Analysis
+            <span id="questionsCount" class="text-sm font-normal text-gray-500"></span>
+          </h3>
+          <div class="flex items-center gap-3 flex-wrap">
+            <div class="inline-flex bg-gray-100 rounded-xl p-1 gap-1">
+              <button id="viewListBtn" onclick="setView('list')" class="view-toggle-btn active flex items-center gap-1.5"><i data-lucide="list" class="w-3.5 h-3.5"></i>Question List</button>
+              <button id="viewFormBtn" onclick="setView('form')" class="view-toggle-btn flex items-center gap-1.5"><i data-lucide="file-text" class="w-3.5 h-3.5"></i>Test Format</button>
+            </div>
+            <select id="questionFilter" class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30">
+              <option value="all">All Questions</option>
+              <option value="correct">Correct Only</option>
+              <option value="incorrect">Incorrect Only</option>
+              <option value="note_completion">Note completion</option>
+              <option value="multiple_choice">Multiple choice</option>
+              <option value="matching">Matching</option>
+              <option value="multi_select">Multi-select</option>
+              <option value="p1">Part 1</option>
+              <option value="p2">Part 2</option>
+              <option value="p3">Part 3</option>
+              <option value="p4">Part 4</option>
+            </select>
+            <button onclick="openScriptsModal()" class="bg-brand text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-dark transition-colors flex items-center gap-2">
+              <i data-lucide="file-text" class="w-4 h-4"></i>Show Scripts
+            </button>
+          </div>
+        </div>
+
+        <div id="listView" class="rounded-xl border border-gray-200 bg-gray-50/40">
+          <div id="questionsList" class="space-y-3 p-3 overflow-y-auto questions-scroll" style="max-height:680px;"></div>
+        </div>
+
+        <div id="formView" class="hidden rounded-xl border border-gray-200 bg-gray-50/40 p-4 space-y-4">
+          <p class="text-sm text-gray-600">Original IELTS test format. Notes layout shows your filled blanks (green = right · red = wrong · amber = empty). MCQ &amp; matching show option letters with your pick highlighted. Click any <code>Q</code> marker in the transcript to jump to that answer.</p>
+          <div id="formContent"></div>
+          <div class="floating-card p-5 mt-2">
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+              <h4 class="font-bold text-gray-900 flex items-center gap-2"><i data-lucide="file-text" class="w-4 h-4 text-brand"></i>Audio Transcript &amp; Answer Key</h4>
+              <span class="text-xs text-gray-500">Click a <code>Q1</code> marker to jump to the question.</span>
+            </div>
+            <div class="flex gap-2 border-b border-gray-200 mb-3 flex-wrap">
+              <button data-tt="1" class="tt-tab active px-3 py-2 text-sm font-medium">Part 1 · Cleaning</button>
+              <button data-tt="2" class="tt-tab px-3 py-2 text-sm font-medium">Part 2 · Hotel Staff</button>
+              <button data-tt="3" class="tt-tab px-3 py-2 text-sm font-medium">Part 3 · Sports</button>
+              <button data-tt="4" class="tt-tab px-3 py-2 text-sm font-medium">Part 4 · Maple Syrup</button>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <div class="lg:col-span-2">
+                <div id="tt-pane-1" class="tt-pane questions-scroll max-h-[400px] overflow-y-auto pr-2"></div>
+                <div id="tt-pane-2" class="tt-pane questions-scroll max-h-[400px] overflow-y-auto pr-2 hidden"></div>
+                <div id="tt-pane-3" class="tt-pane questions-scroll max-h-[400px] overflow-y-auto pr-2 hidden"></div>
+                <div id="tt-pane-4" class="tt-pane questions-scroll max-h-[400px] overflow-y-auto pr-2 hidden"></div>
+              </div>
+              <aside class="bg-gray-50 rounded-xl p-3 self-start max-h-[400px] overflow-y-auto questions-scroll">
+                <h5 class="font-bold text-gray-900 mb-2 flex items-center gap-2 text-sm"><i data-lucide="key-round" class="w-4 h-4 text-brand"></i>Answer Key</h5>
+                <div id="ak-1" class="ak-pane space-y-1 text-sm"></div>
+                <div id="ak-2" class="ak-pane space-y-1 text-sm hidden"></div>
+                <div id="ak-3" class="ak-pane space-y-1 text-sm hidden"></div>
+                <div id="ak-4" class="ak-pane space-y-1 text-sm hidden"></div>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="bandTooltip" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-2xl p-6 z-50 hidden">
+  <div class="flex items-center justify-between mb-4">
+    <h4 class="font-semibold text-gray-900 text-lg">Band Score Breakdown</h4>
+    <button onclick="hideBandTooltip()" class="text-gray-400 hover:text-gray-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+  </div>
+  <div class="space-y-3">
+    <div class="flex justify-between items-center"><span class="text-sm text-gray-600">Your Score:</span><span class="font-bold text-lg text-brand">5.5</span></div>
+    <div class="flex justify-between items-center"><span class="text-sm text-gray-600">Questions Correct:</span><span class="font-medium">21/40 (52.5%)</span></div>
+    <div class="border-t pt-3">
+      <div class="text-xs text-gray-500 mb-2">Band 5.5 Description:</div>
+      <p class="text-sm text-gray-700">"Modest user — has partial command of the language, coping with overall meaning in most situations, though with many mistakes."</p>
+    </div>
+    <div class="border-t pt-3 text-xs text-gray-500">
+      <div>Mock Test 4 · IELTS-style 40-question raw-score → band: 18–22 = 5.5, 23–25 = 6.0, 26–29 = 6.5.</div>
+    </div>
+  </div>
+</div>
+
+<div id="lizModal" class="modal">
+  <div class="modal-content p-8 m-4">
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center gap-4">
+        <div class="liz-shimmer w-16 h-16">
+          <img src="https://static.prod-images.emergentagent.com/jobs/799d7d0f-0425-4acb-aa13-54128002d580/images/baeb03c8118b149f97024b78f7f053e092a9d4c22d6c09656fd3a17aacf6359b.png" alt="Liz">
+        </div>
+        <div><h3 class="text-xl font-bold text-gray-900">Liz AI Tutor</h3><p class="text-sm text-gray-500">Mock Test 4 · Full Listening Analysis</p></div>
+      </div>
+      <button onclick="closeLizModal()" class="text-gray-400 hover:text-gray-600"><i data-lucide="x" class="w-6 h-6"></i></button>
+    </div>
+    <div class="space-y-6">
+      <div class="bg-purple-50 rounded-xl p-6">
+        <p class="text-purple-800">"Hi Mert! Mock Test 4 — 21/40, Band 5.5. <strong>(1)</strong> Conversational English (Parts 1 &amp; 3) you handle — 12/20 there. <strong>(2)</strong> Drop-off is monologues + matching: Part 4 lecture got you 3/10. The 5.5 → 6.5 jump is almost entirely about closing the Part 4 gap."</p>
+      </div>
+      <div class="bg-white rounded-xl border border-gray-200 p-6">
+        <h4 class="font-semibold text-gray-900 mb-4 flex items-center gap-2"><i data-lucide="bar-chart-3" class="w-5 h-5 text-brand"></i>Part-by-part breakdown</h4>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-emerald-50 rounded-lg p-3"><div class="flex items-center justify-between mb-2"><span class="font-medium text-emerald-800">Part 1 · Cleaning</span><span class="text-sm font-bold text-emerald-600">8/10</span></div><div class="w-full bg-emerald-100 rounded-full h-2"><div class="bg-emerald-500 h-2 rounded-full" style="width:80%"></div></div></div>
+          <div class="bg-amber-50 rounded-lg p-3"><div class="flex items-center justify-between mb-2"><span class="font-medium text-amber-800">Part 2 · Hotel</span><span class="text-sm font-bold text-amber-600">6/10</span></div><div class="w-full bg-amber-100 rounded-full h-2"><div class="bg-amber-500 h-2 rounded-full" style="width:60%"></div></div></div>
+          <div class="bg-orange-50 rounded-lg p-3"><div class="flex items-center justify-between mb-2"><span class="font-medium text-orange-800">Part 3 · Sports</span><span class="text-sm font-bold text-orange-600">4/10</span></div><div class="w-full bg-orange-100 rounded-full h-2"><div class="bg-orange-500 h-2 rounded-full" style="width:40%"></div></div></div>
+          <div class="bg-red-50 rounded-lg p-3"><div class="flex items-center justify-between mb-2"><span class="font-medium text-red-800">Part 4 · Maple</span><span class="text-sm font-bold text-red-600">3/10</span></div><div class="w-full bg-red-100 rounded-full h-2"><div class="bg-red-500 h-2 rounded-full" style="width:30%"></div></div></div>
+        </div>
+      </div>
+      <div class="bg-emerald-50 rounded-xl p-6">
+        <h4 class="font-semibold text-emerald-900 mb-3 flex items-center gap-2"><i data-lucide="thumbs-up" class="w-5 h-5"></i>Your Strengths</h4>
+        <ul class="space-y-2 text-emerald-800">
+          <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 text-emerald-600 flex-shrink-0"></i><span class="text-sm">Part 1 note completion: <em>floors, fridge, shirts, balcony, electrician, police, training, review</em> all locked in.</span></li>
+          <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 text-emerald-600 flex-shrink-0"></i><span class="text-sm">Q12, Q13: when MCQ keywords are repeated almost verbatim, you pick correctly.</span></li>
+          <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 text-emerald-600 flex-shrink-0"></i><span class="text-sm">Q15, Q19, Q20 matching: when the strategy is explicit (meetings, vouchers, "co-operative"), you map it correctly.</span></li>
+        </ul>
+      </div>
+      <div class="bg-red-50 rounded-xl p-6">
+        <h4 class="font-semibold text-red-900 mb-3 flex items-center gap-2"><i data-lucide="alert-triangle" class="w-5 h-5"></i>Areas to Improve</h4>
+        <ul class="space-y-2 text-red-800">
+          <li class="flex items-start gap-2"><i data-lucide="x" class="w-4 h-4 mt-0.5 text-red-600 flex-shrink-0"></i><span class="text-sm"><strong>Synonym confusion (Q7, Q32, Q36, Q39):</strong> you wrote <em>dirt / good / pipe / thick</em> when the script said <em>dust / healthy / tube / cloudy</em>. Same idea, wrong word — IELTS marks ONE WORD ONLY.</span></li>
+          <li class="flex items-start gap-2"><i data-lucide="x" class="w-4 h-4 mt-0.5 text-red-600 flex-shrink-0"></i><span class="text-sm"><strong>MCQ distractor traps (Q11, Q14):</strong> picked the option <em>mentioned</em>, not the option that <em>answers</em> the stem.</span></li>
+          <li class="flex items-start gap-2"><i data-lucide="x" class="w-4 h-4 mt-0.5 text-red-600 flex-shrink-0"></i><span class="text-sm"><strong>Part 4 missed words (Q33, Q35, Q38):</strong> three blanks left empty under monologue pace.</span></li>
+        </ul>
+      </div>
+      <div class="bg-blue-50 rounded-xl p-6 text-center">
+        <h4 class="font-semibold text-blue-900 mb-3">My Recommendation</h4>
+        <p class="text-sm text-blue-800 mb-4">Daily Part 4 lecture practice (Mock Tests 1–3) for two weeks. Track every wrong word vs script word. Add MCQ stem-keyword pre-reading drills. That alone takes you to <strong>Band 6.5</strong>.</p>
+        <div class="text-2xl font-bold text-blue-600">Band 6.5</div>
+        <div class="text-xs text-blue-600">Achievable in 3 weeks with focused Part 4 + synonym drills</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="generalModal" class="modal">
+  <div class="modal-content p-8 m-4">
+    <div class="flex items-center justify-between mb-6">
+      <h3 id="modalTitle" class="text-xl font-bold text-gray-900"></h3>
+      <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600"><i data-lucide="x" class="w-6 h-6"></i></button>
+    </div>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] hidden">
+  <div class="bg-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 max-w-md">
+    <i id="toastIcon" data-lucide="info" class="w-5 h-5 flex-shrink-0"></i>
+    <span id="toastMsg" class="text-sm"></span>
+    <button onclick="hideToast()" class="text-white/60 hover:text-white ml-2"><i data-lucide="x" class="w-4 h-4"></i></button>
+  </div>
+</div>
+
+<script id="appData">
+const PARTS = {
+  1: { title:'Easy Life Cleaning Services', topic:'Two-speaker phone call · domestic cleaning enquiry', color:'emerald', band:'Band 5.0–6.0', speakers:'Jacinta (agent) / Client', score:'8/10', q_range:'1–10', q_types:'Note completion (ONE WORD ONLY)', audio:'test4_part1.mp3 · 4:48' },
+  2: { title:'Hotel Staff Turnover', topic:'Conference talk · monologue', color:'amber', band:'Band 5.5–6.5', speakers:'HR consultant', score:'6/10', q_range:'11–20', q_types:'MCQ Q11–14 + Matching A–C Q15–20', audio:'test4_part2.mp3 · 5:20' },
+  3: { title:'Sports Equipment Discussion', topic:'Two-student discussion', color:'orange', band:'Band 6.0–7.0', speakers:'Thomas / Jeanne', score:'4/10', q_range:'21–30', q_types:'Multi-select Q21–24 + Matching A–H Q25–30', audio:'test4_part3.mp3 · 5:48' },
+  4: { title:'Maple Syrup', topic:'Academic lecture · monologue', color:'red', band:'Band 6.5–7.5', speakers:'Lecturer', score:'3/10', q_range:'31–40', q_types:'Note completion (ONE WORD ONLY)', audio:'test4_part4.mp3 · 6:32' }
+};
+
+const QUESTIONS = [
+  { n:1, p:1, type:'note_completion', skill:'note_completion', q:'Cleaning the ___ throughout the apartment', opts:'ONE WORD ONLY (note completion)', y:'floors', c:'floor / floors', ok:true, ev:"the floor would need cleaning",
+    expl:"Client says: 'I don't have any [carpets], but the floor would need cleaning.' You spotted the keyword cleanly. Both 'floor' and 'floors' are accepted.",
+    strat:"Pre-read: gap follows 'cleaning the' — predict a household surface. Listen for 'floor / carpets / tiles' and pick what's named." },
+  { n:2, p:1, type:'note_completion', skill:'note_completion', q:'Cleaning the ___ (every week)', opts:'ONE WORD ONLY', y:'fridge', c:'fridge', ok:true, ev:"can you do the fridge?",
+    expl:"Client lists oven ('hardly ever use that') then asks about the fridge. The exact word is repeated — straight pickup.",
+    strat:"In Q2 of Part 1, the answer often comes right after the speaker rejects an alternative. Listen for the 'no… but yes' structure." },
+  { n:3, p:1, type:'note_completion', skill:'note_completion', q:'Ironing clothes — ___ only', opts:'ONE WORD ONLY', y:'shirts', c:'shirts', ok:true, ev:"just my shirts for work that week",
+    expl:"Direct lift from the script. Plural 'shirts' is required ('my shirts').",
+    strat:"Watch plurals. 'Shirt' singular would be marked wrong here." },
+  { n:4, p:1, type:'note_completion', skill:'note_completion', q:'Cleaning all the ___ from the inside', opts:'ONE WORD ONLY', y:'(left blank)', c:'windows', ok:false, ev:"the inside of your windows need cleaning, we could do that",
+    expl:"You left this blank. The script paraphrases the gap: 'the inside of your windows need cleaning.' Plural 'windows' required. When an item is 'cleaned from the inside', the only thing in a flat that fits is windows. Predict before you listen.",
+    strat:"PREDICT-FIRST. Read the gap before audio: 'cleaned from the inside' = windows almost always. Train your gap-prediction." },
+  { n:5, p:1, type:'note_completion', skill:'note_completion', q:'Washing down the ___', opts:'ONE WORD ONLY', y:'balcony', c:'balcony', ok:true, ev:"do something about the balcony",
+    expl:"Client introduces the balcony herself; cleaner agrees to pressure-wash it. Smooth pickup.",
+    strat:"'Wash down' = water + outdoor surface. Cued you to a flat-exterior word." },
+  { n:6, p:1, type:'note_completion', skill:'note_completion', q:'…a plumber or an ___ if necessary', opts:'ONE WORD ONLY', y:'electrician', c:'electrician', ok:true, ev:"the same thing if you need an electrician",
+    expl:"Plumber is given; gap is the second trade. Script says 'the same thing if you need an electrician.'",
+    strat:"When one item of a pair is given, the gap is its sibling. Plumber → electrician (both home tradespeople)." },
+  { n:7, p:1, type:'note_completion', skill:'note_completion', q:'…allergic to ___', opts:'ONE WORD ONLY', y:'dirt', c:'dust', ok:false, ev:"capturing up to 99% of all the dust in the air",
+    expl:"You heard the right idea but wrote a synonym. The script says 'dust', not 'dirt'. IELTS note completion = exact word from the recording. Synonyms = 0 marks.",
+    strat:"SYNONYM TRAP. Don't 'translate' in your head while listening. Write the literal word you heard, even if a synonym feels more natural." },
+  { n:8, p:1, type:'note_completion', skill:'note_completion', q:'…background check carried out by the ___', opts:'ONE WORD ONLY', y:'police', c:'police', ok:true, ev:"a security check with the police",
+    expl:"Direct match — the speaker says 'a security check with the police.'",
+    strat:"'Background check' = 'security check' (paraphrase). The agent doing it is named directly: police." },
+  { n:9, p:1, type:'note_completion', skill:'note_completion', q:'All cleaners are given ___ for two weeks', opts:'ONE WORD ONLY', y:'training', c:'training', ok:true, ev:"we give them training for it. That lasts for two weeks",
+    expl:"Two-step lift: 'give them training' + 'lasts two weeks' = perfect match.",
+    strat:"When two facts cluster ('we give them X' + duration), confirm before you write." },
+  { n:10, p:1, type:'note_completion', skill:'note_completion', q:'Customers send a ___ after each visit', opts:'ONE WORD ONLY', y:'review', c:'review', ok:true, ev:"complete a review of their performance after every visit",
+    expl:"Script: 'complete a review of their performance after every visit and email it to us.' Spotted cleanly.",
+    strat:"'Send' = 'email' / 'complete' — multiple verbs can wrap the same noun. Listen for the noun." },
+
+  { n:11, p:2, type:'multiple_choice', skill:'multiple_choice', q:'Many hotel managers are unaware that their staff often leave because of', opts:'A: a lack of training / B: long hours / C: low pay', y:'B', c:'A', ok:false, ev:"it's the lack of training in many hotel jobs which is a huge factor",
+    expl:"Distractor trap. The speaker says 'managers think it's this [low pay] and long hours' — but then pivots: 'what they don't realise is that it's the lack of training… which is a huge factor.' The question asks what managers are UNAWARE of, not what they think.",
+    strat:"MCQ TRAP. Watch contrast markers ('but… what they don't realise'). Match to the question stem: 'unaware' = the unseen reason, not the obvious one." },
+  { n:12, p:2, type:'multiple_choice', skill:'multiple_choice', q:'What is the impact of high staff turnover on managers?', opts:'A: increased workload / B: low morale / C: inability to meet targets', y:'A', c:'A', ok:true, ev:"managers may have to cover some duties while waiting for new staff",
+    expl:"'Cover some duties' + 'don't have time to think about less immediate problems' = increased workload.",
+    strat:"Look for behavioural evidence. 'Cover duties' is a workload signal." },
+  { n:13, p:2, type:'multiple_choice', skill:'multiple_choice', q:'What mistake should managers always avoid?', opts:'A: failing to treat staff equally / B: reorganising shifts without warning / C: neglecting busy-period staffing', y:'A', c:'A', ok:true, ev:"never give certain staff preferential treatment",
+    expl:"'Preferential treatment' = failing to treat staff equally. Strong synonym match.",
+    strat:"'Preferential' is a paraphrase of 'unequal'. Build a paraphrase log for IELTS keywords." },
+  { n:14, p:2, type:'multiple_choice', skill:'multiple_choice', q:"What unexpected benefit did Dunwich Hotel notice after improving staff retention?", opts:'A: fall in customer complaints / B: increase in loyalty club membership / C: rise in spending per customer', y:'A', c:'C', ok:false, ev:"a significant increase in the amount each customer spent during their stay",
+    expl:"The complaints did fall — but the question asks the UNEXPECTED benefit. Script: 'Not only did the level of complaints fall, but they also noticed a significant increase in the amount each customer spent.' The 'also' + 'significant' flags the answer.",
+    strat:"MCQ TRAP. 'Unexpected' = the second/added benefit. 'Not only X but also Y' → Y is the unexpected one." },
+  { n:15, p:2, type:'matching', skill:'matching', q:'Q15. The Sun Club', opts:'A: relationships+teamwork / B: incentives+financial / C: career opportunities', y:'A', c:'A', ok:true, ev:"Junior staff at all levels are regularly invited to meetings where their ideas are welcomed",
+    expl:"Inviting staff to meetings = improving relationships and teamwork (A).",
+    strat:"'Invited to meetings' = inclusion = teamwork." },
+  { n:16, p:2, type:'matching', skill:'matching', q:'Q16. The Portland', opts:'A: relationships+teamwork / B: incentives+financial / C: career opportunities', y:'B', c:'C', ok:false, ev:"organising training for individuals with management potential",
+    expl:"You heard 'invest in staff retention' and matched B (incentives). But the strategy is 'training for individuals with management potential' = C: providing career opportunities.",
+    strat:"Watch for keywords: 'management potential', 'training', 'programme' = career path. 'Vouchers / pay / trips' = financial." },
+  { n:17, p:2, type:'matching', skill:'matching', q:'Q17. Bluewater Hotels', opts:'A: relationships+teamwork / B: incentives+financial / C: career opportunities', y:'B', c:'B', ok:true, ev:"sent on an all-expenses-paid trip abroad every year",
+    expl:"All-expenses-paid trip = financial benefit / incentive (B).",
+    strat:"'All-expenses-paid' = direct financial reward → B." },
+  { n:18, p:2, type:'matching', skill:'matching', q:'Q18. Pentlow Hotels', opts:'A: relationships+teamwork / B: incentives+financial / C: career opportunities', y:'A', c:'C', ok:false, ev:"introduced a management programme… additional responsibilities and the chance to work in various roles",
+    expl:"'Management programme' + 'prospects' = C: career opportunities. You picked A (relationships), probably triggered by 'junior reception staff'.",
+    strat:"Listen for the action verb — 'introduced a management programme' is a career-pathway strategy, not a teamwork one." },
+  { n:19, p:2, type:'matching', skill:'matching', q:'Q19. Green Planet', opts:'A: relationships+teamwork / B: incentives+financial / C: career opportunities', y:'B', c:'B', ok:true, ev:"issuing vouchers to help cover the cost of childcare",
+    expl:"Childcare vouchers = financial benefit (B).",
+    strat:"'Vouchers' / 'allowance' / 'cover the cost' → financial." },
+  { n:20, p:2, type:'matching', skill:'matching', q:'Q20. The Amesbury', opts:'A: relationships+teamwork / B: incentives+financial / C: career opportunities', y:'A', c:'A', ok:true, ev:"creating a co-operative and supportive environment",
+    expl:"'Co-operative', 'supportive', 'family' = relationships and teamwork (A).",
+    strat:"Three teamwork keywords clustered → confident A." },
+
+  { n:21, p:3, type:'multi_select', skill:'multi_select', q:'Q21–22. TWO points about Thomas\\u2019s school sport (pick TWO)', opts:'A: more positive / B: training too challenging / C: could have worked harder / D: parents disappointed / E: classmates admired', y:'C', c:'C, E', ok:true, ev:"I should have practised more",
+    expl:"You got C ('I should have practised more') right — half-mark yours. The full pair is C and E (E = classmates admired him).",
+    strat:"Multi-select: read all 5 options before audio. Eliminate as you listen." },
+  { n:22, p:3, type:'multi_select', skill:'multi_select', q:'Q21–22 (continued)', opts:'A: more positive / B: training too challenging / C: could have worked harder / D: parents disappointed / E: classmates admired', y:'A', c:'C, E', ok:false, ev:"my classmates… they thought I was brilliant",
+    expl:"You picked A ('more positive') — but Thomas was already very positive ('I thought I could win anything'). Right second answer is E: classmates admired him ('thought I was brilliant').",
+    strat:"Don't confuse Thomas's confidence (already high) with what the question asks (admiration FROM others)." },
+  { n:23, p:3, type:'multi_select', skill:'multi_select', q:'Q23–24. TWO feelings Thomas had in Kenya (pick TWO)', opts:'A: disbelief / B: relief / C: stress / D: gratitude / E: homesickness', y:'D', c:'A, D', ok:true, ev:"how fortunate I was. What a great chance this was!",
+    expl:"D: gratitude ('how fortunate I was') locked in.",
+    strat:"'Fortunate' / 'great chance' = gratitude vocabulary." },
+  { n:24, p:3, type:'multi_select', skill:'multi_select', q:'Q23–24 (continued)', opts:'A: disbelief / B: relief / C: stress / D: gratitude / E: homesickness', y:'B', c:'A, D', ok:false, ev:"I thought 'this can't be happening'!",
+    expl:"Second answer is A: disbelief ('this can't be happening'). You wrote B (relief) — opposite feeling; Thomas was shocked he wasn't winning.",
+    strat:"Direct quotes are gold. 'This can't be happening' = textbook disbelief." },
+  { n:25, p:3, type:'matching', skill:'matching', q:'Q25. The table tennis bat', opts:'A: sweating / B: mass-produced for other use / C: make own / D: replaced often / E: expensive / F: unpopular w/ spectators / G: caused injuries / H: no one liked it', y:'B', c:'B', ok:true, ev:"a factory was making rolls of the rubber in bulk for something like horse harnesses",
+    expl:"'Bulk for horse harnesses' = mass-produced for another purpose (B).",
+    strat:"'Bulk' / 'in rolls' / 'for X purpose' = B keyword cluster." },
+  { n:26, p:3, type:'matching', skill:'matching', q:'Q26. The cricket helmet', opts:'A–H (see options box)', y:'H', c:'F', ok:false, ev:"booed and jeered by people watching",
+    expl:"You picked H (no one liked it) but it was SPECTATORS who disliked it, not the player. 'Booed and jeered by people watching' = F: unpopular among spectators.",
+    strat:"Match precisely. 'People watching' = spectators (F), not 'no one' (H)." },
+  { n:27, p:3, type:'matching', skill:'matching', q:'Q27. The cycle helmet', opts:'A–H', y:'G', c:'A', ok:false, ev:"serious cyclists ended up with wet hair from all the hard exercise",
+    expl:"Wet hair from exercise = sweating. A: excessive sweating. You picked G (injuries) — but injuries was the football, not the helmet.",
+    strat:"Cause-effect: 'wet hair from exercise' = sweating mechanism. Don't reuse letters; each is used once." },
+  { n:28, p:3, type:'matching', skill:'matching', q:'Q28. The golf club', opts:'A–H', y:'B', c:'D', ok:false, ev:"easily break and players had to get another",
+    expl:"'Easily break' + 'get another' = D: often had to be replaced. You picked B (mass-produced) — but B was the table tennis bat.",
+    strat:"Each option used ONCE. Cross out B after Q25." },
+  { n:29, p:3, type:'matching', skill:'matching', q:'Q29. The hockey stick', opts:'A–H', y:'C', c:'C', ok:true, ev:"when the game started you had to produce a stick yourself",
+    expl:"'Produce yourself' = C: people often needed to make their own.",
+    strat:"'Produce' = make. C confirmed." },
+  { n:30, p:3, type:'matching', skill:'matching', q:'Q30. The football', opts:'A–H', y:'H', c:'G', ok:false, ev:"the damage to players' necks when the ball was headed",
+    expl:"'Damage to players' necks' = G: caused injuries. You picked H (no one liked it). The water-soaked leather made the ball heavy → neck injuries when headed.",
+    strat:"'Damage to body part' = injuries (G). Direct mapping." },
+
+  { n:31, p:4, type:'note_completion', skill:'note_completion', q:'colour described as ___', opts:'ONE WORD ONLY', y:'golden', c:'golden', ok:true, ev:"a thick, golden, sweet-tasting liquid",
+    expl:"Direct adjective lift.",
+    strat:"In a list of adjectives, the colour-word is usually a primary colour or 'golden / amber / pale'." },
+  { n:32, p:4, type:'note_completion', skill:'note_completion', q:'very ___ compared to refined sugar', opts:'ONE WORD ONLY', y:'good', c:'healthy', ok:false, ev:"a healthy alternative to refined sugar",
+    expl:"Paraphrase trap. You wrote a synonym ('good') — script says 'healthy'. Note completion = exact word.",
+    strat:"SYNONYM TRAP. 'Good' is your brain's substitute. Listen for the literal academic word and write THAT." },
+  { n:33, p:4, type:'note_completion', skill:'note_completion', q:'best growing conditions and ___ are in Canada', opts:'ONE WORD ONLY', y:'(left blank)', c:'climate', ok:false, ev:"the climate suits the trees perfectly",
+    expl:"You missed it. Speaker lists conditions ('sun exposure', 'cool nights') then concludes 'the climate suits the trees perfectly'.",
+    strat:"Predict before listening: what word groups 'sun + nights + moisture'? = climate." },
+  { n:34, p:4, type:'note_completion', skill:'note_completion', q:'used hot ___ to heat the sap', opts:'ONE WORD ONLY', y:'rocks', c:'rock / rocks', ok:true, ev:"placing pieces of rock that had become scorching hot from the sun into the sap",
+    expl:"'Scorching hot rocks' → matches the gap. Both 'rock' and 'rocks' accepted.",
+    strat:"Concrete object word — listen for the noun, ignore adjectives ('scorching hot')." },
+  { n:35, p:4, type:'note_completion', skill:'note_completion', q:'Tree trunks may not have the correct ___ until 40 years', opts:'ONE WORD ONLY', y:'(left blank)', c:'diameter', ok:false, ev:"the trunks reach a diameter of around 25 centimetres",
+    expl:"Missed. The script gives the exact measurement: 'diameter of around 25 centimetres.'",
+    strat:"When you hear a measurement (cm/m/kg), the abstract noun before it is often the gap word." },
+  { n:36, p:4, type:'note_completion', skill:'note_completion', q:'a ___ carries the sap into a bucket', opts:'ONE WORD ONLY', y:'pipe', c:'tube', ok:false, ev:"inserting a tube into it that ends in a bucket",
+    expl:"Synonym again. 'Pipe' ≠ 'tube' in IELTS marking even though they overlap. The script word is 'tube'.",
+    strat:"SYNONYM TRAP. Pipe/tube/hose/duct are not interchangeable in note completion. Write the script word." },
+  { n:37, p:4, type:'note_completion', skill:'note_completion', q:'evaporators are heated by means of a ___', opts:'ONE WORD ONLY', y:'fire', c:'fire', ok:true, ev:"a fire is built and the pans are then heated until the sap boils",
+    expl:"Direct lift.",
+    strat:"'Heat by means of' → predict heat source: fire / flame / gas / electricity." },
+  { n:38, p:4, type:'note_completion', skill:'note_completion', q:'A lot of ___ is produced during evaporation', opts:'ONE WORD ONLY', y:'(left blank)', c:'steam', ok:false, ev:"creates large quantities of steam",
+    expl:"Missed. 'Large quantities of steam' = steam.",
+    strat:"'Produced during evaporation' = steam (textbook physics)." },
+  { n:39, p:4, type:'note_completion', skill:'note_completion', q:"'Sugar sand' makes the syrup look ___", opts:'ONE WORD ONLY', y:'thick', c:'cloudy', ok:false, ev:"gives the syrup a cloudy appearance",
+    expl:"You wrote 'thick' — but the script earlier described maple syrup as 'thick' (its desired state). Sugar sand specifically gives a 'cloudy' appearance.",
+    strat:"Distinguish overall product description (thick) from defect description (cloudy). Listen to the cause-effect verb ('gives')." },
+  { n:40, p:4, type:'note_completion', skill:'note_completion', q:'sap is needed to make a ___ of maple syrup', opts:'ONE WORD ONLY', y:'drop', c:'litre / liter', ok:false, ev:"40 litres of sap to produce one litre of maple syrup",
+    expl:"You heard the meaning (small quantity) but missed the unit. Exact word is 'litre' (or US 'liter').",
+    strat:"Numbers are signposts: '40 litres → one ___' → litre." }
+];
+
+const TRANSCRIPTS = {
+  1: [
+    { sp:'Jacinta', t:"Hello, Easy Life Cleaning Services, Jacinta speaking." },
+    { sp:'Client',  t:"Oh hello. I'm looking for a cleaning service for my apartment — do you do domestic cleaning?" },
+    { sp:'Jacinta', t:"Sure." },
+    { sp:'Client',  t:"Well, it's just a one-bedroom flat. Do you have a basic cleaning package?" },
+    { sp:'Jacinta', t:"Yes. For a one-bedroom flat we're probably looking at about two hours for a clean. So we'd do a thorough clean of all surfaces in each room, and polish them where necessary. Does your apartment have carpets?" },
+    { sp:'Client',  t:"No, I don't have any, but the floor would need cleaning.", q:[1] },
+    { sp:'Jacinta', t:"Of course — we'd do that in every room. And we'd do a thorough clean of the kitchen and bathroom." },
+    { sp:'Client',  t:"OK." },
+    { sp:'Jacinta', t:"Then we have some additional services which you can request if you want — so for example, we can clean your oven for you every week." },
+    { sp:'Client',  t:"Actually, I hardly ever use that, but can you do the fridge?", q:[2] },
+    { sp:'Jacinta', t:"Sure. Would you like that done every week?" },
+    { sp:'Client',  t:"Yes, definitely. And would ironing clothes be an additional service you can do?" },
+    { sp:'Jacinta', t:"Yes, of course." },
+    { sp:'Client',  t:"It wouldn't be much, just my shirts for work that week.", q:[3] },
+    { sp:'Jacinta', t:"That's fine. And we could also clean your microwave if you want." },
+    { sp:'Client',  t:"No, I wipe that out pretty regularly so there's no need for that." },
+    { sp:'Jacinta', t:"We also offer additional services that you might want a bit less often, say every month. So for example, if the inside of your windows need cleaning, we could do that.", q:[4] },
+    { sp:'Client',  t:"Yes, that'd be good. I'm on the fifteenth floor, so the outside gets done regularly by specialists, but the inside does get a bit grubby." },
+    { sp:'Jacinta', t:"And we could arrange for your curtains to get cleaned if necessary." },
+    { sp:'Client',  t:"No, they're OK. But would you be able to do something about the balcony? It's quite small and I don't use it much, but it could do with a wash every month or so.", q:[5] },
+    { sp:'Jacinta', t:"Yes, we can get the pressure washer onto that." },
+    { sp:'Jacinta', t:"Now if you're interested, we do offer some other possibilities to do with general maintenance. For example, if you have a problem with water and you need a plumber in a hurry, we can put you in touch with a reliable one who can come out straightaway. And the same thing if you need an electrician.", q:[6] },
+    { sp:'Client',  t:"Right. That's good to know. I've only just moved here so I don't have any of those sorts of contacts." },
+    { sp:'Jacinta', t:"And I don't know if this is of interest to you, but we also offer a special vacuum cleaning system which can improve the indoor air quality of your home by capturing up to 99% of all the dust in the air. So if you're troubled by allergies, this can make a big difference.", q:[7] },
+    { sp:'Client',  t:"Right. In fact, I don't have that sort of problem, but I'll bear it in mind. Now can you tell me a bit about your cleaning staff?" },
+    { sp:'Jacinta', t:"Of course. So all our cleaners are very carefully selected. When they apply to us, they have to undergo a security check with the police to make sure they don't have any sort of criminal background, and, of course, they have to provide references as well.", q:[8] },
+    { sp:'Jacinta', t:"Then if we think they might be suitable for the job, we give them training for it. That lasts for two weeks so it's very thorough, and at the end of it, they have a test. If they pass that, we take them on, but we monitor them very carefully — we ask all our clients to complete a review of their performance after every visit and to email it to us. So we can pick up any problems straightaway and deal with them.", q:[9,10] },
+    { sp:'Client',  t:"OK, well that all sounds good. And will I always have the same cleaner?" },
+    { sp:'Jacinta', t:"Yes, we do our best to organise it that way, and we usually manage it." },
+    { sp:'Client',  t:"Good. That's fine. Right, so I'd like to go ahead and …" }
+  ],
+  2: [
+    { sp:'Speaker', t:"As many of you here today have worked in the hotel industry for some time, I'm sure you have experienced the problem of high staff turnover in your hotels. Every hotel relies on having loyal and experienced members of staff who make sure that everything runs smoothly. If staff are constantly changing, it can make life difficult for everyone." },
+    { sp:'Speaker', t:"But why do staff leave frequently in many hotels? Of course, many hotel jobs, such as cleaning, are low-skilled and are not well-paid. A lot of managers think it's this and the long hours that are the main causes of high staff turnover — but what they don't realise is that it's the lack of training in many hotel jobs which is a huge factor.", q:[11] },
+    { sp:'Speaker', t:"So, what kind of problems does a high turnover of staff cause? Well, having to recruit new staff all the time can be very time-consuming, and managers may have to cover some duties while waiting for new staff to arrive. This means they don't have time to think about less immediate problems such as how to improve their service.", q:[12] },
+    { sp:'Speaker', t:"When staff leave, it can also severely affect the colleagues they leave behind. It has a negative effect on remaining staff, who may start to feel that they too should be thinking about leaving." },
+    { sp:'Speaker', t:"So, what can be done to change this situation? Firstly, managers should stop making basic errors which leave their staff feeling upset and resentful. When organising shifts, for example, make sure you never give certain staff preferential treatment. All staff should be given some choice about when they work, and everyone should have to work some evening and weekend shifts. If you treat staff fairly, they'll be more likely to step in and help when extra staff are needed.", q:[13] },
+    { sp:'Speaker', t:"Keeping staff happy has other tangible benefits for the business. Take the Dunwich Hotel as an example. It had been experiencing a problem with staff complaints and in order to deal with this, invested in staff training and improved staff conditions. Not only did the level of complaints fall, but they also noticed a significant increase in the amount each customer spent during their stay. They have now introduced a customer loyalty scheme which is going really well.", q:[14] },
+    { sp:'Speaker', t:"Now I'd like to look at some ways you can reduce staff turnover in your hotels, and I'll do this by giving some examples of hotels where I've done some training recently." },
+    { sp:'Speaker', t:"The Sun Club received feedback which showed that staff thought managers didn't value their opinions. They weren't made to feel they were partners who were contributing to the success of the business as a whole. This situation has changed. Junior staff at all levels are regularly invited to meetings where their ideas are welcomed.", q:[15] },
+    { sp:'Speaker', t:"A year ago, The Portland recognised the need to invest in staff retention. Their first step was to introduce a scheme for recognising talent amongst their employees. The hope is that organising training for individuals with management potential will encourage them to stay with the business.", q:[16] },
+    { sp:'Speaker', t:"At Bluewater, managers decided to recognise 50 high achievers from across the company's huge hotel chain. As a reward, they're sent on an all-expenses-paid trip abroad every year. Fun is an important element in the trips, but there's also the opportunity to learn something useful. This year's trip included a visit to a brewery, where staff learned about the new beer that would be served in the hotel.", q:[17] },
+    { sp:'Speaker', t:"Pentlow Hotels identified that retention of junior reception staff was an issue. In order to encourage them to see that working in a hotel could be worthwhile and rewarding, with good prospects, they introduced a management programme. These staff were given additional responsibilities and the chance to work in various roles in the hotel.", q:[18] },
+    { sp:'Speaker', t:"Green Planet wanted to be seen as a caring employer. To make life easier for staff, many of whom had childcare responsibilities, the hotel began issuing vouchers to help cover the cost of childcare.", q:[19] },
+    { sp:'Speaker', t:"Louise Marsh at The Amesbury has one of the best staff retention rates in the business. Since she joined the company, she has made a huge effort to achieve this by creating a co-operative and supportive environment. For her, the staff are part of a large family where everyone is valued.", q:[20] },
+    { sp:'Speaker', t:"OK, now I'd like to …" }
+  ],
+  3: [
+    { sp:'Jeanne', t:"Hi Thomas, how are you enjoying the course so far?" },
+    { sp:'Thomas', t:"Yeah, I think it's good." },
+    { sp:'Jeanne', t:"Remind me — why did you decide to study sports science? Didn't you want to be a professional athlete when you were at school?" },
+    { sp:'Thomas', t:"Yeah — that was my goal, and all my classmates assumed I would achieve it; they thought I was brilliant.", q:[21,22] },
+    { sp:'Jeanne', t:"That must have been a nice feeling." },
+    { sp:'Thomas', t:"Mm, I thought I could win anything. There was no one who could run faster than me." },
+    { sp:'Jeanne', t:"Exactly — so what happened? Did your mum and dad want you to be more 'academic'?" },
+    { sp:'Thomas', t:"Not at all. Perhaps they should have pushed me harder, though.", q:[21,22] },
+    { sp:'Jeanne', t:"What do you mean?" },
+    { sp:'Thomas', t:"I think I should have practised more." },
+    { sp:'Jeanne', t:"What makes you say that?" },
+    { sp:'Thomas', t:"Well, I went out to Kenya for a couple of weeks to train …" },
+    { sp:'Jeanne', t:"Really! I didn't know that." },
+    { sp:'Thomas', t:"I was chosen to go there out of loads of kids and run with some of the top teenage athletes in the world. And … I was so calm about it. I just kept thinking how fortunate I was. What a great chance this was! Everyone back home was so proud of me. But once we started competing, I very quickly realised I wasn't good enough.", q:[23,24] },
+    { sp:'Jeanne', t:"That must have been a huge shock." },
+    { sp:'Thomas', t:"I thought 'this can't be happening'! I was used to winning.", q:[23,24] },
+    { sp:'Jeanne', t:"I'm sorry to hear that." },
+    { sp:'Thomas', t:"It's OK. I'm over it now and I think it's much better to do a university course and this one has such a variety of sports-related areas. It's going to be good." },
+    { sp:'Jeanne', t:"Oh, I agree — I chose it because of that." },
+    { sp:'Thomas', t:"So Jeanne — have you thought of any ideas for the discussion session next week on technology and sport?" },
+    { sp:'Jeanne', t:"We have to cover more than one sport, don't we?" },
+    { sp:'Thomas', t:"Yeah." },
+    { sp:'Jeanne', t:"You know — we always think technology is about the future, but we could gather some ideas about past developments in sport." },
+    { sp:'Thomas', t:"Look at early types of equipment perhaps? Uh, I remember reading something about table tennis bats once — how they ended up being covered with pimpled rubber." },
+    { sp:'Jeanne', t:"Cos they were just wooden at first, I'd imagine." },
+    { sp:'Thomas', t:"Yeah. In about the 1920s, a factory was making rolls of the rubber in bulk for something like horse harnesses.", q:[25] },
+    { sp:'Jeanne', t:"Really!" },
+    { sp:'Thomas', t:"Yeah — and someone realised that it'd make a perfect covering for the wooden bats." },
+    { sp:'Jeanne', t:"So what about cricket — that's had a few innovative changes. Maybe the pads they wear on their legs?" },
+    { sp:'Thomas', t:"I don't think they've changed much but, I'm just looking on the internet … and it says that when the first cricket helmet came in, in 1978, the Australian batsman who first wore it was booed and jeered by people watching because it was so ugly!", q:[26] },
+    { sp:'Jeanne', t:"Wow, players have to protect themselves from getting hurt! I mean everyone wears one now." },
+    { sp:'Thomas', t:"Mm, unlike the cycle helmet." },
+    { sp:'Jeanne', t:"Well, unless you're a professional, but you're right, many ordinary bikers don't wear a helmet." },
+    { sp:'Thomas', t:"Hey, look at these pictures of original helmet designs. This one looks like an upside-down bowl!" },
+    { sp:'Jeanne', t:"Yet, the woman's laughing — she's so proud to be wearing it!" },
+    { sp:'Thomas', t:"It says serious cyclists ended up with wet hair from all the hard exercise.", q:[27] },
+    { sp:'Jeanne', t:"I guess that's why they have large air vents in them now so that the skin can breathe more easily." },
+    { sp:'Thomas', t:"OK, so we've done helmets. What about golf balls or better still golf clubs — they've changed a lot." },
+    { sp:'Jeanne', t:"Yeah — I remember my great grandfather telling me that because a club was made entirely of wood, it would easily break and players had to get another.", q:[28] },
+    { sp:'Thomas', t:"There's no wood at all in them now, is there?" },
+    { sp:'Jeanne', t:"No — they're much more powerful." },
+    { sp:'Thomas', t:"The same must be true of hockey sticks." },
+    { sp:'Jeanne', t:"I don't think so because players still use wooden sticks today. What it does say here, though, is that when the game started you had to produce a stick yourself.", q:[29] },
+    { sp:'Thomas', t:"I guess they just weren't being manufactured. So, one more perhaps. What about football?" },
+    { sp:'Jeanne', t:"Well, I know the first balls were made of animal skin." },
+    { sp:'Thomas', t:"Yeah, they covered them with pieces of leather that were stitched together, but … the balls let in water when it rained." },
+    { sp:'Jeanne', t:"Oh, that would have made them much heavier." },
+    { sp:'Thomas', t:"That's right. You can imagine the damage to players' necks when the ball was headed.", q:[30] },
+    { sp:'Jeanne', t:"How painful that must have been!" },
+    { sp:'Thomas', t:"Yeah, well, I think we can put together some useful ideas …" }
+  ],
+  4: [
+    { sp:'Lecturer', t:"Hello everyone. Today we're going to look at another natural food product and that's maple syrup. What is this exactly? Well, maple syrup looks rather like clear honey, but it's not made by bees; it's produced from the plant fluid — or sap — inside the maple tree and that makes maple syrup a very natural product." },
+    { sp:'Lecturer', t:"Maple syrup is a thick, golden, sweet-tasting liquid that can be bought in bottles or jars and poured onto food such as waffles and ice cream or used in the baking of cakes and pastries.", q:[31] },
+    { sp:'Lecturer', t:"It contains no preservatives or added ingredients, and it provides a healthy alternative to refined sugar.", q:[32] },
+    { sp:'Lecturer', t:"Let's just talk a bit about the maple tree itself, which is where maple syrup comes from. So, there are many species of maple tree, and they'll grow without fertilizer in areas where there's plenty of moisture in the soil. However, they'll only do this if another important criterion is fulfilled, which is that they must have full or partial sun exposure during the day and very cool nights — and I'll talk more about that in a minute." },
+    { sp:'Lecturer', t:"There are only certain parts of the world that provide all these conditions: one is Canada, and by that, I mean all parts of Canada, and the other is the north-eastern states of North America. In these areas, the climate suits the trees perfectly. In fact, Canada produces over two-thirds of the world's maple syrup, which is why the five-pointed maple leaf is a Canadian symbol and has featured on the flag since 1964.", q:[33] },
+    { sp:'Lecturer', t:"So how did maple syrup production begin? Well, long before Europeans settled in these parts of the world, the indigenous communities had started producing maple sugar. They bored holes in the trunks of maple trees and used containers made of tree bark to collect the liquid sap as it poured out." },
+    { sp:'Lecturer', t:"As they were unable to keep the liquid for any length of time — they didn't have storage facilities in those days — they boiled the liquid by placing pieces of rock that had become scorching hot from the sun into the sap. They did this until it turned into sugar, and they were then able to use this to sweeten their food and drinks. Since that time, improvements have been made to the process, but it has changed very little overall.", q:[34] },
+    { sp:'Lecturer', t:"So let's look at the production of maple syrup today. Clearly, the maple forests are a valuable resource in many Canadian and North American communities. The trees have to be well looked after and they cannot be used to make syrup until the trunks reach a diameter of around 25 centimetres. This can take anything up to 40 years.", q:[35] },
+    { sp:'Lecturer', t:"As I've already mentioned, maple trees need the right conditions to grow and also to produce sap. Why is this? Well, what happens is that during a cold night, the tree absorbs water from the soil, and that rises through the tree's vascular system. But then in the warmer daytime, the change in temperature causes the water to be pushed back down to the bottom of the tree. This continual movement — up and down — leads to the formation of the sap needed for maple syrup production." },
+    { sp:'Lecturer', t:"When the tree is ready, it can be tapped and this involves drilling a small hole into the trunk and inserting a tube into it that ends in a bucket. The trees can often take several taps, though the workers take care not to cause any damage to the healthy growth of the tree itself.", q:[36] },
+    { sp:'Lecturer', t:"The sap that comes out of the trees consists of 98 percent water and 2 percent sugar and other nutrients. It has to be boiled so that much of that water evaporates, and this process has to take place immediately, using what are called evaporators. These are basically extremely large pans — the sap is poured into these, a fire is built and the pans are then heated until the sap boils.", q:[37] },
+    { sp:'Lecturer', t:"As it does this, the water evaporates, and the syrup begins to form. The evaporation process creates large quantities of steam, and the sap becomes thicker and denser, and, at just the right moment, when the sap is thick enough to be called maple syrup, the worker removes it from the heat.", q:[38] },
+    { sp:'Lecturer', t:"After this process, something called 'sugar sand' has to be filtered out as this builds up during the boiling and gives the syrup a cloudy appearance and a slightly gritty taste. Once this has been done, the syrup is ready to be packaged so that it can be used for a whole variety of products.", q:[39] },
+    { sp:'Lecturer', t:"It takes 40 litres of sap to produce one litre of maple syrup so you can get an idea of how much is needed! So that's the basic process. In places like Quebec where …", q:[40] }
+  ]
+};
+
+const NOTES_LAYOUT = {
+  1: { title:'Easy Life Cleaning Services', sections:[
+    { heading:'Basic cleaning package offered', items:[
+      { text:'Cleaning all surfaces' },
+      { text:'Cleaning the ___ throughout the apartment', q:1 },
+      { text:'Cleaning shower, sinks, toilet etc.' }
+    ]},
+    { heading:'Additional services agreed', subsections:[
+      { name:'Every week', items:[
+        { text:'Cleaning the ___', q:2 },
+        { text:'Ironing clothes — ___ only', q:3 }
+      ]},
+      { name:'Every month', items:[
+        { text:'Cleaning all the ___ from the inside', q:4 },
+        { text:'Washing down the ___', q:5 }
+      ]}
+    ]},
+    { heading:'Other possibilities', items:[
+      { text:'They can organise a plumber or an ___ if necessary.', q:6 },
+      { text:'A special cleaning service is available for customers who are allergic to ___.', q:7 }
+    ]},
+    { heading:'Information on the cleaners', items:[
+      { text:'Before being hired, all cleaners have a background check carried out by the ___.', q:8 },
+      { text:'References are required.' },
+      { text:'All cleaners are given ___ for two weeks.', q:9 },
+      { text:'Customers send a ___ after each visit.', q:10 },
+      { text:'Usually, each customer has one regular cleaner.' }
+    ]}
+  ]},
+  4: { title:'Maple Syrup', sections:[
+    { heading:'What is maple syrup?', items:[
+      { text:'made from the sap of the maple tree' },
+      { text:'added to food or used in cooking' },
+      { text:'colour described as ___', q:31 },
+      { text:'very ___ compared to refined sugar', q:32 }
+    ]},
+    { heading:'The maple tree', items:[
+      { text:'has many species' },
+      { text:'needs sunny days and cool nights' },
+      { text:'maple leaf has been on the Canadian flag since 1964' },
+      { text:'needs moist soil but does not need fertiliser' },
+      { text:'best growing conditions and ___ are in Canada and North America', q:33 }
+    ]},
+    { heading:'Early maple sugar producers', items:[
+      { text:'made holes in the tree trunks' },
+      { text:'used hot ___ to heat the sap', q:34 },
+      { text:'used tree bark to make containers for collection' },
+      { text:'sweetened food and drink with sugar' }
+    ]},
+    { heading:"Today's maple syrup", subsections:[
+      { name:'The trees', items:[
+        { text:'Tree trunks may not have the correct ___ until they have been growing for 40 years.', q:35 },
+        { text:'Temperature change moves water within the tree, producing the sap.' }
+      ]},
+      { name:'The production', items:[
+        { text:'A tap is drilled into the trunk and a ___ carries the sap into a bucket.', q:36 },
+        { text:'Large pans of sap (evaporators) are heated by means of a ___.', q:37 },
+        { text:'A lot of ___ is produced during the evaporation process.', q:38 },
+        { text:"'Sugar sand' is removed because it makes the syrup look ___ and affects the taste.", q:39 },
+        { text:'A huge quantity of sap is needed to make a ___ of maple syrup.', q:40 }
+      ]}
+    ]}
+  ]}
+};
+
+const MCQ_OPTIONS = {
+  11: ['A: a lack of training','B: long hours','C: low pay'],
+  12: ['A: an increased workload','B: low morale','C: an inability to meet targets'],
+  13: ['A: failing to treat staff equally','B: reorganising shifts without warning','C: neglecting to have enough staff during busy periods'],
+  14: ['A: a fall in customer complaints','B: an increase in loyalty club membership','C: a rise in spending per customer']
+};
+const MATCH_BOX_2 = ['A: improving relationships and teamwork','B: offering incentives and financial benefits','C: providing career opportunities'];
+const MATCH_ITEMS_2 = [{n:15,item:'The Sun Club'},{n:16,item:'The Portland'},{n:17,item:'Bluewater Hotels'},{n:18,item:'Pentlow Hotels'},{n:19,item:'Green Planet'},{n:20,item:'The Amesbury'}];
+
+const MS_Q21_22 = { question:'Which TWO points do Thomas and Jeanne make about Thomas\\u2019s sporting activities at school?', options:['A: He should have felt more positive about them.','B: The training was too challenging for him.','C: He could have worked harder at them.','D: His parents were disappointed in him.','E: His fellow students admired him.'], correct:['C','E'], items:[21,22] };
+const MS_Q23_24 = { question:'Which TWO feelings did Thomas experience when he was in Kenya?', options:['A: disbelief','B: relief','C: stress','D: gratitude','E: homesickness'], correct:['A','D'], items:[23,24] };
+
+const MATCH_BOX_3 = ['A: It could cause excessive sweating.','B: The material was being mass produced for another purpose.','C: People often needed to make their own.','D: It often had to be replaced.','E: The material was expensive.','F: It was unpopular among spectators.','G: It caused injuries.','H: No one using it liked it at first.'];
+const MATCH_ITEMS_3 = [{n:25,item:'the table tennis bat'},{n:26,item:'the cricket helmet'},{n:27,item:'the cycle helmet'},{n:28,item:'the golf club'},{n:29,item:'the hockey stick'},{n:30,item:'the football'}];
+</script>
+<script id="appLogic">
+const COLORS = {
+  1:{bg:'bg-emerald-50',border:'border-emerald-200',hbd:'hover:border-emerald-300',pillBg:'bg-emerald-100',pillTx:'text-emerald-800',scoreTx:'text-emerald-700',deepTx:'text-emerald-900'},
+  2:{bg:'bg-amber-50',border:'border-amber-200',hbd:'hover:border-amber-300',pillBg:'bg-amber-100',pillTx:'text-amber-800',scoreTx:'text-amber-700',deepTx:'text-amber-900'},
+  3:{bg:'bg-orange-50',border:'border-orange-200',hbd:'hover:border-orange-300',pillBg:'bg-orange-100',pillTx:'text-orange-800',scoreTx:'text-orange-700',deepTx:'text-orange-900'},
+  4:{bg:'bg-red-50',border:'border-red-200',hbd:'hover:border-red-300',pillBg:'bg-red-100',pillTx:'text-red-800',scoreTx:'text-red-700',deepTx:'text-red-900'}
+};
+const PART_LABELS = {1:'Part 1',2:'Part 2',3:'Part 3',4:'Part 4'};
+const SKILL_LABELS = {note_completion:'Note completion',multiple_choice:'Multiple choice',matching:'Matching',multi_select:'Multi-select'};
+
+function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function questionMatches(q, f){
+  if(f==='all') return true;
+  if(f==='correct') return q.ok;
+  if(f==='incorrect') return !q.ok;
+  if(f==='note_completion'||f==='multiple_choice'||f==='matching'||f==='multi_select') return q.skill===f;
+  if(f==='p1') return q.p===1;
+  if(f==='p2') return q.p===2;
+  if(f==='p3') return q.p===3;
+  if(f==='p4') return q.p===4;
+  return true;
+}
+
+function buildEvidenceHtml(q){
+  const lines = TRANSCRIPTS[q.p] || [];
+  const hits = lines.filter(l => Array.isArray(l.q) && l.q.includes(q.n));
+  if(hits.length===0){
+    return `<div class="text-xs text-gray-500 italic">Evidence: "${escapeHtml(q.ev)}"</div>`;
+  }
+  return hits.map(l => {
+    let t = escapeHtml(l.t);
+    if(q.ev){
+      const ev = escapeHtml(q.ev);
+      const cls = q.ok ? 'highlight-evidence' : 'highlight-evidence miss';
+      t = t.split(ev).join(`<span class="${cls}">${ev}</span>`);
+    }
+    return `<div class="text-xs text-gray-700 leading-relaxed"><span class="font-semibold text-emerald-700">${escapeHtml(l.sp)}:</span> ${t}</div>`;
+  }).join('<div class="my-1"></div>');
+}
+
+function questionRowHtml(q){
+  const c = COLORS[q.p];
+  const statusBg = q.ok ? 'bg-emerald-100' : 'bg-red-100';
+  const statusTx = q.ok ? 'text-emerald-700' : 'text-red-700';
+  const statusIcon = q.ok ? 'check' : 'x';
+  const partPill = `<span class="text-[10px] font-semibold px-2 py-0.5 rounded-full ${c.pillBg} ${c.pillTx}">${PART_LABELS[q.p]}</span>`;
+  const skillPill = `<span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-gray-100 text-gray-700">${SKILL_LABELS[q.skill]||q.skill}</span>`;
+  const yourClass = q.ok ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-red-50 border-red-200 text-red-900';
+  const yourLabel = q.y && q.y !== '(left blank)' ? escapeHtml(q.y) : '<em class="text-amber-700">(left blank)</em>';
+
+  return `
+  <div class="question-row ${c.bg}/40" data-qn="${q.n}">
+    <button onclick="toggleQuestion(${q.n})" class="w-full p-4 text-left flex items-start gap-3">
+      <div class="w-9 h-9 rounded-full ${statusBg} flex items-center justify-center flex-shrink-0">
+        <i data-lucide="${statusIcon}" class="w-4 h-4 ${statusTx}"></i>
+      </div>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-2 flex-wrap mb-1">
+          <span class="font-bold text-gray-900">Q${q.n}</span>
+          ${partPill}
+          ${skillPill}
+          <span class="text-xs text-gray-500 ml-auto">${q.ok?'+1':'0'} mark</span>
+        </div>
+        <p class="text-sm text-gray-800">${escapeHtml(q.q)}</p>
+      </div>
+      <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 chevron mt-2"></i>
+    </button>
+    <div class="qbody hidden border-t border-gray-200 p-4 bg-white/70">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="space-y-3">
+          <div>
+            <div class="text-xs uppercase tracking-wide text-gray-500 mb-1">Options</div>
+            <div class="text-xs text-gray-700">${escapeHtml(q.opts)}</div>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-wide text-gray-500 mb-1">Your answer</div>
+            <div class="inline-block px-3 py-1.5 rounded-lg border text-sm ${yourClass}">${yourLabel}</div>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-wide text-gray-500 mb-1">Correct answer</div>
+            <div class="inline-block px-3 py-1.5 rounded-lg border bg-emerald-50 border-emerald-200 text-emerald-900 text-sm font-semibold">${escapeHtml(q.c)}</div>
+          </div>
+          <div class="bg-blue-50 rounded-lg p-3">
+            <div class="text-xs font-semibold text-blue-900 mb-1 flex items-center gap-1"><i data-lucide="compass" class="w-3 h-3"></i>Strategy</div>
+            <div class="text-xs text-blue-800 leading-relaxed">${escapeHtml(q.strat)}</div>
+          </div>
+        </div>
+        <div class="space-y-3">
+          <div class="audio-row"><i data-lucide="volume-2" class="w-3 h-3"></i> Audio: ${escapeHtml(PARTS[q.p].audio)}</div>
+          <div>
+            <div class="text-xs uppercase tracking-wide text-gray-500 mb-1">Evidence in transcript</div>
+            <div class="bg-gray-50 rounded-lg p-3 space-y-1">${buildEvidenceHtml(q)}</div>
+          </div>
+          <div class="${q.ok?'bg-emerald-50':'bg-amber-50'} rounded-lg p-3">
+            <div class="text-xs font-semibold ${q.ok?'text-emerald-900':'text-amber-900'} mb-1 flex items-center gap-1"><i data-lucide="lightbulb" class="w-3 h-3"></i>Why this answer</div>
+            <div class="text-xs ${q.ok?'text-emerald-800':'text-amber-800'} leading-relaxed">${escapeHtml(q.expl)}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderQuestions(filter){
+  const list = document.getElementById('questionsList');
+  const filtered = QUESTIONS.filter(q => questionMatches(q, filter));
+  list.innerHTML = filtered.map(questionRowHtml).join('');
+  document.getElementById('questionsCount').textContent = `(${filtered.length} of 40)`;
+  if(window.lucide) lucide.createIcons();
+}
+
+function toggleQuestion(n){
+  const row = document.querySelector(`.question-row[data-qn="${n}"]`);
+  if(!row) return;
+  const wasOpen = row.classList.contains('expanded');
+  document.querySelectorAll('.question-row').forEach(r => {
+    r.classList.remove('expanded');
+    const b = r.querySelector('.qbody'); if(b) b.classList.add('hidden');
+    const ch = r.querySelector('.chevron'); if(ch) ch.style.transform='';
+  });
+  if(!wasOpen){
+    row.classList.add('expanded');
+    const b = row.querySelector('.qbody'); if(b) b.classList.remove('hidden');
+    const ch = row.querySelector('.chevron'); if(ch) ch.style.transform='rotate(180deg)';
+    if(window.lucide) lucide.createIcons();
+    setTimeout(()=>row.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+  }
+}
+
+function setView(mode){
+  const lv = document.getElementById('listView');
+  const fv = document.getElementById('formView');
+  const lb = document.getElementById('viewListBtn');
+  const fb = document.getElementById('viewFormBtn');
+  if(mode==='form'){
+    lv.classList.add('hidden'); fv.classList.remove('hidden');
+    lb.classList.remove('active'); fb.classList.add('active');
+  } else {
+    fv.classList.add('hidden'); lv.classList.remove('hidden');
+    fb.classList.remove('active'); lb.classList.add('active');
+  }
+  if(window.lucide) lucide.createIcons();
+}
+
+function blankSpan(qn){
+  const q = QUESTIONS.find(x => x.n===qn);
+  if(!q) return `<span class="blank">___</span>`;
+  if(q.ok) return `<span class="blank right" title="Q${qn}: correct">${escapeHtml(q.y)}</span>`;
+  if(!q.y || q.y==='(left blank)') return `<span class="blank empty" title="Q${qn}: left blank — correct: ${escapeHtml(q.c)}">[blank]</span>`;
+  return `<span class="blank wrong" title="Q${qn}: wrong — correct: ${escapeHtml(q.c)}">${escapeHtml(q.y)}</span>`;
+}
+
+function renderItemText(text, qn){
+  if(qn==null) return escapeHtml(text);
+  const parts = text.split('___');
+  return parts.map(escapeHtml).join(blankSpan(qn));
+}
+
+function notesCardHtml(partNum){
+  const layout = NOTES_LAYOUT[partNum];
+  if(!layout) return '';
+  const c = COLORS[partNum];
+  let html = `<div class="floating-card p-5 mb-4">
+    <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+      <h4 class="font-bold text-gray-900 flex items-center gap-2"><span class="text-[10px] font-semibold px-2 py-0.5 rounded-full ${c.pillBg} ${c.pillTx}">${PART_LABELS[partNum]}</span>${escapeHtml(layout.title)}</h4>
+      <span class="text-xs text-gray-500">Note completion · ONE WORD ONLY</span>
+    </div>
+    <div class="notes-card">`;
+  layout.sections.forEach(sec => {
+    html += `<div class="notes-heading">${escapeHtml(sec.heading)}</div>`;
+    if(sec.items){
+      sec.items.forEach(it => {
+        html += `<div class="notes-li">${it.q?`<span class="qnum-pill">Q${it.q}</span>`:''}${renderItemText(it.text, it.q||null)}</div>`;
+      });
+    }
+    if(sec.subsections){
+      sec.subsections.forEach(sub => {
+        html += `<div class="notes-sub">${escapeHtml(sub.name)}</div>`;
+        sub.items.forEach(it => {
+          html += `<div class="notes-li">${it.q?`<span class="qnum-pill">Q${it.q}</span>`:''}${renderItemText(it.text, it.q||null)}</div>`;
+        });
+      });
+    }
+  });
+  html += `</div></div>`;
+  return html;
+}
+
+function mcqCardHtml(){
+  const c = COLORS[2];
+  let html = `<div class="floating-card p-5 mb-4">
+    <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+      <h4 class="font-bold text-gray-900 flex items-center gap-2"><span class="text-[10px] font-semibold px-2 py-0.5 rounded-full ${c.pillBg} ${c.pillTx}">${PART_LABELS[2]}</span>Hotel Staff Turnover · Q11–14</h4>
+      <span class="text-xs text-gray-500">Multiple choice · choose A, B or C</span>
+    </div>
+    <div class="space-y-3">`;
+  [11,12,13,14].forEach(n => {
+    const q = QUESTIONS.find(x => x.n===n);
+    const opts = MCQ_OPTIONS[n];
+    html += `<div class="border border-gray-200 rounded-xl p-3 bg-white">
+      <div class="flex items-start gap-2 mb-2"><span class="qnum-pill">Q${n}</span><div class="text-sm text-gray-800 font-medium flex-1">${escapeHtml(q.q)}</div></div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-2">`;
+    opts.forEach(opt => {
+      const letter = opt.charAt(0);
+      const isYour = q.y===letter;
+      const isCorrect = q.c===letter;
+      let cls = 'border border-gray-200 bg-gray-50 text-gray-700';
+      let badge = '';
+      if(isCorrect){ cls = 'border-emerald-300 bg-emerald-50 text-emerald-900 font-semibold'; badge = '<span class="text-[10px] font-bold text-emerald-700 ml-1">✓ correct</span>'; }
+      if(isYour && !isCorrect){ cls = 'border-red-300 bg-red-50 text-red-900 font-semibold line-through decoration-red-500'; badge = '<span class="text-[10px] font-bold text-red-700 ml-1 no-underline">✗ your pick</span>'; }
+      else if(isYour && isCorrect){ badge += '<span class="text-[10px] font-bold text-emerald-700 ml-1">· your pick</span>'; }
+      html += `<div class="rounded-lg p-2 text-xs ${cls}">${escapeHtml(opt)}${badge}</div>`;
+    });
+    html += `</div></div>`;
+  });
+  html += `</div></div>`;
+  return html;
+}
+
+function matchingCardHtml(partNum, items, box, title){
+  const c = COLORS[partNum];
+  let html = `<div class="floating-card p-5 mb-4">
+    <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+      <h4 class="font-bold text-gray-900 flex items-center gap-2"><span class="text-[10px] font-semibold px-2 py-0.5 rounded-full ${c.pillBg} ${c.pillTx}">${PART_LABELS[partNum]}</span>${escapeHtml(title)}</h4>
+      <span class="text-xs text-gray-500">Matching · letters used once</span>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div class="lg:col-span-2 space-y-2">`;
+  items.forEach(it => {
+    const q = QUESTIONS.find(x => x.n===it.n);
+    const yourLetter = q.y || '?';
+    const correctLetter = q.c || '?';
+    const yourCls = q.ok ? 'bg-emerald-50 border-emerald-300 text-emerald-900' : 'bg-red-50 border-red-300 text-red-900';
+    const correctBadge = q.ok ? '' : `<span class="ml-2 inline-block px-2 py-0.5 rounded-md bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-bold">→ ${escapeHtml(correctLetter)}</span>`;
+    html += `<div class="flex items-center gap-2 border border-gray-200 rounded-lg p-2 bg-white">
+      <span class="qnum-pill">Q${it.n}</span>
+      <span class="text-sm text-gray-800 flex-1">${escapeHtml(it.item)}</span>
+      <span class="inline-block px-2 py-0.5 rounded-md border text-xs font-bold ${yourCls}">${escapeHtml(yourLetter)}</span>
+      ${correctBadge}
+    </div>`;
+  });
+  html += `</div><div class="bg-amber-50 border border-amber-200 rounded-xl p-3">
+    <div class="text-xs font-bold text-amber-900 mb-2">Options box</div>
+    <div class="space-y-1">`;
+  box.forEach(opt => { html += `<div class="text-xs text-amber-900">${escapeHtml(opt)}</div>`; });
+  html += `</div></div></div></div>`;
+  return html;
+}
+
+function multiSelectCardHtml(ms){
+  const c = COLORS[3];
+  const picks = ms.items.map(n => QUESTIONS.find(x => x.n===n));
+  const yourPicks = picks.map(q => q.y).filter(Boolean);
+  const correctSet = ms.correct;
+  let html = `<div class="floating-card p-5 mb-4">
+    <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+      <h4 class="font-bold text-gray-900 flex items-center gap-2"><span class="text-[10px] font-semibold px-2 py-0.5 rounded-full ${c.pillBg} ${c.pillTx}">${PART_LABELS[3]}</span>Q${ms.items[0]}–${ms.items[1]}</h4>
+      <span class="text-xs text-gray-500">Multi-select · choose TWO</span>
+    </div>
+    <p class="text-sm text-gray-800 font-medium mb-3">${escapeHtml(ms.question)}</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">`;
+  ms.options.forEach(opt => {
+    const letter = opt.charAt(0);
+    const isYour = yourPicks.includes(letter);
+    const isCorrect = correctSet.includes(letter);
+    let cls = 'border border-gray-200 bg-gray-50 text-gray-700';
+    let badge = '';
+    if(isCorrect){ cls = 'border-emerald-300 bg-emerald-50 text-emerald-900 font-semibold'; badge = '<span class="text-[10px] font-bold text-emerald-700 ml-1">✓ correct</span>'; }
+    if(isYour && !isCorrect){ cls = 'border-red-300 bg-red-50 text-red-900 font-semibold'; badge = '<span class="text-[10px] font-bold text-red-700 ml-1">✗ your pick</span>'; }
+    else if(isYour && isCorrect){ badge += '<span class="text-[10px] font-bold text-emerald-700 ml-1">· your pick</span>'; }
+    html += `<div class="rounded-lg p-2 text-xs ${cls}">${escapeHtml(opt)}${badge}</div>`;
+  });
+  html += `</div></div>`;
+  return html;
+}
+
+function renderFormView(){
+  const c = document.getElementById('formContent');
+  let html = '';
+  html += notesCardHtml(1);
+  html += mcqCardHtml();
+  html += matchingCardHtml(2, MATCH_ITEMS_2, MATCH_BOX_2, 'Hotel strategies · Q15–20');
+  html += multiSelectCardHtml(MS_Q21_22);
+  html += multiSelectCardHtml(MS_Q23_24);
+  html += matchingCardHtml(3, MATCH_ITEMS_3, MATCH_BOX_3, 'Sports equipment · Q25–30');
+  html += notesCardHtml(4);
+  c.innerHTML = html;
+}
+
+function renderTranscripts(){
+  [1,2,3,4].forEach(p => {
+    const pane = document.getElementById(`tt-pane-${p}`);
+    pane.innerHTML = TRANSCRIPTS[p].map(line => {
+      const hasQ = Array.isArray(line.q) && line.q.length;
+      const qmarks = hasQ ? line.q.map(qn => `<span class="qmark" onclick="jumpToQ(${qn})" title="Jump to Q${qn}">Q${qn}</span>`).join('') : '';
+      return `<div class="transcript-line ${hasQ?'has-q':''}">
+        <span class="speaker">${escapeHtml(line.sp)}:</span>${qmarks}
+        <span class="text-sm text-gray-700">${escapeHtml(line.t)}</span>
+      </div>`;
+    }).join('');
+  });
+}
+
+function renderAnswerKeys(){
+  [1,2,3,4].forEach(p => {
+    const ak = document.getElementById(`ak-${p}`);
+    const list = QUESTIONS.filter(q => q.p===p);
+    ak.innerHTML = list.map(q => {
+      const okIcon = q.ok ? '<i data-lucide="check" class="w-3 h-3 text-emerald-600"></i>' : '<i data-lucide="x" class="w-3 h-3 text-red-600"></i>';
+      return `<div class="flex items-center justify-between py-1 px-2 rounded hover:bg-gray-100 cursor-pointer" onclick="jumpToQ(${q.n})">
+        <div class="flex items-center gap-2"><span class="qnum-pill">Q${q.n}</span>${okIcon}</div>
+        <span class="text-xs text-gray-700 truncate ml-2">${escapeHtml(q.c)}</span>
+      </div>`;
+    }).join('');
+  });
+}
+
+function switchTranscriptTab(p){
+  document.querySelectorAll('.tt-tab').forEach(t => t.classList.toggle('active', String(t.dataset.tt)===String(p)));
+  [1,2,3,4].forEach(i => {
+    document.getElementById(`tt-pane-${i}`).classList.toggle('hidden', i!==p);
+    document.getElementById(`ak-${i}`).classList.toggle('hidden', i!==p);
+  });
+}
+
+function jumpToQ(n){
+  setView('list');
+  const q = QUESTIONS.find(x => x.n===n);
+  if(!q) return;
+  document.getElementById('questionFilter').value = 'all';
+  renderQuestions('all');
+  setTimeout(() => {
+    toggleQuestion(n);
+    const row = document.querySelector(`.question-row[data-qn="${n}"]`);
+    if(row){ row.style.boxShadow='0 0 0 4px rgba(16,185,129,0.45)'; setTimeout(()=>row.style.boxShadow='',1400); }
+  }, 60);
+}
+
+const INSIGHTS = {
+  'root-cause': {
+    title:'Root Cause Analysis',
+    body:`<div class="space-y-4">
+      <p class="text-sm text-gray-700">Your 19 mistakes cluster around <strong>3 patterns</strong>. Fix these and the 5.5 → 6.5 jump becomes mechanical.</p>
+      <div class="bg-rose-50 border border-rose-200 rounded-xl p-4">
+        <h5 class="font-bold text-rose-900 mb-1 flex items-center gap-2"><i data-lucide="search" class="w-4 h-4"></i>Pattern 1 · Synonym confusion (4 marks)</h5>
+        <p class="text-sm text-rose-800 mb-2">Q7, Q32, Q36, Q39 — you wrote <em>dirt / good / pipe / thick</em> when the script literally said <em>dust / healthy / tube / cloudy</em>. Same idea, wrong word.</p>
+        <p class="text-xs text-rose-700"><strong>Fix:</strong> Stop translating in your head. Write the literal word you hear.</p>
+      </div>
+      <div class="bg-orange-50 border border-orange-200 rounded-xl p-4">
+        <h5 class="font-bold text-orange-900 mb-1 flex items-center gap-2"><i data-lucide="alert-triangle" class="w-4 h-4"></i>Pattern 2 · MCQ &amp; matching distractors (8 marks)</h5>
+        <p class="text-sm text-orange-800 mb-2">Q11, Q14, Q16, Q18, Q22, Q24, Q26, Q27, Q28, Q30 — you matched the option <strong>mentioned</strong>, not the option that <strong>answers</strong> the stem.</p>
+        <p class="text-xs text-orange-700"><strong>Fix:</strong> Pre-read the stem keyword, then listen for cause-effect verbs (<em>introduced, gives, caused, sent on</em>).</p>
+      </div>
+      <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+        <h5 class="font-bold text-red-900 mb-1 flex items-center gap-2"><i data-lucide="book-open" class="w-4 h-4"></i>Pattern 3 · Part 4 monologue gap (3 blanks)</h5>
+        <p class="text-sm text-red-800 mb-2">Q33, Q35, Q38 — three blanks left empty. The lecturer's pace + academic vocab = no recovery time.</p>
+        <p class="text-xs text-red-700"><strong>Fix:</strong> Daily Mock Test Part 4 drills. Train ear → pen latency.</p>
+      </div>
+    </div>`
+  },
+  'why-lost': {
+    title:'Why You Lost Marks (19 mistakes)',
+    body:`<div class="space-y-3">
+      <p class="text-sm text-gray-700">Click any row to jump to that question's full breakdown.</p>
+      <div class="space-y-2">
+        ${QUESTIONS.filter(q => !q.ok).map(q => `
+          <div class="border border-red-200 bg-red-50 rounded-lg p-3 cursor-pointer hover:shadow" onclick="closeModal();jumpToQ(${q.n});">
+            <div class="flex items-start gap-2">
+              <span class="qnum-pill" style="background:#fecaca;color:#7f1d1d;">Q${q.n}</span>
+              <div class="flex-1 min-w-0">
+                <div class="text-xs text-red-700 mb-0.5">${PART_LABELS[q.p]} · ${SKILL_LABELS[q.skill]}</div>
+                <div class="text-sm text-red-900">You: <strong>${escapeHtml(q.y)}</strong> → Correct: <strong>${escapeHtml(q.c)}</strong></div>
+              </div>
+              <i data-lucide="arrow-right" class="w-4 h-4 text-red-600 flex-shrink-0"></i>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>`
+  },
+  'fastest-gain': {
+    title:'Fastest Score Gain · Part 4 Drill',
+    body:`<div class="space-y-4">
+      <div class="bg-emerald-50 rounded-xl p-5 text-center">
+        <div class="text-4xl font-bold text-emerald-700 mb-1">+1.0</div>
+        <div class="text-sm text-emerald-800">band gain · 3 weeks · 20 minutes/day</div>
+      </div>
+      <p class="text-sm text-gray-700">Part 4 alone cost you 7 marks. Closing that gap is mechanical: the lecture format is the most predictable section of the test.</p>
+      <div class="bg-blue-50 rounded-xl p-4">
+        <h5 class="font-bold text-blue-900 mb-2">The 3-week protocol</h5>
+        <ol class="text-sm text-blue-800 space-y-1 list-decimal pl-5">
+          <li><strong>Week 1:</strong> Mock Test 1–2 Part 4 only. Pause-and-write per blank.</li>
+          <li><strong>Week 2:</strong> Mock Test 1–3 Part 4 at full speed; transcript review after.</li>
+          <li><strong>Week 3:</strong> Mock Test full-test simulation.</li>
+        </ol>
+      </div>
+      <div class="bg-amber-50 rounded-xl p-4">
+        <h5 class="font-bold text-amber-900 mb-1">Why this works</h5>
+        <p class="text-sm text-amber-800">Part 4 is the highest-difficulty / highest-density section. Even 1–2 extra correct words moves the raw band threshold (22→23 = 5.5→6.0; 25→26 = 6.0→6.5).</p>
+      </div>
+    </div>`
+  },
+  'lessons': {
+    title:'Recommended Lessons',
+    body:`<div class="space-y-3">
+      ${[
+        {n:1,title:'Part 4 Lecture Capture',pri:'red',desc:'Pause-and-write protocol for academic monologues. Predict-from-context. 25-min lesson.'},
+        {n:2,title:'Synonym vs Script Word',pri:'rose',desc:'Train the listen-and-write reflex. Stop translating. 20-min lesson with 30 paired drills.'},
+        {n:3,title:'MCQ Stem-Keyword Pre-reading',pri:'orange',desc:'Read the question stem before audio. Identify keyword type (cause/effect/contrast). 18 min.'},
+        {n:4,title:'Matching A–H Elimination',pri:'amber',desc:'Cross-out method, listen-for-action-verb method. 22-min lesson with 4 sample sets.'}
+      ].map(l => `
+        <div class="border border-${l.pri}-200 bg-${l.pri}-50 rounded-xl p-4 cursor-pointer hover:shadow" onclick="handleQuickAction('lesson-${l.n}')">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-xl bg-${l.pri}-100 flex items-center justify-center flex-shrink-0"><i data-lucide="play" class="w-4 h-4 text-${l.pri}-700"></i></div>
+            <div class="flex-1">
+              <h5 class="font-bold text-${l.pri}-900">${l.title}</h5>
+              <p class="text-xs text-${l.pri}-800 mt-1">${l.desc}</p>
+            </div>
+            <i data-lucide="arrow-right" class="w-4 h-4 text-${l.pri}-600"></i>
+          </div>
+        </div>
+      `).join('')}
+    </div>`
+  },
+  'roadmap': {
+    title:'3-Week Improvement Roadmap',
+    body:`<div class="space-y-3">
+      <div class="border-l-4 border-violet-500 bg-violet-50 rounded-r-xl p-4">
+        <h5 class="font-bold text-violet-900 mb-1">Week 1 · Diagnose &amp; Drill (Part 4 + synonyms)</h5>
+        <ul class="text-sm text-violet-800 space-y-1 list-disc pl-5">
+          <li>Mon-Tue: Mock Test 1 Part 4 — pause every 3 lines, write blanks</li>
+          <li>Wed-Thu: Synonym log — collect 50 IELTS academic doublets (climate/weather, tube/pipe, cloudy/thick)</li>
+          <li>Fri-Sun: Mock Test 2 Part 4 + review transcripts</li>
+        </ul>
+      </div>
+      <div class="border-l-4 border-indigo-500 bg-indigo-50 rounded-r-xl p-4">
+        <h5 class="font-bold text-indigo-900 mb-1">Week 2 · MCQ &amp; Matching (Parts 2 + 3)</h5>
+        <ul class="text-sm text-indigo-800 space-y-1 list-disc pl-5">
+          <li>Mon-Wed: 6 MCQ sets — pre-read keyword, predict, then listen</li>
+          <li>Thu-Fri: Matching A–H — cross-out method drills</li>
+          <li>Sat-Sun: Mock Test 1–3 Part 4 at full speed</li>
+        </ul>
+      </div>
+      <div class="border-l-4 border-blue-500 bg-blue-50 rounded-r-xl p-4">
+        <h5 class="font-bold text-blue-900 mb-1">Week 3 · Full-Test Simulation</h5>
+        <ul class="text-sm text-blue-800 space-y-1 list-disc pl-5">
+          <li>Mon-Wed: Mock Test 1, 2, 3 — full timed</li>
+          <li>Thu: Review wrong answers, classify error type</li>
+          <li>Fri-Sun: Mock test + Liz feedback session</li>
+        </ul>
+      </div>
+      <div class="bg-emerald-50 rounded-xl p-4 text-center">
+        <div class="text-sm text-emerald-800">Target after Week 3: <strong class="text-2xl text-emerald-700">Band 6.5</strong></div>
+      </div>
+    </div>`
+  },
+  'model-answers': {
+    title:'Model Answers · Compare Your Responses',
+    body:`<div class="space-y-2">
+      <p class="text-sm text-gray-700 mb-3">Side-by-side comparison of every wrong answer.</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead><tr class="bg-gray-100"><th class="text-left p-2">Q</th><th class="text-left p-2">Part</th><th class="text-left p-2">Skill</th><th class="text-left p-2">You</th><th class="text-left p-2">Correct</th><th class="text-left p-2">Why</th></tr></thead>
+          <tbody>
+            ${QUESTIONS.filter(q => !q.ok).map(q => `
+              <tr class="border-b border-gray-100 hover:bg-gray-50 cursor-pointer" onclick="closeModal();jumpToQ(${q.n});">
+                <td class="p-2 font-bold">Q${q.n}</td>
+                <td class="p-2 text-xs">${PART_LABELS[q.p]}</td>
+                <td class="p-2 text-xs text-gray-600">${SKILL_LABELS[q.skill]}</td>
+                <td class="p-2 text-red-700">${escapeHtml(q.y)}</td>
+                <td class="p-2 text-emerald-700 font-semibold">${escapeHtml(q.c)}</td>
+                <td class="p-2 text-xs text-gray-600">${escapeHtml(q.expl.split('.')[0])}.</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`
+  },
+  'priority-fix': {
+    title:'Priority Fix · Part 4 Lecture Capture',
+    body:`<div class="space-y-4">
+      <div class="bg-red-50 rounded-xl p-5">
+        <h5 class="font-bold text-red-900 mb-2 flex items-center gap-2"><i data-lucide="target" class="w-5 h-5"></i>The Gap</h5>
+        <p class="text-sm text-red-800">Part 4 = 3/10. The other three parts: 18/30 (60%). Lifting Part 4 from 3 → 7 alone moves you from raw 21 to raw 25 — that's <strong>5.5 → 6.0</strong>. Lift it to 8 → raw 26 = <strong>6.5</strong>.</p>
+      </div>
+      <div class="bg-blue-50 rounded-xl p-5">
+        <h5 class="font-bold text-blue-900 mb-2">The Strategy (5 steps)</h5>
+        <ol class="text-sm text-blue-800 space-y-2 list-decimal pl-5">
+          <li><strong>Pre-read the notes</strong> in the 30-second gap. Predict word type for each blank (noun/verb/adj).</li>
+          <li><strong>Anchor on signposts:</strong> "first / next / however / in conclusion". They tell you which blank you're on.</li>
+          <li><strong>Listen for measurements/numbers</strong> — they precede or follow blanks (Q35: "diameter of 25 cm").</li>
+          <li><strong>Write the literal word.</strong> If you hear "tube", write tube — not "pipe".</li>
+          <li><strong>Don't freeze</strong> on missed blanks. Skip and recover; the lecturer rarely backtracks.</li>
+        </ol>
+      </div>
+      <div class="bg-emerald-50 rounded-xl p-5">
+        <h5 class="font-bold text-emerald-900 mb-2">Practice Today</h5>
+        <p class="text-sm text-emerald-800 mb-3">Start with Mock Test 1 Part 4. Pause-and-write protocol. Compare against transcript.</p>
+        <button onclick="closeModal();handleQuickAction('practice-part4');" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-emerald-700">Start Part 4 Practice</button>
+      </div>
+    </div>`
+  }
+};
+
+function openModal(key){
+  const data = INSIGHTS[key];
+  if(!data) return;
+  document.getElementById('modalTitle').textContent = data.title;
+  document.getElementById('modalContent').innerHTML = data.body;
+  document.getElementById('generalModal').classList.add('open');
+  if(window.lucide) lucide.createIcons();
+}
+function closeModal(){ document.getElementById('generalModal').classList.remove('open'); }
+function openLizModal(){ document.getElementById('lizModal').classList.add('open'); if(window.lucide) lucide.createIcons(); }
+function closeLizModal(){ document.getElementById('lizModal').classList.remove('open'); }
+
+function openScriptsModal(){
+  let body = `<div class="space-y-5">`;
+  [1,2,3,4].forEach(p => {
+    body += `<div>
+      <h4 class="font-bold text-gray-900 mb-2 flex items-center gap-2"><span class="text-[10px] font-semibold px-2 py-0.5 rounded-full ${COLORS[p].pillBg} ${COLORS[p].pillTx}">${PART_LABELS[p]}</span>${escapeHtml(PARTS[p].title)}</h4>
+      <div class="bg-gray-50 rounded-lg p-3 max-h-64 overflow-y-auto questions-scroll text-sm space-y-1">
+        ${TRANSCRIPTS[p].map(l => `<div><span class="font-semibold text-emerald-700">${escapeHtml(l.sp)}:</span> ${escapeHtml(l.t)}${Array.isArray(l.q)?` <span class="text-[10px] text-gray-500">[Q${l.q.join(', Q')}]</span>`:''}</div>`).join('')}
+      </div>
+    </div>`;
+  });
+  body += `</div>`;
+  document.getElementById('modalTitle').textContent = 'Audio Transcripts · All Parts';
+  document.getElementById('modalContent').innerHTML = body;
+  document.getElementById('generalModal').classList.add('open');
+  if(window.lucide) lucide.createIcons();
+}
+
+function showBandTooltip(){ document.getElementById('bandTooltip').classList.remove('hidden'); }
+function hideBandTooltip(){ document.getElementById('bandTooltip').classList.add('hidden'); }
+
+function filterByPart(p){
+  setView('list');
+  const sel = document.getElementById('questionFilter');
+  sel.value = `p${p}`;
+  renderQuestions(`p${p}`);
+  showToast(`Filtered to ${PART_LABELS[p]}`, 'filter');
+  setTimeout(() => document.querySelector('#listView').scrollIntoView({behavior:'smooth',block:'start'}), 80);
+}
+
+function handleQuickAction(action){
+  const map = {
+    'retry':{m:'Restarting Mock Test 4…',i:'repeat'},
+    'practice-part4':{m:'Loading Part 4 lecture-capture drills…',i:'target'},
+    'download':{m:'Generating PDF report…',i:'download'},
+    'share':{m:'Share link copied to clipboard',i:'share'},
+    'lesson-1':{m:'Opening lesson · Part 4 Lecture Capture',i:'play'},
+    'lesson-2':{m:'Opening lesson · Synonym vs Script Word',i:'play'},
+    'lesson-3':{m:'Opening lesson · MCQ Stem-Keyword Pre-reading',i:'play'},
+    'lesson-4':{m:'Opening lesson · Matching A–H Elimination',i:'play'}
+  };
+  const a = map[action] || {m:'Action: '+action, i:'info'};
+  showToast(a.m, a.i);
+}
+
+let toastTimer = null;
+function showToast(msg, icon){
+  document.getElementById('toastMsg').textContent = msg;
+  const ic = document.getElementById('toastIcon');
+  ic.setAttribute('data-lucide', icon || 'info');
+  document.getElementById('toast').classList.remove('hidden');
+  if(window.lucide) lucide.createIcons();
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(hideToast, 3200);
+}
+function hideToast(){ document.getElementById('toast').classList.add('hidden'); }
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderQuestions('all');
+  renderFormView();
+  renderTranscripts();
+  renderAnswerKeys();
+
+  document.getElementById('questionFilter').addEventListener('change', e => renderQuestions(e.target.value));
+  document.querySelectorAll('.tt-tab').forEach(t => t.addEventListener('click', () => switchTranscriptTab(parseInt(t.dataset.tt,10))));
+
+  document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if(e.target===m) m.classList.remove('open'); }));
+  document.addEventListener('keydown', e => {
+    if(e.key==='Escape'){
+      document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
+      hideBandTooltip();
+    }
+  });
+
+  setTimeout(() => toggleQuestion(11), 250);
+  if(window.lucide) lucide.createIcons();
+});
+</script>
+</body>
+</html>

@@ -774,3 +774,13 @@ For the world record attempt, Gareyev hopes to play 47 blindfold games at once i
         }
     }
 }
+
+
+# Attach official Cambridge audioscripts to the listening section so the
+# results page can render the "Audioscript" modal + per-part panels.
+try:
+    from .audioscripts import IELTS17_AUDIOSCRIPTS as _A
+except ImportError:
+    from audioscripts import IELTS17_AUDIOSCRIPTS as _A
+IELTS17_TEST4["sections"]["listening"]["transcripts"] = _A.get(4, {})
+del _A

@@ -29,6 +29,16 @@ export const PARTS = [
     avgTime: '4 min 30 s',
     tone: 'accent',
   },
+  {
+    id: 'fulltest',
+    label: 'Full Test',
+    title: 'All three parts',
+    description: 'Part 1 → Part 2 → Part 3 on a connected theme. Exam-style flow with one holistic Liz feedback at the end.',
+    duration: '12–14 min',
+    avgTime: '13 min',
+    tone: 'primary',
+    premium: true,
+  },
 ];
 
 export const TOPICS = [

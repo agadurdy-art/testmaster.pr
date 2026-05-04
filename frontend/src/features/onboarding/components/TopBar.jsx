@@ -1,5 +1,6 @@
 import React from 'react';
 import { useI18n } from '../../../lib/i18n';
+import BrandLogo from '../../../components/BrandLogo';
 
 export default function TopBar({ step }) {
   const { t } = useI18n();
@@ -8,9 +9,7 @@ export default function TopBar({ step }) {
   return (
     <header className="topbar">
       <div className="topbar-row">
-        <a href="/" className="logo">
-          testmaster<span className="pro">.pro</span>
-        </a>
+        <BrandLogo size="sm" href="/" className="logo" />
         <div className="step-label">
           {progress} · <span>{stepName}</span>
         </div>

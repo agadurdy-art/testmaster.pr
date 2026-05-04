@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Reading Results - Band 6 Sample</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand': 'hsl(160, 84%, 39%)',
+                        'brand-dark': 'hsl(160, 84%, 28%)',
+                        'brand-light': 'hsl(160, 84%, 60%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --brand: 160 84% 39%;
+            --brand-dark: 160 84% 28%;
+            --brand-light: 160 84% 60%;
+        }
+
+        .floating-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .insight-tile {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-tile:hover {
+            transform: scale(1.02);
+        }
+
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+
+        .question-row {
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+            border-radius: 16px;
+        }
+
+        .question-row.expanded {
+            border-color: hsl(var(--brand));
+        }
+
+        .highlight-evidence {
+            background: #dcfce7;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .liz-avatar {
+            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        /* Liz shimmer halo — circle + animated rotating gradient ring + soft glow */
+        .liz-shimmer {
+            position: relative;
+            display: inline-block;
+            border-radius: 50%;
+            cursor: pointer;
+            isolation: isolate;
+        }
+        .liz-shimmer::before,
+        .liz-shimmer::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: conic-gradient(
+                hsl(160, 84%, 45%),
+                hsl(199, 89%, 60%),
+                hsl(260, 55%, 62%),
+                hsl(290, 70%, 60%),
+                hsl(160, 84%, 45%)
+            );
+            animation: liz-spin 3s linear infinite;
+        }
+        .liz-shimmer::before {
+            inset: -4px;
+            z-index: -1;
+        }
+        .liz-shimmer::after {
+            inset: -10px;
+            filter: blur(14px);
+            opacity: 0.55;
+            z-index: -2;
+        }
+        .liz-shimmer > img {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            z-index: 1;
+        }
+        @keyframes liz-spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Question list scrollbar */
+        .questions-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+        .questions-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .questions-scroll::-webkit-scrollbar-thumb {
+            background: rgba(16, 185, 129, 0.25);
+            border-radius: 4px;
+        }
+        .questions-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(16, 185, 129, 0.5);
+        }
+        .questions-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(16, 185, 129, 0.3) transparent;
+            scroll-behavior: smooth;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.open .modal-content {
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 via-blue-50/30 to-violet-50/20 min-h-screen">
+
+    <!-- Public Top Nav (matches Writing/Speaking samples) -->
+    <header class="sticky top-0 z-50 border-b border-slate-200/70 bg-slate-50/85 backdrop-blur print:hidden">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8 h-16 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2.5">
+          <span class="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-emerald-700"><path d="M12 20l9-5-9-5-9 5 9 5z"/><path d="M12 12l9-5-9-5-9 5 9 5z"/></svg>
+          </span>
+          <span class="leading-tight">
+            <span class="block text-[15px] font-bold text-slate-900">IELTS Ace</span>
+            <span class="block text-[10px] text-slate-500 -mt-0.5">by testmaster.pro</span>
+          </span>
+        </a>
+        <nav class="hidden md:flex items-center gap-7 text-[14px] text-slate-700">
+          <a href="/samples/writing/band-6-5-task2" class="hover:text-slate-900">Writing</a>
+          <a href="/samples/speaking/band-6-5-part2" class="hover:text-slate-900">Speaking</a>
+          <a href="/samples/reading/band-6-0-academic.html" class="hover:text-slate-900">Reading</a>
+          <a href="/samples/listening/band-5-5-listening.html" class="hover:text-slate-900">Listening</a>
+          <a href="/#samples" class="hover:text-slate-900">Samples</a>
+          <a href="/pricing" class="hover:text-slate-900">Pricing</a>
+        </nav>
+        <div class="flex items-center gap-2.5">
+          <a href="/login" class="hidden sm:inline-flex items-center text-[14px] text-slate-700 hover:text-slate-900 px-3 py-2 rounded-lg">Log in</a>
+          <a href="/signup" class="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-[14px] px-4 py-2 rounded-xl shadow-[0_6px_22px_-8px_hsl(160_84%_39%/_0.55)] transition-colors">
+            Try free
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sample Evaluation Banner -->
+    <div class="print:hidden border-b border-emerald-200/70" style="background: linear-gradient(90deg, hsl(160 60% 96%) 0%, hsl(160 60% 97%) 40%, hsl(199 90% 97%) 100%);">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8 py-2.5 flex items-center gap-3 text-[13.5px]">
+        <span class="inline-flex items-center gap-1.5 font-medium text-emerald-800">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4z"/></svg>
+          Sample Evaluation
+        </span>
+        <span class="text-slate-600">— see exactly how <em class="not-italic font-medium text-slate-900">your</em> reading test will be scored. Nothing here is editable.</span>
+        <span class="ml-auto hidden sm:inline-flex items-center gap-2">
+          <a href="/signup" class="text-emerald-800 font-medium hover:underline">Try free →</a>
+        </span>
+      </div>
+    </div>
+
+    <!-- Context strip: back + analysis title -->
+    <div class="bg-white/70 border-b border-gray-200/70 print:hidden">
+      <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between gap-3">
+        <a href="/#samples" class="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-brand transition-colors">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+          Back to samples
+        </a>
+        <div class="text-right">
+          <span class="text-sm font-semibold text-gray-900">Reading Analysis</span>
+          <span class="text-sm text-gray-500"> · Mock Test 18 · Test 1</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-6 py-8">
+
+        <!-- Top Row: Score + Liz (Same Card, Equal Sizes) -->
+        <div class="mb-6">
+            <div class="floating-card p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+                    <!-- Left: Score Circle & Details WITH TIME INFO -->
+                    <div class="relative flex items-center gap-6 p-4 rounded-2xl bg-gradient-to-br from-emerald-50 via-white to-sky-50 border border-emerald-100/60">
+                        <!-- Score Circle -->
+                        <div class="relative">
+                            <div class="w-24 h-24">
+                                <svg class="progress-ring w-full h-full" viewBox="0 0 80 80">
+                                    <circle cx="40" cy="40" r="34" stroke="#e5e7eb" stroke-width="6" fill="none"/>
+                                    <circle cx="40" cy="40" r="34" stroke="hsl(var(--brand))" stroke-width="6" fill="none"
+                                            stroke-dasharray="214" stroke-dashoffset="86" stroke-linecap="round"/>
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="text-2xl font-bold text-gray-900">6.0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Score Details -->
+                        <div>
+                            <h2 class="text-2xl font-bold bg-gradient-to-r from-emerald-700 via-sky-700 to-violet-700 bg-clip-text text-transparent">Abdullah</h2>
+                            <div class="flex items-center gap-2 mt-1 mb-1">
+                                <span class="inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+                                    <i data-lucide="award" class="w-3 h-3"></i>
+                                    Band 6 · Competent User
+                                </span>
+                            </div>
+                            <p class="text-gray-600">24/40 Correct (60%)</p>
+                            <p class="text-sm text-amber-600">48 minutes • 12 min under time</p>
+                            <button onclick="showBandTooltip()" class="text-sm text-brand hover:text-brand-dark transition-colors flex items-center gap-1 mt-1">
+                                <i data-lucide="info" class="w-4 h-4"></i>
+                                Band breakdown
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right: Liz AI Tutor -->
+                    <div class="flex items-center gap-4">
+                        <div class="liz-shimmer w-20 h-20" onclick="openLizModal()">
+                            <img src="https://static.prod-images.emergentagent.com/jobs/799d7d0f-0425-4acb-aa13-54128002d580/images/baeb03c8118b149f97024b78f7f053e092a9d4c22d6c09656fd3a17aacf6359b.png" alt="Liz AI Tutor">
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Liz AI Tutor</h3>
+                            <p class="text-sm text-gray-600 mb-3">"Great foundation! Your T/F/NG strategy needs work - that's your fastest path to Band 7.0. Focus there first!"</p>
+                            <button onclick="openLizModal()" class="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors">
+                                View Full Analysis
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 4-Card Grid RIGHT UNDER SCORE (Horizontal Layout) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 mt-6">
+
+                <!-- Passage 1 -->
+                <div onclick="filterByPassage(1)" class="p-4 bg-emerald-50 rounded-lg border-l-4 border-emerald-500 cursor-pointer hover:shadow-md hover:scale-[1.02] transition-all">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <div class="text-sm text-emerald-700 font-semibold">Passage 1</div>
+                            <div class="text-xs text-emerald-600">Wildlife Conservation</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-emerald-600">10/13</div>
+                            <div class="text-xs text-emerald-600">77%</div>
+                        </div>
+                    </div>
+                    <div class="space-x-1">
+                        <span class="text-xs bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded-full">MC: 4/4</span>
+                        <span class="text-xs bg-red-200 text-red-800 px-2 py-0.5 rounded-full">T/F/NG: 3/6</span>
+                        <span class="text-xs bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded-full">Fill: 3/3</span>
+                    </div>
+                </div>
+
+                <!-- Passage 2 -->
+                <div onclick="filterByPassage(2)" class="p-4 bg-amber-50 rounded-lg border-l-4 border-amber-500 cursor-pointer hover:shadow-md hover:scale-[1.02] transition-all">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <div class="text-sm text-amber-700 font-semibold">Passage 2</div>
+                            <div class="text-xs text-amber-600">Urban Planning</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-amber-600">8/13</div>
+                            <div class="text-xs text-amber-600">62%</div>
+                        </div>
+                    </div>
+                    <div class="space-x-1">
+                        <span class="text-xs bg-amber-200 text-amber-800 px-2 py-0.5 rounded-full">Match: 5/8</span>
+                        <span class="text-xs bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded-full">Summary: 3/5</span>
+                    </div>
+                </div>
+
+                <!-- Passage 3 -->
+                <div onclick="filterByPassage(3)" class="p-4 bg-red-50 rounded-lg border-l-4 border-red-500 cursor-pointer hover:shadow-md hover:scale-[1.02] transition-all">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <div class="text-sm text-red-700 font-semibold">Passage 3</div>
+                            <div class="text-xs text-red-600">Technology Innovation</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-red-600">6/14</div>
+                            <div class="text-xs text-red-600">43%</div>
+                        </div>
+                    </div>
+                    <div class="space-x-1">
+                        <span class="text-xs bg-amber-200 text-amber-800 px-2 py-0.5 rounded-full">MC: 3/5</span>
+                        <span class="text-xs bg-red-200 text-red-800 px-2 py-0.5 rounded-full">Y/N/NG: 2/6</span>
+                        <span class="text-xs bg-red-200 text-red-800 px-2 py-0.5 rounded-full">Fill: 1/3</span>
+                    </div>
+                </div>
+
+                <!-- Target -->
+                <div onclick="showBandTooltip()" class="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500 cursor-pointer hover:shadow-md hover:scale-[1.02] transition-all">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <div class="text-sm text-blue-700 font-semibold">Target</div>
+                            <div class="text-xs text-blue-600">Next Level</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-blue-600">7.0</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Performance Insights + Time Management (Same Row) -->
+        <div class="mb-8">
+            <!-- Performance Insights Header -->
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-8 h-8 rounded-xl bg-brand/10 flex items-center justify-center">
+                    <i data-lucide="zap" class="w-4 h-4 text-brand"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900">Performance Insights</h3>
+                <p class="text-sm text-gray-500 ml-auto">Click any card for detailed analysis</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+
+                <!-- Left: 6-Card Grid (3/4 width) -->
+                <div class="lg:col-span-3">
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <!-- Root Cause Analysis -->
+                        <div class="insight-tile floating-card p-6 bg-gradient-to-br from-rose-500 to-pink-600 text-white" onclick="openModal('root-cause')">
+                            <div class="flex items-center justify-between mb-3">
+                                <i data-lucide="search" class="w-6 h-6"></i>
+                                <div class="w-2 h-2 bg-white/50 rounded-full"></div>
+                            </div>
+                            <h4 class="font-semibold text-sm mb-1">Root Cause Analysis</h4>
+                            <p class="text-xs text-white/80">3 patterns flagged</p>
+                        </div>
+
+                        <!-- Why You Lost Marks -->
+                        <div class="insight-tile floating-card p-7 bg-gradient-to-br from-orange-500 to-red-500 text-white" onclick="openModal('why-lost')">
+                            <div class="flex items-center justify-between mb-3">
+                                <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+                                <div class="w-2 h-2 bg-white/50 rounded-full"></div>
+                            </div>
+                            <h4 class="font-semibold text-sm mb-1">Why You Lost Marks</h4>
+                            <p class="text-xs text-white/80">16 mistakes — tap to retry</p>
+                        </div>
+
+                        <!-- Fastest Gain -->
+                        <div class="insight-tile floating-card p-7 bg-gradient-to-br from-emerald-500 to-teal-600 text-white" onclick="openModal('fastest-gain')">
+                            <div class="flex items-center justify-between mb-3">
+                                <i data-lucide="trending-up" class="w-6 h-6"></i>
+                                <div class="w-2 h-2 bg-white/50 rounded-full"></div>
+                            </div>
+                            <h4 class="font-semibold text-sm mb-1">Fastest Score Gain</h4>
+                            <p class="text-xs text-white/80">T/F/NG mastery +1.0 band</p>
+                        </div>
+
+                        <!-- Recommended Lessons -->
+                        <div class="insight-tile floating-card p-7 bg-gradient-to-br from-indigo-500 to-purple-600 text-white" onclick="openModal('lessons')">
+                            <div class="flex items-center justify-between mb-3">
+                                <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                                <div class="w-2 h-2 bg-white/50 rounded-full"></div>
+                            </div>
+                            <h4 class="font-semibold text-sm mb-1">Recommended Lessons</h4>
+                            <p class="text-xs text-white/80">4 lessons for weak areas</p>
+                        </div>
+
+                        <!-- Study Roadmap -->
+                        <div class="insight-tile floating-card p-7 bg-gradient-to-br from-violet-500 to-purple-600 text-white" onclick="openModal('roadmap')">
+                            <div class="flex items-center justify-between mb-3">
+                                <i data-lucide="map" class="w-6 h-6"></i>
+                                <div class="w-2 h-2 bg-white/50 rounded-full"></div>
+                            </div>
+                            <h4 class="font-semibold text-sm mb-1">Study Roadmap</h4>
+                            <p class="text-xs text-white/80">3-week improvement plan</p>
+                        </div>
+
+                        <!-- Model Answers -->
+                        <div class="insight-tile floating-card p-7 bg-gradient-to-br from-teal-500 to-cyan-600 text-white" onclick="openModal('model-answers')">
+                            <div class="flex items-center justify-between mb-3">
+                                <i data-lucide="eye" class="w-6 h-6"></i>
+                                <div class="w-2 h-2 bg-white/50 rounded-full"></div>
+                            </div>
+                            <h4 class="font-semibold text-sm mb-1">Model Answers</h4>
+                            <p class="text-xs text-white/80">Compare your responses</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Time Management (1/4 width) - SAME LEVEL AS CARDS -->
+                <div class="lg:col-span-1">
+                    <div class="floating-card p-5 h-full">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-5 h-5 rounded-lg bg-brand/10 flex items-center justify-center">
+                                <i data-lucide="clock" class="w-3 h-3 text-brand"></i>
+                            </div>
+                            <h4 class="font-semibold text-base text-gray-900">Time Management</h4>
+                        </div>
+
+                        <div class="space-y-3">
+                            <!-- Overall -->
+                            <div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm text-gray-700">Overall</span>
+                                    <span class="text-sm font-bold text-green-600">80%</span>
+                                </div>
+                                <div class="text-xs text-green-600">48 min / 60 min</div>
+                            </div>
+
+                            <!-- Passage Times -->
+                            <div class="space-y-1">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs text-gray-700">Passage 1</span>
+                                    <span class="text-xs font-medium">14 min</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs text-gray-700">Passage 2</span>
+                                    <span class="text-xs font-medium">16 min</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs text-gray-700">Passage 3</span>
+                                    <span class="text-xs font-medium">18 min</span>
+                                </div>
+                            </div>
+
+                            <!-- Time Tip -->
+                            <div class="bg-blue-50 rounded-lg p-3">
+                                <h6 class="text-xs font-medium text-blue-800 mb-1">Time Tip</h6>
+                                <p class="text-xs text-blue-700">Great pacing! Use the 12 minutes left to double-check T/F/NG answers.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Main Content: Sidebar + Question Analysis -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+
+            <!-- Left: Sidebar (25%) -->
+            <div class="lg:col-span-1 space-y-6">
+
+                <!-- Priority Fix -->
+                <div onclick="openModal('priority-fix')" class="floating-card p-6 border-2 border-red-200 bg-red-50 cursor-pointer hover:shadow-lg hover:scale-[1.02] transition-all group">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 rounded-xl bg-red-100 flex items-center justify-center">
+                            <i data-lucide="alert-triangle" class="w-4 h-4 text-red-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900">Priority Fix</h3>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto mb-3 bg-red-100 rounded-2xl flex items-center justify-center">
+                            <i data-lucide="help-circle" class="w-8 h-8 text-red-600"></i>
+                        </div>
+                        <h4 class="font-bold text-red-900 mb-2">Master T/F/NG Strategy</h4>
+                        <p class="text-sm text-red-700 mb-3">Your biggest opportunity for improvement</p>
+                        <div class="inline-flex items-center gap-1 text-xs font-semibold text-red-700 group-hover:gap-2 transition-all">
+                            Learn the strategy
+                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="floating-card p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 rounded-xl bg-brand/10 flex items-center justify-center">
+                            <i data-lucide="zap" class="w-4 h-4 text-brand"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900">Quick Actions</h3>
+                    </div>
+
+                    <div class="space-y-3">
+                        <button onclick="handleQuickAction('retry')" class="w-full bg-brand text-white py-3 px-4 rounded-xl font-medium hover:bg-brand-dark transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="repeat" class="w-4 h-4"></i>
+                            Retry This Test
+                        </button>
+                        <button onclick="handleQuickAction('practice-tfng')" class="w-full bg-blue-600 text-white py-3 px-4 rounded-xl font-medium hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="target" class="w-4 h-4"></i>
+                            Practice T/F/NG
+                        </button>
+                        <button onclick="handleQuickAction('download')" class="w-full bg-gray-100 text-gray-700 py-3 px-4 rounded-xl font-medium hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="download" class="w-4 h-4"></i>
+                            Download Report
+                        </button>
+                        <button onclick="handleQuickAction('share')" class="w-full bg-gray-100 text-gray-700 py-3 px-4 rounded-xl font-medium hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="share" class="w-4 h-4"></i>
+                            Share Results
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right: Question Analysis (75%) -->
+            <div class="lg:col-span-3">
+                <div class="floating-card p-6">
+                    <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
+                        <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+                            <i data-lucide="list" class="w-5 h-5 text-brand"></i>
+                            Question Analysis
+                            <span id="questionsCount" class="text-sm font-normal text-gray-500"></span>
+                        </h3>
+                        <div class="flex items-center gap-3">
+                            <select id="questionFilter" class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30">
+                                <option value="all">All Questions</option>
+                                <option value="correct">Correct Only</option>
+                                <option value="incorrect">Incorrect Only</option>
+                                <option value="tfng">T/F/NG + Y/N/NG</option>
+                                <option value="mc">Multiple Choice</option>
+                                <option value="fill">Fill in the Blanks</option>
+                                <option value="match">Matching</option>
+                                <option value="p1">Passage 1</option>
+                                <option value="p2">Passage 2</option>
+                                <option value="p3">Passage 3</option>
+                            </select>
+                            <button onclick="openPassagesModal()" class="bg-brand text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-dark transition-colors flex items-center gap-2">
+                                <i data-lucide="book-open" class="w-4 h-4"></i>
+                                Show Passages
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Question List (dynamic, scrollable window) -->
+                    <div class="rounded-xl border border-gray-200 bg-gray-50/40">
+                        <div id="questionsList" class="space-y-3 p-3 overflow-y-auto questions-scroll" style="max-height: 560px;"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Band Tooltip -->
+    <div id="bandTooltip" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-2xl p-6 z-50 hidden">
+        <div class="flex items-center justify-between mb-4">
+            <h4 class="font-semibold text-gray-900 text-lg">Band Score Breakdown</h4>
+            <button onclick="hideBandTooltip()" class="text-gray-400 hover:text-gray-600">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <div class="space-y-3">
+            <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-600">Your Score:</span>
+                <span class="font-bold text-lg text-brand">6.0</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-600">Questions Correct:</span>
+                <span class="font-medium">24/40 (60%)</span>
+            </div>
+            <div class="border-t pt-3">
+                <div class="text-xs text-gray-500 mb-2">Band 6.0 Description:</div>
+                <p class="text-sm text-gray-700">"Generally effective command of the language despite some inaccuracies, inappropriacies and misunderstandings."</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Liz Modal -->
+    <div id="lizModal" class="modal">
+        <div class="modal-content p-8 m-4">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-4">
+                    <div class="liz-shimmer w-16 h-16">
+                        <img src="https://static.prod-images.emergentagent.com/jobs/799d7d0f-0425-4acb-aa13-54128002d580/images/baeb03c8118b149f97024b78f7f053e092a9d4c22d6c09656fd3a17aacf6359b.png" alt="Liz AI Tutor">
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">Liz AI Tutor</h3>
+                        <p class="text-sm text-gray-500">Complete Performance Analysis</p>
+                    </div>
+                </div>
+                <button onclick="closeLizModal()" class="text-gray-400 hover:text-gray-600">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Liz Message -->
+                <div class="bg-purple-50 rounded-xl p-6">
+                    <p class="text-purple-800 mb-4">"Hi! I've analyzed your reading performance in detail. You have a solid foundation with clear opportunities for strategic improvement. Here's my complete assessment:"</p>
+                </div>
+
+                <!-- Skill Breakdown -->
+                <div class="bg-white rounded-xl border border-gray-200 p-6">
+                    <h4 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                        <i data-lucide="bar-chart-3" class="w-5 h-5 text-brand"></i>
+                        Skill Breakdown
+                    </h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-emerald-50 rounded-lg p-3">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-medium text-emerald-800">Multiple Choice</span>
+                                <span class="text-sm font-bold text-emerald-600">78%</span>
+                            </div>
+                            <div class="w-full bg-emerald-100 rounded-full h-2">
+                                <div class="bg-emerald-500 h-2 rounded-full" style="width: 78%"></div>
+                            </div>
+                        </div>
+                        <div class="bg-red-50 rounded-lg p-3">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-medium text-red-800">T/F/NG</span>
+                                <span class="text-sm font-bold text-red-600">42%</span>
+                            </div>
+                            <div class="w-full bg-red-100 rounded-full h-2">
+                                <div class="bg-red-500 h-2 rounded-full" style="width: 42%"></div>
+                            </div>
+                        </div>
+                        <div class="bg-amber-50 rounded-lg p-3">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-medium text-amber-800">Fill Blanks</span>
+                                <span class="text-sm font-bold text-amber-600">67%</span>
+                            </div>
+                            <div class="w-full bg-amber-100 rounded-full h-2">
+                                <div class="bg-amber-500 h-2 rounded-full" style="width: 67%"></div>
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 rounded-lg p-3">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-medium text-blue-800">Matching</span>
+                                <span class="text-sm font-bold text-blue-600">60%</span>
+                            </div>
+                            <div class="w-full bg-blue-100 rounded-full h-2">
+                                <div class="bg-blue-500 h-2 rounded-full" style="width: 60%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strengths -->
+                <div class="bg-emerald-50 rounded-xl p-6">
+                    <h4 class="font-semibold text-emerald-900 mb-3 flex items-center gap-2">
+                        <i data-lucide="thumbs-up" class="w-5 h-5"></i>
+                        Your Strengths
+                    </h4>
+                    <ul class="space-y-2 text-emerald-800">
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="check" class="w-4 h-4 mt-0.5 text-emerald-600 flex-shrink-0"></i>
+                            <span class="text-sm">Excellent multiple choice performance - you understand main ideas clearly</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="check" class="w-4 h-4 mt-0.5 text-emerald-600 flex-shrink-0"></i>
+                            <span class="text-sm">Strong time management - finished 12 minutes early without rushing</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="check" class="w-4 h-4 mt-0.5 text-emerald-600 flex-shrink-0"></i>
+                            <span class="text-sm">Good scanning skills for fill-in-the-blank questions</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Weaknesses -->
+                <div class="bg-red-50 rounded-xl p-6">
+                    <h4 class="font-semibold text-red-900 mb-3 flex items-center gap-2">
+                        <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                        Areas to Improve
+                    </h4>
+                    <ul class="space-y-2 text-red-800">
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="x" class="w-4 h-4 mt-0.5 text-red-600 flex-shrink-0"></i>
+                            <span class="text-sm">T/F/NG strategy needs major work - you're confusing "False" with "Not Given"</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="x" class="w-4 h-4 mt-0.5 text-red-600 flex-shrink-0"></i>
+                            <span class="text-sm">Synonym recognition - missing paraphrased answers</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="x" class="w-4 h-4 mt-0.5 text-red-600 flex-shrink-0"></i>
+                            <span class="text-sm">Passage 3 concentration drops significantly</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Action Plan -->
+                <div class="bg-blue-50 rounded-xl p-6 text-center">
+                    <h4 class="font-semibold text-blue-900 mb-3">My Recommendation</h4>
+                    <p class="text-sm text-blue-800 mb-4">Focus on T/F/NG mastery first - that alone could give you 7 extra marks and push you to <strong>Band 7.0</strong> within 3-4 weeks!</p>
+                    <div class="text-2xl font-bold text-blue-600">Band 7.0</div>
+                    <div class="text-xs text-blue-600">Achievable with focused practice</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- General Modal for Performance Insights -->
+    <div id="generalModal" class="modal">
+        <div class="modal-content p-8 m-4">
+            <div class="flex items-center justify-between mb-6">
+                <h3 id="modalTitle" class="text-xl font-bold text-gray-900"></h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div id="modalContent">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast container -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] hidden">
+        <div class="bg-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 max-w-md">
+            <i id="toastIcon" data-lucide="info" class="w-5 h-5 flex-shrink-0"></i>
+            <span id="toastMsg" class="text-sm"></span>
+            <button onclick="hideToast()" class="text-white/60 hover:text-white ml-2"><i data-lucide="x" class="w-4 h-4"></i></button>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // DATA — 40 questions across 3 passages, realistic IELTS sample
+        // ============================================================
+        const PASSAGES = {
+            1: {
+                title: 'Saving the Snow Leopard',
+                topic: 'Wildlife Conservation',
+                color: 'emerald',
+                text: `Wildlife conservation has become one of the most pressing environmental issues of our time. The primary aim of this passage is to describe current wildlife conservation efforts and their effectiveness in protecting endangered species.
+
+The snow leopard (Panthera uncia), found across the rugged mountain ranges of Central Asia, is one of the most elusive big cats on the planet. Estimates suggest the global population sits between 4,500 and 7,500 individuals, scattered across twelve countries. Although hunting and the illegal wildlife trade remain the most direct threats, retaliatory killings by herders and habitat fragmentation caused by mining and infrastructure projects have emerged as equally damaging pressures.
+
+Conservation initiatives have evolved significantly over the past decade. GPS collars and motion-activated cameras now allow researchers to study leopards without disturbing them. Crucially, programs that compensate herders for livestock losses have reduced retaliatory killings in several regions. However, not every program has produced measurable results, and the long-term outcomes of many community-based projects remain uncertain.
+
+International cooperation has played a central role. The Global Snow Leopard and Ecosystem Protection Program, launched by twelve range countries, coordinates research, anti-poaching patrols and habitat protection across borders. Funding still falls short of what scientists estimate is needed, but the framework provides a model for transboundary conservation more broadly.`
+            },
+            2: {
+                title: 'Designing Cities for People',
+                topic: 'Urban Planning',
+                color: 'amber',
+                text: `Modern urban planning is undergoing a fundamental shift. For most of the twentieth century, cities were designed primarily around the automobile: wide roads, sprawling suburbs and segregated zones for housing, work and shopping. The consequences — traffic congestion, air pollution, social isolation and rising emissions — have prompted planners to rethink the very logic of city building.
+
+A new generation of planners argues that cities should be designed around people, not vehicles. The "fifteen-minute city," for example, holds that residents should be able to reach essential services — schools, clinics, shops, parks — within a fifteen-minute walk or cycle from home. This vision relies on compact, mixed-use neighbourhoods rather than the high-density tower blocks that dominated mid-century planning.
+
+Green spaces play a central role. Parks, urban forests and even small pocket squares lower temperatures during heatwaves, absorb stormwater and provide settings for the kind of unplanned encounters that build social trust. Cities such as Copenhagen and Singapore have shown that integrating nature into the urban fabric is not a luxury but a structural necessity.
+
+Pedestrian-first design and well-connected cycling networks have emerged as defining features. Streets are being narrowed, intersections redesigned and parking spaces converted into seating and planting. Critics warn that such changes can drive up housing costs in revitalised neighbourhoods, displacing the very residents the projects were meant to serve. Successful schemes therefore couple physical redesign with affordable housing policy.`
+            },
+            3: {
+                title: 'The Quantum Computing Race',
+                topic: 'Technology Innovation',
+                color: 'red',
+                text: `Quantum computing promises to solve problems that classical computers cannot tackle in any reasonable timeframe. By harnessing quantum mechanical phenomena — superposition and entanglement — quantum machines manipulate information in fundamentally different ways. Where a classical bit is either 0 or 1, a qubit can exist in a combination of both states simultaneously, allowing certain calculations to scale exponentially.
+
+The technology is still in its early stages. Today's quantum processors range from a few dozen to several hundred qubits, but error rates remain stubbornly high and qubits decohere within microseconds. Maintaining quantum states requires extreme isolation: most leading systems operate at temperatures colder than deep space, suspended inside dilution refrigerators that resemble inverted golden chandeliers.
+
+Despite these constraints, governments and corporations are pouring billions into the field. Applications under active investigation include drug discovery, materials science, cryptography and optimisation problems in logistics and finance. Some researchers caution that the most-discussed application — breaking modern encryption — is still many years away, and that the near-term value of quantum computing lies in narrower scientific and industrial use cases.
+
+A parallel race is underway to develop quantum-resistant cryptography, sometimes called post-quantum cryptography. Standards bodies have begun publishing algorithms designed to withstand attacks by future quantum machines, even though those machines do not yet exist at the scale required. This anticipatory work reflects an unusual feature of the field: defenses are being built against threats that have not yet materialised.`
+            }
+        };
+
+        const QUESTIONS = [
+            // Passage 1 — Wildlife (10/13)
+            {n:1,p:1,type:'mc',label:'Multiple Choice',q:'What is the main purpose of the passage?',opts:'A) To argue against hunting / B) To describe wildlife conservation efforts / C) To compare conservation programs / D) To criticise governments',y:'B',c:'B',ok:true,strat:'Skim the opening paragraph for the explicit statement of intent. The phrase "the primary aim of this passage is to describe…" is a clear signal.',ev:'The primary aim of this passage is to describe current wildlife conservation efforts'},
+            {n:2,p:1,type:'mc',label:'Multiple Choice',q:'The estimated global snow leopard population is between',opts:'A) 1,000–3,000 / B) 4,500–7,500 / C) 7,500–10,000 / D) Over 10,000',y:'B',c:'B',ok:true,strat:'Scan for numbers. The text gives a single explicit range — pick the matching option.',ev:'between 4,500 and 7,500 individuals'},
+            {n:3,p:1,type:'mc',label:'Multiple Choice',q:'According to the passage, which is described as the MOST DIRECT threat?',opts:'A) Climate change / B) Hunting and illegal trade / C) Tourism / D) Disease',y:'B',c:'B',ok:true,strat:'Look for superlatives ("most"). The passage explicitly ranks threats.',ev:'hunting and the illegal wildlife trade remain the most direct threats'},
+            {n:4,p:1,type:'mc',label:'Multiple Choice',q:'How many countries does the GSLEP program coordinate?',opts:'A) Eight / B) Ten / C) Twelve / D) Fifteen',y:'C',c:'C',ok:true,strat:'Match the proper noun (GSLEP) and look for the number nearby.',ev:'launched by twelve range countries'},
+            {n:5,p:1,type:'tfng',label:'True/False/Not Given',q:'All snow leopards live above 3,000 metres altitude.',y:'True',c:'Not Given',ok:false,strat:'The passage mentions "rugged mountain ranges" but never specifies a 3,000 m threshold. When a specific figure is absent, the answer is Not Given — not False.',ev:'across the rugged mountain ranges of Central Asia'},
+            {n:6,p:1,type:'tfng',label:'True/False/Not Given',q:'Hunting is the only threat to snow leopards.',y:'False',c:'False',ok:true,strat:'Look for words like "only/sole." The passage lists multiple threats, so the claim contradicts the text → False.',ev:'retaliatory killings by herders and habitat fragmentation… equally damaging pressures'},
+            {n:7,p:1,type:'tfng',label:'True/False/Not Given',q:'Every conservation program has produced measurable results.',y:'False',c:'Not Given',ok:false,strat:'The passage says "not every program has produced measurable results" — this means the universal claim is contradicted in part, but the passage does not list which programs failed. NG when nuance is missing.',ev:'not every program has produced measurable results'},
+            {n:8,p:1,type:'tfng',label:'True/False/Not Given',q:'GPS tracking has improved snow leopard monitoring.',y:'True',c:'True',ok:true,strat:'Direct paraphrase match — "GPS collars… now allow researchers to study leopards without disturbing them" supports the claim.',ev:'GPS collars and motion-activated cameras now allow researchers to study leopards'},
+            {n:9,p:1,type:'tfng',label:'True/False/Not Given',q:'Motion-activated cameras are placed inside caves.',y:'Not Given',c:'False',ok:false,strat:'The passage mentions cameras but does NOT specify caves. However the question asks about a specific placement; since the text does not confirm or deny caves, NG is reasonable. Tip: re-read the surrounding sentence carefully — sometimes "without disturbing them" implies non-invasive placement.',ev:'motion-activated cameras now allow researchers to study leopards without disturbing them'},
+            {n:10,p:1,type:'tfng',label:'True/False/Not Given',q:'Local communities have helped reduce retaliatory killings.',y:'True',c:'True',ok:true,strat:'Search for "communities" or "herders." The passage explicitly credits compensation programs.',ev:'programs that compensate herders for livestock losses have reduced retaliatory killings'},
+            {n:11,p:1,type:'fill',label:'Fill in the Blanks',q:'Snow leopards inhabit ________ mountain ranges.',y:'rugged',c:'rugged',ok:true,strat:'Use the exact word from the text — fill-ins almost always come straight from the passage.',ev:'across the rugged mountain ranges of Central Asia'},
+            {n:12,p:1,type:'fill',label:'Fill in the Blanks',q:'Conservation efforts require ________ cooperation.',y:'international',c:'international',ok:true,strat:'Find the surrounding paragraph. The phrase "International cooperation has played a central role" gives the answer almost verbatim.',ev:'International cooperation has played a central role'},
+            {n:13,p:1,type:'fill',label:'Fill in the Blanks',q:'Funding falls ________ of what scientists estimate is needed.',y:'short',c:'short',ok:true,strat:'Idiomatic phrase — "fall short of" — the answer is the missing word from the idiom.',ev:'Funding still falls short of what scientists estimate is needed'},
+
+            // Passage 2 — Urban Planning (8/13)
+            {n:14,p:2,type:'match',label:'Matching Headings',q:'Paragraph A heading',opts:'i) The cost of car-centric design / ii) The fifteen-minute city / iii) Green space and the social fabric / iv) Funding shortfalls',y:'ii',c:'i',ok:false,strat:'Match the main idea, not just keywords. Paragraph A summarises the FAILURES of car-centric design — its main idea is the cost, not the new fifteen-minute city model (which appears in paragraph B).',ev:'For most of the twentieth century, cities were designed primarily around the automobile…'},
+            {n:15,p:2,type:'match',label:'Matching Headings',q:'Paragraph B heading',opts:'i) The cost of car-centric design / ii) The fifteen-minute city / iii) Green space and the social fabric / iv) Funding shortfalls',y:'ii',c:'ii',ok:true,strat:'Direct topic match — the paragraph is named after the concept it introduces.',ev:'The "fifteen-minute city," for example, holds that residents should be able to reach essential services'},
+            {n:16,p:2,type:'match',label:'Matching Headings',q:'Paragraph C heading',opts:'i) Pedestrian-first streets / ii) Affordable housing pressures / iii) Green space and the social fabric / iv) Tower blocks',y:'iii',c:'iii',ok:true,strat:'Look for the dominant noun in the paragraph. "Green spaces" appears in the topic sentence.',ev:'Green spaces play a central role'},
+            {n:17,p:2,type:'match',label:'Matching Headings',q:'Paragraph D heading',opts:'i) Pedestrian-first streets / ii) Affordable housing pressures / iii) Green space / iv) Funding shortfalls',y:'i',c:'i',ok:true,strat:'Title-card paragraph: "Pedestrian-first design and well-connected cycling networks have emerged as defining features."',ev:'Pedestrian-first design and well-connected cycling networks have emerged as defining features'},
+            {n:18,p:2,type:'match',label:'Matching Paragraphs',q:'Which paragraph mentions displacement of residents?',opts:'A / B / C / D',y:'C',c:'D',ok:false,strat:'Search for the keyword "displacing." It appears in paragraph D, in the warning about housing costs in revitalised neighbourhoods.',ev:'driving up housing costs in revitalised neighbourhoods, displacing the very residents'},
+            {n:19,p:2,type:'match',label:'Matching Paragraphs',q:'Which paragraph references international examples?',opts:'A / B / C / D',y:'C',c:'C',ok:true,strat:'Proper nouns — Copenhagen, Singapore — are dead giveaways for "international examples."',ev:'Cities such as Copenhagen and Singapore have shown'},
+            {n:20,p:2,type:'match',label:'Matching Paragraphs',q:'Which paragraph criticises mid-century planning?',opts:'A / B / C / D',y:'A',c:'A',ok:true,strat:'Look for negative language about the past — paragraph A lists the failures of automobile-era planning.',ev:'traffic congestion, air pollution, social isolation and rising emissions'},
+            {n:21,p:2,type:'match',label:'Matching Paragraphs',q:'Which paragraph proposes a remedy involving affordable housing?',opts:'A / B / C / D',y:'B',c:'D',ok:false,strat:'Final paragraph (D) couples physical redesign with affordable housing policy. Don\'t confuse the introduction of the new model (B) with the corrective measures (D).',ev:'Successful schemes therefore couple physical redesign with affordable housing policy'},
+            {n:22,p:2,type:'fill',label:'Summary Completion',q:'Twentieth-century planning produced congestion, isolation and ________.',y:'pollution',c:'pollution',ok:true,strat:'List the consequences and copy the missing item directly from the passage.',ev:'traffic congestion, air pollution, social isolation and rising emissions'},
+            {n:23,p:2,type:'fill',label:'Summary Completion',q:'Modern planners advocate ________ neighbourhoods over tower blocks.',y:'compact',c:'compact',ok:true,strat:'Adjective fill-in — find the word qualifying "neighbourhoods" in paragraph B.',ev:'compact, mixed-use neighbourhoods'},
+            {n:24,p:2,type:'fill',label:'Summary Completion',q:'The fifteen-minute city emphasises a maximum walking ________ to services.',y:'distance',c:'time',ok:false,strat:'Re-read the definition: residents reach services within a fifteen-minute WALK — the unit measured is time, not distance. Common synonym trap.',ev:'within a fifteen-minute walk or cycle from home'},
+            {n:25,p:2,type:'fill',label:'Summary Completion',q:'Parks and pocket squares help cities cope with ________.',y:'heatwaves',c:'heatwaves',ok:true,strat:'Direct keyword match — the passage explicitly names heatwaves as one of the conditions parks help mitigate.',ev:'lower temperatures during heatwaves'},
+            {n:26,p:2,type:'fill',label:'Summary Completion',q:'Streets are being narrowed and parking spaces ________.',y:'walkable',c:'converted',ok:false,strat:'The passage uses the verb "converted" — "parking spaces converted into seating and planting." Watch for the exact verb form requested by the gap.',ev:'parking spaces converted into seating and planting'},
+
+            // Passage 3 — Quantum Computing (6/14)
+            {n:27,p:3,type:'mc',label:'Multiple Choice',q:'A qubit differs from a classical bit because it can',opts:'A) Hold more energy / B) Exist in a combination of both states simultaneously / C) Operate at room temperature / D) Be made smaller',y:'B',c:'B',ok:true,strat:'Direct definition match — the passage explicitly contrasts the two.',ev:'a qubit can exist in a combination of both states simultaneously'},
+            {n:28,p:3,type:'mc',label:'Multiple Choice',q:'Today\'s quantum processors typically have',opts:'A) A few qubits / B) A few dozen to several hundred qubits / C) Thousands of qubits / D) Millions of qubits',y:'C',c:'B',ok:false,strat:'Read carefully. The passage gives a precise range: "a few dozen to several hundred." Avoid jumping to the most impressive-sounding option.',ev:'range from a few dozen to several hundred qubits'},
+            {n:29,p:3,type:'mc',label:'Multiple Choice',q:'The decoherence time of a qubit is described as',opts:'A) Hours / B) Minutes / C) Microseconds / D) Permanent',y:'C',c:'C',ok:true,strat:'Single number/time-unit match. The passage uses "microseconds" explicitly.',ev:'qubits decohere within microseconds'},
+            {n:30,p:3,type:'mc',label:'Multiple Choice',q:'Leading quantum systems operate at temperatures',opts:'A) Below freezing / B) Colder than deep space / C) Near room temperature / D) Above 100°C',y:'A',c:'B',ok:false,strat:'Watch for hyperbolic comparisons. The passage uses "colder than deep space" — a deliberately strong comparison. Don\'t settle for the milder option.',ev:'temperatures colder than deep space'},
+            {n:31,p:3,type:'mc',label:'Multiple Choice',q:'The dilution refrigerators are described as resembling',opts:'A) Filing cabinets / B) Inverted golden chandeliers / C) Server racks / D) Glass cubes',y:'B',c:'B',ok:true,strat:'Distinctive imagery — "inverted golden chandeliers" is unusual phrasing the question is testing recall of.',ev:'dilution refrigerators that resemble inverted golden chandeliers'},
+            {n:32,p:3,type:'ynng',label:'Yes/No/Not Given',q:'The writer believes quantum computers will replace classical computers within five years.',y:'Yes',c:'No',ok:false,strat:'Y/N/NG asks about the WRITER\'S OPINION — not the existence of facts. The passage repeatedly emphasises early-stage limitations and "many years away." This contradicts a five-year timeline → No.',ev:'most-discussed application… is still many years away'},
+            {n:33,p:3,type:'ynng',label:'Yes/No/Not Given',q:'The writer suggests near-term value lies in narrower use cases.',y:'No',c:'Yes',ok:false,strat:'The phrase "Some researchers caution… near-term value… lies in narrower scientific and industrial use cases" represents an opinion the writer endorses → Yes. Note: ascribed quotes can still be the writer\'s position when no counterview is offered.',ev:'near-term value of quantum computing lies in narrower scientific and industrial use cases'},
+            {n:34,p:3,type:'ynng',label:'Yes/No/Not Given',q:'The writer thinks billions of dollars in funding is wasteful.',y:'Yes',c:'Not Given',ok:false,strat:'The writer reports the spending neutrally — no judgement of waste appears. NG when no opinion is expressed.',ev:'governments and corporations are pouring billions into the field'},
+            {n:35,p:3,type:'ynng',label:'Yes/No/Not Given',q:'The writer claims quantum-resistant cryptography is unnecessary.',y:'Yes',c:'No',ok:false,strat:'Trick question. The passage frames anticipatory cryptography work positively as "an unusual feature." Calling it unnecessary contradicts → No.',ev:'defenses are being built against threats that have not yet materialised'},
+            {n:36,p:3,type:'ynng',label:'Yes/No/Not Given',q:'The writer says drug discovery is an active application area.',y:'Yes',c:'Yes',ok:true,strat:'List-match — drug discovery is named explicitly in the application list.',ev:'Applications under active investigation include drug discovery'},
+            {n:37,p:3,type:'ynng',label:'Yes/No/Not Given',q:'The writer states that all major encryption is currently broken by quantum computers.',y:'Yes',c:'No',ok:false,strat:'Re-read carefully — the passage says breaking modern encryption is "still many years away." A claim that it is already broken is the OPPOSITE of the writer\'s view → No.',ev:'breaking modern encryption — is still many years away'},
+            {n:38,p:3,type:'fill',label:'Fill in the Blanks',q:'Qubits exploit ________ and entanglement.',y:'superposition',c:'superposition',ok:true,strat:'Pair completion — the passage names the two phenomena together.',ev:'two quantum mechanical phenomena — superposition and entanglement'},
+            {n:39,p:3,type:'fill',label:'Fill in the Blanks',q:'Some applications include cryptography and ________ problems.',y:'logistics',c:'optimisation',ok:false,strat:'Read past the first plausible word. "Cryptography and optimisation problems" is the actual phrase; logistics is mentioned only as a domain WHERE optimisation is used.',ev:'cryptography and optimisation problems in logistics and finance'},
+            {n:40,p:3,type:'fill',label:'Fill in the Blanks',q:'Standards bodies have begun publishing ________ algorithms.',y:'quantum',c:'post-quantum',ok:false,strat:'Compound term — the standardised name is "post-quantum cryptography." Pre-fixes matter.',ev:'algorithms designed to withstand attacks by future quantum machines'}
+        ];
+
+        // ============================================================
+        // PERFORMANCE INSIGHT MODAL CONTENTS
+        // ============================================================
+        const INSIGHTS = {
+            'root-cause': {
+                title: 'Root Cause Analysis',
+                icon: 'search',
+                accent: 'rose',
+                html: `
+                    <p class="text-gray-600 mb-5">Three recurring patterns explain most of your missed marks. Tackling these unlocks the fastest improvement.</p>
+                    <div class="space-y-4">
+                        <div class="p-5 rounded-xl border-2 border-rose-200 bg-rose-50">
+                            <div class="flex items-start gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-rose-200 flex items-center justify-center flex-shrink-0"><span class="font-bold text-rose-700">1</span></div>
+                                <div>
+                                    <h4 class="font-bold text-rose-900 mb-1">Confusing False with Not Given</h4>
+                                    <p class="text-sm text-rose-800 mb-2">You marked Q5, Q7, Q9, Q34 as the wrong distinction between "contradicted by the text" (False) and "not addressed at all" (Not Given). 4 of your 16 mistakes (25%) come from this single pattern.</p>
+                                    <p class="text-xs text-rose-700"><strong>Rule of thumb:</strong> If the passage doesn't mention the specific claim, it's Not Given — even if it feels false.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 rounded-xl border-2 border-amber-200 bg-amber-50">
+                            <div class="flex items-start gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-amber-200 flex items-center justify-center flex-shrink-0"><span class="font-bold text-amber-700">2</span></div>
+                                <div>
+                                    <h4 class="font-bold text-amber-900 mb-1">Synonym recognition gap</h4>
+                                    <p class="text-sm text-amber-800 mb-2">Q24 (time vs distance), Q26 (converted vs walkable), Q39 (logistics vs optimisation), Q40 (quantum vs post-quantum) — 4 fill-ins where you wrote a paraphrase instead of the exact word from the text.</p>
+                                    <p class="text-xs text-amber-700"><strong>Rule of thumb:</strong> Fill-ins almost always require the exact word from the passage. Don't paraphrase.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 rounded-xl border-2 border-purple-200 bg-purple-50">
+                            <div class="flex items-start gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-purple-200 flex items-center justify-center flex-shrink-0"><span class="font-bold text-purple-700">3</span></div>
+                                <div>
+                                    <h4 class="font-bold text-purple-900 mb-1">Concentration drop on Passage 3</h4>
+                                    <p class="text-sm text-purple-800 mb-2">You scored 77% on P1, 62% on P2, but only 43% on P3. Your error rate on Y/N/NG questions doubles in P3, suggesting fatigue rather than skill gap.</p>
+                                    <p class="text-xs text-purple-700"><strong>Fix:</strong> Reorder your test — start with P3 when you're freshest, finish with P1.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            'why-lost': {
+                title: 'Why You Lost Marks',
+                icon: 'alert-triangle',
+                accent: 'orange',
+                html: `
+                    <p class="text-gray-600 mb-5">Breakdown of your 16 incorrect answers by skill type. Click any row to jump to that question.</p>
+                    <div class="space-y-3">
+                        <div class="p-4 rounded-xl border border-red-200 bg-red-50">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-bold text-red-900">T/F/NG + Y/N/NG</h4>
+                                <span class="text-sm font-bold text-red-700">7 mistakes</span>
+                            </div>
+                            <div class="text-xs text-red-700 mb-2">Q5, Q7, Q9, Q32, Q34, Q35, Q37 — biggest single weakness, mostly NG vs F confusion.</div>
+                            <div class="w-full bg-red-100 rounded-full h-2"><div class="bg-red-500 h-2 rounded-full" style="width: 44%"></div></div>
+                        </div>
+                        <div class="p-4 rounded-xl border border-amber-200 bg-amber-50">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-bold text-amber-900">Fill in the Blanks</h4>
+                                <span class="text-sm font-bold text-amber-700">4 mistakes</span>
+                            </div>
+                            <div class="text-xs text-amber-700 mb-2">Q24, Q26, Q39, Q40 — synonym substitution where exact word required.</div>
+                            <div class="w-full bg-amber-100 rounded-full h-2"><div class="bg-amber-500 h-2 rounded-full" style="width: 25%"></div></div>
+                        </div>
+                        <div class="p-4 rounded-xl border border-blue-200 bg-blue-50">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-bold text-blue-900">Matching</h4>
+                                <span class="text-sm font-bold text-blue-700">3 mistakes</span>
+                            </div>
+                            <div class="text-xs text-blue-700 mb-2">Q14, Q18, Q21 — heading swaps and paragraph mis-attribution.</div>
+                            <div class="w-full bg-blue-100 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width: 19%"></div></div>
+                        </div>
+                        <div class="p-4 rounded-xl border border-purple-200 bg-purple-50">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-bold text-purple-900">Multiple Choice</h4>
+                                <span class="text-sm font-bold text-purple-700">2 mistakes</span>
+                            </div>
+                            <div class="text-xs text-purple-700 mb-2">Q28, Q30 — overshooting (picking the most impressive answer over the precise one).</div>
+                            <div class="w-full bg-purple-100 rounded-full h-2"><div class="bg-purple-500 h-2 rounded-full" style="width: 12%"></div></div>
+                        </div>
+                    </div>
+                `
+            },
+            'fastest-gain': {
+                title: 'Fastest Score Gain',
+                icon: 'trending-up',
+                accent: 'emerald',
+                html: `
+                    <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 mb-5 border border-emerald-200">
+                        <div class="flex items-center gap-4">
+                            <div class="text-5xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">+1.0</div>
+                            <div>
+                                <div class="font-bold text-emerald-900">band score gain</div>
+                                <div class="text-sm text-emerald-700">From Band 6.0 → Band 7.0 — achievable in 3-4 weeks</div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-gray-900 mb-3">Why T/F/NG mastery is the fastest path</h4>
+                    <ul class="space-y-3 text-sm text-gray-700 mb-5">
+                        <li class="flex items-start gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5"></i><span>You lost <strong>7 marks</strong> on T/F/NG and Y/N/NG — fixing this single skill recovers nearly half your missed points.</span></li>
+                        <li class="flex items-start gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5"></i><span>The pattern is <strong>predictable</strong> — once you internalise the NG vs F rule, your accuracy jumps quickly.</span></li>
+                        <li class="flex items-start gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5"></i><span>Going from <strong>24 → 31 correct</strong> moves you from Band 6.0 to Band 7.0 (per the official IELTS raw-score band table).</span></li>
+                        <li class="flex items-start gap-3"><i data-lucide="check-circle" class="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5"></i><span>No need to improve your reading speed — your time management is already strong (12 min spare).</span></li>
+                    </ul>
+                    <div class="bg-blue-50 rounded-xl p-4 border border-blue-200">
+                        <h5 class="font-semibold text-blue-900 mb-2 flex items-center gap-2"><i data-lucide="lightbulb" class="w-4 h-4"></i> Liz's recommendation</h5>
+                        <p class="text-sm text-blue-800">Spend 30 minutes a day on T/F/NG-focused practice for 3 weeks. Don't try to fix everything — the 80/20 rule applies here.</p>
+                    </div>
+                `
+            },
+            'lessons': {
+                title: 'Recommended Lessons',
+                icon: 'graduation-cap',
+                accent: 'indigo',
+                html: `
+                    <p class="text-gray-600 mb-5">4 targeted lessons matched to your weak areas. Estimated total study time: 2.5 hours.</p>
+                    <div class="space-y-3">
+                        ${[
+                            {n:1, title:'Mastering True/False/Not Given', dur:'45 min', tag:'Highest priority', tagColor:'red', desc:'Step-by-step decision tree for distinguishing False from Not Given. Includes 30 worked examples.'},
+                            {n:2, title:'Synonym Recognition for Reading', dur:'40 min', tag:'High priority', tagColor:'amber', desc:'Drills on common IELTS synonym pairs (compact/dense, converted/changed, walkable/pedestrian).'},
+                            {n:3, title:'Y/N/NG: Reading the Writer\'s Opinion', dur:'35 min', tag:'Medium priority', tagColor:'blue', desc:'How to detect implicit opinions, hedging language, and reported speech in academic passages.'},
+                            {n:4, title:'Matching Headings: 5-Step Method', dur:'30 min', tag:'Medium priority', tagColor:'purple', desc:'Strategy for matching paragraph topics to heading lists without re-reading every word.'}
+                        ].map(l => `
+                            <div class="p-4 rounded-xl border border-gray-200 bg-white hover:border-${l.tagColor}-300 hover:shadow-md transition-all cursor-pointer" onclick="handleQuickAction('lesson-' + ${l.n})">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 rounded-xl bg-${l.tagColor}-100 flex items-center justify-center flex-shrink-0">
+                                        <span class="font-bold text-${l.tagColor}-700">${l.n}</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <h4 class="font-semibold text-gray-900">${l.title}</h4>
+                                            <span class="text-xs px-2 py-0.5 rounded-full bg-${l.tagColor}-100 text-${l.tagColor}-800 border border-${l.tagColor}-200">${l.tag}</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 mb-2">${l.desc}</p>
+                                        <div class="flex items-center gap-3 text-xs text-gray-500">
+                                            <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> ${l.dur}</span>
+                                            <span class="flex items-center gap-1"><i data-lucide="play-circle" class="w-3 h-3"></i> Video + practice</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `
+            },
+            'roadmap': {
+                title: 'Study Roadmap — 3 Weeks to Band 7.0',
+                icon: 'map',
+                accent: 'violet',
+                html: `
+                    <p class="text-gray-600 mb-5">A focused, realistic plan based on your current performance. Adjust intensity to match your schedule.</p>
+                    <div class="space-y-4">
+                        ${[
+                            {w:1, c:'rose', focus:'T/F/NG mastery', tasks:['Lesson 1: True/False/Not Given decision tree','15 min daily T/F/NG drills (Liz Question Bank)','2 mock T/F/NG-only sets','Review every wrong answer with Liz']},
+                            {w:2, c:'amber', focus:'Y/N/NG + synonym work', tasks:['Lesson 3: Reading the Writer\'s Opinion','Lesson 2: Synonym Recognition','Re-attempt Mock Test 18 — target +4 marks','Build personal synonym list (50 pairs)']},
+                            {w:3, c:'emerald', focus:'Speed + matching + full mock', tasks:['Lesson 4: Matching Headings 5-step method','Two full timed mock tests under exam conditions','Liz post-mortem after each test','Review Passage 3 patterns specifically']}
+                        ].map(w => `
+                            <div class="p-5 rounded-xl border-2 border-${w.c}-200 bg-${w.c}-50">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h4 class="font-bold text-${w.c}-900 flex items-center gap-2">
+                                        <span class="w-8 h-8 rounded-full bg-${w.c}-200 flex items-center justify-center text-${w.c}-700">${w.w}</span>
+                                        Week ${w.w} — ${w.focus}
+                                    </h4>
+                                </div>
+                                <ul class="space-y-1.5 text-sm text-${w.c}-800 ml-10">
+                                    ${w.tasks.map(t => `<li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 mt-0.5 text-${w.c}-600 flex-shrink-0"></i>${t}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="mt-5 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-center">
+                        <div class="text-sm text-emerald-700 mb-1">Expected outcome</div>
+                        <div class="text-2xl font-bold text-emerald-900">Band 7.0</div>
+                        <div class="text-xs text-emerald-600 mt-1">Based on +7 mark recovery in T/F/NG + Y/N/NG</div>
+                    </div>
+                `
+            },
+            'model-answers': {
+                title: 'Model Answers — Your 16 Mistakes',
+                icon: 'eye',
+                accent: 'teal',
+                html: `
+                    <p class="text-gray-600 mb-5">Side-by-side comparison of every wrong answer with the correct response and source evidence.</p>
+                    <div class="space-y-3" id="modelAnswersList"></div>
+                `
+            },
+            'priority-fix': {
+                title: 'Master T/F/NG Strategy',
+                icon: 'target',
+                accent: 'red',
+                html: `
+                    <div class="p-4 rounded-xl bg-red-50 border-2 border-red-200 mb-5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="alert-triangle" class="w-5 h-5 text-red-600"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-red-900"><strong>Your weak spot:</strong> 7 of your 16 mistakes (44%) come from True/False/Not Given and Yes/No/Not Given questions.</p>
+                                <p class="text-xs text-red-700 mt-1">Mastering this single skill = +1.0 band gain potential.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="font-bold text-gray-900 mb-3 flex items-center gap-2"><i data-lucide="book" class="w-4 h-4 text-red-600"></i> The 3-Step Decision Framework</h4>
+                    <div class="space-y-3 mb-6">
+                        <div class="p-4 rounded-xl border-2 border-emerald-200 bg-emerald-50">
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 rounded-full bg-emerald-200 flex items-center justify-center flex-shrink-0 font-bold text-emerald-700">1</div>
+                                <div>
+                                    <h5 class="font-bold text-emerald-900 mb-1">TRUE — passage confirms the statement</h5>
+                                    <p class="text-sm text-emerald-800">The text directly states (or paraphrases) the same idea. Look for synonyms — exact words rarely appear.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 rounded-xl border-2 border-rose-200 bg-rose-50">
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 rounded-full bg-rose-200 flex items-center justify-center flex-shrink-0 font-bold text-rose-700">2</div>
+                                <div>
+                                    <h5 class="font-bold text-rose-900 mb-1">FALSE — passage contradicts the statement</h5>
+                                    <p class="text-sm text-rose-800">The text says the OPPOSITE of the claim. There must be a direct contradiction in the passage — not just absence of support.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 rounded-xl border-2 border-amber-200 bg-amber-50">
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 rounded-full bg-amber-200 flex items-center justify-center flex-shrink-0 font-bold text-amber-700">3</div>
+                                <div>
+                                    <h5 class="font-bold text-amber-900 mb-1">NOT GIVEN — passage doesn't address it</h5>
+                                    <p class="text-sm text-amber-800">The specific claim is neither confirmed nor denied. If you can't find evidence either way → Not Given. <strong>Don't infer or assume.</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="font-bold text-gray-900 mb-3 flex items-center gap-2"><i data-lucide="alert-circle" class="w-4 h-4 text-red-600"></i> Common Traps You Fell Into</h4>
+                    <div class="space-y-2 mb-6">
+                        <div class="p-3 rounded-lg bg-gray-50 border border-gray-200 flex gap-3">
+                            <span class="text-red-600 font-bold">✗</span>
+                            <p class="text-sm text-gray-700"><strong>Q5, Q7, Q9, Q34:</strong> You picked False when it should have been Not Given. Remember — if the claim isn't mentioned, it's NG, not F.</p>
+                        </div>
+                        <div class="p-3 rounded-lg bg-gray-50 border border-gray-200 flex gap-3">
+                            <span class="text-red-600 font-bold">✗</span>
+                            <p class="text-sm text-gray-700"><strong>"Strong" qualifiers:</strong> Words like <em>always, never, only, all</em> in the statement often signal False if the passage uses softer language (<em>often, some, many</em>).</p>
+                        </div>
+                        <div class="p-3 rounded-lg bg-gray-50 border border-gray-200 flex gap-3">
+                            <span class="text-red-600 font-bold">✗</span>
+                            <p class="text-sm text-gray-700"><strong>Y/N/NG vs T/F/NG:</strong> Yes/No/Not Given asks about the writer's <em>opinion</em>; True/False/Not Given asks about <em>facts in the text</em>. Don't mix them.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-5 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200">
+                        <div class="flex items-center justify-between gap-4 flex-wrap">
+                            <div>
+                                <h4 class="font-bold text-gray-900 mb-1">Ready to practice?</h4>
+                                <p class="text-sm text-gray-600">20-question T/F/NG drill with instant feedback on every answer.</p>
+                            </div>
+                            <button onclick="closeModal(); handleQuickAction('practice-tfng');" class="bg-blue-600 text-white px-5 py-3 rounded-xl font-medium hover:bg-blue-700 transition-colors flex items-center gap-2 whitespace-nowrap">
+                                <i data-lucide="play" class="w-4 h-4"></i>
+                                Practice Now
+                            </button>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        // ============================================================
+        // RENDERERS
+        // ============================================================
+        const norm = s => String(s||'').toLowerCase().trim();
+
+        function questionMatches(q, filter) {
+            if (filter === 'all') return true;
+            if (filter === 'correct') return q.ok;
+            if (filter === 'incorrect') return !q.ok;
+            if (filter === 'tfng') return q.type === 'tfng' || q.type === 'ynng';
+            if (filter === 'mc') return q.type === 'mc';
+            if (filter === 'fill') return q.type === 'fill';
+            if (filter === 'match') return q.type === 'match';
+            if (filter === 'p1') return q.p === 1;
+            if (filter === 'p2') return q.p === 2;
+            if (filter === 'p3') return q.p === 3;
+            return true;
+        }
+
+        function buildEvidenceHtml(q) {
+            const passage = PASSAGES[q.p];
+            // Highlight the evidence in passage context
+            const passageText = passage.text;
+            const evIdx = passageText.indexOf(q.ev);
+            if (evIdx === -1) {
+                return `<p class="text-gray-800 leading-relaxed">${escapeHtml(q.ev)}</p>`;
+            }
+            const before = passageText.slice(Math.max(0, evIdx - 100), evIdx);
+            const after = passageText.slice(evIdx + q.ev.length, evIdx + q.ev.length + 100);
+            return `<p class="text-gray-800 leading-relaxed">…${escapeHtml(before)}<span class="highlight-evidence">${escapeHtml(q.ev)}</span>${escapeHtml(after)}…</p>`;
+        }
+
+        function escapeHtml(s) {
+            return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        }
+
+        function questionRowHtml(q) {
+            const okClasses = q.ok ? 'bg-emerald-500' : 'bg-red-500';
+            const okBadge = q.ok
+                ? `<div class="text-sm font-medium text-emerald-600 flex items-center gap-1"><i data-lucide="check" class="w-4 h-4"></i>Correct</div>`
+                : `<div class="text-sm font-medium text-red-600 flex items-center gap-1"><i data-lucide="x" class="w-4 h-4"></i>Wrong</div>`;
+            const detail = q.ok
+                ? `Your: ${escapeHtml(q.y)}`
+                : `Your: ${escapeHtml(q.y)} | Correct: ${escapeHtml(q.c)}`;
+            const passageBadge = `<span class="text-xs px-2 py-0.5 rounded-full bg-${PASSAGES[q.p].color}-100 text-${PASSAGES[q.p].color}-700 border border-${PASSAGES[q.p].color}-200">P${q.p}</span>`;
+
+            return `
+                <div class="question-row" data-qn="${q.n}">
+                    <div class="p-4 cursor-pointer flex items-center justify-between" onclick="toggleQuestion(${q.n})">
+                        <div class="flex items-center gap-4 min-w-0 flex-1">
+                            <div class="w-8 h-8 ${okClasses} rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0">${q.n}</div>
+                            <div class="min-w-0 flex-1">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <div class="font-semibold text-gray-900">${escapeHtml(q.label)}</div>
+                                    ${passageBadge}
+                                </div>
+                                <div class="text-sm text-gray-600 truncate">${escapeHtml(q.q)}</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 flex-shrink-0">
+                            <div class="text-right">
+                                ${okBadge}
+                                <div class="text-xs text-gray-500">${detail}</div>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 chevron"></i>
+                        </div>
+                    </div>
+                    <div class="expanded-panel hidden px-6 pb-6 pt-0">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-4 border-t border-gray-200">
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-3">Model Answer</h4>
+                                <div class="space-y-3">
+                                    ${q.opts ? `<div class="p-3 bg-gray-50 rounded-lg text-xs text-gray-700 leading-relaxed"><strong>Options:</strong> ${escapeHtml(q.opts)}</div>` : ''}
+                                    <div class="p-3 ${q.ok ? 'bg-emerald-50 border-l-4 border-emerald-500' : 'bg-red-50 border-l-4 border-red-500'} rounded-lg">
+                                        <div class="text-sm font-medium ${q.ok ? 'text-emerald-800' : 'text-red-800'} mb-1 flex items-center gap-2">
+                                            <i data-lucide="${q.ok ? 'check' : 'x'}" class="w-4 h-4"></i>
+                                            Your Answer: ${escapeHtml(q.y)}
+                                        </div>
+                                    </div>
+                                    ${!q.ok ? `<div class="p-3 bg-emerald-50 rounded-lg border-l-4 border-emerald-500">
+                                        <div class="text-sm font-medium text-emerald-800 mb-1 flex items-center gap-2"><i data-lucide="check" class="w-4 h-4"></i>Correct Answer: ${escapeHtml(q.c)}</div>
+                                    </div>` : ''}
+                                </div>
+                                <div class="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-100">
+                                    <h5 class="text-sm font-semibold text-blue-800 mb-2 flex items-center gap-1"><i data-lucide="lightbulb" class="w-4 h-4"></i> Strategy</h5>
+                                    <p class="text-xs text-blue-700 leading-relaxed">${escapeHtml(q.strat)}</p>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-3">Locate in Text — ${escapeHtml(PASSAGES[q.p].title)}</h4>
+                                <div class="p-4 bg-gray-50 rounded-lg text-sm leading-relaxed">
+                                    ${buildEvidenceHtml(q)}
+                                </div>
+                                <div class="mt-2 p-2 bg-emerald-100 rounded-lg">
+                                    <span class="text-xs text-emerald-800 font-medium flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> Evidence for ${q.ok ? 'correct' : 'correct'} answer</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderQuestions(filter) {
+            filter = filter || (document.getElementById('questionFilter')?.value || 'all');
+            const list = QUESTIONS.filter(q => questionMatches(q, filter));
+            const container = document.getElementById('questionsList');
+            const countEl = document.getElementById('questionsCount');
+
+            if (list.length === 0) {
+                container.innerHTML = `<div class="text-center py-12 text-gray-500"><i data-lucide="inbox" class="w-12 h-12 mx-auto mb-3 text-gray-300"></i><p>No questions match this filter.</p></div>`;
+            } else {
+                container.innerHTML = list.map(questionRowHtml).join('');
+            }
+
+            if (countEl) {
+                countEl.textContent = `(${list.length} of ${QUESTIONS.length})`;
+            }
+
+            lucide.createIcons();
+        }
+
+        function toggleQuestion(n) {
+            const row = document.querySelector(`.question-row[data-qn="${n}"]`);
+            if (!row) return;
+            const panel = row.querySelector('.expanded-panel');
+            const chevron = row.querySelector('.chevron');
+            const isOpen = !panel.classList.contains('hidden');
+            // Close others
+            document.querySelectorAll('.question-row').forEach(r => {
+                r.classList.remove('expanded');
+                const p = r.querySelector('.expanded-panel');
+                if (p) p.classList.add('hidden');
+            });
+            if (!isOpen) {
+                row.classList.add('expanded');
+                panel.classList.remove('hidden');
+                // Scroll expanded row to top of the inner scroll container
+                const scroller = document.getElementById('questionsList');
+                if (scroller) {
+                    requestAnimationFrame(() => {
+                        const rowTop = row.offsetTop - scroller.offsetTop;
+                        scroller.scrollTo({ top: rowTop - 8, behavior: 'smooth' });
+                    });
+                }
+            }
+            lucide.createIcons();
+        }
+
+        function filterByPassage(p) {
+            const select = document.getElementById('questionFilter');
+            select.value = `p${p}`;
+            renderQuestions(`p${p}`);
+            // Smooth scroll to question list
+            document.getElementById('questionsList').scrollIntoView({behavior: 'smooth', block: 'start'});
+            showToast(`Filtered to Passage ${p} — ${PASSAGES[p].topic}`, 'filter');
+        }
+
+        // ============================================================
+        // MODALS
+        // ============================================================
+        function showBandTooltip() {
+            document.getElementById('bandTooltip').classList.remove('hidden');
+        }
+        function hideBandTooltip() {
+            document.getElementById('bandTooltip').classList.add('hidden');
+        }
+        function openLizModal() {
+            document.getElementById('lizModal').classList.add('open');
+        }
+        function closeLizModal() {
+            document.getElementById('lizModal').classList.remove('open');
+        }
+        function closeModal() {
+            document.getElementById('generalModal').classList.remove('open');
+        }
+
+        function openModal(type) {
+            const data = INSIGHTS[type];
+            if (!data) return;
+            document.getElementById('modalTitle').textContent = data.title;
+            document.getElementById('modalContent').innerHTML = data.html;
+
+            // Populate model-answers list dynamically (it has its own container)
+            if (type === 'model-answers') {
+                const wrong = QUESTIONS.filter(q => !q.ok);
+                const listEl = document.getElementById('modelAnswersList');
+                listEl.innerHTML = wrong.map(q => `
+                    <div class="p-4 rounded-xl border border-gray-200 hover:border-brand transition-colors">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-2">
+                                <div class="w-7 h-7 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold">${q.n}</div>
+                                <span class="text-xs font-semibold text-gray-700">${escapeHtml(q.label)}</span>
+                                <span class="text-xs px-2 py-0.5 rounded-full bg-${PASSAGES[q.p].color}-100 text-${PASSAGES[q.p].color}-700">P${q.p}</span>
+                            </div>
+                            <button onclick="closeModal(); setTimeout(() => { document.getElementById('questionFilter').value='all'; renderQuestions('all'); toggleQuestion(${q.n}); }, 250);" class="text-xs text-brand hover:underline">View detail →</button>
+                        </div>
+                        <div class="text-sm text-gray-700 mb-2">${escapeHtml(q.q)}</div>
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div class="p-2 bg-red-50 rounded border border-red-100"><span class="text-red-700">Your: ${escapeHtml(q.y)}</span></div>
+                            <div class="p-2 bg-emerald-50 rounded border border-emerald-100"><span class="text-emerald-700">Correct: ${escapeHtml(q.c)}</span></div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('generalModal').classList.add('open');
+            lucide.createIcons();
+        }
+
+        function openPassagesModal() {
+            document.getElementById('modalTitle').textContent = 'Reading Passages';
+            const html = `
+                <p class="text-gray-600 mb-5">All three passages from this test, with your evidence highlights preserved.</p>
+                <div class="space-y-6">
+                    ${[1,2,3].map(p => {
+                        const passage = PASSAGES[p];
+                        const correct = QUESTIONS.filter(q => q.p === p && q.ok).length;
+                        const total = QUESTIONS.filter(q => q.p === p).length;
+                        return `
+                        <div class="rounded-xl border-2 border-${passage.color}-200 overflow-hidden">
+                            <div class="px-5 py-3 bg-${passage.color}-50 flex items-center justify-between">
+                                <div>
+                                    <div class="text-xs text-${passage.color}-700 font-semibold">Passage ${p}</div>
+                                    <h4 class="font-bold text-${passage.color}-900">${escapeHtml(passage.title)}</h4>
+                                    <div class="text-xs text-${passage.color}-700">${escapeHtml(passage.topic)}</div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-2xl font-bold text-${passage.color}-700">${correct}/${total}</div>
+                                </div>
+                            </div>
+                            <div class="p-5 bg-white text-sm leading-relaxed text-gray-800 whitespace-pre-line">${escapeHtml(passage.text)}</div>
+                        </div>`;
+                    }).join('')}
+                </div>
+            `;
+            document.getElementById('modalContent').innerHTML = html;
+            document.getElementById('generalModal').classList.add('open');
+            lucide.createIcons();
+        }
+
+        // ============================================================
+        // QUICK ACTIONS — sample page CTA toasts
+        // ============================================================
+        function handleQuickAction(action) {
+            const messages = {
+                'retry': {msg: 'Sign up free to retake this test and track your progress over time.', icon: 'repeat'},
+                'practice-tfng': {msg: 'Sign up to access 250+ T/F/NG practice questions in the Question Bank.', icon: 'target'},
+                'download': {msg: 'Sign up to download a personalised PDF report after each test.', icon: 'download'},
+                'share': {msg: 'Link copied to clipboard — share this sample result.', icon: 'share'},
+            };
+            if (action.startsWith('lesson-')) {
+                showToast('Sign up to unlock this lesson and 40+ others tailored to your weaknesses.', 'graduation-cap');
+                return;
+            }
+            const m = messages[action] || {msg: 'Sign up to access this feature.', icon: 'info'};
+            if (action === 'share' && navigator.clipboard) {
+                navigator.clipboard.writeText(window.location.href).catch(()=>{});
+            }
+            showToast(m.msg, m.icon);
+        }
+
+        function showToast(msg, icon) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            document.getElementById('toastIcon').setAttribute('data-lucide', icon || 'info');
+            toast.classList.remove('hidden');
+            lucide.createIcons();
+            clearTimeout(window._toastTimer);
+            window._toastTimer = setTimeout(hideToast, 4000);
+        }
+        function hideToast() {
+            document.getElementById('toast').classList.add('hidden');
+        }
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', () => {
+            renderQuestions('all');
+            // Open Q1 expanded by default to show the feature
+            setTimeout(() => toggleQuestion(1), 50);
+
+            const filterEl = document.getElementById('questionFilter');
+            if (filterEl) {
+                filterEl.addEventListener('change', e => renderQuestions(e.target.value));
+            }
+        });
+
+        // Close modals on outside click
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('open');
+            }
+        });
+
+        // ESC closes modals + tooltip
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
+                hideBandTooltip();
+                hideToast();
+            }
+        });
+
+        // Initial Lucide icon pass
+        lucide.createIcons();
+    </script>
+
+</body>
+</html>

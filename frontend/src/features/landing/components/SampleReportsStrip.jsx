@@ -28,6 +28,15 @@ const REPORTS = [
     meta: 'Task 2 · 312 words · 4 refinements',
     href: '/samples/writing/band-8-0-task2',
   },
+  {
+    cls: 'b6',
+    band: '6',
+    decimal: '.0',
+    tier: 'Reading · Academic test',
+    title: '"3 passages · 40 questions"',
+    meta: 'T/F/NG · Fill · Match · 24/40 correct',
+    href: '/samples/reading/band-6-0-academic.html',
+  },
 ];
 
 export default function SampleReportsStrip() {

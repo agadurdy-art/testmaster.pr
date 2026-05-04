@@ -47,12 +47,21 @@ EVALUATION_TIERS = {
     }
 }
 
-# Audio cache directory
-AUDIO_CACHE_DIR = Path("/app/backend/static/audio/speaking")
+# Audio + recordings directories. Resolve relative to this file so the router
+# boots in any environment (Emergent pod = /app/backend, local dev =
+# /private/tmp/.../backend) without import-time mkdir failures that silently
+# 404 every QB endpoint.
+_BACKEND_DIR = Path(__file__).resolve().parent.parent
+AUDIO_CACHE_DIR = Path(os.environ.get(
+    "SPEAKING_AUDIO_CACHE_DIR",
+    str(_BACKEND_DIR / "static/audio/speaking"),
+))
 AUDIO_CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
-# User recordings directory
-RECORDINGS_DIR = Path("/app/backend/static/recordings")
+RECORDINGS_DIR = Path(os.environ.get(
+    "SPEAKING_RECORDINGS_DIR",
+    str(_BACKEND_DIR / "static/recordings"),
+))
 RECORDINGS_DIR.mkdir(parents=True, exist_ok=True)
 
 # Voice profiles for examiner (IELTS-neutral tone)

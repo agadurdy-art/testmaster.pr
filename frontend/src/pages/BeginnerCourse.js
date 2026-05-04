@@ -56,6 +56,7 @@ export default function BeginnerCourse({ user }) {
   // Check for preview mode and lesson from URL
   const isPreviewMode = searchParams.get('preview') === 'true';
   const lessonIdFromUrl = searchParams.get('lesson');
+  const focusFromUrl = searchParams.get('focus');
   
   // Theme support
   const { activeTheme } = useTheme();
@@ -189,16 +190,25 @@ export default function BeginnerCourse({ user }) {
   // Auto-select lesson from URL parameter (for preview mode from landing page)
   useEffect(() => {
     if (lessonIdFromUrl && lessons.length > 0) {
-      const targetLesson = lessons.find(l => 
-        String(l.id) === lessonIdFromUrl || 
+      const targetLesson = lessons.find(l =>
+        String(l.id) === lessonIdFromUrl ||
         String(l.lesson_number) === lessonIdFromUrl
       );
       if (targetLesson) {
         setSelectedLesson(targetLesson);
         setView('lesson-detail');
+        if (focusFromUrl && ['vocabulary', 'grammar', 'listening', 'reading', 'speaking', 'writing', 'quiz'].includes(focusFromUrl)) {
+          setCurrentSection(focusFromUrl);
+          const scrollToSection = () => {
+            const el = document.getElementById(`${focusFromUrl}-section`);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          };
+          setTimeout(scrollToSection, 250);
+          setTimeout(scrollToSection, 700);
+        }
       }
     }
-  }, [lessonIdFromUrl, lessons]);
+  }, [lessonIdFromUrl, focusFromUrl, lessons]);
 
   const fetchLessons = async () => {
     try {
@@ -1052,9 +1062,9 @@ export default function BeginnerCourse({ user }) {
     };
     
     return (
-      <div className="space-y-6">
+      <div className="space-y-6" id="grammar-section">
         {/* Main Grammar Card */}
-        <Card className="p-6 bg-white border-0 shadow-lg">
+        <Card className="p-6 bg-white border-0 shadow-lg scroll-mt-24">
           <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
             <Languages className="w-5 h-5 text-purple-600" />
             {selectedLesson.grammar.title}

@@ -11,7 +11,7 @@ from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Optional, Dict, Any, Union
 import uuid
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone, timedelta, time
 import hashlib
 import bcrypt
 import hmac
@@ -341,6 +341,13 @@ else:
     app.mount("/static/visuals", StaticFiles(directory=str(static_visuals_path)), name="visuals")
     print("✅ Static visual files directory created and mounted")
 
+# Mount static files for strategies guide (ported PDF imagery)
+static_strategies_path = ROOT_DIR / "static" / "strategies"
+os.makedirs(static_strategies_path, exist_ok=True)
+app.mount("/api/static/strategies", StaticFiles(directory=str(static_strategies_path)), name="strategies_api")
+app.mount("/static/strategies", StaticFiles(directory=str(static_strategies_path)), name="strategies")
+print("✅ Static strategies images mounted at /api/static/strategies and /static/strategies")
+
 # Import learning platform routes
 try:
     from learning_platform_routes import router as learning_platform_router
@@ -373,6 +380,14 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load lesson registry routes: {e}")
 
+# Strategies Guide (faithful port of the Complete IELTS Preparation Guide)
+try:
+    from routes.strategies import router as strategies_router
+    app.include_router(strategies_router)
+    print("✅ Strategies Guide routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load strategies routes: {e}")
+
 # Import dual-track course routes
 try:
     from routes.dual_track import router as dual_track_router
@@ -388,6 +403,14 @@ try:
     print("✅ Listening QB routes loaded")
 except Exception as e:
     print(f"⚠️  Could not load listening QB routes: {e}")
+
+# Import reading question bank routes (parity with listening — task #139).
+try:
+    from routes.reading_qb import router as reading_qb_router
+    app.include_router(reading_qb_router)
+    print("✅ Reading QB routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load reading QB routes: {e}")
 
 # Import unified speaking evaluation route FIRST so its /evaluate, /topics,
 # and other endpoints take precedence over the legacy ones in
@@ -426,16 +449,27 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load speaking QB routes: {e}")
 
-# Import Liz Live (Gemini Live API WebSocket proxy) — Faz 3.
-# Active for Smart Practice Part 1 + Part 3 conversational entry. Part 2
-# remains a monologue (no Live wiring). Disabled if google-genai is missing
-# or GEMINI_API_KEY is unset; the route handler short-circuits gracefully.
+# Liz Live (Gemini) was removed 2026-04-29. The replacement is ElevenLabs
+# Conversational AI mounted below. The route handles both signed-URL minting
+# (xi-api-key never reaches the browser) and post-fetch transcript pulls.
 try:
-    from routes.liz_live import router as liz_live_router
-    app.include_router(liz_live_router)
-    print("✅ Liz Live (Gemini Live) WebSocket route loaded")
+    from routes.liz_eleven import (
+        router as liz_eleven_router,
+        set_db as set_liz_eleven_db,
+        init_indexes as init_liz_eleven_indexes,
+    )
+    set_liz_eleven_db(db)
+    app.include_router(liz_eleven_router)
+
+    @app.on_event("startup")
+    async def _bootstrap_liz_eleven_indexes():
+        await init_liz_eleven_indexes()
+
+    print("✅ Liz ElevenLabs Conversational routes loaded")
 except Exception as e:
-    print(f"⚠️  Could not load Liz Live route: {e}")
+    print(f"⚠️  Could not load Liz ElevenLabs routes: {e}")
+    import traceback
+    traceback.print_exc()
 
 # Import full test mode routes
 try:
@@ -484,6 +518,13 @@ try:
     print("✅ Recordings routes loaded")
 except Exception as e:
     print(f"⚠️  Could not load Recordings routes: {e}")
+
+# Study-time tracking (heartbeat + summary for the dashboard StreakDial)
+try:
+    from routes.study_time import router as study_time_router
+    app.include_router(study_time_router)
+except Exception as e:
+    print(f"⚠️  Could not load Study Time routes: {e}")
 
 # Audio streaming routes
 try:
@@ -737,6 +778,55 @@ class SubmitAnswers(BaseModel):
     writing_feedback: Optional[Dict[str, Any]] = None  # AI feedback for writing tests
     speaking_feedback: Optional[Dict[str, Any]] = None  # AI feedback for speaking tests
 
+
+# ---------------------------------------------------------------------------
+# persist_attempt — single writer for db.test_attempts
+#
+# All evaluate endpoints (cambridge, reading_qb, listening_qb, speaking_qb,
+# speaking_unified, full_test, cambridge_speaking) call this after computing
+# scores so the Progress page + Liz can read every practice/test attempt from
+# a single collection. Returns the inserted attempt id, or None if skipped.
+# Skips silently when user_id is missing/empty (anonymous practice).
+# ---------------------------------------------------------------------------
+async def persist_attempt(
+    *,
+    user_id: Optional[str],
+    test_id: str,
+    test_type: str,
+    band_score: float = 0.0,
+    score: float = 0.0,
+    answers: Optional[List[Dict[str, Any]]] = None,
+    feedback: Optional[Dict[str, Any]] = None,
+    time_taken: int = 0,
+) -> Optional[str]:
+    if not user_id:
+        return None
+    try:
+        attempt = TestAttempt(
+            user_id=str(user_id),
+            test_id=str(test_id or "unknown"),
+            test_type=str(test_type or "mixed"),
+            answers=answers or [],
+            score=float(score or 0.0),
+            band_score=float(band_score or 0.0),
+            feedback=feedback or {},
+            time_taken=int(time_taken or 0),
+        )
+        doc = attempt.model_dump()
+        doc["completed_at"] = doc["completed_at"].isoformat()
+        await db.test_attempts.insert_one(doc)
+        try:
+            await db.users.update_one(
+                {"id": str(user_id)},
+                {"$push": {"test_history": attempt.id}},
+            )
+        except Exception:
+            pass  # user history mirror is best-effort
+        return attempt.id
+    except Exception as e:
+        logger.warning(f"persist_attempt failed for user={user_id} type={test_type}: {e}")
+        return None
+
 class EvaluateWriting(BaseModel):
     user_id: str
     task_type: str  # task1 or task2
@@ -865,6 +955,45 @@ def verify_password(password: str, password_hash: str) -> bool:
     return hmac.compare_digest(computed, password_hash)
 
 # ============ Helper Functions ============
+
+def _resolve_listening_transcripts(test: Dict[str, Any]) -> Dict[int, str]:
+    """Return a {part_number: transcript_text} map for a listening test.
+
+    Sources, in order:
+      1. test["transcripts"] / test["sections"]["listening"]["transcripts"] —
+         used when the test data itself carries audioscripts (e.g. Cambridge
+         book content modules).
+      2. Title-based fallback for tests seeded into db.tests before transcripts
+         existed (Cambridge IELTS 19 Test 1 / Test 2 dashboard listening tests).
+    """
+    direct = test.get("transcripts")
+    if not direct:
+        try:
+            direct = (test.get("sections") or {}).get("listening", {}).get("transcripts")
+        except (AttributeError, TypeError):
+            direct = None
+    if direct:
+        out: Dict[int, str] = {}
+        for k, v in direct.items():
+            try:
+                out[int(k)] = str(v or "")
+            except (TypeError, ValueError):
+                continue
+        if out:
+            return out
+
+    title = (test.get("title") or "").lower()
+    if "cambridge ielts 19" in title or "ielts 19" in title:
+        try:
+            from content.cambridge_tests.ielts19.audioscripts import IELTS19_AUDIOSCRIPTS
+            if "test 1" in title:
+                return dict(IELTS19_AUDIOSCRIPTS.get(1, {}))
+            if "test 2" in title:
+                return dict(IELTS19_AUDIOSCRIPTS.get(2, {}))
+        except ImportError:
+            pass
+    return {}
+
 
 def calculate_band_score(percentage: float) -> float:
     """Convert percentage to IELTS band score (1-9)"""
@@ -1327,11 +1456,36 @@ async def submit_test(submission: SubmitAnswers):
         
         # Create a map of question id to question text
         question_text_map = {}
+        question_options_map: Dict[Any, List[str]] = {}
+        question_section_map: Dict[Any, int] = {}
         for q in test.get("questions", []):
             q_id = q.get("id")
             if q_id is not None:
                 # Store with original ID (can be int or string like "20-21")
                 question_text_map[q_id] = q.get("question", "")
+                # Track section/part number so listening evidence excerpts can
+                # be looked up in the correct part's transcript.
+                sec = q.get("section") or q.get("part")
+                if sec is not None:
+                    try:
+                        question_section_map[q_id] = int(sec)
+                        if isinstance(q_id, str) and ('-' in q_id or ',' in q_id):
+                            for sub_id in [int(x.strip()) for x in q_id.replace(',', '-').split('-')]:
+                                question_section_map[sub_id] = int(sec)
+                                question_section_map[str(sub_id)] = int(sec)
+                    except (TypeError, ValueError):
+                        pass
+                opts = q.get("options") or []
+                if isinstance(opts, list) and opts:
+                    question_options_map[q_id] = [str(o) for o in opts]
+                    # Mirror onto sub-IDs so combined "20-21" reaches Q20/Q21.
+                    if isinstance(q_id, str) and ('-' in q_id or ',' in q_id):
+                        try:
+                            for sub_id in [int(x.strip()) for x in q_id.replace(',', '-').split('-')]:
+                                question_options_map[sub_id] = [str(o) for o in opts]
+                                question_options_map[str(sub_id)] = [str(o) for o in opts]
+                        except ValueError:
+                            pass
 
         # Create explanation map from answer_key
         explanation_map = {}
@@ -1382,9 +1536,52 @@ async def submit_test(submission: SubmitAnswers):
                     return True
             
             return False
-        
+
+        # ───── Multi-MCQ pre-processing ─────────────────────────────────
+        # When a "Choose TWO" question is stored in answer_key as a combined
+        # ID like "20-21" with answer ["A","B"], the test interface often
+        # submits the two picks as separate Q20/Q21 entries (string answers).
+        # Without merging them into the combined-key shape the scoring loop
+        # below expects, both rows are skipped and 4 questions go missing
+        # from question_results — surfacing as "8/36" or "8/38" totals on
+        # the results page even though the test always has 40 questions.
+        combined_keys = [k for k in answer_key_map.keys()
+                          if isinstance(k, str) and ('-' in k or ',' in k)]
+        if combined_keys:
+            sub_answer_lookup: Dict[str, Any] = {}
+            for ans in submission.answers:
+                qid = ans.get("question_id") or ans.get("id")
+                if qid is not None:
+                    sub_answer_lookup[str(qid)] = ans.get("answer", "")
+            merged_answers = list(submission.answers)
+            for ck in combined_keys:
+                # Already submitted as combined list — keep as-is.
+                existing = sub_answer_lookup.get(ck)
+                if isinstance(existing, list):
+                    continue
+                try:
+                    sub_ids = [int(x.strip()) for x in ck.replace(',', '-').split('-')]
+                except ValueError:
+                    continue
+                gathered: List[str] = []
+                for sub_id in sub_ids:
+                    v = sub_answer_lookup.get(str(sub_id), "")
+                    if isinstance(v, list):
+                        gathered.extend(str(x) for x in v if x)
+                    elif v:
+                        gathered.append(str(v))
+                if not gathered:
+                    continue
+                drop_ids = {str(s) for s in sub_ids} | {ck}
+                merged_answers = [a for a in merged_answers
+                                   if str(a.get("question_id") or a.get("id")) not in drop_ids]
+                merged_answers.append({"question_id": ck, "answer": gathered})
+            submission_answers_iter = merged_answers
+        else:
+            submission_answers_iter = submission.answers
+
         # Comparison with support for multiple correct answers and explanations
-        for ans in submission.answers:
+        for ans in submission_answers_iter:
             qid = ans.get("question_id") or ans.get("id")
             if qid is None:
                 continue
@@ -1424,24 +1621,32 @@ async def submit_test(submission: SubmitAnswers):
                     start_id = individual_q_ids[0] if individual_q_ids else 1
                     individual_q_ids = list(range(start_id, start_id + len(correct_answer)))
                 
-                # Create separate result entries for each answer
+                # Create separate result entries for each answer.
+                # IELTS "Choose TWO" scoring is SET-BASED (order doesn't matter):
+                # each correct option = 1 mark if user picked that letter,
+                # regardless of click order. Positional matching incorrectly
+                # marked [B,C] vs [B,E] as 0/2 when user clicked C before B
+                # (rotated to [C,B] vs [B,E]).
                 user_upper = [str(a).strip().upper() for a in user_answer]
                 correct_upper = [str(a).strip().upper() for a in correct_answer]
-                
+                user_set = set(user_upper)
+                user_display = ", ".join([u for u in user_upper if u]) or ""
+
                 for idx, (q_id, correct_ans) in enumerate(zip(individual_q_ids, correct_upper)):
-                    # Check if user provided an answer for this position
-                    user_ans = user_upper[idx] if idx < len(user_upper) else ""
-                    is_correct_individual = user_ans == correct_ans
-                    
+                    is_correct_individual = correct_ans in user_set
+
                     if is_correct_individual:
                         correct += 1
-                    
-                    # Add individual question result
+
+                    # Add individual question result. user_answer keeps the
+                    # full pick set so the row UI reads "Your: B,C | Correct: B"
+                    # (clarifies WHICH option this row represents while still
+                    # showing the user's complete submission).
                     question_results.append({
                         "question_id": q_id,
                         "question_text": question_text_map.get(qid_normalized, f"Question {q_id}"),
                         "question_type": q_type,
-                        "user_answer": user_ans,
+                        "user_answer": user_display,
                         "correct_answer": correct_ans,
                         "is_correct": is_correct_individual,
                         "explanation": explanation_map.get(qid_normalized, ""),
@@ -1499,9 +1704,114 @@ async def submit_test(submission: SubmitAnswers):
 
         score_percentage = (correct / total * 100) if total > 0 else 0
         band_score = calculate_band_score(score_percentage)
-        
+
         # Sort question results by question_id for proper display order
         question_results.sort(key=lambda x: x.get("question_id", 0))
+
+        # ───── Guarantee 40-row results + passage attachment ─────────────
+        # Every IELTS reading/listening test has 40 questions. If the user
+        # skipped some (or the frontend dropped them), still emit a row so
+        # the results UI shows "(no answer)" instead of silently dropping
+        # to "8/36" totals.
+        covered_qids = {str(qr.get("question_id")) for qr in question_results}
+
+        def _expand_combined(qid):
+            if isinstance(qid, str) and ('-' in qid or ',' in qid):
+                try:
+                    parts = [int(x.strip()) for x in qid.replace(',', '-').split('-')]
+                    return parts
+                except ValueError:
+                    return [qid]
+            return [qid]
+
+        for ak_qid, correct_ans in answer_key_map.items():
+            sub_ids = _expand_combined(ak_qid)
+            q_type = question_type_map.get(ak_qid, "unknown")
+            if isinstance(correct_ans, list):
+                # Combined "Choose TWO" — emit one row per sub-id
+                for idx, sub_id in enumerate(sub_ids):
+                    if str(sub_id) in covered_qids:
+                        continue
+                    sub_correct = correct_ans[idx] if idx < len(correct_ans) else ""
+                    question_results.append({
+                        "question_id": sub_id,
+                        "question_text": question_text_map.get(ak_qid, f"Question {sub_id}"),
+                        "question_type": q_type,
+                        "user_answer": "",
+                        "correct_answer": sub_correct,
+                        "is_correct": False,
+                        "explanation": explanation_map.get(ak_qid, ""),
+                    })
+                    covered_qids.add(str(sub_id))
+                    skey = _make_skill_key(test_type, q_type)
+                    if skey not in skill_stats:
+                        skill_stats[skey] = {
+                            "skill_id": skey,
+                            "test_type": test_type,
+                            "question_type": q_type,
+                            "label": _skill_label(test_type, q_type),
+                            "correct": 0,
+                            "total": 0,
+                        }
+            else:
+                if str(ak_qid) in covered_qids:
+                    continue
+                question_results.append({
+                    "question_id": ak_qid,
+                    "question_text": question_text_map.get(ak_qid, f"Question {ak_qid}"),
+                    "question_type": q_type,
+                    "user_answer": "",
+                    "correct_answer": correct_ans,
+                    "is_correct": False,
+                    "explanation": explanation_map.get(ak_qid, ""),
+                })
+                covered_qids.add(str(ak_qid))
+
+        # Recalculate skill totals from the authoritative answer_key (each
+        # combined "20-21" key contributes len(answer) sub-questions). The
+        # earlier init counted combined keys as 1, undercounting totals.
+        for sstats in skill_stats.values():
+            sstats["total"] = 0
+        for ak_qid, correct_ans in answer_key_map.items():
+            q_type = question_type_map.get(ak_qid, "unknown")
+            skey = _make_skill_key(test_type, q_type)
+            if skey not in skill_stats:
+                skill_stats[skey] = {
+                    "skill_id": skey,
+                    "test_type": test_type,
+                    "question_type": q_type,
+                    "label": _skill_label(test_type, q_type),
+                    "correct": 0,
+                    "total": 0,
+                }
+            n_sub = len(correct_ans) if isinstance(correct_ans, list) else 1
+            skill_stats[skey]["total"] += n_sub
+
+        # Build passage map: each test question carries a "passage" field
+        # (1/2/3). Combined IDs like "20-21" map to both sub-IDs.
+        passage_map: Dict[str, Any] = {}
+        for q in test.get("questions", []):
+            qid = q.get("id") or q.get("question_id")
+            passage_val = q.get("passage")
+            if qid is None or passage_val is None:
+                continue
+            if isinstance(qid, str) and ('-' in qid or ',' in qid):
+                for sub_id in _expand_combined(qid):
+                    passage_map[str(sub_id)] = passage_val
+                passage_map[str(qid)] = passage_val
+            else:
+                passage_map[str(qid)] = passage_val
+
+        for qr in question_results:
+            qid_str = str(qr.get("question_id"))
+            if qid_str in passage_map:
+                qr["passage"] = passage_map[qid_str]
+
+        question_results.sort(
+            key=lambda x: int(x["question_id"]) if isinstance(x.get("question_id"), int)
+            or (isinstance(x.get("question_id"), str) and x["question_id"].isdigit())
+            else 9999
+        )
 
         # Build teacher-style feedback per skill
         skill_breakdown: List[Dict[str, Any]] = []
@@ -1646,6 +1956,241 @@ async def submit_test(submission: SubmitAnswers):
             )
         detailed_teacher_feedback = " ".join(detailed_parts)
 
+        # ───── Insight pipeline (reading + listening) ─────────────────────
+        # Tag each wrong question with a reason_code, build reason_summary,
+        # root_cause_analysis, fastest_gain (top weak skills) and a lesson
+        # recommendation list. The reading results layout reads these keys
+        # to populate the 6 insight tiles ("Root Cause", "Fastest Gain"…).
+        try:
+            from routes.cambridge import (
+                classify_reason_code as _classify_reason_code,
+                build_root_cause_analysis as _build_root_cause_analysis,
+                extract_evidence_text as _extract_evidence_text,
+                get_skill_tip as _get_skill_tip,
+            )
+        except Exception:
+            _classify_reason_code = None
+            _build_root_cause_analysis = None
+            _extract_evidence_text = None
+            _get_skill_tip = None
+
+        # Passage text lookup: passage_id (1/2/3) -> full text
+        passage_text_map: Dict[Any, str] = {}
+        for p in (test.get("passages") or []):
+            pid = p.get("id") or p.get("passage_id")
+            if pid is not None:
+                passage_text_map[pid] = p.get("text", "") or ""
+                passage_text_map[str(pid)] = p.get("text", "") or ""
+
+        # Listening evidence pre-pass — attach audioscript excerpts to each
+        # listening question (correct AND wrong) so the "Locate in Audioscript"
+        # panel works for the dashboard listening tests, mirroring the
+        # cambridge.py route behavior.
+        listening_transcripts_map: Dict[int, str] = {}
+        if test_type == "listening" and _extract_evidence_text is not None:
+            listening_transcripts_map = _resolve_listening_transcripts(test)
+            if listening_transcripts_map:
+                for qr in question_results:
+                    qt_lk = (qr.get("question_type") or "").lower()
+                    if not qt_lk or any(
+                        k in qt_lk for k in ("multiple", "matching", "multi_select")
+                    ):
+                        continue
+                    qid = qr.get("question_id")
+                    part_num = (
+                        question_section_map.get(qid)
+                        or question_section_map.get(str(qid))
+                        or 1
+                    )
+                    p_text = listening_transcripts_map.get(part_num) or ""
+                    if not p_text:
+                        continue
+                    ca = qr.get("correct_answer")
+                    try:
+                        ev = _extract_evidence_text(ca, p_text)
+                        if ev:
+                            qr["evidence_text"] = ev
+                    except Exception:
+                        pass
+
+        reason_summary: Dict[str, int] = {}
+        for qr in question_results:
+            if qr.get("is_correct"):
+                continue
+            ua = qr.get("user_answer")
+            ca = qr.get("correct_answer")
+            qt = qr.get("question_type") or "unknown"
+            if _classify_reason_code is not None:
+                try:
+                    rc = _classify_reason_code(ua, ca, qt)
+                    code = rc.get("code", "WRONG_ANSWER")
+                    qr["reason_code"] = code
+                    qr["reason_label"] = rc.get("label")
+                except Exception:
+                    code = "UNANSWERED" if not ua else "WRONG_ANSWER"
+                    qr["reason_code"] = code
+            else:
+                code = "UNANSWERED" if not ua else "WRONG_ANSWER"
+                qr["reason_code"] = code
+            reason_summary[code] = reason_summary.get(code, 0) + 1
+
+            # Evidence text for "Locate in Text" — only meaningful for reading
+            if test_type == "reading" and _extract_evidence_text is not None:
+                p_text = passage_text_map.get(qr.get("passage")) \
+                    or passage_text_map.get(str(qr.get("passage")))
+                if p_text:
+                    # For MCQ-style questions the answer is just an option
+                    # letter (e.g. "B" or ["B","E"]), which can't be located
+                    # verbatim in the passage. Substitute the option TEXT for
+                    # those letters so the evidence search can find it.
+                    search_input = ca
+                    is_mcq = isinstance(qt, str) and "multiple_choice" in qt
+                    if is_mcq:
+                        opts = question_options_map.get(qr.get("question_id")) \
+                            or question_options_map.get(str(qr.get("question_id"))) \
+                            or question_options_map.get(qid_normalized)
+                        if opts:
+                            def _opt_text_for(letter: str) -> str:
+                                L = str(letter).strip().upper()
+                                for o in opts:
+                                    s = str(o).strip()
+                                    # Match "B: text", "B. text", "B) text" or "B text"
+                                    m = re.match(r"^\s*([A-Za-z])\s*[:.\-)]\s*(.+)$", s)
+                                    if m and m.group(1).upper() == L:
+                                        return m.group(2).strip()
+                                    if s[:1].upper() == L and len(s) > 1 and not s[1:2].isalpha():
+                                        return s[1:].lstrip(" :.-)").strip()
+                                # Fallback: index by alphabetical order if no label prefix
+                                idx_alpha = ord(L) - ord('A')
+                                if 0 <= idx_alpha < len(opts):
+                                    s = str(opts[idx_alpha]).strip()
+                                    m = re.match(r"^\s*([A-Za-z])\s*[:.\-)]\s*(.+)$", s)
+                                    return (m.group(2).strip() if m else s)
+                                return ""
+                            if isinstance(ca, list):
+                                expanded = [t for t in (_opt_text_for(c) for c in ca) if t]
+                                if expanded:
+                                    search_input = expanded
+                            elif isinstance(ca, str) and len(ca.strip()) == 1 and ca.strip().isalpha():
+                                t = _opt_text_for(ca)
+                                if t:
+                                    search_input = t
+                    try:
+                        evidence = _extract_evidence_text(search_input, p_text)
+                        if evidence:
+                            qr["evidence_text"] = evidence
+                    except Exception:
+                        pass
+
+            # Skill tip — reason-code aware tip for the user's specific mistake
+            if _get_skill_tip is not None:
+                try:
+                    qr["skill_tip"] = _get_skill_tip(
+                        section=test_type,
+                        qtype=qt,
+                        accuracy=0.0,
+                        question_text=qr.get("question_text", ""),
+                        correct_ans=ca,
+                        user_answer=ua,
+                        reason_code=code,
+                    )
+                except Exception:
+                    pass
+
+        if _build_root_cause_analysis is not None:
+            try:
+                root_cause_analysis = _build_root_cause_analysis(
+                    reason_summary, {test_type: question_results}
+                )
+            except Exception:
+                root_cause_analysis = []
+        else:
+            root_cause_analysis = []
+
+        # Fastest gain: top weak skills sorted by wrong_count desc
+        fastest_gain = []
+        for s in skill_breakdown:
+            wrong_count = max(0, (s.get("total", 0) or 0) - (s.get("correct", 0) or 0))
+            if wrong_count <= 0:
+                continue
+            fastest_gain.append({
+                "skill_id": s.get("skill_id"),
+                "label": s.get("label"),
+                "question_type": s.get("question_type"),
+                "wrong_count": wrong_count,
+                "total": s.get("total", 0),
+                "correct": s.get("correct", 0),
+                "expected_recovery": max(1, int(round(wrong_count * 0.7))),
+            })
+        fastest_gain.sort(key=lambda x: x["wrong_count"], reverse=True)
+        fastest_gain = fastest_gain[:3]
+
+        # Recommended lessons — local map keyed by question_type (matches
+        # the skill_breakdown items rather than cambridge.py's underscore
+        # naming convention).
+        _LESSON_MAP = {
+            "true_false_notgiven": ("tfng-mastery", "True/False/Not Given Mastery",
+                                    "/mastery?section=reading&lesson=tfng",
+                                    "IELTS Reading Mastery"),
+            "yes_no_notgiven": ("ynng-mastery", "Yes/No/Not Given Strategies",
+                                "/mastery?section=reading&lesson=ynng",
+                                "IELTS Reading Mastery"),
+            "matching_headings": ("headings-mastery", "Matching Headings Technique",
+                                  "/mastery?section=reading&lesson=headings",
+                                  "IELTS Reading Mastery"),
+            "matching_information": ("matching-info", "Matching Information Practice",
+                                     "/mastery?section=reading&lesson=matching",
+                                     "IELTS Reading Mastery"),
+            "sentence_completion": ("sentence-comp", "Sentence Completion Skills",
+                                    "/mastery?section=reading&lesson=sentence",
+                                    "IELTS Reading Mastery"),
+            "summary_completion": ("summary-comp", "Summary Completion Strategy",
+                                   "/mastery?section=reading&lesson=summary",
+                                   "IELTS Reading Mastery"),
+            "note_completion": ("note-comp", "Note Completion Listening",
+                                "/mastery?section=listening&lesson=notes",
+                                "IELTS Listening Mastery"),
+            "form_completion": ("form-comp", "Form Completion Skills",
+                                "/mastery?section=listening&lesson=forms",
+                                "IELTS Listening Mastery"),
+            "map_labeling": ("map-labeling", "Map / Diagram Labelling",
+                             "/mastery?section=listening&lesson=map",
+                             "IELTS Listening Mastery"),
+            "multiple_choice": ("mc-strategy", "Multiple Choice Strategy",
+                                "/mastery?section=skills&lesson=mc",
+                                "IELTS Skills Mastery"),
+            "multiple_choice_two": ("mc-two-strategy", "Multiple Choice (Choose Two)",
+                                    "/mastery?section=skills&lesson=mc-two",
+                                    "IELTS Skills Mastery"),
+            "matching": ("matching-features", "Matching Features",
+                         "/mastery?section=listening&lesson=matching",
+                         "IELTS Listening Mastery"),
+        }
+        recommended_lessons: List[Dict[str, Any]] = []
+        weak_for_recs = [s for s in skill_breakdown
+                         if (s.get("total", 0) or 0) > 0
+                         and ((s.get("correct", 0) or 0) / s["total"]) < 0.7]
+        weak_for_recs.sort(key=lambda s: (s.get("correct", 0) or 0) / max(1, s.get("total", 1)))
+        for s in weak_for_recs[:5]:
+            qt = s.get("question_type") or ""
+            lm = _LESSON_MAP.get(qt)
+            if not lm:
+                continue
+            lesson_id, title, route, course = lm
+            tot = s.get("total", 0) or 0
+            cor = s.get("correct", 0) or 0
+            ratio = (cor / tot) if tot else 0
+            recommended_lessons.append({
+                "lesson_id": lesson_id,
+                "title": title,
+                "course": course,
+                "route": route,
+                "reason": f"Your {s.get('label','this skill')} accuracy is {cor}/{tot} ({int(ratio*100)}%)",
+                "priority": "high" if ratio < 0.4 else "medium",
+            })
+
+        duration_minutes = round((submission.time_taken or 0) / 60)
+
         attempt = TestAttempt(
             user_id=submission.user_id,
             test_id=submission.test_id,
@@ -1664,6 +2209,16 @@ async def submit_test(submission: SubmitAnswers):
                     "detailed": detailed_teacher_feedback,
                 },
                 "question_results": question_results,
+                "reason_summary": reason_summary,
+                "root_cause_analysis": root_cause_analysis,
+                "fastest_gain": fastest_gain,
+                "recommended_lessons": recommended_lessons,
+                "duration_minutes": duration_minutes,
+                "passages": [
+                    {"id": p.get("id"), "title": p.get("title"), "text": p.get("text", "")}
+                    for p in (test.get("passages") or [])
+                ],
+                "transcript": listening_transcripts_map,
             },
             time_taken=submission.time_taken,
         )
@@ -1719,6 +2274,8 @@ async def submit_test(submission: SubmitAnswers):
     # Save attempt
     doc = attempt.model_dump()
     doc["completed_at"] = doc["completed_at"].isoformat()
+    if submission.test_type in ("listening", "reading"):
+        doc["duration_minutes"] = round((submission.time_taken or 0) / 60)
     await db.test_attempts.insert_one(doc)
 
     # Update user history
@@ -2317,6 +2874,23 @@ async def get_dashboard_summary(user_id: str):
             "href": NEW_USER_TASK["mock_section_href"],
         }
 
+    # --- Weekly study time (Monday 00:00 UTC → now) ---
+    # Source = study_time_intervals (heartbeat-tracked active time across the
+    # whole site), not just test attempts. The dial used to read 0h 0m for
+    # everyone because we only summed completed-test durations.
+    week_start = datetime.combine(
+        today - timedelta(days=today.weekday()), time.min, tzinfo=timezone.utc
+    )
+    week_seconds = 0
+    async for row in db.study_time_intervals.aggregate(
+        [
+            {"$match": {"user_id": user_id, "ts": {"$gte": week_start, "$lte": now}}},
+            {"$group": {"_id": None, "total": {"$sum": "$seconds"}}},
+        ]
+    ):
+        week_seconds = int(row.get("total", 0))
+    total_study_minutes_week = week_seconds // 60
+
     # --- Days to exam ---
     exam_date = user.get("exam_date")
     days_remaining = None
@@ -2343,6 +2917,7 @@ async def get_dashboard_summary(user_id: str):
         "weakest_skill": weakest_skill,
         "streak": streak_iso,
         "recent_sessions": recent_sessions,
+        "total_study_minutes_week": total_study_minutes_week,
         "today_task": today_block,
         "liz_message": liz_message,
         "mock_recommendation": mock_recommendation,

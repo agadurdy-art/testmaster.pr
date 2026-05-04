@@ -155,11 +155,25 @@ UPGRADE_TARGETS = {
 }
 
 
-async def resolve_speaking_eval(db, user: Dict[str, Any]) -> EvalDecision:
+FULL_TEST_PLANS = {"monthly", "exam", "master"}
+
+
+async def resolve_speaking_eval(
+    db,
+    user: Dict[str, Any],
+    *,
+    context: str = "practice",
+) -> EvalDecision:
     """Decide allow/mode/quota for a single speaking eval call.
 
     Side-effect: persists plan-expiry downgrade to disk if needed (but does
     NOT increment any counter; that is record_speaking_eval's job).
+
+    `context` is the eval kind from the route layer (practice / qb / cambridge
+    / full_test). Full Test sessions are gated to Monthly + Exam Pack tiers
+    (Aga's pricing call 2026-04-30) — a Free or Weekly user hitting
+    /evaluate-fulltest gets a clean `fulltest_locked` 402 instead of burning
+    their per-part quota.
     """
     user = await _enforce_plan_expiry(db, user)
 
@@ -193,6 +207,16 @@ async def resolve_speaking_eval(db, user: Dict[str, Any]) -> EvalDecision:
     remaining = max(limit - used, 0)
     allowed = used < limit
 
+    # Full Test gate — only Monthly and Exam Pack (and legacy Master) can run
+    # a 3-part holistic eval. Block before considering the per-part quota so
+    # the upgrade message stays specific.
+    locked_message: Optional[str] = None
+    if context == "full_test" and plan_norm not in FULL_TEST_PLANS:
+        allowed = False
+        locked_message = (
+            "Full Test is available on the Monthly and Exam Pack plans."
+        )
+
     # Mode decision.
     if not allowed:
         mode = "basic"  # nominal — never executed when allowed=False
@@ -218,7 +242,10 @@ async def resolve_speaking_eval(db, user: Dict[str, Any]) -> EvalDecision:
         taste_flag_name=TASTE_FLAG_NAME,
         message=(
             None if allowed
-            else f"You've used all {limit} speaking evaluations for this period."
+            else (
+                locked_message
+                or f"You've used all {limit} speaking evaluations for this period."
+            )
         ),
     )
     return decision

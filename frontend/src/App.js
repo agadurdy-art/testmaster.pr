@@ -7,6 +7,7 @@ import { loginWithEmergentSession } from './lib/api';
 import { toast } from 'sonner';
 import { Toaster } from './components/ui/sonner';
 import MobileBottomNav from './components/MobileBottomNav';
+import useStudyTimeTracking from './hooks/useStudyTimeTracking';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AudioProvider } from './contexts/AudioContext';
 import { useI18n } from './lib/i18n';
@@ -26,7 +27,7 @@ import Dashboard from './pages/Dashboard';
 // All other pages - lazy loaded on demand
 const TestInterface = lazy(() => import('./pages/TestInterface'));
 const Results = lazy(() => import('./pages/Results'));
-const TipsPage = lazy(() => import('./pages/TipsPage'));
+const StrategiesGuide = lazy(() => import('./features/strategies/StrategiesGuide'));
 const CoursesPage = lazy(() => import('./pages/CoursesPage'));
 const CourseDetail = lazy(() => import('./pages/CourseDetail'));
 const Profile = lazy(() => import('./pages/Profile'));
@@ -314,6 +315,10 @@ function AppWithSessionHandler() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Heartbeat-based study-time tracking. Mounted once at the top of the
+  // routed app so every authenticated route is counted toward Total Study.
+  useStudyTimeTracking(user?.id);
+
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
@@ -427,9 +432,13 @@ function AppWithSessionHandler() {
           path="/results/:attemptId" 
           element={user ? <Results user={user} /> : <Navigate to="/" />} 
         />
-        <Route 
-          path="/tips" 
-          element={user ? <TipsPage user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
+        <Route
+          path="/tips"
+          element={user ? <StrategiesGuide user={user} onLogout={handleLogout} /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/strategies"
+          element={user ? <StrategiesGuide user={user} onLogout={handleLogout} /> : <Navigate to="/" />}
         />
         <Route 
           path="/courses" 

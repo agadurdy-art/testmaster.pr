@@ -365,6 +365,25 @@ async def evaluate(
         book_id=book_id,
         test_id=test_id,
     )
+    # Mirror to test_attempts so Progress page + Liz see speaking practice.
+    try:
+        from server import persist_attempt as _persist_test_attempt
+        _scores = (result_dump or {}).get("scores") or {}
+        _band = float(_scores.get("overall") or 0.0)
+        await _persist_test_attempt(
+            user_id=user_id,
+            test_id=test_id or f"speaking_{req.part.value}_{question_id or set_id or 'practice'}",
+            test_type="speaking",
+            band_score=_band,
+            feedback={
+                "source": "speaking_unified",
+                "context": context,
+                "part": req.part.value,
+                "scores": _scores,
+            },
+        )
+    except Exception as _e:
+        logger.warning("persist_attempt mirror skipped (speaking /evaluate): %s", _e)
     await record_speaking_eval(db, user, decision)
     await speaking_idempotency.store(
         db,
@@ -719,9 +738,15 @@ async def evaluate_fulltest(
             detail={"code": "invalid_request", "message": str(exc)},
         )
 
-    # Tier gate — Full Test costs 1 attempt regardless of part count.
-    decision = await resolve_speaking_eval(db, user)
+    # Tier gate — Full Test costs 1 attempt regardless of part count, AND is
+    # plan-restricted to Monthly + Exam Pack (resolve_speaking_eval enforces
+    # the plan check when context='full_test').
+    decision = await resolve_speaking_eval(db, user, context="full_test")
     if not decision.allowed:
+        # Distinguish "you don't have this feature" from "you're out of quota"
+        # so the frontend can route to /pricing instead of "wait until reset".
+        is_plan_locked = decision.plan not in {"monthly", "exam", "master"}
+        error_code = "fulltest_locked" if is_plan_locked else "quota_exhausted"
         await _emit_telemetry({
             "_id": uuid.uuid4().hex,
             "ts": datetime.now(timezone.utc),
@@ -731,7 +756,7 @@ async def evaluate_fulltest(
             "mode": decision.mode,
             "context": "full_test",
             "success": False,
-            "error_code": "quota_exhausted",
+            "error_code": error_code,
             "quota_remaining": decision.remaining,
             "period_key": decision.period_key,
             "latency_ms": 0,
@@ -739,7 +764,7 @@ async def evaluate_fulltest(
         raise HTTPException(
             status_code=402,
             detail={
-                "code": "quota_exhausted",
+                "code": error_code,
                 "message": decision.message
                     or "You've used all evaluations for this period.",
                 "quota": decision.quota,
@@ -820,6 +845,24 @@ async def evaluate_fulltest(
         decision=decision,
         test_id=test_id,
     )
+    # Mirror to test_attempts so Progress + Liz see the holistic full test.
+    try:
+        from server import persist_attempt as _persist_test_attempt
+        _scores = (result_dump or {}).get("scores") or {}
+        _band = float(_scores.get("overall") or 0.0)
+        await _persist_test_attempt(
+            user_id=user_id,
+            test_id=test_id or "speaking_full_test",
+            test_type="speaking",
+            band_score=_band,
+            feedback={
+                "source": "speaking_fulltest",
+                "scores": _scores,
+                "target_band": req.target_band,
+            },
+        )
+    except Exception as _e:
+        logger.warning("persist_attempt mirror skipped (speaking fulltest): %s", _e)
     await record_speaking_eval(db, user, decision)
     await speaking_idempotency.store(
         db,

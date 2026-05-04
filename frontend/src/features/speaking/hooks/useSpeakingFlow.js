@@ -27,6 +27,7 @@ export function useSpeakingFlow({ prepSeconds = 60, recordSeconds = 120 } = {}) 
   // Real audio + scoring state
   const [audioBlob, setAudioBlob] = useState(null);
   const [audioError, setAudioError] = useState(null);
+  const [audioReady, setAudioReady] = useState(false);
   const [scoreResult, setScoreResult] = useState(null);
   const [scoreError, setScoreError] = useState(null);
 
@@ -67,6 +68,7 @@ export function useSpeakingFlow({ prepSeconds = 60, recordSeconds = 120 } = {}) 
     clearTimers();
     setPrepRemaining(prepSeconds);
     setAudioBlob(null);
+    setAudioReady(false);
     setAudioError(null);
     setScoreResult(null);
     setScoreError(null);
@@ -77,6 +79,8 @@ export function useSpeakingFlow({ prepSeconds = 60, recordSeconds = 120 } = {}) 
     clearTimers();
     setRecordRemaining(recordSeconds);
     setSpokenWordCount(0);
+    setAudioBlob(null);
+    setAudioReady(false);
     recordStartedAtRef.current = Date.now();
     recordedDurationRef.current = 0;
     setState('recording');
@@ -107,6 +111,7 @@ export function useSpeakingFlow({ prepSeconds = 60, recordSeconds = 120 } = {}) 
     setRecordRemaining(recordSeconds);
     setSpokenWordCount(0);
     setAudioBlob(null);
+    setAudioReady(false);
     setAudioError(null);
     setScoreResult(null);
     setScoreError(null);
@@ -193,6 +198,9 @@ export function useSpeakingFlow({ prepSeconds = 60, recordSeconds = 120 } = {}) 
           const blob = new Blob(chunksRef.current, { type: rec.mimeType || 'audio/webm' });
           chunksRef.current = [];
           if (blob.size > 0) setAudioBlob(blob);
+          // Always mark "audio finalised" — even if empty — so the submission
+          // useEffect downstream knows it can stop waiting.
+          setAudioReady(true);
         };
         rec.start();
       } catch (err) {
@@ -319,7 +327,7 @@ export function useSpeakingFlow({ prepSeconds = 60, recordSeconds = 120 } = {}) 
     recordRemaining, spokenWordCount,
     startPrep, startRecording, startProcessing, showResults, showError, reset,
     // real backend integration
-    audioBlob, audioError,
+    audioBlob, audioError, audioReady,
     scoreResult, scoreError,
     submitScoring,
   };

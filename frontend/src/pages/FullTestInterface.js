@@ -569,7 +569,13 @@ export default function FullTestInterface({ user }) {
             : (meta.description || `Part ${p}`);
         }
         formData.append(`${partKey}_cue_card_prompt`, cuePrompt.slice(0, 1000));
-        formData.append(`${partKey}_cue_card_bullets`, JSON.stringify(cueBullets.slice(0, 6)));
+        // Backend expects newline-separated bullets (see _split_bullets in
+        // routes/speaking_unified.py). Sending JSON here used to produce an
+        // unsplit `["a","b"]` literal that broke Sonnet's structured prompt.
+        formData.append(
+          `${partKey}_cue_card_bullets`,
+          cueBullets.slice(0, 6).filter(Boolean).join('\n'),
+        );
         formData.append(
           `${partKey}_duration_seconds`,
           String(Math.min(600, Math.round(rec.duration || 0))),
@@ -580,9 +586,24 @@ export default function FullTestInterface({ user }) {
         method: 'POST',
         body: formData,
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        throw new Error(data?.detail || `HTTP ${res.status}`);
+        // Backend raises HTTPException(detail={code, message, attempts, last_error}).
+        // Old code stringified the object as "[object Object]" which hid the
+        // real failure. Pull the message out so the toast is actionable.
+        const detail = data?.detail;
+        let msg;
+        if (typeof detail === 'string') {
+          msg = detail;
+        } else if (detail && typeof detail === 'object') {
+          msg = detail.message || detail.code || JSON.stringify(detail);
+        } else {
+          msg = `HTTP ${res.status}`;
+        }
+        const err = new Error(msg);
+        err.detail = detail;
+        err.status = res.status;
+        throw err;
       }
       setFulltestSpeakingResult(data);
       setSectionAnswers(prev => ({

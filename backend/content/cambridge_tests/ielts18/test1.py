@@ -555,3 +555,13 @@ Jah describes himself as a space environmentalist: 'I want to make space a place
         }
     }
 }
+
+
+# Attach official Cambridge audioscripts to the listening section so the
+# results page can render the "Audioscript" modal + per-part panels.
+try:
+    from .audioscripts import IELTS18_AUDIOSCRIPTS as _A
+except ImportError:
+    from audioscripts import IELTS18_AUDIOSCRIPTS as _A
+IELTS18_TEST1["sections"]["listening"]["transcripts"] = _A.get(1, {})
+del _A

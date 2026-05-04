@@ -18,7 +18,7 @@ Pipeline shape:
 from __future__ import annotations
 
 from enum import Enum
-from typing import List, Literal, Optional
+from typing import Any, Dict, List, Literal, Optional
 
 from pydantic import BaseModel, Field, field_validator
 
@@ -103,6 +103,30 @@ class Fluency(BaseModel):
     words: int = Field(..., ge=0)
 
 
+# ---------- Vocabulary profile (CEFR distribution) ----------
+
+
+class VocabularyProfile(BaseModel):
+    """CEFR (A1-C2) vocabulary distribution as percentages of distinct
+    content words in the candidate's transcript. Optional — present only
+    when the evaluator LLM returns it, since per-word CEFR lookup is
+    estimated, not measured. Percentages should sum to ~100 (±2 for
+    rounding); the frontend tolerates small drift.
+
+    `c1_c2_examples` and `b2_examples` carry up to 4 verbatim words
+    apiece so the UI can show *which* words push the candidate's range
+    higher — task #137.
+    """
+    a1: float = Field(..., ge=0, le=100)
+    a2: float = Field(..., ge=0, le=100)
+    b1: float = Field(..., ge=0, le=100)
+    b2: float = Field(..., ge=0, le=100)
+    c1: float = Field(..., ge=0, le=100)
+    c2: float = Field(..., ge=0, le=100)
+    b2_examples: List[str] = Field(default_factory=list, max_length=4)
+    c1_c2_examples: List[str] = Field(default_factory=list, max_length=4)
+
+
 # ---------- Transcript tokens ----------
 
 
@@ -129,6 +153,18 @@ class SpeakingEvaluationResult(BaseModel):
     live_transcript_words: List[str] = Field(default_factory=list)
     liz_note: str = Field(..., min_length=1, max_length=1000)
     feedback_language: str = Field(..., min_length=2, max_length=5)
+    # Optional Azure-only deep-feedback bundle. Populated post-validation by
+    # evaluate_speaking() in full mode; null in basic/Whisper mode. The
+    # frontend's PremiumPronunciationDrawer reads these directly — keep the
+    # field names aligned with that contract (azure_scores, accuracy_score,
+    # problem_phonemes).
+    pronunciation_analysis: Optional[Dict[str, Any]] = None
+    word_level_results: Optional[List[Dict[str, Any]]] = None
+    # Optional CEFR vocabulary distribution (task #137). The evaluator LLM
+    # estimates per-level percentages from distinct content words; the UI
+    # renders a stacked bar with B2/C1+ example chips. Optional because old
+    # cached results pre-#137 won't have it.
+    vocabulary_profile: Optional[VocabularyProfile] = None
 
 
 # ---------- Request ----------

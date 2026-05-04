@@ -652,3 +652,13 @@ The time seems right for abandoning the naive notions of intelligent design and 
         }
     }
 }
+
+
+# Attach official Cambridge audioscripts to the listening section so the
+# results page can render the "Audioscript" modal + per-part panels.
+try:
+    from .audioscripts import IELTS17_AUDIOSCRIPTS as _A
+except ImportError:
+    from audioscripts import IELTS17_AUDIOSCRIPTS as _A
+IELTS17_TEST2["sections"]["listening"]["transcripts"] = _A.get(2, {})
+del _A

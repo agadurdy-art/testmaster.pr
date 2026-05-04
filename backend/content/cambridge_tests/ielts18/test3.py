@@ -601,3 +601,13 @@ IELTS18_TEST3 = {
         }
     }
 }
+
+
+# Attach official Cambridge audioscripts to the listening section so the
+# results page can render the "Audioscript" modal + per-part panels.
+try:
+    from .audioscripts import IELTS18_AUDIOSCRIPTS as _A
+except ImportError:
+    from audioscripts import IELTS18_AUDIOSCRIPTS as _A
+IELTS18_TEST3["sections"]["listening"]["transcripts"] = _A.get(3, {})
+del _A
