@@ -1,3 +1,25 @@
+# IELTS Ace — Pre-deploy PRD (2026-04-23, last updated 2026-02 fork iter76)
+
+## Latest fork (commit 10d69bc6 — applied + verified 2026-02)
+- **NEW** Cambridge audioscripts: Cam17 T1-T4, Cam18 T1-T4 attached to test*.py modules; Cam19 T1+T2 audioscripts shipped as `content/cambridge_tests/ielts19/audioscripts.py` and runtime-attached via `server.py:986 get_cambridge_listening_transcripts` (no static BOOKS entry — by design).
+- **NEW** Backend writing evaluator V4 ("Liz's Margin") integrated at `routes/full_test.py:917 evaluate_writing_section` — emits `evaluator_v2` payload per task with: overall_band, criteria{TA/CC/LR/GRA}, inline_annotations, improved_version, response_diagnosis, highest_priority_fixes, rewrite_guidance, recommended_lesson, feedback_language.
+- **NEW** FullTestResults page redesigned: 5-tab SceneBar (Overview / Reading / Listening / Writing / Speaking) at `frontend/src/pages/FullTestResults.js`; tabs lazy-render `ReadingResultsLayout`, `ListeningResultsLayout`, `WritingEvaluatorResult`, `SpeakingResultsState`.
+- **NEW** `frontend/src/features/results/` — ListeningResultsLayout.jsx + ReadingResultsLayout.jsx + ReadingListeningDrilldown.jsx (P1-P4 drilldowns).
+- **REMOVED** Liz Live (Gemini Live WS) pipeline: liz_live.py, LizLivePanel.jsx, useLizLive.js, smoke_liz_live_ws.py — confirmed intentional by user.
+
+### Iter75/76 fixes
+- FIXED `routes/full_test.py:626` — dropped erroneous `await` on sync `generate_lesson_recommendations` (was 500'ing every full-test completion).
+- FIXED tester password — re-seeded bcrypt for geldiaga67@gmail.com → 'geldiaga67' so /api/auth/login returns 200.
+- INSTALLED `@elevenlabs/react@^1.2.1` (was missing in node_modules causing 3 frontend compile errors in LizD8.jsx, useElevenLabsLiz.js, SpeakingPractice.jsx).
+- VERIFIED 5 mobile polish fixes survived overlay: LandingNav drawer outside <header>, landing.css hero-grid minmax(0,1.05fr), AnnotatedEssayPanel marginRight flip, App.js has-mobile-bottom-nav body-class, server.py speaking_unified mounted before speaking_qb.
+- VERIFIED `services/llm_compat.py` Anthropic-only (claude-sonnet-4-5, AsyncAnthropic, ANTHROPIC_API_KEY) — no GPT-4o fallback.
+
+### Known/non-blocker
+- `GET /api/full-test/results/{session_id}` is a stub (success:false). FullTestResults.js falls back to navigation-state — refresh loses results. Pre-existing.
+- K8s ingress 60s hard timeout: full Task1+Task2 writing eval (~80–90s LLM) returns 502 at proxy in synthetic backend tests; real browser UI awaits the full call.
+
+---
+
 # IELTS Ace — Pre-deploy PRD (2026-04-23)
 
 ## Original Problem Statement
