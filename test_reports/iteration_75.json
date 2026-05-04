@@ -1,0 +1,64 @@
+{
+  "summary": "Iteration 75 – commit 10d69bc6 handoff verification. 21/27 backend tests passed. Static checks on llm_compat.py, writing_evaluator_v2 (V4), full_test.py:917 V4 hook, FullTestResults.js 5-tab SceneBar, and features/results/index.js all PASS. Found 3 real P1 bugs: (a) /api/full-test/complete returns 500 — generate_lesson_recommendations is sync def in cambridge.py:1911 but awaited in full_test.py:626, breaking every full-test completion and blocking the new 5-tab results UI end-to-end; (b) /api/cambridge/books does not expose ielts19 despite audioscripts shipped in content/cambridge_tests/ielts19/audioscripts.py — no ielts19.test1.py/test2.py and no BOOKS entry in routes/cambridge.py, so /api/cambridge/test/ielts19/test1 and test2 return 404; (c) tester login (geldiaga67@gmail.com / geldiaga67) returns 401 even though /api/auth/register says the email is already registered — password hash mismatch. Landing page loads with no compile errors.",
+  "backend_issues": {
+    "critical": [
+      {"endpoint": "POST /api/full-test/complete", "issue": "500 Internal Server Error — TypeError: object list can't be used in 'await' expression. generate_lesson_recommendations (defined sync in routes/cambridge.py:1911, returns list) is awaited at routes/full_test.py:626. Blocks every full test completion → the new 5-tab Results UI never gets data.", "priority": "CRITICAL"},
+      {"endpoint": "GET /api/cambridge/books, GET /api/cambridge/test/ielts19/{test1|test2}", "issue": "ielts19 not exposed. BOOKS registry in routes/cambridge.py only has ielts17 + ielts18, and content/cambridge_tests/ielts19/ only ships audioscripts.py (no test1.py/test2.py). Result: ielts19 T1/T2 transcripts cannot reach the UI. /api/cambridge/test/ielts19/test1 → 404 'Book not found'.", "priority": "HIGH"},
+      {"endpoint": "POST /api/auth/login", "issue": "Tester account geldiaga67@gmail.com / geldiaga67 from /app/memory/test_credentials.md returns 401 'Invalid email or password', but /api/auth/register says 'Email is already registered'. Password hash in users collection no longer matches the documented value — re-seed required.", "priority": "HIGH"}
+    ],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [
+      {"flow": "FullTestResults 5-tab UI", "issue": "Could not verify live rendering of Overview/Reading/Listening/Writing/Speaking drilldowns because the upstream /api/full-test/complete crashes with 500. FullTestResults.js imports and tab wiring (SceneBar with validTabs = ['overview','reading','listening','writing','speaking'], ReadingResultsLayout, ListeningResultsLayout, WritingEvaluatorResult, SpeakingResultsState) look correct in source. Needs retest once backend fix is applied.", "affected_selectors": ["SceneBar tabs"]}
+    ],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_handoff_iter75.py",
+    "/app/test_reports/pytest/iter75_results.xml"
+  ],
+  "action_items": [
+    "FIX /app/backend/routes/full_test.py:626 — remove the `await` from `generate_lesson_recommendations(...)` (function is sync) OR convert `generate_lesson_recommendations` in routes/cambridge.py:1911 to async. Today: `results['recommended_lessons'] = await generate_lesson_recommendations(...)` crashes with TypeError.",
+    "WIRE ielts19 into routes/cambridge.py: add ielts19.test1.py / ielts19.test2.py content modules (or adapt audioscripts.py into IELTS19_TEST1/TEST2 dicts) and register them in the BOOKS dict after line 92 so /api/cambridge/books returns ielts19 and /api/cambridge/test/ielts19/test1|test2 succeeds. Handoff note says Cam19 has only T1/T2 — so no T3/T4 needed.",
+    "RE-SEED tester password: run the user-seed script (or call /api/auth/register with a wipe, or update users collection) so geldiaga67@gmail.com again accepts password 'geldiaga67'. Without this, all auth-gated UI smoke tests fail.",
+    "OPTIONAL: after the three fixes above, retest end-to-end flow via UI: login → start academic_set_a_01 → submit writing answers → complete → confirm 5 tabs render with V4 margin payload in Writing tab and audio_script text in Listening drilldown."
+  ],
+  "critical_code_review_comments": [
+    "routes/full_test.py:917 writing V4 integration is correctly implemented — imports evaluate_writing as evaluate_writing_v4 from services.writing_evaluator_v2 and emits evaluator_v2 + crit fields per task.",
+    "services/llm_compat.py is clean: shim pins claude-sonnet-4-5, routes via AsyncAnthropic with ANTHROPIC_API_KEY, ignores any non-Anthropic provider request. No fallback to OpenAI remains.",
+    "routes/full_test.py:626 sync-vs-async mismatch on generate_lesson_recommendations is a systemic 500 — any successful full test completion is impossible today. Likely regression introduced with V4 wiring.",
+    "content/cambridge_tests/ielts19/ is orphaned — audioscripts.py shipped without the test data modules or BOOKS registration expected by routes/cambridge.py. Either finish the wiring or remove the directory to avoid dead content.",
+    "Frontend FullTestResults.js correctly defines the 5-tab SceneBar, lazy-renders per-tab layouts, and URL-syncs the active tab. features/results/index.js exports the three new drilldown components. No structural issues found."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_handoff_iter75.py"
+  ],
+  "success_rate": {"backend": "78% (21/27)", "frontend": "landing loads clean; 5-tab Results UI not end-to-end testable until complete endpoint fix"},
+  "test_credentials": {
+    "email": "geldiaga67@gmail.com",
+    "password": "geldiaga67 (from /app/memory/test_credentials.md — CURRENTLY REJECTED BY /api/auth/login, needs re-seed)"
+  },
+  "seed_data_creation": "None — tried to register the tester account; backend reported email already registered but login still 401.",
+  "retest_needed": true,
+  "main_agent_can_self_test": false,
+  "context_for_next_testing_agent": "Backend /api/full-test/complete is a hard blocker — every completion 500s due to `await generate_lesson_recommendations(...)` in routes/full_test.py:626 where the helper in routes/cambridge.py:1911 is a plain def. Once that's fixed, rerun backend/tests/test_handoff_iter75.py (TestFullTestFlow + TestWritingV4Runtime) to confirm the writing block includes evaluator_v2 keys. For ielts19 verify /api/cambridge/test/ielts19/test1 returns sections.listening.transcripts with Cam19 T1 content and that /api/cambridge/books lists ielts19. For UI retest, after re-seeding tester password: login → /full-test → academic_set_a_01 → submit writing → complete → check that all 5 SceneBar tabs render and Listening tab shows audio_script text.",
+  "rca of the issue": {
+    "bug_1_full_test_complete_500": {
+      "repro": "curl -X POST https://handoff-2026.preview.emergentagent.com/api/full-test/complete -H 'Content-Type: application/json' -d '{\"session_id\":\"<any>\",\"test_id\":\"academic_set_a_01\",\"all_answers\":{\"listening\":{},\"reading\":{},\"writing\":{},\"speaking\":{}},\"section_times\":{},\"mode\":\"full\"}' → 500",
+      "root_cause": "routes/full_test.py line 626: results['recommended_lessons'] = await generate_lesson_recommendations(skill_breakdown, test.get('test_type','academic')) — but routes/cambridge.py:1911 defines generate_lesson_recommendations as synchronous `def` returning a list. Awaiting a list raises TypeError.",
+      "fix": "Drop the `await` (helper is pure/sync) OR wrap helper as `async def` if future work needs IO."
+    },
+    "bug_2_ielts19_not_registered": {
+      "repro": "curl https://handoff-2026.preview.emergentagent.com/api/cambridge/test/ielts19/test1 → 404 'Book ielts19 not found'; GET /api/cambridge/books shows only ielts17 + ielts18.",
+      "root_cause": "routes/cambridge.py imports IELTS17_TEST{1..4} and IELTS18_TEST{1..4} (lines 24-67) and the BOOKS dict (lines 78-92) only lists those two books. /app/backend/content/cambridge_tests/ielts19/ has only audioscripts.py + __init__.py — no test1.py/test2.py modules, so there is nothing to import.",
+      "fix": "Create content/cambridge_tests/ielts19/test1.py + test2.py (mirroring ielts18 structure, consuming audioscripts.py) and add 'ielts19': { ... } entry to BOOKS."
+    },
+    "bug_3_tester_login_401": {
+      "repro": "POST /api/auth/login {email:geldiaga67@gmail.com, password:geldiaga67} → 401. POST /api/auth/register same email → 'Email is already registered'.",
+      "root_cause": "Stored password_hash for this user no longer matches 'geldiaga67' (likely reset during a previous reseed).",
+      "fix": "Reset password for the tester account (either via a maintenance script that updates bcrypt('geldiaga67') or by deleting + re-registering the user)."
+    }
+  }
+}
