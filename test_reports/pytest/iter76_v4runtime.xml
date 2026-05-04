@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="60.814" timestamp="2026-05-04T23:32:25.584828+00:00" hostname="agent-env-144ad3ac-56d7-4239-bf69-9359f74e345b"><testcase classname="backend.tests.test_handoff_iter75.TestWritingV4Runtime" name="test_complete_with_writing_answers" time="60.742"><failure message="AssertionError: complete: 502 The preview environment is not responding. It may be starting up.&#10;  &#10;assert 502 == 200&#10; +  where 502 = &lt;Response [502]&gt;.status_code">backend/tests/test_handoff_iter75.py:244: in test_complete_with_writing_answers
+    assert c.status_code == 200, f"complete: {c.status_code} {c.text[:300]}"
+E   AssertionError: complete: 502 The preview environment is not responding. It may be starting up.
+E     
+E   assert 502 == 200
+E    +  where 502 = &lt;Response [502]&gt;.status_code</failure></testcase></testsuite></testsuites>

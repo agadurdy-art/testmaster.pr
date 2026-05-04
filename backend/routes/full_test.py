@@ -622,8 +622,8 @@ async def evaluate_full_test(
                 reason_counts[rc] = reason_counts.get(rc, 0) + 1
         results["reason_summary"] = reason_counts
 
-        # Recommended lessons
-        results["recommended_lessons"] = await generate_lesson_recommendations(skill_breakdown, test.get("test_type", "academic"))
+        # Recommended lessons (helper is sync — no await)
+        results["recommended_lessons"] = generate_lesson_recommendations(skill_breakdown, test.get("test_type", "academic"))
 
         results["root_cause_analysis"] = build_root_cause_analysis(
             reason_counts,
