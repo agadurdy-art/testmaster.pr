@@ -151,11 +151,13 @@ UPGRADE_TARGETS = {
     "explorer": ["weekly", "monthly", "exam"],
     "learner":  ["monthly", "exam"],
     "achiever": ["monthly", "exam"],
-    "master":   [],
+    # IELTS has no "master" plan — legacy GE master users must move to a
+    # real IELTS plan to unlock Full Test + Speaking eval.
+    "master":   ["monthly", "exam"],
 }
 
 
-FULL_TEST_PLANS = {"monthly", "exam", "master"}
+FULL_TEST_PLANS = {"monthly", "exam"}
 
 
 async def resolve_speaking_eval(
@@ -207,9 +209,11 @@ async def resolve_speaking_eval(
     remaining = max(limit - used, 0)
     allowed = used < limit
 
-    # Full Test gate — only Monthly and Exam Pack (and legacy Master) can run
-    # a 3-part holistic eval. Block before considering the per-part quota so
-    # the upgrade message stays specific.
+    # Full Test gate — only Monthly and Exam Pack can run a 3-part holistic
+    # eval. IELTS does not have a "master" plan; legacy GE master users must
+    # upgrade to a real IELTS plan (monthly / exam) for Full Test access.
+    # Block before considering the per-part quota so the upgrade message
+    # stays specific.
     locked_message: Optional[str] = None
     if context == "full_test" and plan_norm not in FULL_TEST_PLANS:
         allowed = False

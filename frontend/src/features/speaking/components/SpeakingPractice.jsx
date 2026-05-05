@@ -23,7 +23,7 @@ const CONVERSATIONAL_PARTS = new Set(['part1', 'part3']);
 // backend/services/tier_resolver.py). Free / Weekly users see a locked card
 // in PartSelector and a clean upgrade panel inside FullTestFlow if they
 // somehow bypass the gate.
-const FULL_TEST_PLANS = new Set(['monthly', 'exam', 'master']);
+const FULL_TEST_PLANS = new Set(['monthly', 'exam']);
 
 // /api/speaking/evaluate requires a non-empty cue_card_prompt, but Part 1/3
 // don't have one — the meaningful prompts came from Liz at runtime. Send a

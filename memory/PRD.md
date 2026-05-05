@@ -1,5 +1,35 @@
 # IELTS Ace — Pre-deploy PRD (2026-04-23, last updated 2026-02 fork iter76)
 
+## Latest fork (commit eb5e4e9d + audit fixes — applied + verified 2026-02 fork iter78)
+
+### Plan terminology audit — IELTS plans only (`free` / `weekly` / `monthly` / `exam`)
+User clarified: **IELTS has NO `master` plan** — `master` is GE-legacy only. Removed `master` from every IELTS-side gate:
+- `services/tier_resolver.py:158` — `FULL_TEST_PLANS = {"monthly", "exam"}` (was `{..., "master"}`)
+- `routes/speaking_unified.py:748` — `is_plan_locked = decision.plan not in {"monthly", "exam"}`
+- `frontend/src/features/speaking/components/SpeakingPractice.jsx:26` — `FULL_TEST_PLANS = new Set(['monthly', 'exam'])`
+- `tier_resolver.py:UPGRADE_TARGETS["master"]` now suggests `["monthly", "exam"]` instead of `[]` so legacy GE master users get a clear path to IELTS top tier.
+- `memory/test_credentials.md` updated — no longer lists `master` as an upgrade option.
+- DB user `aga.durdy@gmail.com` (admin) migrated `master` → `monthly` (admins bypass quota anyway via `is_admin_user` check at tier_resolver.py:190).
+
+Legacy GE refs intentionally KEPT for backward compat: `payments.py` (PayPal plan IDs + bank checkout for GE), `usage_tracking.py` (GE plan limits), `pages/PricingPage.js` (legacy `/pricing/ge` route), Profile.js `LEGACY_PLAN_KEYS`, planAccess.js `pro: 'master'` alias.
+
+### Cambridge content audit (raw assets reachable)
+| Book | test*.py modules | Audio files | Visual images |
+|------|---|---|---|
+| **ielts17** | ✅ test1-test4 (4/4) | ✅ 16/16 LOCAL pod (`/api/audio/cambridge/ielts17/...` → 200) | ✅ 3/3 PNG (test2/3/4 writing task1) → 200 |
+| **ielts18** | ✅ test1-test4 (4/4) | ✅ 16/16 `customer-assets.emergentagent.com` CDN → 200 (6.9MB MP3 verified) | ✅ 6/6 PNG CDN → 200 |
+| **ielts19** | ⚠️ Only `audioscripts.py` (T1+T2) | Served via DB-stored tests + `server.py:986 get_cambridge_listening_transcripts` runtime attachment | (Per user: dashboard listening flow works locally with this setup) |
+
+`/api/cambridge/books` exposes `ielts17 + ielts18` only (ielts19 is intentionally not in `CAMBRIDGE_TESTS` registry — handled by separate dashboard listening flow per user).
+
+### Earlier eb5e4e9d fixes (still active)
+- `db.full_test_results` MongoDB collection — `routes/full_test.py:complete_test` upserts payload by `session_id` (uuid4 = share token).
+- `GET /api/full-test/results/{session_id}` — real DB lookup, 404 if missing.
+- `App.js` `/full-test/results/:sessionId` is PUBLIC.
+- "Copy share link" button (`copy-share-link-btn`) in `FullTestResults.js`.
+- `evaluate_writing_section` runs Task1+Task2 via `asyncio.gather` (~46s wall-clock vs ~70s serial).
+- `schemas/speaking_evaluator.py:Fluency.wpm` — `mode="before"` validator clamps to [0, 400].
+
 ## Latest fork (commit eb5e4e9d — applied + verified 2026-02 fork iter77)
 - **NEW** `db.full_test_results` MongoDB collection — `routes/full_test.py:complete_test` now upserts the full payload by `session_id` (uuid4 = share token). Auto-created, no manual seed.
 - **NEW** `GET /api/full-test/results/{session_id}` — replaced stub with real DB lookup; returns 404 if missing. Refresh / bookmark / share now restore the 5-tab UI.

@@ -745,7 +745,7 @@ async def evaluate_fulltest(
     if not decision.allowed:
         # Distinguish "you don't have this feature" from "you're out of quota"
         # so the frontend can route to /pricing instead of "wait until reset".
-        is_plan_locked = decision.plan not in {"monthly", "exam", "master"}
+        is_plan_locked = decision.plan not in {"monthly", "exam"}
         error_code = "fulltest_locked" if is_plan_locked else "quota_exhausted"
         await _emit_telemetry({
             "_id": uuid.uuid4().hex,
