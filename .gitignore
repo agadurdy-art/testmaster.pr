@@ -537,3 +537,12 @@ credentials.json
 
 # Strategies guide — local backup of originals before image crops
 backend/static/strategies/**/_orig_backup/
+-e 
+# Environment and credential files
+.env
+.env.*
+*.env
+credentials.json
+*.pem
+*.key
+.credentials
