@@ -13,6 +13,7 @@ from datetime import datetime, timezone
 import uuid
 import json
 import os
+import asyncio
 
 router = APIRouter(prefix="/api/full-test", tags=["Full Test Mode"])
 
@@ -468,28 +469,64 @@ async def complete_test(
     except Exception as e:
         print(f"persist_attempt mirror skipped (full_test): {e}")
 
-    return {
+    completed_at = datetime.now(timezone.utc).isoformat()
+    response_payload = {
         "success": True,
         "session_id": session_id,
         "test_id": test_id,
         "mode": mode,
-        "completed_at": datetime.now(timezone.utc).isoformat(),
-        "results": results
+        "completed_at": completed_at,
+        "results": results,
     }
+
+    # Persist full results so the FullTestResults page survives refresh /
+    # bookmark / share. Keyed by session_id (uuid4 = share token).
+    try:
+        from server import db
+        await db.full_test_results.update_one(
+            {"session_id": session_id},
+            {"$set": {
+                "session_id": session_id,
+                "test_id": test_id,
+                "mode": mode,
+                "user_id": user_id,
+                "completed_at": completed_at,
+                "results": results,
+            }},
+            upsert=True,
+        )
+    except Exception as e:
+        print(f"Warning: Could not persist full_test_results: {e}")
+
+    return response_payload
 
 
 @router.get("/results/{session_id}")
 async def get_test_results(session_id: str):
     """
-    Get results for a completed test session.
-    
-    In production, retrieves from database.
+    Get results for a completed test session from MongoDB.
+    Public — session_id (uuid4) acts as the share token.
+    Returns 404 if not found.
     """
-    # In production, fetch from database
+    try:
+        from server import db
+        doc = await db.full_test_results.find_one(
+            {"session_id": session_id}, {"_id": 0}
+        )
+    except Exception as e:
+        print(f"full_test_results lookup error: {e}")
+        raise HTTPException(status_code=500, detail="Results store unavailable")
+
+    if not doc:
+        raise HTTPException(status_code=404, detail="Results not found")
+
     return {
-        "success": False,
-        "message": "Results retrieval requires database integration",
-        "session_id": session_id
+        "success": True,
+        "session_id": session_id,
+        "test_id": doc.get("test_id"),
+        "mode": doc.get("mode", "full"),
+        "completed_at": doc.get("completed_at"),
+        "results": doc.get("results", {}),
     }
 
 
@@ -936,23 +973,22 @@ async def evaluate_writing_section(test: Dict, answers: Dict) -> Dict:
         }
 
     test_writing = (test.get("sections") or {}).get("writing") or {}
-    task_results: List[Dict[str, Any]] = []
+    tasks_list = list(test_writing.get("tasks", []))
 
-    for task in test_writing.get("tasks", []):
+    async def _eval_one(task: Dict[str, Any]) -> Dict[str, Any]:
         task_num = task.get("task_number") or 0
         user_response = (answers or {}).get(f"task{task_num}", "") or ""
         prompt_text = task.get("prompt") or task.get("question") or ""
 
         if not user_response.strip():
-            task_results.append({
+            return {
                 "task": task_num,
                 "band": 0,
                 "essay_text": "",
                 "prompt": prompt_text,
                 "evaluator_v2": None,
                 "feedback": "No response provided",
-            })
-            continue
+            }
 
         # Map task → V4 task_type_hint enum
         try:
@@ -976,7 +1012,7 @@ async def evaluate_writing_section(test: Dict, answers: Dict) -> Dict:
             )
 
             crit = v4_result.criteria
-            task_results.append({
+            return {
                 "task": task_num,
                 "band": v4_result.overall_band,
                 "essay_text": user_response,
@@ -993,10 +1029,10 @@ async def evaluate_writing_section(test: Dict, answers: Dict) -> Dict:
                 "weaknesses": list(crit.task_achievement.weaknesses or []),
                 "feedback": crit.task_achievement.explanation,
                 "word_count_penalty": v4_result.word_count < v4_result.word_count_target,
-            })
+            }
         except EvaluatorFailure as exc:
             print(f"Writing V4 evaluator failed for task {task_num}: {exc.last_error}")
-            task_results.append({
+            return {
                 "task": task_num,
                 "band": 0,
                 "essay_text": user_response,
@@ -1004,10 +1040,10 @@ async def evaluate_writing_section(test: Dict, answers: Dict) -> Dict:
                 "evaluator_v2": None,
                 "feedback": f"Evaluation failed after {exc.attempts} attempts",
                 "error": str(exc.last_error or exc),
-            })
+            }
         except Exception as exc:
             print(f"Writing evaluation error for task {task_num}: {exc}")
-            task_results.append({
+            return {
                 "task": task_num,
                 "band": 0,
                 "essay_text": user_response,
@@ -1015,7 +1051,16 @@ async def evaluate_writing_section(test: Dict, answers: Dict) -> Dict:
                 "evaluator_v2": None,
                 "feedback": "Evaluation failed",
                 "error": str(exc),
-            })
+            }
+
+    # Run Task1 + Task2 in parallel — wall-clock ~30-35s vs ~50-70s serial,
+    # which keeps us inside the K8s 60s ingress timeout for /complete.
+    if tasks_list:
+        task_results: List[Dict[str, Any]] = list(
+            await asyncio.gather(*[_eval_one(t) for t in tasks_list])
+        )
+    else:
+        task_results = []
 
     # Overall writing band: Task 2 weighted double (matching IELTS scoring)
     if task_results:

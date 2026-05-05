@@ -7,7 +7,8 @@ import {
   ArrowLeft, BookOpen, Headphones, PenTool, Mic,
   CheckCircle, TrendingUp, Target, Info,
   Lightbulb, Loader2, Award,
-  AlertTriangle, Zap, GraduationCap, ChevronRight, X, MapPin, MessageCircle
+  AlertTriangle, Zap, GraduationCap, ChevronRight, X, MapPin, MessageCircle,
+  Link2, Check
 } from 'lucide-react';
 import { getRecommendedLessonPath } from '../lib/recommendationRouting';
 import {
@@ -62,6 +63,30 @@ export default function FullTestResults() {
     const next = new URLSearchParams(searchParams);
     next.set('tab', t);
     setSearchParams(next, { replace: true });
+  };
+
+  // Share link copy state — sessionId (uuid4) is the share token. The
+  // /full-test/results/:sessionId route is public so an unauthenticated
+  // viewer can open the link and see the same payload.
+  const [shareCopied, setShareCopied] = useState(false);
+  const copyShareLink = async () => {
+    try {
+      const url = `${window.location.origin}/full-test/results/${sessionId}`;
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(url);
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = url;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+      setShareCopied(true);
+      setTimeout(() => setShareCopied(false), 2200);
+    } catch (e) {
+      console.error('Share link copy failed:', e);
+    }
   };
   // Writing sub-tab state (T1/T2) for the Writing tab. URL-synced so refresh
   // keeps the user on the same task. Defaults to task 1.
@@ -147,9 +172,24 @@ export default function FullTestResults() {
   return (
     <div data-testid="full-test-results" className="min-h-screen bg-gradient-to-b from-gray-50 via-slate-50/30 to-gray-100 py-8 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
-        <Button data-testid="back-to-qb-btn" variant="ghost" onClick={() => navigate('/question-bank')} className="mb-6 text-gray-600 hover:text-slate-600">
-          <ArrowLeft className="w-4 h-4 mr-2" /> Back to Question Bank
-        </Button>
+        <div className="flex items-center justify-between mb-6 gap-3">
+          <Button data-testid="back-to-qb-btn" variant="ghost" onClick={() => navigate('/question-bank')} className="text-gray-600 hover:text-slate-600">
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Question Bank
+          </Button>
+          <Button
+            data-testid="copy-share-link-btn"
+            variant="outline"
+            size="sm"
+            onClick={copyShareLink}
+            className="text-gray-600 hover:text-slate-700 border-gray-200"
+          >
+            {shareCopied ? (
+              <><Check className="w-4 h-4 mr-2 text-green-600" /> Link copied</>
+            ) : (
+              <><Link2 className="w-4 h-4 mr-2" /> Copy share link</>
+            )}
+          </Button>
+        </div>
 
         {/* Compact Hero — band score + per-skill mini cards in one row.
             iOS 26 glass card; no oversized icons or vertical empty space.

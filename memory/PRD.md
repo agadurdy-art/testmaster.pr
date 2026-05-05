@@ -1,6 +1,14 @@
 # IELTS Ace — Pre-deploy PRD (2026-04-23, last updated 2026-02 fork iter76)
 
-## Latest fork (commit 10d69bc6 — applied + verified 2026-02)
+## Latest fork (commit eb5e4e9d — applied + verified 2026-02 fork iter77)
+- **NEW** `db.full_test_results` MongoDB collection — `routes/full_test.py:complete_test` now upserts the full payload by `session_id` (uuid4 = share token). Auto-created, no manual seed.
+- **NEW** `GET /api/full-test/results/{session_id}` — replaced stub with real DB lookup; returns 404 if missing. Refresh / bookmark / share now restore the 5-tab UI.
+- **NEW** `App.js` route `/full-test/results/:sessionId` is now PUBLIC (no auth gate). Anonymous viewers can open shared result links.
+- **NEW** "Copy share link" button (`data-testid="copy-share-link-btn"`) in `FullTestResults.js` header — clipboard copy + 2.2s "Link copied" feedback.
+- **PERF** `routes/full_test.py:evaluate_writing_section` — Task1+Task2 now run via `asyncio.gather` (parallel). Wall-clock ~46s for both tasks vs ~50–70s serial — comfortably inside K8s 60s ingress.
+- **FIX** `schemas/speaking_evaluator.py:Fluency.wpm` — `mode="before"` validator clamps to [0, 400] so Sonnet's hallucinated 1240 wpm no longer 422s. Unit-tested: 1240→400, -50→0, 180→180.
+
+### Latest fork (commit 10d69bc6 — applied + verified 2026-02)
 - **NEW** Cambridge audioscripts: Cam17 T1-T4, Cam18 T1-T4 attached to test*.py modules; Cam19 T1+T2 audioscripts shipped as `content/cambridge_tests/ielts19/audioscripts.py` and runtime-attached via `server.py:986 get_cambridge_listening_transcripts` (no static BOOKS entry — by design).
 - **NEW** Backend writing evaluator V4 ("Liz's Margin") integrated at `routes/full_test.py:917 evaluate_writing_section` — emits `evaluator_v2` payload per task with: overall_band, criteria{TA/CC/LR/GRA}, inline_annotations, improved_version, response_diagnosis, highest_priority_fixes, rewrite_guidance, recommended_lesson, feedback_language.
 - **NEW** FullTestResults page redesigned: 5-tab SceneBar (Overview / Reading / Listening / Writing / Speaking) at `frontend/src/pages/FullTestResults.js`; tabs lazy-render `ReadingResultsLayout`, `ListeningResultsLayout`, `WritingEvaluatorResult`, `SpeakingResultsState`.

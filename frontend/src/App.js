@@ -752,7 +752,7 @@ function AppWithSessionHandler() {
         />
         <Route 
           path="/full-test/results/:sessionId" 
-          element={user ? <FullTestResults user={user} /> : <Navigate to="/" />} 
+          element={<FullTestResults user={user} />} 
         />
         {/* Cambridge IELTS Tests */}
         <Route 

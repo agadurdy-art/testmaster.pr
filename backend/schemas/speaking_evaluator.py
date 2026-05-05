@@ -102,6 +102,22 @@ class Fluency(BaseModel):
     duration: str = Field(..., min_length=1, max_length=20)
     words: int = Field(..., ge=0)
 
+    @field_validator("wpm", mode="before")
+    @classmethod
+    def _clamp_wpm(cls, v: Any) -> int:
+        # Sonnet evaluating short / synthetic TTS samples occasionally
+        # hallucinates unrealistic WPM (e.g. 1240). Clamp to [0, 400] so
+        # the response doesn't 422 — 400 wpm is already 2x the human ceiling.
+        try:
+            n = int(v)
+        except (TypeError, ValueError):
+            return 0
+        if n < 0:
+            return 0
+        if n > 400:
+            return 400
+        return n
+
 
 # ---------- Vocabulary profile (CEFR distribution) ----------
 
