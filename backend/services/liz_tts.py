@@ -90,10 +90,10 @@ async def _synthesize_azure(text: str, voice: str, style: Optional[str]) -> Opti
 async def _synthesize_openai_fallback(text: str) -> Optional[str]:
     """Legacy OpenAI `nova` voice so deployments without Azure keys still work."""
     try:
-        from emergentintegrations.llm.openai import OpenAITextToSpeech  # type: ignore
+        from services.openai_compat import OpenAITextToSpeech  # type: ignore
     except ImportError:
         return None
-    api_key = os.environ.get("EMERGENT_LLM_KEY", "")
+    api_key = os.environ.get("OPENAI_API_KEY") or os.environ.get("EMERGENT_LLM_KEY", "")
     if not api_key:
         return None
     try:

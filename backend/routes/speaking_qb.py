@@ -26,6 +26,7 @@ router = APIRouter(prefix="/api/speaking", tags=["Speaking Question Bank"])
 # API Keys
 ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY")
 EMERGENT_LLM_KEY = os.environ.get("EMERGENT_LLM_KEY")
+OPENAI_KEY = os.environ.get("OPENAI_API_KEY") or EMERGENT_LLM_KEY
 AZURE_SPEECH_KEY = os.environ.get("AZURE_SPEECH_KEY")
 AZURE_SPEECH_REGION = os.environ.get("AZURE_SPEECH_REGION", "southeastasia")
 
@@ -137,15 +138,15 @@ async def generate_examiner_audio(text: str, voice_key: str, question_id: str, s
 
 
 async def transcribe_audio(audio_data: bytes, language: str = "en") -> Optional[str]:
-    """Transcribe audio using OpenAI Whisper via emergentintegrations."""
-    if not EMERGENT_LLM_KEY:
-        print("EMERGENT_LLM_KEY not configured")
+    """Transcribe audio using OpenAI Whisper (native openai SDK)."""
+    if not OPENAI_KEY:
+        print("OPENAI_API_KEY (or EMERGENT_LLM_KEY) not configured")
         return None
-    
+
     try:
-        from emergentintegrations.llm.openai import OpenAISpeechToText
-        
-        stt = OpenAISpeechToText(api_key=EMERGENT_LLM_KEY)
+        from services.openai_compat import OpenAISpeechToText
+
+        stt = OpenAISpeechToText(api_key=OPENAI_KEY)
         
         # Save audio temporarily
         temp_path = RECORDINGS_DIR / f"temp_{uuid.uuid4()}.webm"

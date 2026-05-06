@@ -1226,12 +1226,12 @@ async def liz_speak(req: TTSRequest):
 @router.post("/stt")
 async def speech_to_text(file: UploadFile = File(...)):
     """Transcribe audio from the student's microphone."""
-    api_key = get_api_key()
+    api_key = os.environ.get("OPENAI_API_KEY") or os.environ.get("EMERGENT_LLM_KEY")
     if not api_key:
         raise HTTPException(status_code=500, detail="STT API key not configured")
 
     try:
-        from emergentintegrations.llm.openai import OpenAISpeechToText
+        from services.openai_compat import OpenAISpeechToText
         stt = OpenAISpeechToText(api_key=api_key)
 
         suffix = ".webm"

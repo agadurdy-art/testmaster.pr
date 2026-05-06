@@ -39,11 +39,11 @@ async def evaluate_speech(
     prompt_text: str = Form(""),
 ):
     """Transcribe audio with Whisper and evaluate against expected text."""
-    from emergentintegrations.llm.openai import OpenAISpeechToText
+    from services.openai_compat import OpenAISpeechToText
 
-    api_key = os.environ.get("EMERGENT_LLM_KEY")
+    api_key = os.environ.get("OPENAI_API_KEY") or os.environ.get("EMERGENT_LLM_KEY")
     if not api_key:
-        return {"error": "EMERGENT_LLM_KEY not configured", "transcription": "", "score": 0}
+        return {"error": "OPENAI_API_KEY not configured", "transcription": "", "score": 0}
 
     # Save uploaded audio to temp file
     suffix = ".webm"

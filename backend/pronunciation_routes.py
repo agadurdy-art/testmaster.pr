@@ -2,7 +2,7 @@
 Pronunciation Check API - Uses OpenAI Whisper for speech-to-text
 """
 from fastapi import APIRouter, UploadFile, File, Form, HTTPException
-from emergentintegrations.llm.openai import OpenAISpeechToText
+from services.openai_compat import OpenAISpeechToText
 import os
 import tempfile
 import logging
@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/unified/pronunciation", tags=["Pronunciation"])
 
-stt = OpenAISpeechToText(api_key=os.environ.get("EMERGENT_LLM_KEY"))
+stt = OpenAISpeechToText(api_key=os.environ.get("OPENAI_API_KEY") or os.environ.get("EMERGENT_LLM_KEY"))
 
 
 @router.post("/check")

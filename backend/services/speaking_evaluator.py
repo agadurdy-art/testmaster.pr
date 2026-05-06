@@ -710,10 +710,10 @@ async def _default_whisper_transcribe(audio_bytes: bytes) -> str:
     """Default Whisper transcription via emergentintegrations. Lazy-imported
     so unit tests that inject a fake transcribe_audio don't pay for the
     SDK import or require EMERGENT_LLM_KEY."""
-    api_key = os.environ.get("EMERGENT_LLM_KEY")
+    api_key = os.environ.get("OPENAI_API_KEY") or os.environ.get("EMERGENT_LLM_KEY")
     if not api_key:
-        raise RuntimeError("EMERGENT_LLM_KEY not configured")
-    from emergentintegrations.llm.openai import OpenAISpeechToText  # type: ignore
+        raise RuntimeError("OPENAI_API_KEY (or EMERGENT_LLM_KEY) not configured")
+    from services.openai_compat import OpenAISpeechToText  # type: ignore
     import io
 
     stt = OpenAISpeechToText(api_key=api_key)

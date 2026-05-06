@@ -18,7 +18,7 @@ import hmac
 import urllib.parse
 from services.llm_compat import LlmChat, UserMessage
 import json
-from emergentintegrations.llm.openai import OpenAISpeechToText
+from services.openai_compat import OpenAISpeechToText
 import resend
 import re
 import io
@@ -40,7 +40,7 @@ FACEBOOK_APP_ID = os.getenv("FACEBOOK_APP_ID")
 FACEBOOK_APP_SECRET = os.getenv("FACEBOOK_APP_SECRET")
 
 # Initialize OpenAI Speech-to-Text
-stt = OpenAISpeechToText(api_key=os.getenv("EMERGENT_LLM_KEY"))
+stt = OpenAISpeechToText(api_key=os.getenv("OPENAI_API_KEY") or os.getenv("EMERGENT_LLM_KEY"))
 
 # ============ IELTS CORE AI MINDSET ============
 # Complete & Expanded Full Mindset Prompt - Cambridge IELTS Examiner & Teacher
@@ -287,6 +287,37 @@ Your task:
 # Create the main app
 app = FastAPI()
 api_router = APIRouter(prefix="/api")
+
+# ─── Static asset CDN swap (Cloudflare R2) ────────────────────────────────────
+# When STATIC_BASE_URL is set (production: Railway behind R2), incoming requests
+# for /api/static/* and /static/* are 307-redirected to the CDN. /static/recordings
+# is excluded — those are live-written by speaking eval and read in the same pod.
+# When unset (local dev), the local StaticFiles mounts below serve the bytes.
+STATIC_BASE_URL = (os.getenv("STATIC_BASE_URL") or "").rstrip("/")
+
+if STATIC_BASE_URL:
+    from starlette.responses import RedirectResponse
+
+    @app.middleware("http")
+    async def _static_cdn_redirect(request, call_next):
+        path = request.url.path
+        if path.startswith("/api/static/recordings/") or path.startswith("/static/recordings/"):
+            return await call_next(request)
+        for prefix in ("/api/static/", "/static/"):
+            if path.startswith(prefix):
+                rel = path[len(prefix):]
+                target = f"{STATIC_BASE_URL}/{rel}"
+                if request.url.query:
+                    target = f"{target}?{request.url.query}"
+                return RedirectResponse(url=target, status_code=307)
+        return await call_next(request)
+
+# ─── Health check (Railway readiness probe) ───────────────────────────────────
+@app.get("/api/health")
+async def _health_check():
+    """Lightweight readiness probe. Verifies process is up; does NOT ping Mongo
+    (Railway healthcheck runs every few seconds — keep it cheap)."""
+    return {"status": "ok", "static_cdn": bool(STATIC_BASE_URL)}
 
 # Mount static files for audio
 static_audio_path = ROOT_DIR / "static" / "audio"
@@ -3038,8 +3069,8 @@ async def text_to_speech(request: dict):
         raise HTTPException(status_code=400, detail="Text is required")
 
     try:
-        from emergentintegrations.llm.openai import OpenAITextToSpeech
-        tts = OpenAITextToSpeech(api_key=os.getenv("EMERGENT_LLM_KEY"))
+        from services.openai_compat import OpenAITextToSpeech
+        tts = OpenAITextToSpeech(api_key=os.getenv("OPENAI_API_KEY") or os.getenv("EMERGENT_LLM_KEY"))
         # Use generate_speech_base64 for direct base64 output
         audio_base64 = await tts.generate_speech_base64(
             text=text,

@@ -1,0 +1,43 @@
+# Static assets (~679MB) are served from Cloudflare R2, not from the image.
+static/audio/
+static/vocab_images/
+static/strategies/
+static/visuals/
+static/recordings/
+static/cambridge/
+static/images/
+
+# Python / dev
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+*.egg-info/
+
+# Local env / secrets
+.env
+.env.local
+*.log
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+
+# Tests / docs
+tests/
+*.test.py
+*.md
+
+# Old/backup files
+*.old
+*.bak
+ai_content_cache.json
+
+# Local-only experiments
+grammar_only_server.py
