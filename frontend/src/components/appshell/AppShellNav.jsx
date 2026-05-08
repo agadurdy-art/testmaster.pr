@@ -38,10 +38,13 @@ function planLabel(user) {
     monthly: 'Monthly',
     exam: 'Exam Pack',
     exam_pack: 'Exam Pack', // tolerate legacy spelling on user records
-    explorer: 'Explorer',
+    // Legacy GE plan IDs surface to V2 names so the chip never reads "Master"
+    // (V1-only label) on IELTS Ace pages. Mid-migration users see the closest
+    // V2 equivalent of what they paid for.
+    explorer: 'Free',
     learner: 'Weekly',
     achiever: 'Monthly',
-    master: 'Master',
+    master: 'Monthly',
     pro: 'Monthly',
   };
   return map[user.plan] || user.plan_label || 'Free';

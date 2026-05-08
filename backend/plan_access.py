@@ -70,7 +70,7 @@ PLAN_FEATURES = {
     # Feature copy tracks PlanCards.jsx so UI promises match backend gating.
     "weekly": {
         "unified_stages": "all",
-        "max_liz_messages": 0,          # Liz locked until Monthly
+        "max_liz_messages": 20,         # 20 Liz msgs / billing cycle (V2 spec)
         "speaking_credits": 999,         # "unlimited evaluations"
         "mastery_course": False,
         "advanced_mastery": False,
@@ -82,7 +82,7 @@ PLAN_FEATURES = {
     },
     "monthly": {
         "unified_stages": "all",
-        "max_liz_messages": 999,         # "AI Tutor (Liz) unlimited"
+        "max_liz_messages": 100,         # 100 Liz msgs / month (V2 spec)
         "speaking_credits": 999,
         "mastery_course": True,
         "advanced_mastery": True,
@@ -97,7 +97,7 @@ PLAN_FEATURES = {
     },
     "exam": {
         "unified_stages": "all",
-        "max_liz_messages": 0,
+        "max_liz_messages": 200,         # 200 Liz msgs over the 30-day pack (V2 spec)
         "speaking_credits": 999,
         "mastery_course": False,
         "advanced_mastery": False,
