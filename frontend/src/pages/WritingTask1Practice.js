@@ -35,6 +35,28 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
  * - Model answer hidden during writing (controlled reveal)
  */
 
+// 1-2 sentence Liz "take" derived from the v2 evaluation — mirrors the helper
+// in WritingPractice.js / FullTestResults.js so Task1 results show a Liz card.
+function buildLizMessageT1(result) {
+  if (!result?.criteria) return null;
+  const order = [
+    ['task_achievement', 'task achievement'],
+    ['coherence_cohesion', 'coherence and cohesion'],
+    ['lexical_resource', 'lexical resource'],
+    ['grammatical_range_accuracy', 'grammar'],
+  ];
+  let weakest = null;
+  for (const [key, label] of order) {
+    const c = result.criteria[key];
+    if (!c) continue;
+    if (!weakest || c.band < weakest.band) weakest = { ...c, label };
+  }
+  if (!weakest) return null;
+  const firstWeak = weakest.weaknesses?.[0];
+  const headline = `Overall ${result.overall_band} — your weakest area is ${weakest.label} (${weakest.band}).`;
+  return firstWeak ? `${headline} ${firstWeak}` : headline;
+}
+
 export default function WritingTask1Practice() {
   const navigate = useNavigate();
   const goBack = useGoBack();
@@ -281,6 +303,9 @@ export default function WritingTask1Practice() {
         result={evaluation}
         essayText={userResponse}
         prompt={taskData?.task_description || ''}
+        title="Writing Task 1 — Result"
+        lizMessage={buildLizMessageT1(evaluation)}
+        onBack={goBack}
         onRewrite={() => {
           setEvaluation(null);
           setUserResponse(evaluation.improved_version || userResponse);

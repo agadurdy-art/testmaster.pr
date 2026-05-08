@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { ChevronDown, CheckCircle2, AlertCircle } from "lucide-react";
+import { CheckCircle2, AlertCircle } from "lucide-react";
 import { cn } from "../../../lib/utils";
 import { CATEGORY_TOKENS } from "../schemas/writingResult";
 import { CRITERION_CODE, CRITERION_LABEL } from "../utils/annotationMapping";
+import CriteriaDetailsModal from "./CriteriaDetailsModal";
 
 /**
- * Horizontal row of four compact criterion cards. Clicking a card expands it
- * to reveal strengths/weaknesses. Designed for the V4 score strip.
+ * Horizontal row of four compact criterion cards. Clicking a card opens a
+ * floating modal with full strengths/weaknesses (the inline expand was
+ * unreadable inside the narrow column).
  */
 export default function CriteriaCardRow({ criteria, className }) {
   const items = [
@@ -16,32 +18,51 @@ export default function CriteriaCardRow({ criteria, className }) {
     { key: "grammatical_range_accuracy", crit: criteria.grammatical_range_accuracy },
   ];
 
+  const [activeCode, setActiveCode] = useState(null);
+  const active = items.find((it) => CRITERION_CODE[it.key] === activeCode);
+
   return (
-    <div
-      className={cn(
-        "grid grid-cols-2 lg:grid-cols-4 gap-3 w-full",
-        className
-      )}
-    >
-      {items.map(({ key, crit }) => (
-        <CriterionCard key={key} code={CRITERION_CODE[key]} crit={crit} />
-      ))}
-    </div>
+    <>
+      <div
+        className={cn(
+          "grid grid-cols-2 lg:grid-cols-4 gap-3 w-full",
+          className
+        )}
+      >
+        {items.map(({ key, crit }) => (
+          <CriterionCard
+            key={key}
+            code={CRITERION_CODE[key]}
+            crit={crit}
+            onOpen={() => setActiveCode(CRITERION_CODE[key])}
+          />
+        ))}
+      </div>
+
+      <CriteriaDetailsModal
+        open={!!active}
+        onClose={() => setActiveCode(null)}
+        code={activeCode}
+        crit={active?.crit}
+      />
+    </>
   );
 }
 
-function CriterionCard({ code, crit }) {
-  const [open, setOpen] = useState(false);
+function CriterionCard({ code, crit, onOpen }) {
   const tokens = CATEGORY_TOKENS[code];
 
   return (
-    <div
+    <button
+      type="button"
+      onClick={onOpen}
       className={cn(
-        "rounded-2xl bg-white border border-slate-200 p-4",
+        "text-left rounded-2xl bg-white border border-slate-200 p-4",
         "transition-all duration-200",
         "hover:shadow-md hover:-translate-y-0.5",
-        open && "shadow-md"
+        "focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
       )}
+      aria-label={`${CRITERION_LABEL[code]} details`}
     >
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
@@ -71,50 +92,16 @@ function CriterionCard({ code, crit }) {
         {crit.explanation}
       </p>
 
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        className={cn(
-          "mt-3 inline-flex items-center gap-1 text-[11px] font-semibold",
-          "text-slate-500 hover:text-slate-900"
-        )}
-        aria-expanded={open}
-      >
-        <ChevronDown
-          className={cn(
-            "w-3 h-3 transition-transform",
-            open && "rotate-180"
-          )}
-        />
-        {open ? "Hide details" : `${crit.strengths.length} strengths · ${crit.weaknesses.length} to fix`}
-      </button>
-
-      {open && (
-        <div className="mt-3 space-y-2 border-t border-slate-100 pt-3">
-          <ul className="space-y-1">
-            {crit.strengths.map((s, i) => (
-              <li
-                key={i}
-                className="flex gap-2 text-[12px] text-slate-700 leading-snug"
-              >
-                <CheckCircle2 className="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600" />
-                <span>{s}</span>
-              </li>
-            ))}
-          </ul>
-          <ul className="space-y-1">
-            {crit.weaknesses.map((w, i) => (
-              <li
-                key={i}
-                className="flex gap-2 text-[12px] text-slate-700 leading-snug"
-              >
-                <AlertCircle className="w-3.5 h-3.5 mt-0.5 shrink-0 text-rose-500" />
-                <span>{w}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
+      <div className="mt-3 flex items-center gap-3 text-[11px] font-semibold text-slate-500">
+        <span className="inline-flex items-center gap-1">
+          <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+          {crit.strengths.length} strengths
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <AlertCircle className="w-3 h-3 text-rose-500" />
+          {crit.weaknesses.length} to fix
+        </span>
+      </div>
+    </button>
   );
 }

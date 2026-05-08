@@ -84,11 +84,7 @@ export default function CoachingPanel({ result, onOpenLesson }) {
           className={`p-4 border-indigo-100 bg-indigo-50/40 md:col-span-2 ${
             onOpenLesson ? "cursor-pointer hover:bg-indigo-50" : ""
           }`}
-          onClick={
-            onOpenLesson && lesson.lesson_id
-              ? () => onOpenLesson(lesson)
-              : undefined
-          }
+          onClick={onOpenLesson ? () => onOpenLesson(lesson) : undefined}
         >
           <h3 className="font-semibold text-indigo-900 mb-2 text-sm flex items-center gap-2">
             <BookOpen className="w-4 h-4 text-indigo-600" /> Recommended Lesson
@@ -108,7 +104,7 @@ export default function CoachingPanel({ result, onOpenLesson }) {
                   {lesson.stage}
                 </Badge>
               )}
-              {onOpenLesson && lesson.lesson_id && (
+              {onOpenLesson && (
                 <ChevronRight className="w-4 h-4 text-indigo-500" />
               )}
             </div>
