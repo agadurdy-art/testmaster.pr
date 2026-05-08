@@ -3,11 +3,14 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
-import { 
+import {
   ArrowLeft, Clock, Mic, Play, Square,
   CheckCircle, ChevronRight, Award,
   Volume2, Eye, EyeOff, SkipForward, RotateCcw,
-  User, MessageSquare, FileText, Loader2
+  User, MessageSquare, FileText, Loader2,
+  GraduationCap, Cpu, Leaf, Briefcase, Globe, Heart, Atom, TrendingUp,
+  Newspaper, Home, Sparkles, Utensils, Plane, ShoppingBag, Users,
+  Smile, MessageCircle, AlertCircle, BookOpen
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useGoBack } from '../hooks/useGoBack';
@@ -24,6 +27,41 @@ const STATES = {
   READY_NEXT: 'READY_NEXT',
   COMPLETED: 'COMPLETED'
 };
+
+// Visual identity per topic family. Keeps the picker scannable: the icon and
+// soft gradient signal the topic at a glance instead of every card looking
+// identical. Class strings are written in full (not interpolated) so Tailwind
+// JIT can see them at build time — interpolating colours like
+// `hover:border-${accent}-400` produces classes that exist in source but get
+// purged from the bundle.
+const TOPIC_THEME = {
+  education:     { icon: GraduationCap, card: 'bg-gradient-to-br from-emerald-50 to-teal-50 hover:border-emerald-400',   iconBg: 'bg-gradient-to-br from-emerald-500 to-teal-600',   divider: 'border-emerald-200/60',  chev: 'text-emerald-500' },
+  technology:    { icon: Cpu,           card: 'bg-gradient-to-br from-sky-50 to-blue-50 hover:border-sky-400',           iconBg: 'bg-gradient-to-br from-sky-500 to-blue-600',       divider: 'border-sky-200/60',      chev: 'text-sky-500' },
+  environment:   { icon: Leaf,          card: 'bg-gradient-to-br from-green-50 to-lime-50 hover:border-green-400',       iconBg: 'bg-gradient-to-br from-green-500 to-lime-600',     divider: 'border-green-200/60',    chev: 'text-green-500' },
+  work:          { icon: Briefcase,     card: 'bg-gradient-to-br from-amber-50 to-orange-50 hover:border-amber-400',     iconBg: 'bg-gradient-to-br from-amber-500 to-orange-600',   divider: 'border-amber-200/60',    chev: 'text-amber-500' },
+  culture:       { icon: Globe,         card: 'bg-gradient-to-br from-rose-50 to-pink-50 hover:border-rose-400',         iconBg: 'bg-gradient-to-br from-rose-500 to-pink-600',      divider: 'border-rose-200/60',     chev: 'text-rose-500' },
+  health:        { icon: Heart,         card: 'bg-gradient-to-br from-red-50 to-rose-50 hover:border-red-400',           iconBg: 'bg-gradient-to-br from-red-500 to-rose-600',       divider: 'border-red-200/60',      chev: 'text-red-500' },
+  science:       { icon: Atom,          card: 'bg-gradient-to-br from-violet-50 to-purple-50 hover:border-violet-400',   iconBg: 'bg-gradient-to-br from-violet-500 to-purple-600',  divider: 'border-violet-200/60',   chev: 'text-violet-500' },
+  business:      { icon: TrendingUp,    card: 'bg-gradient-to-br from-indigo-50 to-blue-50 hover:border-indigo-400',     iconBg: 'bg-gradient-to-br from-indigo-500 to-blue-600',    divider: 'border-indigo-200/60',   chev: 'text-indigo-500' },
+  media:         { icon: Newspaper,     card: 'bg-gradient-to-br from-fuchsia-50 to-pink-50 hover:border-fuchsia-400',   iconBg: 'bg-gradient-to-br from-fuchsia-500 to-pink-600',   divider: 'border-fuchsia-200/60',  chev: 'text-fuchsia-500' },
+  home:          { icon: Home,          card: 'bg-gradient-to-br from-orange-50 to-amber-50 hover:border-orange-400',    iconBg: 'bg-gradient-to-br from-orange-500 to-amber-600',   divider: 'border-orange-200/60',   chev: 'text-orange-500' },
+  hobbies:       { icon: Sparkles,      card: 'bg-gradient-to-br from-yellow-50 to-amber-50 hover:border-yellow-400',    iconBg: 'bg-gradient-to-br from-yellow-500 to-amber-600',   divider: 'border-yellow-200/60',   chev: 'text-yellow-600' },
+  food:          { icon: Utensils,      card: 'bg-gradient-to-br from-orange-50 to-red-50 hover:border-orange-400',      iconBg: 'bg-gradient-to-br from-orange-500 to-red-600',     divider: 'border-orange-200/60',   chev: 'text-orange-500' },
+  travel:        { icon: Plane,         card: 'bg-gradient-to-br from-cyan-50 to-sky-50 hover:border-cyan-400',          iconBg: 'bg-gradient-to-br from-cyan-500 to-sky-600',       divider: 'border-cyan-200/60',     chev: 'text-cyan-500' },
+  shopping:      { icon: ShoppingBag,   card: 'bg-gradient-to-br from-pink-50 to-rose-50 hover:border-pink-400',         iconBg: 'bg-gradient-to-br from-pink-500 to-rose-600',      divider: 'border-pink-200/60',     chev: 'text-pink-500' },
+  community:     { icon: Users,         card: 'bg-gradient-to-br from-teal-50 to-emerald-50 hover:border-teal-400',      iconBg: 'bg-gradient-to-br from-teal-500 to-emerald-600',   divider: 'border-teal-200/60',     chev: 'text-teal-500' },
+  lifestyle:     { icon: Smile,         card: 'bg-gradient-to-br from-lime-50 to-green-50 hover:border-lime-400',        iconBg: 'bg-gradient-to-br from-lime-500 to-green-600',     divider: 'border-lime-200/60',     chev: 'text-lime-600' },
+  communication: { icon: MessageCircle, card: 'bg-gradient-to-br from-blue-50 to-indigo-50 hover:border-blue-400',       iconBg: 'bg-gradient-to-br from-blue-500 to-indigo-600',    divider: 'border-blue-200/60',     chev: 'text-blue-500' },
+  social_issues: { icon: AlertCircle,   card: 'bg-gradient-to-br from-stone-50 to-slate-50 hover:border-slate-400',      iconBg: 'bg-gradient-to-br from-slate-500 to-stone-600',    divider: 'border-slate-200/60',    chev: 'text-slate-500' },
+};
+const FALLBACK_THEME = {
+  icon: BookOpen,
+  card: 'bg-gradient-to-br from-slate-50 to-gray-50 hover:border-slate-400',
+  iconBg: 'bg-gradient-to-br from-slate-500 to-gray-600',
+  divider: 'border-slate-200/60',
+  chev: 'text-slate-500',
+};
+const themeFor = (topic) => TOPIC_THEME[topic] || FALLBACK_THEME;
 
 export default function SpeakingPracticeQB({ user }) {
   const navigate = useNavigate();
@@ -571,18 +609,29 @@ export default function SpeakingPracticeQB({ user }) {
                   <Mic className="w-5 h-5 text-indigo-600" /> 
                   {filterTrack === 'academic' ? 'Academic' : 'General'} Speaking
                 </h1>
-                <p className="text-sm text-gray-500">{mode === 'practice' ? 'Practice' : 'Test'} • {moduleContent?.band_range}</p>
+                <p className="text-sm text-gray-500">
+                  {moduleContent
+                    ? `${mode === 'practice' ? 'Practice' : 'Test'} • ${moduleContent.band_range}`
+                    : 'Pick a topic to start'}
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <span className="text-sm text-gray-600">{progress.current}/{progress.total}</span>
-              <Badge className={`${currentPart === 1 ? 'bg-green-600' : currentPart === 2 ? 'bg-blue-600' : 'bg-purple-600'} text-white`}>
-                Part {currentPart}
-              </Badge>
-              {!moduleContent?.show_text && (
-                <Button variant="ghost" size="sm" onClick={() => setShowText(!showText)}>
-                  {showText ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                </Button>
+              {/* These controls only make sense once a module is loaded — hide them
+                  on the topic picker so the header doesn't show "1/1 · Part 1"
+                  before the user has chosen anything. */}
+              {moduleContent && (
+                <>
+                  <span className="text-sm text-gray-600">{progress.current}/{progress.total}</span>
+                  <Badge className={`${currentPart === 1 ? 'bg-green-600' : currentPart === 2 ? 'bg-blue-600' : 'bg-purple-600'} text-white`}>
+                    Part {currentPart}
+                  </Badge>
+                  {!moduleContent?.show_text && (
+                    <Button variant="ghost" size="sm" onClick={() => setShowText(!showText)}>
+                      {showText ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </Button>
+                  )}
+                </>
               )}
             </div>
           </div>
@@ -592,33 +641,136 @@ export default function SpeakingPracticeQB({ user }) {
       <div className="max-w-4xl mx-auto px-4 py-6">
         {!moduleContent && (
           <div className="space-y-6">
-            <div className="flex gap-3 flex-wrap">
-              <select className="px-3 py-2 border rounded-lg text-sm" value={filterTrack} onChange={(e) => setFilterTrack(e.target.value)}>
-                <option value="academic">Academic</option>
-                <option value="general">General Training</option>
-              </select>
-              <select className="px-3 py-2 border rounded-lg text-sm" value={filterBand} onChange={(e) => setFilterBand(e.target.value)}>
-                <option value="">All Bands</option>
-                <option value="4.0-5.0">Band 4.0-5.0</option>
-                <option value="5.5-6.5">Band 5.5-6.5</option>
-                <option value="7.0-9.0">Band 7.0-9.0</option>
-              </select>
+            {/* Intro strip — explains what this page is so the picker doesn't
+                feel like a bare list. Mirrors the tone of the Part 1/2/3 cards
+                further down once a module is chosen. */}
+            <div className="rounded-xl border border-indigo-100 bg-gradient-to-br from-indigo-50/60 via-white to-violet-50/40 p-5">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shrink-0">
+                  <Mic className="w-5 h-5 text-white" />
+                </div>
+                <div className="min-w-0">
+                  <h2 className="font-bold text-gray-900">Choose a speaking topic</h2>
+                  <p className="text-sm text-gray-600 mt-0.5">
+                    Each set gives you Part 1 (interview), Part 2 (cue card) and Part 3 (discussion). You'll pick which part to practise on the next screen.
+                  </p>
+                </div>
+              </div>
             </div>
-            <div className="grid gap-3">
-              {modules.map(m => (
-                <Card key={m.set_id} className="p-4 cursor-pointer hover:shadow-md" onClick={() => selectModule(m.set_id)}>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-semibold text-gray-900">{m.title}</h3>
-                      <p className="text-sm text-gray-500">{m.topic} • {m.band_range}</p>
-                    </div>
-                    <Badge className={m.audio_cached === m.total_questions ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}>
-                      {m.audio_cached === m.total_questions ? 'Ready' : 'Loading...'}
-                    </Badge>
-                  </div>
+
+            {/* Filter bar — segmented Academic/GT toggle + band chips. Replaces
+                the unstyled <select> dropdowns that didn't match the rest of
+                the app's chrome. */}
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="inline-flex p-1 bg-slate-100 rounded-lg self-start">
+                {[{ v: 'academic', l: 'Academic' }, { v: 'general', l: 'General Training' }].map(opt => (
+                  <button
+                    key={opt.v}
+                    type="button"
+                    onClick={() => setFilterTrack(opt.v)}
+                    className={`px-3.5 py-1.5 text-sm rounded-md transition-all ${
+                      filterTrack === opt.v
+                        ? 'bg-white shadow-sm font-semibold text-indigo-700'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    {opt.l}
+                  </button>
+                ))}
+              </div>
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <span className="text-xs text-slate-500 mr-1 uppercase tracking-wide">Band</span>
+                {[
+                  { v: '', l: 'All' },
+                  { v: '4.0-5.0', l: '4–5' },
+                  { v: '5.5-6.5', l: '5.5–6.5' },
+                  { v: '7.0-9.0', l: '7–9' },
+                ].map(opt => (
+                  <button
+                    key={opt.v || 'all'}
+                    type="button"
+                    onClick={() => setFilterBand(opt.v)}
+                    className={`px-3 py-1 text-xs font-medium rounded-full border transition-all ${
+                      filterBand === opt.v
+                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
+                        : 'bg-white text-slate-600 border-slate-200 hover:border-indigo-300 hover:text-indigo-700'
+                    }`}
+                  >
+                    {opt.l}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Topic grid. On md+ we show two columns so the page doesn't feel
+                like an endless 1-column list when there are 18+ topics. */}
+            {modules.length > 0 ? (
+              <div className="grid gap-3 md:grid-cols-2">
+                {modules.map(m => {
+                  const theme = themeFor(m.topic);
+                  const Icon = theme.icon;
+                  const ready = m.audio_cached === m.total_questions && m.total_questions > 0;
+                  const partial = m.audio_cached > 0 && m.audio_cached < m.total_questions;
+                  return (
+                    <Card
+                      key={m.set_id}
+                      onClick={() => selectModule(m.set_id)}
+                      className={`p-5 cursor-pointer transition-all border-2 hover:shadow-md hover:-translate-y-0.5 ${theme.card}`}
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className={`w-11 h-11 rounded-xl ${theme.iconBg} flex items-center justify-center shrink-0 shadow-sm`}>
+                          <Icon className="w-5 h-5 text-white" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-3">
+                            <h3 className="font-bold text-gray-900 leading-tight">{m.title}</h3>
+                            {/* Status badge: Ready (cached) / Caching (partial) / AI voice (none).
+                                "Loading..." was alarming — these labels say what's
+                                actually happening. */}
+                            {ready ? (
+                              <Badge className="bg-green-100 text-green-700 border border-green-200 shrink-0">
+                                <CheckCircle className="w-3 h-3 mr-1" /> Ready
+                              </Badge>
+                            ) : partial ? (
+                              <Badge className="bg-amber-100 text-amber-700 border border-amber-200 shrink-0">
+                                <Loader2 className="w-3 h-3 mr-1 animate-spin" /> Caching
+                              </Badge>
+                            ) : (
+                              <Badge className="bg-slate-100 text-slate-600 border border-slate-200 shrink-0">
+                                <Volume2 className="w-3 h-3 mr-1" /> AI voice
+                              </Badge>
+                            )}
+                          </div>
+                          <p className="text-xs text-gray-600 mt-1 capitalize">
+                            {String(m.topic || '').replace(/_/g, ' ')} · Band {m.band_range}
+                          </p>
+                          <div className={`flex items-center justify-between mt-3 pt-3 border-t ${theme.divider}`}>
+                            <span className="text-xs text-gray-500 inline-flex items-center gap-1.5">
+                              <Clock className="w-3 h-3" />
+                              ~12 min · 3 parts
+                            </span>
+                            <ChevronRight className={`w-4 h-4 ${theme.chev}`} />
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  );
+                })}
+              </div>
+            ) : (
+              !loading && (
+                <Card className="p-10 text-center border-dashed">
+                  <Mic className="w-8 h-8 text-slate-300 mx-auto mb-3" />
+                  <p className="text-sm font-medium text-slate-700">No topics in this band yet</p>
+                  <p className="text-xs text-slate-500 mt-1">Try a different band filter or switch tracks.</p>
+                  {filterBand && (
+                    <Button variant="outline" size="sm" className="mt-4" onClick={() => setFilterBand('')}>
+                      Show all bands
+                    </Button>
+                  )}
                 </Card>
-              ))}
-            </div>
+              )
+            )}
           </div>
         )}
 
