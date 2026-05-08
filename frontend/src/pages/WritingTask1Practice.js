@@ -258,6 +258,8 @@ export default function WritingTask1Practice() {
           prompt: taskData?.task_description || '',
           essay: userResponse,
           user_language: languageWireCode || 'en',
+          user_id: (() => { try { return JSON.parse(localStorage.getItem('user'))?.id || null; } catch { return null; } })(),
+          test_id: `writing_task1_academic_${topic}_${bandLevel}`,
         }),
       });
 

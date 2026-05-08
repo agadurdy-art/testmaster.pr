@@ -3585,6 +3585,9 @@ class WritingPracticeV2Request(BaseModel):
     prompt: str
     essay: str
     user_language: Optional[str] = "en"
+    user_id: Optional[str] = None
+    test_id: Optional[str] = None
+    time_taken: Optional[int] = 0
 
 
 @api_router.post("/writing-practice/evaluate/v2")
@@ -3635,7 +3638,33 @@ async def evaluate_writing_practice_v2(request: WritingPracticeV2Request):
                 "last_error": exc.last_error,
             },
         )
-    return result.model_dump()
+
+    result_dict = result.model_dump()
+
+    # Mirror to test_attempts so Progress page + Dashboard see writing history.
+    # persist_attempt no-ops on missing user_id (anonymous practice).
+    try:
+        test_type = "writing_task1" if hint.startswith("task1") else "writing_task2"
+        await persist_attempt(
+            user_id=request.user_id,
+            test_id=request.test_id or f"writing_v2_{hint}",
+            test_type=test_type,
+            band_score=float(result_dict.get("overall_band") or 0.0),
+            feedback={
+                "source": "writing-practice/evaluate/v2",
+                "task_type": request.task_type,
+                "task_hint": hint,
+                "prompt": prompt[:2000],
+                "evaluation": result_dict,
+            },
+            time_taken=int(request.time_taken or 0),
+        )
+    except Exception as _e:
+        logging.getLogger(__name__).warning(
+            "persist_attempt mirror skipped (writing v2): %s", _e
+        )
+
+    return result_dict
 
 
 # ---------------------------------------------------------------------------

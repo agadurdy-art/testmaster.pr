@@ -87,6 +87,8 @@ export default function WritingPractice({ user }) {
           prompt: selectedPrompt.prompt,
           essay,
           user_language: userLanguage,
+          user_id: user?.id || null,
+          test_id: selectedPrompt?.id ? `writing_practice_${selectedTaskType}_${selectedPrompt.id}` : `writing_practice_${selectedTaskType}`,
         }),
       });
 

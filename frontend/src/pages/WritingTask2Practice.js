@@ -213,6 +213,8 @@ export default function WritingTask2Practice() {
           prompt: effectivePrompt,
           essay: userResponse,
           user_language: languageWireCode || 'en',
+          user_id: (() => { try { return JSON.parse(localStorage.getItem('user'))?.id || null; } catch { return null; } })(),
+          test_id: `writing_task2_${examType}_${urlTopic || 'mixed'}_${urlBand}`,
         }),
       });
 
