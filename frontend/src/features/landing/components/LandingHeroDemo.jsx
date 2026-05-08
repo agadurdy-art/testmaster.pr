@@ -323,7 +323,7 @@ function ListeningDemo() {
     <div className="sample-preview">
       <div className="sample-preview-head">
         <div>
-          <div className="sample-preview-eyebrow">Mock Test 4 · Sample report</div>
+          <div className="sample-preview-eyebrow">Diagnostic Mock Test 4 · Sample report</div>
           <div className="sample-preview-title">Listening Test — 4 parts, 40 questions</div>
         </div>
         <div className="sample-preview-band">

@@ -17,7 +17,13 @@ const TICK_ICON = (
   </svg>
 );
 
-export default function Step4Language({ direction, language, onSelect }) {
+export default function Step4Language({
+  direction,
+  language,
+  onSelect,
+  nativeLanguage,
+  onSelectNative,
+}) {
   return (
     <section className={`step${direction === 'rev' ? ' rev' : ''}`}>
       <h1 className="step-title">
@@ -49,6 +55,36 @@ export default function Step4Language({ direction, language, onSelect }) {
           );
         })}
       </div>
+
+      {onSelectNative && (
+        <div className="native-lang-block">
+          <div className="q-label">What's your native language?</div>
+          <div className="q-hint">
+            Helps Liz spot L1-driven mistakes (false friends, article use, word
+            order). Optional.
+          </div>
+          <div className="lang-grid native">
+            {LANGUAGES.map((l) => {
+              const selected = nativeLanguage?.code === l.code;
+              return (
+                <button
+                  key={l.code}
+                  type="button"
+                  className={`lang-chip${selected ? ' selected' : ''}`}
+                  onClick={() => onSelectNative(l)}
+                >
+                  <span className="flag">{l.flag}</span>
+                  <span className="lbl">
+                    <span className="name">{l.name}</span>
+                    <span className="native">{l.native}</span>
+                  </span>
+                  <span className="tick">{TICK_ICON}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

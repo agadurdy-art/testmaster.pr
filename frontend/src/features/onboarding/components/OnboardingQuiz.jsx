@@ -67,6 +67,8 @@ export default function OnboardingQuiz({ onFinish }) {
             direction={direction}
             currentBand={state.currentBand}
             onChange={(currentBand) => update({ currentBand })}
+            weakSkills={state.weakSkills}
+            onWeakSkillsChange={(weakSkills) => update({ weakSkills })}
           />
         )}
         {step === 4 && (
@@ -74,9 +76,17 @@ export default function OnboardingQuiz({ onFinish }) {
             direction={direction}
             language={state.language}
             onSelect={(language) => update({ language })}
+            nativeLanguage={state.nativeLanguage}
+            onSelectNative={(nativeLanguage) => update({ nativeLanguage })}
           />
         )}
-        {step === 5 && <Step5LizIntro direction={direction} state={state} />}
+        {step === 5 && (
+          <Step5LizIntro
+            direction={direction}
+            state={state}
+            onMotivationChange={(motivation) => update({ motivation })}
+          />
+        )}
       </main>
 
       <StickyActions

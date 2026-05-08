@@ -27,7 +27,10 @@ from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, Optional, Tuple
 
 from plan_access import (
+    PLAN_FEATURES,
+    get_effective_plan,
     get_plan_features,
+    get_quota,
     is_admin_user,
     normalize_plan_name,
 )
@@ -36,23 +39,24 @@ from plan_access import (
 # Names intentionally match the pricing page copy so the meter text on the
 # frontend can be derived directly from the key.
 #
-# Tier naming here follows the *current* plan_access tiers (free / explorer /
-# learner / achiever / master) rather than the forthcoming marketing names
-# (Starter / Complete / Band 7+). When billing renames the tiers, update this
-# map — the counter keys are stable.
+# `evaluations` is the writing-eval cap for the IELTS tiers and is derived
+# from PLAN_FEATURES.writing_credits so the locked cap matrix
+# (project_ielts_ace_tier_quotas.md) lives in one place — flipping a number
+# in plan_access.py automatically updates the gate.
+#
+# 2026-05-08 reset: previously the IELTS rows used `evaluations: None`
+# (unlimited) to honor an earlier "unlimited evaluations" pricing promise.
+# That promise is gone in the locked cap matrix; if you re-introduce
+# unlimited copy on the pricing page, update PLAN_FEATURES, not this file.
 MONTHLY_QUOTAS: Dict[str, Dict[str, Optional[int]]] = {
-    "free":     {"evaluations": 1,    "mocks": 0,  "speaking_minutes": 0},
-    "explorer": {"evaluations": 20,   "mocks": 1,  "speaking_minutes": 10},
-    "learner":  {"evaluations": 100,  "mocks": 4,  "speaking_minutes": 45},
-    "achiever": {"evaluations": None, "mocks": None, "speaking_minutes": None},
-    "master":   {"evaluations": None, "mocks": None, "speaking_minutes": None},
-    # IELTS-Ace tiers (pricing page promises "unlimited evaluations"). Without
-    # these entries the .get() fallback below dropped paid users onto `free`
-    # and raised 402 "Monthly quota reached" on the second eval — directly
-    # contradicting marketing copy (bug report 2026-04-20).
-    "weekly":   {"evaluations": None, "mocks": 1,  "speaking_minutes": None},
-    "monthly":  {"evaluations": None, "mocks": None, "speaking_minutes": None},
-    "exam":     {"evaluations": None, "mocks": None, "speaking_minutes": None},
+    "free":     {"evaluations": int(PLAN_FEATURES["free"]["writing_credits"]),    "mocks": 0,    "speaking_minutes": 0},
+    "explorer": {"evaluations": 20,                                                "mocks": 1,    "speaking_minutes": 10},
+    "learner":  {"evaluations": 100,                                               "mocks": 4,    "speaking_minutes": 45},
+    "achiever": {"evaluations": None,                                              "mocks": None, "speaking_minutes": None},
+    "master":   {"evaluations": None,                                              "mocks": None, "speaking_minutes": None},
+    "weekly":   {"evaluations": int(PLAN_FEATURES["weekly"]["writing_credits"]),  "mocks": 1,    "speaking_minutes": None},
+    "monthly":  {"evaluations": int(PLAN_FEATURES["monthly"]["writing_credits"]), "mocks": None, "speaking_minutes": None},
+    "exam":     {"evaluations": int(PLAN_FEATURES["exam"]["writing_credits"]),    "mocks": None, "speaking_minutes": None},
 }
 
 # Human-readable reset label for the meter UI. Pure cosmetic — the boundary
@@ -65,11 +69,12 @@ def current_period_key(now: Optional[datetime] = None) -> str:
 # ─── Speaking-eval period machinery (separate from monthly evaluations) ──────
 #
 # Speaking quotas are tracked under their own counter family because the
-# refresh cadence varies per plan:
-#   free    -> ISO week  (5/week, first one full, rest basic)
-#   weekly  -> ISO week  (20/week, all full)
-#   monthly -> calendar month (100/month)
-#   exam    -> single 30-day window keyed off plan_expires_at (200/window)
+# refresh cadence varies per plan. Limits derive from PLAN_FEATURES.speaking_credits
+# so the locked cap matrix stays single-sourced (project_ielts_ace_tier_quotas.md):
+#   free    -> ISO month (1/month — first one full taste, none after)
+#   weekly  -> ISO week  (2/week, all full)
+#   monthly -> calendar month (10/month)
+#   exam    -> single 30-day window keyed off plan_expires_at (15/window)
 #
 # Counter shape on the user doc:
 #   usage.{period_key}.speaking_evals       -> int
@@ -78,10 +83,10 @@ def current_period_key(now: Optional[datetime] = None) -> str:
 # Period keys never overlap across plans, so a user who upgrades mid-cycle
 # starts fresh on the new plan's bucket.
 SPEAKING_QUOTAS: Dict[str, Dict[str, Any]] = {
-    "free":    {"limit": 5,   "period": "weekly",      "full_per_period": 1},
-    "weekly":  {"limit": 20,  "period": "weekly"},
-    "monthly": {"limit": 100, "period": "monthly"},
-    "exam":    {"limit": 200, "period": "exam_window"},
+    "free":    {"limit": int(PLAN_FEATURES["free"]["speaking_credits"]),    "period": "monthly",     "full_per_period": 1},
+    "weekly":  {"limit": int(PLAN_FEATURES["weekly"]["speaking_credits"]),  "period": "weekly"},
+    "monthly": {"limit": int(PLAN_FEATURES["monthly"]["speaking_credits"]), "period": "monthly"},
+    "exam":    {"limit": int(PLAN_FEATURES["exam"]["speaking_credits"]),    "period": "exam_window"},
     # Legacy GE plans fall back to a sensible policy. They aren't sold for
     # IELTS but we don't want a KeyError if a GE user lands on the endpoint.
     "explorer": {"limit": 20,  "period": "weekly"},
@@ -191,6 +196,11 @@ def _quota_for(user: Dict[str, Any], counter: str) -> Optional[int]:
     if user.get("email") and is_admin_user(user["email"]):
         return None  # unlimited
     plan = normalize_plan_name(user.get("plan"))
+    # Custom resolves to its effective tier (weekly/monthly/exam) for the
+    # *cap copy*; the live remaining amount is read from the subscription
+    # pool by check_usage(), not from MONTHLY_QUOTAS.
+    if plan == "custom":
+        plan = get_effective_plan(user)
     quotas = MONTHLY_QUOTAS.get(plan, MONTHLY_QUOTAS["free"])
     return quotas.get(counter, 0)
 
@@ -200,10 +210,38 @@ def _usage_path(counter: str, period: str) -> str:
     return f"usage.{period}.{counter}"
 
 
+_CUSTOM_POOL_COUNTERS = {
+    # Map period-counter name → kind passed to plan_access.get_quota.
+    "evaluations": "writing",
+}
+
+
 async def check_usage(db, user: Dict[str, Any], counter: str) -> Dict[str, Any]:
     """Return {allowed, used, quota, remaining, period, unlimited} for a
     (user, counter) pair. Does not mutate.
+
+    Custom plans short-circuit to pool semantics (subscription.*_pool_total
+    /_pool_used). Period is reported as 'pool' so the meter UI can render
+    "X of Y left" without a reset timer.
     """
+    plan = normalize_plan_name(user.get("plan"))
+    is_admin = bool(user.get("email")) and is_admin_user(user["email"])
+    if plan == "custom" and not is_admin and counter in _CUSTOM_POOL_COUNTERS:
+        kind = _CUSTOM_POOL_COUNTERS[counter]
+        q = get_quota(user, kind)
+        total = int(q.get("total") or 0)
+        remaining = int(q.get("remaining") or 0)
+        used = max(total - remaining, 0)
+        return {
+            "counter": counter,
+            "period": "pool",
+            "used": used,
+            "quota": total,
+            "remaining": remaining,
+            "unlimited": False,
+            "allowed": remaining > 0,
+        }
+
     period = current_period_key()
     bucket = (user.get("usage") or {}).get(period) or {}
     used = int(bucket.get(counter, 0) or 0)
@@ -240,6 +278,26 @@ async def increment_usage(
     """
     if amount <= 0:
         return await check_usage(db, user, counter)
+
+    plan = normalize_plan_name(user.get("plan"))
+    is_admin = bool(user.get("email")) and is_admin_user(user["email"])
+
+    # Custom plans burn from the per-kind pool counter on the subscription
+    # doc. Period buckets aren't used (no monthly reset) so we mirror the
+    # increment onto subscription.{kind}_pool_used.
+    if plan == "custom" and not is_admin and counter in _CUSTOM_POOL_COUNTERS:
+        kind = _CUSTOM_POOL_COUNTERS[counter]
+        pool_field = f"subscription.{kind}_pool_used"
+        if db is not None:
+            await db.users.update_one(
+                {"id": user["id"]},
+                {"$inc": {pool_field: amount}},
+            )
+        sub = dict(user.get("subscription") or {})
+        sub[f"{kind}_pool_used"] = int(sub.get(f"{kind}_pool_used", 0) or 0) + amount
+        user["subscription"] = sub
+        return await check_usage(db, user, counter)
+
     period = current_period_key()
     path = _usage_path(counter, period)
     await db.users.update_one(

@@ -24,6 +24,8 @@ from plan_access import (
     get_plan_features,
     get_plan_price,
     PLAN_FEATURES,
+    resolve_custom_tier,
+    custom_pools,
 )
 
 router = APIRouter(prefix="/api", tags=["payments"])
@@ -58,6 +60,9 @@ PAYPAL_PLAN_MAPPING = {
     "weekly": ("weekly", "Weekly"),
     "monthly": ("monthly", "Monthly"),
     "exam": ("exam", "Exam Pack"),
+    # Custom slider purchase: price + days come from the request body, not the
+    # static price tables. Pool sizes derived in capture-order via custom_pools().
+    "custom": ("custom", "Custom"),
 }
 
 # Reverse lookup: PayPal plan ID (P-XXX...) -> our internal plan key.
@@ -85,12 +90,20 @@ def set_db(database):
 class PaypalCreateOrderRequest(BaseModel):
     planId: str
     email: str
+    # Custom slider only -- one-time purchase with dynamic price + duration.
+    # Ignored for fixed plans (weekly/monthly/exam read PLAN_PRICES_USD).
+    priceUsd: Optional[str] = None
+    durationDays: Optional[int] = None
 
 
 class PaypalCaptureOrderRequest(BaseModel):
     orderId: str
     planId: str
     email: str
+    # Custom slider only; same semantics as create-order. Capture re-derives
+    # the pool sizes server-side so the client can't tamper with them.
+    priceUsd: Optional[str] = None
+    durationDays: Optional[int] = None
 
 
 class ActivateSubscriptionRequest(BaseModel):
@@ -230,15 +243,32 @@ async def get_payment_order(order_id: str):
 async def paypal_create_order(req: PaypalCreateOrderRequest):
     plan_id = req.planId
     email = req.email.strip().lower()
-    if plan_id not in PAYPAL_PLAN_PRICES:
+    # Custom slider: dynamic price + duration come from the request body.
+    # Validate against the slider's documented bounds ($3.60 floor / 365-day
+    # ceiling, locked 2026-05-08) so tampered clients can't sneak through.
+    if plan_id == "custom":
+        try:
+            price = float(req.priceUsd or 0)
+        except (TypeError, ValueError):
+            raise HTTPException(status_code=400, detail="Invalid priceUsd")
+        days = int(req.durationDays or 0)
+        if price < 3.0 or price > 500.0:
+            raise HTTPException(status_code=400, detail="priceUsd out of range")
+        if days < 3 or days > 365:
+            raise HTTPException(status_code=400, detail="durationDays out of range")
+        amount_value = f"{price:.2f}"
+        order_description = f"IELTS Ace Custom — {days} days"
+    elif plan_id in PAYPAL_PLAN_PRICES:
+        amount_value = PAYPAL_PLAN_PRICES[plan_id]
+        order_description = f"IELTS Ace {plan_id} plan"
+    else:
         raise HTTPException(status_code=400, detail="Invalid planId")
-    amount_value = PAYPAL_PLAN_PRICES[plan_id]
     access_token = await get_paypal_access_token()
     order_payload = {
         "intent": "CAPTURE",
         "purchase_units": [{
             "amount": {"currency_code": "USD", "value": amount_value},
-            "description": f"IELTS Ace {plan_id} plan",
+            "description": order_description,
             "custom_id": email,
         }],
     }
@@ -270,7 +300,19 @@ async def paypal_create_order(req: PaypalCreateOrderRequest):
 async def paypal_capture_order(req: PaypalCaptureOrderRequest):
     plan_id = req.planId
     email = req.email.strip().lower()
-    if plan_id not in PAYPAL_PLAN_PRICES:
+    # Validate up-front; Custom needs the same body fields capture-side so the
+    # pool sizes are recomputed server-side (prevents tampering).
+    if plan_id == "custom":
+        try:
+            price = float(req.priceUsd or 0)
+        except (TypeError, ValueError):
+            raise HTTPException(status_code=400, detail="Invalid priceUsd")
+        days = int(req.durationDays or 0)
+        if price < 3.0 or price > 500.0:
+            raise HTTPException(status_code=400, detail="priceUsd out of range")
+        if days < 3 or days > 365:
+            raise HTTPException(status_code=400, detail="durationDays out of range")
+    elif plan_id not in PAYPAL_PLAN_PRICES:
         raise HTTPException(status_code=400, detail="Invalid planId")
     user = await _get_user_by_email(email)
     if not user:
@@ -291,19 +333,58 @@ async def paypal_capture_order(req: PaypalCaptureOrderRequest):
     status_value = data.get("status")
     if status_value != "COMPLETED":
         raise HTTPException(status_code=400, detail=f"Order not completed (status={status_value})")
+    now = datetime.now(timezone.utc)
     plan_name, subscription_label = PAYPAL_PLAN_MAPPING[plan_id]
-    update_fields: Dict[str, Any] = {
-        "plan": plan_name, "subscription": subscription_label,
-        "lastPayment": datetime.now(timezone.utc).isoformat(),
-        "monthly_usage": {"liz_messages": 0, "speaking_evals": 0, "reset_date": datetime.now(timezone.utc).isoformat()},
-    }
+
+    # Custom: write subscription doc with effective_tier + 3 pools; expires_at
+    # is computed from durationDays. Period counters (monthly_usage) stay zero
+    # since Custom uses pool semantics, not period.
+    if plan_id == "custom":
+        pools = custom_pools(price)
+        effective_tier = resolve_custom_tier(price)
+        expires_at = (now + timedelta(days=days)).isoformat()
+        subscription_doc = {
+            "label": "Custom",
+            "effective_tier": effective_tier,
+            "purchase_price_usd": f"{price:.2f}",
+            "duration_days": days,
+            "expires_at": expires_at,
+            "liz_pool_total": pools["liz"],
+            "liz_pool_used": 0,
+            "writing_pool_total": pools["writing"],
+            "writing_pool_used": 0,
+            "speaking_pool_total": pools["speaking"],
+            "speaking_pool_used": 0,
+            "started_at": now.isoformat(),
+        }
+        update_fields: Dict[str, Any] = {
+            "plan": "custom",
+            "subscription": subscription_doc,
+            "plan_expires_at": expires_at,
+            "lastPayment": now.isoformat(),
+        }
+    else:
+        update_fields = {
+            "plan": plan_name, "subscription": subscription_label,
+            "lastPayment": now.isoformat(),
+            "monthly_usage": {"liz_messages": 0, "speaking_evals": 0, "reset_date": now.isoformat()},
+        }
     await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
     await db.kofi_events.insert_one({
         "provider": "paypal", "kind": "capture-order", "order_id": req.orderId,
         "plan_id": plan_id, "email": email, "payload": data,
-        "processed_at": datetime.now(timezone.utc).isoformat(),
+        "processed_at": now.isoformat(),
     })
-    return {"detail": "PayPal payment captured and plan updated", "plan": plan_name, "subscription": subscription_label}
+    response: Dict[str, Any] = {
+        "detail": "PayPal payment captured and plan updated",
+        "plan": plan_name,
+        "subscription": update_fields["subscription"],
+    }
+    if plan_id == "custom":
+        response["pools"] = pools
+        response["effective_tier"] = effective_tier
+        response["expires_at"] = expires_at
+    return response
 
 
 # ============ PayPal Subscriptions ============
@@ -616,7 +697,21 @@ async def paypal_ipn(request: Request):
         )
         return {"detail": "No matching user; event recorded."}
     update_fields: Dict[str, Any] = {}
-    if abs(amount - 4.99) < 0.01:
+    # Fallback amount→plan mapping for IPN events that arrive without an
+    # order/subscription context. Primary activation happens via
+    # capture-order or the subscription webhook; this is a safety net.
+    # Locked 2026-05-08 cap matrix: $2.99/$9.99/$19.99. Legacy GE amounts
+    # (4.99/9/19/29) kept for old subscriptions still in the wild.
+    if abs(amount - 2.99) < 0.01:
+        update_fields["plan"] = "weekly"
+        update_fields["subscription"] = "Weekly"
+    elif abs(amount - 9.99) < 0.01:
+        update_fields["plan"] = "monthly"
+        update_fields["subscription"] = "Monthly"
+    elif abs(amount - 19.99) < 0.01:
+        update_fields["plan"] = "exam"
+        update_fields["subscription"] = "Exam Pack"
+    elif abs(amount - 4.99) < 0.01:
         update_fields["examCredits"] = user.get("examCredits", 0) + 1
     elif abs(amount - 9.0) < 0.01:
         update_fields["plan"] = "learner"
@@ -771,13 +866,10 @@ async def sepay_initiate(req: SepayInitiateRequest):
     user = await _get_user_by_email(email)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
-    # Backend plans (explorer/learner/...) price off PLAN_PRICES_VND.
-    # Handoff plans (weekly/monthly/exam) don't have a VND entry yet --
-    # fall back to a lookup table keeping the two price sources in sync.
-    amount_vnd = PLAN_PRICES_VND.get(plan_id)
-    if amount_vnd is None:
-        handoff_vnd = {"weekly": "73000", "monthly": "219000", "exam": "365000"}
-        amount_vnd = handoff_vnd.get(plan_id, "0")
+    # All IELTS V2 plans now have a canonical VND entry in PLAN_PRICES_VND
+    # (locked 2026-05-08). No fallback table -- if a plan key is missing here
+    # it's a config error, not a translation gap.
+    amount_vnd = PLAN_PRICES_VND.get(plan_id, "0")
     reference_code = _generate_sepay_reference(user["id"], plan_id)
     # Expire pending payments after 24h -- prevents stale codes stacking up.
     expires_at = (datetime.now(timezone.utc) + timedelta(hours=24)).isoformat()
@@ -881,14 +973,13 @@ async def sepay_webhook(request: Request):
         return {"status": "ok", "matched": True, "reason": "amount_too_low"}
     plan_id = pending.get("plan_id")
     days = PLAN_DURATION_DAYS.get(plan_id, 30)
-    # Map handoff plan keys to backend plan tiers for feature gating.
-    plan_mapping = {
-        "weekly": "explorer", "monthly": "learner", "exam": "achiever",
-        "explorer": "explorer", "learner": "learner",
-        "achiever": "achiever", "master": "master",
-    }
-    plan_name = plan_mapping.get(plan_id, "free")
-    subscription_label = plan_name.title()
+    # plan_id is already a canonical tier (weekly/monthly/exam or legacy GE
+    # key). The old handoff→GE translation (weekly→explorer, etc.) was a V1
+    # stop-gap and is no longer needed; gating reads V2 caps directly.
+    if plan_id not in PAYPAL_PLAN_MAPPING:
+        logger.warning(f"SePay webhook: pending row has unknown plan_id={plan_id}")
+        return {"status": "ok", "matched": True, "reason": "unknown_plan"}
+    plan_name, subscription_label = PAYPAL_PLAN_MAPPING[plan_id]
     expires_at = (datetime.now(timezone.utc) + timedelta(days=days)).isoformat()
     await db.users.update_one(
         {"id": pending["user_id"]},

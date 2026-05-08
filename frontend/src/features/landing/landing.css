@@ -1046,6 +1046,157 @@
   from { transform: translateX(-100%); } to { transform: translateX(0); }
 }
 
+/* ====================================================
+   Anonymous head-to-head comparison (B1)
+   Sits between HowItWorks and PricingTeaser. No competitor
+   names — left column describes generic alternatives.
+   ==================================================== */
+.landing-scope .h2h-section {
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+.landing-scope .h2h-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0;
+  align-items: stretch;
+  border: 1px solid hsl(var(--border));
+  border-radius: 24px;
+  overflow: hidden;
+  background: hsl(var(--card));
+  box-shadow: 0 18px 40px -28px hsl(222 47% 11% / 0.18);
+}
+.landing-scope .h2h-col {
+  padding: 32px 32px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.landing-scope .h2h-col-without {
+  background: hsl(var(--muted));
+  color: hsl(var(--muted-foreground));
+}
+.landing-scope .h2h-col-with {
+  background:
+    radial-gradient(420px 220px at 100% 0%, hsl(160 84% 90% / 0.55), transparent 60%),
+    hsl(var(--card));
+}
+.landing-scope .h2h-col-head {
+  border-bottom: 1px solid hsl(var(--border));
+  padding-bottom: 14px;
+}
+.landing-scope .h2h-col-without .h2h-col-head {
+  border-bottom-color: hsl(214 32% 86%);
+}
+.landing-scope .h2h-col-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+  margin-bottom: 6px;
+}
+.landing-scope .h2h-col-with .h2h-col-eyebrow {
+  color: hsl(var(--primary));
+}
+.landing-scope .h2h-col-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: hsl(var(--foreground));
+}
+.landing-scope .h2h-col-without .h2h-col-title {
+  color: hsl(215 16% 35%);
+}
+.landing-scope .h2h-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.landing-scope .h2h-list li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 14.5px;
+  line-height: 1.45;
+}
+.landing-scope .h2h-bullet {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+.landing-scope .h2h-bullet-x {
+  background: hsl(0 84% 92%);
+  color: hsl(0 70% 45%);
+}
+.landing-scope .h2h-bullet-check {
+  background: hsl(160 84% 88%);
+  color: hsl(160 84% 28%);
+}
+.landing-scope .h2h-col-without .h2h-text {
+  color: hsl(215 16% 35%);
+}
+.landing-scope .h2h-col-with .h2h-text {
+  color: hsl(var(--foreground));
+  font-weight: 500;
+}
+.landing-scope .h2h-divider {
+  width: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: hsl(var(--card));
+  position: relative;
+}
+.landing-scope .h2h-divider::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: hsl(var(--border));
+}
+.landing-scope .h2h-divider-pill {
+  position: relative;
+  z-index: 1;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+}
+@media (max-width: 820px) {
+  .landing-scope .h2h-grid {
+    grid-template-columns: 1fr;
+  }
+  .landing-scope .h2h-divider {
+    width: 100%;
+    height: 56px;
+  }
+  .landing-scope .h2h-divider::before {
+    top: 50%;
+    bottom: auto;
+    left: 0;
+    width: 100%;
+    height: 1px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .landing-scope * {
     animation-duration: .001ms !important;

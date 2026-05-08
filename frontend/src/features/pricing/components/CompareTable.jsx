@@ -38,8 +38,8 @@ export default function CompareTable() {
     {
       name: t('pricingV2CompareGroupEvaluation'),
       rows: [
-        { label: t('pricingV2CompareRowWritingEvals'), cells: [N('1', true), N('∞'), N('∞'), N('∞')] },
-        { label: t('pricingV2CompareRowSpeakingEvals'), cells: [N('1', true), N('∞'), N('∞'), N('∞')] },
+        { label: t('pricingV2CompareRowWritingEvals'), cells: [N('1', true), N('3'), N('10'), N('25')] },
+        { label: t('pricingV2CompareRowSpeakingEvals'), cells: [N('1', true), N('2'), N('10'), N('15')] },
         { label: t('pricingV2CompareRowTask12'), cells: [C(), C(), C(), C()] },
         { label: t('pricingV2CompareRowGT'), cells: [X(), C(), C(), C()] },
         { label: t('pricingV2CompareRowInlineCorrect'), cells: [X(), C(), C(), C()] },
@@ -74,9 +74,9 @@ export default function CompareTable() {
     {
       name: t('pricingV2CompareGroupLiz'),
       rows: [
-        { label: t('pricingV2CompareRowAITutor'), cells: [X(), X(), C(), C()] },
+        { label: t('pricingV2CompareRowAITutor'), cells: [N('5', true), N('20'), N('100'), N('200')] },
         { label: t('pricingV2CompareRowWeeklyFocus'), cells: [X(), X(), C(), C()] },
-        { label: t('pricingV2CompareRowRewrites'), cells: [X(), N(t('pricingV2CompareCell5Month'), true), N(t('pricingV2CompareCellUnlimited')), N(t('pricingV2CompareCellUnlimited'))] },
+        { label: t('pricingV2CompareRowRewrites'), cells: [X(), C(), C(), C()] },
         { label: t('pricingV2CompareRowCharts'), cells: [X(), C(), C(), C()] },
       ],
     },

@@ -34,7 +34,13 @@ from dataclasses import dataclass, asdict
 from datetime import datetime, timezone
 from typing import Any, Dict, Optional
 
-from plan_access import is_admin_user, normalize_plan_name
+from plan_access import (
+    get_effective_plan,
+    get_quota,
+    is_admin_user,
+    normalize_plan_name,
+)
+from services.plan_expiry import enforce_plan_expiry
 from services.usage_tracking import (
     SPEAKING_QUOTAS,
     speaking_period_key_for_plan,
@@ -72,56 +78,10 @@ class EvalDecision:
 # ─── Plan expiry ─────────────────────────────────────────────────────────────
 
 
-async def _enforce_plan_expiry(db, user: Dict[str, Any]) -> Dict[str, Any]:
-    """If user.plan_expires_at is past, downgrade to 'free' and persist.
-    Returns the (possibly mutated) user dict.
-
-    Webhook misses (Stripe/SePay event dropped, IP blip, manual admin
-    intervention) shouldn't strand a user on a paid plan they no longer
-    own. Doing this check on every speaking-eval call is cheap (single
-    Mongo update_one) and authoritative.
-    """
-    expires_at = user.get("plan_expires_at")
-    if not expires_at:
-        return user
-
-    if isinstance(expires_at, datetime):
-        exp_dt = expires_at
-    else:
-        try:
-            exp_dt = datetime.fromisoformat(str(expires_at).replace("Z", "+00:00"))
-        except ValueError:
-            # Malformed — leave as-is rather than downgrading silently.
-            return user
-
-    if exp_dt.tzinfo is None:
-        exp_dt = exp_dt.replace(tzinfo=timezone.utc)
-
-    if exp_dt >= datetime.now(timezone.utc):
-        return user  # still valid
-
-    # Expired. Persist downgrade.
-    if db is not None:
-        try:
-            await db.users.update_one(
-                {"id": user["id"]},
-                {
-                    "$set": {
-                        "plan": "free",
-                        "plan_expires_at": None,
-                        "subscription": None,
-                    }
-                },
-            )
-        except Exception:
-            # If the write fails we still return the in-memory downgrade so
-            # the caller sees the correct effective plan. The next request
-            # will retry the persist.
-            pass
-    user["plan"] = "free"
-    user["plan_expires_at"] = None
-    user["subscription"] = None
-    return user
+# Plan-expiry enforcement lives in services/plan_expiry.enforce_plan_expiry
+# so Liz / writing / mocks can share the same logic. Keeping a thin
+# alias here for the historical name used inside this module.
+_enforce_plan_expiry = enforce_plan_expiry
 
 
 # ─── Counter / flag bookkeeping ──────────────────────────────────────────────
@@ -176,6 +136,69 @@ async def resolve_speaking_eval(
     their per-part quota.
     """
     user = await _enforce_plan_expiry(db, user)
+
+    # Custom plan: pool semantics (decrement subscription.speaking_pool_used,
+    # no period bucket). Effective_tier decides Full Test gating + mode copy.
+    if normalize_plan_name(user.get("plan")) == "custom":
+        is_admin_custom = bool(user.get("email")) and is_admin_user(user["email"])
+        if is_admin_custom:
+            return EvalDecision(
+                allowed=True,
+                mode="full",
+                plan="master",
+                period_key="admin",
+                used=0,
+                quota=9999,
+                remaining=9999,
+                upgrade_to=[],
+                resets_at=datetime.now(timezone.utc).isoformat(),
+                taste_used=False,
+                counter_name=COUNTER_NAME,
+                taste_flag_name=TASTE_FLAG_NAME,
+            )
+        q = get_quota(user, "speaking")
+        eff = q.get("tier") or get_effective_plan(user)
+        eff_norm = normalize_plan_name(eff)
+        total = int(q.get("total") or 0)
+        remaining = int(q.get("remaining") or 0)
+        used = max(total - remaining, 0)
+        sub = user.get("subscription") or {}
+        expires_at = sub.get("expires_at") if isinstance(sub, dict) else getattr(sub, "expires_at", None)
+        # ISO-8601 string already, fall back to now+30d if missing.
+        resets_iso = expires_at if isinstance(expires_at, str) else (
+            expires_at.astimezone(timezone.utc).isoformat() if isinstance(expires_at, datetime)
+            else (datetime.now(timezone.utc).isoformat())
+        )
+
+        allowed = remaining > 0
+        locked_message: Optional[str] = None
+        if context == "full_test" and eff_norm not in FULL_TEST_PLANS:
+            allowed = False
+            locked_message = (
+                "Full Test is available on the Monthly and Exam Pack plans."
+            )
+
+        return EvalDecision(
+            allowed=allowed,
+            mode="full" if allowed else "basic",
+            plan="custom",
+            period_key=f"custom-{sub.get('started_at') or 'pool'}" if isinstance(sub, dict) else "custom-pool",
+            used=used,
+            quota=total,
+            remaining=remaining,
+            upgrade_to=UPGRADE_TARGETS.get(eff_norm, []),
+            resets_at=resets_iso,
+            taste_used=False,
+            counter_name="speaking_pool_used",
+            taste_flag_name=TASTE_FLAG_NAME,
+            message=(
+                None if allowed
+                else (
+                    locked_message
+                    or f"You've used all {total} speaking evaluations from this Custom package."
+                )
+            ),
+        )
 
     plan, quota_cfg = speaking_quota_for(user)
     plan_norm = normalize_plan_name(plan)
@@ -258,12 +281,25 @@ async def record_speaking_eval(
 ) -> None:
     """Increment the period counter atomically. Free-tier full-mode taste
     also flips the taste_used flag in the same write so a concurrent retry
-    can't double-spend the taste."""
+    can't double-spend the taste.
+
+    For Custom plans, increments subscription.speaking_pool_used instead so
+    the package depletes correctly and the meter UI reflects pool burn."""
     if db is None:
         return
     is_admin = bool(user.get("email")) and is_admin_user(user["email"])
     if is_admin:
         return  # admins skip persistence (no quota, no taste)
+
+    if decision.plan == "custom":
+        await db.users.update_one(
+            {"id": user["id"]},
+            {"$inc": {"subscription.speaking_pool_used": 1}},
+        )
+        sub = dict(user.get("subscription") or {})
+        sub["speaking_pool_used"] = int(sub.get("speaking_pool_used", 0) or 0) + 1
+        user["subscription"] = sub
+        return
 
     counter_path = f"usage.{decision.period_key}.{COUNTER_NAME}"
     update: Dict[str, Any] = {"$inc": {counter_path: 1}}

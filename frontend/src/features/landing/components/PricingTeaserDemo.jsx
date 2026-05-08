@@ -17,7 +17,7 @@ const PLANS = [
     price: '$0',
     unit: '',
     tag: 'Try Liz',
-    feats: ['Limited evaluations', 'Liz preview (5 messages)'],
+    feats: ['Full evaluation, not just a score', '1 Writing + 1 Speaking eval / month', '5 Liz tutor messages'],
     href: '/signup',
     ctaLabel: 'Start free',
     ctaClass: 'btn btn-outline',
@@ -28,7 +28,7 @@ const PLANS = [
     price: '$2.99',
     unit: '/ week',
     tag: 'Short sprint',
-    feats: ['Unlimited writing + speaking', '20 Liz messages / week', 'Courses + progress'],
+    feats: ['20 Liz · 3 essays · 2 speaking / week', 'Unlimited Reading + Listening', 'Courses + progress'],
     href: '/signup?plan=weekly',
     ctaLabel: 'Choose Weekly',
     ctaClass: 'btn btn-outline',
@@ -36,10 +36,10 @@ const PLANS = [
   {
     key: 'monthly',
     name: 'Monthly',
-    price: '$8.99',
+    price: '$9.99',
     unit: '/ month',
     tag: 'Most popular',
-    feats: ['Everything in Weekly', '100 Liz messages / month', 'Priority AI queue'],
+    feats: ['100 Liz · 10 essays · 10 speaking / month', 'Priority evaluation queue', 'Everything in Weekly'],
     href: '/signup?plan=monthly',
     ctaLabel: 'Choose Monthly',
     ctaClass: 'btn btn-primary',
@@ -48,10 +48,10 @@ const PLANS = [
   {
     key: 'exam',
     name: 'Exam Pack',
-    price: '$14.99',
+    price: '$19.99',
     unit: 'once',
     tag: '30 days',
-    feats: ['One-time payment', '30 days · 200 Liz messages', 'No renewal'],
+    feats: ['30 days · 200 Liz · 25 essays · 15 speaking', 'One-time payment, no renewal', 'All four skills covered'],
     href: '/signup?plan=exam',
     ctaLabel: 'Get Exam Pack',
     ctaClass: 'btn btn-outline',
@@ -66,7 +66,7 @@ export default function PricingTeaserDemo() {
           <div className="section-eyebrow">Pricing</div>
           <h2 className="section-title">Pick a plan that fits your timeline.</h2>
           <p className="section-sub">
-            Start free. Upgrade when you want Liz full access and unlimited evaluations.
+            Start free. Every plan — even Free — gives you full IELTS-grade feedback, not just a score.
           </p>
         </div>
         <div className="pt-demo-grid">

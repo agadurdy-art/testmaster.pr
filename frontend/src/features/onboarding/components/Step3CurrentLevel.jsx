@@ -1,7 +1,29 @@
 import React from 'react';
 import BandLadder from './BandLadder';
 
-export default function Step3CurrentLevel({ direction, currentBand, onChange }) {
+const WEAK_SKILLS = [
+  { id: 'listening', label: 'Listening' },
+  { id: 'reading', label: 'Reading' },
+  { id: 'writing', label: 'Writing' },
+  { id: 'speaking', label: 'Speaking' },
+];
+
+export default function Step3CurrentLevel({
+  direction,
+  currentBand,
+  onChange,
+  weakSkills = [],
+  onWeakSkillsChange,
+}) {
+  const toggleWeak = (id) => {
+    if (!onWeakSkillsChange) return;
+    if (weakSkills.includes(id)) {
+      onWeakSkillsChange(weakSkills.filter((s) => s !== id));
+    } else {
+      onWeakSkillsChange([...weakSkills, id]);
+    }
+  };
+
   return (
     <section className={`step${direction === 'rev' ? ' rev' : ''}`}>
       <h1 className="step-title">
@@ -19,6 +41,33 @@ export default function Step3CurrentLevel({ direction, currentBand, onChange }) 
           skippable.
         </div>
         <BandLadder value={currentBand} onChange={onChange} />
+
+        <div className="q-label" style={{ marginTop: 24 }}>
+          Which skills feel weakest right now?
+        </div>
+        <div className="q-hint">
+          Pick any that apply — Liz will prioritize these in your plan. Optional.
+        </div>
+        <div
+          className="weak-skills-row"
+          role="group"
+          aria-label="Self-declared weak skills"
+        >
+          {WEAK_SKILLS.map((s) => {
+            const selected = weakSkills.includes(s.id);
+            return (
+              <button
+                key={s.id}
+                type="button"
+                className={`weak-chip${selected ? ' selected' : ''}`}
+                aria-pressed={selected}
+                onClick={() => toggleWeak(s.id)}
+              >
+                {s.label}
+              </button>
+            );
+          })}
+        </div>
 
         <div className="alt-card">
           <div className="ico">

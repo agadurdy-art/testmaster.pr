@@ -93,7 +93,7 @@ function Wave({ playing }) {
   );
 }
 
-export default function Step5LizIntro({ direction, state }) {
+export default function Step5LizIntro({ direction, state, onMotivationChange }) {
   const confettiShown = useRef(false);
   const [showConfetti, setShowConfetti] = useState(false);
 
@@ -172,6 +172,27 @@ export default function Step5LizIntro({ direction, state }) {
             </button>
             <Wave playing={playing} />
             <div className="wave-lang">Greeting · {lang}</div>
+          </div>
+        )}
+
+        {onMotivationChange && (
+          <div className="motivation-block">
+            <label className="motivation-label" htmlFor="liz-motivation">
+              In one line — why are you doing this?
+            </label>
+            <div className="motivation-hint">
+              "I need 7.0 for med school in Australia." Liz uses it to keep
+              you focused. Optional.
+            </div>
+            <input
+              id="liz-motivation"
+              type="text"
+              className="motivation-input"
+              maxLength={140}
+              value={state.motivation || ''}
+              onChange={(e) => onMotivationChange(e.target.value)}
+              placeholder="What's pushing you toward this band?"
+            />
           </div>
         )}
 

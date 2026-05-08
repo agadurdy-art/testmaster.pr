@@ -7,7 +7,8 @@
 
 const KEY = 'testmaster_pending_plan';
 const INTENT_KEY = 'testmaster_pending_intent';
-const PAID = new Set(['weekly', 'monthly', 'exam']);
+const CUSTOM_META_KEY = 'testmaster_pending_custom_meta';
+const PAID = new Set(['weekly', 'monthly', 'exam', 'custom']);
 const INTENTS = new Set(['writing', 'speaking', 'liz']);
 
 export function stashPendingPlan(plan) {
@@ -16,6 +17,38 @@ export function stashPendingPlan(plan) {
   try {
     window.localStorage.setItem(KEY, plan);
   } catch (_) { /* non-fatal */ }
+}
+
+// Custom plan needs extra price + duration that aren't part of the plan key.
+// Stash them alongside the plan so the post-auth redirect can rebuild the
+// correct slider state on /pricing.
+export function stashPendingCustomMeta(price, days) {
+  if (!price || !days) return;
+  try {
+    window.localStorage.setItem(
+      CUSTOM_META_KEY,
+      JSON.stringify({ price: String(price), days: Number(days) }),
+    );
+  } catch (_) { /* non-fatal */ }
+}
+
+export function consumePendingCustomMeta() {
+  try {
+    const raw = window.localStorage.getItem(CUSTOM_META_KEY);
+    if (raw) window.localStorage.removeItem(CUSTOM_META_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch (_) {
+    return null;
+  }
+}
+
+export function peekPendingCustomMeta() {
+  try {
+    const raw = window.localStorage.getItem(CUSTOM_META_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch (_) {
+    return null;
+  }
 }
 
 export function consumePendingPlan() {
@@ -39,6 +72,15 @@ export function peekPendingPlan() {
 export function pendingPlanRedirect(plan) {
   if (!plan) return null;
   if (plan === 'free') return '/dashboard';
+  if (plan === 'custom') {
+    // Pull stashed price/days back into the URL so PricingPageV2 can prime
+    // the slider to the same selection the user made before signup.
+    const meta = peekPendingCustomMeta();
+    if (meta && meta.price && meta.days) {
+      return `/pricing?plan=custom&price=${encodeURIComponent(meta.price)}&days=${meta.days}`;
+    }
+    return '/pricing?plan=custom';
+  }
   if (PAID.has(plan)) return `/pricing?plan=${plan}`;
   return null;
 }

@@ -6,6 +6,7 @@ export { default as DualPathCards } from './components/DualPathCards';
 export { default as SampleReportsStrip } from './components/SampleReportsStrip';
 export { default as Testimonials } from './components/Testimonials';
 export { default as HowItWorks } from './components/HowItWorks';
+export { default as HeadToHead } from './components/HeadToHead';
 export { default as PricingTeaser } from './components/PricingTeaser';
 export { default as PricingTeaserDemo } from './components/PricingTeaserDemo';
 export { default as FinalCTA } from './components/FinalCTA';

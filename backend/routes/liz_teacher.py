@@ -18,7 +18,13 @@ from fastapi import APIRouter, HTTPException, UploadFile, File
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-from plan_access import get_plan_features
+from plan_access import (
+    get_plan_features,
+    get_effective_plan,
+    get_quota,
+    normalize_plan_name,
+)
+from services.plan_expiry import enforce_plan_expiry
 from services import liz_llm, liz_tts
 
 router = APIRouter(prefix="/api/liz", tags=["liz-teacher"])
@@ -61,6 +67,17 @@ RIGHT: "Your coherence has improved from your last attempt. Focus on paragraph t
 - Never give generic praise without backing it with data
 - Always respond in English (you are an English teacher)
 - If the student writes in another language, gently encourage them to try in English
+
+## Remembering the student's stated goals
+The Student Profile below may include onboarding-declared fields: native language,
+their stated motivation ("Why they're studying"), exam date, self-reported current
+and target bands, and self-declared weak areas. Treat these as things the student
+told you personally. Reference them naturally when relevant — e.g. "You mentioned
+you need this for university admission, so let's prioritize Writing Task 2," or
+"Since your exam is on {date}, here's a 6-week plan." Do NOT list them back as
+data; weave them into coaching. If score-derived data later contradicts the
+self-report (e.g. their actual writing average is lower than the band they
+claimed), gently use the real data without calling out the discrepancy.
 
 ## Core Capabilities
 
@@ -345,18 +362,65 @@ def select_chat_model(message: str, is_voice: bool = False) -> str:
 
 async def get_liz_user_access(user_id: str) -> dict:
     if db is None:
-        return {"user": None, "plan": "free", "features": get_plan_features("free"), "has_access": False}
-    user = await db.users.find_one({"id": user_id}, {"_id": 0, "id": 1, "name": 1, "email": 1, "plan": 1})
-    plan = (user or {}).get("plan", "free")
+        return {
+            "user": None,
+            "plan": "free",
+            "effective_plan": "free",
+            "features": get_plan_features("free"),
+            "has_access": False,
+            "quota": {"kind": "period", "total": 0, "remaining": 0, "tier": "free"},
+        }
+    user = await db.users.find_one(
+        {"id": user_id},
+        {"_id": 0, "id": 1, "name": 1, "email": 1, "plan": 1, "subscription": 1, "plan_expires_at": 1},
+    )
+    # Lazy expiry: a Custom package whose expires_at has passed (or a legacy
+    # plan_expires_at gate) collapses to free here, before any feature gate
+    # reads user.plan. Webhook misses won't strand a user on a dead plan.
+    user = await enforce_plan_expiry(db, user)
+    plan = normalize_plan_name((user or {}).get("plan", "free"))
     email = (user or {}).get("email")
-    features = get_plan_features(plan, email)
-    has_access = int(features.get("max_liz_messages", 0) or 0) > 0
-    return {"user": user, "plan": plan, "features": features, "has_access": has_access}
+    # Custom resolves to its effective tier (weekly/monthly/exam) for feature
+    # gating; the actual remaining message count comes from the pool, not
+    # the plan_features cap.
+    effective_plan = get_effective_plan(user) if user else plan
+    features = get_plan_features(effective_plan, email)
+    quota = get_quota(user, "liz") if user else {"kind": "period", "total": 0, "remaining": 0, "tier": "free"}
+    has_access = int(quota.get("total") or 0) > 0
+    return {
+        "user": user,
+        "plan": plan,
+        "effective_plan": effective_plan,
+        "features": features,
+        "has_access": has_access,
+        "quota": quota,
+    }
 
 
-async def get_liz_usage_stats(user_id: str, max_messages: int) -> dict:
+async def get_liz_usage_stats(user_id: str, max_messages: int, *, user: Optional[dict] = None) -> dict:
+    """Liz message usage for the meter UI. Period plans count user messages
+    in the current month. Custom plans report pool consumption (remaining
+    derives from subscription.liz_pool_total - liz_pool_used)."""
     if db is None:
         return {"used_messages": 0, "remaining_messages": max_messages, "resets_at": None}
+    if user is None:
+        user = await db.users.find_one(
+            {"id": user_id},
+            {"_id": 0, "id": 1, "plan": 1, "subscription": 1, "plan_expires_at": 1},
+        )
+    plan = normalize_plan_name((user or {}).get("plan", "free"))
+    if plan == "custom":
+        q = get_quota(user, "liz")
+        total = int(q.get("total") or 0)
+        remaining = int(q.get("remaining") or 0)
+        used = max(total - remaining, 0)
+        sub = (user or {}).get("subscription") or {}
+        return {
+            "used_messages": used,
+            "remaining_messages": remaining,
+            "resets_at": sub.get("expires_at"),
+        }
+
     now = datetime.now(timezone.utc)
     month_start = datetime(now.year, now.month, 1, tzinfo=timezone.utc)
     next_month = datetime(now.year + (1 if now.month == 12 else 0), 1 if now.month == 12 else now.month + 1, 1, tzinfo=timezone.utc)
@@ -375,11 +439,62 @@ async def get_liz_usage_stats(user_id: str, max_messages: int) -> dict:
     return {"used_messages": used, "remaining_messages": remaining, "resets_at": next_month.isoformat()}
 
 
+# Upgrade target tables — first match wins; mirrors tier_resolver.UPGRADE_TARGETS
+# but lives here so the Liz 402 payload doesn't depend on the speaking module.
+LIZ_UPGRADE_TARGETS = {
+    "free":     ["weekly", "monthly", "exam"],
+    "weekly":   ["monthly", "exam"],
+    "monthly":  ["exam"],
+    "exam":     [],
+    "explorer": ["weekly", "monthly", "exam"],
+    "learner":  ["monthly", "exam"],
+    "achiever": ["monthly", "exam"],
+    "master":   [],
+}
+
+
+def _liz_quota_402_payload(access: dict) -> dict:
+    """Structured 402 body so the frontend paywall can render plan/remaining
+    /total/upgrade options without parsing free-text. See PricingPageV2 +
+    upgrade-success flow (project_pricing_backlog.md)."""
+    quota = access.get("quota") or {}
+    usage = access.get("usage") or {}
+    eff = access.get("effective_tier") or quota.get("tier") or access.get("effective_plan") or access.get("plan") or "free"
+    return {
+        "code": "quota_exceeded",
+        "detail": "You have reached your Liz Teacher message limit for this plan.",
+        "plan": access.get("plan") or "free",
+        "effective_plan": access.get("effective_plan") or "free",
+        "kind": "liz",
+        "quota_kind": quota.get("kind", "period"),
+        "remaining": int(usage.get("remaining_messages") or 0),
+        "total": int(quota.get("total") or 0),
+        "resets_at": usage.get("resets_at"),
+        "upgrade_targets": LIZ_UPGRADE_TARGETS.get(eff, ["weekly", "monthly", "exam"]),
+    }
+
+
 async def ensure_liz_access(user_id: str) -> dict:
     access = await get_liz_user_access(user_id)
     if not access["has_access"]:
-        raise HTTPException(status_code=403, detail="Liz Teacher is available on Learner, Achiever, and Master plans.")
-    access["usage"] = await get_liz_usage_stats(user_id, int(access["features"].get("max_liz_messages", 0) or 0))
+        raise HTTPException(
+            status_code=403,
+            detail={
+                "code": "plan_locked",
+                "detail": "Liz Teacher requires a paid plan.",
+                "plan": access.get("plan") or "free",
+                "kind": "liz",
+                "upgrade_targets": LIZ_UPGRADE_TARGETS.get(
+                    access.get("effective_plan") or "free",
+                    ["weekly", "monthly", "exam"],
+                ),
+            },
+        )
+    access["usage"] = await get_liz_usage_stats(
+        user_id,
+        int(access["quota"].get("total") or 0),
+        user=access.get("user"),
+    )
     return access
 
 
@@ -662,13 +777,46 @@ async def get_user_context(user_id: str) -> str:
     profile = {}
 
     # 1. Basic user info
-    user = await db.users.find_one({"id": user_id}, {"_id": 0, "name": 1, "email": 1, "plan": 1, "created_at": 1})
+    user = await db.users.find_one(
+        {"id": user_id},
+        {
+            "_id": 0,
+            "name": 1,
+            "email": 1,
+            "plan": 1,
+            "created_at": 1,
+            # B3 onboarding goals — surfaced so Liz can reference them naturally.
+            "native_language": 1,
+            "motivation": 1,
+            "declared_weak_skills": 1,
+            "exam_date": 1,
+            "target_band": 1,
+            "current_band": 1,
+            "path": 1,
+        },
+    )
     if user:
         profile["name"] = user.get("name", "Student")
         profile["plan"] = user.get("plan", "free")
         created = user.get("created_at")
         if created:
             profile["member_since"] = str(created)[:10] if isinstance(created, str) else created.strftime("%Y-%m-%d")
+        # Onboarding-declared goals. These are *self-reported* — the score-derived
+        # target_band/weak_skills below override them once the student has data.
+        if user.get("native_language"):
+            profile["native_language"] = user["native_language"]
+        if user.get("motivation"):
+            profile["motivation"] = user["motivation"]
+        if user.get("declared_weak_skills"):
+            profile["declared_weak_skills"] = user["declared_weak_skills"]
+        if user.get("exam_date"):
+            profile["exam_date"] = user["exam_date"]
+        if user.get("current_band") is not None:
+            profile["declared_current_band"] = user["current_band"]
+        if user.get("target_band") is not None:
+            profile["declared_target_band"] = user["target_band"]
+        if user.get("path"):
+            profile["path"] = user["path"]
 
     # 2. Test completions with scores
     completions = await db.user_completions.find(
@@ -792,6 +940,27 @@ async def get_user_context(user_id: str) -> str:
     lines.append(f"Student: {profile.get('name', 'Unknown')}")
     lines.append(f"Plan: {profile.get('plan', 'free')}")
 
+    # Onboarding-declared goals (B3 — Liz remembers what they told us up front).
+    if profile.get("path"):
+        lines.append(f"Goal track: {profile['path']}")
+    if profile.get("native_language"):
+        nl = profile["native_language"]
+        nl_name = nl.get("name") if isinstance(nl, dict) else str(nl)
+        if nl_name:
+            lines.append(f"Native language: {nl_name}")
+    if profile.get("motivation"):
+        lines.append(f"Why they're studying: \"{profile['motivation']}\"")
+    if profile.get("exam_date"):
+        lines.append(f"Stated exam date: {profile['exam_date']}")
+    if profile.get("declared_current_band") is not None:
+        lines.append(f"Self-reported current band: {profile['declared_current_band']}")
+    if profile.get("declared_target_band") is not None:
+        lines.append(f"Self-reported target band: {profile['declared_target_band']}")
+    if profile.get("declared_weak_skills"):
+        lines.append(
+            f"Self-declared weak areas: {', '.join(str(s) for s in profile['declared_weak_skills'])}"
+        )
+
     if "current_estimated_level" in profile:
         lines.append(f"Current estimated level: Band {profile['current_estimated_level']}")
         lines.append(f"Target band: {profile['target_band']}")
@@ -893,7 +1062,10 @@ async def _prepare_chat_context(req: ChatRequest):
     builds the system prompt, and returns everything the LLM call needs."""
     access = await ensure_liz_access(req.user_id)
     if access["usage"]["remaining_messages"] <= 0:
-        raise HTTPException(status_code=402, detail="You have reached your Liz Teacher monthly message limit for this plan.")
+        # Structured 402 so the frontend paywall can render plan/remaining
+        # /total/upgrade options. See project_pricing_backlog.md for the
+        # upgrade-resume flow this payload feeds into.
+        raise HTTPException(status_code=402, detail=_liz_quota_402_payload(access))
 
     session = await get_or_create_session(req.user_id, req.session_id)
     session_id = session["session_id"]
@@ -977,7 +1149,9 @@ async def chat_with_liz(req: ChatRequest):
         "homework_assigned": [{"homework_id": h["homework_id"], "title": h["title"], "type": h["type"]} for h in hw_list],
         "voice_pronunciation": ctx["azure_scores"],
         "usage": await get_liz_usage_stats(
-            req.user_id, int(ctx["access"]["features"].get("max_liz_messages", 0) or 0)
+            req.user_id,
+            int(ctx["access"]["quota"].get("total") or 0),
+            user=ctx["access"].get("user"),
         ),
     }
 
@@ -1027,7 +1201,9 @@ async def chat_with_liz_stream(req: ChatRequest):
         )
 
         usage = await get_liz_usage_stats(
-            req.user_id, int(ctx["access"]["features"].get("max_liz_messages", 0) or 0)
+            req.user_id,
+            int(ctx["access"]["quota"].get("total") or 0),
+            user=ctx["access"].get("user"),
         )
         final = {
             "type": "done",
@@ -1061,8 +1237,8 @@ async def create_new_session(req: NewSessionRequest):
 async def get_liz_status(user_id: str):
     """Return Liz availability, plan info, and monthly usage."""
     access = await get_liz_user_access(user_id)
-    max_messages = int(access["features"].get("max_liz_messages", 0) or 0)
-    usage = await get_liz_usage_stats(user_id, max_messages)
+    max_messages = int(access["quota"].get("total") or 0)
+    usage = await get_liz_usage_stats(user_id, max_messages, user=access.get("user"))
     llm_health = liz_llm.health()
     tts_health = liz_tts.health()
 

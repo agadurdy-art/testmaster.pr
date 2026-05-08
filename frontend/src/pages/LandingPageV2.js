@@ -6,6 +6,7 @@ import {
   SampleReportsStrip,
   Testimonials,
   HowItWorks,
+  HeadToHead,
   PricingTeaser,
   FinalCTA,
   LandingFooter,
@@ -36,6 +37,7 @@ export default function LandingPageV2() {
           nothing while the queue is empty so the page stays tight. */}
       <TestimonialWall title="More student stories" />
       <HowItWorks />
+      <HeadToHead />
       <PricingTeaser />
       <FinalCTA />
       <LandingFooter />

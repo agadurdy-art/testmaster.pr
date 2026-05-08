@@ -41,6 +41,11 @@ export default function OnboardingPageV2({ user }) {
             currentBand: state.currentBand,
             examDate: examDateIso,
             language: state.language,
+            // B3 — "Liz remembers your goals". All optional; backend
+            // (auth.py OnboardingPayload) tolerates nulls/empty strings.
+            nativeLanguage: state.nativeLanguage,
+            motivation: state.motivation || null,
+            weakSkills: state.weakSkills,
           }),
         });
       }

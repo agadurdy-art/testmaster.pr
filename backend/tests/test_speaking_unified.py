@@ -234,7 +234,12 @@ def test_iso_week_key_format():
 
 def test_period_key_per_plan():
     user = {"plan": "free", "usage": {}}
-    assert "W" in speaking_period_key_for_plan("free", user)
+    # Free is monthly under the locked 2026-05-08 cap matrix
+    # (1 speaking eval / month, full taste).
+    free_key = speaking_period_key_for_plan("free", user)
+    assert "W" not in free_key
+    assert len(free_key) == 7
+    # Weekly stays weekly.
     assert "W" in speaking_period_key_for_plan("weekly", user)
 
     # Monthly = YYYY-MM, no W.
@@ -250,8 +255,9 @@ def test_period_key_per_plan():
 
 
 def test_resets_at_weekly_lands_on_monday():
-    user = {"plan": "free"}
-    resets = speaking_period_resets_at("free", user)
+    # Weekly plan rolls over to ISO Monday 00:00 UTC.
+    user = {"plan": "weekly"}
+    resets = speaking_period_resets_at("weekly", user)
     # ISO Monday is weekday 0.
     assert resets.weekday() == 0
     assert resets.hour == resets.minute == resets.second == 0
@@ -271,15 +277,18 @@ async def test_free_first_eval_is_full(db, free_user):
 
 
 @pytest.mark.asyncio
-async def test_free_second_eval_is_basic(db, free_user):
-    """After the taste is consumed, mode flips to basic until reset."""
+async def test_free_second_eval_is_blocked(db, free_user):
+    """Locked 2026-05-08 cap matrix: Free has 1 speaking eval per month
+    (full taste). After it, the second call is blocked — no basic-mode
+    follow-on. Upgrade prompt nudges Weekly/Monthly/Exam."""
     await db.users.insert_one(free_user)
     first = await resolve_speaking_eval(db, free_user)
+    assert first.allowed and first.mode == "full"
     await record_speaking_eval(db, free_user, first)
     second = await resolve_speaking_eval(db, free_user)
-    assert second.allowed
-    assert second.mode == "basic"
+    assert second.allowed is False
     assert second.taste_used is True
+    assert "weekly" in second.upgrade_to
 
 
 @pytest.mark.asyncio
@@ -296,15 +305,15 @@ async def test_free_quota_exhausted(db, free_user):
 
 @pytest.mark.asyncio
 async def test_paid_plan_always_full(db, weekly_user):
+    """Paid plans run in full mode for every allowed eval. Loop bounded by
+    the actual cap so we don't trip the post-quota basic fallback."""
     await db.users.insert_one(weekly_user)
-    decision = await resolve_speaking_eval(db, weekly_user)
-    assert decision.allowed
-    assert decision.mode == "full"
-    # Run through several evals — mode never flips.
-    for _ in range(3):
-        await record_speaking_eval(db, weekly_user, decision)
+    limit = SPEAKING_QUOTAS["weekly"]["limit"]
+    for _ in range(limit):
         decision = await resolve_speaking_eval(db, weekly_user)
+        assert decision.allowed
         assert decision.mode == "full"
+        await record_speaking_eval(db, weekly_user, decision)
 
 
 @pytest.mark.asyncio
@@ -499,13 +508,14 @@ async def test_route_full_mode_for_first_free_call(db, client, free_user):
 
 
 @pytest.mark.asyncio
-async def test_route_second_call_basic_mode(db, client, free_user):
+async def test_route_second_call_blocked(db, client, free_user):
+    """Locked 2026-05-08 cap matrix: Free has 1 speaking eval per month —
+    the second route call returns 402, not basic-mode 200."""
     await db.users.insert_one(free_user)
     _post_eval(client, user_id="user-free")
     resp2 = _post_eval(client, user_id="user-free")
-    assert resp2.status_code == 200
-    assert resp2.headers["X-Speaking-Eval-Mode"] == "basic"
-    assert resp2.json()["liz_note"].startswith("BASIC: ")
+    assert resp2.status_code == 402
+    assert resp2.json()["detail"]["code"] == "quota_exhausted"
 
 
 @pytest.mark.asyncio

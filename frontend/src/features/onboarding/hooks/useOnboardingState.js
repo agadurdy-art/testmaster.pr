@@ -39,6 +39,12 @@ const INITIAL_STATE = {
   currentBand: null,
   examDate: null, // Date | 'tbd' | null
   language: null,
+  // B3 — "Liz remembers your goals" — all optional, never block canContinue.
+  // nativeLanguage shape mirrors `language` (LANGUAGES entry); motivation is a
+  // free-text one-liner; weakSkills is a string[] of {listening|reading|writing|speaking}.
+  nativeLanguage: null,
+  motivation: '',
+  weakSkills: [],
   name: null, // collected on Step 5; never hardcode a real name here — it leaks into the Dashboard for other users
 };
 

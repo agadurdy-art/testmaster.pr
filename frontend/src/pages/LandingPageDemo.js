@@ -3,6 +3,7 @@ import {
   LandingNav,
   LandingHeroDemo,
   HowItWorks,
+  HeadToHead,
   PricingTeaserDemo,
   FinalCTA,
   LandingFooter,
@@ -40,6 +41,7 @@ export default function LandingPageDemo() {
         <LandingHeroDemo />
         <MeetLiz />
         <HowItWorks />
+        <HeadToHead />
         <PricingTeaserDemo />
         <FinalCTA />
         <LandingFooter />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PayPalButtons } from '@paypal/react-paypal-js';
+import { resolvePostCheckoutDestination } from '../../../lib/upgradeFlow';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const paypalClientId = process.env.REACT_APP_PAYPAL_CLIENT_ID;
@@ -80,8 +81,8 @@ export default function PlanCheckoutButton({
             if (res.ok) {
               const updatedUser = { ...user, plan: result.plan, subscription: result.subscription };
               localStorage.setItem('user', JSON.stringify(updatedUser));
-              alert('Exam Pack activated. 30 days unlimited access.');
-              window.location.href = '/dashboard';
+              alert('Exam Pack activated. 30 days · 200 Liz · 25 essays · 15 speaking.');
+              window.location.href = resolvePostCheckoutDestination();
             } else {
               alert(result.detail || 'Payment capture failed');
             }
@@ -125,7 +126,7 @@ export default function PlanCheckoutButton({
             const updatedUser = { ...user, plan: result.plan, subscription: result.subscription };
             localStorage.setItem('user', JSON.stringify(updatedUser));
             alert(`${result.subscription} plan activated.`);
-            window.location.href = '/dashboard';
+            window.location.href = resolvePostCheckoutDestination();
           } else {
             alert(result.detail || 'Activation failed');
           }
