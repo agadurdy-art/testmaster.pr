@@ -51,6 +51,18 @@ FRONTEND_BASE_URL = os.getenv("FRONTEND_BASE_URL", "https://www.testmaster.pro")
 OAUTH_STATE_TTL_SECONDS = 600   # 10 min — Google consent window
 OAUTH_SESSION_TTL_SECONDS = 300  # 5 min — frontend exchange window
 
+# Boot-time diagnostic: log presence (not values) so we can confirm Railway
+# env vars reached the process. Remove once Google OAuth is verified live.
+logger.info(
+    "Google OAuth env at boot: CLIENT_ID=%s SECRET=%s REDIRECT=%s FRONTEND=%s",
+    "set" if GOOGLE_CLIENT_ID else "MISSING",
+    "set" if GOOGLE_CLIENT_SECRET else "MISSING",
+    GOOGLE_REDIRECT_URI,
+    FRONTEND_BASE_URL,
+)
+_google_keys_in_env = sorted([k for k in os.environ.keys() if "GOOGLE" in k.upper()])
+logger.info("Env keys containing GOOGLE: %s", _google_keys_in_env)
+
 if RESEND_API_KEY:
     resend.api_key = RESEND_API_KEY
 
