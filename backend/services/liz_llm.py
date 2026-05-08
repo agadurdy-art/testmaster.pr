@@ -157,17 +157,33 @@ async def complete(
     max_tokens: int = 1500,
     is_voice: bool = False,
     task: str = "chat",
+    cache_system: bool = False,
 ) -> str:
-    """Non-streaming completion. Returns the assistant's full text."""
+    """Non-streaming completion. Returns the assistant's full text.
+
+    `cache_system=True` opts the system prompt into Anthropic's prompt-cache
+    (5-min ephemeral). Use it for long, stable system prompts that are reused
+    across many calls (e.g. the writing evaluator's 230-line rubric). Other
+    providers ignore the flag — they pass the system prompt through unchanged.
+    """
     chosen = model or select_model(user_message, is_voice=is_voice, task=task)
     provider = _active_provider()
 
     if provider == "anthropic":
         client = _get_anthropic_client()
+        # Caching: send `system` as a content-block list with `cache_control`
+        # on the (single) text block so the SDK marks it cacheable. Plain str
+        # works too but skips the cache. Cached input tokens cost ~10% of
+        # uncached, so a 230-line rubric reused across calls saves ~$0.07/eval.
+        system_payload = (
+            [{"type": "text", "text": system, "cache_control": {"type": "ephemeral"}}]
+            if cache_system
+            else system
+        )
         response = await client.messages.create(
             model=chosen,
             max_tokens=max_tokens,
-            system=system,
+            system=system_payload,
             messages=[{"role": "user", "content": user_message}],
         )
         # Anthropic returns a list of content blocks; concatenate any text blocks

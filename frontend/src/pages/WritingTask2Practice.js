@@ -15,6 +15,7 @@ import { toast } from 'sonner';
 import { getRecommendedLessonPath } from '../lib/recommendationRouting';
 import { useI18n } from '../lib/i18n';
 import WritingEvaluatorResult from '../features/evaluator/components/WritingEvaluatorResult';
+import EvaluationProgressOverlay from '../features/evaluator/components/EvaluationProgressOverlay';
 import {
   WritingEvaluationResult,
   verifyAnnotationOffsets,
@@ -300,6 +301,9 @@ export default function WritingTask2Practice() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      {/* Long Sonnet evaluation needs visible progress so users don't think
+          the page hung. */}
+      <EvaluationProgressOverlay open={evaluating} />
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 px-4 md:px-6 sticky top-0 z-40">
         <div className="max-w-[1600px] mx-auto">

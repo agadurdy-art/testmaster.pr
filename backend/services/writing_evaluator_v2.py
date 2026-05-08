@@ -46,7 +46,11 @@ PROMPT_FILE = (
 
 MAX_ATTEMPTS = 3
 BACKOFF_SCHEDULE = (1.0, 3.0)  # seconds between attempts 1→2 and 2→3
-MAX_TOKENS = 4096               # annotations + improved_version can be long
+# Real-world payloads (4 criteria + ~12 annotations + improved_version + coaching)
+# land around 1500–2200 output tokens. 2500 leaves ~15% headroom and cuts the
+# worst-case bill by ~40% vs the previous 4096 ceiling without truncating
+# legitimate responses.
+MAX_TOKENS = 2500
 CALL_TIMEOUT_SECONDS = 90.0
 
 
@@ -243,6 +247,10 @@ async def evaluate_writing(req: WritingEvaluationRequest) -> WritingEvaluationRe
                     model=model,
                     max_tokens=MAX_TOKENS,
                     task="eval",
+                    # The 230-line IELTS rubric is identical across every
+                    # evaluation; caching it drops repeat-call input cost
+                    # ~10×. First call seeds the cache (~5 min ephemeral).
+                    cache_system=True,
                 ),
                 timeout=CALL_TIMEOUT_SECONDS,
             )

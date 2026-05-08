@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useI18n } from '../lib/i18n';
+import EvaluationProgressOverlay from '../features/evaluator/components/EvaluationProgressOverlay';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -195,6 +196,7 @@ export default function GeneralTask2Practice() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-purple-50">
+      <EvaluationProgressOverlay open={evaluating} />
       {/* Header */}
       <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 text-white py-6 px-6">
         <div className="max-w-7xl mx-auto">

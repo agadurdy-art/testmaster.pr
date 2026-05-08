@@ -13,6 +13,7 @@ import {
 import { toast } from 'sonner';
 import { useI18n } from '../lib/i18n';
 import { useGoBack } from '../hooks/useGoBack';
+import EvaluationProgressOverlay from '../features/evaluator/components/EvaluationProgressOverlay';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -239,6 +240,7 @@ export default function GeneralTask1Practice() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-purple-50">
+      <EvaluationProgressOverlay open={evaluating} />
       {/* Header */}
       <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 px-4 md:px-6 sticky top-0 z-40">
         <div className="max-w-[1600px] mx-auto">
