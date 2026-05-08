@@ -127,47 +127,60 @@ export default function GeneralTask2Practice() {
     setEvaluating(true);
     setIsTimerRunning(false);
     toast.info('AI evaluation in progress...');
-    
+
     try {
-      const response = await fetch(`${API_URL}/api/question-bank/writing/evaluate`, {
+      // v2 endpoint — same evaluator as Academic; we map our existing v1-shape
+      // UI to the v2 response below so the feedback cards keep rendering.
+      const response = await fetch(`${API_URL}/api/writing-practice/evaluate/v2`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          response: userResponse,
           task_type: 'task2',
-          topic: selectedPrompt?.topic || 'general',
-          band_level: '5.5-6.5',
-          task_description: selectedPrompt?.prompt || '',
-          track: 'general',  // Dual-Track: General Training
-          user_language: languageWireCode
-        })
+          prompt: selectedPrompt?.prompt || '',
+          essay: userResponse,
+          user_language: languageWireCode || 'en',
+          user_id: (() => { try { return JSON.parse(localStorage.getItem('user'))?.id || null; } catch { return null; } })(),
+          test_id: `writing_general_task2_${selectedPrompt?.id || selectedPrompt?.topic || 'mixed'}`,
+        }),
       });
-      
-      const data = await response.json();
-      
-      if (data.success) {
-        setEvaluation({
-          overall_band: data.evaluation.overall_band,
-          task_achievement: data.evaluation.task_achievement,
-          coherence_cohesion: data.evaluation.coherence_cohesion,
-          lexical_resource: data.evaluation.lexical_resource,
-          grammatical_range: data.evaluation.grammatical_range,
-          strengths: data.evaluation.strengths || [],
-          weaknesses: data.evaluation.weaknesses || [],
-          suggestions: data.evaluation.improvement_suggestions || [],
-          grammar_corrections: data.evaluation.grammar_corrections || [],
-          line_by_line_corrections: data.evaluation.line_by_line_corrections || [],
-          high_priority_fixes: data.evaluation.high_priority_fixes || [],
-          rewrite_guidance: data.evaluation.rewrite_guidance || {},
-          response_diagnosis: data.evaluation.response_diagnosis || {},
-          examiner_comment: data.evaluation.examiner_comment || '',
-          vocabulary_to_use: data.evaluation.vocabulary_to_use || [],
-          recommended_lessons: data.recommended_lessons || []
-        });
-        toast.success('Evaluation complete!');
-      } else {
-        toast.error(data.error || 'Evaluation failed');
+
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        toast.error(err?.detail?.message || err?.detail || 'Evaluation failed');
+        return;
       }
+
+      const v2 = await response.json();
+      const c = v2.criteria || {};
+      const ta = c.task_achievement || {};
+      const cc = c.coherence_cohesion || {};
+      const lr = c.lexical_resource || {};
+      const gra = c.grammatical_range_accuracy || {};
+      setEvaluation({
+        overall_band: v2.overall_band,
+        task_achievement: { score: ta.band, feedback: ta.explanation },
+        coherence_cohesion: { score: cc.band, feedback: cc.explanation },
+        lexical_resource: { score: lr.band, feedback: lr.explanation },
+        grammatical_range: { score: gra.band, feedback: gra.explanation },
+        strengths: [
+          ...(ta.strengths || []), ...(cc.strengths || []),
+          ...(lr.strengths || []), ...(gra.strengths || []),
+        ],
+        weaknesses: [
+          ...(ta.weaknesses || []), ...(cc.weaknesses || []),
+          ...(lr.weaknesses || []), ...(gra.weaknesses || []),
+        ],
+        suggestions: [],
+        grammar_corrections: [],
+        line_by_line_corrections: [],
+        high_priority_fixes: v2.highest_priority_fixes || [],
+        rewrite_guidance: v2.rewrite_guidance || {},
+        response_diagnosis: v2.response_diagnosis || {},
+        examiner_comment: '',
+        vocabulary_to_use: [],
+        recommended_lessons: v2.recommended_lesson ? [v2.recommended_lesson] : [],
+      });
+      toast.success('Evaluation complete!');
     } catch (error) {
       console.error('Evaluation error:', error);
       toast.error('Error during evaluation');
