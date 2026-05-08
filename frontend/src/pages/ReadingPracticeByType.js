@@ -310,9 +310,15 @@ export default function ReadingPracticeByType({ user }) {
                 <p className="text-sm text-amber-100 mt-1">{moduleContent.text_type}</p>
               </div>
               <div className="p-6 max-h-[600px] overflow-y-auto">
-                <pre className="whitespace-pre-wrap font-sans text-sm text-gray-700 leading-relaxed">
-                  {getPassage()}
-                </pre>
+                {/* Paragraph render avoids Safari/iOS Reader Mode auto-engage. */}
+                <div className="font-sans text-sm text-gray-700 leading-relaxed space-y-3">
+                  {String(getPassage() || '')
+                    .split(/\n\s*\n/)
+                    .filter((p) => p.trim().length > 0)
+                    .map((para, i) => (
+                      <p key={i}>{para.trim()}</p>
+                    ))}
+                </div>
               </div>
             </Card>
 

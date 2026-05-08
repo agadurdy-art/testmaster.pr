@@ -242,9 +242,15 @@ export default function ReadingPracticeMasteryGeneral({ user }) {
                 )}
               </div>
               <div className="p-6 max-h-[600px] overflow-y-auto bg-gray-50">
-                <pre className="whitespace-pre-wrap font-sans text-sm text-gray-700 leading-relaxed">
-                  {moduleContent.passage}
-                </pre>
+                {/* Paragraph render avoids Safari/iOS Reader Mode auto-engage. */}
+                <div className="font-sans text-sm text-gray-700 leading-relaxed space-y-3">
+                  {String(moduleContent.passage || '')
+                    .split(/\n\s*\n/)
+                    .filter((p) => p.trim().length > 0)
+                    .map((para, i) => (
+                      <p key={i}>{para.trim()}</p>
+                    ))}
+                </div>
               </div>
             </Card>
 

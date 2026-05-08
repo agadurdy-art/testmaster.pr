@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import {
   GraduationCap, MessageSquare, BookOpen, PenTool, Target,
@@ -134,6 +134,36 @@ export default function LizTeacher({ user }) {
     greetStudent();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id, hasGreeted, sessionId]);
+
+  // Deep-link from the Writing Evaluator's "Recommended Lesson" card. After
+  // the greet lands we auto-send a message asking Liz to walk through the
+  // suggested lesson — keeps the user inside Liz instead of jumping them to a
+  // course landing page that lost their evaluation context.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const lessonHandoffRef = useRef(false);
+  useEffect(() => {
+    if (lessonHandoffRef.current) return;
+    const source = searchParams.get('source');
+    if (source !== 'writing-eval') return;
+    if (!sessionId) return; // wait for greet to seed the session
+    lessonHandoffRef.current = true;
+    const title = searchParams.get('title') || 'the recommended lesson';
+    const reason = searchParams.get('reason') || '';
+    const stage = searchParams.get('stage') || '';
+    const lessonId = searchParams.get('lesson_id') || '';
+    const prompt =
+      `I just finished a writing evaluation and you recommended I work on "${title}"` +
+      (reason ? ` because ${reason}` : '') +
+      (stage ? ` (stage: ${stage})` : '') +
+      `. Can we go through it together right now? Start with the key idea, then give me one short worked example, then a 30-second exercise I can do here in chat.` +
+      (lessonId ? `\n\n(lesson_id: ${lessonId})` : '');
+    // Strip the deep-link params so a refresh doesn't replay the message.
+    const next = new URLSearchParams(searchParams);
+    ['source', 'lesson_id', 'title', 'reason', 'stage'].forEach((k) => next.delete(k));
+    setSearchParams(next, { replace: true });
+    sendMessage(prompt);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionId, searchParams]);
 
   const playAudio = useCallback((base64Audio) => {
     return new Promise((resolve) => {

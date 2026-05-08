@@ -22,6 +22,7 @@ export default function ReadingPracticeAcademic({ user }) {
   const [selectedModule, setSelectedModule] = useState(null);
   const [moduleContent, setModuleContent] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(null);
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [results, setResults] = useState(null);
@@ -43,18 +44,31 @@ export default function ReadingPracticeAcademic({ user }) {
   }, [timerActive, timeLeft]);
 
   const loadModules = async () => {
+    setLoadError(null);
     try {
       const res = await fetch(`${API_URL}/api/courses/reading/academic/advanced`);
+      if (!res.ok) {
+        // Surface HTTP failure as an explicit error state so the page doesn't
+        // render an empty selector + blank body that looks broken.
+        setLoadError(`Server error (${res.status})`);
+        toast.error(`Reading passages unavailable (${res.status}). Try again shortly.`);
+        return;
+      }
       const data = await res.json();
-      if (data.success) {
+      if (data?.success && Array.isArray(data.modules)) {
         setModules(data.modules);
-        // Auto-select first module
         if (data.modules.length > 0) {
           selectModule(data.modules[0].module_id);
+        } else {
+          setLoadError('No reading passages available right now.');
         }
+      } else {
+        setLoadError(data?.error || 'Reading content failed to load.');
+        toast.error('Failed to load reading modules');
       }
     } catch (error) {
       console.error('Error loading modules:', error);
+      setLoadError('Network error — check your connection and retry.');
       toast.error('Failed to load reading modules');
     } finally {
       setLoading(false);
@@ -176,23 +190,39 @@ export default function ReadingPracticeAcademic({ user }) {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-6">
+        {/* When the modules fetch fails or returns empty, show an explicit
+            error card with a Retry button instead of letting the page render
+            with an empty selector + blank body (which looked broken before). */}
+        {loadError && modules.length === 0 && !loading && (
+          <Card className="p-8 mb-6 text-center border-dashed">
+            <BookOpen className="w-10 h-10 text-slate-300 mx-auto mb-3" />
+            <p className="text-base font-semibold text-slate-800 mb-1">Couldn't load reading passages</p>
+            <p className="text-sm text-slate-500 mb-4">{loadError}</p>
+            <Button onClick={loadModules} className="bg-blue-600 hover:bg-blue-700">
+              Try again
+            </Button>
+          </Card>
+        )}
+
         {/* Module Selector */}
-        <div className="mb-6">
-          <p className="text-sm font-medium text-gray-600 mb-3">Select Reading Passage:</p>
-          <div className="flex gap-2 flex-wrap">
-            {modules.map((module) => (
-              <Button
-                key={module.module_id}
-                variant={selectedModule === module.module_id ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => selectModule(module.module_id)}
-                className={selectedModule === module.module_id ? 'bg-blue-600' : ''}
-              >
-                {module.module_title?.split(':')[0] || module.module_id}
-              </Button>
-            ))}
+        {modules.length > 0 && (
+          <div className="mb-6">
+            <p className="text-sm font-medium text-gray-600 mb-3">Select Reading Passage:</p>
+            <div className="flex gap-2 flex-wrap">
+              {modules.map((module) => (
+                <Button
+                  key={module.module_id}
+                  variant={selectedModule === module.module_id ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => selectModule(module.module_id)}
+                  className={selectedModule === module.module_id ? 'bg-blue-600' : ''}
+                >
+                  {module.module_title?.split(':')[0] || module.module_id}
+                </Button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {moduleContent && (
           <div className="grid lg:grid-cols-2 gap-6">
@@ -204,9 +234,18 @@ export default function ReadingPracticeAcademic({ user }) {
                 <p className="text-sm text-blue-100 mt-1">{moduleContent.reading_scenario?.text_type}</p>
               </div>
               <div className="p-6 max-h-[600px] overflow-y-auto">
-                <pre className="whitespace-pre-wrap font-sans text-sm text-gray-700 leading-relaxed">
-                  {moduleContent.reading_scenario?.passage}
-                </pre>
+                {/* Render passage as paragraphs (not <pre>) — a single long
+                    <pre> block triggers Safari/iOS Reader Mode auto-engage,
+                    which strips the rest of the app chrome and leaves the
+                    user looking at just the passage with no questions. */}
+                <div className="font-sans text-sm text-gray-700 leading-relaxed space-y-3">
+                  {String(moduleContent.reading_scenario?.passage || '')
+                    .split(/\n\s*\n/)
+                    .filter((p) => p.trim().length > 0)
+                    .map((para, i) => (
+                      <p key={i}>{para.trim()}</p>
+                    ))}
+                </div>
               </div>
             </Card>
 

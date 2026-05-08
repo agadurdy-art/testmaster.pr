@@ -44,19 +44,17 @@ export default function WritingEvaluatorResult({
 }) {
   const navigate = useNavigate();
   const handleOpenLesson = (lesson) => {
-    // Route by stage when provided; fall back to the mastery course surface.
-    // If lesson_id is missing, still navigate to the relevant course landing
-    // so the click is never a no-op.
-    const stage = (lesson?.stage || "").toLowerCase();
-    const lessonId = lesson?.lesson_id;
-    const qs = lessonId ? `?lesson=${lessonId}` : "";
-    if (stage === "beginner") {
-      navigate(`/beginner-course${qs}`);
-    } else if (stage === "advanced") {
-      navigate(`/advanced-mastery${qs}`);
-    } else {
-      navigate(`/mastery-course${qs}`);
-    }
+    // Push the recommended lesson into the Liz chat instead of bouncing the
+    // user out to a course landing page. Liz greets, then auto-sends a prompt
+    // that asks her to walk through this specific lesson — the user keeps
+    // their evaluation context (back button still returns to results) and
+    // gets an interactive teach-back rather than a static lesson page.
+    const params = new URLSearchParams({ source: "writing-eval" });
+    if (lesson?.title) params.set("title", lesson.title);
+    if (lesson?.reason) params.set("reason", lesson.reason);
+    if (lesson?.stage) params.set("stage", lesson.stage);
+    if (lesson?.lesson_id) params.set("lesson_id", lesson.lesson_id);
+    navigate(`/liz?${params.toString()}`);
   };
   return (
     <AnnotationSyncProvider>

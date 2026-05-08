@@ -207,9 +207,15 @@ export default function ReadingPracticeGeneral({ user }) {
                 <p className="text-sm text-purple-100 mt-1 italic">{moduleContent.reading_scenario?.context}</p>
               </div>
               <div className="p-6 max-h-[600px] overflow-y-auto bg-gray-50">
-                <pre className="whitespace-pre-wrap font-sans text-sm text-gray-700 leading-relaxed">
-                  {moduleContent.reading_scenario?.passage}
-                </pre>
+                {/* Paragraph render avoids Safari/iOS Reader Mode auto-engage. */}
+                <div className="font-sans text-sm text-gray-700 leading-relaxed space-y-3">
+                  {String(moduleContent.reading_scenario?.passage || '')
+                    .split(/\n\s*\n/)
+                    .filter((p) => p.trim().length > 0)
+                    .map((para, i) => (
+                      <p key={i}>{para.trim()}</p>
+                    ))}
+                </div>
               </div>
             </Card>
 
