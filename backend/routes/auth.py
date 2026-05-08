@@ -51,17 +51,6 @@ FRONTEND_BASE_URL = os.getenv("FRONTEND_BASE_URL", "https://www.testmaster.pro")
 OAUTH_STATE_TTL_SECONDS = 600   # 10 min — Google consent window
 OAUTH_SESSION_TTL_SECONDS = 300  # 5 min — frontend exchange window
 
-# Boot-time diagnostic: stdout via print() so it shows up in Railway logs
-# regardless of root logger level. Remove once Google OAuth is verified live.
-print(
-    f"[OAUTH-DIAG] Google env at boot: CLIENT_ID={'set' if GOOGLE_CLIENT_ID else 'MISSING'} "
-    f"SECRET={'set' if GOOGLE_CLIENT_SECRET else 'MISSING'} "
-    f"REDIRECT={GOOGLE_REDIRECT_URI} FRONTEND={FRONTEND_BASE_URL}",
-    flush=True,
-)
-_google_keys_in_env = sorted([k for k in os.environ.keys() if "GOOGLE" in k.upper()])
-print(f"[OAUTH-DIAG] Env keys containing GOOGLE: {_google_keys_in_env}", flush=True)
-
 if RESEND_API_KEY:
     resend.api_key = RESEND_API_KEY
 
