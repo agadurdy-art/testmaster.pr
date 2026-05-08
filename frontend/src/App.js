@@ -772,6 +772,13 @@ function AppWithSessionHandler() {
           path="/admin/visual-generator"
           element={user ? <VisualGenerator /> : <Navigate to="/" />}
         />
+        {/* Zombie slug redirects — these URLs surface from browser history /
+            external referrers (no source in code or git). Bounce to the real
+            practice routes so users don't hit a 404. */}
+        <Route path="/dashboard-header-practice-reading" element={<Navigate to="/question-bank/reading" replace />} />
+        <Route path="/dashboard-header-practice-writing" element={<Navigate to="/question-bank/writing" replace />} />
+        <Route path="/dashboard-header-practice-listening" element={<Navigate to="/question-bank/listening" replace />} />
+        <Route path="/dashboard-header-practice-speaking" element={<Navigate to="/question-bank/speaking" replace />} />
         {/* Catch-all 404 — must be last */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
