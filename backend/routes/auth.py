@@ -11,13 +11,16 @@ import uuid
 import hashlib
 import hmac
 import asyncio
+import secrets
 from datetime import datetime, timezone, timedelta
 from typing import Optional, Dict, Any
+from urllib.parse import urlencode
 
 import bcrypt
 import httpx
 import resend
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import RedirectResponse
 from pydantic import BaseModel, Field, ConfigDict
 
 from services.usage_tracking import get_all_counters
@@ -33,6 +36,20 @@ RESEND_FROM_EMAIL = os.getenv("RESEND_FROM_EMAIL", "onboarding@resend.dev")
 FACEBOOK_APP_ID = os.getenv("FACEBOOK_APP_ID")
 FACEBOOK_APP_SECRET = os.getenv("FACEBOOK_APP_SECRET")
 FACEBOOK_GRAPH_API_BASE = "https://graph.facebook.com/v21.0"
+
+# Google OAuth (own client — replaces Emergent proxy as of 2026-05-08).
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+GOOGLE_REDIRECT_URI = os.getenv(
+    "GOOGLE_REDIRECT_URI",
+    "https://api.testmaster.pro/api/auth/google/callback",
+)
+GOOGLE_AUTH_BASE = "https://accounts.google.com/o/oauth2/v2/auth"
+GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token"
+GOOGLE_USERINFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo"
+FRONTEND_BASE_URL = os.getenv("FRONTEND_BASE_URL", "https://www.testmaster.pro")
+OAUTH_STATE_TTL_SECONDS = 600   # 10 min — Google consent window
+OAUTH_SESSION_TTL_SECONDS = 300  # 5 min — frontend exchange window
 
 if RESEND_API_KEY:
     resend.api_key = RESEND_API_KEY
@@ -89,6 +106,10 @@ class UserLogin(BaseModel):
 
 
 class EmergentSessionRequest(BaseModel):
+    session_id: str
+
+
+class GoogleSessionRequest(BaseModel):
     session_id: str
 
 
@@ -362,6 +383,155 @@ async def emergent_session_login(payload: EmergentSessionRequest):
     return User(**user)
 
 
+# ============ Google OAuth (own client) ============
+# Replaces the Emergent proxy flow. Three-leg dance:
+#   1. GET  /api/auth/google/start     → 302 to Google consent screen
+#   2. GET  /api/auth/google/callback  → handles ?code=&state=, upserts user,
+#      redirects browser to FRONTEND_BASE_URL/#session_id=<short_token>
+#   3. POST /api/auth/google/session   → frontend exchanges short_token for
+#      the User payload (single-use, 5min TTL)
+
+
+async def _google_upsert_user(email: str, name: str, google_id: Optional[str]) -> Dict[str, Any]:
+    """Find-or-create the user from a verified Google profile. Mirrors the
+    behavior of the legacy `emergent_session_login` so existing sessions and
+    onboarding state continue to work after the cutover."""
+    user = await db.users.find_one({"email": email}, {"_id": 0})
+    if not user:
+        user_obj = User(email=email, name=name, password_hash=None, verified=True, google_id=google_id)
+        doc = user_obj.model_dump()
+        doc["created_at"] = doc["created_at"].isoformat()
+        await db.users.insert_one(doc)
+        user = {**doc}
+    else:
+        update_fields: Dict[str, Any] = {"verified": True}
+        if google_id:
+            update_fields["google_id"] = google_id
+        await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
+        user.update(update_fields)
+    user.pop("password_hash", None)
+    return user
+
+
+@router.get("/auth/google/start")
+async def google_oauth_start():
+    if not GOOGLE_CLIENT_ID:
+        raise HTTPException(status_code=503, detail="Google OAuth not configured")
+    state = secrets.token_urlsafe(32)
+    now = datetime.now(timezone.utc)
+    await db.oauth_states.insert_one({
+        "state": state,
+        "created_at": now,
+        "expires_at": now + timedelta(seconds=OAUTH_STATE_TTL_SECONDS),
+    })
+    params = {
+        "client_id": GOOGLE_CLIENT_ID,
+        "redirect_uri": GOOGLE_REDIRECT_URI,
+        "response_type": "code",
+        "scope": "openid email profile",
+        "state": state,
+        "access_type": "online",
+        "prompt": "select_account",
+    }
+    return RedirectResponse(url=f"{GOOGLE_AUTH_BASE}?{urlencode(params)}", status_code=302)
+
+
+@router.get("/auth/google/callback")
+async def google_oauth_callback(code: Optional[str] = None, state: Optional[str] = None, error: Optional[str] = None):
+    failure_redirect = f"{FRONTEND_BASE_URL}/login?error=google_auth"
+
+    if error or not code or not state:
+        logger.warning("Google OAuth callback missing fields error=%s code=%s state=%s",
+                       error, bool(code), bool(state))
+        return RedirectResponse(url=failure_redirect, status_code=302)
+
+    # Single-use state — pop it before doing any work
+    state_doc = await db.oauth_states.find_one_and_delete({"state": state})
+    if not state_doc:
+        logger.warning("Google OAuth: unknown or expired state")
+        return RedirectResponse(url=failure_redirect, status_code=302)
+    expires_at = state_doc.get("expires_at")
+    if expires_at and expires_at.replace(tzinfo=timezone.utc) < datetime.now(timezone.utc):
+        logger.warning("Google OAuth: state expired")
+        return RedirectResponse(url=failure_redirect, status_code=302)
+
+    if not GOOGLE_CLIENT_ID or not GOOGLE_CLIENT_SECRET:
+        logger.error("Google OAuth callback hit but credentials are not configured")
+        return RedirectResponse(url=failure_redirect, status_code=302)
+
+    # Exchange code → access_token + id_token
+    token_payload = {
+        "code": code,
+        "client_id": GOOGLE_CLIENT_ID,
+        "client_secret": GOOGLE_CLIENT_SECRET,
+        "redirect_uri": GOOGLE_REDIRECT_URI,
+        "grant_type": "authorization_code",
+    }
+    async with httpx.AsyncClient(timeout=10.0) as client_http:
+        try:
+            tok_resp = await client_http.post(GOOGLE_TOKEN_URL, data=token_payload)
+            tok_resp.raise_for_status()
+            tok_json = tok_resp.json()
+            access_token = tok_json.get("access_token")
+            if not access_token:
+                raise ValueError("No access_token in token response")
+            ui_resp = await client_http.get(
+                GOOGLE_USERINFO_URL,
+                headers={"Authorization": f"Bearer {access_token}"},
+            )
+            ui_resp.raise_for_status()
+            profile = ui_resp.json()
+        except (httpx.HTTPError, ValueError) as e:
+            logger.error("Google OAuth token/userinfo fetch failed: %s", str(e))
+            return RedirectResponse(url=failure_redirect, status_code=302)
+
+    email = (profile.get("email") or "").strip().lower()
+    if not email or not profile.get("email_verified", True):
+        logger.warning("Google OAuth: missing or unverified email")
+        return RedirectResponse(url=failure_redirect, status_code=302)
+    name = profile.get("name") or "Google User"
+    google_id = profile.get("sub")
+
+    user = await _google_upsert_user(email, name, google_id)
+
+    # Hand the frontend a short-lived single-use ticket
+    ticket = secrets.token_urlsafe(32)
+    now = datetime.now(timezone.utc)
+    await db.oauth_sessions.insert_one({
+        "ticket": ticket,
+        "user_id": user["id"],
+        "created_at": now,
+        "expires_at": now + timedelta(seconds=OAUTH_SESSION_TTL_SECONDS),
+    })
+
+    return RedirectResponse(url=f"{FRONTEND_BASE_URL}/#session_id={ticket}", status_code=302)
+
+
+@router.post("/auth/google/session")
+async def google_session_exchange(payload: GoogleSessionRequest):
+    """Frontend posts the short-lived ticket from the URL fragment and
+    receives the full User payload. Ticket is single-use and TTL-bound."""
+    ticket = payload.session_id.strip()
+    if not ticket:
+        raise HTTPException(status_code=400, detail="Missing session_id")
+    sess = await db.oauth_sessions.find_one_and_delete({"ticket": ticket})
+    if not sess:
+        raise HTTPException(status_code=401, detail="Invalid or expired session")
+    expires_at = sess.get("expires_at")
+    if expires_at and expires_at.replace(tzinfo=timezone.utc) < datetime.now(timezone.utc):
+        raise HTTPException(status_code=401, detail="Invalid or expired session")
+    user = await db.users.find_one({"id": sess["user_id"]}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=401, detail="User not found")
+    user.pop("password_hash", None)
+    if isinstance(user.get("created_at"), str):
+        try:
+            user["created_at"] = datetime.fromisoformat(user["created_at"])
+        except Exception:
+            pass
+    return User(**user)
+
+
 @router.post("/auth/facebook-login")
 async def facebook_login(payload: FacebookLoginRequest):
     fb_data = await verify_facebook_access_token(payload.access_token)
@@ -507,7 +677,16 @@ class OnboardingPayload(BaseModel):
     targetBand: Optional[float] = None
     currentBand: Optional[float] = None
     examDate: Optional[str] = None  # ISO string or free-text
-    language: Optional[Dict[str, Any]] = None  # {name, code?}
+    language: Optional[Dict[str, Any]] = None  # {name, code?} — UI/feedback language
+    # B3 — "Liz remembers your goals". nativeLanguage powers Liz's L1-aware
+    # error coaching ("Vietnamese speakers often drop articles" etc.).
+    # motivation is short free-text Liz weaves into encouragement copy
+    # ("you said you want this for grad school admissions — let's get you
+    # to 7.0 by your exam date"). Both optional; missing values fall back
+    # to Liz's generic warm-but-firm voice.
+    nativeLanguage: Optional[Dict[str, Any]] = None  # {name, code?}
+    motivation: Optional[str] = None
+    weakSkills: Optional[list] = None  # e.g. ["writing","speaking"] — user-declared
 
 
 def _normalize_language_code(lang_field: Any) -> Optional[str]:
@@ -522,6 +701,46 @@ def _normalize_language_code(lang_field: Any) -> Optional[str]:
         candidate = str(lang_field)
     code = candidate.strip().lower().split("-")[0][:2]
     return code if code in _ALLOWED_LANGS else None
+
+
+def _normalize_native_language(lang_field: Any) -> Optional[Dict[str, str]]:
+    """Native language is stored as {code, name} so Liz can address learners
+    by both ('Vietnamese speakers...' / 'Tiếng Việt'). Unlike feedback_language
+    we don't gate on the 12-lang allow-list — students may speak languages
+    we don't translate UI for, and Liz still benefits from knowing it."""
+    if not lang_field:
+        return None
+    if isinstance(lang_field, str):
+        # Bare-string input — keep the name only; downstream prompt formatting
+        # uses `name` so missing code is harmless and beats a wrong-guess code.
+        name = lang_field.strip()
+        return {"name": name[:48], "code": ""} if name else None
+    if isinstance(lang_field, dict):
+        name = (lang_field.get("name") or "").strip()
+        code = (lang_field.get("code") or "").strip().lower()
+        if not (name or code):
+            return None
+        return {"name": name[:48], "code": code[:5]}
+    return None
+
+
+def _normalize_motivation(value: Any) -> Optional[str]:
+    """Free-text reason for studying. Capped at 240 chars (about a tweet)
+    so it can be cleanly inlined in Liz's prompt without runaway tokens."""
+    if not value:
+        return None
+    text = str(value).strip()
+    return text[:240] if text else None
+
+
+def _normalize_weak_skills(value: Any) -> Optional[list]:
+    """User-declared problem areas. Stored as the canonical 4-skill set so
+    Liz can prioritize without parsing freeform input."""
+    if not value or not isinstance(value, list):
+        return None
+    valid = {"listening", "reading", "writing", "speaking"}
+    cleaned = [s.strip().lower() for s in value if isinstance(s, str)]
+    return [s for s in cleaned if s in valid] or None
 
 
 def _normalize_learning_mode(path: Optional[str]) -> Optional[str]:
@@ -581,6 +800,16 @@ async def save_onboarding(user_id: str, payload: OnboardingPayload):
     lang = _normalize_language_code(payload.language)
     if lang:
         update["feedback_language"] = lang
+
+    native = _normalize_native_language(payload.nativeLanguage)
+    if native:
+        update["native_language"] = native
+    motivation = _normalize_motivation(payload.motivation)
+    if motivation:
+        update["motivation"] = motivation
+    declared_weak = _normalize_weak_skills(payload.weakSkills)
+    if declared_weak:
+        update["declared_weak_skills"] = declared_weak
 
     # First completion only — subsequent partial patches (e.g. the Progress
     # page updating just targetBand) must not re-flip the completion timestamp.

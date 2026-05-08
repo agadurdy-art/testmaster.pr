@@ -37,7 +37,10 @@ export default function LoginPage({ user, onLogin }) {
   }
 
   const handleGoogle = () => {
-    window.location.href = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(window.location.origin)}`;
+    // Own Google OAuth client (replaces auth.emergentagent.com proxy as of
+    // 2026-05-08). Backend handles the consent dance and hands us back a
+    // short-lived ticket in `#session_id=` for App.js to exchange.
+    window.location.href = `${process.env.REACT_APP_BACKEND_URL}/api/auth/google/start`;
   };
 
   const handleSubmit = async (e) => {

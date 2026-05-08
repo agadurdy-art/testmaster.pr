@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { stashUpgradeResume } from './upgradeFlow';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -9,18 +10,40 @@ const api = axios.create({
   }
 });
 
-// Global 402 handler: when the backend rejects an evaluation / mock with
-// quota_exceeded, broadcast a window event so any mounted page can surface
-// an upgrade modal without each call site duplicating the check.
+// Codes the backend uses to flag "this is a paywall, not a transient error".
+// Speaking surface uses quota_exhausted/fulltest_locked (legacy); Liz +
+// writing surfaces use quota_exceeded/plan_locked. All four route through
+// the same upgrade-resume flow.
+const PAYWALL_CODES = new Set([
+  'quota_exceeded',
+  'quota_exhausted',
+  'fulltest_locked',
+  'plan_locked',
+]);
+
+// Global 402/403 paywall handler: stash where the user was so the post-
+// checkout flow can resume them on the same task, and broadcast a window
+// event so mounted pages can show an inline upsell instead of reloading.
+// The actual /pricing redirect is left to the call site (some surfaces
+// prefer an in-page modal first) — we only stash the resume target here.
 api.interceptors.response.use(
   (resp) => resp,
   (error) => {
     const status = error?.response?.status;
     const detail = error?.response?.data?.detail;
-    if (status === 402 && detail && detail.code === 'quota_exceeded') {
+    const code = detail && typeof detail === 'object' ? detail.code : null;
+    if ((status === 402 || status === 403) && code && PAYWALL_CODES.has(code)) {
       try {
+        // Stash the *current* path so onApprove can return the user here.
+        if (typeof window !== 'undefined' && window.location) {
+          stashUpgradeResume({
+            from: window.location.pathname + window.location.search,
+            kind: detail.kind,
+            label: detail.detail || detail.message,
+          });
+        }
         window.dispatchEvent(
-          new CustomEvent('testmaster:quota-exceeded', { detail })
+          new CustomEvent('testmaster:quota-exceeded', { detail }),
         );
       } catch (_) {
         /* non-browser environment */
@@ -48,6 +71,14 @@ export const loginUser = async (data) => {
 
 export const loginWithEmergentSession = async (sessionId) => {
   const response = await api.post('/auth/emergent/session', { session_id: sessionId });
+  return response.data;
+};
+
+// Replaces loginWithEmergentSession after the 2026-05-08 cutover to our own
+// Google OAuth client. Backend hands the browser a single-use ticket in the
+// `#session_id=...` URL fragment; we POST it back here to receive the User.
+export const loginWithGoogleSession = async (sessionId) => {
+  const response = await api.post('/auth/google/session', { session_id: sessionId });
   return response.data;
 };
 

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useNavig
 import './App.css';
 import './styles/rtl.css';
 import LandingPage from './pages/LandingPage';
-import { loginWithEmergentSession } from './lib/api';
+import { loginWithGoogleSession } from './lib/api';
 import { toast } from 'sonner';
 import { Toaster } from './components/ui/sonner';
 import MobileBottomNav from './components/MobileBottomNav';
@@ -18,6 +18,7 @@ import QuotaExceededModal from './components/QuotaExceededModal';
 import {
   stashPendingPlan, consumePendingPlan, pendingPlanRedirect,
   stashPendingIntent, consumePendingIntent, pendingIntentRedirect,
+  stashPendingCustomMeta,
 } from './lib/pendingPlan';
 import { isIeltsMode } from './lib/learningMode';
 
@@ -295,6 +296,13 @@ function SignupBridge({ user }) {
   }
   stashPendingPlan(plan);
   stashPendingIntent(intent);
+  // Custom slider: capture price + days too so post-signup we can re-prime
+  // the slider to the user's pre-auth selection.
+  if (plan === 'custom') {
+    const price = (params.get('price') || '').trim();
+    const days = (params.get('days') || '').trim();
+    if (price && days) stashPendingCustomMeta(price, parseInt(days, 10));
+  }
   if (user) {
     // Already logged in — honor the pending plan / intent immediately.
     if (!user.onboarding_complete) {
@@ -339,7 +347,7 @@ function AppWithSessionHandler() {
       if (!sessionId) return;
       (async () => {
         try {
-          const userData = await loginWithEmergentSession(sessionId);
+          const userData = await loginWithGoogleSession(sessionId);
           setUser(userData);
           localStorage.setItem('user', JSON.stringify(userData));
           toast.success('Logged in with Google');
