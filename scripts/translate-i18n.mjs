@@ -15,6 +15,8 @@
  *   Optional:
  *     LANGS=ar,ko,th node scripts/translate-i18n.mjs   # only these
  *     DRY=1 node scripts/translate-i18n.mjs            # don't write file
+ *     MERGE=1 node scripts/translate-i18n.mjs          # only fill missing keys
+ *     FORCE=1 node scripts/translate-i18n.mjs          # re-translate everything
  *     MODEL=claude-sonnet-4-6 node scripts/translate-i18n.mjs
  *
  * Notes:
@@ -37,6 +39,10 @@ const BATCH_SIZE = 80;
 const API_KEY = process.env.ANTHROPIC_API_KEY;
 const DRY = process.env.DRY === '1';
 const FORCE = process.env.FORCE === '1';
+// MERGE=1 → only translate keys missing from the target language. Existing
+// translations are preserved verbatim and merged with the new keys, in EN
+// order. Useful after a sprint adds new strings without touching the locales.
+const MERGE = process.env.MERGE === '1';
 
 // code -> human-readable name for the prompt
 const LANG_NAMES = {
@@ -158,11 +164,24 @@ for (const lang of candidates) {
   }
   const block = extractBlock(lang);
   const existing = parseDictBody(block.body);
-  if (existing.length > 0 && !FORCE) {
-    console.log(`Skip ${lang} (already has ${existing.length} keys; set FORCE=1 to overwrite).`);
+  // MERGE mode: skip if every EN key is already translated; otherwise queue
+  // only the missing keys for translation and keep existing ones.
+  if (MERGE) {
+    const have = new Set(existing.map(([k]) => k));
+    const missing = enEntries.filter(([k]) => !have.has(k));
+    if (missing.length === 0) {
+      console.log(`Skip ${lang} (all ${enEntries.length} keys already present).`);
+      continue;
+    }
+    console.log(`Queue ${lang}: ${missing.length} missing key${missing.length === 1 ? '' : 's'} (of ${enEntries.length}).`);
+    targets.push({ lang, block, existing, missing });
     continue;
   }
-  targets.push({ lang, block });
+  if (existing.length > 0 && !FORCE) {
+    console.log(`Skip ${lang} (already has ${existing.length} keys; set FORCE=1 to overwrite, or MERGE=1 to fill gaps).`);
+    continue;
+  }
+  targets.push({ lang, block, existing: [], missing: enEntries });
 }
 
 if (!targets.length) {
@@ -265,12 +284,12 @@ async function translateBatchWithRetry(lang, batch) {
   throw lastErr;
 }
 
-async function translateAll(lang) {
+async function translateAll(lang, source = enEntries) {
   const batches = [];
-  for (let i = 0; i < enEntries.length; i += BATCH_SIZE) {
-    batches.push(enEntries.slice(i, i + BATCH_SIZE));
+  for (let i = 0; i < source.length; i += BATCH_SIZE) {
+    batches.push(source.slice(i, i + BATCH_SIZE));
   }
-  console.log(`[${lang}] ${enEntries.length} keys in ${batches.length} batches…`);
+  console.log(`[${lang}] ${source.length} keys in ${batches.length} batches…`);
   const all = [];
   for (let b = 0; b < batches.length; b++) {
     process.stdout.write(`  batch ${b + 1}/${batches.length} `);
@@ -289,14 +308,14 @@ async function translateAll(lang) {
 let mutated = source;
 const completed = [];
 const failed = [];
-for (const { lang } of targets) {
+for (const { lang, existing, missing } of targets) {
   if (DRY) {
-    console.log(`\n[DRY] would translate ${lang} (${enEntries.length} keys).`);
+    console.log(`\n[DRY] would translate ${lang} (${missing.length} key${missing.length === 1 ? '' : 's'}).`);
     continue;
   }
-  let entries;
+  let translated;
   try {
-    entries = await translateAll(lang);
+    translated = await translateAll(lang, missing);
   } catch (err) {
     console.log(`[${lang}] ✗ ${err.message ?? err}`);
     failed.push([lang, String(err.message ?? err)]);
@@ -306,15 +325,24 @@ for (const { lang } of targets) {
     }
     continue;
   }
+  // Build the final entries list:
+  //   - MERGE / first-fill: union of existing + freshly translated, ordered
+  //     by EN to keep the file diff readable.
+  //   - FORCE: `existing` is already empty here because translateAll returned
+  //     the full set, so we use only `translated`.
+  const map = new Map([...(existing || []), ...translated]);
+  const finalEntries = enEntries
+    .filter(([k]) => map.has(k))
+    .map(([k]) => [k, map.get(k)]);
   // Re-locate block on the mutated buffer — offsets shift after each rewrite.
   const block = extractBlockFrom(mutated, lang);
-  const replacement = formatDictBlock(lang, entries);
+  const replacement = formatDictBlock(lang, finalEntries);
   mutated = mutated.slice(0, block.start) + replacement + mutated.slice(block.end);
   // Incremental write: persist after each language so a later failure
   // doesn't throw away progress already made.
   await fs.writeFile(I18N_PATH, mutated, 'utf8');
   completed.push(lang);
-  console.log(`[${lang}] ✓ ${entries.length} keys written + file flushed.`);
+  console.log(`[${lang}] ✓ ${translated.length} new + ${(existing || []).length} kept = ${finalEntries.length} total written.`);
 }
 
 if (DRY) {
