@@ -342,6 +342,27 @@ export default function Profile({ user, onLogout }) {
                 </div>
               </div>
 
+              {/* Soft prompt: existing students can submit a story. The form
+                  itself lives at /share-your-story; admin moderates before it
+                  appears on the landing page. */}
+              <div className="pt-6 border-t">
+                <button
+                  type="button"
+                  onClick={() => navigate('/share-your-story')}
+                  className="w-full text-left bg-gradient-to-r from-teal-50 to-emerald-50 border border-teal-200 rounded-xl p-4 hover:border-teal-300 transition-colors"
+                >
+                  <div className="flex items-start gap-3">
+                    <Trophy className="w-5 h-5 text-teal-600 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-teal-900">Reached your target band?</div>
+                      <div className="text-xs text-teal-700 mt-1">
+                        Share your story — moderated, then featured on the landing page so other learners can see what's possible.
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              </div>
+
               <div className="pt-6 border-t">
                 <Button
                   variant="outline"

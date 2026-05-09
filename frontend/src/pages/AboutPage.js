@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import LandingNav from '../features/landing/components/LandingNav';
 import LandingFooter from '../features/landing/components/LandingFooter';
+import Testimonials from '../features/landing/components/Testimonials';
 import '../features/landing/landing.css';
 
 /**
@@ -202,6 +203,12 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* PROOF — same component the landing uses, so any approved
+          testimonial automatically appears here too. */}
+      <div className="about-reveal">
+        <Testimonials />
+      </div>
 
       {/* CTA */}
       <section className="about-cta about-reveal">

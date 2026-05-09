@@ -58,6 +58,7 @@ export default function PublicFooter({ className }) {
             <li><a className="hover:text-slate-900" href="/pricing">Pricing</a></li>
             <li><a className="hover:text-slate-900" href="/contact">Contact</a></li>
             <li><a className="hover:text-slate-900" href="/privacy">Privacy</a></li>
+            <li><a className="hover:text-slate-900" href="/share-your-story">Share your story</a></li>
           </ul>
         </div>
       </div>

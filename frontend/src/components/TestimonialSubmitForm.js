@@ -16,7 +16,10 @@ export default function TestimonialSubmitForm({ user, onSubmitted }) {
     role: '',
     quote: '',
     rating: 5,
+    band_before: '',
     band_achieved: '',
+    weeks_to_goal: '',
+    location: '',
   });
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
@@ -38,7 +41,10 @@ export default function TestimonialSubmitForm({ user, onSubmitted }) {
         role: form.role.trim() || null,
         quote: form.quote.trim(),
         rating: Number(form.rating),
+        band_before: form.band_before ? Number(form.band_before) : null,
         band_achieved: form.band_achieved ? Number(form.band_achieved) : null,
+        weeks_to_goal: form.weeks_to_goal ? Number(form.weeks_to_goal) : null,
+        location: form.location.trim() || null,
       };
       const res = await fetch(`${API_URL}/api/testimonials`, {
         method: 'POST',
@@ -96,32 +102,55 @@ export default function TestimonialSubmitForm({ user, onSubmitted }) {
           minLength={10}
           maxLength={600}
         />
-        <div className="flex flex-wrap items-center gap-4">
-          <div className="flex items-center gap-1">
-            {[1, 2, 3, 4, 5].map(n => (
-              <button
-                type="button"
-                key={n}
-                onClick={() => setForm(f => ({ ...f, rating: n }))}
-                className="p-1"
-                aria-label={`${n} stars`}
-              >
-                <Star
-                  className={`w-6 h-6 ${n <= form.rating ? 'fill-amber-400 text-amber-400' : 'text-gray-300'}`}
-                />
-              </button>
-            ))}
-          </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <Input
             type="number"
             step="0.5"
             min="0"
             max="9"
-            placeholder="Band achieved (optional)"
+            placeholder="Starting band"
+            value={form.band_before}
+            onChange={set('band_before')}
+          />
+          <Input
+            type="number"
+            step="0.5"
+            min="0"
+            max="9"
+            placeholder="Band achieved"
             value={form.band_achieved}
             onChange={set('band_achieved')}
-            className="md:max-w-[200px]"
           />
+          <Input
+            type="number"
+            step="1"
+            min="1"
+            max="104"
+            placeholder="Weeks of practice"
+            value={form.weeks_to_goal}
+            onChange={set('weeks_to_goal')}
+          />
+          <Input
+            placeholder="City, country"
+            value={form.location}
+            onChange={set('location')}
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-gray-600 mr-1">Rate the platform:</span>
+          {[1, 2, 3, 4, 5].map(n => (
+            <button
+              type="button"
+              key={n}
+              onClick={() => setForm(f => ({ ...f, rating: n }))}
+              className="p-1"
+              aria-label={`${n} stars`}
+            >
+              <Star
+                className={`w-6 h-6 ${n <= form.rating ? 'fill-amber-400 text-amber-400' : 'text-gray-300'}`}
+              />
+            </button>
+          ))}
         </div>
         {err && <div className="text-sm text-red-600">{err}</div>}
         <Button type="submit" disabled={submitting} className="bg-teal-600 hover:bg-teal-700 text-white">

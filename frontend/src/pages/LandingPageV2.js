@@ -13,7 +13,6 @@ import {
   MobileStickyCTA,
   useLiquidGlass,
 } from '../features/landing';
-import TestimonialWall from '../components/TestimonialWall';
 import '../features/landing/landing.css';
 
 /**
@@ -32,10 +31,9 @@ export default function LandingPageV2() {
       <LandingHero />
       <DualPathCards />
       <SampleReportsStrip />
+      {/* Single testimonials section. Pulls live approved rows from
+          /api/testimonials, falls back to seed examples until we have ≥3. */}
       <Testimonials />
-      {/* Live user-submitted testimonials (approved-only, DB-backed). Renders
-          nothing while the queue is empty so the page stays tight. */}
-      <TestimonialWall title="More student stories" />
       <HowItWorks />
       <HeadToHead />
       <PricingTeaser />

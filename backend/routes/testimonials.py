@@ -49,7 +49,13 @@ class TestimonialSubmit(BaseModel):
     quote: str = Field(min_length=10, max_length=600)
     rating: int = Field(ge=1, le=5, default=5)
     # Optional band / target score context for IELTS testimonials.
+    # band_before captures the starting band so the landing visual can show
+    # a before→after delta (the "5.5 → 7.0 in 8 weeks" card style). Both
+    # bands are optional; cards degrade gracefully if either is missing.
+    band_before: Optional[float] = Field(default=None, ge=0, le=9)
     band_achieved: Optional[float] = Field(default=None, ge=0, le=9)
+    weeks_to_goal: Optional[int] = Field(default=None, ge=1, le=104)
+    location: Optional[str] = Field(default=None, max_length=80)
     avatar_url: Optional[str] = Field(default=None, max_length=500)
 
     @field_validator("quote")
@@ -66,7 +72,10 @@ def _public_shape(doc: dict) -> dict:
         "role": doc.get("role"),
         "quote": doc.get("quote"),
         "rating": doc.get("rating", 5),
+        "band_before": doc.get("band_before"),
         "band_achieved": doc.get("band_achieved"),
+        "weeks_to_goal": doc.get("weeks_to_goal"),
+        "location": doc.get("location"),
         "avatar_url": doc.get("avatar_url"),
         "created_at": doc.get("created_at"),
     }
@@ -96,7 +105,10 @@ async def submit_testimonial(payload: TestimonialSubmit):
         "role": payload.role,
         "quote": payload.quote,
         "rating": payload.rating,
+        "band_before": payload.band_before,
         "band_achieved": payload.band_achieved,
+        "weeks_to_goal": payload.weeks_to_goal,
+        "location": payload.location,
         "avatar_url": payload.avatar_url,
         "status": "pending",
         "created_at": datetime.now(timezone.utc).isoformat(),
@@ -142,7 +154,10 @@ async def list_admin_testimonials(
             "role": doc.get("role"),
             "quote": doc.get("quote"),
             "rating": doc.get("rating", 5),
+            "band_before": doc.get("band_before"),
             "band_achieved": doc.get("band_achieved"),
+            "weeks_to_goal": doc.get("weeks_to_goal"),
+            "location": doc.get("location"),
             "avatar_url": doc.get("avatar_url"),
             "status": doc.get("status"),
             "created_at": doc.get("created_at"),

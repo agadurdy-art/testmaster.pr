@@ -9,6 +9,7 @@ export default function LandingFooter() {
             testmaster<span className="pro">.pro</span>
           </a>
           <ul className="foot-links">
+            <li><a href="/share-your-story">Share your story</a></li>
             <li><a href="/privacy">Privacy</a></li>
             <li><a href="/terms">Terms</a></li>
             <li><a href="/contact">Contact</a></li>
