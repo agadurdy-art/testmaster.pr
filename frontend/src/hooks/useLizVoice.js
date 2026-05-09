@@ -73,6 +73,45 @@ async function resolveAudioUrl(text, voiceId) {
   return fullUrl;
 }
 
+// Names of common female-sounding system voices, by platform. Used to pick a
+// fallback voice when ElevenLabs is unreachable so Liz never accidentally
+// reads with the default male voice (e.g. Daniel on macOS, Mark on Windows).
+// We match case-insensitively against `voice.name`.
+const FEMALE_VOICE_HINTS = [
+  // macOS / iOS
+  'Samantha', 'Karen', 'Moira', 'Tessa', 'Kate', 'Susan', 'Allison',
+  'Ava', 'Serena', 'Veena', 'Fiona', 'Victoria',
+  // Windows
+  'Zira', 'Hazel', 'Susan',
+  // Google Chrome
+  'Google UK English Female', 'Google US English',
+  // Android
+  'female',
+];
+
+function pickFemaleVoice(lang) {
+  if (typeof window === 'undefined' || !window.speechSynthesis) return null;
+  const voices = window.speechSynthesis.getVoices() || [];
+  if (!voices.length) return null;
+
+  const langPrefix = (lang || 'en').slice(0, 2).toLowerCase();
+  const matchingLang = voices.filter((v) =>
+    (v.lang || '').toLowerCase().startsWith(langPrefix),
+  );
+  const pool = matchingLang.length ? matchingLang : voices;
+
+  // Prefer a voice whose name matches our female-name hints. Falls back to
+  // any voice whose name contains "female" (Android/Linux pattern). Last
+  // resort: first matching-language voice (better than nothing).
+  const byName = pool.find((v) =>
+    FEMALE_VOICE_HINTS.some((h) => v.name.toLowerCase().includes(h.toLowerCase())),
+  );
+  if (byName) return byName;
+  const byKeyword = pool.find((v) => /female/i.test(v.name));
+  if (byKeyword) return byKeyword;
+  return pool[0] || null;
+}
+
 function speakViaWebSpeech(text, { lang, rate, pitch, onStart, onEnd, onError }) {
   if (typeof window === 'undefined' || !window.speechSynthesis) {
     onError?.(new Error('Web Speech not supported'));
@@ -81,14 +120,39 @@ function speakViaWebSpeech(text, { lang, rate, pitch, onStart, onEnd, onError })
   try {
     window.speechSynthesis.cancel();
   } catch (_) {}
-  const u = new window.SpeechSynthesisUtterance(text);
-  u.lang = lang;
-  u.rate = rate;
-  u.pitch = pitch;
-  u.onstart = () => onStart?.();
-  u.onend = () => onEnd?.();
-  u.onerror = (e) => onError?.(e);
-  window.speechSynthesis.speak(u);
+
+  const speakNow = () => {
+    const u = new window.SpeechSynthesisUtterance(text);
+    u.lang = lang;
+    u.rate = rate;
+    u.pitch = pitch;
+    const voice = pickFemaleVoice(lang);
+    if (voice) u.voice = voice;
+    u.onstart = () => onStart?.();
+    u.onend = () => onEnd?.();
+    u.onerror = (e) => onError?.(e);
+    window.speechSynthesis.speak(u);
+  };
+
+  // On Chrome/Safari getVoices() may return [] until the voiceschanged event
+  // fires. If that's the case, wait one tick before speaking so we can pick a
+  // proper female voice instead of the engine default.
+  const voices = window.speechSynthesis.getVoices() || [];
+  if (!voices.length && typeof window.speechSynthesis.addEventListener === 'function') {
+    let spoken = false;
+    const onReady = () => {
+      if (spoken) return;
+      spoken = true;
+      window.speechSynthesis.removeEventListener('voiceschanged', onReady);
+      speakNow();
+    };
+    window.speechSynthesis.addEventListener('voiceschanged', onReady);
+    // Safety net — speak after 250ms even if voiceschanged never fires.
+    setTimeout(onReady, 250);
+  } else {
+    speakNow();
+  }
+
   return {
     stop: () => {
       try {
