@@ -11,7 +11,7 @@ import { loadMastery, masterySummary, setMasteryLevel } from './mastery';
  * Visual punch-up (post-2026-05-09): the first pass leaned too pastel and the
  * page felt empty. This revision:
  *   - Cluster tabs paint the full accent colour when active (was a thin ring)
- *   - Learning goals use a deeper amber strip with stronger contrast
+ *   - Learning goals use a calm sky→indigo strip (cool, airy palette)
  *   - Active cluster body uses a saturated header band + clearer section
  *     separators with coloured dots
  *   - Section title gets an accent dot and a count chip pinned to the right
@@ -58,7 +58,7 @@ export default function VocabularyHub({ module, speakText }) {
       <div className="flex items-start justify-between flex-wrap gap-3">
         <div>
           <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-sm">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-indigo-500 flex items-center justify-center shadow-sm">
               <GraduationCap className="w-5 h-5 text-white" />
             </span>
             Advanced Vocabulary
@@ -71,19 +71,19 @@ export default function VocabularyHub({ module, speakText }) {
         <MasteryPill summary={summary} />
       </div>
 
-      {/* Learning goals — deeper amber strip */}
+      {/* Learning goals — calm sky strip */}
       {module?.learning_goals?.length > 0 && (
-        <div className="rounded-xl bg-gradient-to-r from-amber-100 to-orange-50 border border-amber-200 px-4 py-3 shadow-sm">
+        <div className="rounded-xl bg-gradient-to-r from-sky-100 to-indigo-50 border border-sky-200 px-4 py-3 shadow-sm">
           <div className="flex items-center gap-2 mb-2">
-            <Target className="w-4 h-4 text-amber-700" />
-            <span className="text-[11px] uppercase tracking-wide font-bold text-amber-900">
+            <Target className="w-4 h-4 text-sky-700" />
+            <span className="text-[11px] uppercase tracking-wide font-bold text-sky-900">
               Learning goals
             </span>
           </div>
           <ul className="space-y-1.5">
             {module.learning_goals.map((goal, i) => (
               <li key={i} className="text-[13px] text-gray-900 flex items-start gap-2 leading-relaxed font-medium">
-                <CheckCircle className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
+                <CheckCircle className="w-4 h-4 text-sky-600 mt-0.5 flex-shrink-0" />
                 <span>{goal}</span>
               </li>
             ))}

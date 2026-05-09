@@ -24,7 +24,7 @@ export default function VocabFlashcards({
   onSpeak,
   onClose,
 }) {
-  const styles = ACCENT_STYLES[cluster.accent] || ACCENT_STYLES.amber;
+  const styles = ACCENT_STYLES[cluster.accent] || ACCENT_STYLES.sky;
 
   // Flatten and shuffle once per session so the student gets a slightly
   // different order than they read the list in. useMemo keeps it stable

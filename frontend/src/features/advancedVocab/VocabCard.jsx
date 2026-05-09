@@ -18,7 +18,7 @@ import { ACCENT_STYLES } from './clusters';
  */
 export default function VocabCard({ item, accent, mastery, onMasteryChange, onSpeak }) {
   const [open, setOpen] = useState(false);
-  const styles = ACCENT_STYLES[accent] || ACCENT_STYLES.amber;
+  const styles = ACCENT_STYLES[accent] || ACCENT_STYLES.sky;
 
   const cycleMastery = (e) => {
     e.stopPropagation();
