@@ -20,6 +20,9 @@ export default function ListeningPractice({ user }) {
   const initialBand = searchParams.get('band');
   const initialTopic = searchParams.get('topic');
   const initialSetId = searchParams.get('set');
+  // Listening QB also passes ?question_type= when the user lands here from
+  // the QB question-type tile, so prime the filter from the URL.
+  const initialQType = searchParams.get('question_type');
 
   // State
   const [modules, setModules] = useState([]);
@@ -37,6 +40,7 @@ export default function ListeningPractice({ user }) {
   const [timerActive, setTimerActive] = useState(false);
   const [filterBand, setFilterBand] = useState(initialBand || '');
   const [filterTopic, setFilterTopic] = useState(initialTopic || '');
+  const [filterQType, setFilterQType] = useState(initialQType || '');
   
   // Audio is owned by <AudioPlayer />; only transcript + error visibility
   // remain in this page's state.
@@ -215,6 +219,12 @@ export default function ListeningPractice({ user }) {
   const filteredModules = modules.filter(m => {
     if (filterBand && m.band_range !== filterBand) return false;
     if (filterTopic && m.topic !== filterTopic) return false;
+    if (filterQType) {
+      // Each module carries the question types it covers; keep it if the
+      // selected type is one of them.
+      const types = Array.isArray(m.question_types) ? m.question_types : [];
+      if (!types.includes(filterQType)) return false;
+    }
     return true;
   });
 
@@ -279,7 +289,7 @@ export default function ListeningPractice({ user }) {
               <option key={band.id} value={band.id}>{band.name}</option>
             ))}
           </select>
-          <select 
+          <select
             className="px-3 py-2 border rounded-lg text-sm"
             value={filterTopic}
             onChange={(e) => setFilterTopic(e.target.value)}
@@ -289,6 +299,30 @@ export default function ListeningPractice({ user }) {
               <option key={topic.id} value={topic.id}>{topic.icon} {topic.name}</option>
             ))}
           </select>
+          {/* Question-type filter — drives the same `?question_type=` URL the
+              Listening QB landing tiles use, so deep-linking into a specific
+              type lands the student on a pre-filtered practice list. */}
+          <select
+            className="px-3 py-2 border rounded-lg text-sm"
+            value={filterQType}
+            onChange={(e) => setFilterQType(e.target.value)}
+          >
+            <option value="">All Question Types</option>
+            {Object.entries(questionTypes).map(([id, qt]) => (
+              <option key={id} value={id}>
+                {qt.code ? `${qt.code} · ` : ''}{qt.name || id}
+              </option>
+            ))}
+          </select>
+          {(filterBand || filterTopic || filterQType) && (
+            <button
+              type="button"
+              onClick={() => { setFilterBand(''); setFilterTopic(''); setFilterQType(''); }}
+              className="text-xs text-gray-500 underline hover:text-gray-700"
+            >
+              Clear filters
+            </button>
+          )}
         </div>
 
         {/* Module Selector */}
