@@ -1262,6 +1262,7 @@ function KnowledgeBaseCards({ navigate }) {
     { name: "Strategies", route: "/tips", tone: "var(--liz)" },
     { name: "Vocabulary", route: "/vocabulary", tone: "var(--gold-ink)" },
     { name: "Grammar", route: "/grammar", tone: "var(--primary)" },
+    { name: "Sample reports", route: "/sample-reports", tone: "var(--sky)" },
   ];
   const courses = [
     { name: "Beginner", band: "Band 2.0–4.5", route: "/beginner-course", tone: "var(--primary)" },

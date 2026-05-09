@@ -16,6 +16,7 @@ import { toast } from 'sonner';
 import { useGoBack } from '../hooks/useGoBack';
 import { ResultsState as SpeakingResultsState, adaptSpeakingResult } from '../features/speaking';
 import '../features/speaking/speaking.css';
+import SpeakingHelperPanel from '../features/speakingHelper/SpeakingHelperPanel';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -1174,6 +1175,15 @@ export default function SpeakingPracticeQB({ user }) {
           );
         })()}
       </div>
+
+      {selectedPart !== null && question && (
+        <SpeakingHelperPanel
+          part={currentPart}
+          question={currentPart === 2 ? '' : (question?.text || '')}
+          cueCard={currentPart === 2 ? moduleContent?.part2?.cue_card : null}
+          topic={selectedModule?.topic || filterTrack || ''}
+        />
+      )}
     </div>
   );
 }

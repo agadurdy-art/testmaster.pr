@@ -63,6 +63,7 @@ const SampleReportBand65Task2 = lazy(() => import('./pages/SampleReportBand65Tas
 const SampleReportBand50Task2 = lazy(() => import('./pages/SampleReportBand50Task2'));
 const SampleReportBand80Task2 = lazy(() => import('./pages/SampleReportBand80Task2'));
 const SampleReportSpeakingPart2 = lazy(() => import('./pages/SampleReportSpeakingPart2'));
+const SampleReportsHub = lazy(() => import('./pages/SampleReportsHub'));
 const PublicEssayEvaluator = lazy(() => import('./pages/PublicEssayEvaluator'));
 const PublicSpeakingTrial = lazy(() => import('./pages/PublicSpeakingTrial'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage'));
@@ -543,6 +544,10 @@ function AppWithSessionHandler() {
         />
         <Route path="/score-my-essay" element={<PublicEssayEvaluator />} />
         <Route path="/score-my-speaking" element={<PublicSpeakingTrial />} />
+        <Route
+          path="/sample-reports"
+          element={user ? <SampleReportsHub /> : <Navigate to="/" />}
+        />
         <Route
           path="/dashboard/v2"
           element={user ? <DashboardPage /> : <Navigate to="/" />}

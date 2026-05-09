@@ -557,6 +557,26 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load Study Time routes: {e}")
 
+# Writing helper — Liz floating coaching panel (4 dynamic Haiku-backed kinds:
+# unpack / ideas / phrases / polish). Static structure + pitfall buttons live
+# entirely in the frontend; this endpoint is only hit for dynamic guidance.
+try:
+    from routes.writing_helper import router as writing_helper_router
+    app.include_router(writing_helper_router)
+    print("✅ Writing helper routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Writing helper routes: {e}")
+
+# Speaking helper — Liz floating coaching panel during speaking practice.
+# 4 dynamic Haiku-backed kinds (unpack / ideas / phrases / opener);
+# static structure + pitfall buttons live entirely in the frontend.
+try:
+    from routes.speaking_helper import router as speaking_helper_router
+    app.include_router(speaking_helper_router)
+    print("✅ Speaking helper routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Speaking helper routes: {e}")
+
 # Audio streaming routes
 try:
     from routes.audio import router as audio_router

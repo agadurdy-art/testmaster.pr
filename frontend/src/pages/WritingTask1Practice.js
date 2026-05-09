@@ -17,6 +17,8 @@ import { getRecommendedLessonPath } from '../lib/recommendationRouting';
 import { useI18n } from '../lib/i18n';
 import WritingEvaluatorResult from '../features/evaluator/components/WritingEvaluatorResult';
 import EvaluationProgressOverlay from '../features/evaluator/components/EvaluationProgressOverlay';
+import WritingHelperPanel from '../features/writingHelper/WritingHelperPanel';
+import WritingLearnPanel from '../features/writingLearn/WritingLearnPanel';
 import {
   WritingEvaluationResult,
   verifyAnnotationOffsets,
@@ -410,6 +412,11 @@ export default function WritingTask1Practice() {
             mobileView === 'visual' ? 'block' : 'hidden lg:block'
           }`}>
             <div className="p-4 md:p-6 space-y-4">
+              {/* Learn before you write — kademeli micro-lessons. Collapsed
+                  by default; many of the lessons are Task-2 framed but the
+                  paragraphing / lexical lessons apply equally to Task 1. */}
+              <WritingLearnPanel />
+
               {/* Visual Type Selector */}
               <div className="bg-white rounded-xl p-4 shadow-sm border">
                 <h3 className="font-semibold text-gray-900 mb-3 text-sm">Visual Type</h3>
@@ -577,6 +584,7 @@ export default function WritingTask1Practice() {
                   onChange={(e) => setUserResponse(e.target.value)}
                   placeholder="Start with an overview of the main features. Then describe the key data points and make comparisons where relevant..."
                   className="min-h-[300px] md:min-h-[350px] text-sm leading-relaxed resize-none"
+                  data-helper-target="essay"
                 />
 
                 <div className="mt-4 flex flex-col sm:flex-row gap-3">
@@ -601,6 +609,13 @@ export default function WritingTask1Practice() {
           </div>
         </div>
       </div>
+
+      <WritingHelperPanel
+        taskType="task1_academic"
+        subtype={visualType}
+        prompt={taskData?.task_description || ''}
+        essay={userResponse}
+      />
     </div>
   );
 }

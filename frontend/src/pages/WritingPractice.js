@@ -10,6 +10,8 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import WritingEvaluatorResult from '../features/evaluator/components/WritingEvaluatorResult';
+import WritingHelperPanel from '../features/writingHelper/WritingHelperPanel';
+import WritingLearnPanel from '../features/writingLearn/WritingLearnPanel';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -221,6 +223,11 @@ export default function WritingPractice({ user }) {
             <Button variant="ghost" onClick={() => resetPractice()} className="text-gray-600"><ArrowLeft className="w-4 h-4 mr-2" /> Exit</Button>
             <div className={`px-4 py-2 rounded-xl font-mono text-lg ${timeLeft < 300 ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-700'}`}><Clock className="w-4 h-4 inline mr-2" />{formatTime(timeLeft)}</div>
           </div>
+          {/* Learn before you write — kademeli micro-lessons surfaced inside
+              the writing practice flow. Collapsed by default. */}
+          <div className="mb-4">
+            <WritingLearnPanel />
+          </div>
           <div className="grid lg:grid-cols-2 gap-6">
             <Card className="p-6 h-fit lg:sticky lg:top-4 bg-white border-0 shadow-lg rounded-2xl">
               <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${task.color} text-white mb-4`}>{task.title}</span>
@@ -248,7 +255,7 @@ export default function WritingPractice({ user }) {
                 <Progress value={wordProgress} className="h-2" />
               </Card>
               <Card className="p-4 bg-white border-0 shadow-lg rounded-2xl">
-                <textarea ref={textareaRef} value={essay} onChange={(e) => setEssay(e.target.value)} placeholder="Start writing here..." className="w-full h-[400px] p-4 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-violet-500 text-gray-800" />
+                <textarea ref={textareaRef} value={essay} onChange={(e) => setEssay(e.target.value)} placeholder="Start writing here..." data-helper-target="essay" className="w-full h-[400px] p-4 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-violet-500 text-gray-800" />
               </Card>
               <div className="flex gap-3">
                 <Button variant="outline" className="flex-1" onClick={() => { localStorage.setItem(`draft_${selectedTaskType}_${selectedPrompt.id}`, essay); toast.success('Draft saved!'); }}>Save Draft</Button>
@@ -259,6 +266,12 @@ export default function WritingPractice({ user }) {
             </div>
           </div>
         </div>
+        <WritingHelperPanel
+          taskType={selectedTaskType}
+          subtype={selectedPrompt?.type}
+          prompt={selectedPrompt?.prompt || ''}
+          essay={essay}
+        />
       </div>
     );
   }

@@ -97,6 +97,32 @@ export default function QuestionBank({ user }) {
   const [fullTests, setFullTests] = useState([]);
   const [cambridgeBooks, setCambridgeBooks] = useState([]);
   const [selectedCambridgeBook, setSelectedCambridgeBook] = useState(null);
+  // Reading + Listening question-type pickers (Cathoven-style dropdown).
+  // Replaced the old all-visible card grid which users found confusing —
+  // now it's a single dropdown with full IELTS-official names. The eight
+  // reading + six listening type IDs mirror what /api/courses/reading/
+  // question-types and /api/listening/question-types return; downstream
+  // ReadingPracticeByType / ListeningPractice already filter on these IDs.
+  const [selectedReadingQType, setSelectedReadingQType] = useState('');
+  const [selectedListeningQType, setSelectedListeningQType] = useState('');
+  const READING_QTYPES = [
+    { id: 'multiple_choice', name: 'Multiple Choice' },
+    { id: 'true_false_ng', name: 'True / False / Not Given' },
+    { id: 'matching_headings', name: 'Matching Headings' },
+    { id: 'matching_information', name: 'Matching Information' },
+    { id: 'sentence_completion', name: 'Sentence Completion' },
+    { id: 'summary_completion', name: 'Summary Completion' },
+    { id: 'table_completion', name: 'Note / Table / Flow-chart Completion' },
+    { id: 'short_answer', name: 'Short Answer Questions' },
+  ];
+  const LISTENING_QTYPES = [
+    { id: 'multiple_choice', name: 'Multiple Choice' },
+    { id: 'form_completion', name: 'Form / Note Completion' },
+    { id: 'sentence_completion', name: 'Sentence Completion' },
+    { id: 'matching', name: 'Matching' },
+    { id: 'plan_map_labeling', name: 'Plan / Map Labelling' },
+    { id: 'short_answer', name: 'Short Answer' },
+  ];
   
   // Full Test Modal State
   const [selectedTest, setSelectedTest] = useState(null);
@@ -2191,34 +2217,37 @@ export default function QuestionBank({ user }) {
 
               <p className="text-sm text-gray-500 mb-6">Select an IELTS Reading type or question type:</p>
 
-              {/* Question Type Based Practice - NEW */}
+              {/* Question Type Based Practice — single dropdown (Cathoven-style).
+                  Pre-2026-05-09 this rendered a 6-card grid that grew unwieldy
+                  once we surfaced all 8 official IELTS reading types; users
+                  reported it as "confusing — everything visible at once". */}
               <div className="mb-6 p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-200">
                 <h4 className="text-sm font-bold text-amber-700 mb-3 flex items-center gap-2">
                   <HelpCircle className="w-4 h-4" /> PRACTICE BY QUESTION TYPE
                 </h4>
-                <p className="text-xs text-amber-600 mb-3">Choose a specific question type to master</p>
-                <div className="grid grid-cols-2 gap-2">
-                  {[
-                    { id: 'multiple_choice', name: 'Multiple Choice', icon: '🔘' },
-                    { id: 'true_false_ng', name: 'True/False/NG', icon: '✓✗' },
-                    { id: 'matching_headings', name: 'Matching Headings', icon: '📑' },
-                    { id: 'sentence_completion', name: 'Sentence Completion', icon: '✏️' },
-                    { id: 'summary_completion', name: 'Summary Completion', icon: '📝' },
-                    { id: 'matching_information', name: 'Matching Info', icon: '🔗' }
-                  ].map(qtype => (
-                    <Button
-                      key={qtype.id}
-                      variant="outline"
-                      size="sm"
-                      className="justify-start text-xs hover:bg-amber-100 hover:border-amber-300"
-                      onClick={() => {
-                        setShowReadingModal(false);
-                        navigate(`/question-bank/reading/practice?type=${qtype.id}`);
-                      }}
-                    >
-                      <span className="mr-1">{qtype.icon}</span> {qtype.name}
-                    </Button>
-                  ))}
+                <p className="text-xs text-amber-600 mb-3">Pick a specific question type to drill</p>
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <select
+                    value={selectedReadingQType}
+                    onChange={(e) => setSelectedReadingQType(e.target.value)}
+                    className="flex-1 px-3 py-2 text-sm rounded-lg border border-amber-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                  >
+                    <option value="">— Select a question type —</option>
+                    {READING_QTYPES.map(q => (
+                      <option key={q.id} value={q.id}>{q.name}</option>
+                    ))}
+                  </select>
+                  <Button
+                    size="sm"
+                    disabled={!selectedReadingQType}
+                    className="bg-amber-600 hover:bg-amber-700 text-white disabled:opacity-50"
+                    onClick={() => {
+                      setShowReadingModal(false);
+                      navigate(`/question-bank/reading/practice?type=${selectedReadingQType}`);
+                    }}
+                  >
+                    Start Practice
+                  </Button>
                 </div>
               </div>
 
@@ -2418,29 +2447,34 @@ export default function QuestionBank({ user }) {
                 </Card>
               ))}
 
-              {/* Question Type Based Practice */}
+              {/* Question Type Based Practice — Cathoven-style dropdown.
+                  Replaces the 4-card grid; surfaces all 6 official listening
+                  types instead of the prior subset. See parallel change in
+                  the Reading modal block above. */}
               <div className="mt-4 pt-4 border-t">
                 <p className="text-sm font-semibold text-gray-700 mb-2">Or practice by Question Type:</p>
-                <div className="grid grid-cols-2 gap-2">
-                  {[
-                    { id: 'multiple_choice', name: 'Multiple Choice', icon: '🔘' },
-                    { id: 'form_completion', name: 'Form Completion', icon: '📝' },
-                    { id: 'sentence_completion', name: 'Sentence Completion', icon: '✏️' },
-                    { id: 'matching', name: 'Matching', icon: '🔗' }
-                  ].map(qtype => (
-                    <Button
-                      key={qtype.id}
-                      variant="outline"
-                      size="sm"
-                      className="justify-start text-xs hover:bg-purple-50 hover:border-purple-300"
-                      onClick={() => {
-                        setShowListeningModal(false);
-                        navigate(`/question-bank/listening?question_type=${qtype.id}`);
-                      }}
-                    >
-                      <span className="mr-1">{qtype.icon}</span> {qtype.name}
-                    </Button>
-                  ))}
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <select
+                    value={selectedListeningQType}
+                    onChange={(e) => setSelectedListeningQType(e.target.value)}
+                    className="flex-1 px-3 py-2 text-sm rounded-lg border border-purple-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                  >
+                    <option value="">— Select a question type —</option>
+                    {LISTENING_QTYPES.map(q => (
+                      <option key={q.id} value={q.id}>{q.name}</option>
+                    ))}
+                  </select>
+                  <Button
+                    size="sm"
+                    disabled={!selectedListeningQType}
+                    className="bg-purple-600 hover:bg-purple-700 text-white disabled:opacity-50"
+                    onClick={() => {
+                      setShowListeningModal(false);
+                      navigate(`/question-bank/listening?question_type=${selectedListeningQType}`);
+                    }}
+                  >
+                    Start Practice
+                  </Button>
                 </div>
               </div>
 

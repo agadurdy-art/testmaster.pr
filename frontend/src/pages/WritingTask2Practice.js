@@ -16,6 +16,8 @@ import { getRecommendedLessonPath } from '../lib/recommendationRouting';
 import { useI18n } from '../lib/i18n';
 import WritingEvaluatorResult from '../features/evaluator/components/WritingEvaluatorResult';
 import EvaluationProgressOverlay from '../features/evaluator/components/EvaluationProgressOverlay';
+import WritingHelperPanel from '../features/writingHelper/WritingHelperPanel';
+import WritingLearnPanel from '../features/writingLearn/WritingLearnPanel';
 import {
   WritingEvaluationResult,
   verifyAnnotationOffsets,
@@ -361,6 +363,10 @@ export default function WritingTask2Practice() {
           <div className="lg:w-[40%] lg:border-r border-gray-200 lg:sticky lg:top-[80px] lg:h-[calc(100vh-80px)] lg:overflow-y-auto">
             <div className="p-4 md:p-6 space-y-4">
 
+              {/* Learn before you write — kademeli micro-lessons. Collapsed by
+                  default so it does not push the prompt picker down. */}
+              <WritingLearnPanel />
+
               {/* Mode toggle — Preset questions vs Custom (bring-your-own) */}
               <Card className="p-1.5 bg-gray-50 border-gray-200">
                 <div className="grid grid-cols-2 gap-1">
@@ -579,6 +585,11 @@ export default function WritingTask2Practice() {
                   onChange={(e) => setUserResponse(e.target.value)}
                   placeholder={t('wt2ResponsePlaceholder')}
                   className="min-h-[300px] text-sm leading-relaxed resize-none"
+                  // Read by WritingHelperPanel's "Polish a sentence" mode —
+                  // the panel grabs the current selection from this textarea
+                  // when the user clicks Polish, so the LLM sees only the
+                  // sentence the student wants upgraded (not the whole essay).
+                  data-helper-target="essay"
                 />
 
                 <div className="mt-4 flex flex-col sm:flex-row gap-3">
@@ -711,6 +722,19 @@ export default function WritingTask2Practice() {
           </div>
         </div>
       </div>
+
+      {/* Floating Liz coaching panel — fixed-position overlay so the existing
+          40/60 prompt/textarea split stays untouched. Subtype mirrors the
+          preset prompt's essay_type when available; the component falls
+          back to opinion guidance for custom-mode prompts. Dynamic kinds
+          (unpack/ideas/phrases/polish) need the prompt + essay; static
+          kinds (structure/pitfall) ignore them. */}
+      <WritingHelperPanel
+        taskType="task2"
+        subtype={selectedPrompt?.type}
+        prompt={isCustomMode ? customPrompt : (selectedPrompt?.prompt || '')}
+        essay={userResponse}
+      />
     </div>
   );
 }
