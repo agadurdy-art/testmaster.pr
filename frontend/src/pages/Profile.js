@@ -11,14 +11,27 @@ import ThemeToggle from '../components/ThemeToggle';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 
 // IELTS Ace plans only — Free / Weekly / Monthly / Exam Pack (+ Custom slider).
-// `master` and `learner` are legacy V1 (General English) plans; if a user object
-// still carries them, we render as "Legacy" so it's obviously not an IELTS tier.
+// V1 (General English) plan IDs (explorer/learner/achiever/master/pro) are
+// remapped to the closest V2 equivalent so V2 chrome never reads "Master"
+// or "Learner" — same alias table AppShellNav uses, so the chip in the top
+// bar and the plan label on this page stay in sync. Mid-migration users see
+// the V2 tier closest to what they paid for.
 const PLAN_LABELS = {
   free: 'Free',
   weekly: 'Weekly',
   monthly: 'Monthly',
   exam: 'Exam Pack',
+  exam_pack: 'Exam Pack',
   custom: 'Custom',
+};
+
+// Legacy V1 plan ID → V2 tier ID. Mirrors AppShellNav.planLabel().
+const LEGACY_PLAN_ALIAS = {
+  explorer: 'free',
+  learner: 'weekly',
+  achiever: 'monthly',
+  master: 'monthly',
+  pro: 'monthly',
 };
 
 const PLAN_BADGE_STYLE = {
@@ -27,10 +40,7 @@ const PLAN_BADGE_STYLE = {
   monthly: 'bg-violet-50 text-violet-700 border-violet-200',
   exam: 'bg-amber-50 text-amber-800 border-amber-300',
   custom: 'bg-cyan-50 text-cyan-700 border-cyan-200',
-  legacy: 'bg-orange-50 text-orange-700 border-orange-200',
 };
-
-const LEGACY_PLAN_KEYS = new Set(['master', 'learner']);
 
 const formatExpiry = (iso) => {
   if (!iso) return null;
@@ -105,11 +115,10 @@ export default function Profile({ user, onLogout }) {
 
   const isAdmin = (fullUser?.email || user.email || '').toLowerCase().includes('aga.durdy');
   const rawPlan = (fullUser?.plan || 'free').toLowerCase();
-  const isLegacyPlan = LEGACY_PLAN_KEYS.has(rawPlan);
-  const planKey = isLegacyPlan ? 'legacy' : rawPlan;
-  const planLabel = isLegacyPlan
-    ? `Legacy (${rawPlan})`
-    : (PLAN_LABELS[rawPlan] || rawPlan);
+  // Resolve V1 legacy plan IDs to their V2 equivalent so the badge always
+  // reads as a current IELTS Ace tier (Free/Weekly/Monthly/Exam Pack/Custom).
+  const planKey = LEGACY_PLAN_ALIAS[rawPlan] || rawPlan;
+  const planLabel = PLAN_LABELS[planKey] || planKey;
   const planBadge = PLAN_BADGE_STYLE[planKey] || PLAN_BADGE_STYLE.free;
   const expires = formatExpiry(fullUser?.plan_expires_at);
   const learningMode = fullUser?.learning_mode === 'general_english'

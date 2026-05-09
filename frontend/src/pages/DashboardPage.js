@@ -1377,22 +1377,29 @@ function Arrow({ small = false }) {
 // users; one click expands it for upgrade browsing without a full
 // page navigation.
 // ──────────────────────────────────────────────────────────────────────────
-const LEGACY_PLAN_KEYS_DASH = new Set(["master", "learner"]);
+// Mirrors AppShellNav.planLabel + Profile.js — V1 GE plan IDs map to the
+// closest V2 IELTS Ace tier so the badge stays V2-pure across the surface.
+const LEGACY_PLAN_ALIAS_DASH = {
+  explorer: "free",
+  learner: "weekly",
+  achiever: "monthly",
+  master: "monthly",
+  pro: "monthly",
+};
 const PLAN_LABEL_DASH = {
   free: "Free",
   weekly: "Weekly",
   monthly: "Monthly",
   exam: "Exam Pack",
+  exam_pack: "Exam Pack",
   custom: "Custom",
 };
 
 function DashboardPlansBanner({ user }) {
   const [open, setOpen] = useState(false);
   const rawPlan = (user?.plan || "free").toLowerCase();
-  const isLegacy = LEGACY_PLAN_KEYS_DASH.has(rawPlan);
-  const planLabel = isLegacy
-    ? `Legacy (${rawPlan})`
-    : PLAN_LABEL_DASH[rawPlan] || rawPlan;
+  const planKey = LEGACY_PLAN_ALIAS_DASH[rawPlan] || rawPlan;
+  const planLabel = PLAN_LABEL_DASH[planKey] || planKey;
 
   return (
     <section className="mb-14 md:mb-20" aria-label="Plans">
