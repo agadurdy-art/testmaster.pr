@@ -6,11 +6,17 @@ import { resolvePostCheckoutDestination } from '../../../lib/upgradeFlow';
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const paypalClientId = process.env.REACT_APP_PAYPAL_CLIENT_ID;
 
-// Plan key -> PayPal subscription plan ID (Live).
-// Free and Exam are NOT subscriptions (Exam is a one-time Orders API call).
+// Plan key -> PayPal subscription plan ID. Sourced from Vercel env so we
+// don't ship stale IDs after a PayPal account swap (mirrors the backend
+// PAYPAL_*_PLAN_ID env vars in payments.py). Free and Exam aren't
+// subscriptions — Exam goes through the one-time Orders API instead.
+//
+// If an env var is missing we treat that plan as "needs signup" and route
+// the user to /signup with plan info in the query string, so a half-set
+// configuration never renders a broken PayPal button.
 const PAYPAL_SUBSCRIPTION_IDS = {
-  weekly: 'P-3CB93489AE015471KNHSJNVI',
-  monthly: 'P-5AV59196YU6700917NHSJODQ',
+  weekly: process.env.REACT_APP_PAYPAL_WEEKLY_PLAN_ID || '',
+  monthly: process.env.REACT_APP_PAYPAL_MONTHLY_PLAN_ID || '',
 };
 
 /**
