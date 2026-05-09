@@ -37,7 +37,7 @@ const COURSE_CONFIG = {
     name: 'Advanced Mastery',
     nameVi: 'Khóa học Nâng cao',
     nameTr: 'İleri Düzey Ustalık',
-    bandRange: 'Band 6.5 - 9.0',
+    bandRange: 'Band 5.5 - 9.0',
     color: 'from-amber-500 to-orange-600',
     apiEndpoint: '/api/advanced-mastery/modules',
     idField: 'id',
@@ -342,21 +342,31 @@ export default function LessonPreview() {
             </div>
           )}
 
-          {(grammar.band_65_example || grammar.band_80_example) && (
-            <div className="grid md:grid-cols-2 gap-4">
-              {grammar.band_65_example && (
-                <div className="p-4 bg-red-50 rounded-xl border-l-4 border-red-400">
-                  <h4 className="font-semibold text-red-800 mb-2">❌ Band 6.5 Example</h4>
-                  <p className="text-gray-700 italic">"{grammar.band_65_example}"</p>
+          {(grammar.band_55_example || grammar.band_75_example) && (
+            <>
+              <div className="grid md:grid-cols-2 gap-4">
+                {grammar.band_55_example && (
+                  <div className="p-4 bg-amber-50 rounded-xl border-l-4 border-amber-400">
+                    <h4 className="font-semibold text-amber-800 mb-2">Band 5.5 Example</h4>
+                    <p className="text-gray-700 italic">"{grammar.band_55_example}"</p>
+                  </div>
+                )}
+                {grammar.band_75_example && (
+                  <div className="p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
+                    <h4 className="font-semibold text-green-800 mb-2">Band 7.5+ Example</h4>
+                    <p className="text-gray-700 italic">"{grammar.band_75_example}"</p>
+                  </div>
+                )}
+              </div>
+              {grammar.coach_note && (
+                <div className="mt-3 p-3 bg-indigo-50 border border-indigo-100 rounded-lg">
+                  <p className="text-xs text-indigo-900 leading-relaxed">
+                    <span className="font-bold">Coach's note:</span> {grammar.coach_note}
+                  </p>
+                  <p className="text-[11px] text-indigo-500 mt-1 text-right italic">— Chris</p>
                 </div>
               )}
-              {grammar.band_80_example && (
-                <div className="p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
-                  <h4 className="font-semibold text-green-800 mb-2">✅ Band 8.0 Example</h4>
-                  <p className="text-gray-700 italic">"{grammar.band_80_example}"</p>
-                </div>
-              )}
-            </div>
+            </>
           )}
 
           {grammar.why_it_works && (

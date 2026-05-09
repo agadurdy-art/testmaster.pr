@@ -6,12 +6,12 @@ import { ACCENT_STYLES } from './clusters';
  * VocabCard — one record (a noun, an idiom, a pronunciation entry, …) shown
  * with progressive reveal.
  *
- * Why progressive reveal: the original layout fired meaning + example for
- * 30+ items at once. With the front face showing only the headword and
- * subtitle, the eye has fewer simultaneous targets and the student is asked
- * to perform a tiny act of recall before the meaning is unmasked. That
- * single beat between "see word" and "see meaning" is what turns passive
- * scrolling into active study.
+ * Visual grammar (post-2026-05-09 punch-up):
+ *   The first pass leaned too pastel — washed-out tints with grey text — and
+ *   the page felt empty. We now use a stronger headword (text-base bold), a
+ *   pill-style subtitle chip in the cluster accent, a brighter mastery dot,
+ *   and a hover-tint that previews the cluster colour. The card still
+ *   collapses to a single row but it now actually *invites* a tap.
  *
  * Mastery cycle: new → learning → known → new. The dot in the corner is
  * tappable so the student can self-rate without leaving the card.
@@ -39,18 +39,18 @@ export default function VocabCard({ item, accent, mastery, onMasteryChange, onSp
       ? 'text-emerald-500'
       : mastery === 'learning'
         ? 'text-amber-500'
-        : 'text-gray-300';
+        : 'text-gray-400';
   const masteryLabel =
     mastery === 'known' ? 'Known' : mastery === 'learning' ? 'Learning' : 'Tap to track';
 
   return (
     <div
-      className={`bg-white rounded-xl border border-gray-200 border-l-4 ${styles.border} shadow-sm hover:shadow transition overflow-hidden`}
+      className={`group bg-white rounded-xl border border-gray-200 border-l-[6px] ${styles.border} shadow-sm hover:shadow-md hover:${styles.hoverTint} transition overflow-hidden`}
     >
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="w-full text-left p-3 flex items-start gap-3"
+        className="w-full text-left px-3.5 py-3 flex items-start gap-3"
       >
         {/* Mastery dot */}
         <button
@@ -60,17 +60,17 @@ export default function VocabCard({ item, accent, mastery, onMasteryChange, onSp
           title={masteryLabel}
           className="flex-shrink-0 mt-0.5 hover:scale-110 transition"
         >
-          <MasteryIcon className={`w-4 h-4 ${masteryColor}`} />
+          <MasteryIcon className={`w-5 h-5 ${masteryColor}`} strokeWidth={2.25} />
         </button>
 
         {/* Headword + subtitle */}
         <div className="flex-1 min-w-0">
-          <div className="flex items-baseline gap-2 flex-wrap">
-            <span className="font-semibold text-gray-900 text-sm leading-tight">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="font-bold text-gray-900 text-[15px] leading-tight">
               {item.headword}
             </span>
             {item.subtitle && (
-              <span className={`text-[10px] uppercase tracking-wide font-semibold ${styles.text}`}>
+              <span className={`text-[10px] uppercase tracking-wide font-bold px-2 py-0.5 rounded-full ${styles.chipSoft}`}>
                 {item.subtitle}
               </span>
             )}
@@ -84,37 +84,39 @@ export default function VocabCard({ item, accent, mastery, onMasteryChange, onSp
               type="button"
               onClick={speak}
               aria-label={`Pronounce ${item.headword}`}
-              className="p-1 rounded text-gray-400 hover:text-gray-700 hover:bg-gray-50"
+              className={`p-1.5 rounded-md text-gray-400 hover:${styles.text} hover:bg-white`}
             >
-              <Volume2 className="w-3.5 h-3.5" />
+              <Volume2 className="w-4 h-4" />
             </button>
           )}
           {open ? (
-            <ChevronUp className="w-4 h-4 text-gray-400" />
+            <ChevronUp className={`w-4 h-4 ${styles.text}`} />
           ) : (
-            <ChevronDown className="w-4 h-4 text-gray-400" />
+            <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-gray-600" />
           )}
         </div>
       </button>
 
       {open && (
-        <div className="px-3 pb-3 pt-1 space-y-2 border-t border-gray-100">
+        <div className={`px-3.5 pb-3 pt-1 space-y-2 border-t ${styles.divider}`}>
           {item.meaning && (
-            <p className="text-xs leading-relaxed text-gray-700">{item.meaning}</p>
+            <p className="text-[13px] leading-relaxed text-gray-800">{item.meaning}</p>
           )}
           {item.example && (
-            <div className={`rounded-md ${styles.chipSoft} px-2.5 py-1.5`}>
-              <p className="text-[11px] italic leading-relaxed">&ldquo;{item.example}&rdquo;</p>
+            <div className={`rounded-lg ${styles.exampleBg} px-3 py-2`}>
+              <p className={`text-xs italic leading-relaxed ${styles.exampleText}`}>
+                &ldquo;{item.example}&rdquo;
+              </p>
             </div>
           )}
           {item.extras?.length > 0 && (
-            <div className="space-y-1">
+            <div className="space-y-1 pt-0.5">
               {item.extras.map((extra, i) => (
                 <div key={i} className="flex items-baseline gap-2">
-                  <span className={`text-[10px] uppercase tracking-wide font-semibold ${styles.text}`}>
+                  <span className={`text-[10px] uppercase tracking-wide font-bold ${styles.text}`}>
                     {extra.label}
                   </span>
-                  <span className="text-[11px] text-gray-700 leading-relaxed">{extra.value}</span>
+                  <span className="text-[12px] text-gray-700 leading-relaxed">{extra.value}</span>
                 </div>
               ))}
             </div>

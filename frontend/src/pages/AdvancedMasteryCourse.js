@@ -869,39 +869,40 @@ export default function AdvancedMasteryCourse({ user }) {
           </div>
         )}
         
-        {/* Band Level Comparison - Same idea at different levels */}
-        <div className="mt-6">
-          <h4 className="font-semibold text-gray-800 mb-3 text-center">📊 Same Idea - Different Band Levels</h4>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="p-4 bg-amber-50 rounded-xl border-l-4 border-amber-400">
-              <h4 className="font-semibold text-amber-800 mb-2 flex items-center gap-2">
-                📝 Band 6.5 Example
-              </h4>
-              <p className="text-gray-600 text-xs mb-2">Simple structure, basic vocabulary:</p>
-              <p className="text-gray-700 italic text-sm bg-white p-2 rounded">
-                {selectedModule.grammar?.band_65_example || 
-                 '"Technology is very important for education today. Many students use computers to study."'}
-              </p>
-              <p className="text-xs text-amber-600 mt-2 flex items-center gap-1">
-                ⚠️ Correct but repetitive - lacks complexity
-              </p>
+        {/* Band Level Comparison - Same idea at different levels (Chris-authored, lesson-specific) */}
+        {(selectedModule.grammar?.band_55_example || selectedModule.grammar?.band_75_example) && (
+          <div className="mt-6">
+            <h4 className="font-semibold text-gray-800 mb-3 text-center">📊 Same Idea — Different Band Levels</h4>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="p-4 bg-amber-50 rounded-xl border-l-4 border-amber-400">
+                <h4 className="font-semibold text-amber-800 mb-2 flex items-center gap-2">
+                  Band 5.5 Example
+                </h4>
+                <p className="text-gray-600 text-xs mb-2">Clear meaning, simpler structure:</p>
+                <p className="text-gray-700 italic text-sm bg-white p-2 rounded">
+                  {selectedModule.grammar.band_55_example}
+                </p>
+              </div>
+              <div className="p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
+                <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
+                  Band 7.5+ Example
+                </h4>
+                <p className="text-gray-600 text-xs mb-2">Same idea, lifted with this lesson's grammar:</p>
+                <p className="text-gray-700 italic text-sm bg-white p-2 rounded">
+                  {selectedModule.grammar.band_75_example}
+                </p>
+              </div>
             </div>
-            <div className="p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
-              <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
-                ⭐ Band 8.0+ Example
-              </h4>
-              <p className="text-gray-600 text-xs mb-2">Same idea with sophisticated structure:</p>
-              <p className="text-gray-700 italic text-sm bg-white p-2 rounded">
-                {selectedModule.grammar?.band_80_example || 
-                 '"The integration of technology into educational settings has fundamentally transformed how students engage with learning materials, enabling unprecedented access to information."'}
-              </p>
-              <p className="text-xs text-green-600 mt-2 flex items-center gap-1">
-                ✓ Complex sentence structure + advanced vocabulary
-              </p>
-            </div>
+            {selectedModule.grammar?.coach_note && (
+              <div className="mt-3 p-3 bg-indigo-50 border border-indigo-100 rounded-lg">
+                <p className="text-xs text-indigo-900 leading-relaxed">
+                  <span className="font-bold">Coach's note:</span> {selectedModule.grammar.coach_note}
+                </p>
+                <p className="text-[11px] text-indigo-500 mt-1 text-right italic">— Chris</p>
+              </div>
+            )}
           </div>
-          <p className="text-xs text-center text-gray-500 mt-3">💡 Notice: Same concept expressed differently - Band 8+ uses complex structures and precise vocabulary</p>
-        </div>
+        )}
       </div>
 
       {/* Why it works explanation */}
