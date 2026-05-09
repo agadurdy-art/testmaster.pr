@@ -4,13 +4,7 @@ import { cn } from "../../../lib/utils";
 /**
  * Footer for public-facing pages. Four columns that collapse on mobile.
  */
-export default function PublicFooter({ className, currentSampleSlug }) {
-  const sampleLinks = [
-    { label: "Band 5.0 Task 2", slug: "band-5-0-task2" },
-    { label: "Band 6.5 Task 2", slug: "band-6-5-task2" },
-    { label: "Band 8.0 Task 2", slug: "band-8-0-task2" },
-  ];
-
+export default function PublicFooter({ className }) {
   return (
     <footer
       className={cn(
@@ -44,8 +38,8 @@ export default function PublicFooter({ className, currentSampleSlug }) {
         <div>
           <div className="font-semibold mb-2">Practice</div>
           <ul className="space-y-1.5 text-slate-500">
-            <li><a className="hover:text-slate-900" href="/samples/writing/band-6-5-task2">Writing sample</a></li>
-            <li><a className="hover:text-slate-900" href="/samples/speaking/band-6-5-part2">Speaking sample</a></li>
+            <li><a className="hover:text-slate-900" href="/score-my-essay">Try writing</a></li>
+            <li><a className="hover:text-slate-900" href="/score-my-speaking">Try speaking</a></li>
             <li><a className="hover:text-slate-900" href="/signup?intent=writing&path=ielts">Try your own essay</a></li>
             <li><a className="hover:text-slate-900" href="/signup">Start free</a></li>
           </ul>
@@ -53,27 +47,15 @@ export default function PublicFooter({ className, currentSampleSlug }) {
         <div>
           <div className="font-semibold mb-2">Samples</div>
           <ul className="space-y-1.5 text-slate-500">
-            {sampleLinks.map((l) => (
-              <li key={l.slug}>
-                <a
-                  className={cn(
-                    "hover:text-slate-900",
-                    l.slug === currentSampleSlug && "text-slate-900 font-medium"
-                  )}
-                  href={`/samples/writing/${l.slug}`}
-                >
-                  {l.label}
-                </a>
-              </li>
-            ))}
             <li><a className="hover:text-slate-900" href="/#samples">All samples</a></li>
+            <li><a className="hover:text-slate-900" href="/samples/reading/band-6-0-academic.html">Reading sample</a></li>
+            <li><a className="hover:text-slate-900" href="/samples/listening/band-5-5-listening.html">Listening sample</a></li>
           </ul>
         </div>
         <div>
           <div className="font-semibold mb-2">Company</div>
           <ul className="space-y-1.5 text-slate-500">
             <li><a className="hover:text-slate-900" href="/pricing">Pricing</a></li>
-            <li><a className="hover:text-slate-900" href="/blog">Blog</a></li>
             <li><a className="hover:text-slate-900" href="/contact">Contact</a></li>
             <li><a className="hover:text-slate-900" href="/privacy">Privacy</a></li>
           </ul>

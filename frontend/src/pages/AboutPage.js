@@ -15,10 +15,9 @@ export default function AboutPage() {
 
         <div className="space-y-5 text-gray-700 leading-relaxed">
           <p>
-            IELTS Ace (testmaster.pro) is built by <strong>Agageldi Durdyyev</strong>, an IELTS teacher based in Ho Chi
-            Minh City. After watching students pay hundreds of dollars for generic test-prep, the goal became simple:
-            give every learner the quality of feedback a good teacher would give — instantly, in their own language,
-            at a price that isn't gatekept.
+            IELTS Ace (testmaster.pro) is built by an IELTS teacher based in Ho Chi Minh City. After watching students
+            pay hundreds of dollars for generic test-prep, the goal became simple: give every learner the quality of
+            feedback a good teacher would give — instantly, in their own language, at a price that isn't gatekept.
           </p>
           <p>
             Under the hood, every essay you submit is scored by an evaluator tuned on the four IELTS writing criteria —

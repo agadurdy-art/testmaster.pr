@@ -14,7 +14,7 @@ import LizAvatar from './LizAvatar';
 const QUICK_ACTIONS = [
   { label: 'Estimate my writing band', href: '/signup?intent=writing' },
   { label: 'Try a speaking drill',     href: '/speaking/v2' },
-  { label: 'Show me a sample report',  href: '/samples/writing/band-6-5-task2' },
+  { label: 'Show me a sample report',  href: '#samples' },
 ];
 
 export default function LizLauncher() {

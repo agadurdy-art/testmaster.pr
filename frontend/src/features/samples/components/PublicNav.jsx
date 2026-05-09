@@ -21,10 +21,10 @@ export default function PublicNav({ className, ctaHref = "/signup" }) {
         <BrandLogo size="sm" href="/" />
 
         <nav className="hidden md:flex items-center gap-7 text-[14px] text-slate-700">
-          <a href="/samples/writing/band-6-5-task2" className="hover:text-slate-900">
+          <a href="/score-my-essay" className="hover:text-slate-900">
             Writing
           </a>
-          <a href="/samples/speaking/band-6-5-part2" className="hover:text-slate-900">
+          <a href="/score-my-speaking" className="hover:text-slate-900">
             Speaking
           </a>
           <a href="/samples/reading/band-6-0-academic.html" className="hover:text-slate-900">

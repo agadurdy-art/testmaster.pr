@@ -52,19 +52,80 @@ async def admin_get_user_detail(user_id: str, admin_email: str = None):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     attempts = await db.test_attempts.find({"user_id": user_id}, {"_id": 0}).sort("completed_at", -1).to_list(100)
+
+    def _normalize_type(raw):
+        if not raw:
+            return "unknown"
+        if raw.startswith("writing"):
+            return "writing"
+        if raw.startswith("speaking"):
+            return "speaking"
+        if raw.startswith("listening"):
+            return "listening"
+        if raw.startswith("reading"):
+            return "reading"
+        return raw
+
     progress_by_type = {}
     for attempt in attempts:
-        t_type = attempt.get("test_type", "unknown")
+        t_type = _normalize_type(attempt.get("test_type"))
         if t_type not in progress_by_type:
             progress_by_type[t_type] = {"count": 0, "total_band": 0, "best_band": 0}
         progress_by_type[t_type]["count"] += 1
-        progress_by_type[t_type]["total_band"] += attempt.get("band_score", 0)
-        progress_by_type[t_type]["best_band"] = max(progress_by_type[t_type]["best_band"], attempt.get("band_score", 0))
+        band = attempt.get("band_score") or 0
+        progress_by_type[t_type]["total_band"] += band
+        progress_by_type[t_type]["best_band"] = max(progress_by_type[t_type]["best_band"], band)
     for t_type in progress_by_type:
         progress_by_type[t_type]["avg_band"] = round(
             progress_by_type[t_type]["total_band"] / progress_by_type[t_type]["count"], 1
         ) if progress_by_type[t_type]["count"] > 0 else 0
-    return {"user": user, "test_attempts": attempts, "progress_by_type": progress_by_type, "total_tests": len(attempts)}
+
+    # Activity summary aggregations
+    learning_lessons_completed = 0
+    try:
+        progress_doc = await db.unified_user_progress.find_one(
+            {"user_id": user_id}, {"_id": 0, "lesson_progress": 1}
+        )
+        if progress_doc:
+            lp = progress_doc.get("lesson_progress", {}) or {}
+            learning_lessons_completed = sum(
+                1 for v in lp.values() if isinstance(v, dict) and v.get("completed")
+            )
+    except Exception:
+        pass
+
+    full_tests_completed = 0
+    try:
+        full_tests_completed = await db.full_test_results.count_documents({"user_id": user_id})
+    except Exception:
+        pass
+
+    liz_sessions_count = 0
+    try:
+        liz_sessions_count = await db.liz_sessions.count_documents({"user_id": user_id})
+    except Exception:
+        pass
+
+    review_bank_items = 0
+    try:
+        review_bank_items = await db.review_bank.count_documents({"user_id": user_id})
+    except Exception:
+        pass
+
+    activity_summary = {
+        "learning_lessons_completed": learning_lessons_completed,
+        "full_tests_completed": full_tests_completed,
+        "liz_sessions": liz_sessions_count,
+        "review_bank_items": review_bank_items,
+    }
+
+    return {
+        "user": user,
+        "test_attempts": attempts,
+        "progress_by_type": progress_by_type,
+        "total_tests": len(attempts),
+        "activity_summary": activity_summary,
+    }
 
 
 @router.put("/admin/users/{user_id}")

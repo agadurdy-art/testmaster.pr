@@ -29,7 +29,6 @@ export default function PricingNav() {
           <ul className="nav-links">
             <li><a href="/#samples">{t('pricingV2NavSamples')}</a></li>
             <li><a href="/pricing" aria-current="page">{t('pricingV2NavPricing')}</a></li>
-            <li><a href="/blog">{t('pricingV2NavBlog')}</a></li>
             <li><a href="/about">{t('pricingV2NavAbout')}</a></li>
           </ul>
         </nav>
@@ -77,7 +76,6 @@ export default function PricingNav() {
             <ul className="mobile-drawer-links">
               <li><a href="/#samples" onClick={close}>{t('pricingV2NavSamples')}</a></li>
               <li><a href="/pricing" onClick={close}>{t('pricingV2NavPricing')}</a></li>
-              <li><a href="/blog" onClick={close}>{t('pricingV2NavBlog')}</a></li>
               <li><a href="/about" onClick={close}>{t('pricingV2NavAbout')}</a></li>
             </ul>
             <div className="mobile-drawer-cta">

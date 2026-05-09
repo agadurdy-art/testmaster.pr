@@ -11,21 +11,38 @@ import {
 import api from '../lib/api';
 import { toast } from 'sonner';
 
+// V1 (General English) plan IDs map onto V2 (IELTS Ace) tiers so the admin
+// surface shows the same label users see in their Profile/Dashboard.
+const LEGACY_PLAN_ALIAS = {
+  explorer: 'free',
+  learner: 'weekly',
+  achiever: 'monthly',
+  master: 'monthly',
+  pro: 'monthly',
+};
+
+const PLAN_LABELS = {
+  free: 'Free',
+  weekly: 'Weekly',
+  monthly: 'Monthly',
+  exam: 'Exam Pack',
+  custom: 'Custom',
+};
+
 const PLAN_STYLES = {
-  // IELTS-Ace (current) tiers
   monthly: 'bg-purple-100 text-purple-700',
   exam: 'bg-rose-100 text-rose-700',
   weekly: 'bg-blue-100 text-blue-700',
-  // Legacy General English tiers — still present in DB for existing users
-  master: 'bg-purple-100 text-purple-700',
-  achiever: 'bg-amber-100 text-amber-700',
-  learner: 'bg-blue-100 text-blue-700',
-  explorer: 'bg-green-100 text-green-700',
+  custom: 'bg-indigo-100 text-indigo-700',
   free: 'bg-gray-100 text-gray-600',
 };
 
-const getPlanBadgeClass = (plan) => PLAN_STYLES[plan] || PLAN_STYLES.free;
-const getPlanLabel = (userLike) => userLike?.plan_label || userLike?.plan || 'free';
+const resolvePlanKey = (plan) => LEGACY_PLAN_ALIAS[plan] || plan || 'free';
+const getPlanBadgeClass = (plan) => PLAN_STYLES[resolvePlanKey(plan)] || PLAN_STYLES.free;
+const getPlanLabel = (userLike) => {
+  const key = resolvePlanKey(userLike?.plan);
+  return PLAN_LABELS[key] || userLike?.plan_label || userLike?.plan || 'Free';
+};
 const formatAdminDate = (value) => (value ? new Date(value).toLocaleString() : 'Unknown');
 
 export default function AdminPanel({ user }) {

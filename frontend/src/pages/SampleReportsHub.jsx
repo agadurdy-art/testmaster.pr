@@ -52,7 +52,7 @@ const SAMPLES = {
       criteria: 'Task Response 5 · Coherence 5 · Lexical 5 · Grammar 5',
       highlight:
         'Where most candidates plateau — limited paraphrasing, repetitive structures, surface-level examples.',
-      href: '/samples/writing/band-5-0-task2',
+      href: '/score-my-essay',
     },
     {
       band: '6.5',
@@ -62,7 +62,7 @@ const SAMPLES = {
       criteria: 'Task Response 6.5 · Coherence 7 · Lexical 6 · Grammar 6.5',
       highlight:
         'Solid argument structure but lexical resource ceilings the score — exactly where coaching matters.',
-      href: '/samples/writing/band-6-5-task2',
+      href: '/score-my-essay',
     },
     {
       band: '8.0',
@@ -72,7 +72,7 @@ const SAMPLES = {
       criteria: 'Task Response 8 · Coherence 8 · Lexical 8 · Grammar 8.5',
       highlight:
         'Confident position, controlled cohesion, precise collocations. Refinements, not corrections.',
-      href: '/samples/writing/band-8-0-task2',
+      href: '/score-my-essay',
     },
   ],
   speaking: [
@@ -84,7 +84,7 @@ const SAMPLES = {
       criteria: 'Fluency 6.5 · Lexical 6 · Grammar 6.5 · Pronunciation 7',
       highlight:
         'Natural pacing and good cue-card coverage; vocabulary stays neutral — band-7 collocations would lift it.',
-      href: '/samples/speaking/band-6-5-part2',
+      href: '/score-my-speaking',
     },
     {
       band: '7.0',
@@ -94,7 +94,7 @@ const SAMPLES = {
       criteria: 'Fluency 7 · Lexical 7 · Grammar 7 · Pronunciation 7',
       highlight:
         'Concrete sensory detail, mid-turn self-correction, idiomatic phrases — what a band-7 long turn sounds like.',
-      href: '/samples/speaking/band-7-0-part2',
+      href: '/score-my-speaking',
     },
   ],
   reading: [

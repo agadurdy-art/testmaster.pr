@@ -228,11 +228,11 @@ export default function Profile({ user, onLogout }) {
               {/* Subscription / quota */}
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Subscription & quota</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <QuotaCard
                     icon={<FileText className="w-5 h-5 text-violet-600" />}
-                    label="Evaluations"
-                    sub="Writing + Speaking eval"
+                    label="Writing evaluations"
+                    sub="Essays graded this period"
                     counter={usage?.counters?.evaluations}
                     accent="violet"
                   />
@@ -243,14 +243,11 @@ export default function Profile({ user, onLogout }) {
                     counter={usage?.counters?.mocks}
                     accent="amber"
                   />
-                  <QuotaCard
-                    icon={<Mic className="w-5 h-5 text-rose-600" />}
-                    label="Speaking minutes"
-                    sub="Liz Live minutes"
-                    counter={usage?.counters?.speaking_minutes}
-                    accent="rose"
-                  />
                 </div>
+                <p className="mt-3 text-xs text-gray-500 flex items-center gap-1.5">
+                  <Mic className="w-3.5 h-3.5 text-rose-500" />
+                  Speaking evaluations are tracked separately by your plan — see <a href="/pricing" className="text-violet-600 hover:underline ml-1">pricing</a> for the cap.
+                </p>
                 {(fullUser?.examCredits ?? 0) > 0 && (
                   <div className="mt-3 text-sm text-gray-600">
                     <strong>{fullUser.examCredits}</strong> exam credits remaining

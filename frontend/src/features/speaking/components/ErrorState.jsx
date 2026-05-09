@@ -96,11 +96,11 @@ export default function ErrorState({ onRetry, onBack, errorMessage }) {
               Try again
             </button>
             <a
-              href="/samples/speaking/band-6-5-part2"
+              href="/score-my-speaking"
               className="sp-btn-secondary"
               style={{ textDecoration: 'none' }}
             >
-              View sample result
+              Try a Part 2 prompt
             </a>
             <button className="sp-btn-ghost" onClick={onBack}>
               Switch to text practice instead

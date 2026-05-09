@@ -14,7 +14,7 @@ export default function FinalCTA() {
         </h2>
         <p>{t('landingV2FinalSub')}</p>
         <div className="final-cta-row">
-          <a href="/samples/writing/band-6-5-task2" className="btn btn-primary btn-xl">
+          <a href="/score-my-essay" className="btn btn-primary btn-xl">
             {t('landingV2FinalCta')}
             <ArrowRightIcon size={16} />
           </a>

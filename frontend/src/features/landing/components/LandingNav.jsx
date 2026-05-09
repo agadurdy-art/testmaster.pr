@@ -28,9 +28,8 @@ export default function LandingNav() {
           <BrandLogo size="sm" href="/" className="logo" />
           <nav aria-label="Primary">
             <ul className="nav-links">
-              <li><a href="/samples/writing/band-6-5-task2">{t('landingV2NavSamples')}</a></li>
+              <li><a href="#samples">{t('landingV2NavSamples')}</a></li>
               <li><a href="#pricing">{t('landingV2NavPricing')}</a></li>
-              <li><a href="/blog">{t('landingV2NavBlog')}</a></li>
               <li><a href="/about">{t('landingV2NavAbout')}</a></li>
             </ul>
           </nav>
@@ -86,9 +85,8 @@ export default function LandingNav() {
               </button>
             </div>
             <ul className="mobile-drawer-links">
-              <li><a href="/samples/writing/band-6-5-task2" onClick={close}>{t('landingV2NavSamples')}</a></li>
+              <li><a href="#samples" onClick={close}>{t('landingV2NavSamples')}</a></li>
               <li><a href="#pricing" onClick={close}>{t('landingV2NavPricing')}</a></li>
-              <li><a href="/blog" onClick={close}>{t('landingV2NavBlog')}</a></li>
               <li><a href="/about" onClick={close}>{t('landingV2NavAbout')}</a></li>
             </ul>
             <div className="mobile-drawer-lang">

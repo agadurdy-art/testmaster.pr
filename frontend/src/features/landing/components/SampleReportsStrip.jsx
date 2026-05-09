@@ -8,7 +8,7 @@ const REPORTS = [
     tier: 'Working toward band 6',
     title: '"Technology in education"',
     meta: 'Task 2 · 248 words · 23 fixes',
-    href: '/samples/writing/band-5-0-task2',
+    href: '/score-my-essay',
   },
   {
     cls: 'b65',
@@ -17,7 +17,7 @@ const REPORTS = [
     tier: 'Target for most applicants',
     title: '"Living in cities vs countryside"',
     meta: 'Task 2 · 281 words · 14 fixes',
-    href: '/samples/writing/band-6-5-task2',
+    href: '/score-my-essay',
   },
   {
     cls: 'b8',
@@ -26,7 +26,7 @@ const REPORTS = [
     tier: 'High-band benchmark',
     title: '"Environmental responsibility"',
     meta: 'Task 2 · 312 words · 4 refinements',
-    href: '/samples/writing/band-8-0-task2',
+    href: '/score-my-essay',
   },
   {
     cls: 'b6',

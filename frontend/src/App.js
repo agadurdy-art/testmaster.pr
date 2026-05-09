@@ -49,7 +49,6 @@ const LoginPage = lazy(() => import('./pages/LoginPage'));
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
 const TermsPage = lazy(() => import('./pages/TermsPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
-const BlogPage = lazy(() => import('./pages/BlogPage'));
 const StatusPage = lazy(() => import('./pages/StatusPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
@@ -59,10 +58,6 @@ const ComprehensiveLevelTest = lazy(() => import('./pages/ComprehensiveLevelTest
 const AdaptiveLevelTest = lazy(() => import('./pages/AdaptiveLevelTest'));
 const WritingPractice = lazy(() => import('./pages/WritingPractice'));
 const EvaluatorResultPreview = lazy(() => import('./pages/EvaluatorResultPreview'));
-const SampleReportBand65Task2 = lazy(() => import('./pages/SampleReportBand65Task2'));
-const SampleReportBand50Task2 = lazy(() => import('./pages/SampleReportBand50Task2'));
-const SampleReportBand80Task2 = lazy(() => import('./pages/SampleReportBand80Task2'));
-const SampleReportSpeakingPart2 = lazy(() => import('./pages/SampleReportSpeakingPart2'));
 const SampleReportsHub = lazy(() => import('./pages/SampleReportsHub'));
 const PublicEssayEvaluator = lazy(() => import('./pages/PublicEssayEvaluator'));
 const PublicSpeakingTrial = lazy(() => import('./pages/PublicSpeakingTrial'));
@@ -109,6 +104,7 @@ const CambridgeTestResults = lazy(() => import('./pages/CambridgeTestResults'));
 const FocusPlan = lazy(() => import('./pages/FocusPlan'));
 const LizTeacher = lazy(() => import('./pages/LizTeacher'));
 const LizFloatingButton = lazy(() => import('./components/LizFloatingButton'));
+const FeedbackLauncher = lazy(() => import('./components/FeedbackLauncher'));
 const VocabularyLearnMode = lazy(() => import('./pages/VocabularyLearnMode'));
 const VocabularyPracticeMode = lazy(() => import('./pages/VocabularyPracticeMode'));
 const VocabularyQuizMode = lazy(() => import('./pages/VocabularyQuizMode'));
@@ -408,7 +404,6 @@ function AppWithSessionHandler() {
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="/blog" element={<BlogPage />} />
         <Route path="/status" element={<StatusPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
@@ -521,27 +516,11 @@ function AppWithSessionHandler() {
           path="/dev/evaluator-result"
           element={<EvaluatorResultPreview />}
         />
-        <Route
-          path="/samples/writing/band-5-0-task2"
-          element={<SampleReportBand50Task2 />}
-        />
-        <Route
-          path="/samples/writing/band-6-5-task2"
-          element={<SampleReportBand65Task2 />}
-        />
-        <Route
-          path="/samples/writing/band-8-0-task2"
-          element={<SampleReportBand80Task2 />}
-        />
-        <Route
-          path="/samples/speaking/band-6-5-part2"
-          element={<SampleReportSpeakingPart2 />}
-        />
-        {/* Legacy URL — Claude Design fixtures are Band 6.5; keep old route as alias */}
-        <Route
-          path="/samples/speaking/band-7-0-part2"
-          element={<SampleReportSpeakingPart2 />}
-        />
+        {/* Sample detail pop pages removed 2026-05-09 — content is already
+            shown inline on the landing samples switcher. Redirect any stale
+            inbound link to the landing anchor. */}
+        <Route path="/samples/writing/:slug" element={<Navigate to="/#samples" replace />} />
+        <Route path="/samples/speaking/:slug" element={<Navigate to="/#samples" replace />} />
         <Route path="/score-my-essay" element={<PublicEssayEvaluator />} />
         <Route path="/score-my-speaking" element={<PublicSpeakingTrial />} />
         <Route
@@ -798,6 +777,9 @@ function AppWithSessionHandler() {
       </Suspense>
       {user && location.pathname.startsWith('/dashboard') && (
         <Suspense fallback={null}><LizFloatingButton user={user} /></Suspense>
+      )}
+      {user && (
+        <Suspense fallback={null}><FeedbackLauncher user={user} /></Suspense>
       )}
       <EmergentBadgeWrapper />
       <MobileNavWrapper user={user} />

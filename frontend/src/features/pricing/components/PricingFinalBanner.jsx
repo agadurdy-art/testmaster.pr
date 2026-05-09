@@ -17,7 +17,7 @@ export default function PricingFinalBanner() {
               {t('pricingV2FinalBody')}
             </p>
           </div>
-          <a href="/samples/writing/band-6-5-task2" className="btn btn-primary btn-xl">
+          <a href="/score-my-essay" className="btn btn-primary btn-xl">
             {t('pricingV2FinalCta')}
             <ArrowRightIcon />
           </a>

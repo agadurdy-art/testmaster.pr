@@ -16,7 +16,6 @@ export default function PricingFooter() {
           <ul className="foot-links">
             <li><a href="/privacy">{t('pricingV2FooterPrivacy')}</a></li>
             <li><a href="/terms">{t('pricingV2FooterTerms')}</a></li>
-            <li><a href="/blog">{t('pricingV2FooterBlog')}</a></li>
             <li><a href="/contact">{t('pricingV2FooterContact')}</a></li>
             <li><a href="/status">{t('pricingV2FooterStatus')}</a></li>
           </ul>

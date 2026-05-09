@@ -11,7 +11,6 @@ export default function LandingFooter() {
           <ul className="foot-links">
             <li><a href="/privacy">Privacy</a></li>
             <li><a href="/terms">Terms</a></li>
-            <li><a href="/blog">Teacher Blog</a></li>
             <li><a href="/contact">Contact</a></li>
             <li><a href="/status">Status</a></li>
           </ul>

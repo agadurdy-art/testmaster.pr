@@ -15,8 +15,8 @@ import LizAvatar from './LizAvatar';
  */
 
 const TABS = [
-  { key: 'writing',   label: 'Writing',   href: '/samples/writing/band-6-5-task2', cta: 'See writing sample',     available: true  },
-  { key: 'speaking',  label: 'Speaking',  href: '/samples/speaking/band-6-5-part2', cta: 'See sample speaking',    available: true  },
+  { key: 'writing',   label: 'Writing',   href: '/score-my-essay', cta: 'Try your own essay',     available: true  },
+  { key: 'speaking',  label: 'Speaking',  href: '/score-my-speaking', cta: 'Try a Part 2 prompt',    available: true  },
   { key: 'reading',   label: 'Reading',   href: '/samples/reading/band-6-0-academic.html', cta: 'See reading sample',     available: true  },
   { key: 'listening', label: 'Listening', href: '/samples/listening/band-5-5-listening.html', cta: 'See listening sample', available: true  },
 ];
@@ -26,12 +26,6 @@ const LIZ_LINES = [
   'Submit writing and I\u2019ll give you a band estimate.',
   'We can practice speaking Part 2 right now.',
   'I\u2019ll teach you in short lessons, then practice.',
-];
-
-const WRITING_SAMPLES = [
-  { band: '5.0', href: '/samples/writing/band-5-0-task2' },
-  { band: '6.5', href: '/samples/writing/band-6-5-task2' },
-  { band: '8.0', href: '/samples/writing/band-8-0-task2' },
 ];
 
 export default function LandingHeroDemo() {
@@ -113,17 +107,7 @@ export default function LandingHeroDemo() {
           </div>
 
           {active === 'writing' && (
-            <>
-              <WritingDemo />
-              <div className="sample-chips" aria-label="See what a full evaluation looks like">
-                <span className="sample-chips-label">See a full report:</span>
-                {WRITING_SAMPLES.map((s) => (
-                  <a key={s.band} href={s.href} className="sample-chip">
-                    Band {s.band}
-                  </a>
-                ))}
-              </div>
-            </>
+            <WritingDemo />
           )}
           {active === 'speaking' && (
             <SpeakingDemo />
@@ -185,8 +169,8 @@ function WritingDemo() {
           <div className="sample-preview-criterion"><span className="sample-preview-criterion-name">Lexical</span><span className="sample-preview-criterion-val">6.0</span></div>
           <div className="sample-preview-criterion"><span className="sample-preview-criterion-name">Grammar</span><span className="sample-preview-criterion-val">6.5</span></div>
         </div>
-        <a href="/samples/writing/band-6-5-task2" className="sample-preview-cta">
-          See the full report →
+        <a href="/score-my-essay" className="sample-preview-cta">
+          Try your own essay →
         </a>
       </div>
     </div>
@@ -247,8 +231,8 @@ function SpeakingDemo() {
           <div className="sample-preview-criterion"><span className="sample-preview-criterion-name">Grammar</span><span className="sample-preview-criterion-val">6.5</span></div>
           <div className="sample-preview-criterion"><span className="sample-preview-criterion-name">Pronunciation</span><span className="sample-preview-criterion-val">7.0</span></div>
         </div>
-        <a href="/samples/speaking/band-6-5-part2" className="sample-preview-cta">
-          See sample speaking →
+        <a href="/score-my-speaking" className="sample-preview-cta">
+          Try a Part 2 prompt →
         </a>
       </div>
     </div>
