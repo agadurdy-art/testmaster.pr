@@ -64,6 +64,18 @@ const FALLBACK_THEME = {
 };
 const themeFor = (topic) => TOPIC_THEME[topic] || FALLBACK_THEME;
 
+// IELTS tips shown while topics load. Keeps the wait useful instead of
+// staring at a spinner — Safari especially can take 1–2s for the modules
+// fetch + audio_url resolve, and a passive spinner there made users
+// assume the page was broken.
+const LOADING_TIPS = [
+  { title: 'Part 1 timing', body: 'Aim for ~20–30 seconds per answer. Going too short signals limited range; rambling hurts coherence.' },
+  { title: 'Hesitation > rushing', body: 'A short pause and a clear answer beats fast-but-mumbled. Examiners reward clarity, not speed.' },
+  { title: 'Part 2 cue card', body: 'You get 1 minute to prepare. Jot 4–5 keywords, not full sentences — speak from memory, not a script.' },
+  { title: 'Part 3 abstract', body: 'Use signposting: "There are two reasons…", "On the other hand…". It boosts your Coherence band.' },
+  { title: 'Pronunciation', body: 'Word stress matters more than accent. "phoTOgraphy" not "PHOto-graphy" — Liz catches this for you.' },
+];
+
 export default function SpeakingPracticeQB({ user }) {
   const navigate = useNavigate();
   const goBack = useGoBack();
@@ -114,6 +126,14 @@ export default function SpeakingPracticeQB({ user }) {
   const [filterTrack, setFilterTrack] = useState(initialTrack);
   const [filterBand, setFilterBand] = useState(initialBand || '');
   const [userCredits, setUserCredits] = useState(0);
+  // Rotating IELTS tip while loading — replaces the bare spinner so users
+  // don't bounce thinking the page is stuck. Cycles every 4s.
+  const [tipIndex, setTipIndex] = useState(0);
+  useEffect(() => {
+    if (!loading) return undefined;
+    const id = setInterval(() => setTipIndex((i) => (i + 1) % LOADING_TIPS.length), 4000);
+    return () => clearInterval(id);
+  }, [loading]);
   
   const audioRef = useRef(null);
   const mediaRecorderRef = useRef(null);
@@ -581,11 +601,55 @@ export default function SpeakingPracticeQB({ user }) {
   };
 
   if (loading && !moduleContent) {
+    const tip = LOADING_TIPS[tipIndex];
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="w-12 h-12 text-indigo-600 animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">Loading Speaking Practice...</p>
+      <div className="min-h-screen bg-gradient-to-b from-emerald-50/60 via-white to-emerald-50/30 px-4 py-10">
+        <div className="max-w-4xl mx-auto">
+          {/* Animated mic — three concentric pulses give a sense of "Liz is
+              listening / preparing" so the wait reads as activity, not a freeze. */}
+          <div className="flex flex-col items-center mb-8">
+            <div className="relative w-20 h-20 mb-4">
+              <span className="absolute inset-0 rounded-full bg-emerald-400/30 animate-ping" />
+              <span className="absolute inset-2 rounded-full bg-emerald-400/40 animate-ping" style={{ animationDelay: '0.3s' }} />
+              <span className="absolute inset-4 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-200">
+                <Mic className="w-6 h-6 text-white" />
+              </span>
+            </div>
+            <p className="text-sm font-medium text-emerald-700">Liz is preparing your speaking topics…</p>
+          </div>
+
+          {/* Rotating IELTS tip — keeps the wait useful */}
+          <div className="rounded-2xl border border-emerald-100 bg-white shadow-sm p-5 mb-8 transition-opacity duration-500" key={tipIndex}>
+            <div className="flex items-start gap-3">
+              <div className="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+                <Sparkles className="w-4 h-4" />
+              </div>
+              <div className="min-w-0">
+                <div className="text-[11px] uppercase tracking-wider text-emerald-600 font-semibold mb-1">
+                  Tip · {tipIndex + 1} / {LOADING_TIPS.length}
+                </div>
+                <h3 className="font-semibold text-gray-900 text-sm">{tip.title}</h3>
+                <p className="text-sm text-gray-600 mt-1 leading-relaxed">{tip.body}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Skeleton topic cards — the page reads as "almost ready" instead
+              of empty. Two columns mirror the real grid below. */}
+          <div className="grid gap-3 md:grid-cols-2">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="rounded-xl border-2 border-slate-100 bg-white p-5 animate-pulse">
+                <div className="flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-slate-100 shrink-0" />
+                  <div className="flex-1 space-y-2">
+                    <div className="h-4 bg-slate-100 rounded w-3/4" />
+                    <div className="h-3 bg-slate-100 rounded w-1/2" />
+                    <div className="h-3 bg-slate-100 rounded w-2/3 mt-3" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -602,7 +666,26 @@ export default function SpeakingPracticeQB({ user }) {
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between flex-wrap gap-3">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="sm" onClick={goBack}>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  // Hierarchical back: question screen → part picker → topic list → dashboard.
+                  // The browser-history goBack was bouncing users out of the QB
+                  // entirely from the question screen, which felt broken.
+                  if (recordingState === STATES.RECORDING || recordingState === STATES.PROCESSING) return;
+                  if (moduleContent && selectedPart) {
+                    backToParts();
+                  } else if (moduleContent && !selectedPart) {
+                    setSelectedModule(null);
+                    setModuleContent(null);
+                  } else {
+                    goBack();
+                  }
+                }}
+                disabled={recordingState === STATES.RECORDING || recordingState === STATES.PROCESSING}
+                title={recordingState === STATES.RECORDING ? 'Stop recording first' : 'Back'}
+              >
                 <ArrowLeft className="w-4 h-4 mr-1" /> Back
               </Button>
               <div>
