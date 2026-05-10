@@ -212,9 +212,14 @@
   display: grid;
   /* minmax(0, ...) lets each track actually shrink. Plain 1fr defaults to
      minmax(auto, 1fr), so long words / pre blocks can blow the track past
-     the parent and cause horizontal overflow. */
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-  gap: 72px;
+     the parent and cause horizontal overflow.
+     2026-05-10: rebalanced text/demo from 1.05fr/1fr to 0.92fr/1.18fr and
+     dropped gap from 72→56 so the sample-preview card has measurably more
+     desktop width — visitors couldn't comfortably read the report card at
+     the previous size. Mobile (<=900px) still drops to a single column
+     below, so the change is desktop-only. */
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.18fr);
+  gap: 56px;
   align-items: center;
 }
 .landing-scope .eyebrow {

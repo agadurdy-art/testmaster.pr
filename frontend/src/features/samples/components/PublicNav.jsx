@@ -20,11 +20,18 @@ export default function PublicNav({ className, ctaHref = "/signup" }) {
       <div className="mx-auto max-w-7xl px-5 sm:px-8 h-16 flex items-center justify-between">
         <BrandLogo size="sm" href="/" />
 
+        {/* All four skill links point at their canonical "full report"
+            sample page. This way, when a visitor is already inside one
+            sample (e.g. Reading), clicking Writing cross-navigates to the
+            writing sample report instead of jumping back to the live
+            evaluator landing — which is the behavior reported on 2026-05-10.
+            The live evaluator entry points live inside each sample report
+            page (e.g. PublicScoreCard's "Score my essay" button). */}
         <nav className="hidden md:flex items-center gap-7 text-[14px] text-slate-700">
-          <a href="/score-my-essay" className="hover:text-slate-900">
+          <a href="/samples/writing/band-6-5-task2" className="hover:text-slate-900">
             Writing
           </a>
-          <a href="/score-my-speaking" className="hover:text-slate-900">
+          <a href="/samples/speaking/band-6-5-part2" className="hover:text-slate-900">
             Speaking
           </a>
           <a href="/samples/reading/band-6-0-academic.html" className="hover:text-slate-900">

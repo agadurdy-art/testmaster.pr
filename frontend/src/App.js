@@ -61,6 +61,10 @@ const EvaluatorResultPreview = lazy(() => import('./pages/EvaluatorResultPreview
 const SampleReportsHub = lazy(() => import('./pages/SampleReportsHub'));
 const PublicEssayEvaluator = lazy(() => import('./pages/PublicEssayEvaluator'));
 const PublicSpeakingTrial = lazy(() => import('./pages/PublicSpeakingTrial'));
+const SampleReportBand65Task2 = lazy(() => import('./pages/SampleReportBand65Task2'));
+const SampleReportBand80Task2 = lazy(() => import('./pages/SampleReportBand80Task2'));
+const SampleReportBand50Task2 = lazy(() => import('./pages/SampleReportBand50Task2'));
+const SampleReportSpeakingPart2 = lazy(() => import('./pages/SampleReportSpeakingPart2'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage'));
 const LandingPageV2 = lazy(() => import('./pages/LandingPageV2'));
 const LandingPageDemo = lazy(() => import('./pages/LandingPageDemo'));
@@ -516,11 +520,17 @@ function AppWithSessionHandler() {
           path="/dev/evaluator-result"
           element={<EvaluatorResultPreview />}
         />
-        {/* Sample detail pop pages removed 2026-05-09 — content is already
-            shown inline on the landing samples switcher. Redirect any stale
-            inbound link to the landing anchor. */}
-        <Route path="/samples/writing/:slug" element={<Navigate to="/#samples" replace />} />
-        <Route path="/samples/speaking/:slug" element={<Navigate to="/#samples" replace />} />
+        {/* Writing/Speaking sample report pages — re-enabled 2026-05-10.
+            Reading/Listening have static HTML "full report" pages, so writing
+            and speaking need the same surface (parity for switcher CTAs and
+            PublicNav cross-nav). Specific slugs render their report; unknown
+            slugs fall back to the canonical band-6.5 sample. */}
+        <Route path="/samples/writing/band-6-5-task2" element={<SampleReportBand65Task2 />} />
+        <Route path="/samples/writing/band-8-0-task2" element={<SampleReportBand80Task2 />} />
+        <Route path="/samples/writing/band-5-0-task2" element={<SampleReportBand50Task2 />} />
+        <Route path="/samples/writing/:slug" element={<Navigate to="/samples/writing/band-6-5-task2" replace />} />
+        <Route path="/samples/speaking/band-6-5-part2" element={<SampleReportSpeakingPart2 />} />
+        <Route path="/samples/speaking/:slug" element={<Navigate to="/samples/speaking/band-6-5-part2" replace />} />
         <Route path="/score-my-essay" element={<PublicEssayEvaluator />} />
         <Route path="/score-my-speaking" element={<PublicSpeakingTrial />} />
         <Route
