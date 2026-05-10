@@ -140,6 +140,10 @@ export default function SpeakingPracticeQB({ user }) {
   const audioChunksRef = useRef([]);
   const timerRef = useRef(null);
   const audioBlobsRef = useRef({}); // Store audio blobs for premium evaluation
+  // In-memory prefetch cache for /api/speaking/set/{setId}. Filled on
+  // topic-card hover so the click feels instant — Safari especially can
+  // take 1–2s to resolve audio_urls + cue card content. Cleared on unmount.
+  const prefetchedSetsRef = useRef({});
   
   // Fetch user credits on mount
   useEffect(() => {
@@ -166,6 +170,26 @@ export default function SpeakingPracticeQB({ user }) {
   }, [filterTrack, filterBand]);
 
   const loadModules = async () => {
+    // sessionStorage cache — repeat visits to QB Speaking within 5 min
+    // skip the network round-trip entirely. Stale-while-revalidate: show
+    // the cached list immediately, then fetch in the background to refresh
+    // it. Track+band keyed so the Academic/GT toggle and band chips don't
+    // poison each other's cache.
+    const cacheKey = `qb_speaking_modules_v1:${filterTrack}:${filterBand || 'all'}`;
+    const TTL_MS = 5 * 60 * 1000;
+    let usedCache = false;
+    try {
+      const raw = sessionStorage.getItem(cacheKey);
+      if (raw) {
+        const cached = JSON.parse(raw);
+        if (cached && Array.isArray(cached.modules) && Date.now() - cached.t < TTL_MS) {
+          setModules(cached.modules);
+          setLoading(false);
+          usedCache = true;
+        }
+      }
+    } catch (_) { /* ignore corrupt cache */ }
+
     try {
       let url = `${API_URL}/api/speaking/modules?track=${filterTrack}`;
       if (filterBand) url += `&band=${filterBand}`;
@@ -187,7 +211,10 @@ export default function SpeakingPracticeQB({ user }) {
       if (data?.success) {
         const list = Array.isArray(data.modules) ? data.modules : [];
         setModules(list);
-        if (list.length === 0) {
+        try {
+          sessionStorage.setItem(cacheKey, JSON.stringify({ t: Date.now(), modules: list }));
+        } catch (_) { /* sessionStorage full / disabled — non-fatal */ }
+        if (list.length === 0 && !usedCache) {
           toast.info('No speaking topics matched this track yet.');
         }
         if (initialSetId) {
@@ -195,24 +222,66 @@ export default function SpeakingPracticeQB({ user }) {
         }
       } else {
         console.warn('Speaking modules response missing success flag', data);
-        setModules([]);
-        toast.error(data?.error || 'Failed to load speaking topics.');
+        if (!usedCache) {
+          setModules([]);
+          toast.error(data?.error || 'Failed to load speaking topics.');
+        }
       }
     } catch (error) {
       console.error('Error loading modules:', error);
-      toast.error('Failed to load speaking modules');
+      // Only surface the error if we don't already have a cached list on
+      // screen — otherwise it's just a background-refresh blip.
+      if (!usedCache) toast.error('Failed to load speaking modules');
     } finally {
       setLoading(false);
     }
   };
 
+  // Hover-prefetch helper. Fires /api/speaking/set/{setId} once per setId
+  // and stashes the response in prefetchedSetsRef. selectModule below
+  // checks this ref first so the click is instant on hovered cards.
+  const prefetchSet = (setId) => {
+    if (!setId || prefetchedSetsRef.current[setId]) return;
+    // Mark as in-flight immediately so hover-spam doesn't fire N requests.
+    prefetchedSetsRef.current[setId] = 'pending';
+    fetch(`${API_URL}/api/speaking/set/${setId}?include_audio=true&mode=${mode}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.success && data.set) {
+          prefetchedSetsRef.current[setId] = data.set;
+        } else {
+          delete prefetchedSetsRef.current[setId];
+        }
+      })
+      .catch(() => { delete prefetchedSetsRef.current[setId]; });
+  };
+
   const selectModule = async (setId) => {
+    // Prefetch hit: hover already loaded this set — apply instantly,
+    // skipping the spinner entirely.
+    const prefetched = prefetchedSetsRef.current[setId];
+    if (prefetched && prefetched !== 'pending') {
+      setSelectedModule(setId);
+      setModuleContent(prefetched);
+      setSelectedPart(null);
+      setCurrentPart(1);
+      setCurrentQuestionIndex(0);
+      setRecordingState(STATES.IDLE);
+      setAnswers([]);
+      setResults(null);
+      audioBlobsRef.current = {};
+      setShowText(prefetched.show_text || mode === 'practice');
+      setTimeLeft(prefetched.part1?.answer_time_max || 25);
+      return;
+    }
+
     try {
       setLoading(true);
       const res = await fetch(`${API_URL}/api/speaking/set/${setId}?include_audio=true&mode=${mode}`);
       const data = await res.json();
-      
+
       if (data.success) {
+        prefetchedSetsRef.current[setId] = data.set;
         setSelectedModule(setId);
         setModuleContent(data.set);
         setSelectedPart(null);
@@ -799,6 +868,8 @@ export default function SpeakingPracticeQB({ user }) {
                     <Card
                       key={m.set_id}
                       onClick={() => selectModule(m.set_id)}
+                      onMouseEnter={() => prefetchSet(m.set_id)}
+                      onFocus={() => prefetchSet(m.set_id)}
                       className={`p-5 cursor-pointer transition-all border-2 hover:shadow-md hover:-translate-y-0.5 ${theme.card}`}
                     >
                       <div className="flex items-start gap-4">
