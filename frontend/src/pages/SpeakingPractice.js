@@ -7,6 +7,7 @@ import { Mic, MicOff, ArrowLeft, Clock, CheckCircle, XCircle, Loader2, ChevronRi
 import { toast } from 'sonner';
 import { useGoBack } from '../hooks/useGoBack';
 import { speakOnce } from '../hooks/useLizVoice';
+import StructuredResultsLayout from '../features/speaking/components/StructuredResultsLayout';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -59,6 +60,9 @@ export default function SpeakingPractice({ user }) {
   const audioChunksRef = useRef([]);
   const timerRef = useRef(null);
   const audioRef = useRef(null);
+  // Tracks Date.now() at MediaRecorder.start() so we can compute the actual
+  // recorded duration on stop — backend uses this for fluency (WPM, etc.).
+  const recordStartRef = useRef(null);
 
   useEffect(() => {
     if (isPreparing && prepTime > 0) {
@@ -81,12 +85,17 @@ export default function SpeakingPractice({ user }) {
       mediaRecorder.onstop = async () => {
         const blob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
         stream.getTracks().forEach(track => track.stop());
+        // Capture actual recording duration before clearing the start marker.
+        const startedAt = recordStartRef.current;
+        recordStartRef.current = null;
+        const recordedSeconds = startedAt ? (Date.now() - startedAt) / 1000 : 0;
         setAudioBlob(blob);
         setRecording(false);
         setIsSpeaking(false);
-        await transcribeAudio(blob);
+        await transcribeAudio(blob, recordedSeconds);
       };
       mediaRecorder.start();
+      recordStartRef.current = Date.now();
       setRecording(true);
       setIsSpeaking(true);
       setSpeakTime(selectedPart === 'part2' ? 120 : 60);
@@ -96,7 +105,7 @@ export default function SpeakingPractice({ user }) {
 
   const stopRecording = () => { if (mediaRecorderRef.current && recording) mediaRecorderRef.current.stop(); };
 
-  const transcribeAudio = async (blob) => {
+  const transcribeAudio = async (blob, durationSeconds = 0) => {
     setLoading(true);
     try {
       const formData = new FormData();
@@ -105,7 +114,17 @@ export default function SpeakingPractice({ user }) {
       if (!response.ok) throw new Error('Transcription failed');
       const data = await response.json();
       const currentQuestion = getCurrentQuestion();
-      setRecordings(prev => [...prev, { question: currentQuestion, audioBlob: blob, transcript: data.text || '', timestamp: new Date().toISOString() }]);
+      // Keep the raw audio blob + duration so submitForFeedback can multipart it
+      // up to /api/speaking-practice/evaluate-structured (per-question pipeline).
+      // Previously the blob was discarded and only the transcript was POSTed,
+      // which is what blocked the per-question audio playback in results.
+      setRecordings(prev => [...prev, {
+        question: currentQuestion,
+        audioBlob: blob,
+        durationSeconds,
+        transcript: data.text || '',
+        timestamp: new Date().toISOString(),
+      }]);
       setTranscripts(prev => [...prev, { question: currentQuestion, answer: data.text || '' }]);
       toast.success('Recording saved!');
     } catch (error) { toast.error('Failed to transcribe.'); }
@@ -122,16 +141,47 @@ export default function SpeakingPractice({ user }) {
   };
 
   const submitForFeedback = async () => {
-    if (transcripts.length === 0) { toast.error('Record at least one response.'); return; }
+    if (recordings.length === 0) { toast.error('Record at least one response.'); return; }
+    if (!user?.id) { toast.error('Please sign in to evaluate.'); return; }
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}/api/speaking-practice/evaluate`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ part: selectedPart, topic: selectedTopic?.topic || selectedTopic?.card, responses: transcripts }) });
-      if (!response.ok) throw new Error('Evaluation failed');
+      // Multipart POST to the structured per-question evaluator. Each question
+      // gets its own audio_q{i} + question_q{i} + duration_q{i}, so the backend
+      // can run Whisper×N (basic tier) or Azure×N (full tier) in parallel and
+      // a single Sonnet call returns per-question + overall scoring.
+      const formData = new FormData();
+      formData.append('user_id', user.id);
+      formData.append('part', selectedPart);
+      formData.append('topic', selectedTopic?.topic || selectedTopic?.card || '');
+      formData.append('user_language', (user.preferred_language || 'en'));
+      formData.append('target_band', String(user.target_band ?? 7.0));
+      formData.append('client_request_id', `${user.id}:${Date.now()}`);
+      recordings.forEach((rec, i) => {
+        const idx = i + 1;
+        formData.append(`question_q${idx}`, rec.question || '');
+        formData.append(
+          `audio_q${idx}`,
+          new File([rec.audioBlob], `q${idx}.webm`, { type: 'audio/webm' }),
+        );
+        formData.append(`duration_q${idx}`, String(rec.durationSeconds || 0));
+      });
+      const response = await fetch(
+        `${API_URL}/api/speaking-practice/evaluate-structured`,
+        { method: 'POST', body: formData },
+      );
+      if (!response.ok) {
+        const detail = await response.json().catch(() => ({}));
+        throw new Error(detail?.detail?.message || 'Evaluation failed');
+      }
       const data = await response.json();
-      setFeedback(data); setView('feedback');
+      setFeedback(data);
+      setView('feedback');
       toast.success('Speaking evaluated!');
-    } catch (error) { toast.error('Failed to evaluate.'); }
-    finally { setLoading(false); }
+    } catch (error) {
+      toast.error(error?.message || 'Failed to evaluate.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const startPractice = (part, topic) => {
@@ -210,52 +260,96 @@ export default function SpeakingPractice({ user }) {
     </div>
   );
 
-  // Practice Interface
+  // Practice Interface — listen & record screen.
+  // Faz E: emerald accenting (gradient bg + accent timer + 4-px accent border on
+  // the question card + emerald CTA emphasis) so the page reads as part of the
+  // emerald-led web identity instead of plain slate.
   if (view === 'practice') {
     const part = SPEAKING_PARTS.find(p => p.id === selectedPart);
     const currentQuestion = getCurrentQuestion();
     const totalQuestions = getTotalQuestions();
     const hasRecordedCurrent = transcripts.length > currentQuestionIndex;
+    const timerActive = isPreparing || isSpeaking;
+    const remaining = isPreparing ? prepTime : speakTime;
+    const timerLow = remaining < 30;
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-green-50/30 to-gray-100 py-8 px-4">
+      <div className="min-h-screen bg-gradient-to-b from-emerald-50 via-white to-emerald-50/40 py-8 px-4">
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center justify-between mb-4">
-            <Button variant="ghost" onClick={() => { if (window.confirm('Exit? Progress lost.')) resetPractice(); }} className="text-gray-600"><ArrowLeft className="w-4 h-4 mr-2" /> Exit</Button>
-            {(isPreparing || isSpeaking) && <div className={`px-4 py-2 rounded-xl font-mono text-lg ${(isPreparing ? prepTime : speakTime) < 30 ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-700'}`}><Clock className="w-4 h-4 inline mr-2" />{isPreparing ? `Prep: ${formatTime(prepTime)}` : `${formatTime(speakTime)}`}</div>}
+            <Button variant="ghost" onClick={() => { if (window.confirm('Exit? Progress lost.')) resetPractice(); }} className="text-slate-600 hover:text-emerald-700"><ArrowLeft className="w-4 h-4 mr-2" /> Exit</Button>
+            {timerActive && (
+              <div
+                className={`px-4 py-2 rounded-xl font-mono text-lg shadow-sm border ${
+                  timerLow
+                    ? 'bg-rose-50 text-rose-700 border-rose-200 animate-pulse'
+                    : 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-transparent'
+                }`}
+              >
+                <Clock className="w-4 h-4 inline mr-2" />
+                {isPreparing ? `Prep: ${formatTime(prepTime)}` : `${formatTime(speakTime)}`}
+              </div>
+            )}
           </div>
           <div className="flex items-center gap-3 mb-6">
-            <div className={`w-10 h-10 rounded-lg ${part?.color} flex items-center justify-center shadow-lg`}>{part?.icon && <part.icon className="w-5 h-5 text-white" />}</div>
-            <div><h2 className="text-lg font-bold text-gray-900">{part?.title}</h2><p className="text-sm text-gray-500">Topic: {selectedTopic?.topic}</p></div>
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-200">
+              {part?.icon && <part.icon className="w-5 h-5 text-white" />}
+            </div>
+            <div>
+              <h2 className="text-lg font-bold text-slate-900">{part?.title}</h2>
+              <p className="text-sm text-slate-500">Topic: {selectedTopic?.topic}</p>
+            </div>
           </div>
-          {totalQuestions > 1 && <div className="mb-6"><div className="flex items-center justify-between mb-2"><span className="text-sm text-gray-500">Question {currentQuestionIndex + 1} of {totalQuestions}</span><span className="text-sm text-gray-500">{transcripts.length} recorded</span></div><Progress value={((currentQuestionIndex + 1) / totalQuestions) * 100} className="h-2" /></div>}
-          <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex items-center gap-2"><Bot className="w-5 h-5 text-blue-600" /><span className="text-sm font-medium text-blue-600">Examiner</span></div>
+          {totalQuestions > 1 && (
+            <div className="mb-6">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-slate-700">Question {currentQuestionIndex + 1} of {totalQuestions}</span>
+                <span className="text-sm text-emerald-700 font-medium">{transcripts.length} recorded</span>
+              </div>
+              <div className="h-2.5 bg-slate-200 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all"
+                  style={{ width: `${((currentQuestionIndex + 1) / totalQuestions) * 100}%` }}
+                />
+              </div>
+            </div>
+          )}
+          <Card className="relative p-6 mb-6 bg-white border-0 shadow-lg shadow-emerald-100/40 rounded-2xl overflow-hidden">
+            <span aria-hidden="true" className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-500 to-teal-500" />
+            <div className="flex items-start justify-between mb-4 pl-2">
+              <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 text-emerald-700 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider">
+                <Bot className="w-3.5 h-3.5" /> Examiner
+              </div>
               <div className="flex items-center gap-2">
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => playQuestion(currentQuestion, true)} 
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => playQuestion(currentQuestion, true)}
                   disabled={playingAudio === currentQuestion || recording}
-                  className="text-blue-600"
+                  className="text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50"
                 >
                   <Play className="w-4 h-4 mr-1" />
                   {autoRecordEnabled ? 'Play & Record' : 'Play'}
                 </Button>
               </div>
             </div>
-            <p className="text-lg text-gray-800 whitespace-pre-line leading-relaxed">{currentQuestion}</p>
-            {selectedPart === 'part2' && isPreparing && <div className="mt-4 p-3 bg-amber-50 rounded-xl"><p className="text-sm text-amber-800">⏱️ {formatTime(prepTime)} to prepare. Click &quot;Start Speaking&quot; when ready.</p></div>}
+            <p className="text-lg text-slate-800 whitespace-pre-line leading-relaxed pl-2">{currentQuestion}</p>
+            {selectedPart === 'part2' && isPreparing && (
+              <div className="mt-4 p-3 bg-amber-50 rounded-xl border border-amber-200 ml-2">
+                <p className="text-sm text-amber-800">⏱️ {formatTime(prepTime)} to prepare. Click &quot;Start Speaking&quot; when ready.</p>
+              </div>
+            )}
           </Card>
-          <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
+          <Card className="p-6 mb-6 bg-white border-0 shadow-lg shadow-emerald-100/40 rounded-2xl">
             <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2"><User className="w-5 h-5 text-green-600" /><span className="text-sm font-medium text-green-600">Your Response</span></div>
-              <label className="flex items-center gap-2 text-xs text-gray-500 cursor-pointer">
-                <input 
-                  type="checkbox" 
-                  checked={autoRecordEnabled} 
+              <div className="inline-flex items-center gap-1.5 rounded-full bg-teal-50 text-teal-700 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider">
+                <User className="w-3.5 h-3.5" /> Your Response
+              </div>
+              <label className="flex items-center gap-2 text-xs text-slate-500 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={autoRecordEnabled}
                   onChange={(e) => setAutoRecordEnabled(e.target.checked)}
-                  className="rounded border-gray-300"
+                  className="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
                 />
                 Auto-record after play
               </label>
@@ -263,76 +357,80 @@ export default function SpeakingPractice({ user }) {
             <div className="flex flex-col items-center gap-4">
               {!recording ? (
                 <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md">
-                  <Button 
-                    size="lg" 
-                    className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 text-white" 
-                    onClick={() => playQuestion(currentQuestion, true)} 
+                  <Button
+                    size="lg"
+                    className="flex-1 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white shadow-md shadow-emerald-200"
+                    onClick={() => playQuestion(currentQuestion, true)}
                     disabled={loading || isPreparing || playingAudio === currentQuestion || recording}
                   >
                     <Play className="w-5 h-5 mr-2" />Play & Record
                   </Button>
-                  <Button 
-                    size="lg" 
+                  <Button
+                    size="lg"
                     variant="outline"
-                    className={`flex-1 ${hasRecordedCurrent ? 'border-amber-400 text-amber-600' : ''}`} 
-                    onClick={startRecording} 
+                    className={`flex-1 ${hasRecordedCurrent ? 'border-amber-400 text-amber-600' : 'border-emerald-300 text-emerald-700 hover:bg-emerald-50'}`}
+                    onClick={startRecording}
                     disabled={loading || isPreparing}
                   >
                     <Mic className="w-5 h-5 mr-2" />{hasRecordedCurrent ? 'Re-record' : 'Record Only'}
                   </Button>
                 </div>
               ) : (
-                <Button size="lg" className="w-full max-w-xs bg-red-500 hover:bg-red-600 text-white" onClick={stopRecording}><Square className="w-5 h-5 mr-2" />Stop ({formatTime(speakTime)})</Button>
+                <Button size="lg" className="w-full max-w-xs bg-rose-500 hover:bg-rose-600 text-white shadow-md shadow-rose-200 animate-pulse" onClick={stopRecording}>
+                  <Square className="w-5 h-5 mr-2" />Stop ({formatTime(speakTime)})
+                </Button>
               )}
-              {loading && <div className="flex items-center gap-2 text-gray-500"><Loader2 className="w-4 h-4 animate-spin" />Transcribing...</div>}
-              {hasRecordedCurrent && transcripts[currentQuestionIndex] && <div className="w-full p-4 bg-green-50 rounded-xl"><p className="text-sm text-gray-500 mb-1">Your response:</p><p className="text-gray-800">{transcripts[currentQuestionIndex].answer}</p></div>}
+              {loading && (
+                <div className="flex items-center gap-2 text-emerald-700">
+                  <Loader2 className="w-4 h-4 animate-spin" />Transcribing...
+                </div>
+              )}
+              {hasRecordedCurrent && transcripts[currentQuestionIndex] && (
+                <div className="w-full p-4 bg-emerald-50 rounded-xl border border-emerald-100">
+                  <p className="text-xs uppercase tracking-wider text-emerald-700 mb-1 font-semibold">Your response</p>
+                  <p className="text-slate-800">{transcripts[currentQuestionIndex].answer}</p>
+                </div>
+              )}
             </div>
           </Card>
           <div className="flex gap-3">
-            {currentQuestionIndex > 0 && <Button variant="outline" onClick={() => setCurrentQuestionIndex(prev => prev - 1)}><ArrowLeft className="w-4 h-4 mr-2" /> Previous</Button>}
+            {currentQuestionIndex > 0 && <Button variant="outline" onClick={() => setCurrentQuestionIndex(prev => prev - 1)} className="border-slate-300 text-slate-700"><ArrowLeft className="w-4 h-4 mr-2" /> Previous</Button>}
             <div className="flex-1" />
-            {hasRecordedCurrent && (currentQuestionIndex < totalQuestions - 1 ? <Button className="bg-gradient-to-r from-violet-500 to-purple-600 text-white" onClick={nextQuestion}>Next <ChevronRight className="w-4 h-4 ml-2" /></Button> : <Button className="bg-green-500 hover:bg-green-600 text-white" onClick={submitForFeedback} disabled={loading}>{loading ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Evaluating...</> : <><Award className="w-4 h-4 mr-2" />Get Feedback</>}</Button>)}
+            {hasRecordedCurrent && (
+              currentQuestionIndex < totalQuestions - 1 ? (
+                <Button className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white shadow-md shadow-emerald-200" onClick={nextQuestion}>
+                  Next <ChevronRight className="w-4 h-4 ml-2" />
+                </Button>
+              ) : (
+                <Button className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white shadow-md shadow-emerald-200" onClick={submitForFeedback} disabled={loading}>
+                  {loading ? (<><Loader2 className="w-4 h-4 mr-2 animate-spin" />Evaluating...</>) : (<><Award className="w-4 h-4 mr-2" />Get Feedback</>)}
+                </Button>
+              )
+            )}
           </div>
         </div>
       </div>
     );
   }
 
-  // Feedback View
-  if (view === 'feedback' && feedback) return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-green-50/30 to-gray-100 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
-        <Button variant="ghost" onClick={resetPractice} className="mb-4 text-gray-600"><ArrowLeft className="w-4 h-4 mr-2" /> Back</Button>
-        <Card className="p-6 mb-6 text-center bg-gradient-to-br from-green-50 to-emerald-50 border-0 shadow-lg rounded-2xl">
-          <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg"><Award className="w-8 h-8 text-white" /></div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Estimated Band Score</h2>
-          <div className={`inline-block px-6 py-3 rounded-full text-4xl font-bold ${getBandColor(feedback.overall_band)}`}>{feedback.overall_band}</div>
-        </Card>
-        <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Detailed Scores</h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            {[{ key: 'fluency_coherence', label: 'Fluency & Coherence' }, { key: 'lexical_resource', label: 'Lexical Resource' }, { key: 'grammar', label: 'Grammar' }, { key: 'pronunciation', label: 'Pronunciation' }].map((c) => (
-              <div key={c.key} className="p-4 bg-gray-50 rounded-xl flex items-center justify-between">
-                <span className="font-medium text-gray-900">{c.label}</span>
-                <span className={`px-3 py-1 rounded-lg text-sm font-bold ${getBandColor(feedback.scores?.[c.key] || feedback.overall_band)}`}>{feedback.scores?.[c.key] || feedback.overall_band}</span>
-              </div>
-            ))}
-          </div>
-        </Card>
-        <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Feedback</h3>
-          <div className="mb-6"><h4 className="font-medium text-green-700 mb-2 flex items-center gap-2"><CheckCircle className="w-4 h-4" /> Strengths</h4><ul className="space-y-2">{(feedback.strengths || []).map((s, i) => <li key={i} className="text-sm text-gray-700 flex items-start gap-2"><span className="text-green-500">•</span>{s}</li>)}</ul></div>
-          <div className="mb-6"><h4 className="font-medium text-amber-700 mb-2 flex items-center gap-2"><AlertCircle className="w-4 h-4" /> Improvements</h4><ul className="space-y-2">{(feedback.improvements || []).map((s, i) => <li key={i} className="text-sm text-gray-700 flex items-start gap-2"><span className="text-amber-500">•</span>{s}</li>)}</ul></div>
-          {feedback.pronunciation_tips && <div><h4 className="font-medium text-purple-700 mb-2 flex items-center gap-2"><Mic className="w-4 h-4" /> Pronunciation Tips</h4><p className="text-sm text-gray-700">{feedback.pronunciation_tips}</p></div>}
-        </Card>
-        {feedback.model_answer && <Card className="p-6 mb-6 bg-blue-50 border-blue-200 rounded-2xl"><h3 className="text-lg font-semibold text-blue-800 mb-3 flex items-center gap-2"><Lightbulb className="w-5 h-5" /> Model Answer</h3><p className="text-gray-700 whitespace-pre-line">{feedback.model_answer}</p></Card>}
-        <div className="flex gap-3">
-          <Button variant="outline" onClick={resetPractice} className="flex-1"><RotateCcw className="w-4 h-4 mr-2" /> Practice Another</Button>
-          <Button className="flex-1 bg-gradient-to-r from-green-500 to-emerald-600 text-white" onClick={() => { setView('practice'); setFeedback(null); setCurrentQuestionIndex(0); setTranscripts([]); setRecordings([]); }}><Mic className="w-4 h-4 mr-2" /> Try Again</Button>
-        </div>
-      </div>
-    </div>
-  );
+  // Feedback View — per-question switcher + overall band (Cathoven-style).
+  // Feeds on the structured response shape from
+  // /api/speaking-practice/evaluate-structured.
+  if (view === 'feedback' && feedback) {
+    return (
+      <StructuredResultsLayout
+        feedback={feedback}
+        onPracticeAnother={resetPractice}
+        onTryAgain={() => {
+          setView('practice');
+          setFeedback(null);
+          setCurrentQuestionIndex(0);
+          setTranscripts([]);
+          setRecordings([]);
+        }}
+      />
+    );
+  }
 
   return null;
 }

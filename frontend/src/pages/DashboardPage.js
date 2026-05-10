@@ -1033,11 +1033,13 @@ function SmartPracticeList({ skills, user, onPick, onSpeakingPremium }) {
             </button>
           );
 
-          if (key !== "Speaking") return row;
+          // Liz Examiner card is injected directly under the Listening row
+          // (was under Speaking). Aga 2026-05-10: "premium ismini examiner
+          // olarak degistir ve listening'in altinda konumlansin." Premium
+          // tiers (monthly + exam) get the live entry; free / weekly see a
+          // locked appearance with a short conversion blurb.
+          if (key !== "Listening") return row;
 
-          // Inject Speaking Premium card directly under the Speaking row.
-          // Premium tiers (monthly + exam) get a clean entry; free / weekly
-          // see a locked appearance with a short conversion blurb.
           return (
             <React.Fragment key={key}>
               {row}
@@ -1059,7 +1061,7 @@ function SmartPracticeList({ skills, user, onPick, onSpeakingPremium }) {
                 />
                 <div>
                   <div className="font-display text-[18px] flex items-center gap-2">
-                    Speaking Premium
+                    Liz Examiner
                     <span className="inline-flex items-center gap-1 rounded-full bg-violet-50 text-violet-700 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider">
                       {isPremium ? (
                         <>

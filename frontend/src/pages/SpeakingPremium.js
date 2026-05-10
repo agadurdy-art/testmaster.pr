@@ -6,7 +6,9 @@ import { isSpeakingPremiumUser, getPlanLabel } from '../lib/planAccess';
 import '../features/speaking/speaking.css';
 
 /**
- * Speaking Premium — Liz live full AI tutor (gated route).
+ * Liz Examiner — Liz live full AI tutor (gated route).
+ * (Was branded "Speaking Premium" pre-2026-05-10; renamed per Aga to keep
+ * Smart Practice / Liz pipelines unambiguous in the UI.)
  *
  * Gate: only `monthly` and `exam` tiers (admins bypass). Free / weekly users
  * see a locked card with a short conversion blurb → /pricing/v2.
@@ -109,7 +111,7 @@ function SpeakingPremiumLocked({ user, onUpgrade }) {
                     Your plan
                   </div>
                   <div className="text-[15px] font-medium text-slate-800">
-                    {planLabel} — Speaking Premium not included
+                    {planLabel} — Liz Examiner not included
                   </div>
                 </div>
                 <button

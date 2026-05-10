@@ -486,6 +486,24 @@ if os.environ.get("UNIFIED_SPEAKING_EVAL_ENABLED", "1").lower() not in {"0", "fa
         import traceback
         traceback.print_exc()
 
+# Smart Practice — structured per-question speaking eval. Distinct surface from
+# /api/speaking (Liz Examiner / single-audio-per-part). Mounted under
+# /api/speaking-practice/* to avoid collision with the legacy JSON-only
+# /api/speaking-practice/evaluate at server.py:4779 — both coexist for now;
+# the legacy route is scheduled for removal once the frontend is migrated.
+try:
+    from routes.speaking_practice_structured import (
+        router as speaking_practice_structured_router,
+        set_db as set_speaking_practice_structured_db,
+    )
+    set_speaking_practice_structured_db(db)
+    app.include_router(speaking_practice_structured_router)
+    print("✅ Speaking Practice (structured) routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load speaking practice structured routes: {e}")
+    import traceback
+    traceback.print_exc()
+
 # Import speaking question bank routes (registered AFTER unified so its
 # legacy /score, /submit, /transcribe endpoints stay reachable for
 # SpeakingPracticeQB.js until Task #64 migrates that flow).
