@@ -59,7 +59,12 @@ PROMPT_FILE = (
 # (Mongo TTL cache keyed by client_request_id) — a re-submitted request with
 # the same id short-circuits before re-running Azure+Sonnet.
 MAX_ATTEMPTS = 1
-MAX_TOKENS = 3500
+# Per-part speaking eval: 4 criteria + transcript_tokens + Azure pronunciation
+# detail can reach ~2800 tokens on rich submissions. 5000 = ~40% headroom over
+# observed p95 and matches the writing-eval-v2 reliability bar (2026-05-13).
+# Single-shot policy means a truncation here = 502 to the user, so we prefer
+# the few extra cents of output budget over an avoidable failure mode.
+MAX_TOKENS = 5000
 CALL_TIMEOUT_SECONDS = 75.0
 
 # Each entry is (display label, regex pattern). Patterns tolerate trailing
@@ -880,7 +885,11 @@ async def _run_fulltest_llm(
                 system=system_prompt,
                 user_message=user_prompt,
                 model=model,
-                max_tokens=5000,  # holistic output is larger than per-part
+                # Holistic 3-part eval: per-part observations + 3 transcripts +
+                # holistic criteria. Realistic ceiling ~4200 tokens; 6500 leaves
+                # ~55% headroom so a heavy Part 2 monologue + dense Azure data
+                # can't truncate (single-shot policy, see MAX_ATTEMPTS rationale).
+                max_tokens=6500,
                 task="eval",
                 scope="speaking_eval_fulltest",
             ),

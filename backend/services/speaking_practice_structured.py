@@ -46,7 +46,12 @@ logger = logging.getLogger(__name__)
 
 MAX_ATTEMPTS = 3
 BACKOFF_SCHEDULE = (1.0, 3.0)
-MAX_TOKENS = 4500
+# Smart Practice per-q eval: 4 criteria + per-question observations for N
+# questions (3-6 typical) + liz_note. Heavy sessions land ~3500 tokens; 5500
+# leaves ~55% headroom. Retries here are gated by truncation detection in the
+# parser, so each truncation still burns a Sonnet call before the retry — bumping
+# the cap avoids the wasted spend (2026-05-13 sweep alongside writing v2 fix).
+MAX_TOKENS = 5500
 CALL_TIMEOUT_SECONDS = 120.0
 
 

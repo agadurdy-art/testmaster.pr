@@ -56,10 +56,12 @@ PROMPT_FILE = (
 # can retry on transient errors without re-billing the LLM.
 MAX_ATTEMPTS = 1
 # Real-world payloads (4 criteria + ~12 annotations + improved_version + coaching)
-# land around 1500–2200 output tokens. 2500 leaves ~15% headroom and cuts the
-# worst-case bill by ~40% vs the previous 4096 ceiling without truncating
-# legitimate responses.
-MAX_TOKENS = 2500
+# land around 1500–2200 output tokens *on average*, but heavy-feedback essays
+# (long improved_version, more annotations) reach ~2800–3200. Production
+# observed truncation at char ~10033 ≈ 2866 tokens on 2026-05-13 with the
+# previous 2500 cap → invalid_json → 502. 4000 leaves ~25% headroom over the
+# observed truncation point while still bounding cost (~38% above mean usage).
+MAX_TOKENS = 4000
 # 75s leaves comfortable headroom under typical FastAPI/proxy 120s timeouts.
 # Sonnet p99 for this prompt is ~35s; if we're past 75s the call is dead
 # and we should surface failure to the user, not keep waiting.

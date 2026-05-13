@@ -27,46 +27,55 @@ const LESSON_MODES = [
 
 const HW_ICONS = { vocabulary: BookOpen, writing: PenTool, grammar: FileText, speaking: MessageSquare, default: ClipboardList };
 
-export default function LizTeacher({ user }) {
+function LizUpgradeGate() {
   const navigate = useNavigate();
-
-  // Plan gate - learner and above can access Liz
-  if (!canAccessLiz(user)) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 via-teal-50/20 to-white flex flex-col items-center justify-center px-4" data-testid="liz-upgrade-gate">
-        <div className="max-w-md text-center space-y-6">
-          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-slate-300 to-slate-400 flex items-center justify-center mx-auto shadow-lg">
-            <GraduationCap className="w-12 h-12 text-white" />
-          </div>
-          <h1 className="text-2xl font-bold text-slate-900">Meet Liz, Your AI Teacher</h1>
-          <p className="text-slate-500 text-sm leading-relaxed">
-            Liz is your personal IELTS teacher who speaks to you, tracks your progress,
-            assigns homework, and builds structured study plans. Available on
-            <span className="font-semibold text-teal-600"> Weekly</span>,
-            <span className="font-semibold text-emerald-600"> Monthly</span>, and
-            <span className="font-semibold text-violet-600"> Exam Pack</span> plans.
-          </p>
-          <div className="flex flex-col gap-3">
-            <Button
-              onClick={() => navigate('/pricing/v2')}
-              className="bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white shadow-lg"
-              data-testid="upgrade-btn"
-            >
-              Upgrade to Unlock Liz
-            </Button>
-            <button
-              onClick={() => navigate(-1)}
-              className="text-sm text-slate-400 hover:text-slate-600"
-              data-testid="go-back-btn"
-            >
-              Go Back
-            </button>
-          </div>
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-teal-50/20 to-white flex flex-col items-center justify-center px-4" data-testid="liz-upgrade-gate">
+      <div className="max-w-md text-center space-y-6">
+        <div className="w-24 h-24 rounded-full bg-gradient-to-br from-slate-300 to-slate-400 flex items-center justify-center mx-auto shadow-lg">
+          <GraduationCap className="w-12 h-12 text-white" />
+        </div>
+        <h1 className="text-2xl font-bold text-slate-900">Meet Liz, Your AI Teacher</h1>
+        <p className="text-slate-500 text-sm leading-relaxed">
+          Liz is your personal IELTS teacher who speaks to you, tracks your progress,
+          assigns homework, and builds structured study plans. Available on
+          <span className="font-semibold text-teal-600"> Weekly</span>,
+          <span className="font-semibold text-emerald-600"> Monthly</span>, and
+          <span className="font-semibold text-violet-600"> Exam Pack</span> plans.
+        </p>
+        <div className="flex flex-col gap-3">
+          <Button
+            onClick={() => navigate('/pricing/v2')}
+            className="bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white shadow-lg"
+            data-testid="upgrade-btn"
+          >
+            Upgrade to Unlock Liz
+          </Button>
+          <button
+            onClick={() => navigate(-1)}
+            className="text-sm text-slate-400 hover:text-slate-600"
+            data-testid="go-back-btn"
+          >
+            Go Back
+          </button>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
+// Thin dispatcher: routes to either the upgrade gate or the full Liz UI.
+// Splitting on this boundary means each child mounts with a stable hook
+// order — previously the gate lived inline *above* 12 hooks in this
+// function, which crashed with "Rendered fewer hooks than expected"
+// whenever `user` re-fetched and canAccessLiz flipped mid-session.
+export default function LizTeacher({ user }) {
+  if (!canAccessLiz(user)) return <LizUpgradeGate />;
+  return <LizTeacherInner user={user} />;
+}
+
+function LizTeacherInner({ user }) {
+  const navigate = useNavigate();
   const [status, setStatus] = useState('idle');
   const [messages, setMessages] = useState([]); // each: {role, content, mode?, pronunciation_words?, timestamp, audio?}
   const [voiceInsight, setVoiceInsight] = useState(null); // scalar fallback when no word-level pronunciation
