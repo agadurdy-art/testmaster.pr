@@ -21,11 +21,17 @@ export default function OnboardingPageV2({ user, onUserUpdate }) {
   const navigate = useNavigate();
 
   const handleFinish = async (state) => {
-    // Best-effort persistence. If this fails we still route forward so the
-    // user isn't stuck on a blank screen — the next session will simply
-    // re-prompt the quiz.
+    // Frontend-derived learning_mode — used as fallback if backend response
+    // is missing the field, and applied to localStorage immediately so the
+    // post-onboarding reload sees the correct mode regardless of network.
+    const localLearningMode = state.path === 'general' ? 'general_english' : 'ielts';
+
+    let updatedUser = null;
     try {
-      const userId = user?.id || JSON.parse(localStorage.getItem('user') || '{}')?.id;
+      const localUser = (() => {
+        try { return JSON.parse(localStorage.getItem('user') || '{}'); } catch (_) { return {}; }
+      })();
+      const userId = user?.id || localUser?.id;
       if (userId) {
         const base = process.env.REACT_APP_API_URL || '';
         const examDateIso =
@@ -41,54 +47,49 @@ export default function OnboardingPageV2({ user, onUserUpdate }) {
             currentBand: state.currentBand,
             examDate: examDateIso,
             language: state.language,
-            // B3 — "Liz remembers your goals". All optional; backend
-            // (auth.py OnboardingPayload) tolerates nulls/empty strings.
             nativeLanguage: state.nativeLanguage,
             motivation: state.motivation || null,
             weakSkills: state.weakSkills,
           }),
         });
-        // Critical: the backend response is the authoritative User object
-        // with `learning_mode` set (e.g. 'general_english'). Without
-        // propagating it to App state + localStorage, the subsequent
-        // navigate('/dashboard') still sees a stale user object and
-        // App.js isIeltsMode() falls through to IELTS — sending GE
-        // onboardees to the IELTS dashboard.
         if (res.ok) {
           try {
-            const updatedUser = await res.json();
-            if (updatedUser && updatedUser.id) {
-              localStorage.setItem('user', JSON.stringify(updatedUser));
-              if (typeof onUserUpdate === 'function') onUserUpdate(updatedUser);
-            }
+            updatedUser = await res.json();
           } catch (parseErr) {
             // eslint-disable-next-line no-console
             console.warn('[onboarding] response parse failed', parseErr);
           }
         }
       }
+      // Defensive merge: even if the backend response is missing,
+      // synthesize a user object with the locally-known learning_mode +
+      // onboarding_complete=true so isIeltsMode() on the next render sees
+      // the correct mode.
+      const baseUser = updatedUser && updatedUser.id ? updatedUser : (localUser || user || {});
+      const mergedUser = {
+        ...baseUser,
+        learning_mode: (updatedUser && updatedUser.learning_mode) || localLearningMode,
+        onboarding_complete: true,
+      };
+      localStorage.setItem('user', JSON.stringify(mergedUser));
+      if (typeof onUserUpdate === 'function') onUserUpdate(mergedUser);
     } catch (err) {
       // eslint-disable-next-line no-console
       console.warn('[onboarding] persist failed', err);
     }
-    // Clear the landing-page path hand-off so a second onboarding run
-    // (e.g. after a reset) doesn't silently inherit a stale selection.
     try {
       window.localStorage.removeItem('testmaster_onboarding_path');
     } catch (_) {
       /* non-fatal */
     }
-    // Honor a pending plan from /signup?plan=X if the user picked a tier
-    // before signing up — send them to pricing (paid) or dashboard (free).
-    // Plan takes priority; fall back to a pending intent (e.g. ?intent=writing
-    // from "Try your own essay") so users land on the evaluator they clicked.
     const planTarget = pendingPlanRedirect(consumePendingPlan());
     const intentTarget = pendingIntentRedirect(consumePendingIntent());
-    // Route to /dashboard (not /dashboard/v2) so App.js's isIeltsMode-aware
-    // conditional sends GE onboardees to the V1 Dashboard and IELTS onboardees
-    // to DashboardPage. Hardcoding /dashboard/v2 stranded GE users on the V2
-    // IELTS dashboard regardless of learning_mode.
-    navigate(planTarget || intentTarget || '/dashboard');
+    const target = planTarget || intentTarget || '/dashboard';
+    // Hard navigation (not react-router navigate) so the new route picks up
+    // the freshly-written localStorage user. Avoids any race where the
+    // /dashboard route renders before App state has committed the
+    // updated user, sending the GE user to the IELTS dashboard.
+    window.location.assign(target);
   };
 
   return (
