@@ -3,15 +3,20 @@ import LizAvatar from './LizAvatar';
 
 /**
  * PathPickerGate — pre-signup overlay asking the visitor which exam track they
- * care about. Writes the choice to `localStorage.tm_demo_path` so we can:
- *   1) skip this gate on subsequent visits
- *   2) hand the choice to OnboardingPageV2 post-signup (follow-up PR)
+ * care about. Writes the choice to `localStorage.tm_demo_path` (so we don't
+ * re-show the gate) AND `testmaster_onboarding_path` (so SignupBridge picks it
+ * up post-signup).
  *
- * Currently wraps only `/landing/demo`. IELTS is the only active path; General
- * English is rendered as "soon" to telegraph roadmap without branching UX.
+ * Both IELTS Ace and General English are live. Picking IELTS keeps the user
+ * on the IELTS-flavored demo landing. Picking GE shortcuts directly into the
+ * signup flow with `?path=general`, because we don't have a GE-flavored
+ * landing yet (Faz 2 backlog).
  */
 
 const STORAGE_KEY = 'tm_demo_path';
+// Mirror useOnboardingState.PATH_STORAGE_KEY so SignupBridge / OnboardingPageV2
+// can read the same hint without having to round-trip through /signup?path=...
+const ONBOARDING_PATH_KEY = 'testmaster_onboarding_path';
 
 const PATHS = [
   {
@@ -23,8 +28,8 @@ const PATHS = [
   {
     key: 'general',
     label: 'General English',
-    blurb: 'Conversational practice — coming soon',
-    available: false,
+    blurb: 'Everyday English — speak, write, play to fluency',
+    available: true,
   },
 ];
 
@@ -45,10 +50,18 @@ export default function PathPickerGate({ children }) {
   function pick(key) {
     try {
       localStorage.setItem(STORAGE_KEY, key);
+      // Hand the choice to the onboarding flow so SignupBridge doesn't need a
+      // `?path=...` query param to know which product surface the user wants.
+      localStorage.setItem(ONBOARDING_PATH_KEY, key);
     } catch (_) {
       // ignore write failures — user can still proceed this session
     }
     setChoice(key);
+    // GE doesn't have a dedicated landing yet, and the IELTS-flavored landing
+    // would be confusing. Shortcut straight into signup with the path hint.
+    if (key === 'general' && typeof window !== 'undefined') {
+      window.location.assign('/signup?path=general');
+    }
   }
 
   // Avoid flashing the gate before we've read storage.

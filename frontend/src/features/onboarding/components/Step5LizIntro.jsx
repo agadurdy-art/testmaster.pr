@@ -93,6 +93,11 @@ function Wave({ playing }) {
   );
 }
 
+// Placeholder for the General English tutor character. Aga is choosing a
+// final name (Max / Kai / Theo / etc); until then, keep this in one place so
+// the rename is a single-string swap.
+const GE_TUTOR_NAME = 'Ray';
+
 export default function Step5LizIntro({ direction, state, onMotivationChange }) {
   const confettiShown = useRef(false);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -110,6 +115,7 @@ export default function Step5LizIntro({ direction, state, onMotivationChange }) 
   const langCode = state.language?.code || 'en';
   const lang = state.language?.name || 'English';
   const track = state.path === 'general' ? 'General English' : 'IELTS Ace';
+  const isGE = state.path === 'general';
 
   // Liz voice via ElevenLabs (multilingual model handles all 12 supported
   // greeting languages with a single consistent female voice). Hook
@@ -131,6 +137,62 @@ export default function Step5LizIntro({ direction, state, onMotivationChange }) 
   if (state.examDate instanceof Date) {
     const d = state.examDate;
     examTxt = `${DAY_SHORT[d.getDay()]}, ${MONTHS[d.getMonth()].slice(0, 3)} ${d.getDate()}, ${d.getFullYear()}`;
+  }
+
+  // General English variant — no Liz/band/45-day-plan branding. Keeps confetti,
+  // name, motivation, and plan summary (Track/Language) so the welcoming feels
+  // consistent across products. Final tutor name + voice land in Faz 2.
+  if (isGE) {
+    return (
+      <section className={`step${direction === 'rev' ? ' rev' : ''}`}>
+        <div className="liz-screen">
+          <Confetti enabled={showConfetti} />
+          <LizAvatar size={120} ring className="liz-avatar-lg" />
+          <div className="liz-name">{GE_TUTOR_NAME} · Your General English guide</div>
+          <h2 className="liz-heading">
+            Hi {name}! Welcome to your{' '}
+            <span className="ital">English playground</span>.
+          </h2>
+          <p className="liz-quote">
+            We'll mix short lessons, games, and real conversations so the
+            language sticks. I'll explain things in <b>{lang}</b> whenever you
+            want. Ready?
+          </p>
+          {onMotivationChange && (
+            <div className="motivation-block">
+              <label className="motivation-label" htmlFor="liz-motivation">
+                In one line — why are you learning English?
+              </label>
+              <div className="motivation-hint">
+                "I want to chat with my partner's family." {GE_TUTOR_NAME} uses
+                it to tailor topics. Optional.
+              </div>
+              <input
+                id="liz-motivation"
+                type="text"
+                className="motivation-input"
+                maxLength={140}
+                value={state.motivation || ''}
+                onChange={(e) => onMotivationChange(e.target.value)}
+                placeholder="What's pulling you toward English?"
+              />
+            </div>
+          )}
+          <div className="plan-summary">
+            <div className="row">
+              <span className="k">•</span>
+              <span className="lbl">Track</span>
+              <span className="val">{track}</span>
+            </div>
+            <div className="row">
+              <span className="k">•</span>
+              <span className="lbl">Explains in</span>
+              <span className="val">{lang}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
   }
 
   const playIcon = playing ? (

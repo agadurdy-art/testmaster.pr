@@ -1272,36 +1272,59 @@ async def send_reset_email(to_email: str, reset_link: str) -> bool:
 
 # ============ PayPal & Facebook Helpers -> Moved to routes/payments.py and routes/auth.py ============
 
-async def evaluate_with_ai(test_type: str, question: str, user_answer: str, model_answer: Optional[str] = None) -> Dict[str, Any]:
-    """Evaluate answer using AI with IELTS Core Mindset - Strict Cambridge criteria"""
-    
-    # Combine Core Mindset with Evaluation Mode
-    system_message = f"""{IELTS_CORE_MINDSET}
+_GE_TUTOR_SYSTEM_PROMPT = """You are Ray, a warm, encouraging General English tutor — not an exam examiner.
+Your job is to help adult learners gain real-world communicative confidence in
+English, not to police them against Cambridge IELTS criteria.
 
-{EVALUATION_MODE_PROMPT}"""
+Guiding principles:
+- Celebrate what the learner is doing right *before* what they need to fix.
+- Frame the score as a level snapshot (1=A0, 3=A2, 5=B1, 6=B2, 7=C1, 8-9=C2),
+  not as a high-stakes exam band.
+- Errors that *block communication* matter most. Cosmetic slips matter least.
+- Keep feedback specific and actionable: name the structure, give the fix,
+  show a short rewrite — never vague advice like "improve grammar".
+- Use simple English the learner can understand. Avoid jargon.
+- Always end on a forward-looking line (one thing to practise next).
+"""
+
+
+async def evaluate_with_ai(test_type: str, question: str, user_answer: str, model_answer: Optional[str] = None) -> Dict[str, Any]:
+    """Evaluate answer for the General English (V1) product.
+
+    Uses gpt-4o-mini with a friendly tutor persona — *not* IELTS Cambridge
+    criteria. The JSON shape is preserved (band_score / criteria objects /
+    overall_feedback) so existing V1 frontends keep rendering without
+    changes, but the prompt reframes the score as a level snapshot rather
+    than an exam band.
+
+    Cost: ~$0.001 per eval (gpt-4o-mini at $0.15/M in, $0.60/M out) vs.
+    ~$0.06 for GPT-4o or Sonnet. V1 is a learning surface, not an exam
+    surface — sticky-but-cheap is the right trade-off.
+    """
+
+    api_key = os.getenv("OPENAI_API_KEY") or os.getenv("EMERGENT_LLM_KEY")
 
     chat = LlmChat(
-        api_key=os.getenv("EMERGENT_LLM_KEY"),
+        api_key=api_key,
         session_id=str(uuid.uuid4()),
-        system_message=system_message,
-    ).with_model("openai", "gpt-4o")
-    
-    if test_type == "writing":
-        prompt = f"""Evaluate this IELTS writing task with STRICT Cambridge criteria.
+        system_message=_GE_TUTOR_SYSTEM_PROMPT,
+    ).with_model("openai", "gpt-4o-mini")
 
-Question:
+    if test_type == "writing":
+        prompt = f"""Give this General English writing response a friendly, tutor-style review.
+
+Prompt:
 {question}
 
-Student's Answer:
+Learner's writing:
 {user_answer}
 
-IMPORTANT CHECKS BEFORE SCORING:
-1. Does the response address ALL parts of the question?
-2. Is the response ON-TOPIC and RELEVANT?
-3. Is there sufficient development (Task 1: 150+ words, Task 2: 250+ words)?
-4. Is the position clear and consistent throughout?
+BEFORE YOU SCORE:
+1. Did the learner roughly address what was asked? (a sensible answer is enough — strict task fulfilment is not the goal)
+2. Can a reader follow the meaning, even with errors?
+3. Are there 2-3 specific things to celebrate, and 2-3 specific things to fix?
 
-If ANY of these fail, apply the appropriate band cap (see rules above).
+Score 1-9 maps to: 1=A0 beginner · 3=A2 elementary · 5=B1 intermediate · 6=B2 upper-intermediate · 7=C1 advanced · 8-9=C2 mastery.
 
 Return ONLY a JSON object with this structure (no extra text, no markdown, no ``` fences):
 {{
@@ -1328,21 +1351,20 @@ Return ONLY a JSON object with this structure (no extra text, no markdown, no ``
 }}
 """
     else:  # speaking
-        prompt = f"""Evaluate this IELTS speaking response with STRICT Cambridge criteria.
+        prompt = f"""Give this General English speaking response a friendly, tutor-style review.
 
-Question:
+Question asked:
 {question}
 
-Student's Response:
+Learner's spoken response (transcribed):
 {user_answer}
 
-IMPORTANT CHECKS BEFORE SCORING:
-1. Does the response directly address the question asked?
-2. Is there sufficient development and elaboration?
-3. Are ideas expressed clearly without meaning breakdown?
-4. Is this a genuine response or memorized/template-based?
+BEFORE YOU SCORE:
+1. Did the learner reasonably answer the question? (a natural, on-topic reply is enough)
+2. Are ideas understandable, even with some errors?
+3. Are there 2-3 specific things to praise, and 2-3 concrete things to work on?
 
-If ANY issues are detected, apply appropriate band penalties (see rules above).
+Score 1-9 maps to: 1=A0 beginner · 3=A2 elementary · 5=B1 intermediate · 6=B2 upper-intermediate · 7=C1 advanced · 8-9=C2 mastery.
 
 Return ONLY a JSON object with this structure (no extra text, no markdown, no ``` fences):
 {{

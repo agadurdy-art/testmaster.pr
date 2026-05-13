@@ -35,6 +35,7 @@ PLAN_FEATURES = {
     "explorer": {
         "unified_stages": "all",
         "max_liz_messages": 0,
+        "writing_credits": 1,
         "speaking_credits": 1,
         "mastery_course": False,
         "advanced_mastery": False,
@@ -44,6 +45,7 @@ PLAN_FEATURES = {
     "learner": {
         "unified_stages": "all",
         "max_liz_messages": 50,
+        "writing_credits": 10,
         "speaking_credits": 5,
         "mastery_course": True,
         "advanced_mastery": False,
@@ -53,6 +55,7 @@ PLAN_FEATURES = {
     "achiever": {
         "unified_stages": "all",
         "max_liz_messages": 150,
+        "writing_credits": 50,
         "speaking_credits": 999,
         "mastery_course": True,
         "advanced_mastery": True,
@@ -62,6 +65,7 @@ PLAN_FEATURES = {
     "master": {
         "unified_stages": "all",
         "max_liz_messages": 999,
+        "writing_credits": 999,
         "speaking_credits": 999,
         "mastery_course": True,
         "advanced_mastery": True,

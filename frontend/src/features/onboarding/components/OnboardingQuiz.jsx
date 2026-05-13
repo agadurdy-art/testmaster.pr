@@ -42,7 +42,7 @@ export default function OnboardingQuiz({ onFinish }) {
 
   return (
     <>
-      <TopBar step={step} />
+      <TopBar step={step} path={state.path} />
       <NavRow step={step} onBack={back} onSkip={skip} />
 
       <main>

@@ -66,7 +66,11 @@ export default function OnboardingPageV2({ user }) {
     // from "Try your own essay") so users land on the evaluator they clicked.
     const planTarget = pendingPlanRedirect(consumePendingPlan());
     const intentTarget = pendingIntentRedirect(consumePendingIntent());
-    navigate(planTarget || intentTarget || '/dashboard/v2');
+    // Route to /dashboard (not /dashboard/v2) so App.js's isIeltsMode-aware
+    // conditional sends GE onboardees to the V1 Dashboard and IELTS onboardees
+    // to DashboardPage. Hardcoding /dashboard/v2 stranded GE users on the V2
+    // IELTS dashboard regardless of learning_mode.
+    navigate(planTarget || intentTarget || '/dashboard');
   };
 
   return (

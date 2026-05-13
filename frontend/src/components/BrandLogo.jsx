@@ -28,8 +28,15 @@ export default function BrandLogo({
   href = '/dashboard',
   subVariant = 'muted',
   className = '',
+  // Brand variant. 'ielts' renders "IELTS Ace" wordmark; 'general' renders
+  // "General English" for the V1 GE product. Logo image is shared until a
+  // dedicated GE asset lands. Defaults to ielts (primary brand).
+  variant = 'ielts',
 }) {
   const tokens = SIZE_TOKENS[size] || SIZE_TOKENS.sm;
+  const isGeneral = variant === 'general';
+  const wordmark = isGeneral ? 'General English' : 'IELTS Ace';
+  const ariaLabel = isGeneral ? 'General English home' : 'IELTS Ace home';
   // iOS-26-ish liquid-glass sub: faint vertical gradient text + low opacity
   // so it reads like a reflection rather than a label. Slightly darker for
   // gold variant on darker backgrounds.
@@ -68,7 +75,7 @@ export default function BrandLogo({
             color: 'inherit',
           }}
         >
-          IELTS Ace
+          {wordmark}
         </span>
         <span
           style={{
@@ -113,7 +120,7 @@ export default function BrandLogo({
       href={href}
       className={className}
       style={baseStyle}
-      aria-label="IELTS Ace home"
+      aria-label={ariaLabel}
       data-testid="brand-logo"
     >
       {inner}
