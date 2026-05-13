@@ -832,6 +832,26 @@ SEPAY_BANK_INFO = {
 }
 SEPAY_API_KEY = os.getenv("SEPAY_API_KEY", "")
 
+# Loud at import time if any SePay credential is missing — otherwise the QR
+# code in BankTransferCheckout.js renders against an empty bank/account and the
+# user has no way to pay. The route still serves (returns "" fields) so dev
+# environments without VND config don't crash; it's purely a visibility nudge
+# for production.
+_sepay_missing = [k for k, v in SEPAY_BANK_INFO.items() if not v]
+if _sepay_missing:
+    logger.warning(
+        "SePay env incomplete — missing %s. VND bank transfer flow will return "
+        "empty bank_info and the QR code will fail. Set SEPAY_BANK_NAME, "
+        "SEPAY_ACCOUNT_NUMBER, SEPAY_ACCOUNT_HOLDER (and SEPAY_API_KEY for "
+        "webhook auth) on the deploy environment.",
+        ", ".join(_sepay_missing),
+    )
+elif not SEPAY_API_KEY:
+    logger.warning(
+        "SePay bank info set but SEPAY_API_KEY missing — webhook will accept "
+        "unauthenticated callbacks. Acceptable in staging; set the key in prod."
+    )
+
 PLAN_DURATION_DAYS = {
     "explorer": 30, "learner": 30, "achiever": 30, "master": 30,
     # Design-handoff plan keys (consumer-facing)
@@ -980,7 +1000,13 @@ async def sepay_webhook(request: Request):
         logger.warning(f"SePay webhook: pending row has unknown plan_id={plan_id}")
         return {"status": "ok", "matched": True, "reason": "unknown_plan"}
     plan_name, subscription_label = PAYPAL_PLAN_MAPPING[plan_id]
-    expires_at = (datetime.now(timezone.utc) + timedelta(days=days)).isoformat()
+    now = datetime.now(timezone.utc)
+    expires_at = (now + timedelta(days=days)).isoformat()
+    # `monthly_usage` must be reset on every plan activation, otherwise the
+    # new SePay user inherits whatever Liz/speaking counters were on their
+    # free row and hits 402s on a fresh paid plan. PayPal/bank-upload paths
+    # already do this (routes/payments.py:370,419,521,805); SePay was the
+    # missing one.
     await db.users.update_one(
         {"id": pending["user_id"]},
         {"$set": {
@@ -988,7 +1014,12 @@ async def sepay_webhook(request: Request):
             "subscription": subscription_label,
             "plan_expires_at": expires_at,
             "payment_method": "sepay",
-            "lastPayment": datetime.now(timezone.utc).isoformat(),
+            "lastPayment": now.isoformat(),
+            "monthly_usage": {
+                "liz_messages": 0,
+                "speaking_evals": 0,
+                "reset_date": now.isoformat(),
+            },
         }},
     )
     await db.pending_payments.update_one(

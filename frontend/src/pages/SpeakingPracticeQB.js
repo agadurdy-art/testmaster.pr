@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useGoBack } from '../hooks/useGoBack';
+import { mintClientRequestId } from '../lib/clientRequestId';
 import { ResultsState as SpeakingResultsState, adaptSpeakingResult } from '../features/speaking';
 import '../features/speaking/speaking.css';
 import SpeakingHelperPanel from '../features/speakingHelper/SpeakingHelperPanel';
@@ -139,6 +140,9 @@ export default function SpeakingPracticeQB({ user }) {
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const timerRef = useRef(null);
+  // Stable across retries of a single QB part submission. Backend
+  // /api/speaking/evaluate de-dupes on (user_id, client_request_id).
+  const clientRequestIdRef = useRef(null);
   const audioBlobsRef = useRef({}); // Store audio blobs for premium evaluation
   // In-memory prefetch cache for /api/speaking/set/{setId}. Filled on
   // topic-card hover so the click feels instant — Safari especially can
@@ -605,6 +609,12 @@ export default function SpeakingPracticeQB({ user }) {
       form.append('duration_seconds', String(totalDuration || 0));
       form.append('context', 'qb');
       if (selectedModule) form.append('set_id', selectedModule);
+      // Mint once and reuse on transient retry so the backend idempotency
+      // cache short-circuits without re-running Azure + Sonnet.
+      if (!clientRequestIdRef.current) {
+        clientRequestIdRef.current = mintClientRequestId();
+      }
+      form.append('client_request_id', clientRequestIdRef.current);
 
       const res = await fetch(`${API_URL}/api/speaking/evaluate`, {
         method: 'POST',
@@ -640,6 +650,8 @@ export default function SpeakingPracticeQB({ user }) {
       // wrapping `success` flag). Hand it to the existing adapter via setResults.
       setResults(data);
       audioBlobsRef.current = {};
+      // Rotate so a re-record + resubmit mints a fresh id.
+      clientRequestIdRef.current = null;
       setSubmittingTier(null);
       setSubmitStep('idle');
     } catch (error) {

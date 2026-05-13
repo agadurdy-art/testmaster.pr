@@ -14,8 +14,15 @@ Pipeline:
   4. Extract JSON from the reply (tolerates occasional fences)
   5. Validate via Pydantic (WritingEvaluationResult)
   6. Verify annotation offsets point into the original essay (UTF-16)
-  7. Retry up to MAX_ATTEMPTS times with exponential backoff on failure
-  8. On persistent failure raise EvaluatorFailure — callers return HTTP 502
+  7. Fail fast on the first error — callers return HTTP 502 with detail.
+     RATIONALE: prior policy retried 3 × 90s timeouts, allowing worst case
+     ~274s to pass through the FastAPI proxy and surface as a 503 to the
+     browser. Each attempt was an independent Sonnet call (~$0.05 input +
+     ~$0.03 output cached). A flaky network triggering browser-side retry
+     on top of three server-side attempts multiplied the bill 9×. We now
+     run one attempt; transient rate-limit errors are surfaced for the
+     client to retry with the same `client_request_id` (idempotency cache
+     short-circuits double-billing). See `writing_idempotency.py`.
 """
 from __future__ import annotations
 
@@ -44,14 +51,19 @@ PROMPT_FILE = (
     Path(__file__).resolve().parent.parent / "prompts" / "writing-evaluator-v2.md"
 )
 
-MAX_ATTEMPTS = 3
-BACKOFF_SCHEDULE = (1.0, 3.0)  # seconds between attempts 1→2 and 2→3
+# Single-shot: see module docstring rationale. The evaluator is fail-fast.
+# Callers (route layer) wrap us with an idempotency cache so the *client*
+# can retry on transient errors without re-billing the LLM.
+MAX_ATTEMPTS = 1
 # Real-world payloads (4 criteria + ~12 annotations + improved_version + coaching)
 # land around 1500–2200 output tokens. 2500 leaves ~15% headroom and cuts the
 # worst-case bill by ~40% vs the previous 4096 ceiling without truncating
 # legitimate responses.
 MAX_TOKENS = 2500
-CALL_TIMEOUT_SECONDS = 90.0
+# 75s leaves comfortable headroom under typical FastAPI/proxy 120s timeouts.
+# Sonnet p99 for this prompt is ~35s; if we're past 75s the call is dead
+# and we should surface failure to the user, not keep waiting.
+CALL_TIMEOUT_SECONDS = 75.0
 
 
 class EvaluatorFailure(RuntimeError):
@@ -215,9 +227,13 @@ def _realign_annotations(result, essay_text: str) -> Tuple[list, list]:
 
 
 async def evaluate_writing(req: WritingEvaluationRequest) -> WritingEvaluationResult:
-    """Run a single evaluation with retries. Raises EvaluatorFailure on persistent
-    error. Returns a validated WritingEvaluationResult with annotation offsets
-    checked against the submitted essay."""
+    """Run a single Sonnet evaluation. Fail-fast: any error (timeout, LLM
+    error, malformed JSON, schema mismatch, offset drift) raises
+    EvaluatorFailure immediately so the route can return a structured 502.
+
+    The route layer is responsible for idempotency (so a client retrying
+    with the same `client_request_id` reuses any prior success) and for
+    surfacing a retry-friendly error to the UI."""
     system_template, user_template = _load_prompt_blocks()
 
     # Decide target word count from the hint (or default 250 for task2, 150 for task1).
@@ -235,80 +251,86 @@ async def evaluate_writing(req: WritingEvaluationRequest) -> WritingEvaluationRe
     )
 
     model = liz_llm.deep_model()
-    last_error: Optional[str] = None
+    started = time.monotonic()
 
-    for attempt in range(1, MAX_ATTEMPTS + 1):
-        started = time.monotonic()
-        try:
-            reply = await asyncio.wait_for(
-                liz_llm.complete(
-                    system=system_prompt,
-                    user_message=user_prompt,
-                    model=model,
-                    max_tokens=MAX_TOKENS,
-                    task="eval",
-                    # The 230-line IELTS rubric is identical across every
-                    # evaluation; caching it drops repeat-call input cost
-                    # ~10×. First call seeds the cache (~5 min ephemeral).
-                    cache_system=True,
-                ),
-                timeout=CALL_TIMEOUT_SECONDS,
-            )
-        except asyncio.TimeoutError:
-            last_error = f"timeout after {CALL_TIMEOUT_SECONDS}s"
-            logger.warning("Evaluator attempt %d timed out", attempt)
-        except Exception as exc:
-            last_error = f"llm_error: {exc!r}"
-            logger.warning("Evaluator attempt %d LLM error: %s", attempt, exc)
-        else:
-            latency = time.monotonic() - started
-            payload = _extract_json(reply)
-            try:
-                data = json.loads(payload)
-            except json.JSONDecodeError as exc:
-                last_error = f"invalid_json: {exc}"
-                logger.warning(
-                    "Evaluator attempt %d produced invalid JSON (latency %.1fs): %s",
-                    attempt, latency, exc,
-                )
-            else:
-                try:
-                    result = WritingEvaluationResult.model_validate(data)
-                except ValidationError as exc:
-                    last_error = f"schema: {exc.errors()[:3]}"
-                    logger.warning("Evaluator attempt %d failed schema: %s", attempt, last_error)
-                else:
-                    # Repair model-side offset drift (UTF-16 vs grapheme counts,
-                    # smart quotes, CRLF, …) before the strict verifier runs.
-                    _, dropped = _realign_annotations(result, req.essay_text)
-                    if dropped:
-                        logger.info(
-                            "Evaluator attempt %d dropped %d unalignable annotations: %s",
-                            attempt, len(dropped), dropped[:5],
-                        )
-                    offset_errors = verify_annotation_offsets(result, req.essay_text)
-                    if offset_errors:
-                        # Should be empty after realignment. If any survive,
-                        # something is very wrong with this attempt — retry.
-                        last_error = "offsets: " + "; ".join(offset_errors[:3])
-                        logger.warning("Evaluator attempt %d offset errors after realign: %s", attempt, last_error)
-                    else:
-                        logger.info(
-                            "Evaluator succeeded on attempt %d (latency %.1fs, band %s, %d annotations, %d dropped)",
-                            attempt, latency, result.overall_band,
-                            len(result.inline_annotations), len(dropped),
-                        )
-                        return result
+    try:
+        reply = await asyncio.wait_for(
+            liz_llm.complete(
+                system=system_prompt,
+                user_message=user_prompt,
+                model=model,
+                max_tokens=MAX_TOKENS,
+                task="eval",
+                # The 230-line IELTS rubric is identical across every
+                # evaluation; caching it drops repeat-call input cost
+                # ~10×. First call seeds the cache (~5 min ephemeral).
+                cache_system=True,
+                scope="writing_eval_v2",
+            ),
+            timeout=CALL_TIMEOUT_SECONDS,
+        )
+    except asyncio.TimeoutError:
+        last_error = f"timeout after {CALL_TIMEOUT_SECONDS}s"
+        logger.warning("Evaluator timed out (%.1fs)", CALL_TIMEOUT_SECONDS)
+        raise EvaluatorFailure(
+            "Writing evaluator timed out.",
+            attempts=1, last_error=last_error,
+        )
+    except Exception as exc:
+        last_error = f"llm_error: {exc!r}"
+        logger.warning("Evaluator LLM error: %s", exc)
+        raise EvaluatorFailure(
+            "Writing evaluator LLM call failed.",
+            attempts=1, last_error=last_error,
+        )
 
-        if attempt < MAX_ATTEMPTS:
-            delay = BACKOFF_SCHEDULE[min(attempt - 1, len(BACKOFF_SCHEDULE) - 1)]
-            await asyncio.sleep(delay)
+    latency = time.monotonic() - started
+    payload = _extract_json(reply)
+    try:
+        data = json.loads(payload)
+    except json.JSONDecodeError as exc:
+        last_error = f"invalid_json: {exc}"
+        logger.warning(
+            "Evaluator produced invalid JSON (latency %.1fs): %s", latency, exc,
+        )
+        raise EvaluatorFailure(
+            "Writing evaluator returned malformed JSON.",
+            attempts=1, last_error=last_error,
+        )
 
-    raise EvaluatorFailure(
-        "Writing evaluator failed to produce a valid result.",
-        attempts=MAX_ATTEMPTS,
-        last_error=last_error,
+    try:
+        result = WritingEvaluationResult.model_validate(data)
+    except ValidationError as exc:
+        last_error = f"schema: {exc.errors()[:3]}"
+        logger.warning("Evaluator failed schema: %s", last_error)
+        raise EvaluatorFailure(
+            "Writing evaluator output failed schema validation.",
+            attempts=1, last_error=last_error,
+        )
+
+    # Repair model-side offset drift (UTF-16 vs grapheme counts, smart
+    # quotes, CRLF, …) before the strict verifier runs.
+    _, dropped = _realign_annotations(result, req.essay_text)
+    if dropped:
+        logger.info(
+            "Evaluator dropped %d unalignable annotations: %s",
+            len(dropped), dropped[:5],
+        )
+    offset_errors = verify_annotation_offsets(result, req.essay_text)
+    if offset_errors:
+        last_error = "offsets: " + "; ".join(offset_errors[:3])
+        logger.warning("Evaluator offset errors after realign: %s", last_error)
+        raise EvaluatorFailure(
+            "Writing evaluator produced unalignable annotations.",
+            attempts=1, last_error=last_error,
+        )
+
+    logger.info(
+        "Evaluator succeeded (latency %.1fs, band %s, %d annotations, %d dropped)",
+        latency, result.overall_band,
+        len(result.inline_annotations), len(dropped),
     )
+    return result
 
 
 def health() -> dict:

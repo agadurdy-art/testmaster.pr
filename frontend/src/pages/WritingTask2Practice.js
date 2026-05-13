@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
@@ -23,6 +23,7 @@ import {
   verifyAnnotationOffsets,
 } from '../features/evaluator/schemas/writingResult';
 import { useGoBack } from '../hooks/useGoBack';
+import { mintClientRequestId } from '../lib/clientRequestId';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -186,6 +187,9 @@ export default function WritingTask2Practice() {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // Stable idempotency key — keeps a single Sonnet bill across retries.
+  const clientRequestIdRef = useRef(null);
+
   const submitForEvaluation = async () => {
     if (wordCount < 200) {
       toast.error('Please write at least 200 words');
@@ -207,6 +211,7 @@ export default function WritingTask2Practice() {
     toast.info('AI evaluation in progress...');
 
     try {
+      if (!clientRequestIdRef.current) clientRequestIdRef.current = mintClientRequestId();
       const response = await fetch(`${API_URL}/api/writing-practice/evaluate/v2`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -217,6 +222,7 @@ export default function WritingTask2Practice() {
           user_language: languageWireCode || 'en',
           user_id: (() => { try { return JSON.parse(localStorage.getItem('user'))?.id || null; } catch { return null; } })(),
           test_id: `writing_task2_${examType}_${urlTopic || 'mixed'}_${urlBand}`,
+          client_request_id: clientRequestIdRef.current,
         }),
       });
 

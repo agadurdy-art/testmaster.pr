@@ -11,6 +11,7 @@ import {
   ListChecks, Eye, FileText, MessageSquare
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { mintClientRequestId } from '../lib/clientRequestId';
 import { ResultsState as SpeakingResultsState, adaptSpeakingResult } from '../features/speaking';
 import '../features/speaking/speaking.css';
 
@@ -130,6 +131,10 @@ export default function CambridgeTestInterface() {
   const [recordingTime, setRecordingTime] = useState(0);
   const recordingTimerRef = useRef(null);
   const ttsAudioRef = useRef(null);
+  // Map<questionIndex, uuid> — keeps each question's id stable across
+  // retries so the backend idempotency cache de-dupes the (user, request_id)
+  // pair. Rotated on successful eval.
+  const speakingRequestIdsRef = useRef({});
   
   // Evaluation state
   const [isEvaluating, setIsEvaluating] = useState(false);
@@ -859,6 +864,15 @@ export default function CambridgeTestInterface() {
       formData.append('book_id', bookId);
       formData.append('test_id', testId);
       formData.append('question_id', `p${partNumber}_q${questionIndex}`);
+      // Per-question stable id so retries hit the idempotency cache instead
+      // of re-billing Azure + Sonnet.
+      if (!speakingRequestIdsRef.current[questionIndex]) {
+        speakingRequestIdsRef.current[questionIndex] = mintClientRequestId();
+      }
+      formData.append(
+        'client_request_id',
+        speakingRequestIdsRef.current[questionIndex],
+      );
 
       const evalResponse = await fetch(`${API_URL}/api/speaking/evaluate`, {
         method: 'POST',
@@ -918,6 +932,8 @@ export default function CambridgeTestInterface() {
       }));
       setCurrentEvaluation(adapted);
       setShowEvaluationModal(true);
+      // Rotate so a fresh re-record + re-evaluate gets a new id.
+      delete speakingRequestIdsRef.current[questionIndex];
       toast.success('Evaluation complete!');
     } catch (error) {
       console.error('Evaluation error:', error);

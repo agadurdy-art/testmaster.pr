@@ -37,6 +37,7 @@ import VoiceOverlay from '../../liz/components/VoiceOverlay';
 import useElevenLabsLiz from '../../liz/hooks/useElevenLabsLiz';
 import { useSpeakingFlow } from '../hooks/useSpeakingFlow';
 import { pickRandomCueCard } from '../lib/pickCueCard';
+import { mintClientRequestId } from '../../../lib/clientRequestId';
 import {
   SPEAKING_THEMES,
   pickRandomTheme,
@@ -197,11 +198,15 @@ async function submitFullTest({
   part1,
   part2,
   part3,
+  clientRequestId,
 }) {
   const form = new FormData();
   form.append('user_id', user.id);
   form.append('user_language', user.feedback_language || 'en');
   form.append('target_band', String(user.target_band || 7.0));
+  // Stable across retries so the backend idempotency cache (10-min TTL) can
+  // short-circuit duplicate POSTs without re-running Azure×3 + Sonnet.
+  if (clientRequestId) form.append('client_request_id', clientRequestId);
 
   // Part 1 — Liz Live, user-only WAV
   form.append('part1_audio', part1.audioBlob, `liz-part1-${Date.now()}.wav`);
@@ -272,6 +277,8 @@ export default function FullTestFlow({ user, onExit }) {
   const part1CapturedRef = useRef(false);
   const part2CapturedRef = useRef(false);
   const part3CapturedRef = useRef(false);
+  // Stable across retries of a single Full Test submission.
+  const clientRequestIdRef = useRef(null);
 
   // Used to confirm theme + draw cue card + start Part 1 live session.
   const handleThemeConfirm = (chosenTheme) => {
@@ -280,6 +287,7 @@ export default function FullTestFlow({ user, onExit }) {
     part1CapturedRef.current = false;
     part2CapturedRef.current = false;
     part3CapturedRef.current = false;
+    clientRequestIdRef.current = null;
     setPhase('part1-live');
     liz.start({
       part: 'part1',
@@ -373,9 +381,22 @@ export default function FullTestFlow({ user, onExit }) {
     }
 
     setPhase('submitting');
-    submitFullTest({ user, theme, cueCard, part1, part2, part3 })
+    if (!clientRequestIdRef.current) {
+      clientRequestIdRef.current = mintClientRequestId();
+    }
+    submitFullTest({
+      user,
+      theme,
+      cueCard,
+      part1,
+      part2,
+      part3,
+      clientRequestId: clientRequestIdRef.current,
+    })
       .then((data) => {
         setScoreResult(data);
+        // Rotate so a retake under the same component instance mints a fresh id.
+        clientRequestIdRef.current = null;
         setPhase('results');
       })
       .catch((err) => {

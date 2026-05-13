@@ -13,6 +13,7 @@ import { adaptSpeakingResult } from '../lib/adaptSpeakingResult';
 import useElevenLabsLiz from '../../liz/hooks/useElevenLabsLiz';
 import VoiceOverlay from '../../liz/components/VoiceOverlay';
 import FullTestFlow from './FullTestFlow';
+import { mintClientRequestId } from '../../../lib/clientRequestId';
 import '../../liz/liz.css';
 
 // 2026-04-29: Part 1 + Part 3 are conversational, driven by ElevenLabs Liz
@@ -33,7 +34,7 @@ const CONVERSATIONAL_CUE_LABEL = {
   part3: 'IELTS Speaking — Part 3 (abstract discussion connected to Part 2)',
 };
 
-async function submitLizSpeakingEval({ user, part, audioBlob, transcript, durationSecs }) {
+async function submitLizSpeakingEval({ user, part, audioBlob, transcript, durationSecs, clientRequestId }) {
   const base = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_API_URL || '';
   const ext = audioBlob.type.includes('wav') ? 'wav'
     : audioBlob.type.includes('ogg') ? 'ogg' : 'webm';
@@ -50,6 +51,7 @@ async function submitLizSpeakingEval({ user, part, audioBlob, transcript, durati
   form.append('target_band', String(user.target_band || 7.0));
   form.append('duration_seconds', String(durationSecs || 0));
   form.append('context', 'practice');
+  if (clientRequestId) form.append('client_request_id', clientRequestId);
   const resp = await fetch(`${base}/api/speaking/evaluate`, {
     method: 'POST',
     body: form,
@@ -77,6 +79,7 @@ function LiveConversation({ part, user, onExit }) {
   const [scoreResult, setScoreResult] = useState(null);
   const [scoreError, setScoreError] = useState(null);
   const submittedRef = useRef(false);
+  const clientRequestIdRef = useRef(null);
 
   useEffect(() => {
     if (started || !user?.id) return;
@@ -103,9 +106,20 @@ function LiveConversation({ part, user, onExit }) {
     }
 
     setPhase('submitting');
-    submitLizSpeakingEval({ user, part, audioBlob: blob, transcript, durationSecs })
+    if (!clientRequestIdRef.current) {
+      clientRequestIdRef.current = mintClientRequestId();
+    }
+    submitLizSpeakingEval({
+      user,
+      part,
+      audioBlob: blob,
+      transcript,
+      durationSecs,
+      clientRequestId: clientRequestIdRef.current,
+    })
       .then((data) => {
         setScoreResult(data);
+        clientRequestIdRef.current = null;
         setPhase('results');
       })
       .catch((err) => {
@@ -240,6 +254,12 @@ function SpeakingPracticeInner({ onExit, user }) {
     () => pickRandomCueCard({ excludeId: undefined }),
     [cueCardKey],
   );
+  // One stable id per cue-card attempt. Bumped when the candidate swaps the
+  // card or starts fresh via handleExit / handleNewCard.
+  const practiceClientRequestId = useMemo(
+    () => mintClientRequestId(),
+    [cueCardKey],
+  );
 
   // Kick off scoring request once recording finishes AND the MediaRecorder
   // has finalised its blob (rec.onstop fires async after .stop(), so we must
@@ -258,6 +278,7 @@ function SpeakingPracticeInner({ onExit, user }) {
       // Smart Practice = `practice` per backend's _VALID_CONTEXTS allow-list.
       userId: user?.id,
       context: 'practice',
+      clientRequestId: practiceClientRequestId,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [flow.state, flow.audioReady]);

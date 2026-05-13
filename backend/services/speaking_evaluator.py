@@ -53,10 +53,14 @@ PROMPT_FILE = (
     / "speaking-evaluator-v2.md"
 )
 
-MAX_ATTEMPTS = 3
-BACKOFF_SCHEDULE = (1.0, 3.0)
+# Single-shot evaluator. Previously: 3 attempts × 90s = up to 270s, which blew
+# past the FastAPI proxy timeout and produced 503s without ever returning a
+# usable answer. Client safety on retry now comes from speaking_idempotency
+# (Mongo TTL cache keyed by client_request_id) — a re-submitted request with
+# the same id short-circuits before re-running Azure+Sonnet.
+MAX_ATTEMPTS = 1
 MAX_TOKENS = 3500
-CALL_TIMEOUT_SECONDS = 90.0
+CALL_TIMEOUT_SECONDS = 75.0
 
 # Each entry is (display label, regex pattern). Patterns tolerate trailing
 # repetitions ("uhm", "ahhh", "errr") that Whisper / Azure occasionally leave
@@ -552,65 +556,67 @@ async def _run_evaluator_llm(
     )
 
     model = liz_llm.deep_model()
-    last_error: Optional[str] = None
+    started = time.monotonic()
+    try:
+        reply = await asyncio.wait_for(
+            liz_llm.complete(
+                system=system_prompt,
+                user_message=user_prompt,
+                model=model,
+                max_tokens=MAX_TOKENS,
+                task="eval",
+                scope=f"speaking_eval_part{req.part.value}",
+            ),
+            timeout=CALL_TIMEOUT_SECONDS,
+        )
+    except asyncio.TimeoutError:
+        last_error = f"timeout after {CALL_TIMEOUT_SECONDS}s"
+        logger.warning("Speaking eval timed out")
+        raise SpeakingEvaluatorFailure(
+            "Speaking evaluator timed out.",
+            attempts=1,
+            last_error=last_error,
+        )
+    except Exception as exc:
+        last_error = f"llm_error: {exc!r}"
+        logger.warning("Speaking eval LLM error: %s", exc)
+        raise SpeakingEvaluatorFailure(
+            "Speaking evaluator LLM call failed.",
+            attempts=1,
+            last_error=last_error,
+        )
 
-    for attempt in range(1, MAX_ATTEMPTS + 1):
-        started = time.monotonic()
-        try:
-            reply = await asyncio.wait_for(
-                liz_llm.complete(
-                    system=system_prompt,
-                    user_message=user_prompt,
-                    model=model,
-                    max_tokens=MAX_TOKENS,
-                    task="eval",
-                ),
-                timeout=CALL_TIMEOUT_SECONDS,
-            )
-        except asyncio.TimeoutError:
-            last_error = f"timeout after {CALL_TIMEOUT_SECONDS}s"
-            logger.warning("Speaking eval attempt %d timed out", attempt)
-        except Exception as exc:
-            last_error = f"llm_error: {exc!r}"
-            logger.warning("Speaking eval attempt %d LLM error: %s", attempt, exc)
-        else:
-            latency = time.monotonic() - started
-            payload = _extract_json(reply)
-            try:
-                data = json.loads(payload)
-            except json.JSONDecodeError as exc:
-                last_error = f"invalid_json: {exc}"
-                logger.warning(
-                    "Speaking eval attempt %d invalid JSON (%.1fs): %s",
-                    attempt, latency, exc,
-                )
-            else:
-                try:
-                    result = SpeakingEvaluationResult.model_validate(data)
-                except ValidationError as exc:
-                    last_error = f"schema: {exc.errors()[:3]}"
-                    logger.warning(
-                        "Speaking eval attempt %d failed schema: %s",
-                        attempt, last_error,
-                    )
-                else:
-                    logger.info(
-                        "Speaking eval succeeded attempt %d (%.1fs, overall %s)",
-                        attempt, latency, result.scores.overall,
-                    )
-                    return result
+    latency = time.monotonic() - started
+    payload = _extract_json(reply)
+    try:
+        data = json.loads(payload)
+    except json.JSONDecodeError as exc:
+        last_error = f"invalid_json: {exc}"
+        logger.warning(
+            "Speaking eval invalid JSON (%.1fs): %s", latency, exc,
+        )
+        raise SpeakingEvaluatorFailure(
+            "Speaking evaluator returned invalid JSON.",
+            attempts=1,
+            last_error=last_error,
+        )
 
-        if attempt < MAX_ATTEMPTS:
-            delay = BACKOFF_SCHEDULE[
-                min(attempt - 1, len(BACKOFF_SCHEDULE) - 1)
-            ]
-            await asyncio.sleep(delay)
+    try:
+        result = SpeakingEvaluationResult.model_validate(data)
+    except ValidationError as exc:
+        last_error = f"schema: {exc.errors()[:3]}"
+        logger.warning("Speaking eval failed schema: %s", last_error)
+        raise SpeakingEvaluatorFailure(
+            "Speaking evaluator output failed schema validation.",
+            attempts=1,
+            last_error=last_error,
+        )
 
-    raise SpeakingEvaluatorFailure(
-        "Speaking evaluator failed to produce a valid result.",
-        attempts=MAX_ATTEMPTS,
-        last_error=last_error,
+    logger.info(
+        "Speaking eval succeeded (%.1fs, overall %s)",
+        latency, result.scores.overall,
     )
+    return result
 
 
 async def evaluate_speaking(
@@ -867,65 +873,67 @@ async def _run_fulltest_llm(
     )
 
     model = liz_llm.deep_model()
-    last_error: Optional[str] = None
+    started = time.monotonic()
+    try:
+        reply = await asyncio.wait_for(
+            liz_llm.complete(
+                system=system_prompt,
+                user_message=user_prompt,
+                model=model,
+                max_tokens=5000,  # holistic output is larger than per-part
+                task="eval",
+                scope="speaking_eval_fulltest",
+            ),
+            timeout=CALL_TIMEOUT_SECONDS,
+        )
+    except asyncio.TimeoutError:
+        last_error = f"timeout after {CALL_TIMEOUT_SECONDS}s"
+        logger.warning("Fulltest eval timed out")
+        raise SpeakingEvaluatorFailure(
+            "Fulltest evaluator timed out.",
+            attempts=1,
+            last_error=last_error,
+        )
+    except Exception as exc:
+        last_error = f"llm_error: {exc!r}"
+        logger.warning("Fulltest eval LLM error: %s", exc)
+        raise SpeakingEvaluatorFailure(
+            "Fulltest evaluator LLM call failed.",
+            attempts=1,
+            last_error=last_error,
+        )
 
-    for attempt in range(1, MAX_ATTEMPTS + 1):
-        started = time.monotonic()
-        try:
-            reply = await asyncio.wait_for(
-                liz_llm.complete(
-                    system=system_prompt,
-                    user_message=user_prompt,
-                    model=model,
-                    max_tokens=5000,  # holistic output is larger than per-part
-                    task="eval",
-                ),
-                timeout=CALL_TIMEOUT_SECONDS,
-            )
-        except asyncio.TimeoutError:
-            last_error = f"timeout after {CALL_TIMEOUT_SECONDS}s"
-            logger.warning("Fulltest eval attempt %d timed out", attempt)
-        except Exception as exc:
-            last_error = f"llm_error: {exc!r}"
-            logger.warning("Fulltest eval attempt %d LLM error: %s", attempt, exc)
-        else:
-            latency = time.monotonic() - started
-            payload = _extract_json(reply)
-            try:
-                data = json.loads(payload)
-            except json.JSONDecodeError as exc:
-                last_error = f"invalid_json: {exc}"
-                logger.warning(
-                    "Fulltest eval attempt %d invalid JSON (%.1fs): %s",
-                    attempt, latency, exc,
-                )
-            else:
-                try:
-                    result = SpeakingFullTestEvaluationResult.model_validate(data)
-                except ValidationError as exc:
-                    last_error = f"schema: {exc.errors()[:3]}"
-                    logger.warning(
-                        "Fulltest eval attempt %d failed schema: %s",
-                        attempt, last_error,
-                    )
-                else:
-                    logger.info(
-                        "Fulltest eval succeeded attempt %d (%.1fs, overall %s)",
-                        attempt, latency, result.scores.overall,
-                    )
-                    return result
+    latency = time.monotonic() - started
+    payload = _extract_json(reply)
+    try:
+        data = json.loads(payload)
+    except json.JSONDecodeError as exc:
+        last_error = f"invalid_json: {exc}"
+        logger.warning(
+            "Fulltest eval invalid JSON (%.1fs): %s", latency, exc,
+        )
+        raise SpeakingEvaluatorFailure(
+            "Fulltest evaluator returned invalid JSON.",
+            attempts=1,
+            last_error=last_error,
+        )
 
-        if attempt < MAX_ATTEMPTS:
-            delay = BACKOFF_SCHEDULE[
-                min(attempt - 1, len(BACKOFF_SCHEDULE) - 1)
-            ]
-            await asyncio.sleep(delay)
+    try:
+        result = SpeakingFullTestEvaluationResult.model_validate(data)
+    except ValidationError as exc:
+        last_error = f"schema: {exc.errors()[:3]}"
+        logger.warning("Fulltest eval failed schema: %s", last_error)
+        raise SpeakingEvaluatorFailure(
+            "Fulltest evaluator output failed schema validation.",
+            attempts=1,
+            last_error=last_error,
+        )
 
-    raise SpeakingEvaluatorFailure(
-        "Fulltest evaluator failed to produce a valid result.",
-        attempts=MAX_ATTEMPTS,
-        last_error=last_error,
+    logger.info(
+        "Fulltest eval succeeded (%.1fs, overall %s)",
+        latency, result.scores.overall,
     )
+    return result
 
 
 async def _process_one_part_for_fulltest(

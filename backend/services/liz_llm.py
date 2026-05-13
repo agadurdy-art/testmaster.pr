@@ -24,7 +24,9 @@ versions.
 """
 from __future__ import annotations
 
+import asyncio
 import os
+import time
 import logging
 from typing import AsyncIterator, Optional
 
@@ -158,6 +160,9 @@ async def complete(
     is_voice: bool = False,
     task: str = "chat",
     cache_system: bool = False,
+    scope: Optional[str] = None,
+    user_id: Optional[str] = None,
+    request_id: Optional[str] = None,
 ) -> str:
     """Non-streaming completion. Returns the assistant's full text.
 
@@ -165,9 +170,14 @@ async def complete(
     (5-min ephemeral). Use it for long, stable system prompts that are reused
     across many calls (e.g. the writing evaluator's 230-line rubric). Other
     providers ignore the flag — they pass the system prompt through unchanged.
+
+    `scope`/`user_id`/`request_id` are passed through to cost telemetry so the
+    admin dashboard can attribute spend to a feature/user/request. Optional —
+    omitting them just produces an unattributed cost event.
     """
     chosen = model or select_model(user_message, is_voice=is_voice, task=task)
     provider = _active_provider()
+    started = time.monotonic()
 
     if provider == "anthropic":
         client = _get_anthropic_client()
@@ -192,6 +202,21 @@ async def complete(
             text = getattr(block, "text", None)
             if text:
                 parts.append(text)
+
+        # Fire-and-forget cost telemetry. Anthropic exposes usage as
+        # response.usage.{input_tokens, output_tokens, cache_creation_input_tokens,
+        # cache_read_input_tokens}. cache_read_input_tokens billed at the
+        # cached rate; everything else at the standard rate.
+        _emit_cost(
+            provider="anthropic",
+            model=chosen,
+            usage=getattr(response, "usage", None),
+            scope=scope,
+            user_id=user_id,
+            request_id=request_id,
+            started=started,
+            success=True,
+        )
         return "".join(parts).strip()
 
     if provider == "gemini":
@@ -211,6 +236,44 @@ async def complete(
     from emergentintegrations.llm.chat import UserMessage  # type: ignore
     chat = _get_openai_chat(system, chosen, session_id)
     return await chat.send_message(UserMessage(text=user_message))
+
+
+def _emit_cost(
+    *,
+    provider: str,
+    model: str,
+    usage,
+    scope: Optional[str],
+    user_id: Optional[str],
+    request_id: Optional[str],
+    started: float,
+    success: bool,
+) -> None:
+    """Fire-and-forget telemetry emit. Never raises into the caller."""
+    if not scope:
+        # Untagged call sites get a generic bucket so they still show up in the
+        # admin total — easier to spot leakage than to silently drop them.
+        scope = "untagged"
+    try:
+        from services import cost_telemetry  # local import to avoid cycle
+        input_tokens = int(getattr(usage, "input_tokens", 0) or 0)
+        output_tokens = int(getattr(usage, "output_tokens", 0) or 0)
+        cached_input = int(getattr(usage, "cache_read_input_tokens", 0) or 0)
+        duration_ms = int((time.monotonic() - started) * 1000)
+        asyncio.create_task(cost_telemetry.record_llm_call(
+            provider=provider,
+            model=model,
+            scope=scope,
+            input_tokens=input_tokens,
+            output_tokens=output_tokens,
+            cached_input_tokens=cached_input,
+            duration_ms=duration_ms,
+            user_id=user_id,
+            request_id=request_id,
+            success=success,
+        ))
+    except Exception as e:
+        logger.debug("cost telemetry emit skipped: %s", e)
 
 
 async def stream(

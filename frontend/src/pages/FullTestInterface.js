@@ -12,6 +12,7 @@ import {
 import { toast } from 'sonner';
 import MapLabelling from '../components/listening/MapLabelling';
 import OpinionMatching, { MatchingFeatures } from '../components/listening/OpinionMatching';
+import { mintClientRequestId } from '../lib/clientRequestId';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -106,6 +107,10 @@ export default function FullTestInterface({ user }) {
   const audioChunksRef = useRef([]);
   const questionAudioRef = useRef(null);
   const recordingStartRef = useRef(null);
+  // Stable across retries of the same Full Test speaking submission. Minted on
+  // the first submit, reused on retries (so backend idempotency cache hits),
+  // rotated to null only after a successful response.
+  const speakingClientRequestIdRef = useRef(null);
 
   const sectionOrder = ['listening', 'reading', 'writing', 'speaking'];
   const isSingleSectionMode = ['listening', 'reading', 'writing', 'speaking'].includes(mode);
@@ -543,10 +548,15 @@ export default function FullTestInterface({ user }) {
       if (userId) formData.append('user_id', userId);
       formData.append('user_language', 'en');
       formData.append('target_band', '7.0');
-      formData.append(
-        'client_request_id',
-        sessionId || `fulltest_${testId}_${Date.now()}`,
-      );
+      // Mint once and reuse on retry so the backend idempotency cache can
+      // de-dupe repeat POSTs (e.g., user double-clicks submit, or a transient
+      // network error retries). sessionId is stable per attempt but absent in
+      // some entry paths; fall back to a minted UUID rather than Date.now().
+      if (!speakingClientRequestIdRef.current) {
+        speakingClientRequestIdRef.current =
+          sessionId || `fulltest_${testId}_${mintClientRequestId()}`;
+      }
+      formData.append('client_request_id', speakingClientRequestIdRef.current);
       formData.append('test_id', testId);
 
       [1, 2, 3].forEach((p, idx) => {
@@ -611,6 +621,9 @@ export default function FullTestInterface({ user }) {
         speaking: { fulltest_eval: data },
       }));
       setCompletedSections(prev => prev.includes('speaking') ? prev : [...prev, 'speaking']);
+      // Rotate the request id so a subsequent retake (rare but possible)
+      // doesn't collide with the now-stored idempotency entry.
+      speakingClientRequestIdRef.current = null;
 
       if (isSingleSectionMode) {
         navigate(`/full-test/results/${sessionId}`, {

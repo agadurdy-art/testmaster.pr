@@ -281,39 +281,24 @@ async def get_track_recommendations(
 # ============ TRACK-SPECIFIC AI EVALUATION ENDPOINTS ============
 
 @router.post("/evaluate/writing")
-async def evaluate_writing_track_specific(
-    response: str = Body(...),
-    task_type: str = Body(...),  # "task1" or "task2"
-    track: str = Body("academic"),  # "academic" or "general"
-    context: str = Body(None)  # For general task1: "formal", "semi_formal", "informal"
-):
+async def evaluate_writing_track_specific():
+    """Retired in Faz 4 (2026-05-13).
+
+    Original implementation: services.track_specific_evaluator, a parallel
+    rubric path with its own LLM call that bypassed writing_idempotency and
+    the single-shot retry policy. No frontend caller referenced this route
+    on 2026-05-13.
+
+    Use /api/writing-practice/evaluate/v2 for all writing evaluation.
     """
-    Evaluate writing with track-specific rubrics.
-    
-    - Academic: Focuses on formal register, data interpretation, academic vocabulary
-    - General: Focuses on appropriate tone/register, practical communication
-    """
-    from services.track_specific_evaluator import track_evaluator, IELTSTrack
-    
-    try:
-        track_enum = IELTSTrack.ACADEMIC if track == "academic" else IELTSTrack.GENERAL
-        
-        evaluation = await track_evaluator.evaluate_writing(
-            response=response,
-            task_type=task_type,
-            track=track_enum,
-            context=context
-        )
-        
-        return {
-            "success": True,
-            "evaluation": evaluation
-        }
-    except Exception as e:
-        return {
-            "success": False,
-            "error": str(e)
-        }
+    raise HTTPException(
+        status_code=410,
+        detail={
+            "code": "endpoint_retired",
+            "message": "Use /api/writing-practice/evaluate/v2 instead.",
+            "replacement": "/api/writing-practice/evaluate/v2",
+        },
+    )
 
 
 @router.post("/evaluate/reading")

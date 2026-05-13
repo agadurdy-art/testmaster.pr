@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
@@ -14,6 +14,7 @@ import { toast } from 'sonner';
 import { useI18n } from '../lib/i18n';
 import { useGoBack } from '../hooks/useGoBack';
 import EvaluationProgressOverlay from '../features/evaluator/components/EvaluationProgressOverlay';
+import { mintClientRequestId } from '../lib/clientRequestId';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -137,18 +138,23 @@ export default function GeneralTask1Practice() {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // Stable idempotency key — one Sonnet bill per submission, even
+  // across browser/proxy retries. See lib/clientRequestId.js.
+  const clientRequestIdRef = useRef(null);
+
   const submitForEvaluation = async () => {
     if (wordCount < 100) {
       toast.error('Please write at least 100 words');
       return;
     }
-    
+
     setEvaluating(true);
     toast.info('AI evaluation in progress...');
 
     try {
       // v2 endpoint — same evaluator as Academic; we map our existing v1-shape
       // UI to the v2 response below so the feedback cards keep rendering.
+      if (!clientRequestIdRef.current) clientRequestIdRef.current = mintClientRequestId();
       const response = await fetch(`${API_URL}/api/writing-practice/evaluate/v2`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -159,6 +165,7 @@ export default function GeneralTask1Practice() {
           user_language: languageWireCode || 'en',
           user_id: (() => { try { return JSON.parse(localStorage.getItem('user'))?.id || null; } catch { return null; } })(),
           test_id: `writing_general_task1_${selectedPrompt?.id || selectedPrompt?.topic || 'mixed'}`,
+          client_request_id: clientRequestIdRef.current,
         }),
       });
 

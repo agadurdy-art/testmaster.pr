@@ -228,7 +228,10 @@ async def evaluate(
     target_band: float = Form(7.0),
     duration_seconds: float = Form(0.0),
     context: str = Form("practice"),
-    client_request_id: Optional[str] = Form(None),
+    # Required by Faz 3 so every paid Sonnet+Azure pass has an idempotency
+    # anchor. A missing/blank id used to silently disable the cache, leaving
+    # network retries to double-bill the user.
+    client_request_id: str = Form(..., min_length=1, max_length=128),
     set_id: Optional[str] = Form(None),
     question_id: Optional[str] = Form(None),
     book_id: Optional[str] = Form(None),
@@ -434,7 +437,8 @@ async def evaluate_anonymous(
     user_language: str = Form("en"),
     target_band: float = Form(7.0),
     duration_seconds: float = Form(0.0),
-    client_request_id: Optional[str] = Form(None),
+    # Required by Faz 3 (see /evaluate for rationale).
+    client_request_id: str = Form(..., min_length=1, max_length=128),
 ):
     """One free full-mode eval per (email, IP) per ISO week. Mirrors the
     /score-my-essay anon writing flow so the conversion funnel is the same.
@@ -653,7 +657,8 @@ async def evaluate_fulltest(
     user_id: str = Form(...),
     user_language: str = Form("en"),
     target_band: float = Form(7.0),
-    client_request_id: Optional[str] = Form(None),
+    # Required by Faz 3 (see /evaluate for rationale).
+    client_request_id: str = Form(..., min_length=1, max_length=128),
     test_id: Optional[str] = Form(None),
     # Part 1
     part1_audio: UploadFile = File(...),

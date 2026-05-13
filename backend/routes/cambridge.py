@@ -298,154 +298,159 @@ async def evaluate_cambridge_writing(
     user_id: Optional[str] = Body(None),
 ):
     """
-    Evaluate Cambridge Writing Task using detailed IELTS criteria.
-    Returns band scores with detailed feedback like official Cambridge sample answers.
+    Evaluate Cambridge Writing Task using the unified Sonnet-based v2 evaluator.
+
+    Faz 4 (2026-05-13): this route used to call GPT-4o via EMERGENT_LLM_KEY with
+    its own ad-hoc JSON prompt. That diverged from the rest of the platform on
+    calibration, gave inflated bands, and bypassed the v2 retry/timeout/idempotency
+    discipline. The wrapper now delegates to `writing_evaluator_v2.evaluate_writing`
+    (Sonnet 4.6, 75s single-shot) and adapts the v2 schema back into the legacy
+    Cambridge response shape the existing `CambridgeTestResults.js` UI expects:
+        {success, word_count, minimum_words, overall_band, criteria, feedback,
+         reference_samples}
     """
-    if not EMERGENT_LLM_KEY:
-        raise HTTPException(status_code=500, detail="Evaluation service not configured")
-    
+    from schemas.writing_evaluator import (
+        TaskType,
+        WritingEvaluationRequest,
+    )
+    from services import writing_evaluator_v2
+
+    # Look up the Cambridge test + task to recover the prompt and the band-6/8
+    # sample answers the UI shows alongside the score.
+    book = CAMBRIDGE_TESTS.get(book_id, {})
+    test_data = book.get("tests", {}).get(test_id)
+    if not test_data:
+        raise HTTPException(status_code=404, detail="Test not found")
+
+    writing_section = test_data.get("sections", {}).get("writing", {})
+    task_entries = writing_section.get("tasks", [])
+    task = next((t for t in task_entries if t.get("task_number") == task_number), None)
+    task_prompt = (task or {}).get("prompt") or (task or {}).get("instructions") or ""
+    if not task_prompt:
+        # Sonnet needs *some* task context; fall back to a generic stem rather
+        # than failing the evaluation outright.
+        task_prompt = (
+            "Cambridge IELTS Academic Writing Task 1 — describe the visual."
+            if task_number == 1
+            else "Cambridge IELTS Academic Writing Task 2 — respond to the prompt."
+        )
+
+    word_count = len(response.split()) if response else 0
+    min_words = 150 if task_number == 1 else 250
+
+    sample_answers = test_data.get("sample_answers", {}).get("writing", {})
+    reference_samples = sample_answers.get(f"task{task_number}", {})
+
+    # Cambridge books are Academic — the v2 evaluator will refine the exact
+    # subtype from the essay itself; the hint only seeds the word-count target.
+    task_hint = (
+        TaskType.task1_academic_chart if task_number == 1 else TaskType.task2_opinion
+    )
+
+    eval_req = WritingEvaluationRequest(
+        essay_text=response,
+        task_type_hint=task_hint,
+        task_prompt=task_prompt,
+        user_language="en",
+    )
+
     try:
-        from services.llm_compat import LlmChat, UserMessage
-        
-        # Get task details
-        book = CAMBRIDGE_TESTS.get(book_id, {})
-        test_data = book.get("tests", {}).get(test_id)
-        
-        if not test_data:
-            raise HTTPException(status_code=404, detail="Test not found")
-        
-        writing_section = test_data.get("sections", {}).get("writing", {})
-        tasks = writing_section.get("tasks", [])
-        task = next((t for t in tasks if t.get("task_number") == task_number), None)
-        
-        # Word count
-        word_count = len(response.split()) if response else 0
-        min_words = 150 if task_number == 1 else 250
-        
-        # Get sample answers for reference (if available)
-        sample_answers = test_data.get("sample_answers", {}).get("writing", {})
-        task_key = f"task{task_number}"
-        reference_samples = sample_answers.get(task_key, {})
-        
-        # Build evaluation prompt
-        task_type = "Task 1 (Report/Description)" if task_number == 1 else "Task 2 (Essay)"
-        
-        evaluation_prompt = f"""You are a senior IELTS examiner evaluating a Cambridge IELTS {task_type} response.
-
-## TASK DETAILS
-- Task Type: Academic Writing {task_type}
-- Minimum Words: {min_words}
-- Candidate's Word Count: {word_count}
-
-## CANDIDATE'S RESPONSE
-{response}
-
-## EVALUATION INSTRUCTIONS
-Evaluate using official IELTS Writing Band Descriptors:
-
-1. **Task Achievement/Response (TA/TR)**
-   - Task 1: Does it describe the key features? Is there an overview?
-   - Task 2: Does it address all parts? Is the position clear throughout?
-
-2. **Coherence and Cohesion (CC)**
-   - Is information logically organized?
-   - Are paragraphs well-structured?
-   - Are cohesive devices used effectively?
-
-3. **Lexical Resource (LR)**
-   - Is vocabulary range adequate?
-   - Are words used accurately?
-   - Are there spelling errors?
-
-4. **Grammatical Range and Accuracy (GRA)**
-   - Is there sentence variety?
-   - Are structures used accurately?
-   - Are there punctuation errors?
-
-## OUTPUT FORMAT (JSON only)
-{{
-    "overall_band": <float 1.0-9.0, to nearest 0.5>,
-    "task_achievement": <float 1.0-9.0>,
-    "coherence_cohesion": <float 1.0-9.0>,
-    "lexical_resource": <float 1.0-9.0>,
-    "grammatical_range": <float 1.0-9.0>,
-    "examiner_comment": "<Detailed 3-4 sentence feedback in Cambridge examiner style>",
-    "strengths": ["<strength 1>", "<strength 2>"],
-    "areas_for_improvement": ["<improvement 1>", "<improvement 2>", "<improvement 3>"],
-    "vocabulary_notes": "<Specific vocabulary feedback with examples from the text>",
-    "grammar_notes": "<Specific grammar feedback with examples from the text>",
-    "word_count_penalty": <true/false if under minimum>
-}}
-
-Provide honest, calibrated scoring. Be specific with examples from the candidate's text."""
-
-        chat = LlmChat(
-            api_key=EMERGENT_LLM_KEY,
-            session_id=str(uuid.uuid4()),
-            system_message="You are a Cambridge IELTS Writing examiner. Respond only with valid JSON."
-        )
-        
-        result = await chat.send_message(
-            user_message=UserMessage(text=evaluation_prompt)
-        )
-        # Rate limiting: prevent Claude API Usage Policy violations
-        await asyncio.sleep(1.0)
-        
-        # Parse response
-        response_text = str(result)
-        if "```json" in response_text:
-            response_text = response_text.split("```json")[1].split("```")[0]
-        elif "```" in response_text:
-            response_text = response_text.split("```")[1].split("```")[0]
-        
-        evaluation = json.loads(response_text.strip())
-
-        # Persist to test_attempts so Progress page + Liz see this writing task.
-        try:
-            from server import persist_attempt
-            await persist_attempt(
-                user_id=user_id,
-                test_id=f"{book_id}_{test_id}_writing_task{task_number}",
-                test_type="writing",
-                band_score=float(evaluation.get("overall_band", 0.0) or 0.0),
-                feedback={
-                    "source": "cambridge",
-                    "task_number": task_number,
-                    "evaluation": evaluation,
-                },
-            )
-        except Exception as _e:
-            print(f"persist_attempt skipped (writing): {_e}")
-
-        return {
-            "success": True,
-            "task_number": task_number,
-            "word_count": word_count,
-            "minimum_words": min_words,
-            "evaluation": evaluation,
-            "overall_band": evaluation.get("overall_band", 5.0),
-            "criteria": {
-                "task_achievement": evaluation.get("task_achievement", 5.0),
-                "coherence_cohesion": evaluation.get("coherence_cohesion", 5.0),
-                "lexical_resource": evaluation.get("lexical_resource", 5.0),
-                "grammatical_range": evaluation.get("grammatical_range", 5.0)
+        result = await writing_evaluator_v2.evaluate_writing(eval_req)
+    except writing_evaluator_v2.EvaluatorFailure as exc:
+        # Surface a structured 502 so the UI can show a retry-friendly message.
+        raise HTTPException(
+            status_code=502,
+            detail={
+                "code": "evaluator_failed",
+                "message": str(exc),
+                "attempts": getattr(exc, "attempts", 1),
             },
-            "feedback": {
-                "examiner_comment": evaluation.get("examiner_comment", ""),
-                "strengths": evaluation.get("strengths", []),
-                "improvements": evaluation.get("areas_for_improvement", []),
-                "vocabulary_notes": evaluation.get("vocabulary_notes", ""),
-                "grammar_notes": evaluation.get("grammar_notes", "")
+        ) from exc
+
+    crit = result.criteria
+
+    # Compose examiner_comment from the v2 diagnosis if available, else from
+    # the strongest criterion explanations. Keeps the legacy UI panel non-empty.
+    examiner_comment = ""
+    if result.response_diagnosis:
+        examiner_comment = result.response_diagnosis.main_issue
+        if result.response_diagnosis.band_ceiling_reason:
+            examiner_comment += " " + result.response_diagnosis.band_ceiling_reason
+    if not examiner_comment:
+        examiner_comment = crit.task_achievement.explanation
+
+    # Flatten per-criterion strengths into one list; same for weaknesses.
+    legacy_strengths: list = []
+    for c in (
+        crit.task_achievement,
+        crit.coherence_cohesion,
+        crit.lexical_resource,
+        crit.grammatical_range_accuracy,
+    ):
+        legacy_strengths.extend(c.strengths)
+
+    # `highest_priority_fixes` is the v2 equivalent of "areas for improvement";
+    # fall back to flattened criterion weaknesses if Sonnet omitted them.
+    if result.highest_priority_fixes:
+        legacy_improvements = list(result.highest_priority_fixes)
+    else:
+        legacy_improvements = []
+        for c in (
+            crit.task_achievement,
+            crit.coherence_cohesion,
+            crit.lexical_resource,
+            crit.grammatical_range_accuracy,
+        ):
+            legacy_improvements.extend(c.weaknesses)
+
+    legacy_payload = {
+        "success": True,
+        "task_number": task_number,
+        "word_count": word_count,
+        "minimum_words": min_words,
+        "overall_band": result.overall_band,
+        "criteria": {
+            "task_achievement": crit.task_achievement.band,
+            "coherence_cohesion": crit.coherence_cohesion.band,
+            "lexical_resource": crit.lexical_resource.band,
+            # Legacy UI key is `grammatical_range` (no `_accuracy`); keep both
+            # so older readers don't break and new ones can pick the full name.
+            "grammatical_range": crit.grammatical_range_accuracy.band,
+            "grammatical_range_accuracy": crit.grammatical_range_accuracy.band,
+        },
+        "feedback": {
+            "examiner_comment": examiner_comment,
+            "strengths": legacy_strengths[:5],
+            "improvements": legacy_improvements[:5],
+            "vocabulary_notes": crit.lexical_resource.explanation,
+            "grammar_notes": crit.grammatical_range_accuracy.explanation,
+        },
+        "reference_samples": reference_samples,
+        # Pass through v2 extras so any newer UI can render them without
+        # needing a second call. Legacy readers ignore unknown keys.
+        "evaluator_version": "v2",
+        "improved_version": result.improved_version,
+        "inline_annotations": [a.model_dump() for a in result.inline_annotations],
+    }
+
+    # Persist to test_attempts so Progress page + Liz see this writing task.
+    try:
+        from server import persist_attempt
+        await persist_attempt(
+            user_id=user_id,
+            test_id=f"{book_id}_{test_id}_writing_task{task_number}",
+            test_type="writing",
+            band_score=float(result.overall_band or 0.0),
+            feedback={
+                "source": "cambridge",
+                "task_number": task_number,
+                "evaluation": legacy_payload,
             },
-            "reference_samples": reference_samples  # Include band 6 and band 8 samples
-        }
-        
-    except json.JSONDecodeError as e:
-        print(f"JSON parse error: {e}")
-        raise HTTPException(status_code=500, detail="Failed to parse evaluation response")
-    except Exception as e:
-        print(f"Writing evaluation error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        )
+    except Exception as _e:
+        print(f"persist_attempt skipped (writing): {_e}")
+
+    return legacy_payload
 
 
 @router.get("/audio/{book_id}/{test_id}/{part}")

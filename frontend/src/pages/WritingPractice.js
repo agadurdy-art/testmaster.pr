@@ -12,6 +12,7 @@ import { toast } from 'sonner';
 import WritingEvaluatorResult from '../features/evaluator/components/WritingEvaluatorResult';
 import WritingHelperPanel from '../features/writingHelper/WritingHelperPanel';
 import WritingLearnPanel from '../features/writingLearn/WritingLearnPanel';
+import { mintClientRequestId } from '../lib/clientRequestId';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -73,14 +74,24 @@ export default function WritingPractice({ user }) {
     setTimeLeft(task.duration * 60);
     setTimerActive(true);
     setEssay('');
+    // Fresh task → rotate idempotency key so the next submission is
+    // never deduped against a stale prior result.
+    clientRequestIdRef.current = null;
     setView('writing');
   };
+
+  // Stable id across retries of the SAME submission attempt — guarantees
+  // the backend idempotency cache dedups any browser/proxy auto-retry
+  // (no double Sonnet bill). Rotates when the user starts a new task
+  // (see resetPractice + new prompt selection below).
+  const clientRequestIdRef = useRef(null);
 
   const submitEssay = async () => {
     if (wordCount < 50) { toast.error('Please write at least 50 words.'); return; }
     setLoading(true); setTimerActive(false);
     try {
       const userLanguage = (typeof user?.feedback_language === 'string' && user.feedback_language) || 'en';
+      if (!clientRequestIdRef.current) clientRequestIdRef.current = mintClientRequestId();
       const response = await fetch(`${API_URL}/api/writing-practice/evaluate/v2`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -91,6 +102,7 @@ export default function WritingPractice({ user }) {
           user_language: userLanguage,
           user_id: user?.id || null,
           test_id: selectedPrompt?.id ? `writing_practice_${selectedTaskType}_${selectedPrompt.id}` : `writing_practice_${selectedTaskType}`,
+          client_request_id: clientRequestIdRef.current,
         }),
       });
 
@@ -119,7 +131,7 @@ export default function WritingPractice({ user }) {
     }
   };
 
-  const resetPractice = () => { setView('tasks'); setSelectedTaskType(null); setSelectedPrompt(null); setEssay(''); setFeedback(null); setTimerActive(false); setTimeLeft(0); };
+  const resetPractice = () => { setView('tasks'); setSelectedTaskType(null); setSelectedPrompt(null); setEssay(''); setFeedback(null); setTimerActive(false); setTimeLeft(0); clientRequestIdRef.current = null; };
 
   // Build a 1-2 sentence Liz "take" from the v2 evaluation — the biggest
   // weakness tends to be the most actionable thing to say out loud.

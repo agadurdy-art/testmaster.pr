@@ -12,6 +12,7 @@ import {
   verifyAnnotationOffsets,
 } from "../features/evaluator/schemas/writingResult";
 import { useI18n } from "../lib/i18n";
+import { mintClientRequestId } from "../lib/clientRequestId";
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -84,6 +85,9 @@ export default function PublicEssayEvaluator() {
   const [submittedEssay, setSubmittedEssay] = useState("");
   const [submittedPrompt, setSubmittedPrompt] = useState("");
   const reportRef = useRef(null);
+  // Stable id across retries — backend dedups same-id submissions for
+  // 10 minutes to avoid double-billing Sonnet. See lib/clientRequestId.js.
+  const clientRequestIdRef = useRef(null);
 
   // Restore cached result on mount so accidental reloads don't nuke the report.
   useEffect(() => {
@@ -136,6 +140,7 @@ export default function PublicEssayEvaluator() {
 
     setSubmitting(true);
     try {
+      if (!clientRequestIdRef.current) clientRequestIdRef.current = mintClientRequestId();
       const res = await fetch(`${API_URL}/api/public/evaluate-essay`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -145,6 +150,7 @@ export default function PublicEssayEvaluator() {
           prompt: prompt.trim(),
           essay: essay.trim(),
           user_language: languageWireCode || "en",
+          client_request_id: clientRequestIdRef.current,
         }),
       });
 
