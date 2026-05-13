@@ -494,7 +494,7 @@ function AppWithSessionHandler() {
         <Route path="/pricing/v1" element={<PricingPage user={user} />} />
         <Route
           path="/onboarding"
-          element={user ? <OnboardingPageV2 user={user} /> : <Navigate to="/" />}
+          element={user ? <OnboardingPageV2 user={user} onUserUpdate={setUser} /> : <Navigate to="/" />}
         />
         <Route 
           path="/admin/content" 
@@ -544,7 +544,7 @@ function AppWithSessionHandler() {
         <Route path="/landing/v2" element={<LandingPageV2 />} />
         <Route path="/landing/demo" element={<LandingPageDemo />} />
         <Route path="/pricing/v2" element={<PricingPageV2 user={user} />} />
-        <Route path="/onboarding/v2" element={<OnboardingPageV2 user={user} />} />
+        <Route path="/onboarding/v2" element={<OnboardingPageV2 user={user} onUserUpdate={setUser} />} />
         <Route path="/speaking/v2" element={<SpeakingPracticeV2 />} />
         <Route
           path="/speaking-premium"

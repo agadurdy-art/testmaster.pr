@@ -17,7 +17,7 @@ import '../features/onboarding/onboarding.css';
  * Persists state to POST /api/users/{id}/onboarding and marks the user
  * onboarded before routing to the dashboard.
  */
-export default function OnboardingPageV2({ user }) {
+export default function OnboardingPageV2({ user, onUserUpdate }) {
   const navigate = useNavigate();
 
   const handleFinish = async (state) => {
@@ -25,14 +25,14 @@ export default function OnboardingPageV2({ user }) {
     // user isn't stuck on a blank screen — the next session will simply
     // re-prompt the quiz.
     try {
-      const userId = user?.id || JSON.parse(localStorage.getItem('testmaster_user') || '{}')?.id;
+      const userId = user?.id || JSON.parse(localStorage.getItem('user') || '{}')?.id;
       if (userId) {
         const base = process.env.REACT_APP_API_URL || '';
         const examDateIso =
           state.examDate instanceof Date
             ? state.examDate.toISOString().slice(0, 10)
             : state.examDate || null;
-        await fetch(`${base}/api/users/${encodeURIComponent(userId)}/onboarding`, {
+        const res = await fetch(`${base}/api/users/${encodeURIComponent(userId)}/onboarding`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -48,6 +48,24 @@ export default function OnboardingPageV2({ user }) {
             weakSkills: state.weakSkills,
           }),
         });
+        // Critical: the backend response is the authoritative User object
+        // with `learning_mode` set (e.g. 'general_english'). Without
+        // propagating it to App state + localStorage, the subsequent
+        // navigate('/dashboard') still sees a stale user object and
+        // App.js isIeltsMode() falls through to IELTS — sending GE
+        // onboardees to the IELTS dashboard.
+        if (res.ok) {
+          try {
+            const updatedUser = await res.json();
+            if (updatedUser && updatedUser.id) {
+              localStorage.setItem('user', JSON.stringify(updatedUser));
+              if (typeof onUserUpdate === 'function') onUserUpdate(updatedUser);
+            }
+          } catch (parseErr) {
+            // eslint-disable-next-line no-console
+            console.warn('[onboarding] response parse failed', parseErr);
+          }
+        }
       }
     } catch (err) {
       // eslint-disable-next-line no-console
