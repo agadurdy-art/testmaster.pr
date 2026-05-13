@@ -101,6 +101,14 @@ export default function PathPickerGate({ children }) {
                 </button>
               ))}
             </div>
+            <button
+              type="button"
+              className="path-gate-skip"
+              onClick={() => pick('ielts')}
+              aria-label="Skip and continue to IELTS"
+            >
+              Not sure yet — just show me the site
+            </button>
           </div>
         </div>
       )}

@@ -366,7 +366,7 @@ export default function PublicSpeakingTrial() {
 
 function IntroForm({ email, setEmail, partId, setPartId, errorMsg, onStart }) {
   return (
-    <section className="mx-auto max-w-3xl px-5 sm:px-8 pt-10 pb-14">
+    <section id="cta" className="mx-auto max-w-3xl px-5 sm:px-8 pt-10 pb-14 scroll-mt-24">
       <nav className="text-[12px] text-slate-500 mb-3">
         <a href="/" className="hover:text-slate-700">
           Home

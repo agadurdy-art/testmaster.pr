@@ -240,7 +240,7 @@ export default function PublicEssayEvaluator() {
 
       {/* ===== Input form ===== */}
       {!result && (
-        <section className="mx-auto max-w-3xl px-5 sm:px-8 pt-10 pb-14">
+        <section id="cta" className="mx-auto max-w-3xl px-5 sm:px-8 pt-10 pb-14 scroll-mt-24">
           <nav className="text-[12px] text-slate-500 mb-3">
             <a href="/" className="hover:text-slate-700">Home</a>
             <span className="mx-1.5">/</span>

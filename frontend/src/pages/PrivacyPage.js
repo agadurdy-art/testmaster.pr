@@ -54,6 +54,13 @@ export default function PrivacyPage() {
               personal data within 30 days. Anonymized aggregates and legally-required records (e.g., tax receipts) may be
               retained longer.
             </p>
+            <p className="text-gray-700 mt-3">Specific retention windows:</p>
+            <ul className="list-disc pl-5 space-y-1 text-gray-700 mt-2">
+              <li><strong>Essays you submit</strong> — kept in your account history so you can revisit feedback. We do <strong>not</strong> use your essays to train public AI models, and we don't sell them.</li>
+              <li><strong>Speaking audio recordings</strong> — retained for up to 90 days to let you replay your session and compare progress, then automatically deleted. Transcripts and band scores remain in your history.</li>
+              <li><strong>Session recordings &amp; analytics</strong> — we use PostHog and Microsoft Clarity to debug UX issues. These tools record clicks and page navigation but <strong>mask all text inputs</strong> — your essay content, speaking audio, and chat messages with Liz are never captured by session recording. Analytics events are kept up to 12 months.</li>
+              <li><strong>Account deletion</strong> — request from your profile page or by emailing us. All personal data is removed within 30 days; backups are purged within 90 days.</li>
+            </ul>
           </section>
 
           <section>

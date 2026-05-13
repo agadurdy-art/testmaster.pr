@@ -15,5 +15,6 @@ export { default as MobileStickyCTA } from './components/MobileStickyCTA';
 export { default as LizAvatar } from './components/LizAvatar';
 export { default as PathPickerGate } from './components/PathPickerGate';
 export { default as MeetLiz } from './components/MeetLiz';
+export { default as TrustBlock } from './components/TrustBlock';
 export { default as LizLauncher } from './components/LizLauncher';
 export { default as useLiquidGlass } from './hooks/useLiquidGlass';

@@ -9,6 +9,7 @@ import {
   LandingFooter,
   MobileStickyCTA,
   MeetLiz,
+  TrustBlock,
   LizLauncher,
   PathPickerGate,
   useLiquidGlass,
@@ -39,6 +40,7 @@ export default function LandingPageDemo() {
       <div ref={rootRef} className="landing-scope landing-demo has-mobile-cta">
         <LandingNav />
         <LandingHeroDemo />
+        <TrustBlock />
         <MeetLiz />
         <HowItWorks />
         <HeadToHead />

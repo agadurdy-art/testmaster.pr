@@ -545,7 +545,7 @@ export const translations = {
     landingV2HowStep3Body: 'Weekly focus areas, targeted drills across all four skills. Your IELTS coach, always on.',
     landingV2HowLizTag: 'Meet Liz, your AI guide',
     landingV2HowCta: 'Start free',
-    landingV2HowCtaNote: 'No signup required for your first drill.',
+    landingV2HowCtaNote: 'Try a free evaluation. No credit card.',
 
     // B1 — Anonymous head-to-head comparison block (no competitor names)
     h2hEyebrow: 'Why this, not that',
@@ -613,7 +613,7 @@ export const translations = {
     pricingV2CompareStripSame: 'same {days} days',
     landingV2HeroLangNote: 'Auto-translated explanation',
     landingV2FinalCtaFree: 'Or start free',
-    landingV2FinalCtaNote: '3 free evaluations per day · no credit card',
+    landingV2FinalCtaNote: 'Free plan: 1 writing + 1 speaking evaluation per day · no credit card',
     landingV2PathsEyebrow: 'Choose your path',
     landingV2PathsTitle: 'Which path fits you?',
     landingV2PathsSub: 'Two programs, one platform. Start where you are — switch whenever you\'re ready.',

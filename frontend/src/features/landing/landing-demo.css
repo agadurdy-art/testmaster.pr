@@ -281,6 +281,22 @@
   background: hsl(43 96% 56% / .18);
   border-radius: 999px;
 }
+.path-gate-skip {
+  margin-top: 18px;
+  background: transparent;
+  border: none;
+  color: hsl(var(--muted-foreground, 215 16% 47%));
+  font-size: 13.5px;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 6px 8px;
+  transition: color 120ms ease;
+}
+.path-gate-skip:hover {
+  color: hsl(215 30% 25%);
+}
 .path-gate-reset {
   position: fixed;
   left: 16px;
@@ -999,3 +1015,81 @@
   .landing-scope.landing-demo .carousel-cta { padding: 28px; }
   .landing-scope.landing-demo .carousel-dots { display: none; }
 }
+
+/* TrustBlock — teacher profile + methodology + scoring disclaimer */
+.landing-scope.landing-demo .trust-block {
+  padding: 72px 0;
+  background: linear-gradient(180deg, transparent 0%, hsl(210 40% 98%) 100%);
+}
+.landing-scope.landing-demo .trust-block-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+.landing-scope.landing-demo .trust-block .eyebrow {
+  margin-bottom: 12px;
+}
+.landing-scope.landing-demo .trust-block .section-title {
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: hsl(215 30% 18%);
+  margin-bottom: 12px;
+}
+.landing-scope.landing-demo .trust-block .section-sub {
+  font-size: 16px;
+  line-height: 1.6;
+  color: hsl(215 16% 42%);
+  max-width: 720px;
+  margin-bottom: 36px;
+}
+.landing-scope.landing-demo .trust-block-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.landing-scope.landing-demo .trust-card {
+  background: white;
+  border: 1px solid hsl(215 20% 90%);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+.landing-scope.landing-demo .trust-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: hsl(199 89% 40%);
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.landing-scope.landing-demo .trust-card-body {
+  font-size: 14px;
+  line-height: 1.6;
+  color: hsl(215 25% 27%);
+}
+.landing-scope.landing-demo .trust-card-body strong {
+  color: hsl(215 30% 18%);
+  font-weight: 600;
+}
+@media (max-width: 899px) {
+  .landing-scope.landing-demo .trust-block { padding: 56px 0; }
+  .landing-scope.landing-demo .trust-block .section-title { font-size: 26px; }
+  .landing-scope.landing-demo .trust-block-cards {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .landing-scope.landing-demo .trust-card { padding: 20px; }
+}
+
+/* Prevent ElevenLabs ConvAI widget from triggering page scroll-jump when
+   its internal chat input is focused (iOS Safari raises the keyboard and
+   tries to scroll the focused input into view — since the widget is
+   position:fixed, the host page should not move. overscroll-behavior
+   stops the body from absorbing the scroll the widget consumes). */
+#ielts-level-test-agent,
+#ielts-ace-examiner {
+  overscroll-behavior: contain;
+  touch-action: manipulation;
+}
+.landing-scope.landing-demo { scroll-padding-top: 80px; }
