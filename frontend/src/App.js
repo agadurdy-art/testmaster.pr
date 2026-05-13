@@ -347,18 +347,35 @@ function AppWithSessionHandler() {
       window.history.replaceState(null, '', window.location.pathname + window.location.search);
       if (!sessionId) return;
       (async () => {
+        let userData = null;
         try {
-          const userData = await loginWithGoogleSession(sessionId);
+          userData = await loginWithGoogleSession(sessionId);
           setUser(userData);
           localStorage.setItem('user', JSON.stringify(userData));
           toast.success('Logged in with Google');
         } catch (err) {
           const message = err?.response?.data?.detail || 'Google login failed. Please try again.';
           toast.error(message);
-        } finally {
-          // Always send user to dashboard (if login worked, they will see it; if not, they stay unauthenticated)
-          navigate('/dashboard');
         }
+        // Route off the response. Mirror handleLogin's logic so Google
+        // and email login send users to the same places — including
+        // /onboarding when the user hasn't completed it yet. Without
+        // this, a fresh Google signup skipped onboarding entirely and
+        // landed on /dashboard with learning_mode=null → isIeltsMode()
+        // fell through to the IELTS dashboard regardless of the path
+        // the user picked on the landing.
+        if (!userData) {
+          navigate('/');
+          return;
+        }
+        if (userData.onboarding_complete === false) {
+          navigate('/onboarding');
+          return;
+        }
+        const planTarget = pendingPlanRedirect(consumePendingPlan());
+        if (planTarget) { navigate(planTarget); return; }
+        const intentTarget = pendingIntentRedirect(consumePendingIntent());
+        navigate(intentTarget || '/dashboard');
       })();
     }
   }, [location, navigate]);
