@@ -66,6 +66,7 @@ const SampleReportBand80Task2 = lazy(() => import('./pages/SampleReportBand80Tas
 const SampleReportBand50Task2 = lazy(() => import('./pages/SampleReportBand50Task2'));
 const SampleReportSpeakingPart2 = lazy(() => import('./pages/SampleReportSpeakingPart2'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage'));
+const DevGePreview = lazy(() => import('./pages/DevGePreview'));
 const LandingPageV2 = lazy(() => import('./pages/LandingPageV2'));
 const LandingPageDemo = lazy(() => import('./pages/LandingPageDemo'));
 const PricingPageV2 = lazy(() => import('./pages/PricingPageV2'));
@@ -537,6 +538,8 @@ function AppWithSessionHandler() {
           path="/dev/evaluator-result"
           element={<EvaluatorResultPreview />}
         />
+        {/* Dev-only: direct GE (V1) dashboard preview — bypasses auth + onboarding */}
+        <Route path="/dev/ge" element={<DevGePreview />} />
         {/* Writing/Speaking sample report pages — re-enabled 2026-05-10.
             Reading/Listening have static HTML "full report" pages, so writing
             and speaking need the same surface (parity for switcher CTAs and
