@@ -21,7 +21,7 @@ IELTS18_TEST3 = {
                     "title": "Wayside Camera Club",
                     "question_range": "1-10",
                     "question_count": 10,
-                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/9zpu0ev8_18%20section3%20part1.mp3",
+                    "audio_file": "/static/audio/9zpu0ev8_18_section3_part1_49cbc258.mp3",
                     "visual": {
                         "type": "form_and_table",
                         "form_title": "Wayside Camera Club membership form",
@@ -60,7 +60,7 @@ IELTS18_TEST3 = {
                     "title": "Picking mushrooms",
                     "question_range": "11-20",
                     "question_count": 10,
-                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/kayzyfyq_18%20section3%20part2.mp3",
+                    "audio_file": "/static/audio/kayzyfyq_18_section3_part2_4bf26f58.mp3",
                     "questions": [
                         {
                             "number": "11-12",
@@ -165,7 +165,7 @@ IELTS18_TEST3 = {
                     "title": "Discussion about future work",
                     "question_range": "21-30",
                     "question_count": 10,
-                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/2p6vxl7t_18%20section3%20part3.mp3",
+                    "audio_file": "/static/audio/cambridge18_test3_section3_part3.mp3",
                     "questions": [
                         {
                             "number": "21-22",
@@ -228,7 +228,7 @@ IELTS18_TEST3 = {
                     "title": "Space Traffic Management",
                     "question_range": "31-40",
                     "question_count": 10,
-                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/7xq7b2hm_18%20section3%20part4.mp3",
+                    "audio_file": "/static/audio/cambridge18_test3_section3_part4.mp3",
                     "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
                     "visual": {
                         "type": "notes",
@@ -498,8 +498,8 @@ IELTS18_TEST3 = {
                     "title": "Writing Task 1",
                     "prompt": "The two maps below show the change to the Central Library 20 years ago and how it looks now.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.",
                     "requirements": "Write at least 150 words.",
-                    "visual_url": "https://customer-assets.emergentagent.com/job_756d9309-ff91-4a3b-8fb8-033e2a6316d5/artifacts/trqumjap_cambridge%2018%20test%203%20writing%20task%201%20pic%201.png",
-                    "visual_url_2": "https://customer-assets.emergentagent.com/job_756d9309-ff91-4a3b-8fb8-033e2a6316d5/artifacts/lvq82khh_cambridge%2018%20test%203%20writing%20task%201%20pic%202.png",
+                    "visual_url": "/static/cambridge/trqumjap_cambridge_18_test_3_writing_task_1_pic_1_f3e1bf8a.png",
+                    "visual_url_2": "/static/cambridge/lvq82khh_cambridge_18_test_3_writing_task_1_pic_2_ca427cc2.png",
                     "time_recommendation": "20 minutes"
                 },
                 {

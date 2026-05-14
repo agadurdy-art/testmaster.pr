@@ -183,7 +183,7 @@ async def get_module_grammar(module_id: str):
 async def call_llm(system_message: str, prompt: str) -> str:
     """Call LLM and return response text"""
     chat = LlmChat(
-        api_key=os.getenv("EMERGENT_LLM_KEY"),
+        api_key=os.getenv("OPENAI_API_KEY"),
         session_id=str(uuid.uuid4()),
         system_message=system_message,
     ).with_model("openai", "gpt-4o")

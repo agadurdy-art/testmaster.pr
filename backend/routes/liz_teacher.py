@@ -349,7 +349,7 @@ async def get_homework_context(user_id: str) -> str:
 
 def get_api_key():
     """Legacy helper kept for callers; real auth is inside liz_llm."""
-    return os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("EMERGENT_LLM_KEY", "")
+    return os.environ.get("ANTHROPIC_API_KEY", "")
 
 
 def get_liz_model(task: str = "chat") -> str:
@@ -1402,7 +1402,7 @@ async def liz_speak(req: TTSRequest):
 @router.post("/stt")
 async def speech_to_text(file: UploadFile = File(...)):
     """Transcribe audio from the student's microphone."""
-    api_key = os.environ.get("OPENAI_API_KEY") or os.environ.get("EMERGENT_LLM_KEY")
+    api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
         raise HTTPException(status_code=500, detail="STT API key not configured")
 

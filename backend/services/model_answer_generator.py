@@ -605,7 +605,7 @@ Write ONLY the essay text, no labels or explanations."""
         
         try:
             llm = LlmChat(
-                api_key=os.environ.get("EMERGENT_LLM_KEY"),
+                api_key=os.environ.get("OPENAI_API_KEY"),
                 model="gpt-4o"
             )
             
@@ -751,7 +751,7 @@ Write ONLY the essay text. No titles, no labels, no word count."""
         import os, uuid
         from services.llm_compat import LlmChat, UserMessage
         llm = LlmChat(
-            api_key=os.environ.get("EMERGENT_LLM_KEY", ""),
+            api_key=os.environ.get("OPENAI_API_KEY", ""),
             session_id=f"model_answer_{uuid.uuid4()}",
             system_message="You are an IELTS examiner writing model answers. Write naturally, avoid templates."
         ).with_model("openai", "gpt-4o-mini")

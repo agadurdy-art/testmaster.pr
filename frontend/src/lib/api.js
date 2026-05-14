@@ -69,14 +69,9 @@ export const loginUser = async (data) => {
   return response.data;
 };
 
-export const loginWithEmergentSession = async (sessionId) => {
-  const response = await api.post('/auth/emergent/session', { session_id: sessionId });
-  return response.data;
-};
-
-// Replaces loginWithEmergentSession after the 2026-05-08 cutover to our own
-// Google OAuth client. Backend hands the browser a single-use ticket in the
-// `#session_id=...` URL fragment; we POST it back here to receive the User.
+// Own Google OAuth client (replaces the Emergent proxy as of 2026-05-08).
+// Backend hands the browser a single-use ticket in the `#session_id=...` URL
+// fragment; we POST it back here to receive the User.
 export const loginWithGoogleSession = async (sessionId) => {
   const response = await api.post('/auth/google/session', { session_id: sessionId });
   return response.data;

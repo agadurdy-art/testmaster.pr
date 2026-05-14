@@ -25,7 +25,7 @@ def _resolve_key(api_key: str | None) -> str:
     return (
         api_key
         or os.getenv("OPENAI_API_KEY")
-        or os.getenv("EMERGENT_LLM_KEY")
+        or os.getenv("OPENAI_API_KEY")
         or ""
     )
 

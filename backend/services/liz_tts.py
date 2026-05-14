@@ -93,7 +93,7 @@ async def _synthesize_openai_fallback(text: str) -> Optional[str]:
         from services.openai_compat import OpenAITextToSpeech  # type: ignore
     except ImportError:
         return None
-    api_key = os.environ.get("OPENAI_API_KEY") or os.environ.get("EMERGENT_LLM_KEY", "")
+    api_key = os.environ.get("OPENAI_API_KEY", "")
     if not api_key:
         return None
     try:
@@ -142,5 +142,5 @@ def health() -> dict:
         "azure_configured": _azure_configured(),
         "voice": os.environ.get("LIZ_TTS_VOICE", DEFAULT_VOICE),
         "style": os.environ.get("LIZ_TTS_STYLE") or None,
-        "openai_fallback": bool(os.environ.get("EMERGENT_LLM_KEY")),
+        "openai_fallback": bool(os.environ.get("OPENAI_API_KEY")),
     }

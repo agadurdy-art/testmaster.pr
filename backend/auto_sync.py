@@ -33,11 +33,11 @@ Write at least 150 words.""",
                 "images": [
                     {
                         "title": "Porth Harbour (in 2000)",
-                        "url": "https://customer-assets.emergentagent.com/job_lesson-preview-hub/artifacts/csy5kx8j_Screenshot%202026-01-04%20at%2009.21.11.png"
+                        "url": "/static/images/migrated/csy5kx8j_Screenshot_2026-01-04_at_09_21_11_a443f0e7.png"
                     },
                     {
                         "title": "Porth Harbour (today)",
-                        "url": "https://customer-assets.emergentagent.com/job_lesson-preview-hub/artifacts/4he4nkvg_Screenshot%202026-01-04%20at%2009.21.19.png"
+                        "url": "/static/images/migrated/4he4nkvg_Screenshot_2026-01-04_at_09_21_19_758f5bcd.png"
                     }
                 ]
             },

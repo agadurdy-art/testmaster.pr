@@ -87,7 +87,7 @@ async def _generate_exercises_gpt4o(words: list, rules: list, lesson_title: str)
     """Use GPT-4o to generate teacher-quality worksheet exercises."""
     from services.llm_compat import LlmChat, UserMessage
 
-    api_key = os.environ.get("EMERGENT_LLM_KEY")
+    api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
         return _generate_exercises_local(words, rules)
 

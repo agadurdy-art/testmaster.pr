@@ -395,6 +395,14 @@ app.mount("/api/static/strategies", StaticFiles(directory=str(static_strategies_
 app.mount("/static/strategies", StaticFiles(directory=str(static_strategies_path)), name="strategies")
 print("✅ Static strategies images mounted at /api/static/strategies and /static/strategies")
 
+# Mount static files for Cambridge writing-task imagery (migrated off Emergent
+# CDN 2026-05-14 — see /tmp/emergent_url_map.json).
+static_cambridge_path = ROOT_DIR / "static" / "cambridge"
+os.makedirs(static_cambridge_path, exist_ok=True)
+app.mount("/api/static/cambridge", StaticFiles(directory=str(static_cambridge_path)), name="cambridge_api")
+app.mount("/static/cambridge", StaticFiles(directory=str(static_cambridge_path)), name="cambridge_static")
+print("✅ Static cambridge images mounted at /api/static/cambridge and /static/cambridge")
+
 # Cost telemetry — Faz 5. Initialize before any eval route loads so the very
 # first LLM call already records into Mongo. Index init happens on startup.
 try:

@@ -63,9 +63,9 @@ class AIContentEnricher:
     """Service to enrich lesson content with AI-generated pedagogical content"""
     
     def __init__(self):
-        self.api_key = os.environ.get('EMERGENT_LLM_KEY')
+        self.api_key = os.environ.get('OPENAI_API_KEY')
         if not self.api_key:
-            raise ValueError("EMERGENT_LLM_KEY not found in environment")
+            raise ValueError("OPENAI_API_KEY not found in environment")
     
     def _create_chat(self, session_id: str) -> LlmChat:
         """Create a new LLM chat instance"""

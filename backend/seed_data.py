@@ -353,25 +353,25 @@ Let us end with Einstein, the epitome of a genius. He clearly had curiosity, cha
                 "id": 1,
                 "title": "Part 1: Guitar Group enquiry",
                 "context": "A telephone conversation about joining a guitar group",
-                "audio_url": "https://customer-assets.emergentagent.com/job_ielts-buddy-11/artifacts/dn1r0fnc_IELTS%2019%20Track%2005.mp3"
+                "audio_url": "/static/audio/dn1r0fnc_IELTS_19_Track_05_ba9cf707.mp3"
             },
             {
                 "id": 2,
                 "title": "Part 2: Talk about a school sports club",
                 "context": "A talk about a sports club and its activities",
-                "audio_url": "https://customer-assets.emergentagent.com/job_ielts-buddy-11/artifacts/rvxwt4ru_IELTS%2019%20Track%2006.mp3"
+                "audio_url": "/static/audio/rvxwt4ru_IELTS_19_Track_06_c9b91be8.mp3"
             },
             {
                 "id": 3,
                 "title": "Part 3: Discussion about food trends",
                 "context": "Two students discussing food trends and innovation",
-                "audio_url": "https://customer-assets.emergentagent.com/job_ielts-buddy-11/artifacts/2zd9b819_IELTS%2019%20Track%2007.mp3"
+                "audio_url": "/static/audio/2zd9b819_IELTS_19_Track_07_913b20cf.mp3"
             },
             {
                 "id": 4,
                 "title": "Part 4: Lecture on marine life and food security",
                 "context": "A lecture about marine ecosystems and food security",
-                "audio_url": "https://customer-assets.emergentagent.com/job_ielts-buddy-11/artifacts/y0zzip05_IELTS%2019%20Track%2008.mp3"
+                "audio_url": "/static/audio/y0zzip05_IELTS_19_Track_08_a90aae0b.mp3"
             }
         ],
         "questions": [
@@ -570,25 +570,25 @@ Let us end with Einstein, the epitome of a genius. He clearly had curiosity, cha
                 "id": 1,
                 "title": "Part 1: Conversation about Hinchingbrooke Country Park",
                 "context": "A conversation about educational visits to a country park",
-                "audio_url": "https://customer-assets.emergentagent.com/job_ieltsace/artifacts/i09fo3b5_IELTS%2019%20Track%2001.mp3"
+                "audio_url": "/static/audio/i09fo3b5_IELTS_19_Track_01_0c2faccd.mp3"
             },
             {
                 "id": 2,
                 "title": "Part 2: Information about a twinning association and Farley House",
                 "context": "A talk about a twinning association and directions around Farley House",
-                "audio_url": "https://customer-assets.emergentagent.com/job_ieltsace/artifacts/doe7u73v_IELTS%2019%20Track%2002.mp3"
+                "audio_url": "/static/audio/doe7u73v_IELTS_19_Track_02_e81abafa.mp3"
             },
             {
                 "id": 3,
                 "title": "Part 3: Discussion about innovation projects",
                 "context": "Two students discussing their innovation projects",
-                "audio_url": "https://customer-assets.emergentagent.com/job_ieltsace/artifacts/105tkh6h_IELTS%2019%20Track%2003.mp3"
+                "audio_url": "/static/audio/105tkh6h_IELTS_19_Track_03_55f68f08.mp3"
             },
             {
                 "id": 4,
                 "title": "Part 4: Lecture on an academic subject",
                 "context": "A lecture on an academic topic",
-                "audio_url": "https://customer-assets.emergentagent.com/job_ieltsace/artifacts/i6iw429j_IELTS%2019%20Track%2004.mp3"
+                "audio_url": "/static/audio/i6iw429j_IELTS_19_Track_04_10e79a7e.mp3"
             }
         ],
         "questions": [
@@ -702,7 +702,7 @@ Let us end with Einstein, the epitome of a genius. He clearly had curiosity, cha
 Summarise the information by selecting and reporting the main features, and make comparisons where relevant.
 
 Write at least 150 words.""",
-                "image_url": "https://customer-assets.emergentagent.com/job_ielts-buddy-11/artifacts/ws4df3j7_Screenshot%202025-11-22%20at%2021.50.56.png",
+                "image_url": "/static/images/migrated/ws4df3j7_Screenshot_2025-11-22_at_21_50_56_70f3af9b.png",
                 "word_limit": 150,
                 "time_suggestion": 20
             },
@@ -745,11 +745,11 @@ Write at least 150 words.""",
                     "images": [
                         {
                             "title": "Porth Harbour (in 2000)",
-                            "url": "https://customer-assets.emergentagent.com/job_lesson-preview-hub/artifacts/csy5kx8j_Screenshot%202026-01-04%20at%2009.21.11.png"
+                            "url": "/static/images/migrated/csy5kx8j_Screenshot_2026-01-04_at_09_21_11_a443f0e7.png"
                         },
                         {
                             "title": "Porth Harbour (today)",
-                            "url": "https://customer-assets.emergentagent.com/job_lesson-preview-hub/artifacts/4he4nkvg_Screenshot%202026-01-04%20at%2009.21.19.png"
+                            "url": "/static/images/migrated/4he4nkvg_Screenshot_2026-01-04_at_09_21_19_758f5bcd.png"
                         }
                     ]
                 },

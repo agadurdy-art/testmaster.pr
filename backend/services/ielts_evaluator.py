@@ -589,7 +589,7 @@ class IELTSEvaluator:
             from services.llm_compat import LlmChat, UserMessage
             
             llm = LlmChat(
-                api_key=os.environ.get("EMERGENT_LLM_KEY"),
+                api_key=os.environ.get("OPENAI_API_KEY"),
                 model="gpt-4o"
             )
             

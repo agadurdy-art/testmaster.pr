@@ -21,7 +21,7 @@ IELTS18_TEST2 = {
                     "title": "Working at Milo's Restaurants",
                     "question_range": "1-10",
                     "question_count": 10,
-                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/yop1zyzd_18%20section2-part1.mp3",
+                    "audio_file": "/static/audio/yop1zyzd_18_section2-part1_982f10b5.mp3",
                     "instructions": "Questions 1-5: Complete the notes below. Write ONE WORD ONLY for each answer. Questions 6-10: Complete the table below. Write ONE WORD AND/OR A NUMBER for each answer.",
                     "visual": {
                         "type": "notes",
@@ -85,8 +85,8 @@ IELTS18_TEST2 = {
                     "title": "Lilford village developments",
                     "question_range": "11-20",
                     "question_count": 10,
-                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/9m4gec9w_18%20section2-part2.mp3",
-                    "map_image": "https://customer-assets.emergentagent.com/job_756d9309-ff91-4a3b-8fb8-033e2a6316d5/artifacts/m3n8yvaj_cambridge%2018%20test%202%20Listening%20Q15-20.png",
+                    "audio_file": "/static/audio/9m4gec9w_18_section2-part2_29dfe866.mp3",
+                    "map_image": "/static/cambridge/m3n8yvaj_cambridge_18_test_2_Listening_Q15-20_3dd33ae5.png",
                     "map_instruction": "Label the map below. Write the correct letter, A-I, next to questions 15-20.",
                     "questions": [
                         {"number": "11-12", "type": "multiple_selection", "instruction": "Choose TWO letters, A-E.", "question_text": "Which TWO facilities which are planned for Lilford will benefit all residents?", "options": ["A all residents, including those in the area near the bypass", "B improved transport options", "C access to the lake", "D parking for residents", "E more open space"], "answer": ["B", "E"], "select_count": 2},
@@ -104,7 +104,7 @@ IELTS18_TEST2 = {
                     "title": "Laki eruption",
                     "question_range": "21-30",
                     "question_count": 10,
-                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/cf87vrw1_18%20section2-%20part3.mp3",
+                    "audio_file": "/static/audio/cf87vrw1_18_section2-_part3_46146dbb.mp3",
                     "questions": [
                         {
                             "number": 21,
@@ -164,7 +164,7 @@ IELTS18_TEST2 = {
                     "title": "Pockets",
                     "question_range": "31-40",
                     "question_count": 10,
-                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/917musbi_18%20section2-%20part4.mp3",
+                    "audio_file": "/static/audio/917musbi_18_section2-_part4_9d762730.mp3",
                     "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
                     "visual": {
                         "type": "notes",
@@ -304,7 +304,7 @@ IELTS18_TEST2 = {
                 {
                     "task_number": 1,
                     "task_type": "report",
-                    "visual_url": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/vmrty9ai_cambridge%2018%20test%202%20writing%20task%201.png",
+                    "visual_url": "/static/cambridge/vmrty9ai_cambridge_18_test_2_writing_task_1_1769b41f.png",
                     "prompt": "The chart below shows the number of households in the US by their annual income in 2007, 2011 and 2015. Summarise the information by selecting and reporting the main features, and make comparisons where relevant."
                 },
                 {

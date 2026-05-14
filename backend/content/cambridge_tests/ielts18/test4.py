@@ -21,7 +21,7 @@ IELTS18_TEST4 = {
                     "title": "Job details from employment agency",
                     "question_range": "1-10",
                     "question_count": 10,
-                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/0j10j9a6_18%20section4%20part1.mp3",
+                    "audio_file": "/static/audio/cambridge18_test4_section4_part1.mp3",
                     "instructions": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
                     "visual": {
                         "type": "notes",
@@ -80,7 +80,7 @@ IELTS18_TEST4 = {
                     "title": "Museum tour",
                     "question_range": "11-20",
                     "question_count": 10,
-                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/sxk2y4q0_18%20section4%20part2.mp3",
+                    "audio_file": "/static/audio/cambridge18_test4_section4_part2.mp3",
                     "questions": [
                         {"number": 11, "type": "multiple_choice", "question_text": "The museum building was originally", "options": ["A a factory.", "B a private home.", "C a hall of residence."], "answer": "B"},
                         {"number": 12, "type": "multiple_choice", "question_text": "The university uses part of the museum building as", "options": ["A teaching rooms.", "B a research library.", "C administration offices."], "answer": "C"},
@@ -109,7 +109,7 @@ IELTS18_TEST4 = {
                     "title": "Origami activity",
                     "question_range": "21-30",
                     "question_count": 10,
-                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/3rpq8v0x_18%20section4%20part3.mp3",
+                    "audio_file": "/static/audio/cambridge18_test4_section4_part3.mp3",
                     "questions": [
                         {"number": "21-22", "type": "multiple_selection", "instruction": "Choose TWO letters, A-E.", "question_text": "Which TWO educational skills were shown in the video of children doing origami?", "options": ["A solving problems", "B following instructions", "C working cooperatively", "D learning through play", "E developing hand-eye coordination"], "answer": ["C", "E"], "select_count": 2},
                         {
@@ -137,7 +137,7 @@ IELTS18_TEST4 = {
                     "title": "Victor Hugo",
                     "question_range": "31-40",
                     "question_count": 10,
-                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/f7r3nlpt_18%20section4%20part4.mp3",
+                    "audio_file": "/static/audio/cambridge18_test4_section4_part4.mp3",
                     "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
                     "visual": {
                         "type": "notes",
@@ -275,7 +275,7 @@ IELTS18_TEST4 = {
             "total_tasks": 2,
             "duration": "60 minutes",
             "tasks": [
-                {"task_number": 1, "task_type": "report", "title": "Writing Task 1", "prompt": "The graph below shows the average monthly change in the prices of three metals during 2014.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.", "requirements": "Write at least 150 words.", "visual_url": "https://customer-assets.emergentagent.com/job_d1c2beca-8714-455b-b8b3-d34422ff6e80/artifacts/sapyysg1_Screenshot%202026-02-11%20at%2023.33.46.png", "time_recommendation": "20 minutes"},
+                {"task_number": 1, "task_type": "report", "title": "Writing Task 1", "prompt": "The graph below shows the average monthly change in the prices of three metals during 2014.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.", "requirements": "Write at least 150 words.", "visual_url": "/static/images/migrated/sapyysg1_Screenshot_2026-02-11_at_23_33_46_508a5894.png", "time_recommendation": "20 minutes"},
                 {"task_number": 2, "task_type": "essay", "title": "Writing Task 2", "instruction": "Write about the following topic:", "prompt": "In many countries, people are now living longer than ever before. Some people say an ageing population creates problems for governments. Other people think there are benefits if society has more elderly people.\n\nTo what extent do the advantages of having an ageing population outweigh the disadvantages?", "requirements": "Give reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words.", "time_recommendation": "40 minutes"}
             ]
         },

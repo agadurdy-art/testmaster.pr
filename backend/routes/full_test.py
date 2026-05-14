@@ -699,7 +699,7 @@ async def evaluate_full_test(
 
 async def generate_ai_teacher_feedback(results: Dict, skill_breakdown: list, test: Dict) -> Optional[Dict]:
     """Generate AI teacher feedback using LLM."""
-    EMERGENT_LLM_KEY = os.environ.get("EMERGENT_LLM_KEY")
+    EMERGENT_LLM_KEY = os.environ.get("OPENAI_API_KEY")
     if not EMERGENT_LLM_KEY:
         return None
     try:
@@ -1080,7 +1080,7 @@ async def evaluate_writing_section(test: Dict, answers: Dict) -> Dict:
 
 async def evaluate_speaking_section(test: Dict, answers: Dict) -> Dict:
     """Evaluate speaking section using AI."""
-    EMERGENT_LLM_KEY = os.environ.get("EMERGENT_LLM_KEY")
+    EMERGENT_LLM_KEY = os.environ.get("OPENAI_API_KEY")
     
     if not EMERGENT_LLM_KEY:
         return {

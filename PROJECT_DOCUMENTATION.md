@@ -276,7 +276,9 @@ Each module contains: Vocabulary, Grammar, Reading, Writing, Speaking, Listening
 ### Auth (`/api/auth/*`)
 - `POST /api/auth/register` — Register new user
 - `POST /api/auth/login` — Login (bcrypt + SHA-256 migration)
-- `POST /api/auth/emergent/session` — Google OAuth via Emergent
+- `GET  /api/auth/google/start`     — Begin Google OAuth (own client)
+- `GET  /api/auth/google/callback`  — Google OAuth callback
+- `POST /api/auth/google/session`   — Exchange single-use ticket for User
 - `POST /api/auth/facebook-login` — Facebook OAuth
 - `POST /api/auth/verify-email` — Email verification
 - `POST /api/auth/forgot-password` — Request password reset

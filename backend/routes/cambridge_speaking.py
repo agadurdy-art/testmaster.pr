@@ -20,7 +20,7 @@ from routes.speaking_qb import (
 router = APIRouter(prefix="/api/cambridge/speaking", tags=["Cambridge Speaking"])
 
 # API Keys
-EMERGENT_LLM_KEY = os.environ.get("EMERGENT_LLM_KEY")
+EMERGENT_LLM_KEY = os.environ.get("OPENAI_API_KEY")  # legacy var name; reads own OpenAI key
 AZURE_SPEECH_KEY = os.environ.get("AZURE_SPEECH_KEY")
 AZURE_SPEECH_REGION = os.environ.get("AZURE_SPEECH_REGION", "southeastasia")
 

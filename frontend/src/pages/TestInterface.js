@@ -272,39 +272,39 @@ function ElevenLabsExaminer() {
     }
   };
   // Pre-recorded British audio for speaking questions (single combined file with timestamps)
-  const speakingAudioUrlTest1 = 'https://customer-assets.emergentagent.com/job_ielts-buddy-11/artifacts/madyib68_ElevenLabs_2025-11-30T13_18_42_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3';
-  const speakingAudioUrlTest2 = 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/psaeevf4_ElevenLabs_2025-12-02T14_47_58_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3';
+  const speakingAudioUrlTest1 = '/static/audio/madyib68_ElevenLabs_2025-11-30T13_18_42_Daniel_pre_sp100_s50_fb048665.mp3';
+  const speakingAudioUrlTest2 = '/static/audio/psaeevf4_ElevenLabs_2025-12-02T14_47_58_Daniel_pre_sp100_s50_467ee4ef.mp3';
 
   // Additional per-question ElevenLabs audio files for Speaking Practice Test 1 and 2
   const speakingAudioTest1PerQuestion = {
     // Test 1 Part 1 – International food (Q1–4)
-    1: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/jai2ksg9_ElevenLabs_2025-12-02T15_28_04_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
-    2: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/b1n0vr85_ElevenLabs_2025-12-02T15_28_32_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
-    3: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/3cg9faj4_test%201%20Q3.mp3',
-    4: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/idnsfuch_test%201%20Q4.mp3',
-    5: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/e5tz00s4_Test%201%20Q5.mp3',
+    1: '/static/audio/jai2ksg9_ElevenLabs_2025-12-02T15_28_04_Daniel_pre_sp100_s50_1a63f8a8.mp3',
+    2: '/static/audio/b1n0vr85_ElevenLabs_2025-12-02T15_28_32_Daniel_pre_sp100_s50_1600608e.mp3',
+    3: '/static/audio/3cg9faj4_test_1_Q3_af29c0fc.mp3',
+    4: '/static/audio/idnsfuch_test_1_Q4_da96e007.mp3',
+    5: '/static/audio/e5tz00s4_Test_1_Q5_92cb254d.mp3',
     // Test 1 Part 3 – school rules / law discussion (Q6–10)
-    6: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/kv15nw42_Test%201%20Q6.mp3',
-    7: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/g22m93zq_Test%201%20Q7.mp3',
-    8: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/jx5j5icm_test%201%20q8.mp3',
-    9: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/zzmd5x0b_test%201%20Q9.mp3',
-    10: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/4n4t1ua0_test%201%20Q10.mp3',
+    6: '/static/audio/kv15nw42_Test_1_Q6_4f0064ec.mp3',
+    7: '/static/audio/g22m93zq_Test_1_Q7_84df7ea7.mp3',
+    8: '/static/audio/jx5j5icm_test_1_q8_76286772.mp3',
+    9: '/static/audio/zzmd5x0b_test_1_Q9_35d05cf8.mp3',
+    10: '/static/audio/4n4t1ua0_test_1_Q10_cbbc326d.mp3',
     // Test 1 Part 3 – legal profession (Q11)
-    11: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/vcetv83l_ElevenLabs_2025-12-02T15_31_49_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
+    11: '/static/audio/vcetv83l_ElevenLabs_2025-12-02T15_31_49_Daniel_pre_sp100_s50_a4daa0f7.mp3',
   };
 
   const speakingAudioTest2PerQuestion = {
-    1: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/ahzvigmt_ElevenLabs_2025-12-02T15_07_35_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
-    2: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/l0bu9hot_ElevenLabs_2025-12-02T15_08_00_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
-    3: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/w6rxtg7d_ElevenLabs_2025-12-02T15_08_18_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
-    4: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/3l2c03zk_ElevenLabs_2025-12-02T15_08_35_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
+    1: '/static/audio/ahzvigmt_ElevenLabs_2025-12-02T15_07_35_Daniel_pre_sp100_s50_8e6807a6.mp3',
+    2: '/static/audio/l0bu9hot_ElevenLabs_2025-12-02T15_08_00_Daniel_pre_sp100_s50_6321bd6f.mp3',
+    3: '/static/audio/w6rxtg7d_ElevenLabs_2025-12-02T15_08_18_Daniel_pre_sp100_s50_e01ca98a.mp3',
+    4: '/static/audio/3l2c03zk_ElevenLabs_2025-12-02T15_08_35_Daniel_pre_sp100_s50_f728e383.mp3',
     // Q5 uses the combined Test 2 audio with timings (Part 2 cue card)
-    6: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/do18iez3_ElevenLabs_2025-12-02T15_09_12_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
-    7: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/8md1sht7_ElevenLabs_2025-12-02T15_09_28_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
-    8: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/y2fq4ufb_ElevenLabs_2025-12-02T15_09_44_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
-    9: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/u3sbwqu2_ElevenLabs_2025-12-02T15_10_09_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
-    10: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/ssdocb39_ElevenLabs_2025-12-02T15_10_27_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
-    11: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/k7h279r5_ElevenLabs_2025-12-02T15_10_41_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
+    6: '/static/audio/do18iez3_ElevenLabs_2025-12-02T15_09_12_Daniel_pre_sp100_s50_cd46ee05.mp3',
+    7: '/static/audio/8md1sht7_ElevenLabs_2025-12-02T15_09_28_Daniel_pre_sp100_s50_12ae62cc.mp3',
+    8: '/static/audio/y2fq4ufb_ElevenLabs_2025-12-02T15_09_44_Daniel_pre_sp100_s50_fd00b33b.mp3',
+    9: '/static/audio/u3sbwqu2_ElevenLabs_2025-12-02T15_10_09_Daniel_pre_sp100_s50_9c5c2618.mp3',
+    10: '/static/audio/ssdocb39_ElevenLabs_2025-12-02T15_10_27_Daniel_pre_sp100_s50_59cf0933.mp3',
+    11: '/static/audio/k7h279r5_ElevenLabs_2025-12-02T15_10_41_Daniel_pre_sp100_s50_ebaa3e30.mp3',
   };
 
   // Timings for pre-recorded British audio for Speaking Practice Test 1 (Q1–Q11)
@@ -1631,7 +1631,7 @@ function ElevenLabsExaminer() {
                             <div className="mt-3 mb-3 bg-gray-50 p-4 rounded-lg border border-gray-200">
                               <p className="text-center text-gray-900 font-bold mb-2">Farley House Map</p>
                               <img 
-                                src="https://customer-assets.emergentagent.com/job_ieltsace/artifacts/nh3dkxxe_Screenshot%202025-11-22%20at%2015.34.39.png" 
+                                src="/static/images/migrated/nh3dkxxe_Screenshot_2025-11-22_at_15_34_39_d6e54b52.png" 
                                 alt="Farley House Map"
                                 className="w-full h-auto max-w-md mx-auto"
                               />

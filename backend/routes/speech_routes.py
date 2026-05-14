@@ -41,7 +41,7 @@ async def evaluate_speech(
     """Transcribe audio with Whisper and evaluate against expected text."""
     from services.openai_compat import OpenAISpeechToText
 
-    api_key = os.environ.get("OPENAI_API_KEY") or os.environ.get("EMERGENT_LLM_KEY")
+    api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
         return {"error": "OPENAI_API_KEY not configured", "transcription": "", "score": 0}
 

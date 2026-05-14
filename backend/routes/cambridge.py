@@ -70,9 +70,7 @@ except (ImportError, SyntaxError) as e:
     print(f"Warning: Could not import IELTS 18 Test 4: {e}")
 
 # LLM Key for evaluation
-EMERGENT_LLM_KEY = os.environ.get("EMERGENT_LLM_KEY")
-
-
+EMERGENT_LLM_KEY = os.environ.get("OPENAI_API_KEY")  # legacy var name; reads own OpenAI key
 # Available Cambridge tests registry
 CAMBRIDGE_TESTS = {
     "ielts17": {

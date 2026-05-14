@@ -1,23 +1,26 @@
 """
 Liz LLM provider abstraction
 ============================
-Unified async interface for Liz Teacher LLM calls. Supports Anthropic (Claude),
-Gemini, and OpenAI (emergentintegrations) as interchangeable backends, selected
-via environment flag. Keeps call-site code identical regardless of backend.
+Unified async interface for Liz Teacher LLM calls. Supports Anthropic (Claude)
+and Gemini as interchangeable backends, selected via environment flag. Keeps
+call-site code identical regardless of backend.
+
+(The legacy OpenAI/`emergentintegrations` branch was retired 2026-05-14 along
+with the migration off Emergent — Anthropic is now the production provider and
+Gemini stays available as an alternate. Plain-OpenAI evaluation/eval calls now
+go directly through `services.openai_compat` / `services.llm_compat` instead
+of this module.)
 
 Env:
-  LIZ_LLM_PROVIDER         = "anthropic" | "gemini" | "openai"
+  LIZ_LLM_PROVIDER         = "anthropic" | "gemini"
                              (default: anthropic if ANTHROPIC_API_KEY is set,
-                             else gemini if GEMINI_API_KEY is set, else openai)
+                             else gemini if GEMINI_API_KEY is set)
   ANTHROPIC_API_KEY        = Claude API key
   GEMINI_API_KEY           = Gemini API key (also used by Liz Live)
   LIZ_DEFAULT_MODEL        = Haiku model id (chat/greet/light tasks)
   LIZ_DEEP_MODEL           = Sonnet model id (evaluation/deep tasks)
   LIZ_GEMINI_DEFAULT_MODEL = Gemini fast-chat model id
   LIZ_GEMINI_DEEP_MODEL    = Gemini deep model id
-  EMERGENT_LLM_KEY         = OpenAI key (via emergentintegrations)
-  LIZ_OPENAI_DEFAULT_MODEL = legacy OpenAI default (fallback)
-  LIZ_OPENAI_DEEP_MODEL    = legacy OpenAI deep (fallback)
 
 All model ids are overridable so we never have to edit this file to bump
 versions.
@@ -39,8 +42,6 @@ DEFAULT_ANTHROPIC_CHAT = "claude-haiku-4-5-20251001"
 DEFAULT_ANTHROPIC_DEEP = "claude-sonnet-4-6"
 DEFAULT_GEMINI_CHAT = "gemini-2.5-flash"
 DEFAULT_GEMINI_DEEP = "gemini-2.5-pro"
-DEFAULT_OPENAI_CHAT = "gpt-4o-mini"
-DEFAULT_OPENAI_DEEP = "gpt-4o"
 
 DEEP_KEYWORDS = (
     "study plan", "analyze my progress", "weekly plan", "band prediction",
@@ -51,13 +52,16 @@ DEEP_KEYWORDS = (
 
 def _active_provider() -> str:
     explicit = (os.environ.get("LIZ_LLM_PROVIDER") or "").strip().lower()
-    if explicit in {"anthropic", "gemini", "openai"}:
+    if explicit in {"anthropic", "gemini"}:
         return explicit
     if os.environ.get("ANTHROPIC_API_KEY"):
         return "anthropic"
     if os.environ.get("GEMINI_API_KEY"):
         return "gemini"
-    return "openai"
+    raise RuntimeError(
+        "No Liz LLM provider configured: set ANTHROPIC_API_KEY or GEMINI_API_KEY "
+        "(or LIZ_LLM_PROVIDER explicitly)."
+    )
 
 
 def active_provider() -> str:
@@ -67,20 +71,16 @@ def active_provider() -> str:
 
 def default_model() -> str:
     provider = _active_provider()
-    if provider == "anthropic":
-        return os.environ.get("LIZ_DEFAULT_MODEL", DEFAULT_ANTHROPIC_CHAT)
     if provider == "gemini":
         return os.environ.get("LIZ_GEMINI_DEFAULT_MODEL", DEFAULT_GEMINI_CHAT)
-    return os.environ.get("LIZ_OPENAI_DEFAULT_MODEL", DEFAULT_OPENAI_CHAT)
+    return os.environ.get("LIZ_DEFAULT_MODEL", DEFAULT_ANTHROPIC_CHAT)
 
 
 def deep_model() -> str:
     provider = _active_provider()
-    if provider == "anthropic":
-        return os.environ.get("LIZ_DEEP_MODEL", DEFAULT_ANTHROPIC_DEEP)
     if provider == "gemini":
         return os.environ.get("LIZ_GEMINI_DEEP_MODEL", DEFAULT_GEMINI_DEEP)
-    return os.environ.get("LIZ_OPENAI_DEEP_MODEL", DEFAULT_OPENAI_DEEP)
+    return os.environ.get("LIZ_DEEP_MODEL", DEFAULT_ANTHROPIC_DEEP)
 
 
 def select_model(message: str, is_voice: bool = False, task: str = "chat") -> str:
@@ -135,17 +135,6 @@ def _get_anthropic_client():
         raise RuntimeError("ANTHROPIC_API_KEY is not configured.")
     _anthropic_client = AsyncAnthropic(api_key=api_key)
     return _anthropic_client
-
-
-def _get_openai_chat(system_message: str, model: str, session_id: str):
-    """Build a fresh emergentintegrations LlmChat (OpenAI fallback)."""
-    from emergentintegrations.llm.chat import LlmChat  # type: ignore
-    api_key = os.environ.get("EMERGENT_LLM_KEY", "")
-    if not api_key:
-        raise RuntimeError("EMERGENT_LLM_KEY is not configured (OpenAI fallback).")
-    return LlmChat(
-        api_key=api_key, session_id=session_id, system_message=system_message
-    ).with_model("openai", model)
 
 
 # ─── Unified entry points ─────────────────────────────────────────────────────
@@ -219,23 +208,18 @@ async def complete(
         )
         return "".join(parts).strip()
 
-    if provider == "gemini":
-        from google.genai import types as gtypes  # type: ignore
-        client = _get_gemini_client()
-        response = await client.aio.models.generate_content(
-            model=chosen,
-            contents=user_message,
-            config=gtypes.GenerateContentConfig(
-                system_instruction=system,
-                max_output_tokens=max_tokens,
-            ),
-        )
-        return (response.text or "").strip()
-
-    # openai fallback
-    from emergentintegrations.llm.chat import UserMessage  # type: ignore
-    chat = _get_openai_chat(system, chosen, session_id)
-    return await chat.send_message(UserMessage(text=user_message))
+    # gemini
+    from google.genai import types as gtypes  # type: ignore
+    client = _get_gemini_client()
+    response = await client.aio.models.generate_content(
+        model=chosen,
+        contents=user_message,
+        config=gtypes.GenerateContentConfig(
+            system_instruction=system,
+            max_output_tokens=max_tokens,
+        ),
+    )
+    return (response.text or "").strip()
 
 
 def _emit_cost(
@@ -285,8 +269,7 @@ async def stream(
     is_voice: bool = False,
     task: str = "chat",
 ) -> AsyncIterator[str]:
-    """Yield text deltas as they arrive. OpenAI fallback degrades to a single
-    chunk since emergentintegrations does not expose token streaming here."""
+    """Yield text deltas as they arrive."""
     chosen = model or select_model(user_message, is_voice=is_voice, task=task)
     provider = _active_provider()
 
@@ -337,5 +320,4 @@ def health() -> dict:
         "deep_model": deep_model(),
         "anthropic_configured": bool(os.environ.get("ANTHROPIC_API_KEY")),
         "gemini_configured": bool(os.environ.get("GEMINI_API_KEY")),
-        "openai_configured": bool(os.environ.get("EMERGENT_LLM_KEY")),
     }

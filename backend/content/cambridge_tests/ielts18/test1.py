@@ -23,7 +23,7 @@ IELTS18_TEST1 = {
                     "question_count": 10,
                     "context": "A woman answering questions for a transport survey",
                     "question_types": ["note_completion"],
-                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/330dmao1_18%20section1-part1.mp3",
+                    "audio_file": "/static/audio/330dmao1_18_section1-part1_169e5c57.mp3",
                     "instructions": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
                     "visual": {
                         "type": "notes",
@@ -83,7 +83,7 @@ IELTS18_TEST1 = {
                     "question_count": 10,
                     "context": "A talk about volunteering opportunities at ACE",
                     "question_types": ["multiple_choice", "multiple_selection", "matching"],
-                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/ut6d1tyx_18%20section1-part2.mp3",
+                    "audio_file": "/static/audio/ut6d1tyx_18_section1-part2_9e800ca4.mp3",
                     "questions": [
                         {
                             "number": 11,
@@ -138,7 +138,7 @@ IELTS18_TEST1 = {
                     "question_count": 10,
                     "context": "Two students discussing a talk about jobs in fashion design",
                     "question_types": ["multiple_choice", "multiple_selection"],
-                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/wlt7wyhd_18%20section1-part3.mp3",
+                    "audio_file": "/static/audio/wlt7wyhd_18_section1-part3_1bcbe3ab.mp3",
                     "questions": [
                         {
                             "number": 21,
@@ -207,7 +207,7 @@ IELTS18_TEST1 = {
                     "question_count": 10,
                     "context": "A lecture about elephant translocation",
                     "question_types": ["note_completion"],
-                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/6ozv5g9b_18%20section1-part4.mp3",
+                    "audio_file": "/static/audio/6ozv5g9b_18_section1-part4_2f3172fc.mp3",
                     "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
                     "visual": {
                         "type": "notes",
@@ -497,7 +497,7 @@ Jah describes himself as a space environmentalist: 'I want to make space a place
                     "word_limit": "at least 150 words",
                     "time_suggestion": "20 minutes",
                     "visual_type": "line_graph",
-                    "visual_url": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/5olsly9y_cambridge%2018%20test%201%20writing%20task%201.png",
+                    "visual_url": "/static/cambridge/5olsly9y_cambridge_18_test_1_writing_task_1_2bb6c826.png",
                     "prompt": "The graph below gives information about the percentage of the population in four Asian countries living in cities from 1970 to 2020, with predictions for 2030 and 2040.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant."
                 },
                 {
