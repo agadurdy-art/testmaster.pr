@@ -348,7 +348,13 @@ function AppWithSessionHandler() {
 
   const handleLogout = () => {
     setUser(null);
-    localStorage.removeItem('user');
+    // Clear all per-user cached state (mockExamDate, weekly_pace, targetBand,
+    // onboarding_path, audio-progress:*, draft_*, etc.) to prevent leakage to
+    // the next user on shared devices. Preserve only the device-level i18n
+    // language preference so the next visitor sees their browser language.
+    const preservedLang = localStorage.getItem('ieltsace_language');
+    localStorage.clear();
+    if (preservedLang) localStorage.setItem('ieltsace_language', preservedLang);
   };
 
   // Show loading state while checking localStorage
