@@ -200,7 +200,7 @@ ADMIN_EMAILS_FOR_BYPASS = [
 def is_admin_user(email: str) -> bool:
     if not email:
         return False
-    return email.lower() in [e.lower() for e in ADMIN_EMAILS_FOR_BYPASS] or "aga.durdy" in email.lower()
+    return email.lower() in [e.lower() for e in ADMIN_EMAILS_FOR_BYPASS]
 
 
 def get_plan_features(plan_name: str, email: str = None) -> dict:
