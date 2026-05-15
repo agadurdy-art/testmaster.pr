@@ -825,7 +825,6 @@ async def forgot_password(payload: ForgotPasswordRequest):
     frontend_base = os.getenv("FRONTEND_BASE_URL", "http://localhost:3000")
     reset_link = f"{frontend_base}/reset-password?token={token}"
     await send_reset_email(email, reset_link)
-    logger.info(f"Password reset token for {email}: {token}")
     return {"detail": "If this email exists, a reset link has been sent."}
 
 
