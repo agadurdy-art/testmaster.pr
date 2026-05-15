@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MONTHS, DOW } from '../constants';
 
-const TODAY = new Date(2026, 3, 18); // Fixed "today" per design spec
+const TODAY = new Date();
 
 export default function Calendar({ selected, onSelect }) {
   const [view, setView] = useState(
