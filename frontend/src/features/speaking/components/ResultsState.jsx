@@ -444,9 +444,37 @@ function buildContextLine(data, fluency) {
 }
 
 export default function ResultsState({ data, onRetryCard, onNewCard }) {
-  const SCORES = data?.scores || FIXTURE_SCORES;
-  const FLUENCY = data?.fluency || FIXTURE_FLUENCY;
-  const TRANSCRIPT_TOKENS = data?.transcript_tokens || FIXTURE_TOKENS;
+  // Guard against missing evaluation data. Pre-launch audit (2026-05-16)
+  // flagged that the previous `data?.scores || FIXTURE_SCORES` fallback was
+  // rendering hardcoded "Aunt Mai" demo scores (see ../constants.js) whenever
+  // the speaking evaluator returned null — which looked like a real result
+  // to the user. Render an error UI instead so the caller can retry.
+  if (!data?.scores || !data?.fluency) {
+    return (
+      <section style={{ background: 'white', borderTop: '1px solid var(--sp-border)', borderBottom: '1px solid var(--sp-border)' }}>
+        <div style={{ maxWidth: 1320, margin: '0 auto', padding: '56px 32px 80px', textAlign: 'center' }}>
+          <div style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>We couldn't load your results.</div>
+          <div style={{ fontSize: 14, color: 'var(--sp-muted)', marginBottom: 24 }}>
+            The evaluator didn't return scores for this attempt. Please try recording again.
+          </div>
+          {onRetryCard && (
+            <button
+              type="button"
+              onClick={onRetryCard}
+              style={{ padding: '10px 20px', borderRadius: 8, border: '1px solid var(--sp-border)', background: 'white', cursor: 'pointer' }}
+            >
+              Try this card again
+            </button>
+          )}
+        </div>
+      </section>
+    );
+  }
+  const SCORES = data.scores;
+  const FLUENCY = data.fluency;
+  // Empty array when transcript missing rather than the FIXTURE Vietnamese
+  // demo tokens (constants.js:77) that previously leaked in as "real" data.
+  const TRANSCRIPT_TOKENS = Array.isArray(data?.transcript_tokens) ? data.transcript_tokens : [];
   const lizNote = data?.liz_note;
   const audioSrc = resolveAudioSrc(data?.audio_url);
   const meta = buildContextLine(data, FLUENCY);
