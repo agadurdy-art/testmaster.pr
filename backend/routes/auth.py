@@ -51,6 +51,13 @@ FRONTEND_BASE_URL = os.getenv("FRONTEND_BASE_URL", "https://www.testmaster.pro")
 OAUTH_STATE_TTL_SECONDS = 600   # 10 min — Google consent window
 OAUTH_SESSION_TTL_SECONDS = 300  # 5 min — frontend exchange window
 
+# Allowed return_to schemes/prefixes for /auth/google/start. The web flow
+# uses the default (None → FRONTEND_BASE_URL). Mobile clients pass their
+# own custom scheme so the in-app browser can auto-close on redirect.
+# Anything not on this allow-list is silently dropped — never trust the
+# raw query value as a redirect target (open-redirect risk).
+ALLOWED_OAUTH_RETURN_SCHEMES = ("ieltsace://", "ielts-ace://", FRONTEND_BASE_URL)
+
 if RESEND_API_KEY:
     resend.api_key = RESEND_API_KEY
 
@@ -366,15 +373,28 @@ async def _google_upsert_user(email: str, name: str, google_id: Optional[str]) -
 
 
 @router.get("/auth/google/start")
-async def google_oauth_start():
+async def google_oauth_start(return_to: Optional[str] = None):
+    """Kick off the Google consent dance.
+
+    `return_to` is an optional client-controlled URL the callback will
+    redirect to after upserting the user (with `#session_id=...` appended).
+    Web flow omits it → callback uses FRONTEND_BASE_URL. Mobile passes its
+    own custom scheme (e.g. `ieltsace://oauth`) so the in-app browser can
+    auto-close on match. Untrusted values are dropped to prevent open
+    redirect.
+    """
     if not GOOGLE_CLIENT_ID:
         raise HTTPException(status_code=503, detail="Google OAuth not configured")
     state = secrets.token_urlsafe(32)
     now = datetime.now(timezone.utc)
+    safe_return_to: Optional[str] = None
+    if return_to and any(return_to.startswith(p) for p in ALLOWED_OAUTH_RETURN_SCHEMES):
+        safe_return_to = return_to
     await db.oauth_states.insert_one({
         "state": state,
         "created_at": now,
         "expires_at": now + timedelta(seconds=OAUTH_STATE_TTL_SECONDS),
+        "return_to": safe_return_to,
     })
     params = {
         "client_id": GOOGLE_CLIENT_ID,
@@ -456,6 +476,13 @@ async def google_oauth_callback(code: Optional[str] = None, state: Optional[str]
         "expires_at": now + timedelta(seconds=OAUTH_SESSION_TTL_SECONDS),
     })
 
+    # Pick the redirect target the client asked for. Custom-scheme returns
+    # land via `?session_id=` (query) since fragments don't survive every
+    # in-app browser. Web stays on fragment for back-compat.
+    return_to = state_doc.get("return_to") if state_doc else None
+    if return_to:
+        joiner = "&" if "?" in return_to else "?"
+        return RedirectResponse(url=f"{return_to}{joiner}session_id={ticket}", status_code=302)
     return RedirectResponse(url=f"{FRONTEND_BASE_URL}/#session_id={ticket}", status_code=302)
 
 
