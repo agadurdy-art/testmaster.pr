@@ -4077,8 +4077,21 @@ async def _run_anon_eval_background(
         client_request_id=crid,
         result=result_dict,
     )
-    # Best-effort email — failures are logged inside, not raised.
-    await send_essay_evaluation_email(email, result_dict, token)
+    # Best-effort email — failures are logged inside, not raised. We persist
+    # the delivery descriptor so the admin dashboard can surface
+    # sent / failed / message-id without re-querying Resend.
+    delivery = await send_essay_evaluation_email(email, result_dict, token)
+    await db.anonymous_evaluations.update_one(
+        {"email": email},
+        {"$set": {
+            "email_delivery": {
+                "ok": delivery.get("ok"),
+                "email_id": delivery.get("email_id"),
+                "error": delivery.get("error"),
+                "sent_at": datetime.now(timezone.utc),
+            }
+        }},
+    )
 
 
 @api_router.post("/public/evaluate-essay/async")
@@ -7397,6 +7410,308 @@ async def delete_feedback(feedback_id: str, admin_email: str = Query(...)):
     except Exception as e:
         logger.error(f"Error deleting feedback: {e}")
         raise HTTPException(status_code=500, detail="Failed to delete feedback")
+
+
+# ============ ADMIN: OPS DASHBOARD ============
+# One endpoint, six panels. Powers /admin/ops in the frontend so Aga can
+# eyeball "is everything still alive?" from a single page (service health,
+# anon eval queue, LLM cost, revenue, users, Resend email delivery).
+#
+# Performance: every panel is an aggregate over a small time window so the
+# total payload is well under 100 KB even on busy days. We fan out with
+# asyncio.gather so the call returns in roughly the time of the slowest
+# query (usually the cost rollup).
+
+
+@app.get("/api/admin/ops/overview")
+async def admin_ops_overview(admin_email: str = Query(...)):
+    """Single-call dashboard data. See /admin/ops in the frontend."""
+    from security_utils import require_admin_email
+    from services import cost_telemetry
+
+    require_admin_email(admin_email)
+
+    now = datetime.now(timezone.utc)
+    h24 = now - timedelta(hours=24)
+    d7 = now - timedelta(days=7)
+    d30 = now - timedelta(days=30)
+
+    # --- 1. Services health --------------------------------------------------
+    async def _services():
+        services = {}
+        # Mongo ping
+        try:
+            await db.command("ping")
+            services["mongo"] = {"ok": True, "note": "ping ok"}
+        except Exception as exc:
+            services["mongo"] = {"ok": False, "note": str(exc)[:120]}
+        # Resend API key configured?
+        services["resend"] = {
+            "ok": bool(os.getenv("RESEND_API_KEY")),
+            "from_email": os.getenv("RESEND_FROM_EMAIL") or "onboarding@resend.dev",
+            "note": (
+                "Using Resend sandbox — emails to addresses other than the "
+                "Resend account owner will be blocked with 403. Verify your "
+                "domain in Resend to send to real users."
+                if (os.getenv("RESEND_FROM_EMAIL") or "onboarding@resend.dev")
+                .endswith("resend.dev")
+                else "Verified from-address."
+            ),
+        }
+        # LLM provider keys (just presence — we don't ping the upstream APIs
+        # from here because each ping costs a token and adds latency).
+        services["anthropic"] = {"ok": bool(os.getenv("ANTHROPIC_API_KEY"))}
+        services["openai"] = {"ok": bool(os.getenv("OPENAI_API_KEY"))}
+        services["azure_speech"] = {"ok": bool(os.getenv("AZURE_SPEECH_KEY"))}
+        services["elevenlabs"] = {"ok": bool(os.getenv("ELEVENLABS_API_KEY"))}
+        services["paypal"] = {"ok": bool(os.getenv("PAYPAL_CLIENT_ID"))}
+        services["sepay"] = {"ok": bool(os.getenv("SEPAY_API_KEY")) and os.getenv("ENVIRONMENT") == "production"}
+        services["r2"] = {"ok": bool(os.getenv("R2_ACCOUNT_ID")) and bool(os.getenv("R2_BUCKET"))}
+        services["frontend_base_url"] = {
+            "ok": bool(os.getenv("FRONTEND_BASE_URL")),
+            "value": os.getenv("FRONTEND_BASE_URL") or "(default: https://www.testmaster.pro)",
+        }
+        return services
+
+    # --- 2. Anonymous eval queue (score-my-essay async pipeline) -------------
+    async def _anon_evals():
+        coll = db.anonymous_evaluations
+        pending = await coll.count_documents({"status": "pending"})
+        complete_24h = await coll.count_documents({
+            "status": "complete",
+            "completed_at": {"$gte": h24},
+        })
+        failed_24h = await coll.count_documents({
+            "status": "failed",
+            "failed_at": {"$gte": h24},
+        })
+        complete_7d = await coll.count_documents({
+            "status": "complete",
+            "completed_at": {"$gte": d7},
+        })
+        # Recent 20 — obfuscate email so screenshots are shareable.
+        recent_raw = await coll.find(
+            {},
+            {
+                "_id": 0,
+                "email": 1,
+                "status": 1,
+                "task_type": 1,
+                "user_language": 1,
+                "created_at": 1,
+                "completed_at": 1,
+                "failed_at": 1,
+                "error": 1,
+                "email_delivery": 1,
+                "result.overall_band": 1,
+                "token": 1,
+            },
+        ).sort("created_at", -1).limit(20).to_list(length=20)
+
+        def _obfuscate(addr):
+            if not addr or "@" not in addr:
+                return addr
+            local, dom = addr.split("@", 1)
+            head = local[:2] if len(local) > 2 else local[:1]
+            return f"{head}***@{dom}"
+
+        recent = []
+        for r in recent_raw:
+            band = (r.get("result") or {}).get("overall_band")
+            delivery = r.get("email_delivery") or {}
+            recent.append({
+                "email_masked": _obfuscate(r.get("email")),
+                "status": r.get("status"),
+                "task_type": r.get("task_type"),
+                "language": r.get("user_language"),
+                "created_at": r.get("created_at"),
+                "completed_at": r.get("completed_at"),
+                "failed_at": r.get("failed_at"),
+                "error": (r.get("error") or "")[:120],
+                "band": round(float(band), 1) if isinstance(band, (int, float)) else None,
+                "email_ok": delivery.get("ok"),
+                "email_error": (delivery.get("error") or "")[:120],
+                "token": r.get("token"),
+            })
+
+        return {
+            "pending": pending,
+            "complete_24h": complete_24h,
+            "failed_24h": failed_24h,
+            "complete_7d": complete_7d,
+            "recent": recent,
+        }
+
+    # --- 3. LLM cost summary (reuse existing telemetry) ----------------------
+    async def _cost():
+        try:
+            week = await cost_telemetry.summarize(days=7)
+            month = await cost_telemetry.summarize(days=30)
+            return {
+                "week": {
+                    "total_usd": week.get("total_usd"),
+                    "threshold_usd": week.get("threshold_usd"),
+                    "by_scope": week.get("by_scope", [])[:10],
+                    "by_model": week.get("by_model", [])[:10],
+                    "daily": week.get("daily", []),
+                },
+                "month": {
+                    "total_usd": month.get("total_usd"),
+                    "by_model": month.get("by_model", [])[:10],
+                },
+                "available": week.get("available", False),
+            }
+        except Exception as exc:
+            return {"available": False, "error": str(exc)[:200]}
+
+    # --- 4. Revenue (PayPal payment_orders + SePay pending_payments) ---------
+    async def _revenue():
+        revenue = {"paypal": {"week_count": 0, "month_count": 0, "month_usd": 0.0},
+                   "sepay":  {"week_count": 0, "month_count": 0, "month_vnd": 0}}
+        # PayPal — `payment_orders` collection holds completed orders.
+        try:
+            paypal_week = await db.payment_orders.count_documents({
+                "status": {"$in": ["COMPLETED", "completed", "captured"]},
+                "created_at": {"$gte": d7},
+            })
+            paypal_month_cursor = db.payment_orders.aggregate([
+                {"$match": {
+                    "status": {"$in": ["COMPLETED", "completed", "captured"]},
+                    "created_at": {"$gte": d30},
+                }},
+                {"$group": {
+                    "_id": None,
+                    "count": {"$sum": 1},
+                    "total_usd": {"$sum": "$amount_usd"},
+                }},
+            ])
+            paypal_month_doc = await paypal_month_cursor.to_list(length=1)
+            paypal_month = paypal_month_doc[0] if paypal_month_doc else {}
+            revenue["paypal"] = {
+                "week_count": paypal_week,
+                "month_count": paypal_month.get("count", 0),
+                "month_usd": round(float(paypal_month.get("total_usd") or 0), 2),
+            }
+        except Exception as exc:
+            revenue["paypal"]["error"] = str(exc)[:120]
+        # SePay — `pending_payments` with status='paid'.
+        try:
+            sepay_week = await db.pending_payments.count_documents({
+                "status": "paid",
+                "paid_at": {"$gte": d7},
+            })
+            sepay_month_cursor = db.pending_payments.aggregate([
+                {"$match": {"status": "paid", "paid_at": {"$gte": d30}}},
+                {"$group": {
+                    "_id": None,
+                    "count": {"$sum": 1},
+                    "total_vnd": {"$sum": "$amount_vnd"},
+                }},
+            ])
+            sepay_month_doc = await sepay_month_cursor.to_list(length=1)
+            sepay_month = sepay_month_doc[0] if sepay_month_doc else {}
+            revenue["sepay"] = {
+                "week_count": sepay_week,
+                "month_count": sepay_month.get("count", 0),
+                "month_vnd": int(sepay_month.get("total_vnd") or 0),
+            }
+        except Exception as exc:
+            revenue["sepay"]["error"] = str(exc)[:120]
+        return revenue
+
+    # --- 5. Users (signups + active + plan breakdown) ------------------------
+    async def _users():
+        coll = db.users
+        total = await coll.count_documents({})
+        signups_24h = await coll.count_documents({"created_at": {"$gte": h24}})
+        signups_7d = await coll.count_documents({"created_at": {"$gte": d7}})
+        # Verified ratio — soft signal for spam vs real signups.
+        verified = await coll.count_documents({"email_verified": True})
+        # Plan breakdown.
+        plan_agg = db.users.aggregate([
+            {"$group": {"_id": "$plan", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}},
+        ])
+        plan_breakdown = [
+            {"plan": d["_id"] or "(unset)", "count": d["count"]}
+            for d in await plan_agg.to_list(length=20)
+        ]
+        # Active in last 7d (last_login_at if present).
+        active_7d = await coll.count_documents({"last_login_at": {"$gte": d7}})
+        return {
+            "total": total,
+            "signups_24h": signups_24h,
+            "signups_7d": signups_7d,
+            "verified": verified,
+            "active_7d": active_7d,
+            "plan_breakdown": plan_breakdown,
+        }
+
+    # --- 6. Resend email delivery (last 24h from anon eval log) --------------
+    async def _resend():
+        coll = db.anonymous_evaluations
+        sent_24h = await coll.count_documents({
+            "email_delivery.ok": True,
+            "email_delivery.sent_at": {"$gte": h24},
+        })
+        failed_24h = await coll.count_documents({
+            "email_delivery.ok": False,
+            "email_delivery.sent_at": {"$gte": h24},
+        })
+        # Recent 10 deliveries — including the error string so 403 sandbox
+        # restrictions surface immediately in the dashboard.
+        recent_raw = await coll.find(
+            {"email_delivery": {"$exists": True}},
+            {
+                "_id": 0,
+                "email": 1,
+                "email_delivery": 1,
+            },
+        ).sort("email_delivery.sent_at", -1).limit(10).to_list(length=10)
+
+        def _obfuscate(addr):
+            if not addr or "@" not in addr:
+                return addr
+            local, dom = addr.split("@", 1)
+            return f"{local[:2]}***@{dom}"
+
+        recent = []
+        for r in recent_raw:
+            d = r.get("email_delivery") or {}
+            recent.append({
+                "to_masked": _obfuscate(r.get("email")),
+                "ok": d.get("ok"),
+                "email_id": d.get("email_id"),
+                "error": (d.get("error") or "")[:200],
+                "sent_at": d.get("sent_at"),
+            })
+        return {
+            "sent_24h": sent_24h,
+            "failed_24h": failed_24h,
+            "recent": recent,
+        }
+
+    # Run all six panels in parallel. Each handler swallows its own
+    # exceptions so one slow query can't take down the whole dashboard.
+    services, anon_evals, cost, revenue, users, resend_delivery = await asyncio.gather(
+        _services(),
+        _anon_evals(),
+        _cost(),
+        _revenue(),
+        _users(),
+        _resend(),
+        return_exceptions=False,
+    )
+
+    return {
+        "generated_at": now.isoformat(),
+        "services": services,
+        "anon_evals": anon_evals,
+        "cost": cost,
+        "revenue": revenue,
+        "users": users,
+        "resend": resend_delivery,
+    }
 
 
 # ============ ADMIN: RESEED DATABASE ============

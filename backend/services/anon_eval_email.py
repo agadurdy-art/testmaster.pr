@@ -162,16 +162,19 @@ async def send_essay_evaluation_email(
     to_email: str,
     result: Mapping[str, Any],
     token: str,
-) -> bool:
-    """Send the hybrid report email. Returns True on success, False on any error.
+) -> dict:
+    """Send the hybrid report email. Returns a delivery descriptor:
+        { "ok": bool, "email_id": str | None, "error": str | None }
 
     Failures are logged but do not raise — callers should treat the email
     as a best-effort delivery and rely on the tokenized URL persisting in
-    the eval document so the user can still pull the report.
+    the eval document so the user can still pull the report. The shape
+    above lets the admin dashboard surface delivery state (sent / failed
+    + Resend message id for tracing).
     """
     if not RESEND_API_KEY:
         logger.warning("Resend not configured; skipping anon eval email send")
-        return False
+        return {"ok": False, "email_id": None, "error": "RESEND_API_KEY not set"}
 
     overall = result.get("overall_band")
     overall_str = f"{float(overall):.1f}" if overall is not None else "—"
@@ -186,13 +189,14 @@ async def send_essay_evaluation_email(
             "html": _summary_html(result, report_url),
         }
         sent = await asyncio.to_thread(resend.Emails.send, params)
+        email_id = sent.get("id") if isinstance(sent, dict) else None
         logger.info(
             "Sent anon eval email to %s, email_id=%s, token=%s",
             to_email,
-            sent.get("id") if isinstance(sent, dict) else "?",
+            email_id or "?",
             token[:8],
         )
-        return True
+        return {"ok": True, "email_id": email_id, "error": None}
     except Exception as exc:
         logger.error("Resend anon eval email exception for %s: %s", to_email, exc)
-        return False
+        return {"ok": False, "email_id": None, "error": str(exc)[:300]}
