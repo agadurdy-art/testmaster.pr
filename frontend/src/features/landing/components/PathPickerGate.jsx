@@ -36,6 +36,11 @@ const PATHS = [
 export default function PathPickerGate({ children }) {
   const [resolved, setResolved] = useState(false);
   const [choice, setChoice] = useState(null);
+  // GE redirects to /signup, which on mobile can take 100–500ms to start.
+  // Keep the gate visible with a loading state during that window so the
+  // tap registers a visible commit instead of a brief blank screen
+  // (Fix #C — Aga's "confirm yok / ilerleme yok" mobile observation).
+  const [loadingPath, setLoadingPath] = useState(null);
 
   useEffect(() => {
     try {
@@ -48,6 +53,7 @@ export default function PathPickerGate({ children }) {
   }, []);
 
   function pick(key) {
+    if (loadingPath) return; // ignore double-taps while redirecting
     try {
       localStorage.setItem(STORAGE_KEY, key);
       // Hand the choice to the onboarding flow so SignupBridge doesn't need a
@@ -56,18 +62,20 @@ export default function PathPickerGate({ children }) {
     } catch (_) {
       // ignore write failures — user can still proceed this session
     }
-    setChoice(key);
-    // GE doesn't have a dedicated landing yet, and the IELTS-flavored landing
-    // would be confusing. Shortcut straight into signup with the path hint.
     if (key === 'general' && typeof window !== 'undefined') {
+      // Show "Loading General English…" inside the modal so the tap has
+      // visible feedback before the browser navigates away.
+      setLoadingPath(key);
       window.location.assign('/signup?path=general');
+      return;
     }
+    setChoice(key);
   }
 
   // Avoid flashing the gate before we've read storage.
   if (!resolved) return null;
 
-  const showGate = !choice;
+  const showGate = !choice || loadingPath;
 
   return (
     <>
@@ -82,14 +90,16 @@ export default function PathPickerGate({ children }) {
               </div>
             </div>
             <p className="path-gate-sub">
-              Pick a track to see a tailored landing. You can change this later.
+              {loadingPath === 'general'
+                ? 'Loading General English… taking you to sign-up.'
+                : 'Pick a track to see a tailored landing. You can change this later.'}
             </p>
             <div className="path-gate-options">
               {PATHS.map((p) => (
                 <button
                   key={p.key}
                   type="button"
-                  className={`path-gate-option ${p.available ? '' : 'is-soon'}`}
+                  className={`path-gate-option ${p.available ? '' : 'is-soon'} ${loadingPath === p.key ? 'is-loading' : ''}`}
                   onClick={() => p.available && pick(p.key)}
                   onTouchEnd={(e) => {
                     // Mobile Safari occasionally swallows the synthetic
@@ -97,11 +107,11 @@ export default function PathPickerGate({ children }) {
                     // away (Fix #C — GE path picker stuck on mobile).
                     // Treating touchend as the commit signal makes both
                     // tracks behave the same way on mobile.
-                    if (!p.available) return;
+                    if (!p.available || loadingPath) return;
                     e.preventDefault();
                     pick(p.key);
                   }}
-                  disabled={!p.available}
+                  disabled={!p.available || !!loadingPath}
                 >
                   <span className="path-gate-option-label">
                     {p.label}
