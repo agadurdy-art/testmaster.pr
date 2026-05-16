@@ -88,14 +88,12 @@ export default function LandingPageGE() {
     <div className="min-h-screen bg-gradient-to-b from-violet-50 via-white to-sky-50">
       {/* Top bar — minimal, no shared PublicNav (different brand on purpose) */}
       <header className="max-w-7xl mx-auto px-5 sm:px-8 pt-6 pb-2 flex items-center justify-between">
-        <a href="/" className="inline-flex items-center gap-2">
-          <span className="inline-flex w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 text-white items-center justify-center font-bold">
-            R
-          </span>
-          <div className="leading-tight">
-            <div className="font-bold text-slate-900">testmaster.pro</div>
-            <div className="text-[11px] text-slate-500 tracking-wide">General English with Ray</div>
-          </div>
+        <a href="/" className="inline-flex items-center" aria-label="Ray English home">
+          <img
+            src="/brand/ray-english-logo.png"
+            alt="Ray English — Everyday English by testmaster.pro"
+            className="h-10 sm:h-12 w-auto"
+          />
         </a>
         <div className="flex items-center gap-2">
           <a
@@ -160,9 +158,11 @@ export default function LandingPageGE() {
           <div className="relative">
             <div className="rounded-2xl border border-violet-100 bg-white p-6 shadow-[0_30px_80px_-30px_rgba(124,58,237,0.25)]">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 text-white inline-flex items-center justify-center font-bold flex-shrink-0">
-                  R
-                </div>
+                <img
+                  src="/static/images/ray/ray.png"
+                  alt="Ray"
+                  className="w-12 h-12 rounded-full object-cover ring-2 ring-violet-200 flex-shrink-0"
+                />
                 <div className="flex-1">
                   <div className="text-[11px] font-semibold tracking-wider uppercase text-violet-700">
                     Ray · Vocab card
