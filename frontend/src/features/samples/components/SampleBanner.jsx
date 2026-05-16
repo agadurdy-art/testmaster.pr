@@ -4,9 +4,16 @@ import { cn } from "../../../lib/utils";
 
 /**
  * Thin emerald-tinted banner sits directly under the public nav on sample
- * pages to remind visitors this is a read-only preview.
+ * pages to remind visitors this is a read-only preview. `noun` lets the
+ * speaking trial swap "essay" for "speaking response" without forking the
+ * component (Codex live-test #5).
  */
-export default function SampleBanner({ className, ctaHref = "#cta" }) {
+export default function SampleBanner({
+  className,
+  ctaHref = "#cta",
+  noun = "essay",
+  ctaLabel = "Score my essay",
+}) {
   return (
     <div
       className={cn(
@@ -26,14 +33,14 @@ export default function SampleBanner({ className, ctaHref = "#cta" }) {
         <span className="text-slate-600">
           — see exactly how{" "}
           <em className="not-italic font-medium text-slate-900">your</em>{" "}
-          essay will be scored. Nothing here is editable.
+          {noun} will be scored. Nothing here is editable.
         </span>
         <span className="ml-auto hidden sm:inline-flex items-center gap-2">
           <a
             href={ctaHref}
             className="text-emerald-800 font-medium hover:underline"
           >
-            Score my essay →
+            {ctaLabel} →
           </a>
         </span>
       </div>

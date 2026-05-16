@@ -21,6 +21,18 @@ export default function LoginPage({ user, onLogin }) {
     return action === 'signup' ? 'signup' : 'signin';
   };
 
+  // Honor ?next=<path> set by RedirectToLogin so users return to the page
+  // they were trying to reach. Same-origin paths only — reject anything that
+  // doesn't start with a single "/" to block open-redirect into //evil.com
+  // or javascript: URLs.
+  const safeNext = (() => {
+    const raw = new URLSearchParams(location.search).get('next');
+    if (!raw) return null;
+    if (!raw.startsWith('/') || raw.startsWith('//')) return null;
+    return raw;
+  })();
+  const postLoginTarget = safeNext || '/dashboard';
+
   const [mode, setMode] = useState(initialMode);
   const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
   const [loading, setLoading] = useState(false);
@@ -33,13 +45,19 @@ export default function LoginPage({ user, onLogin }) {
   }, [location.search]);
 
   if (user) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to={postLoginTarget} replace />;
   }
 
   const handleGoogle = () => {
     // Own Google OAuth client (replaces auth.emergentagent.com proxy as of
     // 2026-05-08). Backend handles the consent dance and hands us back a
     // short-lived ticket in `#session_id=` for App.js to exchange.
+    // Stash `next` in sessionStorage so the OAuth round-trip (which strips
+    // the query string) can still return us to the originally requested
+    // page after sign-in.
+    if (safeNext) {
+      try { window.sessionStorage.setItem('postLoginNext', safeNext); } catch (_) { /* non-fatal */ }
+    }
     window.location.href = `${process.env.REACT_APP_BACKEND_URL}/api/auth/google/start`;
   };
 
@@ -56,13 +74,13 @@ export default function LoginPage({ user, onLogin }) {
         const userData = await registerUser({ name, email, password });
         onLogin(userData);
         toast.success('Welcome! Check your email to verify your account.', { duration: 5000 });
-        navigate('/dashboard');
+        navigate(postLoginTarget);
       } else {
         const { email, password } = formData;
         const userData = await loginUser({ email, password });
         onLogin(userData);
         toast.success('Welcome back!');
-        navigate('/dashboard');
+        navigate(postLoginTarget);
       }
     } catch (err) {
       const msg = err?.response?.data?.detail || 'Authentication failed. Please try again.';

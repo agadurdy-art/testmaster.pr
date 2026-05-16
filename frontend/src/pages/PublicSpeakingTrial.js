@@ -305,7 +305,7 @@ export default function PublicSpeakingTrial() {
   return (
     <div className="min-h-screen bg-slate-50 pb-24 md:pb-0">
       <PublicNav />
-      <SampleBanner />
+      <SampleBanner noun="speaking response" ctaLabel="Score my speaking" />
 
       {stage === "intro" && (
         <IntroForm
@@ -355,7 +355,7 @@ export default function PublicSpeakingTrial() {
       )}
 
       <PublicFooter />
-      <MobileStickyCTA />
+      <MobileStickyCTA label="Score my speaking — free" />
     </div>
   );
 }

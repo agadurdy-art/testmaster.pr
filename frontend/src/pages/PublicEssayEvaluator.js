@@ -236,7 +236,7 @@ export default function PublicEssayEvaluator() {
   return (
     <div className="min-h-screen bg-slate-50 pb-24 md:pb-0">
       <PublicNav />
-      <SampleBanner />
+      <SampleBanner ctaLabel="Jump to evaluator" />
 
       {/* ===== Input form ===== */}
       {!result && (
@@ -393,7 +393,7 @@ export default function PublicEssayEvaluator() {
                 ) : (
                   <>
                     <PenLine className="w-4 h-4" />
-                    Score my essay
+                    Submit essay for scoring
                     <ArrowRight className="w-3.5 h-3.5" />
                   </>
                 )}

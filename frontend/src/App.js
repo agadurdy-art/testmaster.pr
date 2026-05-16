@@ -128,6 +128,16 @@ const UnifiedLessonPage = lazy(() => import('./pages/UnifiedLessonPage'));
 const DailyHabitPage = lazy(() => import('./pages/DailyHabitPage'));
 const GameDemo = lazy(() => import('./pages/GameDemo'));
 
+// Unauthenticated user redirect — sends to /login with ?next= so we can
+// bounce back to the originally requested page after sign-in. Previously
+// every protected route fell back to the landing page, which forgot the
+// user's target (Codex live-test #2).
+function RedirectToLogin() {
+  const location = useLocation();
+  const next = `${location.pathname}${location.search}${location.hash}`;
+  return <Navigate to={`/login?next=${encodeURIComponent(next)}`} replace />;
+}
+
 // Page loading fallback — skeleton-based to avoid empty-screen flash during
 // lazy route chunks. Neutral layout that reads as "something is coming" on
 // any page, not a specific one.
@@ -321,7 +331,19 @@ function AppWithSessionHandler() {
         const planTarget = pendingPlanRedirect(consumePendingPlan());
         if (planTarget) { navigate(planTarget); return; }
         const intentTarget = pendingIntentRedirect(consumePendingIntent());
-        navigate(intentTarget || '/dashboard');
+        // Consume `?next=` stashed by LoginPage before the OAuth round-trip
+        // so unauthenticated users redirected from a protected route end up
+        // back on that route after Google sign-in. Same-origin guard mirrors
+        // LoginPage's safeNext.
+        let nextTarget = null;
+        try {
+          const raw = window.sessionStorage.getItem('postLoginNext');
+          window.sessionStorage.removeItem('postLoginNext');
+          if (raw && raw.startsWith('/') && !raw.startsWith('//')) {
+            nextTarget = raw;
+          }
+        } catch (_) { /* non-fatal */ }
+        navigate(intentTarget || nextTarget || '/dashboard');
       })();
     }
   }, [location, navigate]);
@@ -398,52 +420,52 @@ function AppWithSessionHandler() {
               ? (isIeltsMode(user)
                   ? <DashboardPage user={user} onLogout={handleLogout} />
                   : <Dashboard user={user} onLogout={handleLogout} />)
-              : <Navigate to="/" />
+              : <RedirectToLogin />
           }
         />
         <Route 
           path="/test/:testType" 
-          element={user ? <TestInterface user={user} /> : <Navigate to="/" />} 
+          element={user ? <TestInterface user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/results/:attemptId" 
-          element={user ? <Results user={user} /> : <Navigate to="/" />} 
+          element={user ? <Results user={user} /> : <RedirectToLogin />} 
         />
         <Route
           path="/tips"
-          element={user ? <StrategiesGuide user={user} onLogout={handleLogout} /> : <Navigate to="/" />}
+          element={user ? <StrategiesGuide user={user} onLogout={handleLogout} /> : <RedirectToLogin />}
         />
         <Route
           path="/strategies"
-          element={user ? <StrategiesGuide user={user} onLogout={handleLogout} /> : <Navigate to="/" />}
+          element={user ? <StrategiesGuide user={user} onLogout={handleLogout} /> : <RedirectToLogin />}
         />
         <Route 
           path="/courses" 
-          element={user ? <CoursesPage user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
+          element={user ? <CoursesPage user={user} onLogout={handleLogout} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/courses/:courseId" 
-          element={user ? <CourseDetail user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
+          element={user ? <CourseDetail user={user} onLogout={handleLogout} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/learning" 
-          element={user ? <LearningPlatform user={user} /> : <Navigate to="/" />} 
+          element={user ? <LearningPlatform user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/learning/level/:levelId" 
-          element={user ? <LevelDetail user={user} /> : <Navigate to="/" />} 
+          element={user ? <LevelDetail user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/learning/unit/:unitId" 
-          element={user ? <UnitDetail user={user} /> : <Navigate to="/" />} 
+          element={user ? <UnitDetail user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/learning/lesson/:lessonId" 
-          element={user ? <LessonView user={user} /> : <Navigate to="/" />} 
+          element={user ? <LessonView user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/profile" 
-          element={user ? <Profile user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
+          element={user ? <Profile user={user} onLogout={handleLogout} /> : <RedirectToLogin />} 
         />
         <Route
           path="/pricing"
@@ -458,12 +480,12 @@ function AppWithSessionHandler() {
         />
         <Route
           path="/checkout/bank/:plan"
-          element={user ? <BankTransferCheckout user={user} /> : <Navigate to="/" />}
+          element={user ? <BankTransferCheckout user={user} /> : <RedirectToLogin />}
         />
         <Route path="/pricing/v1" element={<PricingPage user={user} />} />
         <Route
           path="/onboarding"
-          element={user ? <OnboardingPageV2 user={user} onUserUpdate={setUser} /> : <Navigate to="/" />}
+          element={user ? <OnboardingPageV2 user={user} onUserUpdate={setUser} /> : <RedirectToLogin />}
         />
         <Route 
           path="/admin/content" 
@@ -483,7 +505,7 @@ function AppWithSessionHandler() {
         />
         <Route
           path="/writing-practice"
-          element={user ? <WritingPractice user={user} /> : <Navigate to="/" />}
+          element={user ? <WritingPractice user={user} /> : <RedirectToLogin />}
         />
         {/* Codex audit P0 (#96): gate /dev/* routes to non-production
             builds. /dev/ge bypasses both auth and onboarding, /dev/evaluator-result
@@ -514,11 +536,11 @@ function AppWithSessionHandler() {
         <Route path="/score-my-speaking" element={<PublicSpeakingTrial />} />
         <Route
           path="/sample-reports"
-          element={user ? <SampleReportsHub /> : <Navigate to="/" />}
+          element={user ? <SampleReportsHub /> : <RedirectToLogin />}
         />
         <Route
           path="/dashboard/v2"
-          element={user ? <DashboardPage /> : <Navigate to="/" />}
+          element={user ? <DashboardPage /> : <RedirectToLogin />}
         />
         <Route path="/landing/v2" element={<LandingPageV2 />} />
         <Route path="/landing/demo" element={<LandingPageDemo />} />
@@ -527,7 +549,7 @@ function AppWithSessionHandler() {
         <Route path="/speaking/v2" element={<SpeakingPracticeV2 />} />
         <Route
           path="/speaking-premium"
-          element={user ? <SpeakingPremium user={user} /> : <Navigate to="/" />}
+          element={user ? <SpeakingPremium user={user} /> : <RedirectToLogin />}
         />
         <Route
           path="/speaking-practice"
@@ -536,12 +558,12 @@ function AppWithSessionHandler() {
               ? (isIeltsMode(user)
                   ? <SpeakingPracticeV2 user={user} />
                   : <SpeakingPractice user={user} />)
-              : <Navigate to="/" />
+              : <RedirectToLogin />
           }
         />
         <Route 
           path="/progress" 
-          element={user ? <Progress user={user} /> : <Navigate to="/" />} 
+          element={user ? <Progress user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/beginner-course" 
@@ -559,49 +581,49 @@ function AppWithSessionHandler() {
         <Route path="/vocabulary" element={<VocabularyBrowse />} />
         <Route
           path="/vocabulary/learn/:moduleId"
-          element={user ? <VocabularyLearnMode user={user} /> : <Navigate to="/" />}
+          element={user ? <VocabularyLearnMode user={user} /> : <RedirectToLogin />}
         />
         <Route 
           path="/vocabulary/practice/:moduleId" 
-          element={user ? <VocabularyPracticeMode user={user} /> : <Navigate to="/" />} 
+          element={user ? <VocabularyPracticeMode user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/vocabulary/quiz/:moduleId" 
-          element={user ? <VocabularyQuizMode user={user} /> : <Navigate to="/" />} 
+          element={user ? <VocabularyQuizMode user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/vocabulary/production/:moduleId" 
-          element={user ? <VocabularyProductionMode user={user} /> : <Navigate to="/" />} 
+          element={user ? <VocabularyProductionMode user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/review-bank" 
-          element={user ? <ReviewBank user={user} /> : <Navigate to="/" />} 
+          element={user ? <ReviewBank user={user} /> : <RedirectToLogin />} 
         />
         
         {/* Grammar Engine Routes */}
         <Route 
           path="/grammar/learn/:moduleId" 
-          element={user ? <GrammarLearnMode user={user} /> : <Navigate to="/" />} 
+          element={user ? <GrammarLearnMode user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/grammar/practice/:moduleId" 
-          element={user ? <GrammarPracticeMode user={user} /> : <Navigate to="/" />} 
+          element={user ? <GrammarPracticeMode user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/grammar/quiz/:moduleId" 
-          element={user ? <GrammarQuizMode user={user} /> : <Navigate to="/" />} 
+          element={user ? <GrammarQuizMode user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/grammar/guided/:moduleId" 
-          element={user ? <GrammarProductionMode user={user} stage="guided" /> : <Navigate to="/" />} 
+          element={user ? <GrammarProductionMode user={user} stage="guided" /> : <RedirectToLogin />} 
         />
         <Route 
           path="/grammar/free/:moduleId" 
-          element={user ? <GrammarProductionMode user={user} stage="free" /> : <Navigate to="/" />} 
+          element={user ? <GrammarProductionMode user={user} stage="free" /> : <RedirectToLogin />} 
         />
         <Route
           path="/grammar/smart-review/:moduleId"
-          element={user ? <GrammarSmartReview user={user} /> : <Navigate to="/" />}
+          element={user ? <GrammarSmartReview user={user} /> : <RedirectToLogin />}
         />
 
         {/* Grammar Blueprint — curated IELTS 8 curriculum */}
@@ -611,19 +633,19 @@ function AppWithSessionHandler() {
         {/* Unified Learning System Routes */}
         <Route 
           path="/unified" 
-          element={user ? <UnifiedCoursePage user={user} /> : <Navigate to="/" />} 
+          element={user ? <UnifiedCoursePage user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/unified/stage/:stageId" 
-          element={user ? <UnifiedStagePage user={user} /> : <Navigate to="/" />} 
+          element={user ? <UnifiedStagePage user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/unified/lesson/:lessonId" 
-          element={user ? <UnifiedLessonPage user={user} /> : <Navigate to="/" />} 
+          element={user ? <UnifiedLessonPage user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/unified/daily-habit" 
-          element={user ? <DailyHabitPage user={user} /> : <Navigate to="/" />} 
+          element={user ? <DailyHabitPage user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/game-demo" 
@@ -660,76 +682,76 @@ function AppWithSessionHandler() {
         />
         <Route 
           path="/question-bank/writing/task1" 
-          element={user ? <WritingTask1Practice user={user} /> : <Navigate to="/" />} 
+          element={user ? <WritingTask1Practice user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/question-bank/writing/task2" 
-          element={user ? <WritingTask2Practice user={user} /> : <Navigate to="/" />} 
+          element={user ? <WritingTask2Practice user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/question-bank/writing/general/task1" 
-          element={user ? <GeneralTask1Practice user={user} /> : <Navigate to="/" />} 
+          element={user ? <GeneralTask1Practice user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/question-bank/writing/general/task2" 
-          element={user ? <GeneralTask2Practice user={user} /> : <Navigate to="/" />} 
+          element={user ? <GeneralTask2Practice user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/question-bank/reading/academic" 
-          element={user ? <ReadingPracticeAcademic user={user} /> : <Navigate to="/" />} 
+          element={user ? <ReadingPracticeAcademic user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/question-bank/reading/general" 
-          element={user ? <ReadingPracticeGeneral user={user} /> : <Navigate to="/" />} 
+          element={user ? <ReadingPracticeGeneral user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/question-bank/reading/mastery/academic" 
-          element={user ? <ReadingPracticeMasteryAcademic user={user} /> : <Navigate to="/" />} 
+          element={user ? <ReadingPracticeMasteryAcademic user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/question-bank/reading/mastery/general" 
-          element={user ? <ReadingPracticeMasteryGeneral user={user} /> : <Navigate to="/" />} 
+          element={user ? <ReadingPracticeMasteryGeneral user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/question-bank/reading/practice" 
-          element={user ? <ReadingPracticeByType user={user} /> : <Navigate to="/" />} 
+          element={user ? <ReadingPracticeByType user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/question-bank/listening" 
-          element={user ? <ListeningPractice user={user} /> : <Navigate to="/" />} 
+          element={user ? <ListeningPractice user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/question-bank/speaking" 
-          element={user ? <SpeakingPracticeQB user={user} /> : <Navigate to="/" />} 
+          element={user ? <SpeakingPracticeQB user={user} /> : <RedirectToLogin />} 
         />
         <Route
           path="/question-bank/practice"
-          element={user ? <PracticeMode user={user} /> : <Navigate to="/" />}
+          element={user ? <PracticeMode user={user} /> : <RedirectToLogin />}
         />
         <Route
           path="/quick-practice"
-          element={user ? <PracticeMode user={user} /> : <Navigate to="/" />}
+          element={user ? <PracticeMode user={user} /> : <RedirectToLogin />}
         />
         <Route
           path="/learning-tools"
-          element={user ? <LearningToolsIndex user={user} /> : <Navigate to="/" />}
+          element={user ? <LearningToolsIndex user={user} /> : <RedirectToLogin />}
         />
         <Route 
           path="/liz" 
-          element={user ? <LizTeacher user={user} /> : <Navigate to="/" />} 
+          element={user ? <LizTeacher user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/question-bank" 
-          element={user ? <QuestionBank user={user} /> : <Navigate to="/" />} 
+          element={user ? <QuestionBank user={user} /> : <RedirectToLogin />} 
         />
         {/* Full Test Mode Routes */}
         <Route 
           path="/full-test" 
-          element={user ? <FullTestMode user={user} /> : <Navigate to="/" />} 
+          element={user ? <FullTestMode user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/full-test/take/:testId" 
-          element={user ? <FullTestInterface user={user} /> : <Navigate to="/" />} 
+          element={user ? <FullTestInterface user={user} /> : <RedirectToLogin />} 
         />
         <Route
           path="/full-test/results/:sessionId"
@@ -738,20 +760,20 @@ function AppWithSessionHandler() {
         {/* Cambridge IELTS Tests */}
         <Route 
           path="/cambridge-test/:bookId/:testId" 
-          element={user ? <CambridgeTestInterface user={user} /> : <Navigate to="/" />} 
+          element={user ? <CambridgeTestInterface user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/cambridge-test/:bookId/:testId/results" 
-          element={user ? <CambridgeTestResults user={user} /> : <Navigate to="/" />} 
+          element={user ? <CambridgeTestResults user={user} /> : <RedirectToLogin />} 
         />
         <Route 
           path="/focus-plan" 
-          element={user ? <FocusPlan /> : <Navigate to="/" />} 
+          element={user ? <FocusPlan /> : <RedirectToLogin />} 
         />
         {/* Admin Tools */}
         <Route
           path="/admin/visual-generator"
-          element={user ? <VisualGenerator /> : <Navigate to="/" />}
+          element={user ? <VisualGenerator /> : <RedirectToLogin />}
         />
         {/* Zombie slug redirects — these URLs surface from browser history /
             external referrers (no source in code or git). Bounce to the real
