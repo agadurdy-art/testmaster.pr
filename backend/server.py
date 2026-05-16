@@ -8196,7 +8196,10 @@ async def auto_seed_unified_learning():
         
         # Count content JSON files available
         import glob
-        content_dir = "/app/backend/content"
+        from pathlib import Path as _Path
+        # Resolve relative to this file (backend/server.py) — works on both
+        # Railway (service root = backend/) and local dev.
+        content_dir = str(_Path(__file__).resolve().parent / "content")
         content_files = glob.glob(f"{content_dir}/stage*_unit*.json")
         expected_units = len(content_files)
         

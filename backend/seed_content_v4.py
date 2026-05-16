@@ -297,7 +297,8 @@ async def seed_from_content(target_db=None):
         client = AsyncIOMotorClient(os.environ.get('MONGO_URL'))
         db = client[os.environ.get('DB_NAME', 'ielts_ace')]
 
-    content_dir = "/app/backend/content"
+    from pathlib import Path as _Path
+    content_dir = str(_Path(__file__).resolve().parent / "content")
     files = sorted(glob.glob(f"{content_dir}/stage*_unit*.json"))
 
     if not files:

@@ -6,12 +6,19 @@ Allows triggering content enrichment from the admin panel
 from fastapi import APIRouter, HTTPException, BackgroundTasks
 from pydantic import BaseModel
 from typing import Optional, List
+from pathlib import Path
 import os
 import json
 import asyncio
 from datetime import datetime, timezone
 
 router = APIRouter(prefix="/api/admin/content", tags=["Content Enrichment"])
+
+# backend/routes/content_enrichment.py → parent.parent = backend/
+# Works on both Railway (service root = backend/) and local repo layout.
+_BACKEND_ROOT = Path(__file__).resolve().parent.parent
+_CONTENT_DIR = str(_BACKEND_ROOT / "content")
+_ENRICHED_DIR = str(_BACKEND_ROOT / "content" / "enriched")
 
 # Track enrichment status
 enrichment_status = {}
@@ -41,8 +48,8 @@ async def run_enrichment(unit_numbers: Optional[List[int]] = None):
     enrichment_status['completed_units'] = []
     enrichment_status['errors'] = []
     
-    content_dir = "/app/backend/content"
-    enriched_dir = "/app/backend/content/enriched"
+    content_dir = _CONTENT_DIR
+    enriched_dir = _ENRICHED_DIR
     os.makedirs(enriched_dir, exist_ok=True)
     
     # Get list of unit files
@@ -152,8 +159,8 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None, stage
     client = AsyncIOMotorClient(mongo_url)
     db = client[db_name]
     
-    content_dir = "/app/backend/content"
-    enriched_dir = "/app/backend/content/enriched"
+    content_dir = _CONTENT_DIR
+    enriched_dir = _ENRICHED_DIR
     
     if unit_numbers is None:
         unit_numbers = list(range(1, 13))
@@ -375,8 +382,8 @@ async def seed_enriched_content(unit_numbers: Optional[List[int]] = None):
     client = AsyncIOMotorClient(mongo_url)
     db = client[db_name]
     
-    enriched_dir = "/app/backend/content/enriched"
-    
+    enriched_dir = _ENRICHED_DIR
+
     if not os.path.exists(enriched_dir):
         raise HTTPException(status_code=400, detail="No enriched content found. Run enrichment first.")
     
@@ -538,7 +545,7 @@ async def seed_enriched_content(unit_numbers: Optional[List[int]] = None):
 @router.get("/preview/{unit_num}/{lesson_num}")
 async def preview_enriched_lesson(unit_num: int, lesson_num: int):
     """Preview enriched content for a specific lesson"""
-    enriched_file = f"/app/backend/content/enriched/stage1_unit{str(unit_num).zfill(2)}_enriched.json"
+    enriched_file = f"{_ENRICHED_DIR}/stage1_unit{str(unit_num).zfill(2)}_enriched.json"
     
     if not os.path.exists(enriched_file):
         raise HTTPException(status_code=404, detail="Enriched content not found for this unit")
