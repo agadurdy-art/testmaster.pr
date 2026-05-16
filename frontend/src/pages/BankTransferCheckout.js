@@ -56,7 +56,17 @@ export default function BankTransferCheckout({ user }) {
   const [error, setError] = useState(null);
   const [status, setStatus] = useState('pending');
   const [copied, setCopied] = useState(null);
+  // Bumped by restart() to re-mint a reference code when the previous
+  // session expired (or failed). Both effects depend on it.
+  const [nonce, setNonce] = useState(0);
   const pollRef = useRef(null);
+
+  const restart = () => {
+    setSession(null);
+    setError(null);
+    setStatus('pending');
+    setNonce((n) => n + 1);
+  };
 
   // Guard: unknown plan keys bounce back to pricing.
   if (!PLAN_LABELS[plan]) {
@@ -85,7 +95,7 @@ export default function BankTransferCheckout({ user }) {
     return () => {
       cancelled = true;
     };
-  }, [plan, user.email]);
+  }, [plan, user.email, nonce]);
 
   // Step 3: poll status every 6 seconds. Stops when completed/expired.
   useEffect(() => {
@@ -195,6 +205,28 @@ export default function BankTransferCheckout({ user }) {
         {status === 'completed' ? (
           <div style={bannerOk}>
             ✓ Payment received. Activating your plan...
+          </div>
+        ) : status === 'expired' || status === 'failed' ? (
+          // Codex sweep #2 / #7: backend flips status to 'expired' after the
+          // pending_payment window closes (see /payments/sepay/status). Before
+          // this branch existed, the polling loop would stop on a non-pending
+          // status but the UI kept showing the now-stale QR + "Waiting for
+          // your transfer..." spinner forever.
+          <div style={bannerExpired}>
+            <strong style={{ fontSize: 15 }}>
+              {status === 'expired' ? 'This transfer window expired' : 'Payment failed'}
+            </strong>
+            <p style={{ margin: '6px 0 0', fontSize: 13, color: '#7c2d12' }}>
+              The old reference code is no longer valid. Start a new transfer
+              to get a fresh QR.
+            </p>
+            <button
+              type="button"
+              style={{ ...primaryBtn, marginTop: 14 }}
+              onClick={restart}
+            >
+              Start new transfer
+            </button>
           </div>
         ) : (
           <>
@@ -373,6 +405,15 @@ const bannerOk = {
   padding: 16,
   borderRadius: 12,
   fontWeight: 600,
+  textAlign: 'center',
+};
+
+const bannerExpired = {
+  background: '#fef2f2',
+  border: '1px solid #fecaca',
+  color: '#991b1b',
+  padding: 16,
+  borderRadius: 12,
   textAlign: 'center',
 };
 

@@ -78,28 +78,35 @@ async def generate_tts(request: TTSRequest):
     # synthesize but below pathological payloads.
     if len(request.text or "") > 800:
         raise HTTPException(status_code=413, detail="Text too long for TTS")
+    # Cache lookup runs first — even an anon client with no ELEVENLABS_API_KEY
+    # in env must be able to fetch already-cached audio. Codex P0 #6: previously
+    # the ELEVENLABS_API_KEY guard came first, so cache-only anon requests 500'd
+    # on a missing key instead of serving the static MP3.
+    cache_path = get_cache_path(request.text, request.voice_id)
+    try:
+        cached_ok = cache_path.exists() and cache_path.stat().st_size > 0
+    except OSError:
+        cached_ok = False
+    if cached_ok:
+        return TTSResponse(
+            audio_url=f"/api/static/audio/tts_cache/{cache_path.name}",
+            cached=True,
+        )
+    # Anonymous callers may only fetch already-cached audio. First
+    # generation of any new string must come from an authed request;
+    # this turns the anon path into a static-file fetch and removes
+    # the ElevenLabs cost-bomb vector.
+    if is_anon:
+        raise HTTPException(
+            status_code=403,
+            detail="TTS generation requires authentication",
+        )
+
     try:
         from elevenlabs import ElevenLabs, VoiceSettings
 
         if not ELEVENLABS_API_KEY:
             raise HTTPException(status_code=500, detail="ElevenLabs API key not configured")
-
-        # Check cache first
-        cache_path = get_cache_path(request.text, request.voice_id)
-        if cache_path.exists():
-            return TTSResponse(
-                audio_url=f"/api/static/audio/tts_cache/{cache_path.name}",
-                cached=True
-            )
-        # Anonymous callers may only fetch already-cached audio. First
-        # generation of any new string must come from an authed request;
-        # this turns the anon path into a static-file fetch and removes
-        # the ElevenLabs cost-bomb vector.
-        if is_anon:
-            raise HTTPException(
-                status_code=403,
-                detail="TTS generation requires authentication",
-            )
 
         # Generate new audio
         client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
@@ -131,7 +138,11 @@ async def generate_tts(request: TTSRequest):
             audio_url=f"/api/static/audio/tts_cache/{cache_path.name}",
             cached=False
         )
-        
+
+    except HTTPException:
+        # Preserve 401/403/413 etc. — without this, the broad Exception
+        # handler below re-wraps them as 500 (Codex P0 #5).
+        raise
     except Exception as e:
         print(f"TTS Error: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error generating TTS: {str(e)}")
@@ -209,7 +220,9 @@ async def generate_speaking_questions_audio(request: TTSBatchRequest):
             })
         
         return {"success": True, "questions": results}
-        
+
+    except HTTPException:
+        raise
     except Exception as e:
         print(f"TTS Batch Error: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error generating TTS: {str(e)}")
