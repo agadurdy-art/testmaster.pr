@@ -2,29 +2,15 @@ import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../components/ui/dialog';
-import { uploadBankPayment } from '../lib/api';
 import { useI18n, LANGUAGES } from '../lib/i18n';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import {
-  ArrowLeft, Check, X, Compass, BookOpen, Award, Crown, Building2, Mail, Globe, QrCode, Upload
+  ArrowLeft, Check, X, Compass, BookOpen, Award, Crown, Building2, Mail, Globe
 } from 'lucide-react';
-
-import qrExplorer from '../assets/payments/Single exam 120k.png';
-import qrLearner from '../assets/payments/Starter plan 220k.png';
-import qrAchiever from '../assets/payments/Booster plan 460k.png';
-import qrMaster from '../assets/payments/Pro plan 700k.png';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const paypalClientId = process.env.REACT_APP_PAYPAL_CLIENT_ID;
 const SUPPORT_EMAIL = 'support@testmaster.pro';
-
-const QR_IMAGES = {
-  explorer: qrExplorer,
-  learner: qrLearner,
-  achiever: qrAchiever,
-  master: qrMaster,
-};
 
 const PAYPAL_PLAN_IDS = {
   explorer: 'P-01067231X8887700NNGUZXZI',
@@ -37,8 +23,6 @@ export default function PricingPage({ user }) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { t, language, setLanguage } = useI18n();
-  const [selectedPlan, setSelectedPlan] = useState(null);
-  const [bankModalOpen, setBankModalOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
 
   const fromFeature = searchParams.get('from');
@@ -99,36 +83,14 @@ export default function PricingPage({ user }) {
     },
   ];
 
+  // V1 GE plans (explorer/learner/achiever/master) are also accepted by the
+  // SePay /initiate endpoint (see backend PLAN_DURATION_DAYS + PLAN_PRICES_VND).
+  // Pre-launch audit 2026-05-16 retired the screenshot-upload bank flow in
+  // favour of SePay's auto-confirming bank-transfer checkout — same UX as
+  // V2 IELTS Ace plans, no manual admin review needed.
   const handleOpenBankModal = (plan) => {
     if (!user) { navigate('/'); return; }
-    setSelectedPlan(plan);
-    setBankModalOpen(true);
-  };
-
-  const handleUploadScreenshot = async () => {
-    if (!user || !selectedPlan) return;
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = 'image/*';
-    fileInput.onchange = async () => {
-      if (!fileInput.files || fileInput.files.length === 0) return;
-      const file = fileInput.files[0];
-      const formData = new FormData();
-      formData.append('plan_id', selectedPlan.id);
-      formData.append('email', user.email);
-      formData.append('screenshot', file);
-      try {
-        // Bank upload no longer auto-activates the plan (pre-launch audit
-        // 2026-05-16: previously any PNG → 30 days of any tier). The screenshot
-        // is queued for admin review; do not optimistically mutate the cached
-        // user. The flash message still tells the user we received their proof.
-        await uploadBankPayment(formData);
-        alert(t('paymentSubmitted'));
-        setBankModalOpen(false);
-        navigate('/dashboard');
-      } catch { alert(t('uploadFailed')); }
-    };
-    fileInput.click();
+    navigate(`/checkout/bank/${plan.id}`);
   };
 
   const planTier = { free: 0, explorer: 1, learner: 2, achiever: 3, master: 4 };
@@ -298,56 +260,6 @@ export default function PricingPage({ user }) {
           </a>
         </div>
       </main>
-
-      <Dialog open={bankModalOpen} onOpenChange={setBankModalOpen}>
-        <DialogContent className="max-w-md bg-gray-900 border-gray-700 p-0 overflow-hidden" data-testid="bank-modal">
-          <div className="p-5 pb-3">
-            <DialogHeader>
-              <DialogTitle className="text-white text-lg">{t('bankModalTitle')}</DialogTitle>
-              <DialogDescription className="text-gray-400 text-xs">{t('bankModalDesc')}</DialogDescription>
-            </DialogHeader>
-          </div>
-          {selectedPlan && (
-            <div className="px-5 pb-5 space-y-4">
-              {/* QR Code - centered and prominent */}
-              {QR_IMAGES[selectedPlan.id] && (
-                <div className="flex justify-center">
-                  <div className="bg-white rounded-2xl p-3 shadow-lg" data-testid="bank-qr-code">
-                    <img
-                      src={QR_IMAGES[selectedPlan.id]}
-                      alt={`QR code for ${selectedPlan.name}`}
-                      className="w-48 h-48 object-contain"
-                    />
-                  </div>
-                </div>
-              )}
-
-              {/* Plan + Account info row */}
-              <div className="flex items-center gap-3">
-                <div className="bg-gray-800 rounded-xl px-4 py-2 text-center flex-shrink-0">
-                  <p className="text-2xl font-bold text-white">{selectedPlan.price}</p>
-                  <p className="text-[11px] text-gray-400">{selectedPlan.name}</p>
-                </div>
-                <div className="text-xs space-y-1 text-gray-300 min-w-0">
-                  <p><span className="font-semibold text-white">{t('bankAccountName')}:</span> OVEZDURDYYEV AGAGELDI</p>
-                  <p><span className="font-semibold text-white">{t('bankAccountNumber')}:</span> 700036356609</p>
-                  <p><span className="font-semibold text-white">{t('bankName')}:</span> Shinhan Vietnam</p>
-                </div>
-              </div>
-
-              {/* Upload button */}
-              <Button
-                onClick={handleUploadScreenshot}
-                className="w-full bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 h-10"
-                data-testid="bank-upload-btn"
-              >
-                <Upload className="w-4 h-4 mr-2" />
-                {t('bankUploadReceipt')}
-              </Button>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

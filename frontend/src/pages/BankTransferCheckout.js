@@ -13,13 +13,23 @@ import { initiateSepayPayment, getSepayStatus } from '../lib/api';
  *   4. When status flips to 'completed' (SePay webhook matched the bank
  *      transfer to our reference code), redirect to /dashboard.
  *
- * Route: /checkout/bank/:plan  (plan in: weekly | monthly | exam)
+ * Route: /checkout/bank/:plan
+ *   V2 IELTS plans: weekly | monthly | exam
+ *   V1 GE legacy plans: explorer | learner | achiever | master
+ *   (backend SePay /initiate + webhook accept both — see PLAN_DURATION_DAYS
+ *   in routes/payments.py)
  */
 
 const PLAN_LABELS = {
   weekly: 'Weekly',
   monthly: 'Monthly',
   exam: 'Exam Pack',
+  // V1 GE legacy — kept so PricingPage (GE) routes here instead of the
+  // old self-managed bank-upload flow.
+  explorer: 'Explorer',
+  learner: 'Learner',
+  achiever: 'Achiever',
+  master: 'Master',
 };
 
 // Map MB Bank (full name) to SePay's VietQR bank code.

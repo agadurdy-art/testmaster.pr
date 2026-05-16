@@ -56,9 +56,17 @@ def get_cache_path(text: str, voice_id: str) -> Path:
 
 @router.post("/generate", response_model=TTSResponse)
 async def generate_tts(request: TTSRequest):
-    """Generate text-to-speech audio using ElevenLabs"""
-    from security_utils import require_known_user
-    await require_known_user(request.email)
+    """Generate text-to-speech audio using ElevenLabs.
+
+    Soft-auth: if an email is sent, validate it against the user DB. If no
+    email (anonymous sample-page playback like /samples/speaking/band-6-5-part2
+    "Listen to sample"), allow through — these surfaces play a fixed handful
+    of cached strings, so the per-request cost is effectively zero after the
+    first generation.
+    """
+    if request.email:
+        from security_utils import require_known_user
+        await require_known_user(request.email)
     try:
         from elevenlabs import ElevenLabs, VoiceSettings
 
