@@ -43,11 +43,16 @@ export default function PathPickerGate({ children }) {
   const [loadingPath, setLoadingPath] = useState(null);
 
   useEffect(() => {
+    // Session-scoped cache so the picker reappears every new browser
+    // session. Aga complained that returning to testmaster.pro after a
+    // few hours showed the IELTS landing without offering the picker
+    // again — localStorage was holding the choice forever. sessionStorage
+    // drops on tab close/quit so the next visit re-asks.
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
+      const saved = sessionStorage.getItem(STORAGE_KEY);
       if (saved) setChoice(saved);
     } catch (_) {
-      // localStorage blocked (private mode / SSR) — treat as first visit
+      // storage blocked (private mode / SSR) — treat as first visit
     }
     setResolved(true);
   }, []);
@@ -55,18 +60,22 @@ export default function PathPickerGate({ children }) {
   function pick(key) {
     if (loadingPath) return; // ignore double-taps while redirecting
     try {
-      localStorage.setItem(STORAGE_KEY, key);
+      sessionStorage.setItem(STORAGE_KEY, key);
       // Hand the choice to the onboarding flow so SignupBridge doesn't need a
       // `?path=...` query param to know which product surface the user wants.
+      // Onboarding hint still lives in localStorage because the signup
+      // round-trip can outlast a session.
       localStorage.setItem(ONBOARDING_PATH_KEY, key);
     } catch (_) {
       // ignore write failures — user can still proceed this session
     }
     if (key === 'general' && typeof window !== 'undefined') {
       // Show "Loading General English…" inside the modal so the tap has
-      // visible feedback before the browser navigates away.
+      // visible feedback before the browser navigates away. GE goes to
+      // its own landing (/landing/ge — Ray-centric, GE-flavoured), not
+      // the IELTS landing or straight to signup.
       setLoadingPath(key);
-      window.location.assign('/signup?path=general');
+      window.location.assign('/landing/ge');
       return;
     }
     setChoice(key);
@@ -91,7 +100,7 @@ export default function PathPickerGate({ children }) {
             </div>
             <p className="path-gate-sub">
               {loadingPath === 'general'
-                ? 'Loading General English… taking you to sign-up.'
+                ? 'Opening General English with Ray…'
                 : 'Pick a track to see a tailored landing. You can change this later.'}
             </p>
             <div className="path-gate-options">
@@ -131,12 +140,12 @@ export default function PathPickerGate({ children }) {
           type="button"
           className="path-gate-reset"
           onClick={() => {
-            try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
+            try { sessionStorage.removeItem(STORAGE_KEY); } catch (_) {}
             setChoice(null);
           }}
-          aria-label="Reset demo path choice"
+          aria-label="Switch path"
         >
-          Reset demo
+          Switch path
         </button>
       )}
     </>

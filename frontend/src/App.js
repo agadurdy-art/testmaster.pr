@@ -70,6 +70,7 @@ const SampleReportSpeakingPart2 = lazy(() => import('./pages/SampleReportSpeakin
 const DashboardPage = lazy(() => import('./pages/DashboardPage'));
 const DevGePreview = lazy(() => import('./pages/DevGePreview'));
 const LandingPageV2 = lazy(() => import('./pages/LandingPageV2'));
+const LandingPageGE = lazy(() => import('./pages/LandingPageGE'));
 const LandingPageDemo = lazy(() => import('./pages/LandingPageDemo'));
 const PricingPageV2 = lazy(() => import('./pages/PricingPageV2'));
 const BankTransferCheckout = lazy(() => import('./pages/BankTransferCheckout'));
@@ -553,6 +554,7 @@ function AppWithSessionHandler() {
           element={user ? <DashboardPage /> : <RedirectToLogin />}
         />
         <Route path="/landing/v2" element={<LandingPageV2 />} />
+        <Route path="/landing/ge" element={<LandingPageGE />} />
         <Route path="/landing/demo" element={<LandingPageDemo />} />
         <Route path="/pricing/v2" element={<PricingPageV2 user={user} />} />
         <Route path="/onboarding/v2" element={<OnboardingPageV2 user={user} onUserUpdate={setUser} />} />
