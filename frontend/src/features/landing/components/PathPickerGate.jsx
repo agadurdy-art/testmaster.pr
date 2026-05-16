@@ -91,6 +91,16 @@ export default function PathPickerGate({ children }) {
                   type="button"
                   className={`path-gate-option ${p.available ? '' : 'is-soon'}`}
                   onClick={() => p.available && pick(p.key)}
+                  onTouchEnd={(e) => {
+                    // Mobile Safari occasionally swallows the synthetic
+                    // click after a touch when the button also navigates
+                    // away (Fix #C — GE path picker stuck on mobile).
+                    // Treating touchend as the commit signal makes both
+                    // tracks behave the same way on mobile.
+                    if (!p.available) return;
+                    e.preventDefault();
+                    pick(p.key);
+                  }}
                   disabled={!p.available}
                 >
                   <span className="path-gate-option-label">
@@ -101,14 +111,6 @@ export default function PathPickerGate({ children }) {
                 </button>
               ))}
             </div>
-            <button
-              type="button"
-              className="path-gate-skip"
-              onClick={() => pick('ielts')}
-              aria-label="Skip and continue to IELTS"
-            >
-              Not sure yet — just show me the site
-            </button>
           </div>
         </div>
       )}

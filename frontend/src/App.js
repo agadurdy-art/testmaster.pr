@@ -379,6 +379,12 @@ function AppWithSessionHandler() {
     const preservedLang = localStorage.getItem('ieltsace_language');
     localStorage.clear();
     if (preservedLang) localStorage.setItem('ieltsace_language', preservedLang);
+    // Hard-redirect to "/" so PathPickerGate remounts with an empty choice
+    // and the visitor sees the IELTS/GE picker again instead of landing
+    // straight on whichever flavour they picked last session.
+    if (typeof window !== 'undefined') {
+      window.location.href = '/';
+    }
   };
 
   // Show loading state while checking localStorage
