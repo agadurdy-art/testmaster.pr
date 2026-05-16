@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException, UploadFile, File, Request, Form, Body, Query
+from fastapi import FastAPI, APIRouter, HTTPException, UploadFile, File, Request, Form, Body, Query, BackgroundTasks
 from fastapi.responses import StreamingResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
@@ -3986,6 +3986,229 @@ async def public_evaluate_essay(request: PublicEvaluateEssayRequest):
         result=result_dict,
     )
     return result_dict
+
+
+# ---------------------------------------------------------------------------
+# Async variant — accepts the submission, returns 202 immediately, and runs
+# the evaluator in a background task. When the eval completes we email the
+# user a hybrid report (inline band summary + tokenized link to the full
+# interactive report at /r/<token>). The user no longer waits ~3 minutes on
+# a spinning UI — they close the tab and read the email when it arrives.
+#
+# The reservation insert + idempotency lookup mirror the sync endpoint so
+# anyone holding the legacy /api/public/evaluate-essay path keeps working.
+# ---------------------------------------------------------------------------
+
+PUBLIC_EVAL_TOKEN_TTL_DAYS = 7
+
+
+async def _run_anon_eval_background(
+    email: str,
+    essay: str,
+    prompt: str,
+    user_language: str,
+    task_type: str,
+    crid: Optional[str],
+    token: str,
+) -> None:
+    """Background task — does the actual LLM eval, persists, emails the user."""
+    from services.writing_evaluator_v2 import evaluate_writing, EvaluatorFailure
+    from services import writing_idempotency
+    from services.anon_eval_email import send_essay_evaluation_email
+    from schemas.writing_evaluator import WritingEvaluationRequest, TaskType
+
+    log = logging.getLogger(__name__)
+    hint = _map_task_type_hint(task_type)
+    try:
+        task_hint_enum = TaskType(hint)
+    except ValueError:
+        task_hint_enum = TaskType.task2_opinion
+
+    try:
+        eval_req = WritingEvaluationRequest(
+            essay_text=essay,
+            task_type_hint=task_hint_enum,
+            task_prompt=prompt,
+            user_language=user_language,
+        )
+        result = await evaluate_writing(eval_req)
+    except EvaluatorFailure as exc:
+        log.error(
+            "Async anon eval failed for %s after %d attempts: %s",
+            email, exc.attempts, exc.last_error,
+        )
+        # Mark failed so the visitor can retry with a different email or
+        # we can sweep it later; leave the reservation in place so they
+        # see "this email already used" if they hit retry-from-form.
+        await db.anonymous_evaluations.update_one(
+            {"email": email},
+            {"$set": {
+                "status": "failed",
+                "failed_at": datetime.now(timezone.utc),
+                "error": str(exc.last_error)[:500],
+            }},
+        )
+        return
+    except Exception as exc:
+        log.exception("Async anon eval crashed for %s: %s", email, exc)
+        await db.anonymous_evaluations.update_one(
+            {"email": email},
+            {"$set": {"status": "failed", "failed_at": datetime.now(timezone.utc), "error": str(exc)[:500]}},
+        )
+        return
+
+    result_dict = result.model_dump()
+    completed_at = datetime.now(timezone.utc)
+    await db.anonymous_evaluations.update_one(
+        {"email": email},
+        {"$set": {
+            "status": "complete",
+            "completed_at": completed_at,
+            "result": result_dict,
+            "essay": essay,
+            "token": token,
+            "token_expires_at": completed_at + timedelta(days=PUBLIC_EVAL_TOKEN_TTL_DAYS),
+        }},
+    )
+    await writing_idempotency.store(
+        db,
+        user_id=None,
+        anon_key=f"anon:email:{email}",
+        client_request_id=crid,
+        result=result_dict,
+    )
+    # Best-effort email — failures are logged inside, not raised.
+    await send_essay_evaluation_email(email, result_dict, token)
+
+
+@api_router.post("/public/evaluate-essay/async")
+async def public_evaluate_essay_async(request: PublicEvaluateEssayRequest, background_tasks: BackgroundTasks):
+    """Async one-per-email evaluation: 202 + emailed report when ready."""
+    from services import writing_idempotency
+    from security_utils import sanitize_ai_input
+    from pymongo.errors import DuplicateKeyError
+
+    email = (request.email or "").strip().lower()
+    if not _PUBLIC_EVAL_EMAIL_RE.match(email) or len(email) > 254:
+        raise HTTPException(status_code=400, detail="Please enter a valid email address.")
+
+    crid = (request.client_request_id or "").strip() or None
+
+    # Idempotency short-circuit — same request_id resubmits return cached.
+    cached = await writing_idempotency.lookup(
+        db,
+        user_id=None,
+        anon_key=f"anon:email:{email}",
+        client_request_id=crid,
+    )
+    if cached is not None:
+        existing = await db.anonymous_evaluations.find_one({"email": email})
+        token = (existing or {}).get("token")
+        return {
+            "status": "complete",
+            "token": token,
+            "estimated_minutes": 0,
+        }
+
+    essay = sanitize_ai_input(request.essay or "")
+    prompt = sanitize_ai_input(request.prompt or "")
+    if not essay.strip():
+        raise HTTPException(status_code=400, detail="Essay is empty.")
+    if len(essay) > 20000:
+        raise HTTPException(status_code=400, detail="Essay is too long (max 20,000 chars).")
+    if not prompt.strip():
+        raise HTTPException(status_code=400, detail="Task prompt is required.")
+    if len(prompt) > 4000:
+        raise HTTPException(status_code=400, detail="Task prompt is too long.")
+
+    essay_hash = hashlib.sha256(essay.encode("utf-8")).hexdigest()
+    now = datetime.now(timezone.utc)
+    token = uuid.uuid4().hex
+
+    try:
+        await db.anonymous_evaluations.insert_one({
+            "email": email,
+            "status": "pending",
+            "created_at": now,
+            "essay_hash": essay_hash,
+            "task_type": request.task_type,
+            "user_language": request.user_language or "en",
+            "prompt": prompt,
+            "token": token,
+            "token_expires_at": now + timedelta(days=PUBLIC_EVAL_TOKEN_TTL_DAYS),
+        })
+    except DuplicateKeyError:
+        existing = await db.anonymous_evaluations.find_one({"email": email})
+        if existing and existing.get("status") == "complete":
+            return {
+                "status": "complete",
+                "token": existing.get("token"),
+                "estimated_minutes": 0,
+            }
+        if existing and existing.get("status") == "pending":
+            return {
+                "status": "pending",
+                "token": existing.get("token"),
+                "estimated_minutes": 3,
+            }
+        raise HTTPException(
+            status_code=409,
+            detail="This email has already been used. Each email may claim only one free evaluation.",
+        )
+
+    # Schedule the background eval. FastAPI runs this after the 202 response
+    # is sent, so the visitor sees the success state immediately.
+    background_tasks.add_task(
+        _run_anon_eval_background,
+        email=email,
+        essay=essay,
+        prompt=prompt,
+        user_language=request.user_language or "en",
+        task_type=request.task_type,
+        crid=crid,
+        token=token,
+    )
+
+    return {
+        "status": "queued",
+        "token": token,
+        "estimated_minutes": 3,
+    }
+
+
+@api_router.get("/public/evaluate-essay/result/{token}")
+async def public_get_essay_result(token: str):
+    """Retrieve a completed anonymous evaluation by its tokenized URL."""
+    if not token or len(token) < 16 or len(token) > 64:
+        raise HTTPException(status_code=404, detail="Result not found.")
+
+    doc = await db.anonymous_evaluations.find_one({"token": token})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Result not found.")
+
+    status = doc.get("status")
+    if status == "pending":
+        return {"status": "pending", "estimated_minutes": 3}
+    if status == "failed":
+        raise HTTPException(
+            status_code=502,
+            detail="Evaluation failed. Please try again with a different email.",
+        )
+    if status != "complete" or not doc.get("result"):
+        raise HTTPException(status_code=404, detail="Result not found.")
+
+    expires_at = doc.get("token_expires_at")
+    if expires_at and expires_at < datetime.now(timezone.utc):
+        raise HTTPException(status_code=410, detail="This report link has expired.")
+
+    return {
+        "status": "complete",
+        "result": doc["result"],
+        "essay": doc.get("essay"),
+        "prompt": doc.get("prompt"),
+        "task_type": doc.get("task_type"),
+        "completed_at": doc.get("completed_at"),
+    }
 
 
 # ---------------------------------------------------------------------------

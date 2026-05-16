@@ -48,8 +48,8 @@ export default function PublicFooter({ className }) {
           <div className="font-semibold mb-2">Samples</div>
           <ul className="space-y-1.5 text-slate-500">
             <li><a className="hover:text-slate-900" href="/#samples">All samples</a></li>
-            <li><a className="hover:text-slate-900" href="/samples/reading/band-6-0-academic.html">Reading sample</a></li>
-            <li><a className="hover:text-slate-900" href="/samples/listening/band-5-5-listening.html">Listening sample</a></li>
+            <li><a className="hover:text-slate-900" href="/samples/reading/band-6-0-academic">Reading sample</a></li>
+            <li><a className="hover:text-slate-900" href="/samples/listening/band-5-5-listening">Listening sample</a></li>
           </ul>
         </div>
         <div>

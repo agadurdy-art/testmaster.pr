@@ -60,6 +60,7 @@ const WritingPractice = lazy(() => import('./pages/WritingPractice'));
 const EvaluatorResultPreview = lazy(() => import('./pages/EvaluatorResultPreview'));
 const SampleReportsHub = lazy(() => import('./pages/SampleReportsHub'));
 const PublicEssayEvaluator = lazy(() => import('./pages/PublicEssayEvaluator'));
+const AnonEvalReportPage = lazy(() => import('./pages/AnonEvalReportPage'));
 const PublicSpeakingTrial = lazy(() => import('./pages/PublicSpeakingTrial'));
 const SampleReportBand65Task2 = lazy(() => import('./pages/SampleReportBand65Task2'));
 const SampleReportBand80Task2 = lazy(() => import('./pages/SampleReportBand80Task2'));
@@ -533,6 +534,7 @@ function AppWithSessionHandler() {
         <Route path="/samples/speaking/band-6-5-part2" element={<SampleReportSpeakingPart2 />} />
         <Route path="/samples/speaking/:slug" element={<Navigate to="/samples/speaking/band-6-5-part2" replace />} />
         <Route path="/score-my-essay" element={<PublicEssayEvaluator />} />
+        <Route path="/r/:token" element={<AnonEvalReportPage />} />
         <Route path="/score-my-speaking" element={<PublicSpeakingTrial />} />
         <Route
           path="/sample-reports"

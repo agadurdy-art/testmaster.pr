@@ -70,7 +70,11 @@ export default function SampleReportSpeakingPart2() {
   return (
     <div className="min-h-screen bg-slate-50 pb-24 md:pb-0">
       <PublicNav />
-      <SampleBanner />
+      <SampleBanner
+        noun="speaking response"
+        ctaHref="/score-my-speaking"
+        ctaLabel="Score my speaking"
+      />
 
       {/* Hero + state-chip navigator */}
       <section className="mx-auto max-w-7xl px-5 sm:px-8 pt-10 pb-6">
@@ -227,7 +231,7 @@ export default function SampleReportSpeakingPart2() {
       {/* ConversionBlock removed — see project_discount_email_capture.md */}
       <SampleFAQ items={DEFAULT_SAMPLE_FAQ} />
       <PublicFooter />
-      <MobileStickyCTA />
+      <MobileStickyCTA href="/score-my-speaking" label="Score my speaking — free" />
     </div>
   );
 }

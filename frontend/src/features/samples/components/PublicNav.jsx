@@ -34,10 +34,10 @@ export default function PublicNav({ className, ctaHref = "/signup" }) {
           <a href="/samples/speaking/band-6-5-part2" className="hover:text-slate-900">
             Speaking
           </a>
-          <a href="/samples/reading/band-6-0-academic.html" className="hover:text-slate-900">
+          <a href="/samples/reading/band-6-0-academic" className="hover:text-slate-900">
             Reading
           </a>
-          <a href="/samples/listening/band-5-5-listening.html" className="hover:text-slate-900">
+          <a href="/samples/listening/band-5-5-listening" className="hover:text-slate-900">
             Listening
           </a>
           {/* "Samples" is the hub/switcher — sends users to the carousel on

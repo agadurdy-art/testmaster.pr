@@ -84,6 +84,10 @@ export default function PublicEssayEvaluator() {
   const [result, setResult] = useState(null);
   const [submittedEssay, setSubmittedEssay] = useState("");
   const [submittedPrompt, setSubmittedPrompt] = useState("");
+  // Async-mode success state — set after the backend has accepted the
+  // submission and queued the eval for email delivery. Carries the user's
+  // email back so we can echo it in the confirmation copy.
+  const [queued, setQueued] = useState(null); // { email, estimatedMinutes }
   const reportRef = useRef(null);
   // Stable id across retries — backend dedups same-id submissions for
   // 10 minutes to avoid double-billing Sonnet. See lib/clientRequestId.js.
@@ -141,7 +145,10 @@ export default function PublicEssayEvaluator() {
     setSubmitting(true);
     try {
       if (!clientRequestIdRef.current) clientRequestIdRef.current = mintClientRequestId();
-      const res = await fetch(`${API_URL}/api/public/evaluate-essay`, {
+      // Async endpoint: accepts payload, returns 202 with a token, runs the
+      // eval in a background task, and emails the user when it's ready. No
+      // more ~3-minute spinning UI — they close the tab and read the email.
+      const res = await fetch(`${API_URL}/api/public/evaluate-essay/async`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -173,31 +180,15 @@ export default function PublicEssayEvaluator() {
       }
 
       const data = await res.json();
-      const parsed = WritingEvaluationResult.safeParse(data);
-      if (!parsed.success) {
-        // eslint-disable-next-line no-console
-        console.error("[PublicEssayEvaluator] schema mismatch", parsed.error);
-        setErrorMsg(
-          "Evaluator returned an unexpected response. Please try again.",
-        );
-        return;
-      }
-      const offsetErrors = verifyAnnotationOffsets(parsed.data, essay.trim());
-      if (offsetErrors.length) {
-        // eslint-disable-next-line no-console
-        console.warn(
-          "[PublicEssayEvaluator] annotation offsets drifted",
-          offsetErrors,
-        );
-      }
-
-      setResult(parsed.data);
-      setSubmittedEssay(essay.trim());
-      setSubmittedPrompt(prompt.trim());
-      saveCache({
-        result: parsed.data,
-        essay: essay.trim(),
-        prompt: prompt.trim(),
+      // Three queue states from the backend: queued / pending / complete.
+      // For complete (idempotent retry that already finished) we still send
+      // the user to the success screen — the email + token URL are the
+      // primary delivery channel, not an inline result render.
+      setQueued({
+        email: cleanEmail,
+        estimatedMinutes: data?.estimated_minutes ?? 3,
+        token: data?.token || null,
+        alreadyComplete: data?.status === "complete",
       });
     } catch (err) {
       // eslint-disable-next-line no-console
@@ -222,7 +213,7 @@ export default function PublicEssayEvaluator() {
       </>
     ),
     description:
-      "Every highlight is a live piece of feedback. Hover the essay, read Liz's notes on the right, then act on the top weakness before your next attempt.",
+      "Every highlight is a live piece of feedback. Click any annotation to read Liz's note inline, then act on the top weakness before your next attempt.",
     meta: [
       { label: "Question type", value: TASK_OPTIONS.find((t) => t.value === taskType)?.label || "Task 2" },
       { label: "Your length", value: `${result.word_count} words` },
@@ -236,10 +227,91 @@ export default function PublicEssayEvaluator() {
   return (
     <div className="min-h-screen bg-slate-50 pb-24 md:pb-0">
       <PublicNav />
-      <SampleBanner ctaLabel="Jump to evaluator" />
+      {!result && !queued && <SampleBanner ctaLabel="Jump to evaluator" />}
+      {result && (
+        <div
+          className="print:hidden border-b border-emerald-200/70"
+          style={{
+            background:
+              "linear-gradient(90deg, hsl(160 60% 96%) 0%, hsl(160 60% 97%) 40%, hsl(199 90% 97%) 100%)",
+          }}
+        >
+          <div className="mx-auto max-w-7xl px-5 sm:px-8 py-2.5 flex items-center gap-3 text-[13.5px]">
+            <span className="inline-flex items-center gap-1.5 font-medium text-emerald-800">
+              Your evaluation
+            </span>
+            <span className="text-slate-600">
+              — view-only. Result stays in this browser for 10 minutes; we also
+              emailed you a copy.
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* ===== Success state (email sent) ===== */}
+      {queued && !result && (
+        <section className="mx-auto max-w-2xl px-5 sm:px-8 pt-16 pb-20 scroll-mt-24">
+          <div className="rounded-2xl border border-emerald-200 bg-white p-8 sm:p-10 shadow-sm text-center">
+            <div className="mx-auto w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center">
+              <Mail className="w-7 h-7 text-emerald-700" />
+            </div>
+            <h1
+              className="mt-5 text-[28px] sm:text-[32px] font-semibold tracking-tight text-slate-900"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+            >
+              {queued.alreadyComplete
+                ? "We already emailed you this report."
+                : "Your evaluation is on the way."}
+            </h1>
+            <p className="mt-3 text-[15px] leading-relaxed text-slate-600">
+              {queued.alreadyComplete ? (
+                <>
+                  This email has already claimed its free evaluation. Check
+                  your inbox at <b>{queued.email}</b> — the link inside opens
+                  the full interactive report.
+                </>
+              ) : (
+                <>
+                  We're grading your essay against Cambridge band descriptors
+                  right now. You'll get an email at <b>{queued.email}</b> in
+                  about {queued.estimatedMinutes}–{queued.estimatedMinutes + 2}{" "}
+                  minutes — band, top fixes, and a link to the full
+                  interactive report.
+                </>
+              )}
+            </p>
+
+            <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center">
+              {queued.token && (
+                <a
+                  href={`/r/${queued.token}`}
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-[15px]"
+                >
+                  Open my report
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              )}
+              <a
+                href="/signup?intent=writing&path=ielts"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-300 hover:border-slate-400 text-slate-700 font-medium text-[15px]"
+              >
+                Create an account to keep practising
+              </a>
+            </div>
+
+            <p className="mt-6 text-[12px] text-slate-500">
+              Didn't get the email? Check spam, or{" "}
+              <a href="/contact" className="text-emerald-700 hover:underline">
+                contact support
+              </a>
+              .
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* ===== Input form ===== */}
-      {!result && (
+      {!result && !queued && (
         <section id="cta" className="mx-auto max-w-3xl px-5 sm:px-8 pt-10 pb-14 scroll-mt-24">
           <nav className="text-[12px] text-slate-500 mb-3">
             <a href="/" className="hover:text-slate-700">Home</a>

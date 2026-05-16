@@ -117,7 +117,7 @@ export default function LoginPage({ user, onLogin }) {
     formData.password.length >= 8;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-violet-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <Link to="/" className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-6">
           <ArrowLeft className="w-4 h-4" /> Back to home
@@ -126,7 +126,10 @@ export default function LoginPage({ user, onLogin }) {
         <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-7">
           <div className="mb-6">
             <div className="text-xl font-bold text-gray-900">
-              testmaster<span className="text-violet-600">.pro</span>
+              IELTS Ace
+              <span className="block text-[11px] font-normal text-gray-500 tracking-wide">
+                by testmaster.pro
+              </span>
             </div>
             <h1 className="text-2xl font-bold text-gray-900 mt-4">
               {mode === 'signup' ? 'Create your account' : 'Welcome back'}
@@ -244,7 +247,7 @@ export default function LoginPage({ user, onLogin }) {
 
             {mode === 'signin' && (
               <div className="text-right text-xs">
-                <button type="button" className="text-violet-600 hover:underline" onClick={handleForgot}>
+                <button type="button" className="text-emerald-700 hover:underline" onClick={handleForgot}>
                   Forgot password?
                 </button>
               </div>
@@ -262,7 +265,7 @@ export default function LoginPage({ user, onLogin }) {
             <Button
               type="submit"
               disabled={loading || passwordsMismatch}
-              className="w-full bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0"
+              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white border-0"
             >
               {loading ? 'Working…' : mode === 'signup' ? 'Create account' : 'Sign in'}
             </Button>
@@ -271,7 +274,7 @@ export default function LoginPage({ user, onLogin }) {
           <div className="text-center text-sm text-gray-500 mt-5">
             <button
               type="button"
-              className="text-violet-600 hover:underline"
+              className="text-emerald-700 hover:underline"
               onClick={() => setMode(mode === 'signup' ? 'signin' : 'signup')}
             >
               {mode === 'signup' ? 'Already have an account? Sign in' : "Don't have an account? Create one"}
@@ -281,9 +284,9 @@ export default function LoginPage({ user, onLogin }) {
 
         <p className="text-xs text-gray-500 text-center mt-6">
           By continuing, you agree to our{' '}
-          <Link to="/terms" className="text-violet-600 hover:underline">Terms</Link>{' '}
+          <Link to="/terms" className="text-emerald-700 hover:underline">Terms</Link>{' '}
           and{' '}
-          <Link to="/privacy" className="text-violet-600 hover:underline">Privacy Policy</Link>.
+          <Link to="/privacy" className="text-emerald-700 hover:underline">Privacy Policy</Link>.
         </p>
       </div>
     </div>

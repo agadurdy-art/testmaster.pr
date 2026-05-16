@@ -943,8 +943,11 @@
     line-height: 1.3;
     flex: 1;
   }
-  .landing-scope.has-mobile-cta { padding-bottom: 78px; }
-  .landing-scope.has-mobile-cta footer { padding-bottom: 90px; }
+  /* Sticky CTA bar (mobile-cta) + LizLauncher pill (~56px) + safe-area can
+     overlap the page footer/last CTA section. Reserve enough room so the
+     "No credit card" line and footer links are never covered. */
+  .landing-scope.has-mobile-cta { padding-bottom: 108px; }
+  .landing-scope.has-mobile-cta footer { padding-bottom: 120px; }
   .landing-scope .final h2 { font-size: clamp(26px, 7vw, 36px); }
 }
 

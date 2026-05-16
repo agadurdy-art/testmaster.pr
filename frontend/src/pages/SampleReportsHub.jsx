@@ -106,7 +106,7 @@ const SAMPLES = {
       criteria: 'Question-by-question rationale, vocabulary highlights, time-on-passage breakdown',
       highlight:
         'Walks through which question types cost the most marks and why — diagnostic-style annotated answer key.',
-      href: '/samples/reading/band-6-0-academic.html',
+      href: '/samples/reading/band-6-0-academic',
       external: true,
     },
   ],
@@ -119,7 +119,7 @@ const SAMPLES = {
       criteria: 'Per-section breakdown with timestamps and audioscript anchors',
       highlight:
         'Common Section-1 spelling traps and Section-2 distractor patterns — annotated transcript.',
-      href: '/samples/listening/band-5-5-diagnostic.html',
+      href: '/samples/listening/band-5-5-diagnostic',
       external: true,
     },
     {
@@ -130,7 +130,7 @@ const SAMPLES = {
       criteria: 'Item-level review · accent + register notes',
       highlight:
         'Shows where Australian/Indian accent shifts cost marks and how to brace for them.',
-      href: '/samples/listening/band-5-5-listening.html',
+      href: '/samples/listening/band-5-5-listening',
       external: true,
     },
     {
@@ -141,7 +141,7 @@ const SAMPLES = {
       criteria: 'Cambridge-aligned scoring, distractor analysis',
       highlight:
         'Anchor sample for what real Cambridge calibration looks like at band 5.5.',
-      href: '/samples/listening/cambridge-17-test-4-band-5-5.html',
+      href: '/samples/listening/cambridge-17-test-4-band-5-5',
       external: true,
     },
   ],

@@ -35,7 +35,7 @@ const REPORTS = [
     tier: 'Reading · Academic test',
     title: '"3 passages · 40 questions"',
     meta: 'T/F/NG · Fill · Match · 24/40 correct',
-    href: '/samples/reading/band-6-0-academic.html',
+    href: '/samples/reading/band-6-0-academic',
   },
 ];
 

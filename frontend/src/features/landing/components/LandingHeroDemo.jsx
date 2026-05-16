@@ -20,17 +20,58 @@ import LizAvatar from './LizAvatar';
 // trial CTAs, so the switcher consistently funnels visitors to the report
 // first (parity with Reading/Listening that the user explicitly asked for).
 const TABS = [
-  { key: 'writing',   label: 'Writing',   href: '/samples/writing/band-6-5-task2',           cta: 'See the full report', available: true },
-  { key: 'speaking',  label: 'Speaking',  href: '/samples/speaking/band-6-5-part2',          cta: 'See the full report', available: true },
-  { key: 'reading',   label: 'Reading',   href: '/samples/reading/band-6-0-academic.html',   cta: 'See the full report', available: true },
-  { key: 'listening', label: 'Listening', href: '/samples/listening/band-5-5-listening.html', cta: 'See the full report', available: true },
-];
-
-const LIZ_LINES = [
-  'Hi, I\u2019m Liz — your AI IELTS coach.',
-  'Submit writing and I\u2019ll give you a band estimate.',
-  'We can practice speaking Part 2 right now.',
-  'I\u2019ll teach you in short lessons, then practice.',
+  {
+    key: 'writing',
+    label: 'Writing',
+    href: '/samples/writing/band-6-5-task2',
+    cta: 'See the full report',
+    available: true,
+    micro: 'Real student essay · Full band-level report.',
+    lizLines: [
+      'Hi, I\u2019m Liz — your AI IELTS coach.',
+      'Submit writing and I\u2019ll give you a band estimate.',
+      'I\u2019ll show every line that\u2019s costing you band points.',
+    ],
+  },
+  {
+    key: 'speaking',
+    label: 'Speaking',
+    href: '/samples/speaking/band-6-5-part2',
+    cta: 'See the full report',
+    available: true,
+    micro: 'Real student recording · Full band-level report.',
+    lizLines: [
+      'We can practice Speaking Part 2 right now.',
+      'Record once — I\u2019ll score fluency, lexis, and pronunciation.',
+      'Hi, I\u2019m Liz — your AI IELTS coach.',
+    ],
+  },
+  {
+    key: 'reading',
+    label: 'Reading',
+    href: '/samples/reading/band-6-0-academic',
+    cta: 'See the full report',
+    available: true,
+    micro: 'Real student attempt · Full band-level report.',
+    lizLines: [
+      'Reading is mostly about traps — let me show you the patterns.',
+      'Hi, I\u2019m Liz — your AI IELTS coach.',
+      'I\u2019ll mark every wrong answer with the trap type.',
+    ],
+  },
+  {
+    key: 'listening',
+    label: 'Listening',
+    href: '/samples/listening/band-5-5-listening',
+    cta: 'See the full report',
+    available: true,
+    micro: 'Real student attempt · Full band-level report.',
+    lizLines: [
+      'Listening is 70% prediction — I\u2019ll train you to listen ahead.',
+      'Distractors are predictable. I\u2019ll teach you to spot them.',
+      'Hi, I\u2019m Liz — your AI IELTS coach.',
+    ],
+  },
 ];
 
 export default function LandingHeroDemo() {
@@ -44,9 +85,16 @@ export default function LandingHeroDemo() {
     if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
       return undefined;
     }
-    const id = setInterval(() => setLizLine((i) => (i + 1) % LIZ_LINES.length), 4000);
+    const lines = current.lizLines.length;
+    const id = setInterval(() => setLizLine((i) => (i + 1) % lines), 4000);
     return () => clearInterval(id);
-  }, []);
+  }, [active, current.lizLines.length]);
+
+  // Reset chip line whenever tab changes so users immediately see a
+  // skill-appropriate message instead of an out-of-context cycled one.
+  useEffect(() => {
+    setLizLine(0);
+  }, [active]);
 
   return (
     <section className="hero">
@@ -62,14 +110,14 @@ export default function LandingHeroDemo() {
             {t('landingV2HeroTitleA')} <span className="under">{t('landingV2HeroTitleTime')}</span> —{' '}
             <span className="ital">{t('landingV2HeroTitleB')}</span>
           </h1>
-          <p className="sub">
-            Meet <b>Liz</b>, your AI IELTS coach. Learn with structured courses, then prove it with
-            instant band estimates and margin notes in your language.
-          </p>
+          <p
+            className="sub"
+            dangerouslySetInnerHTML={{ __html: t('landingV2HeroLizSub') }}
+          />
 
           <div className="liz-chip" aria-live="polite">
             <LizAvatar size={36} ring />
-            <span className="liz-chip-text" key={lizLine}>{LIZ_LINES[lizLine]}</span>
+            <span className="liz-chip-text" key={`${active}-${lizLine}`}>{current.lizLines[lizLine]}</span>
           </div>
 
           <div className="cta-row">
@@ -90,7 +138,7 @@ export default function LandingHeroDemo() {
           </div>
           <div className="micro">
             <span className="chk">✓</span>
-            {t('landingV2HeroMicro')}
+            {current.micro}
           </div>
         </div>
 
@@ -299,7 +347,7 @@ function ReadingDemo() {
           <div className="sample-preview-criterion"><span className="sample-preview-criterion-name">Passage 3</span><span className="sample-preview-criterion-val">6/14</span></div>
           <div className="sample-preview-criterion"><span className="sample-preview-criterion-name">Total</span><span className="sample-preview-criterion-val">24/40</span></div>
         </div>
-        <a href="/samples/reading/band-6-0-academic.html" className="sample-preview-cta">
+        <a href="/samples/reading/band-6-0-academic" className="sample-preview-cta">
           See the full report →
         </a>
       </div>
@@ -364,7 +412,7 @@ function ListeningDemo() {
           <div className="sample-preview-criterion"><span className="sample-preview-criterion-name">Part 4</span><span className="sample-preview-criterion-val">3/10</span></div>
           <div className="sample-preview-criterion"><span className="sample-preview-criterion-name">Total</span><span className="sample-preview-criterion-val">21/40</span></div>
         </div>
-        <a href="/samples/listening/band-5-5-listening.html" className="sample-preview-cta">
+        <a href="/samples/listening/band-5-5-listening" className="sample-preview-cta">
           See the full report →
         </a>
       </div>

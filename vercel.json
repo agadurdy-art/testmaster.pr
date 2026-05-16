@@ -5,6 +5,10 @@
   "installCommand": "echo skip-root-install",
   "framework": null,
   "rewrites": [
+    { "source": "/samples/reading/band-6-0-academic", "destination": "/samples/reading/band-6-0-academic.html" },
+    { "source": "/samples/listening/band-5-5-listening", "destination": "/samples/listening/band-5-5-listening.html" },
+    { "source": "/samples/listening/band-5-5-diagnostic", "destination": "/samples/listening/band-5-5-diagnostic.html" },
+    { "source": "/samples/listening/cambridge-17-test-4-band-5-5", "destination": "/samples/listening/cambridge-17-test-4-band-5-5.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
