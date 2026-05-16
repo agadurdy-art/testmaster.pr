@@ -7534,6 +7534,8 @@ async def admin_ops_overview(admin_email: str = Query(...)):
                 "failed_at": 1,
                 "error": 1,
                 "email_delivery": 1,
+                "marketing_consent": 1,
+                "marketing_audience": 1,
                 "result.overall_band": 1,
                 "token": 1,
             },
@@ -7550,6 +7552,7 @@ async def admin_ops_overview(admin_email: str = Query(...)):
         for r in recent_raw:
             band = (r.get("result") or {}).get("overall_band")
             delivery = r.get("email_delivery") or {}
+            audience = r.get("marketing_audience") or {}
             recent.append({
                 "email_masked": _obfuscate(r.get("email")),
                 "status": r.get("status"),
@@ -7562,14 +7565,26 @@ async def admin_ops_overview(admin_email: str = Query(...)):
                 "band": round(float(band), 1) if isinstance(band, (int, float)) else None,
                 "email_ok": delivery.get("ok"),
                 "email_error": (delivery.get("error") or "")[:120],
+                "marketing_consent": bool(r.get("marketing_consent")),
+                "audience_ok": audience.get("ok"),
+                "audience_skipped": bool(audience.get("skipped")),
+                "audience_error": (audience.get("reason") or "")[:120],
                 "token": r.get("token"),
             })
+
+        # Marketing roll-up: who opted in and whether the audience sync
+        # actually landed. Surfaces silent skip when RESEND_AUDIENCE_ID is
+        # unset and broken syncs (invalid id, dupe contact) at a glance.
+        marketing_opted = await coll.count_documents({"marketing_consent": True})
+        marketing_synced = await coll.count_documents({"marketing_audience.ok": True})
 
         return {
             "pending": pending,
             "complete_24h": complete_24h,
             "failed_24h": failed_24h,
             "complete_7d": complete_7d,
+            "marketing_opted_total": marketing_opted,
+            "marketing_synced_total": marketing_synced,
             "recent": recent,
         }
 

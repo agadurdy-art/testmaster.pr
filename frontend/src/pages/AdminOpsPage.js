@@ -314,11 +314,32 @@ function AnonEvalPanel({ evals }) {
   if (!evals) return null;
   return (
     <PanelShell title="Anon eval queue · /score-my-essay" icon={Inbox}>
-      <div className="grid grid-cols-4 gap-3 mb-4">
+      <div className="grid grid-cols-4 gap-3 mb-3">
         <Stat label="Pending" value={evals.pending} tone={evals.pending > 0 ? "amber" : "slate"} />
         <Stat label="Done 24h" value={evals.complete_24h} />
         <Stat label="Failed 24h" value={evals.failed_24h} tone={evals.failed_24h > 0 ? "red" : "slate"} />
         <Stat label="Done 7d" value={evals.complete_7d} />
+      </div>
+      {/* Marketing roll-up — opted vs synced to Resend audience. Gap is
+          either RESEND_AUDIENCE_ID unset or sync failures. */}
+      <div className="mb-4 px-3 py-2 rounded-lg bg-slate-50 flex items-center gap-4 text-[12px]">
+        <span className="font-semibold tracking-wider uppercase text-slate-500 text-[10px]">
+          Marketing
+        </span>
+        <span className="text-slate-700">
+          <b className="text-slate-900">{evals.marketing_opted_total ?? 0}</b>{" "}
+          opted-in
+        </span>
+        <span className="text-slate-700">
+          <b className="text-slate-900">{evals.marketing_synced_total ?? 0}</b>{" "}
+          synced to Resend
+        </span>
+        {(evals.marketing_opted_total ?? 0) > (evals.marketing_synced_total ?? 0) && (
+          <Pill tone="amber">
+            {(evals.marketing_opted_total ?? 0) - (evals.marketing_synced_total ?? 0)}{" "}
+            unsynced — check RESEND_AUDIENCE_ID
+          </Pill>
+        )}
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-[12px]">
@@ -328,7 +349,8 @@ function AnonEvalPanel({ evals }) {
               <th className="font-normal">Email</th>
               <th className="font-normal">Status</th>
               <th className="font-normal">Band</th>
-              <th className="font-normal">Email sent</th>
+              <th className="font-normal">Sent</th>
+              <th className="font-normal" title="Marketing opt-in + Resend audience sync">Opt-in</th>
               <th className="font-normal"></th>
             </tr>
           </thead>
@@ -348,6 +370,9 @@ function AnonEvalPanel({ evals }) {
                   {r.email_ok === false && <StatusDot ok={false} />}
                   {r.email_ok === undefined && <span className="text-slate-400">—</span>}
                 </td>
+                <td>
+                  <OptInBadge row={r} />
+                </td>
                 <td className="text-right">
                   {r.token && (
                     <a
@@ -366,6 +391,45 @@ function AnonEvalPanel({ evals }) {
         </table>
       </div>
     </PanelShell>
+  );
+}
+
+// Marketing opt-in badge for each row:
+//   ✓ green  = opted in + successfully synced to Resend audience
+//   ✓ amber  = opted in but audience sync skipped (RESEND_AUDIENCE_ID unset)
+//   ✕ red    = opted in but audience sync failed (invalid id, API error, etc.)
+//   —       = did not opt in (most users; not a problem)
+function OptInBadge({ row }) {
+  if (!row.marketing_consent) {
+    return <span className="text-slate-300" title="No marketing opt-in">—</span>;
+  }
+  if (row.audience_ok === true) {
+    return (
+      <span title="Opted in + synced to Resend audience">
+        <Pill tone="emerald">opt-in ✓</Pill>
+      </span>
+    );
+  }
+  if (row.audience_skipped) {
+    return (
+      <span title={row.audience_error || "Audience sync skipped"}>
+        <Pill tone="amber">opt-in · unsynced</Pill>
+      </span>
+    );
+  }
+  if (row.audience_ok === false) {
+    return (
+      <span title={row.audience_error || "Audience sync failed"}>
+        <Pill tone="red">opt-in · sync fail</Pill>
+      </span>
+    );
+  }
+  // marketing_consent=true but no audience attempt recorded yet (eval may
+  // still be running, or the background task crashed before audience step).
+  return (
+    <span title="Opt-in recorded, audience sync pending">
+      <Pill tone="amber">opt-in · pending</Pill>
+    </span>
   );
 }
 
