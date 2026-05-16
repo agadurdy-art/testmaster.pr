@@ -525,11 +525,16 @@ async def get_listening_modules(
 @router.get("/set/{set_id}")
 async def get_listening_set(
     set_id: str,
-    include_audio: bool = Query(True, description="Generate audio for the set")
+    include_audio: bool = Query(True, description="Generate audio for the set"),
+    mode: str = Query("test", description="test → transcript stripped; review → transcript included"),
 ):
     """
     Get a specific listening set with questions (no answers until submit).
     Optionally generates IELTS-quality audio using ElevenLabs.
+
+    Pre-launch audit 2026-05-16: transcript was always included → anyone
+    could read the audioscript without listening. Now stripped when
+    mode=test; clients pass mode=review to fetch it after submission.
     """
     from content.listening.listening_sets import get_listening_set_by_id
     
@@ -579,8 +584,9 @@ async def get_listening_set(
             "audio_url": audio_url,
             "has_audio": audio_url is not None,
             "audio_cached": is_audio_cached(set_id),  # Tell frontend if audio is cached
-            # Include transcript for "show transcript" feature (after submit or for lower bands)
-            "transcript": listening_set["transcript"]
+            # Pre-launch audit 2026-05-16: only ship the transcript when the
+            # caller explicitly asks for review mode (post-submission).
+            "transcript": listening_set["transcript"] if mode == "review" else None,
         }
     }
 

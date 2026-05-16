@@ -46,6 +46,17 @@ const DEFAULT_VOICE_ID = '';
 // requesting the same line also benefit.
 const urlCache = new Map();
 
+// Read current logged-in user email from localStorage. Pre-launch audit
+// (2026-05-16) requires cost-bomb endpoints to be soft-auth gated; backend
+// rejects empty/unknown emails with 401.
+function getCurrentEmail() {
+  try {
+    return JSON.parse(localStorage.getItem('user') || 'null')?.email || null;
+  } catch {
+    return null;
+  }
+}
+
 async function resolveAudioUrl(text, voiceId) {
   if (!text) return null;
   const key = `${voiceId}::${text}`;
@@ -53,7 +64,8 @@ async function resolveAudioUrl(text, voiceId) {
 
   // Only include voice_id when caller passed one; empty string lets the
   // backend apply its LIZ_VOICE_ID env default.
-  const body = voiceId ? { text, voice_id: voiceId } : { text };
+  const email = getCurrentEmail();
+  const body = voiceId ? { text, voice_id: voiceId, email } : { text, email };
   const res = await fetch(`${API_URL}/api/tts/generate`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

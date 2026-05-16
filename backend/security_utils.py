@@ -54,6 +54,56 @@ def require_admin_email(admin_email: Optional[str]) -> str:
     return email
 
 
+_lazy_users_db = None  # cached Motor db handle for require_known_user
+
+
+def _get_users_db():
+    """Lazy Motor handle pointing at the same DB used by routes/auth.py.
+
+    We can't import server.db here without creating a circular import, so
+    we read the env directly. AsyncIOMotorClient is safe to instantiate in
+    a worker process — Motor pools connections internally.
+    """
+    global _lazy_users_db
+    if _lazy_users_db is None:
+        from motor.motor_asyncio import AsyncIOMotorClient
+        mongo_url = os.environ.get("MONGO_URL")
+        db_name = os.environ.get("DB_NAME")
+        if not mongo_url or not db_name:
+            return None
+        _lazy_users_db = AsyncIOMotorClient(mongo_url)[db_name]
+    return _lazy_users_db
+
+
+async def require_known_user(email: Optional[str], db=None) -> Dict[str, Any]:
+    """Soft-auth gate for cost-bomb endpoints (TTS / STT / LLM eval).
+
+    Pre-launch audit (2026-05-16) flagged ~13 anonymous endpoints that hit
+    paid providers (ElevenLabs, Azure, Anthropic, OpenAI) with no caller
+    identity at all. Until the Phase 7 JWT migration lands, this helper at
+    least requires the caller to submit a known user email so an attacker
+    can't burn credits anonymously from a botnet.
+
+    `db` is optional — if not supplied, the helper falls back to a lazy
+    Motor client pointed at MONGO_URL / DB_NAME (same place users live).
+
+    Returns the user dict on success. Raises 401 otherwise.
+    NOTE: This is *not* a real auth check — anyone who guesses a real email
+    can still call. The proper fix is JWT (see project_pre_launch_audit_2026_05_16).
+    """
+    cleaned = (email or "").strip().lower()
+    if not cleaned or "@" not in cleaned:
+        raise HTTPException(status_code=401, detail="Login required for this endpoint.")
+    if db is None:
+        db = _get_users_db()
+        if db is None:
+            raise HTTPException(status_code=503, detail="Auth backend unavailable.")
+    user = await db.users.find_one({"email": cleaned}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=401, detail="Login required for this endpoint.")
+    return user
+
+
 def validate_upload_filename(filename: Optional[str]) -> str:
     if not filename:
         raise HTTPException(status_code=400, detail="A file name is required.")

@@ -32,10 +32,11 @@ function TranslationToggle({ text, context = "grammar explanation" }) {
     setSelectedLang(lang);
     setShowLangs(false);
     try {
+      const _email = (() => { try { return JSON.parse(localStorage.getItem('user') || 'null')?.email || null; } catch { return null; } })();
       const res = await fetch(`${API_URL}/api/grammar-engine/translate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text, target_language: lang, context }),
+        body: JSON.stringify({ text, target_language: lang, context, email: _email }),
       });
       if (res.ok) {
         const data = await res.json();

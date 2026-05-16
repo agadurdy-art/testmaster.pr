@@ -260,6 +260,72 @@ async def check_usage(db, user: Dict[str, Any], counter: str) -> Dict[str, Any]:
     }
 
 
+async def claim_usage_atomic(
+    db,
+    user: Dict[str, Any],
+    counter: str,
+    amount: int = 1,
+) -> Dict[str, Any]:
+    """Atomic check-and-claim for a usage counter.
+
+    Pre-launch audit 2026-05-16: the legacy `check_usage → do work →
+    increment_usage` pattern has a TOCTOU race — two concurrent callers can
+    both see `allowed=true` and both increment past the cap.
+
+    This helper does the check + increment in one MongoDB conditional
+    update (`$inc` only if `usage.{period}.{counter} < quota`) so the
+    quota cannot be exceeded by parallel requests. On success returns the
+    fresh check_usage payload. On failure returns the *current* payload
+    with `allowed=False` so the caller can raise 402 with accurate counts.
+
+    Unlimited plans and the custom-plan pool path fall back to the legacy
+    pattern (the pool is decremented by the subscription pipeline, not a
+    monthly counter, so the race doesn't apply there).
+    """
+    if amount <= 0:
+        return await check_usage(db, user, counter)
+
+    plan = normalize_plan_name(user.get("plan"))
+    is_admin = bool(user.get("email")) and is_admin_user(user["email"])
+
+    # Admin or unlimited tier → no quota to enforce, just record the usage.
+    quota = _quota_for(user, counter)
+    if is_admin or quota is None:
+        return await increment_usage(db, user, counter, amount)
+
+    # Custom plans → pool semantics live on the subscription doc; keep the
+    # existing path (it already does a single atomic $inc on _pool_used).
+    if plan == "custom" and counter in _CUSTOM_POOL_COUNTERS:
+        usage = await check_usage(db, user, counter)
+        if not usage["allowed"]:
+            return usage
+        return await increment_usage(db, user, counter, amount)
+
+    period = current_period_key()
+    path = _usage_path(counter, period)
+
+    # Conditional $inc: only modifies the doc when used < quota.
+    result = await db.users.update_one(
+        {"id": user["id"], path: {"$lt": quota}},
+        {"$inc": {path: amount}},
+        upsert=False,
+    )
+    if result.modified_count == 0:
+        # Either the user is missing (shouldn't happen — caller looked them
+        # up) or they hit the cap. Re-check_usage gives the accurate 402
+        # payload.
+        return await check_usage(db, user, counter)
+
+    # Mirror the increment onto the in-memory user dict so subsequent calls
+    # in the same request don't have to re-read.
+    usage = dict(user.get("usage") or {})
+    bucket = dict(usage.get(period) or {})
+    bucket[counter] = int(bucket.get(counter, 0) or 0) + amount
+    usage[period] = bucket
+    user["usage"] = usage
+    return await check_usage(db, user, counter)
+
+
 async def increment_usage(
     db,
     user: Dict[str, Any],

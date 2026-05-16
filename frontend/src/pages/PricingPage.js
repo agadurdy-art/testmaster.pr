@@ -118,9 +118,11 @@ export default function PricingPage({ user }) {
       formData.append('email', user.email);
       formData.append('screenshot', file);
       try {
+        // Bank upload no longer auto-activates the plan (pre-launch audit
+        // 2026-05-16: previously any PNG → 30 days of any tier). The screenshot
+        // is queued for admin review; do not optimistically mutate the cached
+        // user. The flash message still tells the user we received their proof.
         await uploadBankPayment(formData);
-        const updatedUser = { ...user, plan: selectedPlan.id, subscription: selectedPlan.name };
-        localStorage.setItem('user', JSON.stringify(updatedUser));
         alert(t('paymentSubmitted'));
         setBankModalOpen(false);
         navigate('/dashboard');

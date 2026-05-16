@@ -676,10 +676,17 @@ from pydantic import BaseModel as PydanticBaseModel
 
 class TTSRequest(PydanticBaseModel):
     text: str
+    email: Optional[str] = None  # required by audit gate (pre-launch 2026-05-16)
 
 @router.post("/tts/generate")
 async def generate_tts(request: TTSRequest):
-    """Generate TTS audio for a given text using ElevenLabs"""
+    """Generate TTS audio for a given text using ElevenLabs.
+
+    Pre-launch audit (2026-05-16): anonymous callers can no longer burn
+    ElevenLabs credits — request must include a known-user email.
+    """
+    from security_utils import require_known_user
+    await require_known_user(request.email)
     try:
         from services.tts_service import get_tts_service
         tts = get_tts_service()

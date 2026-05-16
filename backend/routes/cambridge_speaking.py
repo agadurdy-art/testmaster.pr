@@ -31,20 +31,30 @@ async def evaluate_speaking_response(
     question: str = Form(...),
     part: int = Form(...),
     question_index: int = Form(0),
-    user_plan: str = Form("free")  # "free", "booster", "pro"
+    email: Optional[str] = Form(default=None),  # required by soft-auth gate (pre-launch audit 2026-05-16)
 ):
     """
     Evaluate a single speaking response using QB protocols.
     Free tier: Whisper + GPT-4o
     Premium tier (booster/pro): Azure pronunciation + detailed analysis
+
+    Note (pre-launch audit 2026-05-16): user_plan is no longer read from the
+    client form — it was a trust bug (attacker could claim "pro" to unlock
+    Azure premium pipeline). Plan is now derived from the authenticated
+    user's DB record.
     """
+    from security_utils import require_known_user
+    user_doc = await require_known_user(email)
+    # Trust the DB, not the client.
+    user_plan = (user_doc.get("plan") or "free").lower()
+
     try:
         audio_content = await audio.read()
-        
+
         with tempfile.NamedTemporaryFile(suffix=".webm", delete=False) as temp_file:
             temp_file.write(audio_content)
             temp_path = temp_file.name
-        
+
         # Check if premium evaluation
         is_premium = user_plan in ["booster", "pro"] and AZURE_SPEECH_KEY
         

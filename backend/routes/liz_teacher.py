@@ -14,7 +14,7 @@ import logging
 import base64
 from datetime import datetime, timezone, timedelta
 from typing import Optional, List, Dict, Any
-from fastapi import APIRouter, HTTPException, UploadFile, File
+from fastapi import APIRouter, HTTPException, UploadFile, File, Form
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
@@ -196,6 +196,7 @@ class NewSessionRequest(BaseModel):
 
 class TTSRequest(BaseModel):
     text: str
+    email: Optional[str] = None  # soft-auth gate (pre-launch audit 2026-05-16)
 
 
 class HomeworkSubmitRequest(BaseModel):
@@ -421,11 +422,28 @@ async def get_liz_usage_stats(user_id: str, max_messages: int, *, user: Optional
             "resets_at": sub.get("expires_at"),
         }
 
+    # Pre-launch audit 2026-05-16: this path counted weekly-tier users on a
+    # monthly window — they got 7× the intended quota. Pick the period based
+    # on the actual plan so Weekly resets every Monday and Monthly resets
+    # on the 1st.
     now = datetime.now(timezone.utc)
-    month_start = datetime(now.year, now.month, 1, tzinfo=timezone.utc)
-    next_month = datetime(now.year + (1 if now.month == 12 else 0), 1 if now.month == 12 else now.month + 1, 1, tzinfo=timezone.utc)
+    if plan == "weekly":
+        # Week starts Monday 00:00 UTC.
+        week_start = (now - timedelta(days=now.weekday())).replace(
+            hour=0, minute=0, second=0, microsecond=0
+        )
+        period_start = week_start
+        period_end = week_start + timedelta(days=7)
+    else:
+        period_start = datetime(now.year, now.month, 1, tzinfo=timezone.utc)
+        period_end = datetime(
+            now.year + (1 if now.month == 12 else 0),
+            1 if now.month == 12 else now.month + 1,
+            1,
+            tzinfo=timezone.utc,
+        )
     sessions = await db.liz_sessions.find(
-        {"user_id": user_id, "created_at": {"$gte": month_start.isoformat()}},
+        {"user_id": user_id, "created_at": {"$gte": period_start.isoformat()}},
         {"_id": 0, "messages": 1}
     ).to_list(200)
     used = 0
@@ -433,10 +451,10 @@ async def get_liz_usage_stats(user_id: str, max_messages: int, *, user: Optional
         for msg in session.get("messages", []):
             if msg.get("role") == "user":
                 timestamp = msg.get("timestamp") or session.get("created_at")
-                if timestamp and timestamp >= month_start.isoformat():
+                if timestamp and timestamp >= period_start.isoformat():
                     used += 1
     remaining = max(max_messages - used, 0)
-    return {"used_messages": used, "remaining_messages": remaining, "resets_at": next_month.isoformat()}
+    return {"used_messages": used, "remaining_messages": remaining, "resets_at": period_end.isoformat()}
 
 
 # Upgrade target tables — first match wins; mirrors tier_resolver.UPGRADE_TARGETS
@@ -1390,6 +1408,8 @@ async def get_user_sessions(user_id: str):
 @router.post("/tts")
 async def liz_speak(req: TTSRequest):
     """Convert Liz's response to speech (Azure SoniaNeural primary, OpenAI fallback)."""
+    from security_utils import require_known_user
+    await require_known_user(req.email)
     if not req.text:
         raise HTTPException(status_code=400, detail="No text provided")
 
@@ -1400,8 +1420,13 @@ async def liz_speak(req: TTSRequest):
 
 
 @router.post("/stt")
-async def speech_to_text(file: UploadFile = File(...)):
+async def speech_to_text(
+    file: UploadFile = File(...),
+    email: Optional[str] = Form(default=None),
+):
     """Transcribe audio from the student's microphone."""
+    from security_utils import require_known_user
+    await require_known_user(email)
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
         raise HTTPException(status_code=500, detail="STT API key not configured")

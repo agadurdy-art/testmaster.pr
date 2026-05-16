@@ -192,14 +192,17 @@ async def get_audio_status(test_id: str):
 async def generate_listening_audio(
     test_id: str,
     background_tasks: BackgroundTasks,
-    part: Optional[int] = None
+    part: Optional[int] = None,
+    email: Optional[str] = None,
 ):
     """
     Generate listening audio for a test.
-    
+
     Can generate all parts or a specific part.
     Uses background task for long-running generation.
     """
+    from security_utils import require_known_user
+    await require_known_user(email)
     if not audio_generator:
         raise HTTPException(status_code=503, detail="Audio generator service not available")
     

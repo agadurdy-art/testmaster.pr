@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException, UploadFile, File, Request, Form, Body
+from fastapi import FastAPI, APIRouter, HTTPException, UploadFile, File, Request, Form, Body, Query
 from fastapi.responses import StreamingResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
@@ -2480,16 +2480,25 @@ async def get_test_attempt(attempt_id: str):
     return attempt
 
 # AI Evaluation routes
-from services.usage_tracking import check_usage, increment_usage
+from services.usage_tracking import (
+    check_usage,
+    increment_usage,
+    claim_usage_atomic,
+    current_period_key,
+)
 
 
-async def _enforce_evaluation_quota(user_id: str, counter: str) -> dict:
-    """Look up the user, check their monthly quota for `counter`, raise 402
-    if exhausted. Returns the user doc on success."""
+async def _claim_evaluation_quota(user_id: str, counter: str) -> dict:
+    """Atomically claim one unit of `counter` quota for the user. Raises 402
+    if exhausted. Returns the user doc on success.
+
+    Caller MUST call _rollback_evaluation_claim(user_id, counter) if the
+    downstream work (e.g. AI call) fails, to avoid burning quota on errors.
+    """
     user = await db.users.find_one({"id": user_id}, {"_id": 0})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
-    usage = await check_usage(db, user, counter)
+    usage = await claim_usage_atomic(db, user, counter)
     if not usage["allowed"]:
         raise HTTPException(
             status_code=402,
@@ -2506,9 +2515,24 @@ async def _enforce_evaluation_quota(user_id: str, counter: str) -> dict:
     return user
 
 
+async def _rollback_evaluation_claim(user_id: str, counter: str) -> None:
+    """Decrement a previously-claimed quota unit. Bounded to monthly period
+    counter; admin/custom plans use a different storage path and are
+    no-ops here (claim_usage_atomic delegated to increment_usage for them,
+    which is fine to leave as-is on failure for the rare custom-plan case)."""
+    try:
+        period = current_period_key()
+        await db.users.update_one(
+            {"id": user_id},
+            {"$inc": {f"usage.{period}.{counter}": -1}},
+        )
+    except Exception as e:
+        logger.warning(f"Quota rollback failed for {user_id}/{counter}: {e}")
+
+
 @api_router.post("/evaluate/writing")
 async def evaluate_writing(data: EvaluateWriting):
-    user = await _enforce_evaluation_quota(data.user_id, "evaluations")
+    await _claim_evaluation_quota(data.user_id, "evaluations")
     try:
         evaluation = await evaluate_with_ai(
             test_type="writing",
@@ -2516,14 +2540,14 @@ async def evaluate_writing(data: EvaluateWriting):
             user_answer=data.answer
         )
     except Exception as e:
+        # Roll back the atomic claim so a failed AI call doesn't burn quota.
+        await _rollback_evaluation_claim(data.user_id, "evaluations")
         raise HTTPException(status_code=500, detail=str(e))
-    # Only increment on success so a failed call doesn't burn quota.
-    await increment_usage(db, user, "evaluations")
     return evaluation
 
 @api_router.post("/evaluate/speaking")
 async def evaluate_speaking(data: SpeakingTest):
-    user = await _enforce_evaluation_quota(data.user_id, "evaluations")
+    await _claim_evaluation_quota(data.user_id, "evaluations")
     try:
         evaluation = await evaluate_with_ai(
             test_type="speaking",
@@ -2531,8 +2555,8 @@ async def evaluate_speaking(data: SpeakingTest):
             user_answer=data.user_response
         )
     except Exception as e:
+        await _rollback_evaluation_claim(data.user_id, "evaluations")
         raise HTTPException(status_code=500, detail=str(e))
-    await increment_usage(db, user, "evaluations")
     return evaluation
 
 # Speaking test with AI - simple transcribe endpoint
@@ -7084,8 +7108,10 @@ async def submit_feedback(feedback: FeedbackCreate):
 
 
 @app.get("/api/admin/feedbacks")
-async def get_all_feedbacks():
+async def get_all_feedbacks(admin_email: str = Query(...)):
     """Get all feedbacks (admin only)"""
+    from security_utils import require_admin_email
+    require_admin_email(admin_email)
     try:
         feedbacks = await db.feedbacks.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
         return feedbacks
@@ -7095,8 +7121,10 @@ async def get_all_feedbacks():
 
 
 @app.put("/api/admin/feedbacks/{feedback_id}/resolve")
-async def resolve_feedback(feedback_id: str):
+async def resolve_feedback(feedback_id: str, admin_email: str = Query(...)):
     """Mark feedback as resolved (admin only)"""
+    from security_utils import require_admin_email
+    require_admin_email(admin_email)
     try:
         result = await db.feedbacks.update_one(
             {"id": feedback_id},
@@ -7113,8 +7141,10 @@ async def resolve_feedback(feedback_id: str):
 
 
 @app.delete("/api/admin/feedbacks/{feedback_id}")
-async def delete_feedback(feedback_id: str):
+async def delete_feedback(feedback_id: str, admin_email: str = Query(...)):
     """Delete feedback (admin only)"""
+    from security_utils import require_admin_email
+    require_admin_email(admin_email)
     try:
         result = await db.feedbacks.delete_one({"id": feedback_id})
         if result.deleted_count == 0:
@@ -7130,11 +7160,15 @@ async def delete_feedback(feedback_id: str):
 # ============ ADMIN: RESEED DATABASE ============
 
 @app.post("/api/admin/reseed-tests")
-async def reseed_tests(admin_key: str = None):
-    """Reseed tests collection with latest format (admin only)"""
-    # Simple admin key check
-    if admin_key != "emergent2025reseed":
-        raise HTTPException(status_code=403, detail="Invalid admin key")
+async def reseed_tests(admin_email: str = Query(...)):
+    """Reseed tests collection with latest format (admin only).
+
+    Pre-launch audit (2026-05-16) replaced the hardcoded "emergent2025reseed"
+    admin_key with the standard email-allowlist gate used elsewhere. The old
+    key was committed to git history; rotate via allowlist instead.
+    """
+    from security_utils import require_admin_email
+    require_admin_email(admin_email)
     
     try:
         import uuid

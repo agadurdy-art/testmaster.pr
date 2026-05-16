@@ -37,11 +37,13 @@ EXAMINER_VOICE_SETTINGS = {
 class TTSRequest(BaseModel):
     text: str
     voice_id: Optional[str] = DEFAULT_VOICE_ID
-    
+    email: Optional[str] = None  # required by soft-auth gate (pre-launch audit 2026-05-16)
+
 class TTSBatchRequest(BaseModel):
     texts: List[str]
     voice_id: Optional[str] = DEFAULT_VOICE_ID
     include_transitions: bool = True
+    email: Optional[str] = None  # required by soft-auth gate (pre-launch audit 2026-05-16)
 
 class TTSResponse(BaseModel):
     audio_url: str
@@ -55,9 +57,11 @@ def get_cache_path(text: str, voice_id: str) -> Path:
 @router.post("/generate", response_model=TTSResponse)
 async def generate_tts(request: TTSRequest):
     """Generate text-to-speech audio using ElevenLabs"""
+    from security_utils import require_known_user
+    await require_known_user(request.email)
     try:
         from elevenlabs import ElevenLabs, VoiceSettings
-        
+
         if not ELEVENLABS_API_KEY:
             raise HTTPException(status_code=500, detail="ElevenLabs API key not configured")
         
@@ -107,9 +111,11 @@ async def generate_tts(request: TTSRequest):
 @router.post("/speaking-questions")
 async def generate_speaking_questions_audio(request: TTSBatchRequest):
     """Generate audio for multiple speaking questions with natural transitions"""
+    from security_utils import require_known_user
+    await require_known_user(request.email)
     try:
         from elevenlabs import ElevenLabs, VoiceSettings
-        
+
         if not ELEVENLABS_API_KEY:
             raise HTTPException(status_code=500, detail="ElevenLabs API key not configured")
         

@@ -874,12 +874,15 @@ class EvaluateRequest(BaseModel):
     grammar_focus: Optional[str] = ""
     model_answer: Optional[str] = ""
     prompt_text: Optional[str] = ""
+    email: Optional[str] = None  # soft-auth gate (pre-launch audit 2026-05-16)
 
 
 @router.post("/{module_id}/evaluate")
 async def evaluate_production(module_id: str, req: EvaluateRequest):
     """AI evaluation for guided/free production"""
-    system = """You are a strict but encouraging IELTS grammar coach. 
+    from security_utils import require_known_user
+    await require_known_user(req.email)
+    system = """You are a strict but encouraging IELTS grammar coach.
 Evaluate the student's sentence for grammar accuracy and correct use of the target grammar structure.
 Be concise and helpful. Respond with valid JSON only."""
 
@@ -934,6 +937,7 @@ class TranslateRequest(BaseModel):
     text: str
     target_language: str  # e.g. "vi", "tr", "ko", "zh"
     context: Optional[str] = "grammar explanation"
+    email: Optional[str] = None  # soft-auth gate (pre-launch audit 2026-05-16)
 
 
 LANGUAGE_NAMES = {
@@ -956,6 +960,8 @@ LANGUAGE_NAMES = {
 @router.post("/translate")
 async def translate_text(req: TranslateRequest):
     """Translate text to target language"""
+    from security_utils import require_known_user
+    await require_known_user(req.email)
     lang_name = LANGUAGE_NAMES.get(req.target_language, req.target_language)
 
     system = f"You are a professional translator. Translate the given English text to {lang_name}. Keep grammar terminology in English where appropriate (e.g., 'Present Perfect', 'Past Simple'). Respond with ONLY the translated text, nothing else."
@@ -1123,11 +1129,14 @@ async def submit_grammar_quiz(module_id: str, req: QuizSubmitRequest):
 class SmartReviewRequest(BaseModel):
     weak_areas: list  # e.g. ["form", "usage"]
     quiz_score: Optional[int] = None
+    email: Optional[str] = None  # soft-auth gate (pre-launch audit 2026-05-16)
 
 
 @router.post("/{module_id}/smart-review")
 async def generate_smart_review(module_id: str, req: SmartReviewRequest):
     """Generate targeted practice exercises based on weak areas from quiz diagnostics"""
+    from security_utils import require_known_user
+    await require_known_user(req.email)
     if not req.weak_areas:
         raise HTTPException(status_code=400, detail="No weak areas provided")
 

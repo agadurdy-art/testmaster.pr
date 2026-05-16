@@ -19,6 +19,46 @@ router = APIRouter(prefix="/api/cambridge", tags=["cambridge"])
 # Simple cache for teacher feedback based on performance patterns
 _feedback_cache = {}
 
+
+# Pre-launch audit (2026-05-16): answer keys + listening transcripts were
+# served via plain GETs with no gating — any anonymous client could scrape
+# the entire test bank. We strip those fields from the live-test response
+# and keep the raw payloads behind /answers/* (admin/post-submission only).
+ANSWER_KEYS_BLACKLIST = {
+    "answer_keys",
+    "correct_answer",
+    "correct_answers",
+    "answer",
+    "answers",
+    "explanation",
+    "explanations",
+    "audioscript",
+    "audio_script",
+    "transcript",
+    "transcripts",
+    "model_answer",
+    "model_answers",
+    "sample_answer",
+    "sample_answers",
+}
+
+
+def _strip_answers(node):
+    """Recursively remove answer-key / transcript fields from a test payload.
+
+    Returns a *new* structure so the original CAMBRIDGE_TESTS module data
+    is not mutated (those dicts are imported once and shared across reqs).
+    """
+    if isinstance(node, dict):
+        return {
+            k: _strip_answers(v)
+            for k, v in node.items()
+            if k not in ANSWER_KEYS_BLACKLIST
+        }
+    if isinstance(node, list):
+        return [_strip_answers(item) for item in node]
+    return node
+
 # Import test content - IELTS 17
 try:
     from content.cambridge_tests.ielts17.test1 import IELTS17_TEST1
@@ -178,21 +218,26 @@ async def get_cambridge_book(book_id: str):
 
 @router.get("/test/{book_id}/{test_id}")
 async def get_cambridge_test(book_id: str, test_id: str):
-    """Get full test content"""
+    """Get full test content with answer keys + transcripts stripped.
+
+    Pre-launch audit 2026-05-16: anonymous GET previously leaked correct
+    answers and listening audioscripts. Both are now stripped from the
+    response — clients fetch them from /answers/* after submission.
+    """
     if book_id not in CAMBRIDGE_TESTS:
         raise HTTPException(status_code=404, detail=f"Book '{book_id}' not found")
-    
+
     book = CAMBRIDGE_TESTS[book_id]
-    
+
     if test_id not in book["tests"]:
         raise HTTPException(status_code=404, detail=f"Test '{test_id}' not found in {book_id}")
-    
+
     test_data = book["tests"][test_id]
-    
+
     if test_data is None:
         raise HTTPException(status_code=404, detail=f"Test '{test_id}' is coming soon")
-    
-    return {"success": True, "test": test_data}
+
+    return {"success": True, "test": _strip_answers(test_data)}
 
 
 @router.get("/test/{book_id}/{test_id}/section/{section}")
@@ -218,13 +263,21 @@ async def get_cambridge_test_section(book_id: str, test_id: str, section: str):
         "success": True,
         "test_id": test_data["test_id"],
         "section": section,
-        "data": test_data["sections"][section]
+        # Pre-launch audit 2026-05-16: strip answer keys / transcripts here
+        # too — the per-section endpoint had the same exposure.
+        "data": _strip_answers(test_data["sections"][section])
     }
 
 
 @router.get("/answers/{book_id}/{test_id}")
-async def get_answer_key(book_id: str, test_id: str):
-    """Get answer key for a test"""
+async def get_answer_key(book_id: str, test_id: str, email: Optional[str] = None):
+    """Get answer key for a test.
+
+    Pre-launch audit 2026-05-16: was anonymous → trivially scrapable.
+    Now requires a known user email; clients call this post-submission.
+    """
+    from security_utils import require_known_user
+    await require_known_user(email)
     if book_id not in CAMBRIDGE_TESTS:
         raise HTTPException(status_code=404, detail=f"Book '{book_id}' not found")
     

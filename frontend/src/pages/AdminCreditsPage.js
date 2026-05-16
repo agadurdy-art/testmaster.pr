@@ -13,8 +13,11 @@ export default function AdminCreditsPage({ user }) {
   const [credits, setCredits] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Very simple guard: only allow a specific admin email for now
-  const isAllowed = user?.email && user.email.includes('aga.durdy');
+  // Frontend guard is cosmetic — backend enforces admin allowlist server-side.
+  // Pre-launch audit (2026-05-16) replaced the substring `.includes('aga.durdy')`
+  // check with exact-email matching aligned with backend ADMIN_EMAILS.
+  const ADMIN_EMAILS = ['aga.durdy@gmail.com', 'ieltsace@testmaster.pro', 'admin@ieltsace.com', 'stemhousebenluc@gmail.com'];
+  const isAllowed = !!user?.email && ADMIN_EMAILS.includes(user.email.toLowerCase());
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,7 +34,7 @@ export default function AdminCreditsPage({ user }) {
 
     try {
       setLoading(true);
-      const res = await manualCreditSimple({ email, plan: plan || null, exam_credits });
+      const res = await manualCreditSimple({ email, plan: plan || null, exam_credits, admin_email: user.email });
       toast.success(`Updated ${res.email}: ${JSON.stringify(res.update)}`);
     } catch (err) {
       const msg = err?.response?.data?.detail || 'Failed to update user';

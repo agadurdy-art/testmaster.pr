@@ -408,7 +408,9 @@ export default function BeginnerCourse({ user }) {
       const formData = new FormData();
       formData.append('audio', audioBlob, 'recording.webm');
       formData.append('reference_text', word);
-      
+      const _email = (() => { try { return JSON.parse(localStorage.getItem('user') || 'null')?.email || null; } catch { return null; } })();
+      if (_email) formData.append('email', _email);
+
       const response = await fetch(`${API_URL}/api/beginner/pronunciation/assess`, {
         method: 'POST',
         body: formData

@@ -27,6 +27,7 @@ function PromptCard({ prompt, grammarTitle, moduleId, onEvaluated }) {
     }
     setEvaluating(true);
     try {
+      const _email = (() => { try { return JSON.parse(localStorage.getItem('user') || 'null')?.email || null; } catch { return null; } })();
       const res = await fetch(`${API_URL}/api/grammar-engine/${moduleId}/evaluate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -36,6 +37,7 @@ function PromptCard({ prompt, grammarTitle, moduleId, onEvaluated }) {
           grammar_focus: prompt.grammar_focus || '',
           model_answer: prompt.model_answer || '',
           prompt_text: prompt.prompt || prompt.question || '',
+          email: _email,
         }),
       });
       if (res.ok) {

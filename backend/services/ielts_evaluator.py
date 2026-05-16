@@ -101,7 +101,13 @@ class IELTSEvaluator:
             lexical["score"],
             grammar["score"]
         ]
-        overall_band = round(sum(scores) / len(scores) * 2) / 2  # Round to nearest 0.5
+        # Pre-launch audit 2026-05-16: Python's built-in round() uses banker's
+        # rounding (round-half-to-even) — round(12.5)==12, which doesn't match
+        # the IELTS rubric (always round 0.25 / 0.75 UP). math.floor(x*2+0.5)/2
+        # gives the documented away-from-zero half-step rounding.
+        import math
+        avg = sum(scores) / len(scores)
+        overall_band = math.floor(avg * 2 + 0.5) / 2
         
         # Identify strengths and weaknesses
         strengths = []

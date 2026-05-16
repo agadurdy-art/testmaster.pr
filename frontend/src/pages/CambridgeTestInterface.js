@@ -2493,10 +2493,11 @@ export default function CambridgeTestInterface() {
         textToSpeak = transitions[speakingQuestionIndex % transitions.length] + questionText;
       }
       
+      const _email = (() => { try { return JSON.parse(localStorage.getItem('user') || 'null')?.email || null; } catch { return null; } })();
       const res = await fetch(`${API_URL}/api/tts/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: textToSpeak })
+        body: JSON.stringify({ text: textToSpeak, email: _email })
       });
       
       const data = await res.json();

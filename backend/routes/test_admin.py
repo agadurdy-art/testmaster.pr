@@ -4,7 +4,7 @@ Test Admin Routes
 Debug and validation endpoints for test management.
 """
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Depends
 from typing import Optional
 import os
 import sys
@@ -12,7 +12,21 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from security_utils import require_admin_email
 
-router = APIRouter(prefix="/api/admin/tests", tags=["Test Admin"])
+
+def _admin_gate(admin_email: str = Query(..., description="Admin email for gating")):
+    """Router-level admin gate. Every /api/admin/tests/* endpoint now requires
+    ?admin_email=<allowlisted>. Pre-launch audit (2026-05-16) flagged that
+    require_admin_email was imported here but never called by any handler,
+    so anonymous callers could hit debug/list/refresh-stats/practice routes.
+    """
+    require_admin_email(admin_email)
+
+
+router = APIRouter(
+    prefix="/api/admin/tests",
+    tags=["Test Admin"],
+    dependencies=[Depends(_admin_gate)],
+)
 
 # Import services
 from services.practice_service import PracticeService

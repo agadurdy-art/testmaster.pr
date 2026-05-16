@@ -257,7 +257,10 @@ class TrackSpecificEvaluator:
             lr_score,
             gr_score
         ]
-        overall_band = round(sum(scores) / len(scores) * 2) / 2
+        # Pre-launch audit 2026-05-16: round() is banker's rounding which is
+        # wrong for IELTS half-band rounding. Use floor(x*2+0.5)/2.
+        import math
+        overall_band = math.floor((sum(scores) / len(scores)) * 2 + 0.5) / 2
         evaluation["overall_band"] = overall_band
         
         # Add track-specific feedback

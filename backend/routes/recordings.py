@@ -3,6 +3,7 @@ User Recordings API Routes
 Save and manage user voice recordings for Speaking tests
 """
 
+import re
 from fastapi import APIRouter, HTTPException, UploadFile, File, Form
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
@@ -23,6 +24,31 @@ RECORDINGS_DIR = Path(os.environ.get(
     str(_BACKEND_DIR / "static/audio/user_recordings"),
 ))
 RECORDINGS_DIR.mkdir(parents=True, exist_ok=True)
+RECORDINGS_ROOT = RECORDINGS_DIR.resolve()
+
+# Pre-launch audit (2026-05-16) flagged that user_id / test_id / filename
+# came straight from form/path params and were joined onto RECORDINGS_DIR
+# with no validation, so a caller could escape the directory with `..`
+# segments (e.g. user_id="../../etc", filename="passwd"). These regexes
+# reject anything that's not a safe identifier shape.
+_SAFE_ID_RE = re.compile(r"^[A-Za-z0-9_.-]{1,128}$")
+_SAFE_FILENAME_RE = re.compile(r"^[A-Za-z0-9_.-]{1,200}$")
+
+
+def _safe_user_test(user_id: str, test_id: str) -> None:
+    if not _SAFE_ID_RE.match(user_id) or not _SAFE_ID_RE.match(test_id):
+        raise HTTPException(status_code=400, detail="Invalid user_id or test_id")
+    if user_id.startswith(".") or test_id.startswith("."):
+        raise HTTPException(status_code=400, detail="Invalid user_id or test_id")
+
+
+def _resolve_inside_root(path: Path) -> Path:
+    resolved = path.resolve()
+    try:
+        resolved.relative_to(RECORDINGS_ROOT)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Path traversal blocked")
+    return resolved
 
 class RecordingMetadata(BaseModel):
     recording_id: str
@@ -45,13 +71,14 @@ async def save_recording(
     question_index: Optional[int] = Form(None)
 ):
     """Save a user's voice recording"""
+    _safe_user_test(user_id, test_id)
     try:
         # Generate unique filename
         recording_id = str(uuid.uuid4())[:8]
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        
-        # Create user directory if not exists
-        user_dir = RECORDINGS_DIR / user_id / test_id
+
+        # Create user directory if not exists (path-traversal blocked above)
+        user_dir = _resolve_inside_root(RECORDINGS_DIR / user_id / test_id)
         user_dir.mkdir(parents=True, exist_ok=True)
         
         # Determine file extension from content type
@@ -88,9 +115,10 @@ async def save_recording(
 @router.get("/list/{user_id}/{test_id}")
 async def list_recordings(user_id: str, test_id: str):
     """List all recordings for a user's test session"""
+    _safe_user_test(user_id, test_id)
     try:
-        user_dir = RECORDINGS_DIR / user_id / test_id
-        
+        user_dir = _resolve_inside_root(RECORDINGS_DIR / user_id / test_id)
+
         if not user_dir.exists():
             return {"success": True, "recordings": []}
         
@@ -120,12 +148,15 @@ async def list_recordings(user_id: str, test_id: str):
 @router.delete("/{user_id}/{test_id}/{filename}")
 async def delete_recording(user_id: str, test_id: str, filename: str):
     """Delete a specific recording"""
+    _safe_user_test(user_id, test_id)
+    if not _SAFE_FILENAME_RE.match(filename):
+        raise HTTPException(status_code=400, detail="Invalid filename")
     try:
-        filepath = RECORDINGS_DIR / user_id / test_id / filename
-        
+        filepath = _resolve_inside_root(RECORDINGS_DIR / user_id / test_id / filename)
+
         if not filepath.exists():
             raise HTTPException(status_code=404, detail="Recording not found")
-        
+
         os.remove(filepath)
         
         return {"success": True, "message": "Recording deleted"}

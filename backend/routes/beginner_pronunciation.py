@@ -122,17 +122,20 @@ def simplify_feedback(assessment_result: dict, target_text: str) -> dict:
 async def assess_pronunciation(
     audio: UploadFile = File(...),
     reference_text: str = Form(...),
-    language: str = Form(default="en-US")
+    language: str = Form(default="en-US"),
+    email: Optional[str] = Form(default=None),
 ):
     """
     Assess pronunciation of spoken audio against reference text.
     Returns beginner-friendly feedback.
-    
+
     Parameters:
     - audio: Audio file (wav, webm, mp3)
     - reference_text: The text the user is trying to pronounce
     - language: Language code (default: en-US)
     """
+    from security_utils import require_known_user
+    await require_known_user(email)
     if not AZURE_AVAILABLE:
         raise HTTPException(status_code=500, detail="Azure Speech SDK not available")
     

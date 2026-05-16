@@ -122,6 +122,7 @@ class ManualCreditRequest(BaseModel):
     plan: Optional[str] = None
     exam_credits: Optional[int] = None
     admin_token: Optional[str] = None
+    admin_email: Optional[str] = None  # required by manual-credit-simple (audit fix)
 
 
 # ============ Helpers ============
@@ -247,16 +248,23 @@ async def paypal_create_order(req: PaypalCreateOrderRequest):
     # Validate against the slider's documented bounds ($3.60 floor / 365-day
     # ceiling, locked 2026-05-08) so tampered clients can't sneak through.
     if plan_id == "custom":
+        # Pre-launch audit 2026-05-16: float arithmetic on money is a known
+        # source of off-by-a-cent bugs (e.g. 14.99 stored as 14.9899999…).
+        # PayPal accepts strings, so we keep money in Decimal end-to-end and
+        # only stringify at the API boundary.
+        from decimal import Decimal, ROUND_HALF_UP, InvalidOperation
         try:
-            price = float(req.priceUsd or 0)
-        except (TypeError, ValueError):
+            price_dec = Decimal(str(req.priceUsd or "0")).quantize(
+                Decimal("0.01"), rounding=ROUND_HALF_UP
+            )
+        except (InvalidOperation, TypeError, ValueError):
             raise HTTPException(status_code=400, detail="Invalid priceUsd")
         days = int(req.durationDays or 0)
-        if price < 3.0 or price > 500.0:
+        if price_dec < Decimal("3.00") or price_dec > Decimal("500.00"):
             raise HTTPException(status_code=400, detail="priceUsd out of range")
         if days < 3 or days > 365:
             raise HTTPException(status_code=400, detail="durationDays out of range")
-        amount_value = f"{price:.2f}"
+        amount_value = format(price_dec, "f")
         order_description = f"IELTS Ace Custom — {days} days"
     elif plan_id in PAYPAL_PLAN_PRICES:
         amount_value = PAYPAL_PLAN_PRICES[plan_id]
@@ -670,11 +678,16 @@ async def paypal_ipn(request: Request):
     resource = payload.get("resource", {})
     amount_info = resource.get("amount") or resource.get("gross_amount") or {}
     value_str = amount_info.get("value") or "0"
+    # Pre-launch audit 2026-05-16: parse PayPal's string amount as Decimal so
+    # the plan-bucket comparisons below are exact (2.99 / 9.99 / 19.99 etc.)
+    # instead of `abs(amount - 2.99) < 0.01` float dance.
+    from decimal import Decimal, InvalidOperation
     try:
-        amount = float(str(value_str))
-    except ValueError:
+        amount_dec = Decimal(str(value_str))
+    except (InvalidOperation, ValueError):
         logger.error(f"Invalid PayPal amount: {value_str}")
         raise HTTPException(status_code=400, detail="Invalid amount")
+    amount = float(amount_dec)  # legacy float kept for the comparisons below
     email = None
     payer = resource.get("payer")
     if isinstance(payer, dict):
@@ -740,6 +753,13 @@ async def paypal_ipn(request: Request):
 
 @router.post("/payments/manual-credit-simple")
 async def manual_credit_simple(req: ManualCreditRequest):
+    """Admin-only top-up. Pre-launch audit (2026-05-16) flagged that this
+    endpoint had no auth at all — any caller could grant master / exam credits
+    to any email. Now requires admin_email in body and validates against the
+    server-side allowlist (security_utils.require_admin_email).
+    """
+    from security_utils import require_admin_email
+    require_admin_email(req.admin_email)
     user = await _get_user_by_email(req.email)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -782,6 +802,17 @@ async def upload_bank_payment(
     email: str = Form(...),
     screenshot: UploadFile = File(...),
 ):
+    """Accept a payment screenshot and queue it for admin review.
+
+    Pre-launch audit (2026-05-16) flagged that this endpoint auto-granted
+    30 days of any tier to anyone who uploaded any PNG — no admin approval.
+    Now: stores the screenshot + creates a pending_bank_payments row, and
+    returns "awaiting review". An admin runs /payments/manual-credit-simple
+    (allowlist-gated) to activate the plan after verifying the transfer.
+
+    SePay webhook (/payments/sepay/webhook) remains the auto-activation
+    path because bank notifications there are signed by the SePay relay.
+    """
     from security_utils import validate_upload_filename
     validate_upload_filename(screenshot.filename)
     email_clean = email.strip().lower()
@@ -797,20 +828,23 @@ async def upload_bank_payment(
     if plan_id not in PAYPAL_PLAN_MAPPING:
         raise HTTPException(status_code=400, detail="Invalid plan_id")
     plan_name, subscription_label = PAYPAL_PLAN_MAPPING[plan_id]
-    expires_at = (datetime.now(timezone.utc) + timedelta(days=30)).isoformat()
-    update_fields: Dict[str, Any] = {
-        "plan": plan_name, "subscription": subscription_label,
-        "plan_expires_at": expires_at, "payment_method": "bank_transfer",
-        "lastPayment": datetime.now(timezone.utc).isoformat(),
-        "monthly_usage": {"liz_messages": 0, "speaking_evals": 0, "reset_date": datetime.now(timezone.utc).isoformat()},
-    }
-    await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
-    await db.kofi_events.insert_one({
-        "provider": "bank", "received_at": datetime.now(timezone.utc).isoformat(),
-        "email": email_clean, "plan_id": plan_id, "plan_name": plan_name,
-        "expires_at": expires_at, "screenshot_path": filepath,
+    await db.pending_bank_payments.insert_one({
+        "provider": "bank_upload",
+        "submitted_at": datetime.now(timezone.utc).isoformat(),
+        "email": email_clean,
+        "user_id": user["id"],
+        "plan_id": plan_id,
+        "plan_name": plan_name,
+        "subscription_label": subscription_label,
+        "screenshot_path": filepath,
+        "status": "pending_review",
     })
-    return {"detail": "Bank payment recorded. Plan active for 30 days.", "plan": plan_name, "subscription": subscription_label, "expires_at": expires_at}
+    return {
+        "detail": "Payment proof received. Our team will activate your subscription within 24 hours.",
+        "status": "pending_review",
+        "plan": plan_name,
+        "subscription": subscription_label,
+    }
 
 
 # ============ SePay (Vietnamese bank webhook) ============

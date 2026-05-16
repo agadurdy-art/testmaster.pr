@@ -164,7 +164,8 @@ export default function CambridgeTestResults() {
       
       // Fallback to basic calculation
       try {
-        const ansRes = await fetch(`${API_URL}/api/cambridge/answers/${bookId}/${testId}`);
+        const _email = (() => { try { return JSON.parse(localStorage.getItem('user') || 'null')?.email || null; } catch { return null; } })();
+        const ansRes = await fetch(`${API_URL}/api/cambridge/answers/${bookId}/${testId}${_email ? `?email=${encodeURIComponent(_email)}` : ''}`);
         const ansData = await ansRes.json();
         
         if (ansData.success) {

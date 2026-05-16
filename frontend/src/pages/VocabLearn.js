@@ -142,10 +142,11 @@ export default function VocabLearn() {
   const speak = async (text) => {
     setSpeaking(true);
     try {
+      const _email = (() => { try { return JSON.parse(localStorage.getItem('user') || 'null')?.email || null; } catch { return null; } })();
       const res = await fetch(`${API_URL}/api/liz/tts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text })
+        body: JSON.stringify({ text, email: _email })
       });
       const data = await res.json();
       if (data.audio) {

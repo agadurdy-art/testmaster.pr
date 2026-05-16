@@ -198,10 +198,11 @@ function LizTeacherInner({ user }) {
 
   const ttsText = useCallback(async (text) => {
     try {
+      const _email = (() => { try { return JSON.parse(localStorage.getItem('user') || 'null')?.email || null; } catch { return null; } })();
       const res = await fetch(`${API_URL}/api/liz/tts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: text.substring(0, 500) }),
+        body: JSON.stringify({ text: text.substring(0, 500), email: _email }),
       });
       const data = await res.json();
       if (data.audio) return data.audio;
@@ -369,6 +370,8 @@ function LizTeacherInner({ user }) {
       const audioData = await blobToBase64(blob);
       const formData = new FormData();
       formData.append('file', blob, 'recording.webm');
+      const _email = (() => { try { return JSON.parse(localStorage.getItem('user') || 'null')?.email || null; } catch { return null; } })();
+      if (_email) formData.append('email', _email);
       const res = await fetch(`${API_URL}/api/liz/stt`, { method: 'POST', body: formData });
       const data = await res.json();
       if (data.success && data.text?.trim()) {

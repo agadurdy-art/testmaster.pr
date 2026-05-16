@@ -289,8 +289,15 @@ async def evaluate_all_writing_tasks(
         })
         total_band += evaluation.get("band_score", 4.0)
     
-    # Calculate overall writing band (average)
-    overall_band = round(total_band / len(evaluations), 1) if evaluations else 4.0
+    # Calculate overall writing band (average).
+    # Pre-launch audit 2026-05-16: round() to nearest 0.1 is wrong for IELTS
+    # (bands are 0.5 increments). math.floor(x*2+0.5)/2 = away-from-zero
+    # half-band rounding to match the published rubric.
+    import math
+    overall_band = (
+        math.floor((total_band / len(evaluations)) * 2 + 0.5) / 2
+        if evaluations else 4.0
+    )
     
     # Aggregate tips (unique)
     all_tips = []

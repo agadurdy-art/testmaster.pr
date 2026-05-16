@@ -35,10 +35,11 @@ export default function GrammarSmartReview({ user }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const _email = (() => { try { return JSON.parse(localStorage.getItem('user') || 'null')?.email || null; } catch { return null; } })();
         const res = await fetch(`${API_URL}/api/grammar-engine/${moduleId}/smart-review`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ weak_areas: weakAreas, quiz_score: quizScore }),
+          body: JSON.stringify({ weak_areas: weakAreas, quiz_score: quizScore, email: _email }),
         });
         if (res.ok) setData(await res.json());
         else toast.error('Failed to load review exercises');

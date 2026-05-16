@@ -4,7 +4,7 @@ QA Admin Routes
 Admin endpoints for QA workflow, evidence packs, and test approval.
 """
 
-from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Query
+from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Query, Depends
 from typing import Optional, List
 from datetime import datetime
 import os
@@ -14,7 +14,21 @@ import base64
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from security_utils import require_admin_email
 
-router = APIRouter(prefix="/api/admin/qa", tags=["QA Workflow"])
+
+def _admin_gate(admin_email: str = Query(..., description="Admin email for gating")):
+    """Router-level admin gate. Every /api/admin/qa/* endpoint now requires
+    ?admin_email=<allowlisted>. Pre-launch audit (2026-05-16) flagged that
+    require_admin_email was imported here but never called by any handler,
+    so anonymous callers could approve/publish/revoke/attach tests.
+    """
+    require_admin_email(admin_email)
+
+
+router = APIRouter(
+    prefix="/api/admin/qa",
+    tags=["QA Workflow"],
+    dependencies=[Depends(_admin_gate)],
+)
 
 # Import services and schemas
 from schemas.visual_asset import TestStatus, VisualValidator, get_required_visual_slots
