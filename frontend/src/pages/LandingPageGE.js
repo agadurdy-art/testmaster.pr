@@ -1,6 +1,64 @@
 import React, { useEffect } from 'react';
 import { ArrowRight, MessageCircle, Mic, PenLine, Sparkles } from 'lucide-react';
 
+// V1 GE plan ladder. Prices mirror backend/plan_access.py PLAN_PRICES_USD/VND
+// so this page never drifts from what the checkout actually charges. VND
+// values are rounded to friendly thousands and rendered with a thin dot.
+const GE_PLANS = [
+  {
+    id: 'explorer',
+    eyebrow: 'Dip your toe',
+    name: 'Explorer',
+    priceUSD: '4.99',
+    priceVND: '119,000',
+    features: [
+      '30 days of Ray',
+      'Daily vocab cards + games',
+      'Limited writing feedback',
+    ],
+  },
+  {
+    id: 'learner',
+    eyebrow: 'Build the habit',
+    name: 'Learner',
+    priceUSD: '9.00',
+    priceVND: '219,000',
+    features: [
+      '30 days of Ray',
+      'Unlimited writing feedback',
+      'Conversation drills',
+      'Full vocab game library',
+    ],
+    popular: true,
+  },
+  {
+    id: 'achiever',
+    eyebrow: 'Stretch yourself',
+    name: 'Achiever',
+    priceUSD: '19.00',
+    priceVND: '459,000',
+    features: [
+      '30 days of Ray',
+      'Speaking practice with pronunciation feedback',
+      'Mock conversations + scenarios',
+      'Priority email support',
+    ],
+  },
+  {
+    id: 'master',
+    eyebrow: 'Go all in',
+    name: 'Master',
+    priceUSD: '29.00',
+    priceVND: '699,000',
+    features: [
+      '30 days of Ray',
+      'Everything in Achiever',
+      'Unlimited everything',
+      '1-on-1 lesson planning with Ray',
+    ],
+  },
+];
+
 /**
  * Landing page for the General English track.
  *
@@ -169,6 +227,72 @@ export default function LandingPageGE() {
         </div>
       </section>
 
+      {/* Pricing — V1 GE tiers, NOT the IELTS Ace plans (those live at /pricing) */}
+      <section id="pricing" className="max-w-7xl mx-auto px-5 sm:px-8 py-14 border-t border-slate-100">
+        <div className="text-[11px] font-semibold tracking-wider uppercase text-violet-700">
+          Pricing
+        </div>
+        <h2
+          className="mt-2 text-[28px] sm:text-[36px] font-semibold text-slate-900 tracking-tight max-w-3xl"
+          style={{ fontFamily: "'Playfair Display', serif" }}
+        >
+          Pay for the time you actually study.
+        </h2>
+        <p className="mt-3 text-[15px] text-slate-600 max-w-2xl">
+          Every paid plan unlocks Ray for 30 days. Cancel any time — your
+          progress and vocab cards stay yours.
+        </p>
+
+        <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {GE_PLANS.map((plan) => (
+            <div
+              key={plan.id}
+              className={`relative rounded-2xl border bg-white p-6 ${
+                plan.popular
+                  ? 'border-violet-300 shadow-[0_20px_60px_-25px_rgba(124,58,237,0.45)]'
+                  : 'border-slate-200'
+              }`}
+            >
+              {plan.popular && (
+                <span className="absolute -top-2.5 left-6 px-2.5 py-1 rounded-md bg-gradient-to-r from-violet-500 to-purple-600 text-white text-[10px] font-bold tracking-wider uppercase">
+                  Most popular
+                </span>
+              )}
+              <div className="text-[11px] font-semibold tracking-wider uppercase text-slate-500">
+                {plan.eyebrow}
+              </div>
+              <h3 className="mt-1 text-xl font-bold text-slate-900">{plan.name}</h3>
+              <div className="mt-3 flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-slate-900">${plan.priceUSD}</span>
+                <span className="text-[13px] text-slate-500">/ 30 days</span>
+              </div>
+              <div className="text-[12px] text-slate-500 mt-0.5">
+                or ₫{plan.priceVND} via VietQR
+              </div>
+              <ul className="mt-5 space-y-2 text-[14px] text-slate-700">
+                {plan.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2">
+                    <span className="text-violet-600 mt-0.5">✓</span>
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+              <a
+                href={`/signup?path=general&plan=${plan.id}`}
+                className={`mt-5 inline-flex w-full items-center justify-center gap-1.5 font-semibold text-[14px] px-4 py-2.5 rounded-xl ${
+                  plan.popular
+                    ? 'bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white'
+                    : 'border border-slate-200 hover:border-slate-300 text-slate-700'
+                }`}
+              >
+                {plan.id === 'explorer' ? 'Start small' : `Choose ${plan.name}`}
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Path nudge */}
       <section className="max-w-3xl mx-auto px-5 sm:px-8 py-14">
         <div className="rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 text-white p-8 sm:p-10 text-center shadow-[0_30px_80px_-30px_rgba(124,58,237,0.6)]">
@@ -179,8 +303,8 @@ export default function LandingPageGE() {
             Ready when you are.
           </h2>
           <p className="mt-3 text-[15px] text-violet-100 max-w-xl mx-auto leading-relaxed">
-            Free forever for a few lessons a week. Upgrade when you want
-            unlimited chat, writing feedback, and the full game library.
+            Start free with Ray. Upgrade when you want unlimited chat, writing
+            feedback, and the full game library.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <a
@@ -191,7 +315,7 @@ export default function LandingPageGE() {
               <ArrowRight className="w-4 h-4" />
             </a>
             <a
-              href="/pricing"
+              href="#pricing"
               className="inline-flex items-center gap-2 border border-white/40 hover:border-white/70 text-white font-medium text-[15px] px-5 py-3 rounded-xl"
             >
               See pricing
