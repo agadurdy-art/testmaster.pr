@@ -5,7 +5,7 @@ Allows triggering content enrichment from the admin panel
 
 from fastapi import APIRouter, HTTPException, BackgroundTasks
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from pathlib import Path
 import os
 import json
@@ -177,7 +177,50 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None, stage
     merger = ContentMerger()
     seeded_count = 0
     TS = datetime.now(timezone.utc).isoformat()
-    
+
+    # ── Pre-pass: build enrichment pools (vocab + grammar) from every
+    # enriched file in scope. Review lessons reference earlier words/
+    # patterns by string only; without this lookup their UI rows render
+    # with empty ipa/definition/image_emoji.
+    vocab_pool: Dict[str, Dict[str, Any]] = {}
+    grammar_pool: Dict[str, Dict[str, Any]] = {}
+    for sp in stage_prefixes:
+        for un in unit_numbers:
+            us = str(un).zfill(2)
+            ep = f"{enriched_dir}/{sp}_unit{us}_enriched.json"
+            if not os.path.exists(ep):
+                continue
+            with open(ep, 'r') as f:
+                edata = json.load(f)
+            for eunit in edata.get('units', []):
+                for elesson in eunit.get('lessons', []):
+                    for estep in elesson.get('steps', []):
+                        if estep.get('type') == 'vocabulary':
+                            for w in estep.get('items', []) or []:
+                                if isinstance(w, dict) and w.get('word'):
+                                    key = w['word'].strip().lower()
+                                    if key and key not in vocab_pool:
+                                        vocab_pool[key] = w
+                        elif estep.get('type') == 'grammar_focus':
+                            pat = estep.get('rule_pattern') or estep.get('rule') or ''
+                            pat = pat.strip()
+                            if pat and pat not in grammar_pool:
+                                grammar_pool[pat] = {
+                                    'pattern': pat,
+                                    'rule_text': pat,
+                                    'explanation': estep.get('explanation', ''),
+                                    'examples': estep.get('examples', []),
+                                }
+
+    def _resolve_vocab(word: str) -> Dict[str, Any]:
+        """Look up enriched word object by lowercase word; fallback to placeholder."""
+        if not word:
+            return {'word': '', 'ipa': '', 'definition': '', 'example': '', 'image_emoji': ''}
+        hit = vocab_pool.get(word.strip().lower())
+        if hit:
+            return hit
+        return {'word': word, 'ipa': '', 'definition': '', 'example': '', 'image_emoji': ''}
+
     # Map step types -> activity_flow types used by frontend
     STEP_TO_ACTIVITY = {
         "warm_up": "retrieval_warmup",
@@ -223,13 +266,24 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None, stage
             return {"words": step.get("items", [])}
         
         if step_type == "vocabulary_review":
-            # items may be plain strings or word objects
+            # items may be plain strings or word objects. For strings, resolve
+            # against the unit-wide enriched vocab pool so review rows show
+            # ipa/definition/image from the lessons where each word was taught.
             items = step.get("items", [])
-            if items and isinstance(items[0], str):
-                words = [{"word": w, "ipa": "", "definition": "", "example": "", "image_emoji": ""} for w in items]
-            else:
-                words = items
-            return {"words": words, "is_review": True, "review_words": step.get("items", [])}
+            words = []
+            for it in items:
+                if isinstance(it, str):
+                    words.append(_resolve_vocab(it))
+                elif isinstance(it, dict):
+                    # Already an object — fill missing fields from pool if possible.
+                    pool_hit = vocab_pool.get((it.get('word') or '').strip().lower())
+                    if pool_hit:
+                        words.append({**pool_hit, **{k: v for k, v in it.items() if v}})
+                    else:
+                        words.append(it)
+            return {"words": words, "is_review": True, "review_words": [
+                (w.get('word') if isinstance(w, dict) else w) for w in items
+            ]}
         
         if step_type in ("vocab_games", "micro_game_vocab"):
             if step.get("games"):
@@ -249,11 +303,15 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None, stage
             }
         
         if step_type == "grammar_review":
-            patterns = step.get("patterns", [])
-            return {
-                "rules": [{"pattern": p, "rule_text": p, "explanation": "", "examples": []} for p in patterns] if patterns else [],
-                "is_review": True
-            }
+            patterns = step.get("patterns", []) or []
+            rules = []
+            for p in patterns:
+                if isinstance(p, str):
+                    hit = grammar_pool.get(p.strip())
+                    rules.append(hit or {"pattern": p, "rule_text": p, "explanation": "", "examples": []})
+                elif isinstance(p, dict):
+                    rules.append(p)
+            return {"rules": rules, "is_review": True}
         
         if step_type in ("grammar_games", "grammar_game"):
             if step.get("games"):
