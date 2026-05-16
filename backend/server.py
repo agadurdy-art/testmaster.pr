@@ -7829,7 +7829,19 @@ async def admin_users_import(
             # distinguish freshly-imported users from native signups.
             doc["imported_from_legacy_at"] = datetime.now(timezone.utc)
 
-            existing = await db.users.find_one({"email": email}, {"_id": 0, "id": 1})
+            existing = await db.users.find_one(
+                {"email": email},
+                {"_id": 0, "id": 1, "learning_mode": 1},
+            )
+
+            # Cross-product check: if this user already exists under a
+            # *different* learning_mode, flag them as "both" instead of
+            # overwriting. This catches the "Tina was in the GE batch
+            # AND the IELTS batch" case Aga warned about — the old
+            # platform had a single signup that fed both products.
+            prior_mode = (existing or {}).get("learning_mode")
+            if existing and prior_mode and prior_mode != "both" and prior_mode != learning_mode:
+                doc["learning_mode"] = "both"
 
             if dry_run:
                 if existing:
