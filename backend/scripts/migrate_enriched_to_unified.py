@@ -38,8 +38,15 @@ from motor.motor_asyncio import AsyncIOMotorClient
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format="%(message)s")
 
-REPO_ROOT = Path(__file__).resolve().parent.parent.parent
-CONTENT_DIR = REPO_ROOT / "backend" / "content" / "enriched"
+# Script lives at backend/scripts/migrate_enriched_to_unified.py and needs
+# to find backend/content/enriched/*.json regardless of whether the process
+# was launched from the repo root (local dev: working dir = repo root,
+# `backend/` prefix is part of the relative path) or from backend itself
+# (Railway: service root = backend/, the container has /app == backend/).
+# parent = scripts/, parent.parent = backend/ — content/enriched is right
+# next door, no `backend/` prefix required.
+BACKEND_ROOT = Path(__file__).resolve().parent.parent
+CONTENT_DIR = BACKEND_ROOT / "content" / "enriched"
 
 # Stage number → unified_stages.stage_id used by seed_unified_learning.py
 STAGE_ID_MAP = {
@@ -179,7 +186,7 @@ async def _cli_main(dry_run: bool) -> None:
     if not mongo_url:
         # Fall back to backend/.env so the script works locally without
         # `set -a; source backend/.env`.
-        env_path = REPO_ROOT / "backend" / ".env"
+        env_path = BACKEND_ROOT / ".env"
         if env_path.exists():
             for line in env_path.read_text().splitlines():
                 if line.startswith("MONGO_URL="):
