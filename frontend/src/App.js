@@ -812,7 +812,7 @@ function AppWithSessionHandler() {
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       </Suspense>
-      {user && location.pathname.startsWith('/dashboard') && (
+      {user && isIeltsMode(user) && location.pathname.startsWith('/dashboard') && (
         <Suspense fallback={null}><LizFloatingButton user={user} /></Suspense>
       )}
       {user && (
