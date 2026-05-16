@@ -25,7 +25,16 @@ import resend
 logger = logging.getLogger(__name__)
 
 RESEND_API_KEY = os.getenv("RESEND_API_KEY")
-RESEND_FROM_EMAIL = os.getenv("RESEND_FROM_EMAIL", "onboarding@resend.dev")
+# Default to the verified testmaster.pro sender once we move off the Resend
+# sandbox; override via env if we ever change the from-address. Display name
+# helps the inbox show "Liz · IELTS Ace" instead of just the bare address.
+RESEND_FROM_EMAIL = os.getenv(
+    "RESEND_FROM_EMAIL",
+    "Liz · IELTS Ace <liz@testmaster.pro>",
+)
+# Where user replies land. Defaults to support@ so anyone hitting "Reply" on
+# the eval email lands in the inbox that's already published on /contact.
+RESEND_REPLY_TO = os.getenv("RESEND_REPLY_TO", "support@testmaster.pro")
 FRONTEND_BASE_URL = os.getenv("FRONTEND_BASE_URL", "https://www.testmaster.pro")
 
 # Configure resend module-level so callers don't need to re-initialise.
@@ -185,6 +194,7 @@ async def send_essay_evaluation_email(
         params = {
             "from": RESEND_FROM_EMAIL,
             "to": [to_email],
+            "reply_to": RESEND_REPLY_TO,
             "subject": f"Your IELTS Ace evaluation — Band {overall_str} · {word_count} words",
             "html": _summary_html(result, report_url),
         }
