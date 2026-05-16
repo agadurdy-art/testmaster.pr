@@ -3857,6 +3857,10 @@ class PublicEvaluateEssayRequest(BaseModel):
     user_language: Optional[str] = "en"
     # See WritingPracticeV2Request — same shape, anonymous scope.
     client_request_id: Optional[str] = None
+    # Opt-in to "Liz's weekly IELTS tips" marketing list. Defaults to False;
+    # backend records the flag in MongoDB and (if RESEND_AUDIENCE_ID is set)
+    # creates a Resend contact so the email can be broadcast to later.
+    marketing_consent: Optional[bool] = False
 
 
 @api_router.post("/public/evaluate-essay")
@@ -4010,11 +4014,15 @@ async def _run_anon_eval_background(
     task_type: str,
     crid: Optional[str],
     token: str,
+    marketing_consent: bool = False,
 ) -> None:
     """Background task — does the actual LLM eval, persists, emails the user."""
     from services.writing_evaluator_v2 import evaluate_writing, EvaluatorFailure
     from services import writing_idempotency
-    from services.anon_eval_email import send_essay_evaluation_email
+    from services.anon_eval_email import (
+        send_essay_evaluation_email,
+        add_to_marketing_audience,
+    )
     from schemas.writing_evaluator import WritingEvaluationRequest, TaskType
 
     log = logging.getLogger(__name__)
@@ -4093,6 +4101,26 @@ async def _run_anon_eval_background(
         }},
     )
 
+    # Marketing opt-in side-effect — only if the visitor actively ticked
+    # the "Send me Liz's weekly tips" checkbox. We add to the Resend
+    # audience after the eval succeeds (no point growing the list with
+    # failed submissions) and persist the audience-side result so the
+    # admin dashboard can surface duplicate / failed contact creates.
+    if marketing_consent:
+        audience = await add_to_marketing_audience(email)
+        await db.anonymous_evaluations.update_one(
+            {"email": email},
+            {"$set": {
+                "marketing_audience": {
+                    "ok": audience.get("ok"),
+                    "skipped": audience.get("skipped", False),
+                    "reason": audience.get("reason") or audience.get("error"),
+                    "contact_id": audience.get("contact_id"),
+                    "synced_at": datetime.now(timezone.utc),
+                }
+            }},
+        )
+
 
 @api_router.post("/public/evaluate-essay/async")
 async def public_evaluate_essay_async(request: PublicEvaluateEssayRequest, background_tasks: BackgroundTasks):
@@ -4149,6 +4177,8 @@ async def public_evaluate_essay_async(request: PublicEvaluateEssayRequest, backg
             "prompt": prompt,
             "token": token,
             "token_expires_at": now + timedelta(days=PUBLIC_EVAL_TOKEN_TTL_DAYS),
+            "marketing_consent": bool(request.marketing_consent),
+            "marketing_consent_at": now if request.marketing_consent else None,
         })
     except DuplicateKeyError:
         existing = await db.anonymous_evaluations.find_one({"email": email})
@@ -4180,6 +4210,7 @@ async def public_evaluate_essay_async(request: PublicEvaluateEssayRequest, backg
         task_type=request.task_type,
         crid=crid,
         token=token,
+        marketing_consent=bool(request.marketing_consent),
     )
 
     return {

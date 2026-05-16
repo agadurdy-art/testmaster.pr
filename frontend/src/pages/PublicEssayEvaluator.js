@@ -76,6 +76,10 @@ function countWords(text) {
 export default function PublicEssayEvaluator() {
   const { languageWireCode } = useI18n();
   const [email, setEmail] = useState("");
+  // Marketing opt-in — defaults to off (GDPR/CAN-SPAM friendly: never
+  // pre-check). Backend records the flag on the eval document and, if a
+  // Resend audience is configured, adds the contact to the broadcast list.
+  const [marketingConsent, setMarketingConsent] = useState(false);
   const [taskType, setTaskType] = useState("task2");
   const [prompt, setPrompt] = useState("");
   const [essay, setEssay] = useState("");
@@ -158,6 +162,7 @@ export default function PublicEssayEvaluator() {
           essay: essay.trim(),
           user_language: languageWireCode || "en",
           client_request_id: clientRequestIdRef.current,
+          marketing_consent: marketingConsent,
         }),
       });
 
@@ -359,8 +364,30 @@ export default function PublicEssayEvaluator() {
                 />
               </div>
               <p className="mt-1.5 text-[12px] text-slate-500">
-                One evaluation per email, ever. We won't spam you.
+                One evaluation per email, ever. No spam — unsubscribe in one
+                click.
               </p>
+
+              {/* Marketing opt-in — never pre-checked. */}
+              <label
+                htmlFor="pe-marketing"
+                className="mt-3 flex items-start gap-2.5 cursor-pointer select-none"
+              >
+                <input
+                  id="pe-marketing"
+                  type="checkbox"
+                  checked={marketingConsent}
+                  onChange={(e) => setMarketingConsent(e.target.checked)}
+                  disabled={submitting}
+                  className="mt-0.5 w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500/30"
+                />
+                <span className="text-[12.5px] text-slate-600 leading-snug">
+                  <b className="text-slate-800">Send me Liz's weekly IELTS
+                  tips</b>{" "}
+                  — band 5 → 7 in 8 weeks, with real lessons. Unsubscribe
+                  anytime.
+                </span>
+              </label>
             </div>
 
             {/* Task type */}

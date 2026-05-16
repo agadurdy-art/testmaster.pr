@@ -35,6 +35,12 @@ RESEND_FROM_EMAIL = os.getenv(
 # Where user replies land. Defaults to support@ so anyone hitting "Reply" on
 # the eval email lands in the inbox that's already published on /contact.
 RESEND_REPLY_TO = os.getenv("RESEND_REPLY_TO", "support@testmaster.pro")
+# Resend Audience ID for the "Liz's weekly IELTS tips" list. Set this in
+# Railway once you've created the audience in the Resend dashboard
+# (Audience → Create audience → copy the audience id). Leave unset to
+# silently skip the audience sync — opt-in checkbox still records the
+# consent flag in MongoDB either way.
+RESEND_AUDIENCE_ID = os.getenv("RESEND_AUDIENCE_ID", "")
 FRONTEND_BASE_URL = os.getenv("FRONTEND_BASE_URL", "https://www.testmaster.pro")
 
 # Configure resend module-level so callers don't need to re-initialise.
@@ -165,6 +171,42 @@ def _summary_html(result: Mapping[str, Any], report_url: str) -> str:
       </p>
     </div>
     """
+
+
+async def add_to_marketing_audience(
+    to_email: str,
+    first_name: str = "",
+) -> dict:
+    """Add a verified opt-in to the Resend marketing audience.
+
+    Best-effort and idempotent: a duplicate email returns 200 from Resend
+    so callers don't need to dedupe. Returns a small status dict so the
+    caller can persist the result; we never raise — marketing sync is a
+    soft side-effect, not a contract.
+    """
+    if not RESEND_API_KEY:
+        return {"ok": False, "skipped": True, "reason": "RESEND_API_KEY not set"}
+    if not RESEND_AUDIENCE_ID:
+        return {"ok": False, "skipped": True, "reason": "RESEND_AUDIENCE_ID not set"}
+
+    try:
+        params = {
+            "email": to_email,
+            "audience_id": RESEND_AUDIENCE_ID,
+            "unsubscribed": False,
+        }
+        if first_name:
+            params["first_name"] = first_name
+        created = await asyncio.to_thread(resend.Contacts.create, params)
+        contact_id = created.get("id") if isinstance(created, dict) else None
+        logger.info(
+            "Added %s to Resend audience %s (contact_id=%s)",
+            to_email, RESEND_AUDIENCE_ID[:8], contact_id or "?",
+        )
+        return {"ok": True, "contact_id": contact_id, "error": None}
+    except Exception as exc:
+        logger.warning("Resend audience add exception for %s: %s", to_email, exc)
+        return {"ok": False, "contact_id": None, "error": str(exc)[:300]}
 
 
 async def send_essay_evaluation_email(
