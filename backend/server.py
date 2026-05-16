@@ -6779,10 +6779,29 @@ Be precise with start/end indices. Only flag real errors. Return valid JSON only
 # Include router
 app.include_router(api_router)
 
+# Codex audit P0 (#95): drop the `["*"]` fallback. allow_credentials=True
+# combined with `*` is silently rejected by browsers anyway, but leaving it
+# there makes the intent ambiguous and would happily accept any Origin if a
+# downstream framework loosened the credentials flag. Production must set
+# CORS_ORIGINS in Railway env; missing config now fails loud with explicit
+# CORS errors instead of opening the door.
+_cors_origins = [
+    o.strip()
+    for o in os.environ.get('CORS_ORIGINS', '').split(',')
+    if o.strip()
+]
+if not _cors_origins:
+    # Dev-only fallback — local frontend ports. Prod must configure CORS_ORIGINS.
+    _cors_origins = [
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://127.0.0.1:3000",
+    ]
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=[o.strip() for o in os.environ.get('CORS_ORIGINS', '').split(',') if o.strip()] or ["*"],
+    allow_origins=_cors_origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )

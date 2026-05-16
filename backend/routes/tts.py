@@ -58,21 +58,32 @@ def get_cache_path(text: str, voice_id: str) -> Path:
 async def generate_tts(request: TTSRequest):
     """Generate text-to-speech audio using ElevenLabs.
 
-    Soft-auth: if an email is sent, validate it against the user DB. If no
-    email (anonymous sample-page playback like /samples/speaking/band-6-5-part2
-    "Listen to sample"), allow through — these surfaces play a fixed handful
-    of cached strings, so the per-request cost is effectively zero after the
-    first generation.
+    Auth model (Codex audit P0, #93 — 2026-05-16):
+      - Authenticated (email present + verified): full path — cache lookup,
+        fall through to ElevenLabs generation if missing, write to cache.
+      - Anonymous (no email): cache-only — return cached audio if the
+        text+voice hash already exists on disk, otherwise 403. This makes
+        /api/tts/generate cost-bomb-proof for anon traffic; bots cannot
+        burn ElevenLabs minutes by sending novel text. The sample pages
+        (/samples/speaking/band-6-5-part2 etc.) play a fixed handful of
+        strings — once warmed (by an authed admin call or first signed-in
+        user), anon clients just fetch the cached MP3.
     """
+    is_anon = not request.email
     if request.email:
         from security_utils import require_known_user
         await require_known_user(request.email)
+    # Bound per-request cost even for authed users. ElevenLabs charges by
+    # character; an 800-char cap is well above any UI string we currently
+    # synthesize but below pathological payloads.
+    if len(request.text or "") > 800:
+        raise HTTPException(status_code=413, detail="Text too long for TTS")
     try:
         from elevenlabs import ElevenLabs, VoiceSettings
 
         if not ELEVENLABS_API_KEY:
             raise HTTPException(status_code=500, detail="ElevenLabs API key not configured")
-        
+
         # Check cache first
         cache_path = get_cache_path(request.text, request.voice_id)
         if cache_path.exists():
@@ -80,7 +91,16 @@ async def generate_tts(request: TTSRequest):
                 audio_url=f"/api/static/audio/tts_cache/{cache_path.name}",
                 cached=True
             )
-        
+        # Anonymous callers may only fetch already-cached audio. First
+        # generation of any new string must come from an authed request;
+        # this turns the anon path into a static-file fetch and removes
+        # the ElevenLabs cost-bomb vector.
+        if is_anon:
+            raise HTTPException(
+                status_code=403,
+                detail="TTS generation requires authentication",
+            )
+
         # Generate new audio
         client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
         

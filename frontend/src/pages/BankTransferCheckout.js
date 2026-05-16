@@ -146,11 +146,35 @@ export default function BankTransferCheckout({ user }) {
     );
   }
 
-  const bankCode = BANK_QR_CODE[session.bank_info?.bank_name] || 'MB';
+  // Codex audit P0 (#98): bail out of the QR render if the bank info is
+  // missing or the bank name is unknown to our VietQR mapping. Previously
+  // the page silently fell back to 'MB' + an empty account number, which
+  // produced a scannable-looking QR pointing to nowhere — users would scan,
+  // get a bank-app error, and have no recourse. Backend /initiate now
+  // returns 503 when env is incomplete (caught in setError); this is the
+  // belt to that suspender in case bank_info comes back partial.
+  const bankName = session.bank_info?.bank_name;
+  const accountNumber = session.bank_info?.account_number;
+  if (!bankName || !accountNumber || !BANK_QR_CODE[bankName]) {
+    return (
+      <div style={pageStyle}>
+        <div style={cardStyle}>
+          <h2 style={{ margin: 0, color: '#dc2626' }}>Bank transfer unavailable</h2>
+          <p style={{ color: '#4b5563', fontSize: 14 }}>
+            We can't generate a QR code right now. Please try PayPal or contact support.
+          </p>
+          <button style={primaryBtn} onClick={() => navigate('/pricing')}>
+            Back to pricing
+          </button>
+        </div>
+      </div>
+    );
+  }
+  const bankCode = BANK_QR_CODE[bankName];
   const qrUrl =
     `https://qr.sepay.vn/img` +
     `?bank=${bankCode}` +
-    `&acc=${session.bank_info?.account_number || ''}` +
+    `&acc=${accountNumber}` +
     `&amount=${session.amount_vnd}` +
     `&des=${encodeURIComponent(session.reference_code)}`;
 

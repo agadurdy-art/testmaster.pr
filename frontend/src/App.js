@@ -485,12 +485,20 @@ function AppWithSessionHandler() {
           path="/writing-practice"
           element={user ? <WritingPractice user={user} /> : <Navigate to="/" />}
         />
-        <Route
-          path="/dev/evaluator-result"
-          element={<EvaluatorResultPreview />}
-        />
-        {/* Dev-only: direct GE (V1) dashboard preview — bypasses auth + onboarding */}
-        <Route path="/dev/ge" element={<DevGePreview />} />
+        {/* Codex audit P0 (#96): gate /dev/* routes to non-production
+            builds. /dev/ge bypasses both auth and onboarding, /dev/evaluator-result
+            renders raw evaluator output — neither belongs in the prod bundle.
+            React-Router treats nulls as no-route, so prod requests fall through
+            to the 404 catch-all. */}
+        {process.env.NODE_ENV !== 'production' && (
+          <>
+            <Route
+              path="/dev/evaluator-result"
+              element={<EvaluatorResultPreview />}
+            />
+            <Route path="/dev/ge" element={<DevGePreview />} />
+          </>
+        )}
         {/* Writing/Speaking sample report pages — re-enabled 2026-05-10.
             Reading/Listening have static HTML "full report" pages, so writing
             and speaking need the same surface (parity for switcher CTAs and

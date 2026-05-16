@@ -341,6 +341,71 @@ async def paypal_capture_order(req: PaypalCaptureOrderRequest):
     status_value = data.get("status")
     if status_value != "COMPLETED":
         raise HTTPException(status_code=400, detail=f"Order not completed (status={status_value})")
+    # Codex audit P0 (#92): cross-validate capture payload against the
+    # request. PayPal v2 returns purchase_units[0] with custom_id (the email
+    # we stamped at create-order time) and the captured amount. Without
+    # checking these, a $3 Custom order can be replayed to activate a $19.99
+    # Exam plan, or another user's capture can be claimed against an
+    # arbitrary email.
+    purchase_units = data.get("purchase_units") or []
+    if not purchase_units:
+        logger.warning(f"PayPal capture missing purchase_units: order={req.orderId}")
+        raise HTTPException(status_code=400, detail="Capture payload missing purchase units")
+    unit = purchase_units[0]
+    captured_custom_id = (unit.get("custom_id") or "").strip().lower()
+    if captured_custom_id and captured_custom_id != email:
+        logger.warning(
+            f"PayPal capture custom_id mismatch: order={req.orderId} "
+            f"custom_id={captured_custom_id} request_email={email}"
+        )
+        raise HTTPException(status_code=400, detail="Order does not belong to this account")
+    # Amount lives under payments.captures[0].amount for v2 captures.
+    captures = (unit.get("payments") or {}).get("captures") or []
+    if not captures:
+        logger.warning(f"PayPal capture missing captures array: order={req.orderId}")
+        raise HTTPException(status_code=400, detail="Capture payload missing capture record")
+    capture_amount = captures[0].get("amount") or {}
+    captured_value = str(capture_amount.get("value") or "")
+    captured_currency = capture_amount.get("currency_code") or ""
+    capture_id = captures[0].get("id") or ""
+    if captured_currency != "USD":
+        logger.warning(
+            f"PayPal capture currency mismatch: order={req.orderId} "
+            f"currency={captured_currency}"
+        )
+        raise HTTPException(status_code=400, detail="Unexpected capture currency")
+    # Fixed plans: expected value is PAYPAL_PLAN_PRICES[plan_id] (already a
+    # string like "9.99"). Custom: expected value is the Decimal-quantized
+    # priceUsd from the request, recomputed server-side so a tampered client
+    # can't claim a different price than was captured.
+    if plan_id == "custom":
+        from decimal import Decimal, ROUND_HALF_UP, InvalidOperation
+        try:
+            expected_dec = Decimal(str(req.priceUsd or "0")).quantize(
+                Decimal("0.01"), rounding=ROUND_HALF_UP
+            )
+        except (InvalidOperation, TypeError, ValueError):
+            raise HTTPException(status_code=400, detail="Invalid priceUsd")
+        expected_value = format(expected_dec, "f")
+    else:
+        expected_value = PAYPAL_PLAN_PRICES[plan_id]
+    if captured_value != expected_value:
+        logger.warning(
+            f"PayPal capture amount mismatch: order={req.orderId} "
+            f"captured={captured_value} expected={expected_value} plan={plan_id}"
+        )
+        raise HTTPException(status_code=400, detail="Captured amount does not match plan price")
+    # Capture-id idempotency: a single capture must not upgrade multiple
+    # users. kofi_events already has a row per processed capture; bail if
+    # this capture_id was already booked.
+    if capture_id:
+        already = await db.kofi_events.find_one(
+            {"provider": "paypal", "kind": "capture-order", "capture_id": capture_id},
+            {"_id": 1},
+        )
+        if already:
+            logger.info(f"PayPal capture {capture_id} already processed; ignoring replay")
+            raise HTTPException(status_code=409, detail="Capture already processed")
     now = datetime.now(timezone.utc)
     plan_name, subscription_label = PAYPAL_PLAN_MAPPING[plan_id]
 
@@ -380,7 +445,9 @@ async def paypal_capture_order(req: PaypalCaptureOrderRequest):
     await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
     await db.kofi_events.insert_one({
         "provider": "paypal", "kind": "capture-order", "order_id": req.orderId,
-        "plan_id": plan_id, "email": email, "payload": data,
+        "capture_id": capture_id,  # Codex P0 (#92): idempotency anchor
+        "plan_id": plan_id, "email": email, "amount_usd": captured_value,
+        "payload": data,
         "processed_at": now.isoformat(),
     })
     response: Dict[str, Any] = {
@@ -406,19 +473,59 @@ async def activate_subscription(req: ActivateSubscriptionRequest):
     user = await _get_user_by_email(email)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
+    # Codex audit P0 (#91): sub ID uniqueness — refuse if a *different* user
+    # already owns this subscription. Without this, a valid sub ID can be
+    # replayed against any email/plan combo. Same user re-activating is fine.
+    duplicate = await db.users.find_one(
+        {"paypal_subscription_id": req.subscriptionId, "id": {"$ne": user["id"]}},
+        {"_id": 1, "id": 1},
+    )
+    if duplicate:
+        logger.warning(
+            f"PayPal sub {req.subscriptionId} already bound to a different user; "
+            f"refusing to rebind for {email}"
+        )
+        raise HTTPException(status_code=409, detail="Subscription already linked to another account")
     access_token = await get_paypal_access_token()
     async with httpx.AsyncClient() as client:
         resp = await client.get(
             f"{PAYPAL_API_BASE}/v1/billing/subscriptions/{req.subscriptionId}",
             headers={"Authorization": f"Bearer {access_token}"},
         )
-        if resp.status_code == 200:
-            sub_data = resp.json()
-            sub_status = sub_data.get("status", "")
-            if sub_status not in ("ACTIVE", "APPROVED"):
-                raise HTTPException(status_code=400, detail=f"Subscription not active (status={sub_status})")
-        else:
-            logger.warning(f"PayPal sub verify failed: {resp.status_code} {resp.text}")
+    # Codex audit P0 (#91): fail closed when PayPal verify endpoint errors —
+    # previous code just logged a warning and continued, which meant any
+    # subscriptionId string activated a plan if PayPal happened to 4xx/5xx.
+    if resp.status_code != 200:
+        logger.warning(f"PayPal sub verify failed: {resp.status_code} {resp.text}")
+        raise HTTPException(status_code=502, detail="PayPal subscription verification failed")
+    sub_data = resp.json()
+    sub_status = sub_data.get("status", "")
+    if sub_status not in ("ACTIVE", "APPROVED"):
+        raise HTTPException(status_code=400, detail=f"Subscription not active (status={sub_status})")
+    # Codex audit P0 (#91): plan_id cross-validation. PayPal's plan_id maps to
+    # an internal tier via PAYPAL_SUBSCRIPTION_PLAN_IDS; that tier must equal
+    # the requested planId. Otherwise a valid Weekly sub could be claimed as
+    # Monthly. Skip the check only if the env mapping is unconfigured (empty
+    # string keys mean the env var wasn't set in this environment).
+    paypal_plan_id = sub_data.get("plan_id", "")
+    expected_tier = PAYPAL_SUBSCRIPTION_PLAN_IDS.get(paypal_plan_id)
+    if paypal_plan_id and expected_tier and expected_tier != plan_id:
+        logger.warning(
+            f"PayPal sub plan mismatch for {email}: paypal_plan_id={paypal_plan_id} "
+            f"resolves to {expected_tier}, but request asked for {plan_id}"
+        )
+        raise HTTPException(status_code=400, detail="Subscription plan does not match requested plan")
+    # Codex audit P0 (#91): subscriber email cross-validation. The PayPal
+    # subscriber's email must match the account being upgraded — otherwise
+    # someone else's sub can be replayed against an arbitrary email.
+    subscriber = sub_data.get("subscriber") or {}
+    subscriber_email = (subscriber.get("email_address") or "").strip().lower()
+    if subscriber_email and subscriber_email != email:
+        logger.warning(
+            f"PayPal subscriber email mismatch: subscriber={subscriber_email} "
+            f"vs request={email} (sub={req.subscriptionId})"
+        )
+        raise HTTPException(status_code=400, detail="Subscriber email does not match account email")
     plan_name, subscription_label = PAYPAL_PLAN_MAPPING[plan_id]
     update_fields = {
         "plan": plan_name, "subscription": subscription_label,
@@ -866,6 +973,13 @@ SEPAY_BANK_INFO = {
 }
 SEPAY_API_KEY = os.getenv("SEPAY_API_KEY", "")
 
+# Codex audit P0 (#97): production hardening. When ENVIRONMENT=production
+# is set in the deploy env (Railway), the SePay webhook hard-fails with 503
+# if SEPAY_API_KEY is missing — otherwise an unauthenticated webhook can
+# activate plans for free. Dev/staging still accepts missing key with a
+# warning so local testing isn't blocked.
+IS_PRODUCTION = os.getenv("ENVIRONMENT", "").strip().lower() == "production"
+
 # Loud at import time if any SePay credential is missing — otherwise the QR
 # code in BankTransferCheckout.js renders against an empty bank/account and the
 # user has no way to pay. The route still serves (returns "" fields) so dev
@@ -881,10 +995,16 @@ if _sepay_missing:
         ", ".join(_sepay_missing),
     )
 elif not SEPAY_API_KEY:
-    logger.warning(
-        "SePay bank info set but SEPAY_API_KEY missing — webhook will accept "
-        "unauthenticated callbacks. Acceptable in staging; set the key in prod."
-    )
+    if IS_PRODUCTION:
+        logger.error(
+            "SePay bank info set but SEPAY_API_KEY missing in PRODUCTION — "
+            "webhook will return 503 until the key is configured."
+        )
+    else:
+        logger.warning(
+            "SePay bank info set but SEPAY_API_KEY missing — webhook will accept "
+            "unauthenticated callbacks. Acceptable in staging; set the key in prod."
+        )
 
 PLAN_DURATION_DAYS = {
     "explorer": 30, "learner": 30, "achiever": 30, "master": 30,
@@ -913,6 +1033,20 @@ class SepayInitiateRequest(BaseModel):
 
 @router.post("/payments/sepay/initiate")
 async def sepay_initiate(req: SepayInitiateRequest):
+    # Codex audit P0 (#98): refuse to mint a reference code when the SePay
+    # bank credentials aren't fully configured. Previously the route still
+    # returned with empty bank_info fields → BankTransferCheckout.js would
+    # render a VietQR against a blank account number (falling back to "MB"
+    # bank code) and the user couldn't pay. 503 surfaces the misconfig as
+    # a hard error so the frontend can show "payment temporarily unavailable"
+    # instead of a broken QR.
+    if not all(SEPAY_BANK_INFO.values()):
+        missing = [k for k, v in SEPAY_BANK_INFO.items() if not v]
+        logger.error(f"SePay initiate refused: missing config {missing}")
+        raise HTTPException(
+            status_code=503,
+            detail="Bank transfer temporarily unavailable",
+        )
     plan_id = (req.planId or "").strip().lower()
     if plan_id not in PLAN_DURATION_DAYS:
         raise HTTPException(status_code=400, detail="Invalid planId")
@@ -958,9 +1092,34 @@ async def sepay_status(reference_code: str):
     )
     if not row:
         raise HTTPException(status_code=404, detail="Reference not found")
+    status_value = row.get("status", "pending")
+    # Codex audit P0 (#97): compute expiry on read. Without this, a pending
+    # row whose expires_at has passed still reports "pending" to the polling
+    # checkout page, so the spinner spins forever. Surface "expired" so the
+    # UI can prompt the user to start a new transfer.
+    expires_at_raw = row.get("expires_at")
+    if status_value == "pending" and expires_at_raw:
+        try:
+            exp_dt = (
+                datetime.fromisoformat(expires_at_raw)
+                if isinstance(expires_at_raw, str)
+                else expires_at_raw
+            )
+            if exp_dt < datetime.now(timezone.utc):
+                status_value = "expired"
+                # Best-effort write so subsequent polls/webhooks skip the row.
+                try:
+                    await db.pending_payments.update_one(
+                        {"provider": "sepay", "reference_code": reference_code, "status": "pending"},
+                        {"$set": {"status": "expired"}},
+                    )
+                except Exception as e:
+                    logger.warning(f"Failed to persist SePay expiry for {reference_code}: {e}")
+        except (ValueError, TypeError):
+            pass
     return {
         "reference_code": reference_code,
-        "status": row.get("status", "pending"),
+        "status": status_value,
         "plan_id": row.get("plan_id"),
         "processed_at": row.get("processed_at"),
     }
@@ -974,7 +1133,13 @@ async def sepay_webhook(request: Request):
     Signature / API key verification is enforced once SEPAY_API_KEY is set.
     Until then the handler logs + processes (dev/staging only -- do NOT
     deploy without SEPAY_API_KEY in production env)."""
-    # 1. Optional API key gate (header-based). When SEPAY_API_KEY is set,
+    # 1. Codex audit P0 (#97): in production, SEPAY_API_KEY is mandatory.
+    #    Missing key → 503 (instead of silently fail-open). Dev/staging
+    #    still accepts unauthenticated webhooks so local testing works.
+    if IS_PRODUCTION and not SEPAY_API_KEY:
+        logger.error("SePay webhook called in production but SEPAY_API_KEY not configured")
+        raise HTTPException(status_code=503, detail="SePay webhook auth not configured")
+    # 2. API key gate (header-based). When SEPAY_API_KEY is set,
     #    require matching Authorization: Apikey <key>.
     if SEPAY_API_KEY:
         auth_hdr = request.headers.get("authorization", "")
@@ -988,6 +1153,19 @@ async def sepay_webhook(request: Request):
         raise HTTPException(status_code=400, detail="Invalid JSON body")
     # SePay payload fields: id, gateway, transactionDate, accountNumber,
     # content, transferAmount (VND, integer), referenceCode, description.
+    # Codex audit P0 (#97): idempotency by SePay transaction id. SePay can
+    # auto-retry deliveries on transient failures, and we don't want a single
+    # transfer to flip the user's plan twice (resetting monthly_usage on each
+    # replay). If we've already booked this transaction id, ack and exit.
+    sepay_txn_id = payload.get("id") or payload.get("transactionId") or ""
+    if sepay_txn_id:
+        existing = await db.kofi_events.find_one(
+            {"provider": "sepay", "kind": "webhook", "sepay_txn_id": str(sepay_txn_id)},
+            {"_id": 1},
+        )
+        if existing:
+            logger.info(f"SePay webhook duplicate transaction id={sepay_txn_id}, skipping")
+            return {"status": "ok", "duplicate": True}
     content = (payload.get("content") or payload.get("description") or "")
     amount = payload.get("transferAmount") or 0
     try:
@@ -1001,6 +1179,7 @@ async def sepay_webhook(request: Request):
     await db.kofi_events.insert_one({
         "provider": "sepay",
         "kind": "webhook",
+        "sepay_txn_id": str(sepay_txn_id) if sepay_txn_id else None,
         "payload": payload,
         "reference_match": match.group(0) if match else None,
         "received_at": datetime.now(timezone.utc).isoformat(),
