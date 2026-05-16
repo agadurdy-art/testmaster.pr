@@ -7,6 +7,7 @@ import RecordingState from './RecordingState';
 import ResultsState from './ResultsState';
 import ProcessingState from './ProcessingState';
 import ErrorState from './ErrorState';
+import StructuredQuestionFlow from './StructuredQuestionFlow';
 import { useSpeakingFlow } from '../hooks/useSpeakingFlow';
 import { pickRandomCueCard } from '../lib/pickCueCard';
 import { adaptSpeakingResult } from '../lib/adaptSpeakingResult';
@@ -334,10 +335,14 @@ function SpeakingPracticeInner({ onExit, user }) {
     );
   }
 
-  // Part 1 / Part 3 — live conversation with Liz via ElevenLabs.
+  // Part 1 / Part 3 — structured per-question flow (each question gets its
+  // own audio playback + recording + per-Q evaluation). Replaces the old
+  // Liz-conversational flow so the results screen can show Q1/Q2/.../Qn
+  // tabs with individual feedback. See memory:
+  // project_speaking_practice_v2_refactor.md
   if (pendingLivePart) {
     return (
-      <LiveConversation
+      <StructuredQuestionFlow
         part={pendingLivePart}
         user={user}
         onExit={() => setPendingLivePart(null)}
