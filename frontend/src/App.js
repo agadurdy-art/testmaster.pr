@@ -68,6 +68,7 @@ const SampleReportBand80Task2 = lazy(() => import('./pages/SampleReportBand80Tas
 const SampleReportBand50Task2 = lazy(() => import('./pages/SampleReportBand50Task2'));
 const SampleReportSpeakingPart2 = lazy(() => import('./pages/SampleReportSpeakingPart2'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage'));
+const GEDashboard = lazy(() => import('./pages/GEDashboard'));
 const DevGePreview = lazy(() => import('./pages/DevGePreview'));
 const LandingPageV2 = lazy(() => import('./pages/LandingPageV2'));
 const LandingPageGE = lazy(() => import('./pages/LandingPageGE'));
@@ -428,8 +429,21 @@ function AppWithSessionHandler() {
             user
               ? (isIeltsMode(user)
                   ? <DashboardPage user={user} onLogout={handleLogout} />
-                  : <Dashboard user={user} onLogout={handleLogout} />)
+                  : <GEDashboard user={user} onLogout={handleLogout} />)
               : <RedirectToLogin />
+          }
+        />
+        <Route
+          path="/ge/dashboard"
+          element={
+            user ? <GEDashboard user={user} onLogout={handleLogout} /> : <RedirectToLogin />
+          }
+        />
+        {/* Legacy IELTS-flavored GE dashboard kept at /dashboard/legacy for fallback */}
+        <Route
+          path="/dashboard/legacy"
+          element={
+            user ? <Dashboard user={user} onLogout={handleLogout} /> : <RedirectToLogin />
           }
         />
         <Route 
