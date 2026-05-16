@@ -7760,6 +7760,33 @@ async def admin_ops_overview(admin_email: str = Query(...)):
     }
 
 
+# ============ ADMIN: MIGRATE ENRICHED GE CONTENT ============
+# Re-runs the enriched/*.json → unified_units + unified_lessons import.
+# Idempotent (upsert by unit_id/lesson_id). Pre-launch audit allowlist gate.
+
+@app.post("/api/admin/migrate/enriched")
+async def admin_migrate_enriched(
+    admin_email: str = Query(...),
+    dry_run: bool = Query(False),
+):
+    """One-shot migration of backend/content/enriched/*.json into the
+    unified_units + unified_lessons collections. Use ?dry_run=true to
+    preview without writing.
+    """
+    from security_utils import require_admin_email
+    from scripts.migrate_enriched_to_unified import run_migration
+
+    require_admin_email(admin_email)
+    try:
+        summary = await run_migration(db, dry_run=dry_run)
+        return {"ok": True, "summary": summary}
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=500, detail=str(exc))
+    except Exception as exc:
+        logger.exception("enriched migration failed: %s", exc)
+        raise HTTPException(status_code=500, detail=f"Migration crashed: {exc}")
+
+
 # ============ ADMIN: RESEED DATABASE ============
 
 @app.post("/api/admin/reseed-tests")
