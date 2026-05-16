@@ -7760,6 +7760,116 @@ async def admin_ops_overview(admin_email: str = Query(...)):
     }
 
 
+# ============ ADMIN: IMPORT LEGACY USERS ============
+# One-shot tool for re-hydrating users we lost during the Emergent → Atlas
+# move. Accepts a list of user docs in the legacy shape (the same JSON the
+# Emergent MongoDB viewer dumps). Each doc is upserted by email so re-runs
+# are safe — already-present users get their non-null legacy fields merged
+# in, never overwritten with blanks.
+
+@app.post("/api/admin/users/import")
+async def admin_users_import(
+    payload: dict = Body(...),
+    admin_email: str = Query(...),
+    learning_mode: str = Query("ielts", regex="^(ielts|general_english)$"),
+    dry_run: bool = Query(False),
+):
+    """Bulk-import legacy users. Body shape: {"users": [<legacy user doc>, ...]}.
+
+    learning_mode query param tags every user in the batch with the
+    correct V1/V2 product split (memory: project_v1_v2_product_split).
+    """
+    from security_utils import require_admin_email
+
+    require_admin_email(admin_email)
+
+    raw_users = payload.get("users")
+    if not isinstance(raw_users, list) or not raw_users:
+        raise HTTPException(status_code=400, detail="Body needs a non-empty 'users' array.")
+
+    inserted = 0
+    updated = 0
+    skipped = 0
+    errors = []
+    samples = {"inserted": [], "updated": [], "skipped": []}
+
+    for raw in raw_users:
+        try:
+            email = (raw.get("email") or "").strip().lower()
+            if not email:
+                errors.append({"index": raw_users.index(raw), "error": "missing email"})
+                continue
+
+            # Normalise created_at: Emergent dumps it as an ISO string but
+            # the rest of the app stores it as a real BSON datetime so
+            # downstream sorts/queries don't break.
+            created_at_raw = raw.get("created_at")
+            created_at_dt = None
+            if isinstance(created_at_raw, str):
+                try:
+                    created_at_dt = datetime.fromisoformat(created_at_raw.replace("Z", "+00:00"))
+                except ValueError:
+                    created_at_dt = None
+            elif isinstance(created_at_raw, datetime):
+                created_at_dt = created_at_raw
+
+            doc = {
+                # Carry every legacy field forward so nothing silently
+                # vanishes (test_history, examCredits, paypal_subscription_id, etc.)
+                **raw,
+                "email": email,
+                "learning_mode": learning_mode,
+                # Legacy users were active before the migration, so flip
+                # the onboarding gate so they aren't asked again.
+                "onboarding_complete": bool(raw.get("onboarding_complete", True)),
+            }
+            if created_at_dt is not None:
+                doc["created_at"] = created_at_dt
+            # imported_from_legacy_at is useful for the dashboard to
+            # distinguish freshly-imported users from native signups.
+            doc["imported_from_legacy_at"] = datetime.now(timezone.utc)
+
+            existing = await db.users.find_one({"email": email}, {"_id": 0, "id": 1})
+
+            if dry_run:
+                if existing:
+                    samples["skipped"].append(email)
+                    skipped += 1
+                else:
+                    samples["inserted"].append(email)
+                    inserted += 1
+                continue
+
+            if existing:
+                # Update path: don't blow away the live user.id (used by
+                # any persisted progress, payments, etc). Merge legacy
+                # fields on top instead.
+                doc.pop("id", None)
+                await db.users.update_one({"email": email}, {"$set": doc})
+                samples["updated"].append(email)
+                updated += 1
+            else:
+                await db.users.insert_one(doc)
+                samples["inserted"].append(email)
+                inserted += 1
+        except Exception as exc:
+            errors.append({
+                "email": (raw.get("email") if isinstance(raw, dict) else None),
+                "error": str(exc)[:200],
+            })
+
+    return {
+        "ok": True,
+        "dry_run": dry_run,
+        "learning_mode": learning_mode,
+        "inserted": inserted,
+        "updated": updated,
+        "skipped": skipped,
+        "errors": errors,
+        "samples": {k: v[:5] for k, v in samples.items()},  # cap response size
+    }
+
+
 # ============ ADMIN: MIGRATE ENRICHED GE CONTENT ============
 # Re-runs the enriched/*.json → unified_units + unified_lessons import.
 # Idempotent (upsert by unit_id/lesson_id). Pre-launch audit allowlist gate.
