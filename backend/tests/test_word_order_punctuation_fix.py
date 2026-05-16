@@ -1,10 +1,10 @@
-"""
+r"""
 Test Word Order Grammar Game - Punctuation Token Fix
 Verifies that the grammar game API returns word_order items with punctuation tokens
 and that the normalize function logic correctly handles them.
 
-Bug: When punctuation marks (commas, periods, question marks) are stored as separate 
-word tokens in the data, joining them with spaces creates 'Yes , I do .' instead of 
+Bug: When punctuation marks (commas, periods, question marks) are stored as separate
+word tokens in the data, joining them with spaces creates 'Yes , I do .' instead of
 'Yes, I do.' - causing correct answers to be marked wrong.
 
 Fix: The normalize function removes spaces before punctuation using regex:
