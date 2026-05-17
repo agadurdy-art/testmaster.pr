@@ -25,14 +25,21 @@ import {
   FlashcardMatch,
   MemoryGame,
   FillTheGap,
-  AnimalSounds
+  AnimalSounds,
+  WordRace,
+  WordLadder,
+  CumulativeRace,
+  ImageWordMatch
 } from '../components/games/vocab';
 import {
   WordOrder,
   FillTheBlank,
   ErrorHunter,
   TrueFalseGrammar,
-  MultipleChoiceGrammar
+  MultipleChoiceGrammar,
+  TransformSentence,
+  AudioMatch,
+  SentenceBuilderTimed
 } from '../components/games/grammar';
 import {
   Crossword,
@@ -799,6 +806,15 @@ function VocabGamesPlayer({ activity, onComplete, onSkip }) {
         return <WordSearch items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
       case 'board_game':
         return <BoardGame items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'image_word_match':
+        return <ImageWordMatch items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'word_race':
+        return <WordRace items={items} onComplete={handleGameComplete} onSkip={handleSkip} timeLimit={currentGame?.time_limit_seconds} />;
+      case 'cumulative_race':
+        return <CumulativeRace items={items} onComplete={handleGameComplete} onSkip={handleSkip} timeLimit={currentGame?.time_limit_seconds} />;
+      case 'word_ladder':
+        // word_ladder uses `rungs` or `items`
+        return <WordLadder items={currentGame?.rungs || items} onComplete={handleGameComplete} onSkip={handleSkip} />;
       default:
         // Fallback to MCQ game
         return <MatchingGame activity={{ items }} onComplete={handleGameComplete} onSkip={handleSkip} />;
@@ -888,6 +904,12 @@ function GrammarGamesPlayer({ activity, onComplete, onSkip }) {
         return <TrueFalseGrammar items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
       case 'multiple_choice_grammar':
         return <MultipleChoiceGrammar items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'transform_sentence':
+        return <TransformSentence items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'audio_match':
+        return <AudioMatch items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'sentence_builder_timed':
+        return <SentenceBuilderTimed items={items} onComplete={handleGameComplete} onSkip={handleSkip} timeLimit={currentGame?.time_limit_seconds} />;
       default:
         return <FillTheBlank items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
     }
@@ -1296,6 +1318,23 @@ function GrammarFocus({ activity, onComplete, onSkip }) {
 
 // ═══════ GRAMMAR GAME (Multi-type) ═══════
 function GrammarGame({ activity, onComplete, onSkip }) {
+  // Mode-based routing: when activity.mode is set (Stage 3+ schema), delegate to dedicated renderer.
+  const mode = activity?.mode;
+  const items = activity?.items || [];
+  if (mode === 'transform_sentence' && items.length) {
+    return <TransformSentence items={items} onComplete={onComplete} onSkip={onSkip} />;
+  }
+  if (mode === 'audio_match' && items.length) {
+    return <AudioMatch items={items} onComplete={onComplete} onSkip={onSkip} />;
+  }
+  if (mode === 'sentence_builder_timed' && items.length) {
+    return <SentenceBuilderTimed items={items} onComplete={onComplete} onSkip={onSkip} timeLimit={activity?.time_limit_seconds} />;
+  }
+  if (mode === 'word_order' && items.length && items[0]?.words) {
+    // Adapt items: existing WordOrder renderer accepts {words, correct_sentence}
+    return <WordOrder items={items} onComplete={onComplete} onSkip={onSkip} />;
+  }
+
   const allItems = React.useMemo(() => {
     const errorHunterItems = (activity?.items || []).map(item => ({ ...item, gameType: 'error_hunter' }));
     const wordOrderItems = (activity?.word_order_items || []).map(item => ({ ...item, gameType: 'word_order' }));

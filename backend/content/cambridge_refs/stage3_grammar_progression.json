@@ -1,0 +1,326 @@
+{
+  "schema_version": "1.0",
+  "stage": "stage_3",
+  "level": "A1 Movers",
+  "design_note": "Stage 3 grammar spiral. Each structure has a primary teaching unit, a list of reinforce units (where it reappears in passages/games), and an anticipation unit (where it appears passively before explicit teaching). All 26 A1 Movers grammar structures from the official Cambridge list are placed.",
+  "reference": "Cambridge A1 Movers Grammar and Structures List (free public PDF, 2 pages)",
+  "structures": [
+    {
+      "id": "be_verb_full",
+      "label": "Verb 'be' — affirmative, negative, questions, short answers",
+      "primary_unit": 1,
+      "anticipation_unit": 0,
+      "reinforce_units": [2, 3, 5, 7, 19],
+      "notes": "Foundation — already in Starters; Stage 3 Unit 1 brings full conjugation incl. plural + negative contractions"
+    },
+    {
+      "id": "be_called",
+      "label": "Be called + noun",
+      "primary_unit": 1,
+      "anticipation_unit": 0,
+      "reinforce_units": [2, 12, 20],
+      "example": "I am called Linh."
+    },
+    {
+      "id": "possessive_apostrophe_s",
+      "label": "Possessive 's + possessive pronouns (mine, yours, his, hers, ours, theirs)",
+      "primary_unit": 2,
+      "anticipation_unit": 1,
+      "reinforce_units": [3, 4, 9, 15],
+      "example": "That is my brother's bag. — Yes, it's his."
+    },
+    {
+      "id": "have_got",
+      "label": "have got / has got — affirmative, negative, questions",
+      "primary_unit": 4,
+      "anticipation_unit": 3,
+      "reinforce_units": [5, 9, 15, 20],
+      "example": "I've got a new bag. — Has she got a sister?"
+    },
+    {
+      "id": "have_to",
+      "label": "have to / had to (obligation)",
+      "primary_unit": 8,
+      "anticipation_unit": 7,
+      "reinforce_units": [12, 14, 19],
+      "example": "I have to do my homework. — She had to wear a uniform yesterday."
+    },
+    {
+      "id": "there_is_are",
+      "label": "there is / there are (affirmative, negative, questions)",
+      "primary_unit": 3,
+      "anticipation_unit": 2,
+      "reinforce_units": [4, 13, 17],
+      "example": "There is a balcony in our flat. — Are there any books?"
+    },
+    {
+      "id": "can_could",
+      "label": "can / can't / could (ability + permission)",
+      "primary_unit": 5,
+      "anticipation_unit": 4,
+      "reinforce_units": [9, 10, 13, 20],
+      "example": "I can swim. — Could you ride a bike when you were five?"
+    },
+    {
+      "id": "must",
+      "label": "must / mustn't (obligation, prohibition)",
+      "primary_unit": 8,
+      "anticipation_unit": 5,
+      "reinforce_units": [12, 14],
+      "example": "You must finish your work. — You mustn't run in the hall."
+    },
+    {
+      "id": "shall_offers",
+      "label": "Shall I / Shall we ...? (offers + suggestions)",
+      "primary_unit": 14,
+      "anticipation_unit": 6,
+      "reinforce_units": [16, 18],
+      "example": "Shall I help you, Mum? — Shall we go to the park?"
+    },
+    {
+      "id": "indirect_objects",
+      "label": "Indirect object (give him a book / give a book to him)",
+      "primary_unit": 6,
+      "anticipation_unit": 4,
+      "reinforce_units": [11, 14, 16],
+      "example": "Pass me the salt. — Give the present to your friend."
+    },
+    {
+      "id": "countable_uncountable",
+      "label": "Countable / uncountable nouns + some / any / a lot of / a few / a bit of",
+      "primary_unit": 6,
+      "anticipation_unit": 5,
+      "reinforce_units": [11, 16],
+      "example": "There are some sandwiches. — Is there any juice?"
+    },
+    {
+      "id": "prepositions_time",
+      "label": "Prepositions of time (at + clock, on + days, in + month, after, before)",
+      "primary_unit": 6,
+      "anticipation_unit": 5,
+      "reinforce_units": [7, 8, 18, 19],
+      "example": "Class starts at nine. — On Saturdays I play football."
+    },
+    {
+      "id": "prepositions_place",
+      "label": "Prepositions of place (above, below, between, behind, in front of, near, opposite, next to)",
+      "primary_unit": 3,
+      "anticipation_unit": 2,
+      "reinforce_units": [4, 13, 14, 17],
+      "example": "The shop is opposite the bank. — There's a balcony above the door."
+    },
+    {
+      "id": "present_simple",
+      "label": "Present simple — affirmative, negative, questions, short answers",
+      "primary_unit": 7,
+      "anticipation_unit": 6,
+      "reinforce_units": [8, 11, 12, 18],
+      "example": "I get up at seven. — She doesn't drink coffee. — Do they play tennis?"
+    },
+    {
+      "id": "adverbs_frequency",
+      "label": "Adverbs of frequency (always, usually, often, sometimes, never)",
+      "primary_unit": 7,
+      "anticipation_unit": 6,
+      "reinforce_units": [8, 9, 12, 18],
+      "example": "I always have breakfast. — They sometimes go to the cinema."
+    },
+    {
+      "id": "question_words_full",
+      "label": "Question words (what, when, where, who, why, which, how, how much, how many, how often, how old)",
+      "primary_unit": 8,
+      "anticipation_unit": 7,
+      "reinforce_units": [9, 11, 13, 18, 19],
+      "example": "Why do you like art? — How often do you swim?"
+    },
+    {
+      "id": "like_plus_ing",
+      "label": "like / love / hate + -ing",
+      "primary_unit": 9,
+      "anticipation_unit": 8,
+      "reinforce_units": [10, 11, 15, 19],
+      "example": "I love swimming. — She hates doing homework."
+    },
+    {
+      "id": "present_continuous",
+      "label": "Present continuous — affirmative, negative, questions",
+      "primary_unit": 10,
+      "anticipation_unit": 9,
+      "reinforce_units": [11, 14, 15],
+      "example": "I am reading a comic. — Are they playing in the garden?"
+    },
+    {
+      "id": "simple_vs_continuous",
+      "label": "Present simple vs present continuous",
+      "primary_unit": 11,
+      "anticipation_unit": 10,
+      "reinforce_units": [12, 18],
+      "example": "I usually walk to school but today I'm taking the bus."
+    },
+    {
+      "id": "imperatives",
+      "label": "Imperatives (affirmative, negative)",
+      "primary_unit": 14,
+      "anticipation_unit": 13,
+      "reinforce_units": [16, 17],
+      "example": "Wait for the bus. — Don't cross now."
+    },
+    {
+      "id": "conjunctions",
+      "label": "Conjunctions: and, but, or, because",
+      "primary_unit": 14,
+      "anticipation_unit": 13,
+      "reinforce_units": [15, 17, 19, 20],
+      "example": "I'm hungry because I didn't eat lunch."
+    },
+    {
+      "id": "when_clauses_non_future",
+      "label": "When clauses (not future meaning)",
+      "primary_unit": 19,
+      "anticipation_unit": 14,
+      "reinforce_units": [20],
+      "example": "When I got home, I had dinner."
+    },
+    {
+      "id": "comparatives_full",
+      "label": "Comparative adjectives (short + long, irregular) + 'than'",
+      "primary_unit": 17,
+      "anticipation_unit": 15,
+      "reinforce_units": [18, 19, 20],
+      "example": "My brother is taller than me. — This book is more interesting than that one."
+    },
+    {
+      "id": "superlatives",
+      "label": "Superlative adjectives (-est, most-, irregular)",
+      "primary_unit": 17,
+      "anticipation_unit": 16,
+      "reinforce_units": [19, 20],
+      "example": "Mount Fansipan is the tallest mountain in Vietnam."
+    },
+    {
+      "id": "comparative_superlative_adverbs",
+      "label": "Comparative + superlative adverbs (more quickly, best)",
+      "primary_unit": 17,
+      "anticipation_unit": 15,
+      "reinforce_units": [19, 20],
+      "example": "She speaks more quickly than her brother. — He sings best in our class."
+    },
+    {
+      "id": "want_to_verb",
+      "label": "Verb + infinitive (want to, would like to, start to, try to)",
+      "primary_unit": 16,
+      "anticipation_unit": 5,
+      "reinforce_units": [17, 18, 20],
+      "example": "I want to buy a new ball. — She'd like to go home."
+    },
+    {
+      "id": "want_someone_to",
+      "label": "Want/ask someone to do something",
+      "primary_unit": 16,
+      "anticipation_unit": 14,
+      "reinforce_units": [18],
+      "example": "Mum wants me to tidy my room. — Ask your teacher to help you."
+    },
+    {
+      "id": "infinitive_of_purpose",
+      "label": "Infinitive of purpose (to + verb)",
+      "primary_unit": 13,
+      "anticipation_unit": 12,
+      "reinforce_units": [14, 16, 18],
+      "example": "I went to the library to read."
+    },
+    {
+      "id": "verb_plus_ing",
+      "label": "Verb + ing (after some verbs — went riding, kept walking)",
+      "primary_unit": 10,
+      "anticipation_unit": 9,
+      "reinforce_units": [18, 20],
+      "example": "We went swimming on Sunday."
+    },
+    {
+      "id": "going_to_future",
+      "label": "going to — future plans",
+      "primary_unit": 18,
+      "anticipation_unit": 17,
+      "reinforce_units": [19, 20],
+      "example": "It's going to rain. — I'm going to visit my grandmother."
+    },
+    {
+      "id": "past_simple_was_were",
+      "label": "Past simple — was / were (affirmative, negative, questions)",
+      "primary_unit": 19,
+      "anticipation_unit": 18,
+      "reinforce_units": [20],
+      "example": "It was a great party. — Were you at school yesterday?"
+    },
+    {
+      "id": "past_simple_regular_irregular",
+      "label": "Past simple — regular (-ed) + common irregular (went, saw, had, did, made, gave, ate, came)",
+      "primary_unit": 20,
+      "anticipation_unit": 19,
+      "reinforce_units": [],
+      "bridge_to": "Stage 4 Flyers — past simple full + present perfect intro"
+    },
+    {
+      "id": "relative_clauses_basic",
+      "label": "Relative clauses (who, which, where)",
+      "primary_unit": 19,
+      "anticipation_unit": 17,
+      "reinforce_units": [20],
+      "example": "This is the boy who lives next door. — That's the park where we play."
+    },
+    {
+      "id": "whats_the_weather",
+      "label": "What is / was the weather like?",
+      "primary_unit": 18,
+      "anticipation_unit": 17,
+      "reinforce_units": [19],
+      "example": "What's the weather like today? — What was it like at the beach?"
+    },
+    {
+      "id": "whats_the_matter",
+      "label": "What's the matter?",
+      "primary_unit": 9,
+      "anticipation_unit": 8,
+      "reinforce_units": [12],
+      "example": "What's the matter? — I've got a headache."
+    },
+    {
+      "id": "how_about_ing",
+      "label": "How about / What about + n or ing",
+      "primary_unit": 14,
+      "anticipation_unit": 13,
+      "reinforce_units": [16, 18],
+      "example": "How about going to the cinema? — What about pizza for dinner?"
+    },
+    {
+      "id": "go_for_a_n",
+      "label": "Go for a + n (go for a walk / drive / swim)",
+      "primary_unit": 14,
+      "anticipation_unit": 13,
+      "reinforce_units": [18],
+      "example": "Let's go for a walk in the park."
+    },
+    {
+      "id": "be_good_at",
+      "label": "Be good at + n / ing",
+      "primary_unit": 5,
+      "anticipation_unit": 4,
+      "reinforce_units": [9, 10, 12, 15],
+      "example": "She is good at swimming. — I'm good at maths."
+    },
+    {
+      "id": "i_think_know",
+      "label": "I think / I know + clause",
+      "primary_unit": 11,
+      "anticipation_unit": 9,
+      "reinforce_units": [13, 17, 19],
+      "example": "I think he is nice. — I don't know where she is."
+    }
+  ],
+  "summary": {
+    "total_structures": 39,
+    "structures_per_unit_avg": 3.5,
+    "movers_official_count_aligned": "All 26 structures from Cambridge official A1 Movers Grammar List are mapped; 13 supplementary placements (review/reinforce) added for spiral effect."
+  }
+}

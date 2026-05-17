@@ -1,0 +1,2049 @@
+{
+  "stage": "stage_3",
+  "stage_title": "Movers (A1)",
+  "units": [
+    {
+      "unit_id": "stage_3_movers_unit_01",
+      "unit_num": 1,
+      "title": "All about me",
+      "subtitle": "Say hello, share where you live, and introduce the people around you.",
+      "phonics_focus": "",
+      "grammar_focus": "Verb 'be' — am / is / are: affirmative, negative, questions, short answers. Plus 'be called' for names.",
+      "spiral_meta": {
+        "target_vocab_count": 26,
+        "anticipation_pool_used": [
+          "daughter",
+          "son",
+          "grandparent",
+          "internet"
+        ],
+        "recycled_pool_used": [
+          "mum",
+          "dad",
+          "brother",
+          "sister",
+          "friend",
+          "family",
+          "boy",
+          "girl"
+        ],
+        "grammar_anticipation": "have got — 2-3 passive exposures in passages (Unit 3 will teach explicitly)"
+      },
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_3_movers_unit_01_lesson_01",
+          "number": 1,
+          "title": "Saying hello",
+          "topic": "Greetings, your name, age, where you live; verb 'be' affirmative + 'be called'",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Ray says hello to the class. Watch and answer.",
+              "questions": [
+                {
+                  "question_text": "How does Ray greet the class?",
+                  "correct_answer": "Hi everyone!",
+                  "options": [
+                    "Hi everyone!",
+                    "Good night!",
+                    "See you later!",
+                    "Stop, please!"
+                  ],
+                  "image_emoji": "👋",
+                  "hint": "It's a friendly group greeting."
+                },
+                {
+                  "question_text": "What does Ray want to know first?",
+                  "correct_answer": "your name and age",
+                  "options": [
+                    "your name and age",
+                    "your favourite food",
+                    "your shoe size",
+                    "your phone number"
+                  ],
+                  "image_emoji": "❓",
+                  "hint": "Basic info you share when you meet someone."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "hello",
+                  "ipa": "/həˈləʊ/",
+                  "definition": "A friendly word you use to greet someone.",
+                  "example": "Hello, Ray!",
+                  "image_emoji": "👋",
+                  "image_url": "/static/vocab_images/hello.png"
+                },
+                {
+                  "word": "hi",
+                  "ipa": "/haɪ/",
+                  "definition": "A short, friendly way to say hello.",
+                  "example": "Hi! I am Linh.",
+                  "image_emoji": "🙋",
+                  "image_url": "/static/vocab_images/hi.png"
+                },
+                {
+                  "word": "name",
+                  "ipa": "/neɪm/",
+                  "definition": "What people call you.",
+                  "example": "My name is Mai.",
+                  "image_emoji": "🏷️",
+                  "image_url": "/static/vocab_images/name.png"
+                },
+                {
+                  "word": "age",
+                  "ipa": "/eɪdʒ/",
+                  "definition": "How many years old someone is.",
+                  "example": "What is your age?",
+                  "image_emoji": "🎂",
+                  "image_url": "/static/vocab_images/stage3/age.png"
+                },
+                {
+                  "word": "live",
+                  "ipa": "/lɪv/",
+                  "definition": "To have your home in a place.",
+                  "example": "I live in Ho Chi Minh City.",
+                  "image_emoji": "🏠",
+                  "image_url": "/static/vocab_images/stage3/live.png"
+                },
+                {
+                  "word": "address",
+                  "ipa": "/əˈdres/",
+                  "definition": "The place where you live, with a street and number.",
+                  "example": "What is your address?",
+                  "image_emoji": "📬",
+                  "image_url": "/static/vocab_images/stage3/address.png"
+                },
+                {
+                  "word": "born",
+                  "ipa": "/bɔːn/",
+                  "definition": "Where or when your life started.",
+                  "example": "I was born in Vietnam.",
+                  "image_emoji": "👶",
+                  "image_url": "/static/vocab_images/stage3/born.png"
+                },
+                {
+                  "word": "be called",
+                  "ipa": "/biː kɔːld/",
+                  "definition": "To have a particular name.",
+                  "example": "My brother is called Minh.",
+                  "image_emoji": "🪪",
+                  "image_url": "/static/vocab_images/stage3/be_called.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "image_word_match",
+                  "instruction": "Match each picture with the right word.",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "emoji": "👋",
+                      "distractors": [
+                        {
+                          "word": "book",
+                          "emoji": "📚"
+                        },
+                        {
+                          "word": "ball",
+                          "emoji": "⚽"
+                        },
+                        {
+                          "word": "tree",
+                          "emoji": "🌳"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "name",
+                      "emoji": "🏷️",
+                      "distractors": [
+                        {
+                          "word": "cup",
+                          "emoji": "🥤"
+                        },
+                        {
+                          "word": "shoe",
+                          "emoji": "👟"
+                        },
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "age",
+                      "emoji": "🎂",
+                      "distractors": [
+                        {
+                          "word": "balloon",
+                          "emoji": "🎈"
+                        },
+                        {
+                          "word": "gift",
+                          "emoji": "🎁"
+                        },
+                        {
+                          "word": "flower",
+                          "emoji": "🌸"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "live",
+                      "emoji": "🏠",
+                      "distractors": [
+                        {
+                          "word": "school",
+                          "emoji": "🏫"
+                        },
+                        {
+                          "word": "park",
+                          "emoji": "🏞️"
+                        },
+                        {
+                          "word": "shop",
+                          "emoji": "🏪"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "address",
+                      "emoji": "📬",
+                      "distractors": [
+                        {
+                          "word": "phone",
+                          "emoji": "📱"
+                        },
+                        {
+                          "word": "bag",
+                          "emoji": "🎒"
+                        },
+                        {
+                          "word": "key",
+                          "emoji": "🔑"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "born",
+                      "emoji": "👶",
+                      "distractors": [
+                        {
+                          "word": "boy",
+                          "emoji": "👦"
+                        },
+                        {
+                          "word": "girl",
+                          "emoji": "👧"
+                        },
+                        {
+                          "word": "family",
+                          "emoji": "👨‍👩‍👧‍👦"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_game_vocab",
+              "games": [
+                {
+                  "game_type": "unscramble",
+                  "instruction": "Unscramble the letters.",
+                  "items": [
+                    {
+                      "scrambled": "ELLOH",
+                      "answer": "HELLO",
+                      "hint": "You say this to greet someone."
+                    },
+                    {
+                      "scrambled": "MAEN",
+                      "answer": "NAME",
+                      "hint": "What people call you."
+                    },
+                    {
+                      "scrambled": "VILE",
+                      "answer": "LIVE",
+                      "hint": "To have your home somewhere."
+                    },
+                    {
+                      "scrambled": "GEA",
+                      "answer": "AGE",
+                      "hint": "How many years old."
+                    },
+                    {
+                      "scrambled": "RBNO",
+                      "answer": "BORN",
+                      "hint": "When and where your life started."
+                    },
+                    {
+                      "scrambled": "DSDARSE",
+                      "answer": "ADDRESS",
+                      "hint": "The number and street where you live."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "micro_reading",
+              "title": "Meet Linh",
+              "text": "Hello! My name is Linh. I am nine years old. I am a girl from Vietnam. I live in Ho Chi Minh City. My address is 14 Le Loi Street. I was born in 2016. I am in class 3A. My mum and dad are at home. I have got one brother. My brother is called Minh. He is seven. My best friend is Mai. We are happy and we love our school. Are you in our class on the internet, too?",
+              "scene_description": "A cheerful 9-year-old Vietnamese girl in a school uniform waving at the camera, with a name tag that says 'Linh' and a small map of Vietnam in the background.",
+              "questions": [
+                {
+                  "question": "Where does Linh live?",
+                  "answer": "Ho Chi Minh City",
+                  "options": [
+                    "Ho Chi Minh City",
+                    "Hanoi",
+                    "Da Nang",
+                    "Hue"
+                  ],
+                  "correct_answer": "Ho Chi Minh City"
+                },
+                {
+                  "question": "How old is Linh's brother?",
+                  "answer": "7",
+                  "options": [
+                    "7",
+                    "8",
+                    "9",
+                    "10"
+                  ],
+                  "correct_answer": "7"
+                },
+                {
+                  "question": "What is Linh's brother's name?",
+                  "answer": "Minh",
+                  "options": [
+                    "Mai",
+                    "Minh",
+                    "Ray",
+                    "Tom"
+                  ],
+                  "correct_answer": "Minh"
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_focus",
+              "rule_pattern": "Verb 'be' — I am, you are, he/she/it is. Plus 'be called' for names.",
+              "explanation": "We use the verb 'be' to say who we are, our age and where we live. With 'I' we use 'am'. With 'he', 'she' and 'it' we use 'is'. We will add 'are' for groups in Lesson 2. For names, we can also say 'I am called…' or 'My brother is called…'.",
+              "examples": [
+                "I am Linh. I am nine.",
+                "She is from Vietnam.",
+                "He is my brother.",
+                "My best friend is called Mai.",
+                "Ray is our teacher.",
+                "I have got a brother. (We learn 'have got' more in Unit 3.)"
+              ]
+            },
+            {
+              "step": 7,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "instruction": "Choose the right form of 'be'.",
+                  "items": [
+                    {
+                      "sentence": "I ___ Linh.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "am"
+                    },
+                    {
+                      "sentence": "Mai ___ my best friend.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "My brother ___ called Minh.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "I ___ from Vietnam.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "am"
+                    },
+                    {
+                      "sentence": "It ___ my school bag.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "Ray ___ our teacher.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "instruction": "Drag the words to build the sentence.",
+              "items": [
+                {
+                  "words": [
+                    "am",
+                    "I",
+                    "Linh"
+                  ],
+                  "correct_sentence": "I am Linh."
+                },
+                {
+                  "words": [
+                    "is",
+                    "Mai",
+                    "friend",
+                    "my",
+                    "best"
+                  ],
+                  "correct_sentence": "Mai is my best friend."
+                },
+                {
+                  "words": [
+                    "Minh",
+                    "called",
+                    "is",
+                    "My",
+                    "brother"
+                  ],
+                  "correct_sentence": "My brother is called Minh."
+                },
+                {
+                  "words": [
+                    "am",
+                    "I",
+                    "Vietnam",
+                    "from"
+                  ],
+                  "correct_sentence": "I am from Vietnam."
+                },
+                {
+                  "words": [
+                    "nine",
+                    "I",
+                    "old",
+                    "am",
+                    "years"
+                  ],
+                  "correct_sentence": "I am nine years old."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "listening",
+              "audio_text": "Ray: Hi everyone! I am Ray. I am your English teacher. Today we meet a new friend. Linh: Hello, Ray! My name is Linh. I am nine years old. I am from Vietnam. I live in Ho Chi Minh City. I am in class 3A. My best friend is called Mai. She is nine, too. Ray: Lovely! And Linh, you have got a little brother, yes? Linh: Yes. My brother is called Minh. He is seven.",
+              "questions": [
+                {
+                  "question": "Who is the speaker at the start?",
+                  "answer": "Ray",
+                  "options": [
+                    "Ray",
+                    "Linh",
+                    "Mai",
+                    "Minh"
+                  ],
+                  "correct_answer": "Ray"
+                },
+                {
+                  "question": "Where is Linh from?",
+                  "answer": "Vietnam",
+                  "options": [
+                    "Vietnam",
+                    "the USA",
+                    "the UK",
+                    "Brazil"
+                  ],
+                  "correct_answer": "Vietnam"
+                },
+                {
+                  "question": "How old is Linh's best friend?",
+                  "answer": "9",
+                  "options": [
+                    "7",
+                    "8",
+                    "9",
+                    "10"
+                  ],
+                  "correct_answer": "9"
+                }
+              ],
+              "audio_url": "/static/audio/stage3/unit01/lesson_01.mp3"
+            },
+            {
+              "step": 10,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Say hello to Ray! Tell him your name, age, and where you live.",
+              "expected_text": "Hello Ray! I am [name]. I am [age] years old. I live in [city]. My best friend is called [name].",
+              "prompts": [
+                "Greet Ray. ('Hello Ray!' or 'Hi Ray!')",
+                "Say your name. ('I am ___' or 'My name is ___')",
+                "Say your age. ('I am ___ years old.')",
+                "Say where you live. ('I live in ___.')",
+                "Say a best friend's name using 'be called'. ('My best friend is called ___.')"
+              ]
+            },
+            {
+              "step": 11,
+              "type": "exit_ticket",
+              "title": "Quick check — Lesson 1",
+              "questions": [
+                {
+                  "question": "Choose: I ___ a girl.",
+                  "options": [
+                    "am",
+                    "is",
+                    "are"
+                  ],
+                  "correct_answer": "am"
+                },
+                {
+                  "question": "Choose: Linh ___ nine years old.",
+                  "options": [
+                    "am",
+                    "is",
+                    "are"
+                  ],
+                  "correct_answer": "is"
+                },
+                {
+                  "question": "What is a friendly way to say 'hello'?",
+                  "options": [
+                    "hi",
+                    "bye",
+                    "stop",
+                    "sorry"
+                  ],
+                  "correct_answer": "hi"
+                },
+                {
+                  "question": "Linh ___ in Ho Chi Minh City.",
+                  "options": [
+                    "lives",
+                    "is live",
+                    "are live"
+                  ],
+                  "correct_answer": "lives"
+                },
+                {
+                  "question": "Build: brother / Minh / is / My / called",
+                  "options": [
+                    "My brother is called Minh.",
+                    "Minh is my brother called.",
+                    "My is called brother Minh.",
+                    "Brother my Minh is called."
+                  ],
+                  "correct_answer": "My brother is called Minh."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_3_movers_unit_01_lesson_02",
+          "number": 2,
+          "title": "Where I'm from",
+          "topic": "Countries, cities, towns, nationalities; verb 'be' plural and negative",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Ray shows the class a world map. Watch and answer.",
+              "questions": [
+                {
+                  "question_text": "Which country is Tom from?",
+                  "correct_answer": "the USA",
+                  "options": [
+                    "the USA",
+                    "the UK",
+                    "Brazil",
+                    "Vietnam"
+                  ],
+                  "image_emoji": "🇺🇸",
+                  "hint": "He says 'I'm American.'"
+                },
+                {
+                  "question_text": "Which word means 'a small place to live, smaller than a city'?",
+                  "correct_answer": "village",
+                  "options": [
+                    "village",
+                    "ocean",
+                    "mountain",
+                    "river"
+                  ],
+                  "image_emoji": "🏘️",
+                  "hint": "A few houses together in the countryside."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "country",
+                  "ipa": "/ˈkʌntri/",
+                  "definition": "A place like Vietnam or Brazil, with its own people and government.",
+                  "example": "Vietnam is my country.",
+                  "image_emoji": "🗺️",
+                  "image_url": "/static/vocab_images/stage3/country.png"
+                },
+                {
+                  "word": "city",
+                  "ipa": "/ˈsɪti/",
+                  "definition": "A big place with many people, shops and buildings.",
+                  "example": "Ho Chi Minh City is a big city.",
+                  "image_emoji": "🏙️",
+                  "image_url": "/static/vocab_images/stage3/city.png"
+                },
+                {
+                  "word": "town",
+                  "ipa": "/taʊn/",
+                  "definition": "A place to live — smaller than a city but bigger than a village.",
+                  "example": "My grandparents live in a small town.",
+                  "image_emoji": "🏘️",
+                  "image_url": "/static/vocab_images/stage3/town.png"
+                },
+                {
+                  "word": "village",
+                  "ipa": "/ˈvɪlɪdʒ/",
+                  "definition": "A small place in the countryside with only a few houses.",
+                  "example": "Tom's aunt lives in a quiet village.",
+                  "image_emoji": "🛖",
+                  "image_url": "/static/vocab_images/stage3/village.png"
+                },
+                {
+                  "word": "Vietnamese",
+                  "ipa": "/ˌvjetnəˈmiːz/",
+                  "definition": "From Vietnam.",
+                  "example": "Linh and Mai are Vietnamese.",
+                  "image_emoji": "🇻🇳",
+                  "image_url": "/static/vocab_images/stage3/vietnamese.png"
+                },
+                {
+                  "word": "American",
+                  "ipa": "/əˈmerɪkən/",
+                  "definition": "From the USA.",
+                  "example": "Tom is American.",
+                  "image_emoji": "🇺🇸",
+                  "image_url": "/static/vocab_images/stage3/american.png"
+                },
+                {
+                  "word": "British",
+                  "ipa": "/ˈbrɪtɪʃ/",
+                  "definition": "From the United Kingdom.",
+                  "example": "Sophie is British.",
+                  "image_emoji": "🇬🇧",
+                  "image_url": "/static/vocab_images/stage3/british.png"
+                },
+                {
+                  "word": "Brazilian",
+                  "ipa": "/brəˈzɪliən/",
+                  "definition": "From Brazil.",
+                  "example": "Lucas is Brazilian.",
+                  "image_emoji": "🇧🇷",
+                  "image_url": "/static/vocab_images/stage3/brazilian.png"
+                },
+                {
+                  "word": "Chinese",
+                  "ipa": "/ˌtʃaɪˈniːz/",
+                  "definition": "From China.",
+                  "example": "Our new classmate Wei is Chinese.",
+                  "image_emoji": "🇨🇳",
+                  "image_url": "/static/vocab_images/stage3/chinese.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "word_race",
+                  "instruction": "60 seconds! Tap the right flag for each nationality.",
+                  "time_limit_seconds": 60,
+                  "items": [
+                    {
+                      "prompt": "Vietnamese",
+                      "correct_emoji": "🇻🇳",
+                      "options": [
+                        "🇻🇳",
+                        "🇨🇳",
+                        "🇺🇸",
+                        "🇬🇧"
+                      ]
+                    },
+                    {
+                      "prompt": "American",
+                      "correct_emoji": "🇺🇸",
+                      "options": [
+                        "🇧🇷",
+                        "🇺🇸",
+                        "🇬🇧",
+                        "🇨🇳"
+                      ]
+                    },
+                    {
+                      "prompt": "British",
+                      "correct_emoji": "🇬🇧",
+                      "options": [
+                        "🇬🇧",
+                        "🇻🇳",
+                        "🇧🇷",
+                        "🇺🇸"
+                      ]
+                    },
+                    {
+                      "prompt": "Brazilian",
+                      "correct_emoji": "🇧🇷",
+                      "options": [
+                        "🇨🇳",
+                        "🇧🇷",
+                        "🇻🇳",
+                        "🇬🇧"
+                      ]
+                    },
+                    {
+                      "prompt": "Chinese",
+                      "correct_emoji": "🇨🇳",
+                      "options": [
+                        "🇺🇸",
+                        "🇧🇷",
+                        "🇨🇳",
+                        "🇻🇳"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_game_vocab",
+              "games": [
+                {
+                  "game_type": "memory_game",
+                  "instruction": "Flip the cards. Match each country with its nationality.",
+                  "items": [
+                    {
+                      "a": "Vietnam",
+                      "b": "Vietnamese"
+                    },
+                    {
+                      "a": "the USA",
+                      "b": "American"
+                    },
+                    {
+                      "a": "the UK",
+                      "b": "British"
+                    },
+                    {
+                      "a": "Brazil",
+                      "b": "Brazilian"
+                    },
+                    {
+                      "a": "China",
+                      "b": "Chinese"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "micro_reading",
+              "title": "Our online class",
+              "text": "We are class 3A. We are friends. Linh and Mai are Vietnamese. They are from Ho Chi Minh City. Tom is American. He is from a small town near New York. His mum is a daughter of a Vietnamese family, so Tom speaks a little Vietnamese, too. Sophie is British. She is from London. Lucas is Brazilian. He lives in a village near the sea. We aren't in the same country, but we are in the same class on the internet. Ray, our teacher, is from the UK. He is funny and kind.",
+              "scene_description": "A bright illustration of an online classroom with six small kid avatars in a grid — each next to a tiny flag for Vietnam (×2), USA, UK, Brazil and a teacher in the centre with a UK flag.",
+              "questions": [
+                {
+                  "question": "Where does Lucas live?",
+                  "answer": "a village near the sea",
+                  "options": [
+                    "a big city",
+                    "a village near the sea",
+                    "a town in the UK",
+                    "Ho Chi Minh City"
+                  ],
+                  "correct_answer": "a village near the sea"
+                },
+                {
+                  "question": "Are the friends in the same country?",
+                  "answer": "no",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
+                },
+                {
+                  "question": "Who is the teacher?",
+                  "answer": "Ray",
+                  "options": [
+                    "Tom",
+                    "Sophie",
+                    "Ray",
+                    "Lucas"
+                  ],
+                  "correct_answer": "Ray"
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_focus",
+              "rule_pattern": "Verb 'be' — plural (we are / they are) and negative (am not, isn't, aren't)",
+              "explanation": "With 'you', 'we' and 'they' we use 'are'. To make 'be' negative we add 'not'. Short forms: I'm not, he isn't, she isn't, we aren't, they aren't.",
+              "examples": [
+                "We are class 3A.",
+                "They are from different countries.",
+                "I am not American. I am Vietnamese.",
+                "Sophie isn't from Brazil. She is from London.",
+                "Tom and his brother aren't in our city.",
+                "They have got friends in many countries. (Unit 3 will teach 'have got' fully.)"
+              ]
+            },
+            {
+              "step": 7,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "error_hunter",
+                  "instruction": "One word is wrong. Tap it.",
+                  "items": [
+                    {
+                      "sentence": "We is friends.",
+                      "wrong_word": "is",
+                      "correct_word": "are"
+                    },
+                    {
+                      "sentence": "They am from Brazil.",
+                      "wrong_word": "am",
+                      "correct_word": "are"
+                    },
+                    {
+                      "sentence": "I are nine years old.",
+                      "wrong_word": "are",
+                      "correct_word": "am"
+                    },
+                    {
+                      "sentence": "Sophie are British.",
+                      "wrong_word": "are",
+                      "correct_word": "is"
+                    },
+                    {
+                      "sentence": "Tom and Sophie is friends.",
+                      "wrong_word": "is",
+                      "correct_word": "are"
+                    },
+                    {
+                      "sentence": "Lucas am from a village.",
+                      "wrong_word": "am",
+                      "correct_word": "is"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "grammar_game",
+              "mode": "audio_match",
+              "instruction": "Listen and tap the sentence you hear.",
+              "items": [
+                {
+                  "audio_text": "We are in class 3A.",
+                  "options": [
+                    "We are in class 3A.",
+                    "We is in class 3A.",
+                    "We am in class 3A."
+                  ],
+                  "correct": "We are in class 3A."
+                },
+                {
+                  "audio_text": "They aren't British.",
+                  "options": [
+                    "They aren't British.",
+                    "They isn't British.",
+                    "They am not British."
+                  ],
+                  "correct": "They aren't British."
+                },
+                {
+                  "audio_text": "I am not American.",
+                  "options": [
+                    "I am not American.",
+                    "I are not American.",
+                    "I is not American."
+                  ],
+                  "correct": "I am not American."
+                },
+                {
+                  "audio_text": "Sophie isn't from Brazil.",
+                  "options": [
+                    "Sophie isn't from Brazil.",
+                    "Sophie aren't from Brazil.",
+                    "Sophie am not from Brazil."
+                  ],
+                  "correct": "Sophie isn't from Brazil."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "listening",
+              "audio_text": "Ray: Class, look at the map. Linh, where are you from? Linh: I am from Vietnam. I live in Ho Chi Minh City. Ray: And Tom? Tom: I'm American. I'm not from the same town as Linh, of course. I am from a small town near New York. Ray: Sophie? Sophie: I am British. I'm from London. Ray: Lucas, what about you? Lucas: I am Brazilian. I live in a village near the sea. My mum is a daughter of a fisherman, so the sea is everything for our family. We aren't far from a big city, but my village is very small.",
+              "questions": [
+                {
+                  "question": "Is Tom from a big city?",
+                  "answer": "no",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
+                },
+                {
+                  "question": "Where does Sophie live?",
+                  "answer": "London",
+                  "options": [
+                    "New York",
+                    "London",
+                    "Rio",
+                    "Ho Chi Minh City"
+                  ],
+                  "correct_answer": "London"
+                },
+                {
+                  "question": "Lucas's village is ___.",
+                  "answer": "near the sea",
+                  "options": [
+                    "near the sea",
+                    "in a mountain",
+                    "in a big city",
+                    "far from a sea"
+                  ],
+                  "correct_answer": "near the sea"
+                }
+              ],
+              "audio_url": "/static/audio/stage3/unit01/lesson_02.mp3"
+            },
+            {
+              "step": 10,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Tell Ray about your country and city. Say one thing you ARE and one thing you AREN'T.",
+              "expected_text": "I am [nationality]. I am from [country]. I live in [city / town / village]. I am not [something], I am [something].",
+              "prompts": [
+                "Say your nationality. ('I am ___.')",
+                "Say your country. ('I am from ___.')",
+                "Say your city, town or village. ('I live in ___.')",
+                "Say one thing you are NOT. ('I am not ___.')"
+              ]
+            },
+            {
+              "step": 11,
+              "type": "exit_ticket",
+              "title": "Quick check — Lesson 2",
+              "questions": [
+                {
+                  "question": "Choose: We ___ friends.",
+                  "options": [
+                    "am",
+                    "is",
+                    "are"
+                  ],
+                  "correct_answer": "are"
+                },
+                {
+                  "question": "Choose: She ___ from Vietnam. (She is American.)",
+                  "options": [
+                    "isn't",
+                    "aren't",
+                    "am not"
+                  ],
+                  "correct_answer": "isn't"
+                },
+                {
+                  "question": "Lucas is from Brazil. He is ___.",
+                  "options": [
+                    "Vietnamese",
+                    "American",
+                    "Brazilian",
+                    "British"
+                  ],
+                  "correct_answer": "Brazilian"
+                },
+                {
+                  "question": "A small place in the countryside is a ___.",
+                  "options": [
+                    "city",
+                    "town",
+                    "village",
+                    "country"
+                  ],
+                  "correct_answer": "village"
+                },
+                {
+                  "question": "True or false: 'aren't' = are not.",
+                  "options": [
+                    "true",
+                    "false"
+                  ],
+                  "correct_answer": "true"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_3_movers_unit_01_lesson_03",
+          "number": 3,
+          "title": "People around me",
+          "topic": "Aunt, uncle, parent, grown-up; 'be' questions and short answers",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Linh shows Ray a photo of her family. Watch and answer.",
+              "questions": [
+                {
+                  "question_text": "Who is in the photo with Linh?",
+                  "correct_answer": "her aunt and uncle",
+                  "options": [
+                    "her aunt and uncle",
+                    "her best friend Mai",
+                    "her teacher Ray",
+                    "a stranger"
+                  ],
+                  "image_emoji": "👨‍👩‍👧‍👦",
+                  "hint": "Linh's parents' brother and sister."
+                },
+                {
+                  "question_text": "What is a 'grown-up'?",
+                  "correct_answer": "an adult person",
+                  "options": [
+                    "an adult person",
+                    "a small child",
+                    "a baby",
+                    "a toy"
+                  ],
+                  "image_emoji": "🧑",
+                  "hint": "It's someone older than 18, like your mum or dad."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "aunt",
+                  "ipa": "/ɑːnt/",
+                  "definition": "Your mum's or dad's sister.",
+                  "example": "My aunt is called Hoa.",
+                  "image_emoji": "👩",
+                  "image_url": "/static/vocab_images/stage3/aunt.png"
+                },
+                {
+                  "word": "uncle",
+                  "ipa": "/ˈʌŋkl/",
+                  "definition": "Your mum's or dad's brother.",
+                  "example": "My uncle lives in Hanoi.",
+                  "image_emoji": "👨",
+                  "image_url": "/static/vocab_images/stage3/uncle.png"
+                },
+                {
+                  "word": "parent",
+                  "ipa": "/ˈpeərənt/",
+                  "definition": "Your mother or father.",
+                  "example": "My parents are at home.",
+                  "image_emoji": "👨‍👩‍👧",
+                  "image_url": "/static/vocab_images/stage3/parent.png"
+                },
+                {
+                  "word": "grown-up",
+                  "ipa": "/ˈɡrəʊnʌp/",
+                  "definition": "An adult person.",
+                  "example": "Five grown-ups are in the room.",
+                  "image_emoji": "🧑",
+                  "image_url": "/static/vocab_images/stage3/grown_up.png"
+                },
+                {
+                  "word": "from",
+                  "ipa": "/frɒm/",
+                  "definition": "A word we use to say which place is your home country or city.",
+                  "example": "I am from Vietnam.",
+                  "image_emoji": "📍",
+                  "image_url": "/static/vocab_images/stage3/from.png"
+                },
+                {
+                  "word": "say",
+                  "ipa": "/seɪ/",
+                  "definition": "To use your voice to tell someone words.",
+                  "example": "Say 'hello' to Ray.",
+                  "image_emoji": "💬",
+                  "image_url": "/static/vocab_images/stage3/say.png"
+                },
+                {
+                  "word": "tell",
+                  "ipa": "/tel/",
+                  "definition": "To give information to someone.",
+                  "example": "Tell me about your family.",
+                  "image_emoji": "🗣️",
+                  "image_url": "/static/vocab_images/stage3/tell.png"
+                },
+                {
+                  "word": "ask",
+                  "ipa": "/ɑːsk/",
+                  "definition": "To make a question.",
+                  "example": "I ask Ray a question.",
+                  "image_emoji": "❓",
+                  "image_url": "/static/vocab_images/stage3/ask.png"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_write",
+                  "instruction": "Listen to the word, then type it.",
+                  "items": [
+                    {
+                      "audio_text": "aunt",
+                      "answer": "aunt"
+                    },
+                    {
+                      "audio_text": "uncle",
+                      "answer": "uncle"
+                    },
+                    {
+                      "audio_text": "parent",
+                      "answer": "parent"
+                    },
+                    {
+                      "audio_text": "grown-up",
+                      "answer": "grown-up"
+                    },
+                    {
+                      "audio_text": "ask",
+                      "answer": "ask"
+                    },
+                    {
+                      "audio_text": "tell",
+                      "answer": "tell"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_game_vocab",
+              "games": [
+                {
+                  "game_type": "flashcard_match",
+                  "instruction": "Flip the card. Say the word, then check.",
+                  "items": [
+                    {
+                      "front_emoji": "👩",
+                      "back_word": "aunt"
+                    },
+                    {
+                      "front_emoji": "👨",
+                      "back_word": "uncle"
+                    },
+                    {
+                      "front_emoji": "👨‍👩‍👧",
+                      "back_word": "parent"
+                    },
+                    {
+                      "front_emoji": "🧑",
+                      "back_word": "grown-up"
+                    },
+                    {
+                      "front_emoji": "💬",
+                      "back_word": "say"
+                    },
+                    {
+                      "front_emoji": "🗣️",
+                      "back_word": "tell"
+                    },
+                    {
+                      "front_emoji": "❓",
+                      "back_word": "ask"
+                    },
+                    {
+                      "front_emoji": "📍",
+                      "back_word": "from"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "micro_reading",
+              "title": "Linh's people",
+              "text": "Hello again. Today I tell you about my family. My parents are Hoa and Tuan. My mum, Hoa, is a doctor. My dad, Tuan, is a teacher. He is not my English teacher — Ray is! My mum has got one sister. She is my aunt. Her name is Lan. She is a grown-up but she is funny and kind. My dad has got one brother. He is my uncle. His name is Quan. My grandparents live in a small town near a river. I love my family. Are you a son or a daughter, too? Ask your friend!",
+              "scene_description": "A warm family photo: a Vietnamese girl in the centre, two parents behind her (mum in a doctor's coat, dad with a book), and a smiling aunt and uncle on each side. A small inset shows grandparents in a town setting.",
+              "questions": [
+                {
+                  "question": "Is Linh's dad her English teacher?",
+                  "answer": "no",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
+                },
+                {
+                  "question": "What is Linh's aunt called?",
+                  "answer": "Lan",
+                  "options": [
+                    "Hoa",
+                    "Lan",
+                    "Mai",
+                    "Quan"
+                  ],
+                  "correct_answer": "Lan"
+                },
+                {
+                  "question": "Where do Linh's grandparents live?",
+                  "answer": "in a small town near a river",
+                  "options": [
+                    "in Ho Chi Minh City",
+                    "in a big city",
+                    "in a small town near a river",
+                    "in a village near the sea"
+                  ],
+                  "correct_answer": "in a small town near a river"
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_focus",
+              "rule_pattern": "Verb 'be' — questions and short answers",
+              "explanation": "To ask a 'be' question we put am / is / are before the person. Short answers use only 'be' (or 'be' + not). Don't repeat the rest of the sentence.",
+              "examples": [
+                "Are you Linh? — Yes, I am.",
+                "Is he your uncle? — Yes, he is.",
+                "Is she from Brazil? — No, she isn't.",
+                "Are they your grandparents? — Yes, they are.",
+                "Am I in your class? — Yes, you are.",
+                "Has she got a brother? — Yes, she has. (Unit 3 will explain 'have got' questions fully.)"
+              ]
+            },
+            {
+              "step": 7,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "fill_blank",
+                  "instruction": "Fill the gap with Am, Is or Are.",
+                  "items": [
+                    {
+                      "sentence": "___ you my friend?",
+                      "answer": "Are"
+                    },
+                    {
+                      "sentence": "___ he your uncle?",
+                      "answer": "Is"
+                    },
+                    {
+                      "sentence": "___ she Vietnamese?",
+                      "answer": "Is"
+                    },
+                    {
+                      "sentence": "___ they your grandparents?",
+                      "answer": "Are"
+                    },
+                    {
+                      "sentence": "___ I in class 3A?",
+                      "answer": "Am"
+                    },
+                    {
+                      "sentence": "___ we friends?",
+                      "answer": "Are"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "grammar_game",
+              "mode": "transform_sentence",
+              "instruction": "Change the sentence into a question.",
+              "items": [
+                {
+                  "sentence": "He is my uncle.",
+                  "answer": "Is he your uncle?"
+                },
+                {
+                  "sentence": "She is American.",
+                  "answer": "Is she American?"
+                },
+                {
+                  "sentence": "They are your parents.",
+                  "answer": "Are they your parents?"
+                },
+                {
+                  "sentence": "You are nine.",
+                  "answer": "Are you nine?"
+                },
+                {
+                  "sentence": "We are friends.",
+                  "answer": "Are we friends?"
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "listening",
+              "audio_text": "Ray: Hi Linh! Is this a photo of your family? Linh: Yes, it is. Ray: Are the two people behind you your parents? Linh: Yes, they are. My mum is a doctor and my dad is a teacher. Ray: Is the woman on the left your aunt? Linh: Yes, she is. Her name is Lan. Ray: Is the man on the right your uncle? Linh: Yes, he is. He is called Quan. He has got two sons — they are my cousins. Ray: And the grandparents? Are they in the photo? Linh: No, they aren't. They live in a small town and they are not on the internet today.",
+              "questions": [
+                {
+                  "question": "Is Linh's mum a teacher?",
+                  "answer": "no",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
+                },
+                {
+                  "question": "Is the woman on the left Linh's aunt?",
+                  "answer": "yes",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
+                },
+                {
+                  "question": "Are the grandparents in the photo?",
+                  "answer": "no",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
+                }
+              ],
+              "audio_url": "/static/audio/stage3/unit01/lesson_03.mp3"
+            },
+            {
+              "step": 10,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Show Ray three people in your world. For each one, say who they are and use 'be' questions Ray can answer.",
+              "expected_text": "This is [name]. Is he / she my [aunt / uncle / parent / friend]? Yes, he / she is. He / She is [age] years old.",
+              "prompts": [
+                "Say the first person. ('This is ___.')",
+                "Ask a 'be' question Ray can answer. ('Is he my ___?')",
+                "Repeat for a second and a third person.",
+                "End with one age sentence using 'is'. ('He / She is ___ years old.')"
+              ]
+            },
+            {
+              "step": 11,
+              "type": "exit_ticket",
+              "title": "Quick check — Lesson 3",
+              "questions": [
+                {
+                  "question": "Choose: ___ he your uncle?",
+                  "options": [
+                    "Am",
+                    "Is",
+                    "Are"
+                  ],
+                  "correct_answer": "Is"
+                },
+                {
+                  "question": "Short answer for 'Are you nine?' (yes)",
+                  "options": [
+                    "Yes, I am.",
+                    "Yes, you are.",
+                    "Yes, I is."
+                  ],
+                  "correct_answer": "Yes, I am."
+                },
+                {
+                  "question": "Choose: ___ they your grandparents?",
+                  "options": [
+                    "Am",
+                    "Is",
+                    "Are"
+                  ],
+                  "correct_answer": "Are"
+                },
+                {
+                  "question": "Your mother and father are your ___.",
+                  "options": [
+                    "aunts",
+                    "uncles",
+                    "parents",
+                    "children"
+                  ],
+                  "correct_answer": "parents"
+                },
+                {
+                  "question": "True or false: 'Is she British?' — 'No, she isn't.' is correct.",
+                  "options": [
+                    "true",
+                    "false"
+                  ],
+                  "correct_answer": "true"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_3_movers_unit_01_lesson_04",
+          "number": 4,
+          "title": "All about me — Review",
+          "topic": "Cumulative review: hello, name, age, address, country, nationality, family; verb 'be' (all forms) + 'be called'",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "It's review time! Ray asks you to remember the unit. Answer 2 quick questions.",
+              "questions": [
+                {
+                  "question_text": "What did we learn in this unit?",
+                  "correct_answer": "all about me, my country, my family",
+                  "options": [
+                    "all about me, my country, my family",
+                    "the weather",
+                    "food and drink",
+                    "wild animals"
+                  ],
+                  "image_emoji": "🙋",
+                  "hint": "Think about the unit title."
+                },
+                {
+                  "question_text": "Which verb did we practise the most?",
+                  "correct_answer": "be",
+                  "options": [
+                    "be",
+                    "have",
+                    "do",
+                    "go"
+                  ],
+                  "image_emoji": "🔤",
+                  "hint": "It has am, is and are."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "hello",
+                "hi",
+                "name",
+                "age",
+                "live",
+                "address",
+                "born",
+                "be called",
+                "country",
+                "city",
+                "town",
+                "village",
+                "Vietnamese",
+                "American",
+                "British",
+                "Brazilian",
+                "Chinese",
+                "aunt",
+                "uncle",
+                "parent",
+                "grown-up",
+                "from",
+                "say",
+                "tell",
+                "ask"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "word_ladder",
+                  "instruction": "Climb the ladder! Choose the word that fits each rung.",
+                  "items": [
+                    {
+                      "prompt": "Say hi to someone you meet:",
+                      "options": [
+                        "hello",
+                        "bye",
+                        "sorry"
+                      ],
+                      "correct": "hello"
+                    },
+                    {
+                      "prompt": "Linh is from Vietnam. She is ___:",
+                      "options": [
+                        "Vietnamese",
+                        "Chinese",
+                        "British"
+                      ],
+                      "correct": "Vietnamese"
+                    },
+                    {
+                      "prompt": "Your mum's brother is your ___:",
+                      "options": [
+                        "aunt",
+                        "uncle",
+                        "parent"
+                      ],
+                      "correct": "uncle"
+                    },
+                    {
+                      "prompt": "A very small place in the countryside is a ___:",
+                      "options": [
+                        "city",
+                        "town",
+                        "village"
+                      ],
+                      "correct": "village"
+                    },
+                    {
+                      "prompt": "Mum and dad together are your ___:",
+                      "options": [
+                        "aunts",
+                        "uncles",
+                        "parents"
+                      ],
+                      "correct": "parents"
+                    },
+                    {
+                      "prompt": "How many years old you are is your ___:",
+                      "options": [
+                        "name",
+                        "age",
+                        "address"
+                      ],
+                      "correct": "age"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_game_vocab",
+              "games": [
+                {
+                  "game_type": "cumulative_race",
+                  "instruction": "90 seconds! Tap the right picture for each word.",
+                  "time_limit_seconds": 90,
+                  "items": [
+                    {
+                      "prompt": "aunt",
+                      "correct_emoji": "👩",
+                      "options": [
+                        "👦",
+                        "👧",
+                        "👩",
+                        "👨"
+                      ]
+                    },
+                    {
+                      "prompt": "uncle",
+                      "correct_emoji": "👨",
+                      "options": [
+                        "👦",
+                        "👧",
+                        "👩",
+                        "👨"
+                      ]
+                    },
+                    {
+                      "prompt": "parent",
+                      "correct_emoji": "👨‍👩‍👧",
+                      "options": [
+                        "👨‍👩‍👧",
+                        "👶",
+                        "🧒",
+                        "🧑"
+                      ]
+                    },
+                    {
+                      "prompt": "grown-up",
+                      "correct_emoji": "🧑",
+                      "options": [
+                        "👨‍👩‍👧",
+                        "👶",
+                        "🧒",
+                        "🧑"
+                      ]
+                    },
+                    {
+                      "prompt": "Vietnamese",
+                      "correct_emoji": "🇻🇳",
+                      "options": [
+                        "🇻🇳",
+                        "🇺🇸",
+                        "🇬🇧",
+                        "🇧🇷"
+                      ]
+                    },
+                    {
+                      "prompt": "American",
+                      "correct_emoji": "🇺🇸",
+                      "options": [
+                        "🇻🇳",
+                        "🇺🇸",
+                        "🇬🇧",
+                        "🇧🇷"
+                      ]
+                    },
+                    {
+                      "prompt": "British",
+                      "correct_emoji": "🇬🇧",
+                      "options": [
+                        "🇻🇳",
+                        "🇺🇸",
+                        "🇬🇧",
+                        "🇧🇷"
+                      ]
+                    },
+                    {
+                      "prompt": "Brazilian",
+                      "correct_emoji": "🇧🇷",
+                      "options": [
+                        "🇻🇳",
+                        "🇺🇸",
+                        "🇬🇧",
+                        "🇧🇷"
+                      ]
+                    },
+                    {
+                      "prompt": "city",
+                      "correct_emoji": "🏙️",
+                      "options": [
+                        "🏙️",
+                        "🏘️",
+                        "🛖",
+                        "🏠"
+                      ]
+                    },
+                    {
+                      "prompt": "village",
+                      "correct_emoji": "🛖",
+                      "options": [
+                        "🏙️",
+                        "🏘️",
+                        "🛖",
+                        "🏠"
+                      ]
+                    },
+                    {
+                      "prompt": "town",
+                      "correct_emoji": "🏘️",
+                      "options": [
+                        "🏙️",
+                        "🏘️",
+                        "🛖",
+                        "🏠"
+                      ]
+                    },
+                    {
+                      "prompt": "address",
+                      "correct_emoji": "📬",
+                      "options": [
+                        "📬",
+                        "🎂",
+                        "🏷️",
+                        "🗺️"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "micro_reading",
+              "title": "Linh's whole world",
+              "text": "Hello! Let me tell you all about me again. My name is Linh and I am nine years old. I was born in Vietnam. My address is 14 Le Loi Street, Ho Chi Minh City. I am Vietnamese, but my class is from many countries. Tom is American. He is from a small town near New York. Sophie is British and lives in London. Lucas is Brazilian. He lives in a quiet village near the sea. My parents are Hoa and Tuan. My mum is a doctor and my dad is a teacher. I have got one brother. He is called Minh and he is seven. My aunt is called Lan and my uncle is called Quan. My grandparents live in a small town near a river. They are not on the internet today, but they say hello to me on the phone. We aren't in the same city, but we are a happy family. Are we lucky? Yes, we are!",
+              "scene_description": "A wide, cosy scene of Linh in the centre with small portraits of her family, friends and online classmates connected by friendly lines and small flags. A river and a small town are drawn behind the grandparents.",
+              "questions": [
+                {
+                  "question": "How old is Linh?",
+                  "answer": "9",
+                  "options": [
+                    "7",
+                    "8",
+                    "9",
+                    "10"
+                  ],
+                  "correct_answer": "9"
+                },
+                {
+                  "question": "Where does Lucas live?",
+                  "answer": "a village near the sea",
+                  "options": [
+                    "a city in the UK",
+                    "a town near New York",
+                    "a village near the sea",
+                    "the same city as Linh"
+                  ],
+                  "correct_answer": "a village near the sea"
+                },
+                {
+                  "question": "Who lives in a small town near a river?",
+                  "answer": "her grandparents",
+                  "options": [
+                    "her parents",
+                    "her aunt and uncle",
+                    "her grandparents",
+                    "her best friend"
+                  ],
+                  "correct_answer": "her grandparents"
+                },
+                {
+                  "question": "Is Linh's class from one country?",
+                  "answer": "no",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
+                },
+                {
+                  "question": "What is the name of Linh's aunt?",
+                  "answer": "Lan",
+                  "options": [
+                    "Hoa",
+                    "Lan",
+                    "Mai",
+                    "Sophie"
+                  ],
+                  "correct_answer": "Lan"
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_review",
+              "patterns": [
+                "be: am / is / are (affirmative)",
+                "be: am not / isn't / aren't (negative)",
+                "be: Am I…? / Is he/she/it…? / Are you/we/they…? (questions)",
+                "Short answers: Yes, I am. / No, she isn't. / Yes, they are. / No, we aren't.",
+                "Be called + name: My brother is called Minh."
+              ]
+            },
+            {
+              "step": 7,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "true_false",
+                  "instruction": "Read the sentence. Is the grammar correct?",
+                  "items": [
+                    {
+                      "sentence": "I am Vietnamese.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "She are British.",
+                      "correct": "false"
+                    },
+                    {
+                      "sentence": "They aren't in the same country.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "He am my uncle.",
+                      "correct": "false"
+                    },
+                    {
+                      "sentence": "Is she your aunt? — Yes, she is.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "My brother called is Minh.",
+                      "correct": "false"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "grammar_game",
+              "mode": "sentence_builder_timed",
+              "instruction": "45 seconds! Build each sentence by tapping the words in order.",
+              "time_limit_seconds": 45,
+              "items": [
+                {
+                  "words": [
+                    "am",
+                    "I",
+                    "Vietnamese"
+                  ],
+                  "correct_sentence": "I am Vietnamese."
+                },
+                {
+                  "words": [
+                    "called",
+                    "is",
+                    "My",
+                    "brother",
+                    "Minh"
+                  ],
+                  "correct_sentence": "My brother is called Minh."
+                },
+                {
+                  "words": [
+                    "are",
+                    "from",
+                    "We",
+                    "different",
+                    "countries"
+                  ],
+                  "correct_sentence": "We are from different countries."
+                },
+                {
+                  "words": [
+                    "aren't",
+                    "in",
+                    "They",
+                    "Vietnam"
+                  ],
+                  "correct_sentence": "They aren't in Vietnam."
+                },
+                {
+                  "words": [
+                    "your",
+                    "Are",
+                    "parents",
+                    "they"
+                  ],
+                  "correct_sentence": "Are they your parents?"
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "listening",
+              "audio_text": "Ray: Class, today is review day. Linh, tell us all about you. Linh: Hi everyone! I am Linh. I am nine. I was born in Vietnam. I live at 14 Le Loi Street in Ho Chi Minh City. My brother is called Minh. He is seven. My best friend is called Mai. My mum is a doctor and my dad is a teacher. My aunt Lan and my uncle Quan live near us. My grandparents live in a small town near a river. Ray: Lovely! And Tom, are you Vietnamese? Tom: No, I'm not. I am American. I am from a small town near New York. My friend Sophie is British. Lucas is Brazilian. We aren't in the same country, but we are in the same class on the internet. Ray: Class, you are amazing.",
+              "questions": [
+                {
+                  "question": "How old is Linh?",
+                  "answer": "9",
+                  "options": [
+                    "7",
+                    "8",
+                    "9",
+                    "10"
+                  ],
+                  "correct_answer": "9"
+                },
+                {
+                  "question": "Is Tom Vietnamese?",
+                  "answer": "no",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
+                },
+                {
+                  "question": "Sophie is ___.",
+                  "answer": "British",
+                  "options": [
+                    "American",
+                    "Vietnamese",
+                    "British",
+                    "Brazilian"
+                  ],
+                  "correct_answer": "British"
+                },
+                {
+                  "question": "Where does Linh's grandparents live?",
+                  "answer": "in a small town near a river",
+                  "options": [
+                    "in a big city",
+                    "in London",
+                    "in a small town near a river",
+                    "in Brazil"
+                  ],
+                  "correct_answer": "in a small town near a river"
+                },
+                {
+                  "question": "Are the friends in the same country?",
+                  "answer": "no",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
+                }
+              ],
+              "audio_url": "/static/audio/stage3/unit01/lesson_04.mp3"
+            },
+            {
+              "step": 10,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Tell Ray all about you in 6-8 sentences. Use 'be' in different forms. Mention: name, age, country, nationality, your city / town / village, and 2 people in your family.",
+              "expected_text": "Hello Ray! I am [name]. I am [age] years old. I was born in [country]. I am [nationality]. I live in [city/town/village]. My [parent/aunt/uncle] is called [name]. My [brother/sister/best friend] is called [name]. We are happy.",
+              "prompts": [
+                "Greet Ray.",
+                "Say your name and age.",
+                "Say your country and nationality.",
+                "Say where you live (city/town/village).",
+                "Tell about 2 people in your family. Use 'is called'.",
+                "End with one positive 'we are' sentence."
+              ]
+            },
+            {
+              "step": 11,
+              "type": "exit_ticket",
+              "title": "Unit 1 — All about me — Final check",
+              "questions": [
+                {
+                  "question": "Choose: They ___ my friends.",
+                  "options": [
+                    "am",
+                    "is",
+                    "are"
+                  ],
+                  "correct_answer": "are"
+                },
+                {
+                  "question": "Choose: She ___ from Vietnam. (She's from the USA.)",
+                  "options": [
+                    "isn't",
+                    "aren't",
+                    "am not"
+                  ],
+                  "correct_answer": "isn't"
+                },
+                {
+                  "question": "Question form: 'He is your uncle.' → ___ he your uncle?",
+                  "options": [
+                    "Am",
+                    "Is",
+                    "Are"
+                  ],
+                  "correct_answer": "Is"
+                },
+                {
+                  "question": "Lucas is from Brazil. He is ___.",
+                  "options": [
+                    "Brazilian",
+                    "British",
+                    "Vietnamese",
+                    "American"
+                  ],
+                  "correct_answer": "Brazilian"
+                },
+                {
+                  "question": "Short answer (yes) for 'Are you nine?' →",
+                  "options": [
+                    "Yes, I am.",
+                    "Yes, you are.",
+                    "Yes, I is."
+                  ],
+                  "correct_answer": "Yes, I am."
+                },
+                {
+                  "question": "Build: brother / is / My / Minh / called",
+                  "options": [
+                    "My brother is called Minh.",
+                    "Minh is my brother called.",
+                    "My is called brother Minh.",
+                    "Brother my Minh is called."
+                  ],
+                  "correct_answer": "My brother is called Minh."
+                },
+                {
+                  "question": "A small place to live, smaller than a town, is a ___.",
+                  "options": [
+                    "city",
+                    "country",
+                    "village",
+                    "address"
+                  ],
+                  "correct_answer": "village"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

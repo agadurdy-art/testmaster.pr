@@ -8,6 +8,9 @@ export { default as FillTheBlank } from './FillTheBlank';
 export { default as ErrorHunter } from './ErrorHunter';
 export { default as TrueFalseGrammar } from './TrueFalseGrammar';
 export { default as MultipleChoiceGrammar } from './MultipleChoiceGrammar';
+export { default as TransformSentence } from './TransformSentence';
+export { default as AudioMatch } from './AudioMatch';
+export { default as SentenceBuilderTimed } from './SentenceBuilderTimed';
 
 // Grammar game metadata
 export const GRAMMAR_GAMES = [

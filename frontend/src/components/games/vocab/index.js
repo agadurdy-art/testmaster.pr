@@ -13,6 +13,10 @@ export { default as FlashcardMatch } from './FlashcardMatch';
 export { default as MemoryGame } from './MemoryGame';
 export { default as FillTheGap } from './FillTheGap';
 export { default as AnimalSounds } from './AnimalSounds';
+export { default as WordRace } from './WordRace';
+export { default as WordLadder } from './WordLadder';
+export { default as CumulativeRace } from './CumulativeRace';
+export { default as ImageWordMatch } from './ImageWordMatch';
 
 // Game metadata for dynamic selection
 export const VOCAB_GAMES = [
