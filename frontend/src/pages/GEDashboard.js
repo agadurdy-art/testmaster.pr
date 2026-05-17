@@ -10,6 +10,7 @@ import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { toast } from 'sonner';
 import { useI18n } from '../lib/i18n';
+import { isAdminUser } from '../lib/planAccess';
 import FeedbackModal from '../components/FeedbackModal';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -267,8 +268,10 @@ export default function GEDashboard({ user, onLogout }) {
     return m;
   }, [progress, stages]);
 
+  const isAdmin = isAdminUser(user);
+
   const onStageClick = (stage) => {
-    if ((stage.total_lessons || 0) === 0) {
+    if (!isAdmin && (stage.total_lessons || 0) === 0) {
       toast.message('Coming soon!', {
         description: 'This stage is being built. Keep learning to unlock it first.',
       });
@@ -412,7 +415,7 @@ export default function GEDashboard({ user, onLogout }) {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
               {stages.map((stage) => {
-                const isUnlocked = (stage.total_lessons || 0) > 0;
+                const isUnlocked = isAdmin || (stage.total_lessons || 0) > 0;
                 const isActive = stage.stage_id === resumeLesson?.stage_id;
                 return (
                   <StageCard
