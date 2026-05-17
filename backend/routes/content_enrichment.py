@@ -321,10 +321,43 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None, stage
             return {"rules": rules, "is_review": True}
         
         if step_type in ("grammar_games", "grammar_game"):
+            # Normalize inner game items where Stage 3+ JSON uses Sonnet-style
+            # field names but the existing renderers expect different keys.
+            def _normalize_games(games):
+                out = []
+                for g in games or []:
+                    if not isinstance(g, dict):
+                        continue
+                    gt = g.get("game_type")
+                    items = g.get("items", []) or []
+                    if gt == "error_hunter":
+                        # ErrorHunter.js expects {sentence, errorWord, alternateErrors?}
+                        items = [
+                            {
+                                **it,
+                                "errorWord": it.get("errorWord") or it.get("wrong_word") or "",
+                                "alternateErrors": it.get("alternateErrors", []),
+                            }
+                            for it in items if isinstance(it, dict)
+                        ]
+                    out.append({**g, "items": items})
+                return out
+
             if step.get("games"):
-                return {"games": step.get("games", [])}
-            # Old single-exercise format
-            return {"games": [], "mode": step.get("mode", ""), "words": step.get("words", []), "correct_sentence": step.get("correct_sentence", "")}
+                return {"games": _normalize_games(step.get("games", []))}
+            # Stage 3+ single-game step uses mode + items at root.
+            # Pass through so the GrammarGame mode router can delegate to the
+            # right renderer (audio_match, transform_sentence, word_order, etc.).
+            return {
+                "games": [],
+                "mode": step.get("mode", ""),
+                "instruction": step.get("instruction", ""),
+                "items": step.get("items", []),
+                "time_limit_seconds": step.get("time_limit_seconds", 0),
+                # Legacy single-sentence fields preserved for older formats
+                "words": step.get("words", []),
+                "correct_sentence": step.get("correct_sentence", ""),
+            }
         
         if step_type == "listening":
             return {"audio_text": step.get("audio_text", ""), "transcript": step.get("audio_text", ""), "questions": step.get("questions", [])}
@@ -339,10 +372,18 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None, stage
         
         if step_type == "exit_ticket":
             if step.get('questions') and len(step['questions']) > 0:
-                qs = step['questions']
-                for qi, q in enumerate(qs):
-                    if not q.get('question_id'):
-                        q['question_id'] = f"exit_q{qi+1}"
+                qs = []
+                for qi, q in enumerate(step['questions']):
+                    if not isinstance(q, dict):
+                        continue
+                    nq = dict(q)
+                    if not nq.get('question_id'):
+                        nq['question_id'] = f"exit_q{qi+1}"
+                    # Frontend ExitTicket renderer reads `question_text`;
+                    # Sonnet-produced JSON uses `question`. Normalize both ways.
+                    if not nq.get('question_text') and nq.get('question'):
+                        nq['question_text'] = nq['question']
+                    qs.append(nq)
                 return {"questions": qs}
             return {"questions": [{
                 "question_id": "exit_q1",
