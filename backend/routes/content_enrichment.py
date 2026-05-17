@@ -352,38 +352,89 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None, stage
         unit_str = str(unit_num).zfill(2)
         original_path = f"{content_dir}/{stage_prefix}_unit{unit_str}.json"
         enriched_path = f"{enriched_dir}/{stage_prefix}_unit{unit_str}_enriched.json"
-        
-        if not os.path.exists(original_path):
+
+        # Stage 1+2 always have both original + enriched files.
+        # Stage 3+ may ship enriched-only (the enriched JSON already contains
+        # the full lesson; no separate "original" base is required).
+        if not os.path.exists(original_path) and not os.path.exists(enriched_path):
             continue
-        
-        with open(original_path, 'r') as f:
-            original_data = json.load(f)
-        
+
+        original_data = None
+        if os.path.exists(original_path):
+            with open(original_path, 'r') as f:
+                original_data = json.load(f)
+
         enriched_data = None
         if os.path.exists(enriched_path):
             with open(enriched_path, 'r') as f:
                 enriched_data = json.load(f)
-        
+
+        # If we have no original, use enriched as the base directly.
+        if original_data is None and enriched_data is not None:
+            for enrich_unit_only in enriched_data.get('units', []):
+                unit_id = enrich_unit_only.get('unit_id')
+                # Ensure unit doc exists / mark enriched
+                await db.unified_units.update_one(
+                    {"unit_id": unit_id},
+                    {"$set": {"ai_enriched": True, "enriched_at": TS}}
+                )
+                for elesson in enrich_unit_only.get('lessons', []):
+                    lesson_id = elesson.get('lesson_id')
+                    activity_flow = []
+                    for i, step in enumerate(elesson.get('steps', [])):
+                        step_type = step.get('type')
+                        activity_type = STEP_TO_ACTIVITY.get(step_type, step_type)
+                        activity_flow.append({
+                            "order": i + 1,
+                            "type": activity_type,
+                            "activity_id": f"step_{i+1}",
+                            "data": build_activity_data(step)
+                        })
+                    activity_flow.append({
+                        "order": len(activity_flow) + 1,
+                        "type": "auto_review",
+                        "activity_id": "auto_review",
+                        "data": {}
+                    })
+                    # Upsert: create lesson doc if it doesn't exist yet (Stage 3+).
+                    await db.unified_lessons.update_one(
+                        {"lesson_id": lesson_id},
+                        {"$set": {
+                            "lesson_id": lesson_id,
+                            "unit_id": unit_id,
+                            "lesson_num": elesson.get('lesson_num'),
+                            "title": elesson.get('title'),
+                            "topic": elesson.get('topic'),
+                            "activity_flow": activity_flow,
+                            "merged": True,
+                            "merged_at": TS,
+                            "context": {"enriched": True, "enriched_at": TS}
+                        }},
+                        upsert=True
+                    )
+                    seeded_count += 1
+            continue
+
         for orig_unit in original_data.get('units', []):
             unit_id = orig_unit.get('unit_id')
-            
+
             enrich_unit = None
             if enriched_data:
                 enrich_unit = next(
                     (u for u in enriched_data.get('units', []) if u.get('unit_id') == unit_id),
                     None
                 )
-            
+
             for orig_lesson in orig_unit.get('lessons', []):
                 lesson_id = orig_lesson.get('lesson_id')
-                
+
                 enrich_lesson = None
                 if enrich_unit:
                     enrich_lesson = next(
                         (l for l in enrich_unit.get('lessons', []) if l.get('lesson_id') == lesson_id),
                         None
                     )
-                
+
                 # Merge lessons (original base + enriched games)
                 if enrich_lesson:
                     merged_lesson = merger.merge_lesson(orig_lesson, enrich_lesson)
