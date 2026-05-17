@@ -153,16 +153,34 @@
                       "emoji": "👋",
                       "distractors": [
                         {
-                          "word": "book",
-                          "emoji": "📚"
+                          "word": "hi",
+                          "emoji": "🙋"
                         },
                         {
-                          "word": "ball",
-                          "emoji": "⚽"
+                          "word": "name",
+                          "emoji": "🏷️"
                         },
                         {
-                          "word": "tree",
-                          "emoji": "🌳"
+                          "word": "age",
+                          "emoji": "🎂"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hi",
+                      "emoji": "🙋",
+                      "distractors": [
+                        {
+                          "word": "hello",
+                          "emoji": "👋"
+                        },
+                        {
+                          "word": "name",
+                          "emoji": "🏷️"
+                        },
+                        {
+                          "word": "age",
+                          "emoji": "🎂"
                         }
                       ]
                     },
@@ -171,16 +189,16 @@
                       "emoji": "🏷️",
                       "distractors": [
                         {
-                          "word": "cup",
-                          "emoji": "🥤"
+                          "word": "hello",
+                          "emoji": "👋"
                         },
                         {
-                          "word": "shoe",
-                          "emoji": "👟"
+                          "word": "hi",
+                          "emoji": "🙋"
                         },
                         {
-                          "word": "dog",
-                          "emoji": "🐕"
+                          "word": "age",
+                          "emoji": "🎂"
                         }
                       ]
                     },
@@ -189,16 +207,16 @@
                       "emoji": "🎂",
                       "distractors": [
                         {
-                          "word": "balloon",
-                          "emoji": "🎈"
+                          "word": "hello",
+                          "emoji": "👋"
                         },
                         {
-                          "word": "gift",
-                          "emoji": "🎁"
+                          "word": "hi",
+                          "emoji": "🙋"
                         },
                         {
-                          "word": "flower",
-                          "emoji": "🌸"
+                          "word": "name",
+                          "emoji": "🏷️"
                         }
                       ]
                     },
@@ -207,16 +225,16 @@
                       "emoji": "🏠",
                       "distractors": [
                         {
-                          "word": "school",
-                          "emoji": "🏫"
+                          "word": "hello",
+                          "emoji": "👋"
                         },
                         {
-                          "word": "park",
-                          "emoji": "🏞️"
+                          "word": "hi",
+                          "emoji": "🙋"
                         },
                         {
-                          "word": "shop",
-                          "emoji": "🏪"
+                          "word": "name",
+                          "emoji": "🏷️"
                         }
                       ]
                     },
@@ -225,36 +243,162 @@
                       "emoji": "📬",
                       "distractors": [
                         {
-                          "word": "phone",
-                          "emoji": "📱"
+                          "word": "hello",
+                          "emoji": "👋"
                         },
                         {
-                          "word": "bag",
-                          "emoji": "🎒"
+                          "word": "hi",
+                          "emoji": "🙋"
                         },
                         {
-                          "word": "key",
-                          "emoji": "🔑"
+                          "word": "name",
+                          "emoji": "🏷️"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "listen_choose_picture",
+                  "instruction": "Listen to the word and tap the right picture.",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "emoji": "👋",
+                      "distractors": [
+                        {
+                          "word": "hi",
+                          "emoji": "🙋"
+                        },
+                        {
+                          "word": "name",
+                          "emoji": "🏷️"
+                        },
+                        {
+                          "word": "age",
+                          "emoji": "🎂"
                         }
                       ]
                     },
                     {
-                      "word": "born",
-                      "emoji": "👶",
+                      "word": "hi",
+                      "emoji": "🙋",
                       "distractors": [
                         {
-                          "word": "boy",
-                          "emoji": "👦"
+                          "word": "hello",
+                          "emoji": "👋"
                         },
                         {
-                          "word": "girl",
-                          "emoji": "👧"
+                          "word": "name",
+                          "emoji": "🏷️"
                         },
                         {
-                          "word": "family",
-                          "emoji": "👨‍👩‍👧‍👦"
+                          "word": "age",
+                          "emoji": "🎂"
                         }
                       ]
+                    },
+                    {
+                      "word": "name",
+                      "emoji": "🏷️",
+                      "distractors": [
+                        {
+                          "word": "hello",
+                          "emoji": "👋"
+                        },
+                        {
+                          "word": "hi",
+                          "emoji": "🙋"
+                        },
+                        {
+                          "word": "age",
+                          "emoji": "🎂"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "age",
+                      "emoji": "🎂",
+                      "distractors": [
+                        {
+                          "word": "hello",
+                          "emoji": "👋"
+                        },
+                        {
+                          "word": "hi",
+                          "emoji": "🙋"
+                        },
+                        {
+                          "word": "name",
+                          "emoji": "🏷️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "live",
+                      "emoji": "🏠",
+                      "distractors": [
+                        {
+                          "word": "hello",
+                          "emoji": "👋"
+                        },
+                        {
+                          "word": "hi",
+                          "emoji": "🙋"
+                        },
+                        {
+                          "word": "name",
+                          "emoji": "🏷️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "address",
+                      "emoji": "📬",
+                      "distractors": [
+                        {
+                          "word": "hello",
+                          "emoji": "👋"
+                        },
+                        {
+                          "word": "hi",
+                          "emoji": "🙋"
+                        },
+                        {
+                          "word": "name",
+                          "emoji": "🏷️"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "look_write",
+                  "instruction": "Look at the picture and type the word.",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "emoji": "👋"
+                    },
+                    {
+                      "word": "hi",
+                      "emoji": "🙋"
+                    },
+                    {
+                      "word": "name",
+                      "emoji": "🏷️"
+                    },
+                    {
+                      "word": "age",
+                      "emoji": "🎂"
+                    },
+                    {
+                      "word": "live",
+                      "emoji": "🏠"
+                    },
+                    {
+                      "word": "address",
+                      "emoji": "📬"
                     }
                   ]
                 }
@@ -262,41 +406,107 @@
             },
             {
               "step": 4,
-              "type": "micro_game_vocab",
+              "type": "vocab_games",
               "games": [
                 {
                   "game_type": "unscramble",
                   "instruction": "Unscramble the letters.",
                   "items": [
                     {
-                      "scrambled": "ELLOH",
+                      "scrambled": "EHLLO",
                       "answer": "HELLO",
-                      "hint": "You say this to greet someone."
+                      "hint": "A friendly word you use to greet someone."
                     },
                     {
-                      "scrambled": "MAEN",
+                      "scrambled": "HI",
+                      "answer": "HI",
+                      "hint": "A short, friendly way to say hello."
+                    },
+                    {
+                      "scrambled": "EMNA",
                       "answer": "NAME",
                       "hint": "What people call you."
                     },
                     {
-                      "scrambled": "VILE",
-                      "answer": "LIVE",
-                      "hint": "To have your home somewhere."
-                    },
-                    {
-                      "scrambled": "GEA",
+                      "scrambled": "EAG",
                       "answer": "AGE",
-                      "hint": "How many years old."
+                      "hint": "How many years old someone is."
                     },
                     {
-                      "scrambled": "RBNO",
-                      "answer": "BORN",
-                      "hint": "When and where your life started."
+                      "scrambled": "EIVL",
+                      "answer": "LIVE",
+                      "hint": "To have your home in a place."
                     },
                     {
-                      "scrambled": "DSDARSE",
+                      "scrambled": "RESSADD",
                       "answer": "ADDRESS",
-                      "hint": "The number and street where you live."
+                      "hint": "The place where you live, with a street and number."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "flashcard_match",
+                  "instruction": "Match pairs: word ↔ picture.",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "emoji": "👋",
+                      "image_url": "/static/vocab_images/hello.png"
+                    },
+                    {
+                      "word": "hi",
+                      "emoji": "🙋",
+                      "image_url": "/static/vocab_images/hi.png"
+                    },
+                    {
+                      "word": "name",
+                      "emoji": "🏷️",
+                      "image_url": "/static/vocab_images/name.png"
+                    },
+                    {
+                      "word": "age",
+                      "emoji": "🎂",
+                      "image_url": "/static/vocab_images/stage3/age.png"
+                    },
+                    {
+                      "word": "live",
+                      "emoji": "🏠",
+                      "image_url": "/static/vocab_images/stage3/live.png"
+                    },
+                    {
+                      "word": "address",
+                      "emoji": "📬",
+                      "image_url": "/static/vocab_images/stage3/address.png"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "listen_write",
+                  "instruction": "Listen to the word, then type it.",
+                  "items": [
+                    {
+                      "audio_text": "hello",
+                      "answer": "hello"
+                    },
+                    {
+                      "audio_text": "hi",
+                      "answer": "hi"
+                    },
+                    {
+                      "audio_text": "name",
+                      "answer": "name"
+                    },
+                    {
+                      "audio_text": "age",
+                      "answer": "age"
+                    },
+                    {
+                      "audio_text": "live",
+                      "answer": "live"
+                    },
+                    {
+                      "audio_text": "address",
+                      "answer": "address"
                     }
                   ]
                 }
@@ -364,7 +574,7 @@
               "games": [
                 {
                   "game_type": "multiple_choice_grammar",
-                  "instruction": "Choose the right form of 'be'.",
+                  "instruction": "Choose the correct word.",
                   "items": [
                     {
                       "sentence": "I ___ Linh.",
@@ -421,61 +631,234 @@
                       "correct": "is"
                     }
                   ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "instruction": "Fill the gap.",
+                  "items": [
+                    {
+                      "sentence": "I ___ Linh.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "Mai ___ my best friend.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "My brother ___ called Minh.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ from Vietnam.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "It ___ my school bag.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "Ray ___ our teacher.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "instruction": "Is the grammar correct?",
+                  "items": [
+                    {
+                      "sentence": "I am Linh. I am nine.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "She am from Vietnam.",
+                      "correct": "false"
+                    },
+                    {
+                      "sentence": "He is my brother.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "My best friend am called Mai.",
+                      "correct": "false"
+                    },
+                    {
+                      "sentence": "Ray is our teacher.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "I have got a brother. (We learn 'have got' more in Unit 3.)",
+                      "correct": "true"
+                    }
+                  ]
                 }
               ]
             },
             {
               "step": 8,
-              "type": "grammar_game",
-              "mode": "word_order",
-              "instruction": "Drag the words to build the sentence.",
-              "items": [
+              "type": "grammar_games",
+              "games": [
                 {
-                  "words": [
-                    "am",
-                    "I",
-                    "Linh"
-                  ],
-                  "correct_sentence": "I am Linh."
+                  "game_type": "word_order",
+                  "instruction": "Drag the words.",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "am",
+                        "Linh",
+                        "I",
+                        "am",
+                        "nine"
+                      ],
+                      "correct_sentence": "I am Linh. I am nine."
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "from",
+                        "Vietnam"
+                      ],
+                      "correct_sentence": "She is from Vietnam."
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "my",
+                        "brother"
+                      ],
+                      "correct_sentence": "He is my brother."
+                    },
+                    {
+                      "words": [
+                        "My",
+                        "best",
+                        "friend",
+                        "is",
+                        "called",
+                        "Mai"
+                      ],
+                      "correct_sentence": "My best friend is called Mai."
+                    },
+                    {
+                      "words": [
+                        "Ray",
+                        "is",
+                        "our",
+                        "teacher"
+                      ],
+                      "correct_sentence": "Ray is our teacher."
+                    }
+                  ]
                 },
                 {
-                  "words": [
-                    "is",
-                    "Mai",
-                    "friend",
-                    "my",
-                    "best"
-                  ],
-                  "correct_sentence": "Mai is my best friend."
+                  "game_type": "error_hunter",
+                  "instruction": "Tap the wrong word.",
+                  "items": [
+                    {
+                      "sentence": "I is Linh. I am nine.",
+                      "errorWord": "is",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "She am from Vietnam.",
+                      "errorWord": "am",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "He am my brother.",
+                      "errorWord": "am",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "My best friend am called Mai.",
+                      "errorWord": "am",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "Ray am our teacher.",
+                      "errorWord": "am",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "I is Linh. I am nine.",
+                      "errorWord": "is",
+                      "alternateErrors": []
+                    }
+                  ]
                 },
                 {
-                  "words": [
-                    "Minh",
-                    "called",
-                    "is",
-                    "My",
-                    "brother"
-                  ],
-                  "correct_sentence": "My brother is called Minh."
-                },
-                {
-                  "words": [
-                    "am",
-                    "I",
-                    "Vietnam",
-                    "from"
-                  ],
-                  "correct_sentence": "I am from Vietnam."
-                },
-                {
-                  "words": [
-                    "nine",
-                    "I",
-                    "old",
-                    "am",
-                    "years"
-                  ],
-                  "correct_sentence": "I am nine years old."
+                  "game_type": "audio_match",
+                  "instruction": "Listen and tap the sentence you hear.",
+                  "items": [
+                    {
+                      "audio_text": "I am Linh. I am nine.",
+                      "options": [
+                        "I am Linh. I am nine."
+                      ],
+                      "correct": "I am Linh. I am nine."
+                    },
+                    {
+                      "audio_text": "She is from Vietnam.",
+                      "options": [
+                        "She is from Vietnam."
+                      ],
+                      "correct": "She is from Vietnam."
+                    },
+                    {
+                      "audio_text": "He is my brother.",
+                      "options": [
+                        "He is my brother."
+                      ],
+                      "correct": "He is my brother."
+                    },
+                    {
+                      "audio_text": "My best friend is called Mai.",
+                      "options": [
+                        "My best friend is called Mai."
+                      ],
+                      "correct": "My best friend is called Mai."
+                    },
+                    {
+                      "audio_text": "Ray is our teacher.",
+                      "options": [
+                        "Ray is our teacher."
+                      ],
+                      "correct": "Ray is our teacher."
+                    }
+                  ]
                 }
               ]
             },
@@ -714,58 +1097,212 @@
               "games": [
                 {
                   "game_type": "word_race",
-                  "instruction": "60 seconds! Tap the right flag for each nationality.",
+                  "instruction": "60 seconds! Tap the right picture for each word.",
                   "time_limit_seconds": 60,
                   "items": [
+                    {
+                      "prompt": "country",
+                      "correct_emoji": "🗺️",
+                      "options": [
+                        "🗺️",
+                        "🏙️",
+                        "🏘️",
+                        "🛖"
+                      ]
+                    },
+                    {
+                      "prompt": "city",
+                      "correct_emoji": "🏙️",
+                      "options": [
+                        "🏙️",
+                        "🗺️",
+                        "🏘️",
+                        "🛖"
+                      ]
+                    },
+                    {
+                      "prompt": "town",
+                      "correct_emoji": "🏘️",
+                      "options": [
+                        "🏘️",
+                        "🗺️",
+                        "🏙️",
+                        "🛖"
+                      ]
+                    },
+                    {
+                      "prompt": "village",
+                      "correct_emoji": "🛖",
+                      "options": [
+                        "🛖",
+                        "🗺️",
+                        "🏙️",
+                        "🏘️"
+                      ]
+                    },
                     {
                       "prompt": "Vietnamese",
                       "correct_emoji": "🇻🇳",
                       "options": [
                         "🇻🇳",
-                        "🇨🇳",
-                        "🇺🇸",
-                        "🇬🇧"
+                        "🗺️",
+                        "🏙️",
+                        "🏘️"
                       ]
                     },
                     {
                       "prompt": "American",
                       "correct_emoji": "🇺🇸",
                       "options": [
-                        "🇧🇷",
                         "🇺🇸",
-                        "🇬🇧",
-                        "🇨🇳"
+                        "🗺️",
+                        "🏙️",
+                        "🏘️"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "instruction": "Read the word and tap the right picture.",
+                  "items": [
+                    {
+                      "word": "country",
+                      "emoji": "🗺️",
+                      "distractors": [
+                        {
+                          "word": "city",
+                          "emoji": "🏙️"
+                        },
+                        {
+                          "word": "town",
+                          "emoji": "🏘️"
+                        },
+                        {
+                          "word": "village",
+                          "emoji": "🛖"
+                        }
                       ]
                     },
                     {
-                      "prompt": "British",
-                      "correct_emoji": "🇬🇧",
-                      "options": [
-                        "🇬🇧",
-                        "🇻🇳",
-                        "🇧🇷",
-                        "🇺🇸"
+                      "word": "city",
+                      "emoji": "🏙️",
+                      "distractors": [
+                        {
+                          "word": "country",
+                          "emoji": "🗺️"
+                        },
+                        {
+                          "word": "town",
+                          "emoji": "🏘️"
+                        },
+                        {
+                          "word": "village",
+                          "emoji": "🛖"
+                        }
                       ]
                     },
                     {
-                      "prompt": "Brazilian",
-                      "correct_emoji": "🇧🇷",
-                      "options": [
-                        "🇨🇳",
-                        "🇧🇷",
-                        "🇻🇳",
-                        "🇬🇧"
+                      "word": "town",
+                      "emoji": "🏘️",
+                      "distractors": [
+                        {
+                          "word": "country",
+                          "emoji": "🗺️"
+                        },
+                        {
+                          "word": "city",
+                          "emoji": "🏙️"
+                        },
+                        {
+                          "word": "village",
+                          "emoji": "🛖"
+                        }
                       ]
                     },
                     {
-                      "prompt": "Chinese",
-                      "correct_emoji": "🇨🇳",
-                      "options": [
-                        "🇺🇸",
-                        "🇧🇷",
-                        "🇨🇳",
-                        "🇻🇳"
+                      "word": "village",
+                      "emoji": "🛖",
+                      "distractors": [
+                        {
+                          "word": "country",
+                          "emoji": "🗺️"
+                        },
+                        {
+                          "word": "city",
+                          "emoji": "🏙️"
+                        },
+                        {
+                          "word": "town",
+                          "emoji": "🏘️"
+                        }
                       ]
+                    },
+                    {
+                      "word": "Vietnamese",
+                      "emoji": "🇻🇳",
+                      "distractors": [
+                        {
+                          "word": "country",
+                          "emoji": "🗺️"
+                        },
+                        {
+                          "word": "city",
+                          "emoji": "🏙️"
+                        },
+                        {
+                          "word": "town",
+                          "emoji": "🏘️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "American",
+                      "emoji": "🇺🇸",
+                      "distractors": [
+                        {
+                          "word": "country",
+                          "emoji": "🗺️"
+                        },
+                        {
+                          "word": "city",
+                          "emoji": "🏙️"
+                        },
+                        {
+                          "word": "town",
+                          "emoji": "🏘️"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "memory_game",
+                  "instruction": "Flip the cards and find the pairs.",
+                  "items": [
+                    {
+                      "word": "country",
+                      "emoji": "🗺️"
+                    },
+                    {
+                      "word": "city",
+                      "emoji": "🏙️"
+                    },
+                    {
+                      "word": "town",
+                      "emoji": "🏘️"
+                    },
+                    {
+                      "word": "village",
+                      "emoji": "🛖"
+                    },
+                    {
+                      "word": "Vietnamese",
+                      "emoji": "🇻🇳"
+                    },
+                    {
+                      "word": "American",
+                      "emoji": "🇺🇸"
                     }
                   ]
                 }
@@ -773,31 +1310,185 @@
             },
             {
               "step": 4,
-              "type": "micro_game_vocab",
+              "type": "vocab_games",
               "games": [
                 {
-                  "game_type": "memory_game",
-                  "instruction": "Flip the cards. Match each country with its nationality.",
+                  "game_type": "look_write",
+                  "instruction": "Look at the picture and type the word.",
                   "items": [
                     {
-                      "a": "Vietnam",
-                      "b": "Vietnamese"
+                      "word": "country",
+                      "emoji": "🗺️"
                     },
                     {
-                      "a": "the USA",
-                      "b": "American"
+                      "word": "city",
+                      "emoji": "🏙️"
                     },
                     {
-                      "a": "the UK",
-                      "b": "British"
+                      "word": "town",
+                      "emoji": "🏘️"
                     },
                     {
-                      "a": "Brazil",
-                      "b": "Brazilian"
+                      "word": "village",
+                      "emoji": "🛖"
                     },
                     {
-                      "a": "China",
-                      "b": "Chinese"
+                      "word": "Vietnamese",
+                      "emoji": "🇻🇳"
+                    },
+                    {
+                      "word": "American",
+                      "emoji": "🇺🇸"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "flashcard_match",
+                  "instruction": "Match pairs: word ↔ picture.",
+                  "items": [
+                    {
+                      "word": "country",
+                      "emoji": "🗺️",
+                      "image_url": "/static/vocab_images/stage3/country.png"
+                    },
+                    {
+                      "word": "city",
+                      "emoji": "🏙️",
+                      "image_url": "/static/vocab_images/stage3/city.png"
+                    },
+                    {
+                      "word": "town",
+                      "emoji": "🏘️",
+                      "image_url": "/static/vocab_images/stage3/town.png"
+                    },
+                    {
+                      "word": "village",
+                      "emoji": "🛖",
+                      "image_url": "/static/vocab_images/stage3/village.png"
+                    },
+                    {
+                      "word": "Vietnamese",
+                      "emoji": "🇻🇳",
+                      "image_url": "/static/vocab_images/stage3/vietnamese.png"
+                    },
+                    {
+                      "word": "American",
+                      "emoji": "🇺🇸",
+                      "image_url": "/static/vocab_images/stage3/american.png"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "image_word_match",
+                  "instruction": "Match each picture with the right word.",
+                  "items": [
+                    {
+                      "word": "country",
+                      "emoji": "🗺️",
+                      "distractors": [
+                        {
+                          "word": "city",
+                          "emoji": "🏙️"
+                        },
+                        {
+                          "word": "town",
+                          "emoji": "🏘️"
+                        },
+                        {
+                          "word": "village",
+                          "emoji": "🛖"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "city",
+                      "emoji": "🏙️",
+                      "distractors": [
+                        {
+                          "word": "country",
+                          "emoji": "🗺️"
+                        },
+                        {
+                          "word": "town",
+                          "emoji": "🏘️"
+                        },
+                        {
+                          "word": "village",
+                          "emoji": "🛖"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "town",
+                      "emoji": "🏘️",
+                      "distractors": [
+                        {
+                          "word": "country",
+                          "emoji": "🗺️"
+                        },
+                        {
+                          "word": "city",
+                          "emoji": "🏙️"
+                        },
+                        {
+                          "word": "village",
+                          "emoji": "🛖"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "village",
+                      "emoji": "🛖",
+                      "distractors": [
+                        {
+                          "word": "country",
+                          "emoji": "🗺️"
+                        },
+                        {
+                          "word": "city",
+                          "emoji": "🏙️"
+                        },
+                        {
+                          "word": "town",
+                          "emoji": "🏘️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "Vietnamese",
+                      "emoji": "🇻🇳",
+                      "distractors": [
+                        {
+                          "word": "country",
+                          "emoji": "🗺️"
+                        },
+                        {
+                          "word": "city",
+                          "emoji": "🏙️"
+                        },
+                        {
+                          "word": "town",
+                          "emoji": "🏘️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "American",
+                      "emoji": "🇺🇸",
+                      "distractors": [
+                        {
+                          "word": "country",
+                          "emoji": "🗺️"
+                        },
+                        {
+                          "word": "city",
+                          "emoji": "🏙️"
+                        },
+                        {
+                          "word": "town",
+                          "emoji": "🏘️"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -863,37 +1554,127 @@
               "games": [
                 {
                   "game_type": "error_hunter",
-                  "instruction": "One word is wrong. Tap it.",
+                  "instruction": "Tap the wrong word.",
                   "items": [
                     {
                       "sentence": "We is friends.",
-                      "wrong_word": "is",
-                      "correct_word": "are"
+                      "errorWord": "is",
+                      "alternateErrors": []
                     },
                     {
                       "sentence": "They am from Brazil.",
-                      "wrong_word": "am",
-                      "correct_word": "are"
+                      "errorWord": "am",
+                      "alternateErrors": []
                     },
                     {
                       "sentence": "I are nine years old.",
-                      "wrong_word": "are",
-                      "correct_word": "am"
+                      "errorWord": "are",
+                      "alternateErrors": []
                     },
                     {
                       "sentence": "Sophie are British.",
-                      "wrong_word": "are",
-                      "correct_word": "is"
+                      "errorWord": "are",
+                      "alternateErrors": []
                     },
                     {
                       "sentence": "Tom and Sophie is friends.",
-                      "wrong_word": "is",
-                      "correct_word": "are"
+                      "errorWord": "is",
+                      "alternateErrors": []
                     },
                     {
                       "sentence": "Lucas am from a village.",
-                      "wrong_word": "am",
-                      "correct_word": "is"
+                      "errorWord": "am",
+                      "alternateErrors": []
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "instruction": "Is the grammar correct?",
+                  "items": [
+                    {
+                      "sentence": "We are class 3A.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "They am from different countries.",
+                      "correct": "false"
+                    },
+                    {
+                      "sentence": "I am not American. I am Vietnamese.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "Sophie isn't from Brazil. She am from London.",
+                      "correct": "false"
+                    },
+                    {
+                      "sentence": "Tom and his brother aren't in our city.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "They have got friends in many countries. (Unit 3 will teach 'have got' fully.)",
+                      "correct": "true"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "instruction": "Choose the correct word.",
+                  "items": [
+                    {
+                      "audio_text": "We are in class 3A.",
+                      "options": [
+                        "We are in class 3A.",
+                        "We is in class 3A.",
+                        "We am in class 3A."
+                      ],
+                      "correct": "We are in class 3A."
+                    },
+                    {
+                      "audio_text": "They aren't British.",
+                      "options": [
+                        "They aren't British.",
+                        "They isn't British.",
+                        "They am not British."
+                      ],
+                      "correct": "They aren't British."
+                    },
+                    {
+                      "audio_text": "I am not American.",
+                      "options": [
+                        "I am not American.",
+                        "I are not American.",
+                        "I is not American."
+                      ],
+                      "correct": "I am not American."
+                    },
+                    {
+                      "audio_text": "Sophie isn't from Brazil.",
+                      "options": [
+                        "Sophie isn't from Brazil.",
+                        "Sophie aren't from Brazil.",
+                        "Sophie am not from Brazil."
+                      ],
+                      "correct": "Sophie isn't from Brazil."
+                    },
+                    {
+                      "sentence": "We ___ class 3A.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "are"
+                    },
+                    {
+                      "sentence": "They ___ from different countries.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "are"
                     }
                   ]
                 }
@@ -901,45 +1682,171 @@
             },
             {
               "step": 8,
-              "type": "grammar_game",
-              "mode": "audio_match",
-              "instruction": "Listen and tap the sentence you hear.",
-              "items": [
+              "type": "grammar_games",
+              "games": [
                 {
-                  "audio_text": "We are in class 3A.",
-                  "options": [
-                    "We are in class 3A.",
-                    "We is in class 3A.",
-                    "We am in class 3A."
-                  ],
-                  "correct": "We are in class 3A."
+                  "game_type": "audio_match",
+                  "instruction": "Listen and tap the sentence you hear.",
+                  "items": [
+                    {
+                      "audio_text": "We are class 3A.",
+                      "options": [
+                        "We are class 3A."
+                      ],
+                      "correct": "We are class 3A."
+                    },
+                    {
+                      "audio_text": "They are from different countries.",
+                      "options": [
+                        "They are from different countries."
+                      ],
+                      "correct": "They are from different countries."
+                    },
+                    {
+                      "audio_text": "I am not American. I am Vietnamese.",
+                      "options": [
+                        "I am not American. I am Vietnamese."
+                      ],
+                      "correct": "I am not American. I am Vietnamese."
+                    },
+                    {
+                      "audio_text": "Sophie isn't from Brazil. She is from London.",
+                      "options": [
+                        "Sophie isn't from Brazil. She is from London."
+                      ],
+                      "correct": "Sophie isn't from Brazil. She is from London."
+                    },
+                    {
+                      "audio_text": "Tom and his brother aren't in our city.",
+                      "options": [
+                        "Tom and his brother aren't in our city."
+                      ],
+                      "correct": "Tom and his brother aren't in our city."
+                    }
+                  ]
                 },
                 {
-                  "audio_text": "They aren't British.",
-                  "options": [
-                    "They aren't British.",
-                    "They isn't British.",
-                    "They am not British."
-                  ],
-                  "correct": "They aren't British."
+                  "game_type": "word_order",
+                  "instruction": "Drag the words.",
+                  "items": [
+                    {
+                      "words": [
+                        "We",
+                        "are",
+                        "class",
+                        "3A"
+                      ],
+                      "correct_sentence": "We are class 3A."
+                    },
+                    {
+                      "words": [
+                        "They",
+                        "are",
+                        "from",
+                        "different",
+                        "countries"
+                      ],
+                      "correct_sentence": "They are from different countries."
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "am",
+                        "not",
+                        "American",
+                        "I",
+                        "am",
+                        "Vietnamese"
+                      ],
+                      "correct_sentence": "I am not American. I am Vietnamese."
+                    },
+                    {
+                      "words": [
+                        "Sophie",
+                        "isn't",
+                        "from",
+                        "Brazil",
+                        "She",
+                        "is",
+                        "from",
+                        "London"
+                      ],
+                      "correct_sentence": "Sophie isn't from Brazil. She is from London."
+                    },
+                    {
+                      "words": [
+                        "Tom",
+                        "and",
+                        "his",
+                        "brother",
+                        "aren't",
+                        "in",
+                        "our",
+                        "city"
+                      ],
+                      "correct_sentence": "Tom and his brother aren't in our city."
+                    }
+                  ]
                 },
                 {
-                  "audio_text": "I am not American.",
-                  "options": [
-                    "I am not American.",
-                    "I are not American.",
-                    "I is not American."
-                  ],
-                  "correct": "I am not American."
-                },
-                {
-                  "audio_text": "Sophie isn't from Brazil.",
-                  "options": [
-                    "Sophie isn't from Brazil.",
-                    "Sophie aren't from Brazil.",
-                    "Sophie am not from Brazil."
-                  ],
-                  "correct": "Sophie isn't from Brazil."
+                  "game_type": "fill_blank",
+                  "instruction": "Fill the gap.",
+                  "items": [
+                    {
+                      "sentence": "We ___ class 3A.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ from different countries.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "We ___ class 3A.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ from different countries.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ not American. I am Vietnamese.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "Sophie isn't from Brazil. She ___ from London.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    }
+                  ]
                 }
               ]
             },
@@ -1185,12 +2092,120 @@
                       "answer": "grown-up"
                     },
                     {
-                      "audio_text": "ask",
-                      "answer": "ask"
+                      "audio_text": "from",
+                      "answer": "from"
                     },
                     {
-                      "audio_text": "tell",
-                      "answer": "tell"
+                      "audio_text": "say",
+                      "answer": "say"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "listen_choose_word",
+                  "instruction": "Listen and tap the right word.",
+                  "items": [
+                    {
+                      "audio_text": "aunt",
+                      "word": "aunt",
+                      "options": [
+                        "aunt",
+                        "uncle",
+                        "parent",
+                        "grown-up"
+                      ],
+                      "correct": "aunt"
+                    },
+                    {
+                      "audio_text": "uncle",
+                      "word": "uncle",
+                      "options": [
+                        "uncle",
+                        "aunt",
+                        "parent",
+                        "grown-up"
+                      ],
+                      "correct": "uncle"
+                    },
+                    {
+                      "audio_text": "parent",
+                      "word": "parent",
+                      "options": [
+                        "parent",
+                        "aunt",
+                        "uncle",
+                        "grown-up"
+                      ],
+                      "correct": "parent"
+                    },
+                    {
+                      "audio_text": "grown-up",
+                      "word": "grown-up",
+                      "options": [
+                        "grown-up",
+                        "aunt",
+                        "uncle",
+                        "parent"
+                      ],
+                      "correct": "grown-up"
+                    },
+                    {
+                      "audio_text": "from",
+                      "word": "from",
+                      "options": [
+                        "from",
+                        "aunt",
+                        "uncle",
+                        "parent"
+                      ],
+                      "correct": "from"
+                    },
+                    {
+                      "audio_text": "say",
+                      "word": "say",
+                      "options": [
+                        "say",
+                        "aunt",
+                        "uncle",
+                        "parent"
+                      ],
+                      "correct": "say"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "flashcard_match",
+                  "instruction": "Match pairs: word ↔ picture.",
+                  "items": [
+                    {
+                      "word": "aunt",
+                      "emoji": "👩",
+                      "image_url": "/static/vocab_images/stage3/aunt.png"
+                    },
+                    {
+                      "word": "uncle",
+                      "emoji": "👨",
+                      "image_url": "/static/vocab_images/stage3/uncle.png"
+                    },
+                    {
+                      "word": "parent",
+                      "emoji": "👨‍👩‍👧",
+                      "image_url": "/static/vocab_images/stage3/parent.png"
+                    },
+                    {
+                      "word": "grown-up",
+                      "emoji": "🧑",
+                      "image_url": "/static/vocab_images/stage3/grown_up.png"
+                    },
+                    {
+                      "word": "from",
+                      "emoji": "📍",
+                      "image_url": "/static/vocab_images/stage3/from.png"
+                    },
+                    {
+                      "word": "say",
+                      "emoji": "💬",
+                      "image_url": "/static/vocab_images/stage3/say.png"
                     }
                   ]
                 }
@@ -1198,43 +2213,101 @@
             },
             {
               "step": 4,
-              "type": "micro_game_vocab",
+              "type": "vocab_games",
               "games": [
                 {
-                  "game_type": "flashcard_match",
-                  "instruction": "Flip the card. Say the word, then check.",
+                  "game_type": "look_write",
+                  "instruction": "Look at the picture and type the word.",
                   "items": [
                     {
-                      "front_emoji": "👩",
-                      "back_word": "aunt"
+                      "word": "aunt",
+                      "emoji": "👩"
                     },
                     {
-                      "front_emoji": "👨",
-                      "back_word": "uncle"
+                      "word": "uncle",
+                      "emoji": "👨"
                     },
                     {
-                      "front_emoji": "👨‍👩‍👧",
-                      "back_word": "parent"
+                      "word": "parent",
+                      "emoji": "👨‍👩‍👧"
                     },
                     {
-                      "front_emoji": "🧑",
-                      "back_word": "grown-up"
+                      "word": "grown-up",
+                      "emoji": "🧑"
                     },
                     {
-                      "front_emoji": "💬",
-                      "back_word": "say"
+                      "word": "from",
+                      "emoji": "📍"
                     },
                     {
-                      "front_emoji": "🗣️",
-                      "back_word": "tell"
+                      "word": "say",
+                      "emoji": "💬"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "memory_game",
+                  "instruction": "Flip the cards and find the pairs.",
+                  "items": [
+                    {
+                      "word": "aunt",
+                      "emoji": "👩"
                     },
                     {
-                      "front_emoji": "❓",
-                      "back_word": "ask"
+                      "word": "uncle",
+                      "emoji": "👨"
                     },
                     {
-                      "front_emoji": "📍",
-                      "back_word": "from"
+                      "word": "parent",
+                      "emoji": "👨‍👩‍👧"
+                    },
+                    {
+                      "word": "grown-up",
+                      "emoji": "🧑"
+                    },
+                    {
+                      "word": "from",
+                      "emoji": "📍"
+                    },
+                    {
+                      "word": "say",
+                      "emoji": "💬"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "instruction": "Unscramble the letters.",
+                  "items": [
+                    {
+                      "scrambled": "UANT",
+                      "answer": "AUNT",
+                      "hint": "Your mum's or dad's sister."
+                    },
+                    {
+                      "scrambled": "EUCNL",
+                      "answer": "UNCLE",
+                      "hint": "Your mum's or dad's brother."
+                    },
+                    {
+                      "scrambled": "REPANT",
+                      "answer": "PARENT",
+                      "hint": "Your mother or father."
+                    },
+                    {
+                      "scrambled": "WRUPNG-O",
+                      "answer": "GROWN-UP",
+                      "hint": "An adult person."
+                    },
+                    {
+                      "scrambled": "RMFO",
+                      "answer": "FROM",
+                      "hint": "A word we use to say which place is your home country or cit"
+                    },
+                    {
+                      "scrambled": "YAS",
+                      "answer": "SAY",
+                      "hint": "To use your voice to tell someone words."
                     }
                   ]
                 }
@@ -1300,31 +2373,131 @@
               "games": [
                 {
                   "game_type": "fill_blank",
-                  "instruction": "Fill the gap with Am, Is or Are.",
+                  "instruction": "Fill the gap.",
                   "items": [
                     {
                       "sentence": "___ you my friend?",
-                      "answer": "Are"
+                      "answer": "Are",
+                      "options": null
                     },
                     {
                       "sentence": "___ he your uncle?",
-                      "answer": "Is"
+                      "answer": "Is",
+                      "options": null
                     },
                     {
                       "sentence": "___ she Vietnamese?",
-                      "answer": "Is"
+                      "answer": "Is",
+                      "options": null
                     },
                     {
                       "sentence": "___ they your grandparents?",
-                      "answer": "Are"
+                      "answer": "Are",
+                      "options": null
                     },
                     {
                       "sentence": "___ I in class 3A?",
-                      "answer": "Am"
+                      "answer": "Am",
+                      "options": null
                     },
                     {
                       "sentence": "___ we friends?",
-                      "answer": "Are"
+                      "answer": "Are",
+                      "options": null
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "instruction": "Choose the correct word.",
+                  "items": [
+                    {
+                      "sentence": "___ you Linh? — Yes, I am.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "are"
+                    },
+                    {
+                      "sentence": "___ he your uncle? — Yes, he is.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "___ she from Brazil? — No, she isn't.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "___ they your grandparents? — Yes, they are.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "are"
+                    },
+                    {
+                      "sentence": "___ I in your class? — Yes, you are.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "am"
+                    },
+                    {
+                      "audio_text": "Are you Linh? — Yes, I am.",
+                      "options": [
+                        "Are you Linh? — Yes, I am."
+                      ],
+                      "correct": "Are you Linh? — Yes, I am."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "instruction": "Tap the wrong word.",
+                  "items": [
+                    {
+                      "sentence": "am you Linh? — Yes, I am.",
+                      "errorWord": "am",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "am he your uncle? — Yes, he is.",
+                      "errorWord": "am",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "am she from Brazil? — No, she isn't.",
+                      "errorWord": "am",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "am they your grandparents? — Yes, they are.",
+                      "errorWord": "am",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "is I in your class? — Yes, you are.",
+                      "errorWord": "is",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "am you Linh? — Yes, I am.",
+                      "errorWord": "am",
+                      "alternateErrors": []
                     }
                   ]
                 }
@@ -1332,29 +2505,105 @@
             },
             {
               "step": 8,
-              "type": "grammar_game",
-              "mode": "transform_sentence",
-              "instruction": "Change the sentence into a question.",
-              "items": [
+              "type": "grammar_games",
+              "games": [
                 {
-                  "sentence": "He is my uncle.",
-                  "answer": "Is he your uncle?"
+                  "game_type": "word_order",
+                  "instruction": "Drag the words.",
+                  "items": [
+                    {
+                      "words": [
+                        "Are",
+                        "you",
+                        "Linh",
+                        "—",
+                        "Yes",
+                        "I",
+                        "am"
+                      ],
+                      "correct_sentence": "Are you Linh? — Yes, I am."
+                    },
+                    {
+                      "words": [
+                        "Is",
+                        "he",
+                        "your",
+                        "uncle",
+                        "—",
+                        "Yes",
+                        "he",
+                        "is"
+                      ],
+                      "correct_sentence": "Is he your uncle? — Yes, he is."
+                    },
+                    {
+                      "words": [
+                        "Is",
+                        "she",
+                        "from",
+                        "Brazil",
+                        "—",
+                        "No",
+                        "she",
+                        "isn't"
+                      ],
+                      "correct_sentence": "Is she from Brazil? — No, she isn't."
+                    },
+                    {
+                      "words": [
+                        "Are",
+                        "they",
+                        "your",
+                        "grandparents",
+                        "—",
+                        "Yes",
+                        "they",
+                        "are"
+                      ],
+                      "correct_sentence": "Are they your grandparents? — Yes, they are."
+                    }
+                  ]
                 },
                 {
-                  "sentence": "She is American.",
-                  "answer": "Is she American?"
-                },
-                {
-                  "sentence": "They are your parents.",
-                  "answer": "Are they your parents?"
-                },
-                {
-                  "sentence": "You are nine.",
-                  "answer": "Are you nine?"
-                },
-                {
-                  "sentence": "We are friends.",
-                  "answer": "Are we friends?"
+                  "game_type": "audio_match",
+                  "instruction": "Listen and tap the sentence you hear.",
+                  "items": [
+                    {
+                      "audio_text": "Are you Linh? — Yes, I am.",
+                      "options": [
+                        "Are you Linh? — Yes, I am."
+                      ],
+                      "correct": "Are you Linh? — Yes, I am."
+                    },
+                    {
+                      "audio_text": "Is he your uncle? — Yes, he is.",
+                      "options": [
+                        "Is he your uncle? — Yes, he is."
+                      ],
+                      "correct": "Is he your uncle? — Yes, he is."
+                    },
+                    {
+                      "audio_text": "Is she from Brazil? — No, she isn't.",
+                      "options": [
+                        "Is she from Brazil? — No, she isn't."
+                      ],
+                      "correct": "Is she from Brazil? — No, she isn't."
+                    },
+                    {
+                      "audio_text": "Are they your grandparents? — Yes, they are.",
+                      "options": [
+                        "Are they your grandparents? — Yes, they are."
+                      ],
+                      "correct": "Are they your grandparents? — Yes, they are."
+                    },
+                    {
+                      "audio_text": "Am I in your class? — Yes, you are.",
+                      "options": [
+                        "Am I in your class? — Yes, you are."
+                      ],
+                      "correct": "Am I in your class? — Yes, you are."
+                    }
+                  ]
                 }
               ]
             },
@@ -1537,61 +2786,195 @@
               "games": [
                 {
                   "game_type": "word_ladder",
-                  "instruction": "Climb the ladder! Choose the word that fits each rung.",
+                  "instruction": "Climb the ladder! Choose the right word for each step.",
                   "items": [
                     {
-                      "prompt": "Say hi to someone you meet:",
+                      "prompt": "Which word matches: ",
                       "options": [
                         "hello",
-                        "bye",
-                        "sorry"
+                        "hi",
+                        "name"
                       ],
                       "correct": "hello"
                     },
                     {
-                      "prompt": "Linh is from Vietnam. She is ___:",
+                      "prompt": "Which word matches: ",
                       "options": [
-                        "Vietnamese",
-                        "Chinese",
-                        "British"
+                        "hi",
+                        "hello",
+                        "name"
                       ],
-                      "correct": "Vietnamese"
+                      "correct": "hi"
                     },
                     {
-                      "prompt": "Your mum's brother is your ___:",
-                      "options": [
-                        "aunt",
-                        "uncle",
-                        "parent"
-                      ],
-                      "correct": "uncle"
-                    },
-                    {
-                      "prompt": "A very small place in the countryside is a ___:",
-                      "options": [
-                        "city",
-                        "town",
-                        "village"
-                      ],
-                      "correct": "village"
-                    },
-                    {
-                      "prompt": "Mum and dad together are your ___:",
-                      "options": [
-                        "aunts",
-                        "uncles",
-                        "parents"
-                      ],
-                      "correct": "parents"
-                    },
-                    {
-                      "prompt": "How many years old you are is your ___:",
+                      "prompt": "Which word matches: ",
                       "options": [
                         "name",
+                        "hello",
+                        "hi"
+                      ],
+                      "correct": "name"
+                    },
+                    {
+                      "prompt": "Which word matches: ",
+                      "options": [
                         "age",
-                        "address"
+                        "hello",
+                        "hi"
                       ],
                       "correct": "age"
+                    },
+                    {
+                      "prompt": "Which word matches: ",
+                      "options": [
+                        "live",
+                        "hello",
+                        "hi"
+                      ],
+                      "correct": "live"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "cumulative_race",
+                  "instruction": "90 seconds! Race through all the words you learned.",
+                  "time_limit_seconds": 90,
+                  "items": [
+                    {
+                      "prompt": "hello",
+                      "correct_emoji": "📦",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ]
+                    },
+                    {
+                      "prompt": "hi",
+                      "correct_emoji": "📦",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ]
+                    },
+                    {
+                      "prompt": "name",
+                      "correct_emoji": "📦",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ]
+                    },
+                    {
+                      "prompt": "age",
+                      "correct_emoji": "📦",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ]
+                    },
+                    {
+                      "prompt": "live",
+                      "correct_emoji": "📦",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ]
+                    },
+                    {
+                      "prompt": "address",
+                      "correct_emoji": "📦",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ]
+                    },
+                    {
+                      "prompt": "born",
+                      "correct_emoji": "📦",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ]
+                    },
+                    {
+                      "prompt": "be called",
+                      "correct_emoji": "📦",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ]
+                    },
+                    {
+                      "prompt": "country",
+                      "correct_emoji": "📦",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ]
+                    },
+                    {
+                      "prompt": "city",
+                      "correct_emoji": "📦",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "flashcard_match",
+                  "instruction": "Match pairs: word ↔ picture.",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "emoji": "📦",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "hi",
+                      "emoji": "📦",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "name",
+                      "emoji": "📦",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "age",
+                      "emoji": "📦",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "live",
+                      "emoji": "📦",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "address",
+                      "emoji": "📦",
+                      "image_url": ""
                     }
                   ]
                 }
@@ -1599,132 +2982,179 @@
             },
             {
               "step": 4,
-              "type": "micro_game_vocab",
+              "type": "vocab_games",
               "games": [
                 {
-                  "game_type": "cumulative_race",
-                  "instruction": "90 seconds! Tap the right picture for each word.",
-                  "time_limit_seconds": 90,
+                  "game_type": "memory_game",
+                  "instruction": "Flip the cards and find the pairs.",
                   "items": [
                     {
-                      "prompt": "aunt",
-                      "correct_emoji": "👩",
-                      "options": [
-                        "👦",
-                        "👧",
-                        "👩",
-                        "👨"
+                      "word": "hello",
+                      "emoji": "📦"
+                    },
+                    {
+                      "word": "hi",
+                      "emoji": "📦"
+                    },
+                    {
+                      "word": "name",
+                      "emoji": "📦"
+                    },
+                    {
+                      "word": "age",
+                      "emoji": "📦"
+                    },
+                    {
+                      "word": "live",
+                      "emoji": "📦"
+                    },
+                    {
+                      "word": "address",
+                      "emoji": "📦"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "image_word_match",
+                  "instruction": "Match each picture with the right word.",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "emoji": "📦",
+                      "distractors": [
+                        {
+                          "word": "hi",
+                          "emoji": "📦"
+                        },
+                        {
+                          "word": "name",
+                          "emoji": "📦"
+                        },
+                        {
+                          "word": "age",
+                          "emoji": "📦"
+                        }
                       ]
                     },
                     {
-                      "prompt": "uncle",
-                      "correct_emoji": "👨",
-                      "options": [
-                        "👦",
-                        "👧",
-                        "👩",
-                        "👨"
+                      "word": "hi",
+                      "emoji": "📦",
+                      "distractors": [
+                        {
+                          "word": "hello",
+                          "emoji": "📦"
+                        },
+                        {
+                          "word": "name",
+                          "emoji": "📦"
+                        },
+                        {
+                          "word": "age",
+                          "emoji": "📦"
+                        }
                       ]
                     },
                     {
-                      "prompt": "parent",
-                      "correct_emoji": "👨‍👩‍👧",
-                      "options": [
-                        "👨‍👩‍👧",
-                        "👶",
-                        "🧒",
-                        "🧑"
+                      "word": "name",
+                      "emoji": "📦",
+                      "distractors": [
+                        {
+                          "word": "hello",
+                          "emoji": "📦"
+                        },
+                        {
+                          "word": "hi",
+                          "emoji": "📦"
+                        },
+                        {
+                          "word": "age",
+                          "emoji": "📦"
+                        }
                       ]
                     },
                     {
-                      "prompt": "grown-up",
-                      "correct_emoji": "🧑",
-                      "options": [
-                        "👨‍👩‍👧",
-                        "👶",
-                        "🧒",
-                        "🧑"
+                      "word": "age",
+                      "emoji": "📦",
+                      "distractors": [
+                        {
+                          "word": "hello",
+                          "emoji": "📦"
+                        },
+                        {
+                          "word": "hi",
+                          "emoji": "📦"
+                        },
+                        {
+                          "word": "name",
+                          "emoji": "📦"
+                        }
                       ]
                     },
                     {
-                      "prompt": "Vietnamese",
-                      "correct_emoji": "🇻🇳",
-                      "options": [
-                        "🇻🇳",
-                        "🇺🇸",
-                        "🇬🇧",
-                        "🇧🇷"
+                      "word": "live",
+                      "emoji": "📦",
+                      "distractors": [
+                        {
+                          "word": "hello",
+                          "emoji": "📦"
+                        },
+                        {
+                          "word": "hi",
+                          "emoji": "📦"
+                        },
+                        {
+                          "word": "name",
+                          "emoji": "📦"
+                        }
                       ]
                     },
                     {
-                      "prompt": "American",
-                      "correct_emoji": "🇺🇸",
-                      "options": [
-                        "🇻🇳",
-                        "🇺🇸",
-                        "🇬🇧",
-                        "🇧🇷"
+                      "word": "address",
+                      "emoji": "📦",
+                      "distractors": [
+                        {
+                          "word": "hello",
+                          "emoji": "📦"
+                        },
+                        {
+                          "word": "hi",
+                          "emoji": "📦"
+                        },
+                        {
+                          "word": "name",
+                          "emoji": "📦"
+                        }
                       ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "look_write",
+                  "instruction": "Look at the picture and type the word.",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "emoji": "📦"
                     },
                     {
-                      "prompt": "British",
-                      "correct_emoji": "🇬🇧",
-                      "options": [
-                        "🇻🇳",
-                        "🇺🇸",
-                        "🇬🇧",
-                        "🇧🇷"
-                      ]
+                      "word": "hi",
+                      "emoji": "📦"
                     },
                     {
-                      "prompt": "Brazilian",
-                      "correct_emoji": "🇧🇷",
-                      "options": [
-                        "🇻🇳",
-                        "🇺🇸",
-                        "🇬🇧",
-                        "🇧🇷"
-                      ]
+                      "word": "name",
+                      "emoji": "📦"
                     },
                     {
-                      "prompt": "city",
-                      "correct_emoji": "🏙️",
-                      "options": [
-                        "🏙️",
-                        "🏘️",
-                        "🛖",
-                        "🏠"
-                      ]
+                      "word": "age",
+                      "emoji": "📦"
                     },
                     {
-                      "prompt": "village",
-                      "correct_emoji": "🛖",
-                      "options": [
-                        "🏙️",
-                        "🏘️",
-                        "🛖",
-                        "🏠"
-                      ]
+                      "word": "live",
+                      "emoji": "📦"
                     },
                     {
-                      "prompt": "town",
-                      "correct_emoji": "🏘️",
-                      "options": [
-                        "🏙️",
-                        "🏘️",
-                        "🛖",
-                        "🏠"
-                      ]
-                    },
-                    {
-                      "prompt": "address",
-                      "correct_emoji": "📬",
-                      "options": [
-                        "📬",
-                        "🎂",
-                        "🏷️",
-                        "🗺️"
-                      ]
+                      "word": "address",
+                      "emoji": "📦"
                     }
                   ]
                 }
@@ -1809,31 +3239,151 @@
               "games": [
                 {
                   "game_type": "true_false",
-                  "instruction": "Read the sentence. Is the grammar correct?",
+                  "instruction": "Is the grammar correct?",
                   "items": [
                     {
-                      "sentence": "I am Vietnamese.",
+                      "sentence": "be: am / is / are (affirmative)",
                       "correct": "true"
                     },
                     {
-                      "sentence": "She are British.",
+                      "sentence": "be: is not / isn't / aren't (negative)",
                       "correct": "false"
                     },
                     {
-                      "sentence": "They aren't in the same country.",
+                      "sentence": "be: Am I…? / Is he/she/it…? / Are you/we/they…? (questions)",
                       "correct": "true"
                     },
                     {
-                      "sentence": "He am my uncle.",
+                      "sentence": "Short answers: Yes, I is / No, she isn't. / Yes, they are. / No, we aren't.",
                       "correct": "false"
                     },
                     {
-                      "sentence": "Is she your aunt? — Yes, she is.",
+                      "sentence": "Be called + name: My brother is called Minh.",
                       "correct": "true"
                     },
                     {
-                      "sentence": "My brother called is Minh.",
+                      "sentence": "I is Vietnamese.",
                       "correct": "false"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "instruction": "Fill the gap.",
+                  "items": [
+                    {
+                      "sentence": "be: ___ / is / are (affirmative)",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "be: ___ not / isn't / aren't (negative)",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "be: ___ I…? / Is he/she/it…? / Are you/we/they…? (questions)",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "Short answers: Yes, I ___ / No, she isn't. / Yes, they are. / No, we aren't.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "Be called + name: My brother ___ called Minh.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ Vietnamese.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "instruction": "Choose the correct word.",
+                  "items": [
+                    {
+                      "sentence": "be: ___ / is / are (affirmative)",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "am"
+                    },
+                    {
+                      "sentence": "be: ___ not / isn't / aren't (negative)",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "am"
+                    },
+                    {
+                      "sentence": "be: ___ I…? / Is he/she/it…? / Are you/we/they…? (questions)",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "am"
+                    },
+                    {
+                      "sentence": "Short answers: Yes, I ___ / No, she isn't. / Yes, they are. / No, we aren't.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "am"
+                    },
+                    {
+                      "sentence": "Be called + name: My brother ___ called Minh.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "I ___ Vietnamese.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "am"
                     }
                   ]
                 }
@@ -1841,56 +3391,149 @@
             },
             {
               "step": 8,
-              "type": "grammar_game",
-              "mode": "sentence_builder_timed",
-              "instruction": "45 seconds! Build each sentence by tapping the words in order.",
-              "time_limit_seconds": 45,
-              "items": [
+              "type": "grammar_games",
+              "games": [
                 {
-                  "words": [
-                    "am",
-                    "I",
-                    "Vietnamese"
-                  ],
-                  "correct_sentence": "I am Vietnamese."
+                  "game_type": "sentence_builder_timed",
+                  "instruction": "45 seconds! Build each sentence.",
+                  "time_limit_seconds": 45,
+                  "items": [
+                    {
+                      "words": [
+                        "be:",
+                        "am",
+                        "/",
+                        "is",
+                        "/",
+                        "are",
+                        "(affirmative)"
+                      ],
+                      "correct_sentence": "be: am / is / are (affirmative)."
+                    },
+                    {
+                      "words": [
+                        "be:",
+                        "am",
+                        "not",
+                        "/",
+                        "isn't",
+                        "/",
+                        "aren't",
+                        "(negative)"
+                      ],
+                      "correct_sentence": "be: am not / isn't / aren't (negative)."
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "am",
+                        "Vietnamese"
+                      ],
+                      "correct_sentence": "I am Vietnamese."
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "my",
+                        "friend"
+                      ],
+                      "correct_sentence": "She is my friend."
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "my",
+                        "brother"
+                      ],
+                      "correct_sentence": "He is my brother."
+                    },
+                    {
+                      "words": [
+                        "We",
+                        "are",
+                        "classmates"
+                      ],
+                      "correct_sentence": "We are classmates."
+                    }
+                  ]
                 },
                 {
-                  "words": [
-                    "called",
-                    "is",
-                    "My",
-                    "brother",
-                    "Minh"
-                  ],
-                  "correct_sentence": "My brother is called Minh."
+                  "game_type": "transform_sentence",
+                  "instruction": "Transform the sentence.",
+                  "items": [
+                    {
+                      "sentence": "I am Vietnamese.",
+                      "task": "Make it a question.",
+                      "answer": "Am i vietnamese?"
+                    }
+                  ]
                 },
                 {
-                  "words": [
-                    "are",
-                    "from",
-                    "We",
-                    "different",
-                    "countries"
-                  ],
-                  "correct_sentence": "We are from different countries."
-                },
-                {
-                  "words": [
-                    "aren't",
-                    "in",
-                    "They",
-                    "Vietnam"
-                  ],
-                  "correct_sentence": "They aren't in Vietnam."
-                },
-                {
-                  "words": [
-                    "your",
-                    "Are",
-                    "parents",
-                    "they"
-                  ],
-                  "correct_sentence": "Are they your parents?"
+                  "game_type": "word_order",
+                  "instruction": "Drag the words.",
+                  "items": [
+                    {
+                      "words": [
+                        "be:",
+                        "am",
+                        "/",
+                        "is",
+                        "/",
+                        "are",
+                        "(affirmative)"
+                      ],
+                      "correct_sentence": "be: am / is / are (affirmative)."
+                    },
+                    {
+                      "words": [
+                        "be:",
+                        "am",
+                        "not",
+                        "/",
+                        "isn't",
+                        "/",
+                        "aren't",
+                        "(negative)"
+                      ],
+                      "correct_sentence": "be: am not / isn't / aren't (negative)."
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "am",
+                        "Vietnamese"
+                      ],
+                      "correct_sentence": "I am Vietnamese."
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "my",
+                        "friend"
+                      ],
+                      "correct_sentence": "She is my friend."
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "my",
+                        "brother"
+                      ],
+                      "correct_sentence": "He is my brother."
+                    },
+                    {
+                      "words": [
+                        "We",
+                        "are",
+                        "classmates"
+                      ],
+                      "correct_sentence": "We are classmates."
+                    }
+                  ]
                 }
               ]
             },
