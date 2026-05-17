@@ -56,7 +56,14 @@ OAUTH_SESSION_TTL_SECONDS = 300  # 5 min — frontend exchange window
 # own custom scheme so the in-app browser can auto-close on redirect.
 # Anything not on this allow-list is silently dropped — never trust the
 # raw query value as a redirect target (open-redirect risk).
-ALLOWED_OAUTH_RETURN_SCHEMES = ("ieltsace://", "ielts-ace://", FRONTEND_BASE_URL)
+#
+# `exp://` covers Expo Go during development: Linking.createURL() in
+# Expo Go returns `exp://<lan-ip>:<port>/--/<path>` because the host app
+# owns the URL scheme (not our custom `ieltsace://`). Without this entry
+# the OAuth round-trip can't auto-close the in-app browser when we're
+# testing through Expo Go. Production / EAS dev-client builds use the
+# `ieltsace://` scheme registered in app.json.
+ALLOWED_OAUTH_RETURN_SCHEMES = ("ieltsace://", "ielts-ace://", "exp://", FRONTEND_BASE_URL)
 
 if RESEND_API_KEY:
     resend.api_key = RESEND_API_KEY
