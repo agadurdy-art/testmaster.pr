@@ -301,6 +301,13 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None, stage
                 "explanation": step.get("explanation", ""),
                 "examples": step.get("examples", [])
             }
+
+        if step_type == "listening":
+            return {
+                "audio_text": step.get("audio_text", ""),
+                "audio_url": step.get("audio_url", ""),
+                "questions": step.get("questions", [])
+            }
         
         if step_type == "grammar_review":
             patterns = step.get("patterns", []) or []
