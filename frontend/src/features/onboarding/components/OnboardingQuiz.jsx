@@ -12,16 +12,9 @@ import Step5LizIntro from './Step5LizIntro';
 export default function OnboardingQuiz({ onFinish }) {
   const { state, update, next, back, skip, canContinue } = useOnboardingState();
 
-  // Auto-skip Step 1 when the user already chose a path on the landing
-  // PathPickerGate. Without this they see "Choose your path" again on
-  // Step 1 with their selection pre-checked — confusing UX.
-  useEffect(() => {
-    if (state.step === 1 && state.path) {
-      next();
-    }
-    // Only run on mount — `next` is stable from the hook.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // Step 1 (path picker) is skipped at the hook level when the visitor
+  // already chose on the landing PathPickerGate — see useOnboardingState's
+  // initial-state setter. No useEffect needed here.
 
   // Keyboard shortcuts: Enter → continue, Esc → back
   useEffect(() => {

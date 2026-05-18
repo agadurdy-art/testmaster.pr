@@ -43,17 +43,13 @@ export default function PathPickerGate({ children }) {
   const [loadingPath, setLoadingPath] = useState(null);
 
   useEffect(() => {
-    // Session-scoped cache so the picker reappears every new browser
-    // session. Aga complained that returning to testmaster.pro after a
-    // few hours showed the IELTS landing without offering the picker
-    // again — localStorage was holding the choice forever. sessionStorage
-    // drops on tab close/quit so the next visit re-asks.
-    try {
-      const saved = sessionStorage.getItem(STORAGE_KEY);
-      if (saved) setChoice(saved);
-    } catch (_) {
-      // storage blocked (private mode / SSR) — treat as first visit
-    }
+    // Always start with an empty choice. Aga's earlier complaint was
+    // "testmaster.pro yazinca path picker cikmali, ielts landpage degil"
+    // — the cached sessionStorage choice kept the modal hidden on revisits
+    // within the same tab. Picker should always show on root for
+    // unauthenticated visitors. The localStorage `testmaster_onboarding_path`
+    // hint is still written on pick() so SignupBridge / onboarding pick it
+    // up post-signup.
     setResolved(true);
   }, []);
 

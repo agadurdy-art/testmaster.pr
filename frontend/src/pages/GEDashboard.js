@@ -652,9 +652,9 @@ export default function GEDashboard({ user, onLogout }) {
           </div>
           <div className="grid grid-cols-3 gap-3 md:gap-4">
             {[
-              { emoji: '🎯', title: 'Matching',  path: '/games/matching_pairs/family', gradient: 'from-blue-500 to-cyan-500' },
-              { emoji: '🐝', title: 'Spelling',  path: '/games/spelling_bee/animals',  gradient: 'from-amber-500 to-yellow-500' },
-              { emoji: '🏎️', title: 'Word Race', path: '/games/word_race/food',        gradient: 'from-emerald-500 to-green-500' },
+              { emoji: '🎯', title: 'Matching',  path: '/game-bank?game=matching_pairs&topic=family',  gradient: 'from-blue-500 to-cyan-500' },
+              { emoji: '🐝', title: 'Spelling',  path: '/game-bank?game=spelling_bee&topic=animals',   gradient: 'from-amber-500 to-yellow-500' },
+              { emoji: '🏎️', title: 'Word Race', path: '/game-bank?game=word_race&topic=food',         gradient: 'from-emerald-500 to-green-500' },
             ].map((g) => (
               <button
                 key={g.title}

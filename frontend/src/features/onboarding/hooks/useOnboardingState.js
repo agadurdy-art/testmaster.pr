@@ -61,7 +61,13 @@ export default function useOnboardingState() {
   const { t } = useI18n();
   const [state, setState] = useState(() => {
     const initialPath = readInitialPath();
-    return initialPath ? { ...INITIAL_STATE, path: initialPath } : INITIAL_STATE;
+    if (!initialPath) return INITIAL_STATE;
+    // PathPickerGate already asked the user which track they want, so the
+    // onboarding quiz must not re-ask "Choose your path" on Step 1. Start
+    // at the first relevant question — Step 2 for IELTS (target band /
+    // exam date), Step 4 for GE (skip band + level steps).
+    const initialStep = initialPath === 'general' ? 4 : 2;
+    return { ...INITIAL_STATE, path: initialPath, step: initialStep };
   });
 
   const update = useCallback((patch) => {
