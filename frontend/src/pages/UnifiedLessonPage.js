@@ -50,6 +50,100 @@ import {
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
+// ═══════ GAME ITEM NORMALIZATION ═══════
+// Sonnet content writers emit different field names per game type
+// (`audio_text` for listen, `scrambled` for unscramble, `correct` vs
+// `correct_sentence`, etc). Components expect uniform fields. Normalize at
+// dispatch so each component sees the shape it was authored for.
+//
+// Also strips author meta-comments that leak through to the student view —
+// notes like "(Full 'there is/are' in Unit 3.)" the writer left for itself.
+
+const META_COMMENT_REGEX = /\s*\([^)]*\bUnit\s+\d+[^)]*\)\s*/gi;
+
+function stripMeta(value) {
+  if (typeof value !== 'string') return value;
+  return value.replace(META_COMMENT_REGEX, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function synthesizeDistractors(correct, peerItems, fieldNames = ['answer', 'word', 'correct', 'correct_sentence']) {
+  if (!correct) return [];
+  const norm = String(correct).toLowerCase().trim();
+  const pool = [];
+  for (const peer of peerItems || []) {
+    for (const f of fieldNames) {
+      const v = peer?.[f];
+      if (typeof v === 'string' && v.trim() && v.toLowerCase().trim() !== norm) {
+        pool.push(v.trim());
+      }
+    }
+  }
+  const unique = Array.from(new Set(pool));
+  return unique.slice(0, 3);
+}
+
+function normalizeGameItem(rawItem, gameType, peerItems) {
+  if (!rawItem || typeof rawItem !== 'object') return rawItem;
+  const item = { ...rawItem };
+
+  // Strip meta-comments from every string field — catches sentence,
+  // audio_text, prompt, hint, answer, correct_sentence, etc.
+  for (const k of Object.keys(item)) {
+    if (typeof item[k] === 'string') item[k] = stripMeta(item[k]);
+  }
+
+  // Uniform `word` field for components that expect it.
+  if (!item.word) {
+    if (gameType === 'listen_write') item.word = item.answer || item.audio_text;
+    else if (gameType === 'unscramble') item.word = item.answer;
+    else if (item.audio_text && (gameType === 'listen_choose_word' || gameType === 'flashcard_match')) {
+      item.word = item.audio_text;
+    }
+  }
+  // Uniform `answer` field (some components use `correct`).
+  if (!item.answer && item.correct) item.answer = item.correct;
+  // Word-order: support both camelCase + snake_case.
+  if (!item.correctSentence && item.correct_sentence) item.correctSentence = item.correct_sentence;
+  if (!item.correct_sentence && item.correctSentence) item.correct_sentence = item.correctSentence;
+
+  // ListenChooseWord wants a `distractors` array; data ships `options` (which
+  // already includes the correct answer). Map options → distractors minus
+  // the correct word; synthesize from peers if there's only 1 option.
+  if (gameType === 'listen_choose_word') {
+    const correct = item.word || item.answer;
+    let distractors = Array.isArray(item.options)
+      ? item.options.filter(o => o && String(o).toLowerCase().trim() !== String(correct).toLowerCase().trim())
+      : [];
+    if (distractors.length < 2) {
+      distractors = synthesizeDistractors(correct, peerItems, ['word', 'answer', 'audio_text']);
+    }
+    item.distractors = distractors;
+  }
+
+  // AudioMatch / multiple_choice_grammar: pad options if too few — data
+  // sometimes emits a single-option array which leaves the user with no
+  // choice to make. Pull alternatives from peer items.
+  if ((gameType === 'audio_match' || gameType === 'multiple_choice_grammar')
+      && Array.isArray(item.options) && item.options.length < 2) {
+    const correct = item.correct || item.answer;
+    const extras = synthesizeDistractors(correct, peerItems, ['correct', 'answer', 'audio_text', 'sentence']);
+    item.options = Array.from(new Set([...(item.options || []), ...extras])).slice(0, 4);
+  }
+
+  return item;
+}
+
+function normalizeItemsForGame(items, gameType) {
+  if (!Array.isArray(items)) return [];
+  return items.map((it) => normalizeGameItem(it, gameType, items));
+}
+
+// Hard cap so a lesson never shows more than this many mini-games per game
+// step. Aga's pedagogy call (2026-05-19): "6 oyun olmasina gerek yok en
+// fazla 4 oyun ve 3 ideal." Existing data still ships 6-packs; this caps at
+// render time until the packer is updated.
+const MAX_GAMES_PER_STEP = 3;
+
 // ═══════ LESSON SURFACE MOTION ═══════
 // Very subtle — the lesson page is for learning, not for showing off.
 // Activities fade in when they switch; sidebar dots breathe; cards lift on
@@ -981,8 +1075,9 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
 
 // ═══════ VOCAB GAMES PLAYER (Multiple Games in Sequence) ═══════
 function VocabGamesPlayer({ activity, onComplete, onSkip }) {
-  // Use all games from enrichment (enrichment controls game count per lesson)
-  const games = activity?.games || [];
+  // Cap pack length per pedagogy call — max 3-4 mini-games per step keeps
+  // 8-12yo learners engaged without burnout. See MAX_GAMES_PER_STEP above.
+  const games = (activity?.games || []).slice(0, MAX_GAMES_PER_STEP);
   const [currentGameIdx, setCurrentGameIdx] = useState(0);
   const [gameScores, setGameScores] = useState([]);
   const [isAllComplete, setIsAllComplete] = useState(false);
@@ -1044,7 +1139,8 @@ function VocabGamesPlayer({ activity, onComplete, onSkip }) {
   // Render game based on type
   const renderGame = () => {
     const gameType = currentGame?.game_type;
-    const items = currentGame?.items || [];
+    const rawItems = currentGame?.items || [];
+    const items = normalizeItemsForGame(rawItems, gameType);
 
     // Guard: skip games with no items
     if (!items.length) {
@@ -1115,7 +1211,8 @@ function VocabGamesPlayer({ activity, onComplete, onSkip }) {
 
 // ═══════ GRAMMAR GAMES PLAYER ═══════
 function GrammarGamesPlayer({ activity, onComplete, onSkip }) {
-  const games = activity?.games || [];
+  // Same per-step cap as vocab pack — pedagogy call 2026-05-19.
+  const games = (activity?.games || []).slice(0, MAX_GAMES_PER_STEP);
   const [currentGameIdx, setCurrentGameIdx] = useState(0);
   const [gameScores, setGameScores] = useState([]);
   const [isAllComplete, setIsAllComplete] = useState(false);
@@ -1161,7 +1258,8 @@ function GrammarGamesPlayer({ activity, onComplete, onSkip }) {
 
   const renderGame = () => {
     const gameType = currentGame?.game_type;
-    const items = currentGame?.items || [];
+    const rawItems = currentGame?.items || [];
+    const items = normalizeItemsForGame(rawItems, gameType);
 
     if (!items.length) {
       return (
@@ -1410,8 +1508,17 @@ function MicroReading({ activity, onComplete, onSkip }) {
   const [correct, setCorrect] = useState(0);
   const [showPassage, setShowPassage] = useState(true);
   const [locateSpan, setLocateSpan] = useState(null); // text of the locate-in-text hint
-  const questions = activity?.comprehension_questions || activity?.questions || [];
-  const passageText = activity?.passage_text || activity?.passage || activity?.text || '';
+  const rawQuestions = activity?.comprehension_questions || activity?.questions || [];
+  // Strip author meta-comments like "(Full 'there is/are' in Unit 3.)" before
+  // rendering — those notes are for the curriculum writer, not the student.
+  const questions = rawQuestions.map(q => q ? ({
+    ...q,
+    question: stripMeta(q.question),
+    question_text: stripMeta(q.question_text),
+    options: Array.isArray(q.options) ? q.options.map(stripMeta) : q.options,
+  }) : q);
+  const passageText = stripMeta(activity?.passage_text || activity?.passage || activity?.text || '');
+  const sceneImage = activity?.scene_image_url || activity?.scene_image || activity?.image_url;
   const q = questions[currentQ];
 
   // Locate-in-text: when learner gets a question wrong, highlight the
@@ -1502,6 +1609,14 @@ function MicroReading({ activity, onComplete, onSkip }) {
       {showPassage && (
         <Card className="p-6 mb-6 bg-amber-50/50 border-amber-200">
           <h4 className="text-sm font-semibold text-amber-600 uppercase tracking-wider mb-3">Read the passage</h4>
+          {sceneImage && (
+            <img
+              src={sceneImage}
+              alt="Scene"
+              className="block w-full max-h-64 object-cover rounded-xl mb-4 border border-amber-100"
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+            />
+          )}
           <p className="text-xl text-gray-800 leading-relaxed" dangerouslySetInnerHTML={{ __html: highlightText(passageText) }} />
           {questions.length > 0 && (
             <Button variant="outline" size="sm" className="mt-4" onClick={() => setShowPassage(false)} data-testid="reading-answer-questions-btn">
@@ -1896,8 +2011,14 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
   const [correct, setCorrect] = useState(0);
   const [phase, setPhase] = useState('listen'); // listen -> questions
   const [hasPlayed, setHasPlayed] = useState(false);
-  const questions = activity?.questions || [];
-  const transcript = activity?.transcript || activity?.audio_script || activity?.audio_text || '';
+  const rawQuestions = activity?.questions || [];
+  const questions = rawQuestions.map(q => q ? ({
+    ...q,
+    question: stripMeta(q.question),
+    question_text: stripMeta(q.question_text),
+    options: Array.isArray(q.options) ? q.options.map(stripMeta) : q.options,
+  }) : q);
+  const transcript = stripMeta(activity?.transcript || activity?.audio_script || activity?.audio_text || '');
   const q = questions[currentQ];
   const audioRef = useRef(null);
 
@@ -2078,8 +2199,8 @@ function ProductionActivity({ activity, onComplete, onSkip, lessonContext }) {
   const API_URL = process.env.REACT_APP_BACKEND_URL;
 
   const currentPrompt = prompts[currentPromptIdx] || prompts[0];
-  const expectedText = currentPrompt?.expected_text || '';
-  const promptText = currentPrompt?.prompt || 'Practice speaking';
+  const expectedText = stripMeta(currentPrompt?.expected_text || '');
+  const promptText = stripMeta(currentPrompt?.prompt || 'Practice speaking');
   const isWriting = activity?.production_type === 'writing';
 
   // Writing mode fallback
@@ -2461,10 +2582,14 @@ function ExitTicket({ activity, onComplete, onSkip }) {
   // Normalize Sonnet/legacy data shape so the renderer can rely on stable
   // fields: question_text, question_type, options. Question writer sometimes
   // emits `question` instead of `question_text` and omits `question_type`.
+  // Also strips author meta-comments leaking from the prompt template.
   const questions = (activity?.questions || []).map((raw, qi) => {
     if (!raw || typeof raw !== 'object') return raw;
     const out = { ...raw };
     if (!out.question_text && out.question) out.question_text = out.question;
+    out.question_text = stripMeta(out.question_text);
+    out.question = stripMeta(out.question);
+    if (Array.isArray(out.options)) out.options = out.options.map(stripMeta);
     if (!out.question_id) out.question_id = `exit_q${qi + 1}`;
     if (!out.question_type) {
       const opts = Array.isArray(out.options) ? out.options.map(o => String(o).toLowerCase()) : [];

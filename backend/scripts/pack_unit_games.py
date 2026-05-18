@@ -516,18 +516,21 @@ def pack_lesson(lesson, lesson_num):
                 out.append(g)
         return out
 
-    # One Vocab Games step (6 games) and one Grammar Games step (6 games)
-    # instead of two of each. The Lesson Path sidebar shows one entry per
-    # step; two adjacent same-typed steps looked redundant.
+    # Pedagogy call 2026-05-19 (Aga): max 4 mini-games per step, ideal 3.
+    # We now ship just the first rotation row (3 games) per game step.
+    # Each lesson's rotation table starts with a different lineup, so
+    # variety across lessons is preserved without burning kids out on a
+    # 6-pack. The second row stays in the table for future use but is not
+    # packed into shipped content.
     new_step_vocab = {
         "step": 3,
         "type": "vocab_games",
-        "games": vocab_pack(rot_v[0]) + vocab_pack(rot_v[1]),
+        "games": vocab_pack(rot_v[0]),
     }
     new_step_grammar = {
         "step": 7,
         "type": "grammar_games",
-        "games": grammar_pack(rot_g[0]) + grammar_pack(rot_g[1]),
+        "games": grammar_pack(rot_g[0]),
     }
 
     # Walk original steps. Replace step 3 with the merged vocab pack,
