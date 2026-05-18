@@ -538,3 +538,6 @@ credentials.json
 
 # Strategies guide — local backup of originals before image crops
 backend/static/strategies/**/_orig_backup/
+
+# Local design prototypes — not part of the app build
+prototypes/
