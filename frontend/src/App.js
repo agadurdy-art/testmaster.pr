@@ -237,7 +237,7 @@ function MobileNavWrapper({ user }) {
   }, [visible]);
 
   if (!visible) return null;
-  return <MobileBottomNav currentPath={location.pathname} />;
+  return <MobileBottomNav currentPath={location.pathname} mode={user?.learning_mode} />;
 }
 // Landing CTAs point here with `?path=ielts|general`. We stash the choice in
 // localStorage so the onboarding hook can pre-select Step 1 after signup, then
