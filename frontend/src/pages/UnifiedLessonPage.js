@@ -13,6 +13,7 @@ import { Card } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { Progress } from '../components/ui/progress';
 import { toast } from 'sonner';
+import { speakOnce } from '../hooks/useLizVoice';
 
 // Import Game Components
 import {
@@ -48,6 +49,65 @@ import {
 } from '../components/games/review';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
+
+// ═══════ LESSON SURFACE MOTION ═══════
+// Very subtle — the lesson page is for learning, not for showing off.
+// Activities fade in when they switch; sidebar dots breathe; cards lift on
+// hover. Honors prefers-reduced-motion in full.
+const LESSON_MOTION_CSS = `
+.lesson-surface [data-testid="micro-reading"],
+.lesson-surface [data-testid="listening-activity"],
+.lesson-surface [data-testid="production-activity"],
+.lesson-surface [data-testid="exit-ticket"],
+.lesson-surface [data-testid="vocab-games-player"],
+.lesson-surface [data-testid="grammar-games-player"],
+.lesson-surface [data-testid="lesson-summary"] {
+  animation: lessonFadeUp 0.36s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes lessonFadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Soft hover lift on activity cards — kids feel they're interactive. */
+.lesson-surface [data-testid="micro-reading"] [class*="rounded-xl"][class*="border-2"]:hover,
+.lesson-surface [data-testid="listening-activity"] [class*="rounded-xl"][class*="border-2"]:hover,
+.lesson-surface [data-testid="exit-ticket"] [class*="rounded-xl"][class*="border-2"]:hover {
+  transform: translateY(-1px);
+  transition: transform 0.18s ease;
+}
+
+/* Trophy + score breathe on Lesson Complete. */
+.lesson-surface [data-testid="lesson-summary"] .lesson-trophy {
+  animation: lessonTrophyPulse 2.6s ease-in-out infinite;
+}
+@keyframes lessonTrophyPulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.04); }
+}
+
+/* Score bars sweep in. */
+.lesson-surface [data-testid="lesson-summary"] [role="progressbar"] > div {
+  transition: width 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Locate-in-text highlight pulses softly the first second. */
+.lesson-surface mark.bg-amber-200 {
+  animation: lessonLocate 1.4s ease-out 1;
+}
+@keyframes lessonLocate {
+  0%   { background-color: #fde68a; box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.45); }
+  60%  { background-color: #fcd34d; box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); }
+  100% { background-color: #fde68a; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lesson-surface * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+`;
 
 // ═══════ FETCH WITH RETRY ═══════
 async function fetchRetry(url, options = {}, retries = 2) {
@@ -92,6 +152,31 @@ class ActivityErrorBoundary extends React.Component {
               </Button>
             )}
           </div>
+        </Card>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+// Per-game boundary — bad item / null prop in ONE game inside a 6-pack
+// should not kill the rest. Resets whenever `resetKey` (gameIdx) changes.
+class GameSlotBoundary extends React.Component {
+  constructor(props) { super(props); this.state = { hasError: false }; }
+  static getDerivedStateFromError() { return { hasError: true }; }
+  componentDidCatch(err, info) { console.error('Game slot crash:', err, info); }
+  componentDidUpdate(prev) {
+    if (prev.resetKey !== this.props.resetKey && this.state.hasError) {
+      this.setState({ hasError: false });
+    }
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <Card className="p-6 text-center" data-testid="game-slot-error">
+          <AlertCircle className="w-8 h-8 text-amber-500 mx-auto mb-2" />
+          <p className="text-sm text-gray-600 mb-4">This mini-game can't load. Let's continue.</p>
+          <Button size="sm" onClick={this.props.onSkip}>Next game <ChevronRight className="w-4 h-4 ml-1" /></Button>
         </Card>
       );
     }
@@ -1021,7 +1106,9 @@ function VocabGamesPlayer({ activity, onComplete, onSkip }) {
           <Gamepad2 className="w-3 h-3 mr-1" /> Game {currentGameIdx + 1} of {games.length}
         </Badge>
       </div>
-      {renderGame()}
+      <GameSlotBoundary resetKey={currentGameIdx} onSkip={handleSkip}>
+        {renderGame()}
+      </GameSlotBoundary>
     </div>
   );
 }
@@ -1114,7 +1201,9 @@ function GrammarGamesPlayer({ activity, onComplete, onSkip }) {
           <Edit3 className="w-3 h-3 mr-1" /> Grammar Game {currentGameIdx + 1} of {games.length}
         </Badge>
       </div>
-      {renderGame()}
+      <GameSlotBoundary resetKey={currentGameIdx} onSkip={handleSkip}>
+        {renderGame()}
+      </GameSlotBoundary>
     </div>
   );
 }
@@ -1320,18 +1409,43 @@ function MicroReading({ activity, onComplete, onSkip }) {
   const [showFeedback, setShowFeedback] = useState(false);
   const [correct, setCorrect] = useState(0);
   const [showPassage, setShowPassage] = useState(true);
+  const [locateSpan, setLocateSpan] = useState(null); // text of the locate-in-text hint
   const questions = activity?.comprehension_questions || activity?.questions || [];
   const passageText = activity?.passage_text || activity?.passage || activity?.text || '';
   const q = questions[currentQ];
 
+  // Locate-in-text: when learner gets a question wrong, highlight the
+  // sentence in the passage that contains the answer so they can re-read.
+  // Source order: q.locate_text (explicit author hint) → q.evidence →
+  // sentence containing the correct answer string.
+  const findLocateSentence = (question) => {
+    if (!question || !passageText) return null;
+    const explicit = question.locate_text || question.evidence || question.passage_quote;
+    if (explicit && typeof explicit === 'string') return explicit;
+    const ans = String(question.correct_answer || question.answer || '').trim();
+    if (!ans) return null;
+    const sentences = passageText.match(/[^.!?]+[.!?]+/g) || [passageText];
+    const hit = sentences.find(s => s.toLowerCase().includes(ans.toLowerCase()));
+    return hit ? hit.trim() : null;
+  };
+
   const highlightText = (text) => {
-    const words = activity?.highlighted_words;
-    if (!words?.length) return text;
     let result = text;
-    words.forEach(word => {
-      const regex = new RegExp(`\\b(${word})\\b`, 'gi');
-      result = result.replace(regex, `<mark class="bg-yellow-200 px-0.5 rounded">$1</mark>`);
-    });
+    // Locate-in-text wins (yellow) — wraps the full sentence carrying the
+    // answer when the learner got it wrong.
+    if (locateSpan) {
+      const escaped = locateSpan.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const re = new RegExp(`(${escaped})`, 'i');
+      result = result.replace(re, '<mark class="bg-amber-200 px-1 rounded shadow-sm">$1</mark>');
+    }
+    // Vocab pre-highlights (lighter yellow, only when no locate-in-text active)
+    const words = activity?.highlighted_words;
+    if (!locateSpan && words?.length) {
+      words.forEach(word => {
+        const regex = new RegExp(`\\b(${word})\\b`, 'gi');
+        result = result.replace(regex, `<mark class="bg-yellow-100 px-0.5 rounded">$1</mark>`);
+      });
+    }
     return result;
   };
 
@@ -1354,9 +1468,17 @@ function MicroReading({ activity, onComplete, onSkip }) {
   };
 
   const handleNext = () => {
-    setSelectedAnswer(null); setShowFeedback(false);
+    setSelectedAnswer(null); setShowFeedback(false); setLocateSpan(null);
     if (currentQ < questions.length - 1) { setCurrentQ(i => i + 1); }
     else onComplete(Math.round((correct / questions.length) * 100));
+  };
+
+  const handleLocateInText = () => {
+    const sentence = findLocateSentence(q);
+    if (sentence) {
+      setLocateSpan(sentence);
+      setShowPassage(true);
+    }
   };
 
   const isCorrectOption = (option) => {
@@ -1416,8 +1538,13 @@ function MicroReading({ activity, onComplete, onSkip }) {
             })}
           </div>
           {showFeedback && (
-            <div className="mt-5 flex justify-end">
-              <Button onClick={handleNext}>{currentQ < questions.length - 1 ? 'Next' : 'Continue'} <ChevronRight className="w-4 h-4 ml-1" /></Button>
+            <div className="mt-5 flex items-center justify-between gap-3 flex-wrap">
+              {!isCorrectOption(selectedAnswer) && findLocateSentence(q) && (
+                <Button variant="outline" size="sm" onClick={handleLocateInText} data-testid="reading-locate-btn">
+                  <Map className="w-3.5 h-3.5 mr-1" /> Find it in the passage
+                </Button>
+              )}
+              <Button className="ml-auto" onClick={handleNext}>{currentQ < questions.length - 1 ? 'Next' : 'Continue'} <ChevronRight className="w-4 h-4 ml-1" /></Button>
             </div>
           )}
         </Card>
@@ -1836,6 +1963,21 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
     return opt === String(correctAns || '').toLowerCase().trim();
   };
 
+  // Compact audio bar — always visible so kids can replay while answering.
+  const AudioBar = () => (
+    <div className="flex items-center gap-3 bg-cyan-50 border border-cyan-200 rounded-xl p-3">
+      <Button size="sm" className="bg-cyan-600 hover:bg-cyan-700 shrink-0" onClick={playListeningAudio} data-testid="listening-play-btn">
+        <Play className="w-4 h-4 mr-1" /> Play
+      </Button>
+      <div className="flex-1 text-xs text-cyan-800">
+        {hasPlayed ? 'Played — you can replay as many times as you like.' : 'Click Play to start.'}
+      </div>
+      <button className="text-xs text-cyan-700 underline shrink-0" onClick={() => setShowTranscript(!showTranscript)}>
+        {showTranscript ? 'Hide' : 'Show'} script
+      </button>
+    </div>
+  );
+
   return (
     <div data-testid="listening-activity">
       <div className="flex items-center justify-between mb-4">
@@ -1843,40 +1985,33 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
         <SkipButton onSkip={onSkip} />
       </div>
 
-      {phase === 'listen' && (
-        <Card className="p-8 text-center max-w-xl mx-auto">
-          <div className="w-24 h-24 bg-cyan-100 rounded-full mx-auto mb-6 flex items-center justify-center">
-            <Headphones className="w-12 h-12 text-cyan-600" />
+      <Card className="p-6 max-w-xl mx-auto space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center shrink-0">
+            <Headphones className="w-6 h-6 text-cyan-600" />
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">Listen carefully</h3>
-          <p className="text-gray-600 mb-6 text-base">Click the play button to hear the audio. You can listen multiple times.</p>
-          <Button className="bg-cyan-600 hover:bg-cyan-700 mb-4" onClick={playListeningAudio} data-testid="listening-play-btn">
-            <Play className="w-5 h-5 mr-2" /> Play Audio
-          </Button>
           <div>
-            <button className="text-sm text-gray-500 underline" onClick={() => setShowTranscript(!showTranscript)}>
-              {showTranscript ? 'Hide' : 'Show'} transcript
-            </button>
-            {showTranscript && (
-              <div className="mt-3 bg-gray-50 rounded-xl p-4 text-left">
-                <p className="text-sm text-gray-700">{transcript}</p>
-              </div>
-            )}
+            <h3 className="text-lg font-bold text-gray-900">Listen carefully</h3>
+            <p className="text-xs text-gray-500">Replay as many times as you need.</p>
           </div>
-          {questions.length > 0 && (
-            <Button className="mt-6" onClick={() => setPhase('questions')} data-testid="listening-answer-btn">
-              Answer Questions <ChevronRight className="w-4 h-4 ml-1" />
-            </Button>
-          )}
-          {questions.length === 0 && <Button className="mt-6" onClick={() => onComplete(100)}>Continue</Button>}
-        </Card>
-      )}
+        </div>
 
-      {phase === 'questions' && q && (
-        <Card className="p-6 max-w-xl mx-auto">
-          <button className="text-sm text-blue-600 mb-4 flex items-center gap-1" onClick={() => setPhase('listen')}>
-            <ArrowLeft className="w-3 h-3" /> Listen again
-          </button>
+        <AudioBar />
+        {showTranscript && transcript && (
+          <div className="bg-gray-50 rounded-xl p-3 text-sm text-gray-700">{transcript}</div>
+        )}
+
+        {questions.length === 0 && (
+          <div className="text-center pt-2">
+            <Button onClick={() => onComplete(100)}>Continue</Button>
+          </div>
+        )}
+
+        {q && (
+          <div className="pt-2 border-t border-gray-100">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-semibold text-cyan-700">Question {currentQ + 1} of {questions.length}</span>
+            </div>
           <Progress value={((currentQ + 1) / questions.length) * 100} className="mb-5" />
           <h3 className="text-2xl font-bold text-gray-900 mb-5"><FormattedQuestion text={q.question || q.question_text} /></h3>
           <div className="space-y-3">
@@ -1905,18 +2040,27 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
             })}
           </div>
           {showFeedback && <div className="mt-5 flex justify-end"><Button onClick={handleNext}>{currentQ < questions.length - 1 ? 'Next' : 'Continue'}</Button></div>}
-        </Card>
-      )}
+          </div>
+        )}
+      </Card>
     </div>
   );
 }
 
 // ═══════ PRODUCTION (Speaking/Writing) ═══════
-function ProductionActivity({ activity, onComplete, onSkip }) {
+function ProductionActivity({ activity, onComplete, onSkip, lessonContext }) {
   // Support multiple prompts (new) or single prompt (legacy)
-  const prompts = activity?.prompts || [
+  // `prompts` from Sonnet may be array of strings (scaffold ladder) — render
+  // those as separate scaffold hints rather than treating them like prompt
+  // objects. The top-level `activity.prompt` is the main task.
+  const rawPrompts = activity?.prompts;
+  const scaffoldStrings = Array.isArray(rawPrompts) && rawPrompts.every(p => typeof p === 'string')
+    ? rawPrompts : null;
+  const prompts = scaffoldStrings ? [
     { prompt: activity?.prompt || 'Practice speaking', expected_text: activity?.expected_text || activity?.example_response || '' }
-  ];
+  ] : (rawPrompts || [
+    { prompt: activity?.prompt || 'Practice speaking', expected_text: activity?.expected_text || activity?.example_response || '' }
+  ]);
   const [currentPromptIdx, setCurrentPromptIdx] = useState(0);
   const [promptScores, setPromptScores] = useState([]);
   const [phase, setPhase] = useState('ready'); // ready, recording, processing, result
@@ -2106,13 +2250,64 @@ function ProductionActivity({ activity, onComplete, onSkip }) {
             <Volume2 className="w-3 h-3" /> Action
           </div>
           <h3 className="text-2xl font-bold text-gray-900" data-testid="production-prompt">{promptText}</h3>
-          {expectedText && (
-            <button onClick={() => { const u = new SpeechSynthesisUtterance(expectedText); u.lang = 'en-US'; u.rate = 0.8; speechSynthesis.speak(u); }}
-              className="mt-2 text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1 mx-auto" data-testid="listen-example-btn">
+          {/* Optional scene/reference photo from activity data */}
+          {(activity?.image_url || activity?.scene_image) && (
+            <img
+              src={activity.image_url || activity.scene_image}
+              alt="Reference"
+              className="mt-4 mx-auto max-h-44 rounded-xl border border-rose-100 shadow-sm"
+            />
+          )}
+          {expectedText && !/\[[A-Za-z/_-]+\]/.test(expectedText) && (
+            <button
+              onClick={() => speakOnce(expectedText, { rate: 0.95 })}
+              className="mt-3 text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1 mx-auto"
+              data-testid="listen-example-btn">
               <Volume2 className="w-3.5 h-3.5" /> Listen to example
             </button>
           )}
         </div>
+
+        {/* Scaffold + tip card — keeps kids from staring at a blank prompt.
+            Sources: activity.prompts (string ladder), vocab/grammar context
+            from the lesson, optional activity.tips array. */}
+        {phase === 'ready' && (scaffoldStrings?.length || lessonContext?.words?.length || lessonContext?.grammarRules?.length || activity?.tips?.length) && (
+          <div className="mb-6 bg-amber-50 border border-amber-200 rounded-xl p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Sparkles className="w-4 h-4 text-amber-600" />
+              <h4 className="text-sm font-semibold text-amber-700">Tips from Ray</h4>
+            </div>
+            {scaffoldStrings?.length > 0 && (
+              <ul className="text-sm text-gray-700 space-y-1.5 mb-2">
+                {scaffoldStrings.slice(0, 3).map((s, i) => (
+                  <li key={i} className="flex gap-2"><span className="text-amber-600 font-bold">{i + 1}.</span><span>{s}</span></li>
+                ))}
+              </ul>
+            )}
+            {lessonContext?.words?.length > 0 && (
+              <div className="mt-2">
+                <p className="text-xs font-semibold text-amber-700 uppercase mb-1">Words to use</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {lessonContext.words.slice(0, 8).map((w, i) => (
+                    <span key={i} className="inline-flex items-center gap-1 bg-white text-amber-800 text-xs px-2 py-0.5 rounded-full border border-amber-200">
+                      {w.word || w.term || w}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+            {lessonContext?.grammarRules?.[0]?.examples?.length > 0 && (
+              <div className="mt-2">
+                <p className="text-xs font-semibold text-amber-700 uppercase mb-1">Example sentences</p>
+                <ul className="text-xs text-gray-700 space-y-0.5">
+                  {lessonContext.grammarRules[0].examples.slice(0, 2).map((ex, i) => (
+                    <li key={i} className="italic">"{ex}"</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
 
         {error && (
           <div className="bg-red-50 text-red-700 text-sm p-3 rounded-xl mb-4 text-center">{error}</div>
@@ -2263,7 +2458,21 @@ function ExitTicket({ activity, onComplete, onSkip }) {
   const [showResults, setShowResults] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
   const [fillBlankValue, setFillBlankValue] = useState('');
-  const questions = activity?.questions || [];
+  // Normalize Sonnet/legacy data shape so the renderer can rely on stable
+  // fields: question_text, question_type, options. Question writer sometimes
+  // emits `question` instead of `question_text` and omits `question_type`.
+  const questions = (activity?.questions || []).map((raw, qi) => {
+    if (!raw || typeof raw !== 'object') return raw;
+    const out = { ...raw };
+    if (!out.question_text && out.question) out.question_text = out.question;
+    if (!out.question_id) out.question_id = `exit_q${qi + 1}`;
+    if (!out.question_type) {
+      const opts = Array.isArray(out.options) ? out.options.map(o => String(o).toLowerCase()) : [];
+      const isTF = opts.length === 2 && opts.includes('true') && opts.includes('false');
+      out.question_type = isTF ? 'true_false' : (opts.length > 0 ? 'multiple_choice' : 'fill_blank');
+    }
+    return out;
+  });
   const q = questions[idx];
 
   const handleAnswer = (answer) => {
@@ -2380,7 +2589,7 @@ function ExitTicket({ activity, onComplete, onSkip }) {
       </div>
       <Progress value={(idx / questions.length) * 100} className="mb-6" />
       <Card className="p-6">
-        <h3 className="text-2xl font-bold text-gray-900 mb-5"><FormattedQuestion text={q.question_text} /></h3>
+        <h3 className="text-2xl font-bold text-gray-900 mb-5"><FormattedQuestion text={q.question_text || q.question} /></h3>
         {q.question_type === 'multiple_choice' && (
           <div className="space-y-3">
             {q.options?.map(option => {
@@ -2636,7 +2845,7 @@ export default function UnifiedLessonPage({ user }) {
         return currentActivityData ? <ListeningActivity activity={currentActivityData} onComplete={handleActivityComplete} onSkip={handleActivitySkip} /> :
           <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable />;
       case 'production':
-        return currentActivityData ? <ProductionActivity activity={currentActivityData} onComplete={handleActivityComplete} onSkip={handleActivitySkip} /> :
+        return currentActivityData ? <ProductionActivity activity={currentActivityData} onComplete={handleActivityComplete} onSkip={handleActivitySkip} lessonContext={lessonSummaryData} /> :
           <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable />;
       case 'exit_ticket':
         return currentActivityData ? <ExitTicket activity={currentActivityData} onComplete={(score) => handleActivityComplete(score)} onSkip={handleActivitySkip} /> :
@@ -2686,13 +2895,14 @@ export default function UnifiedLessonPage({ user }) {
   };
 
   return (
-    <div 
-      className="min-h-screen" 
+    <div
+      className="min-h-screen lesson-surface"
       style={{
         background: `radial-gradient(at 0% 0%, ${theme.accentLight}90 0, transparent 50%), radial-gradient(at 100% 0%, hsla(190,100%,92%,1) 0, transparent 50%), radial-gradient(at 100% 100%, hsla(37,100%,91%,1) 0, transparent 50%), #F8FAFC`
       }}
       data-testid="unified-lesson-page"
     >
+      <style>{LESSON_MOTION_CSS}</style>
       {/* Header - iOS 26 Glass Style */}
       <div 
         className="sticky top-0 z-40"
@@ -3117,7 +3327,7 @@ function LessonSummary({ lesson, activityScores, summaryData, completedActivitie
     <div className="max-w-2xl mx-auto space-y-5" data-testid="lesson-summary">
       {/* Header */}
       <Card className={`p-8 text-center ${motivation.bg} border-0`}>
-        <div className="w-20 h-20 bg-white/80 rounded-full mx-auto mb-4 flex items-center justify-center shadow-sm">
+        <div className="lesson-trophy w-20 h-20 bg-white/80 rounded-full mx-auto mb-4 flex items-center justify-center shadow-sm">
           <Trophy className={`w-10 h-10 ${motivation.color}`} />
         </div>
         <h2 className="text-2xl font-bold text-gray-900 mb-1">Lesson Complete!</h2>

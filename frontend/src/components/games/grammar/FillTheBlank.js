@@ -29,12 +29,31 @@ const FillTheBlank = ({
   if (!items?.length) return null;
   const currentItem = items[currentIdx];
 
+  // Build option pool — uses item.options when supplied, otherwise synthesizes
+  // from peer items so a single missing-options field doesn't blank the game.
+  // Always guarantees the correct answer is present.
+  const buildOptions = React.useCallback((item) => {
+    const correct = String(item?.answer || item?.correct || '').trim();
+    let opts = Array.isArray(item?.options) ? item.options.filter(Boolean) : [];
+    if (!opts.length) {
+      const peers = items
+        .map(p => String(p?.answer || p?.correct || '').trim())
+        .filter(a => a && a.toLowerCase() !== correct.toLowerCase());
+      const uniquePeers = Array.from(new Set(peers));
+      opts = [correct, ...uniquePeers.slice(0, 2)];
+    }
+    if (!opts.some(o => String(o).toLowerCase() === correct.toLowerCase())) {
+      opts.push(correct);
+    }
+    return opts;
+  }, [items]);
+
   // Shuffle options when item changes
   React.useEffect(() => {
-    if (currentItem?.options) {
-      setShuffledOptions(shuffleArray([...currentItem.options]));
+    if (currentItem) {
+      setShuffledOptions(shuffleArray(buildOptions(currentItem)));
     }
-  }, [currentIdx, currentItem]);
+  }, [currentIdx, currentItem, buildOptions]);
 
   const handleSelect = (option) => {
     if (showFeedback) return;
