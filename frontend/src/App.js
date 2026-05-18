@@ -213,6 +213,12 @@ function MobileNavWrapper({ user }) {
     // Suppress the legacy MobileBottomNav on those routes so we don't stack
     // two bars on mobile (bug report 2026-04-20).
     visible = false;
+  } else if (location.pathname.startsWith('/onboarding')) {
+    // Onboarding has its own sticky-bottom StickyActions Continue button.
+    // The global MobileBottomNav was stacking on top of it on mobile, hiding
+    // the Continue control — user reported "ilerlemiyor, giris basarisiz"
+    // on 2026-05-19 GE onboarding.
+    visible = false;
   }
 
   // Reserve scroll room (88px + safe-area) on the body whenever the bar is

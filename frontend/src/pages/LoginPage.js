@@ -33,6 +33,30 @@ export default function LoginPage({ user, onLogin }) {
   })();
   const postLoginTarget = safeNext || '/dashboard';
 
+  // Branding: if the visitor came from PathPickerGate ?path=general OR
+  // /signup?path=general we render the Ray English / General English brand
+  // instead of the default IELTS Ace. Persist the choice into
+  // localStorage so the bridge to /onboarding doesn't lose it.
+  const pathPick = (() => {
+    const raw = (new URLSearchParams(location.search).get('path') || '').toLowerCase();
+    if (raw === 'general' || raw === 'general_english' || raw === 'ge') return 'general';
+    if (raw === 'ielts' || raw === 'ielts_ace') return 'ielts';
+    try {
+      const stored = String(localStorage.getItem('testmaster_onboarding_path') || '').toLowerCase();
+      if (stored === 'general') return 'general';
+      if (stored === 'ielts') return 'ielts';
+    } catch (_) { /* non-fatal */ }
+    return null;
+  })();
+  const isGE = pathPick === 'general';
+  const brandTitle = isGE ? 'General English' : 'IELTS Ace';
+  const brandTagline = isGE ? 'by Ray · testmaster.pro' : 'by testmaster.pro';
+  useEffect(() => {
+    if (pathPick) {
+      try { localStorage.setItem('testmaster_onboarding_path', pathPick); } catch (_) { /* non-fatal */ }
+    }
+  }, [pathPick]);
+
   const [mode, setMode] = useState(initialMode);
   const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
   const [loading, setLoading] = useState(false);
@@ -126,9 +150,9 @@ export default function LoginPage({ user, onLogin }) {
         <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-7">
           <div className="mb-6">
             <div className="text-xl font-bold text-gray-900">
-              IELTS Ace
+              {brandTitle}
               <span className="block text-[11px] font-normal text-gray-500 tracking-wide">
-                by testmaster.pro
+                {brandTagline}
               </span>
             </div>
             <h1 className="text-2xl font-bold text-gray-900 mt-4">
@@ -137,7 +161,9 @@ export default function LoginPage({ user, onLogin }) {
             <p className="text-sm text-gray-500 mt-1">
               {mode === 'signup'
                 ? 'Free to start. No credit card required.'
-                : 'Sign in to continue your IELTS prep.'}
+                : isGE
+                  ? 'Sign in to continue learning English with Ray.'
+                  : 'Sign in to continue your IELTS prep.'}
             </p>
           </div>
 

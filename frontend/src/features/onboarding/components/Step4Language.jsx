@@ -28,6 +28,14 @@ export default function Step4Language({
   // GE users see Ray, IELTS users see Liz. Keeps onboarding voice consistent
   // with whichever tutor will appear on the dashboard after sign-up.
   const tutor = path === 'general' ? 'Ray' : 'Liz';
+
+  // Auto-mirror native lang → explanation lang on first native pick. Most
+  // learners want explanations in their L1 by default; they can still change
+  // explanation lang manually if they prefer immersion-English.
+  const handleNativePick = (l) => {
+    if (onSelectNative) onSelectNative(l);
+    if (onSelect && !language) onSelect(l);
+  };
   return (
     <section className={`step${direction === 'rev' ? ' rev' : ''}`}>
       <h1 className="step-title">
@@ -75,7 +83,7 @@ export default function Step4Language({
                   key={l.code}
                   type="button"
                   className={`lang-chip${selected ? ' selected' : ''}`}
-                  onClick={() => onSelectNative(l)}
+                  onClick={() => handleNativePick(l)}
                 >
                   <span className="flag">{l.flag}</span>
                   <span className="lbl">
