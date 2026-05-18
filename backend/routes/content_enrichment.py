@@ -238,6 +238,20 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None, stage
         "exit_ticket": "exit_ticket",
     }
     
+    _STAGE_PREFIX_TO_ID = {
+        "stage1": "stage_1",
+        "stage2": "stage_2_starters",
+        "stage3": "stage_3_movers",
+        "stage4": "stage_4_flyers",
+        "stage5": "stage_5_b1",
+        "stage6": "stage_6_b2",
+        "stage7": "stage_7_ielts_foundation",
+        "stage8": "stage_8_ielts_mastery",
+    }
+
+    def _stage_id_from_prefix(prefix: str) -> str:
+        return _STAGE_PREFIX_TO_ID.get(prefix, prefix)
+
     def build_activity_data(step):
         """Convert a content step into frontend-ready activity data dict"""
         step_type = step.get('type')
@@ -472,6 +486,30 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None, stage
                     (u for u in enriched_data.get('units', []) if u.get('unit_id') == unit_id),
                     None
                 )
+
+            # Ensure unit doc exists in unified_units. seed_content_v4 only
+            # runs at boot when file count > db count; for late-added units
+            # (e.g. Stage 3 Unit 2 produced after first deploy) the merged
+            # path is the only place that touches the DB, so we upsert
+            # metadata here as well.
+            unit_num_val = orig_unit.get('unit_num') or orig_unit.get('unit_number')
+            await db.unified_units.update_one(
+                {"unit_id": unit_id},
+                {"$set": {
+                    "unit_id": unit_id,
+                    "stage_id": _stage_id_from_prefix(stage_prefix),
+                    "unit_number": unit_num_val,
+                    "number": unit_num_val,
+                    "title": orig_unit.get('title', ''),
+                    "subtitle": orig_unit.get('subtitle', ''),
+                    "phonics_focus": orig_unit.get('phonics_focus', ''),
+                    "grammar_focus": orig_unit.get('grammar_focus', ''),
+                    "total_lessons": len(orig_unit.get('lessons', [])),
+                    "ai_enriched": bool(enrich_unit),
+                    "enriched_at": TS,
+                }},
+                upsert=True,
+            )
 
             for orig_lesson in orig_unit.get('lessons', []):
                 lesson_id = orig_lesson.get('lesson_id')
