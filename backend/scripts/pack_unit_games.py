@@ -76,8 +76,16 @@ def shuffle_distractors(target, pool, n=3):
 def build_image_word_match(vocab):
     items = []
     for w in vocab[:6]:
-        distractors = [{"word": d["word"], "emoji": d.get("image_emoji", "📦")} for d in shuffle_distractors(w, vocab, 3)]
-        items.append({"word": w["word"], "emoji": w.get("image_emoji", "📦"), "distractors": distractors})
+        distractors = [
+            {"word": d["word"], "emoji": d.get("image_emoji", "📦"), "image_url": d.get("image_url", "")}
+            for d in shuffle_distractors(w, vocab, 3)
+        ]
+        items.append({
+            "word": w["word"],
+            "emoji": w.get("image_emoji", "📦"),
+            "image_url": w.get("image_url", ""),
+            "distractors": distractors,
+        })
     return {"game_type": "image_word_match", "instruction": "Match each picture with the right word.", "items": items}
 
 
@@ -110,7 +118,10 @@ def build_listen_choose_word(vocab):
 
 
 def build_look_write(vocab):
-    items = [{"word": w["word"], "emoji": w.get("image_emoji", "📦")} for w in vocab[:6]]
+    items = [
+        {"word": w["word"], "emoji": w.get("image_emoji", "📦"), "image_url": w.get("image_url", "")}
+        for w in vocab[:6]
+    ]
     return {"game_type": "look_write", "instruction": "Look at the picture and type the word.", "items": items}
 
 
@@ -140,16 +151,38 @@ def build_flashcard_match(vocab):
 
 
 def build_memory_game(vocab):
-    items = [{"word": w["word"], "emoji": w.get("image_emoji", "📦")} for w in vocab[:6]]
+    items = [
+        {"word": w["word"], "emoji": w.get("image_emoji", "📦"), "image_url": w.get("image_url", "")}
+        for w in vocab[:6]
+    ]
     return {"game_type": "memory_game", "instruction": "Flip the cards and find the pairs.", "items": items}
+
+
+def _picture_options(w, vocab, n):
+    """Build a list of {emoji, image_url, word} option dicts (correct first)."""
+    pool = [w] + shuffle_distractors(w, vocab, n)
+    return [
+        {
+            "emoji": x.get("image_emoji", "📦"),
+            "image_url": x.get("image_url", ""),
+            "word": x["word"],
+        }
+        for x in pool
+    ]
 
 
 def build_word_race(vocab):
     items = []
     for w in vocab[:6]:
-        correct = w.get("image_emoji", "📦")
-        opts = [correct] + [d.get("image_emoji", "📦") for d in shuffle_distractors(w, vocab, 3)]
-        items.append({"prompt": w["word"], "correct_emoji": correct, "options": opts})
+        opts = _picture_options(w, vocab, 3)
+        correct = opts[0]["emoji"]
+        items.append({
+            "prompt": w["word"],
+            "correct_emoji": correct,
+            "correct_image_url": w.get("image_url", ""),
+            "options": [o["emoji"] for o in opts],
+            "options_full": opts,  # renderer can read image_url here
+        })
     return {"game_type": "word_race", "instruction": "60 seconds! Tap the right picture for each word.", "time_limit_seconds": 60, "items": items}
 
 
@@ -169,9 +202,14 @@ def build_cumulative_race(vocab):
     # Use up to 10 items
     g["items"] = []
     for w in vocab[:10]:
-        correct = w.get("image_emoji", "📦")
-        opts = [correct] + [d.get("image_emoji", "📦") for d in shuffle_distractors(w, vocab, 3)]
-        g["items"].append({"prompt": w["word"], "correct_emoji": correct, "options": opts})
+        opts = _picture_options(w, vocab, 3)
+        g["items"].append({
+            "prompt": w["word"],
+            "correct_emoji": opts[0]["emoji"],
+            "correct_image_url": w.get("image_url", ""),
+            "options": [o["emoji"] for o in opts],
+            "options_full": opts,
+        })
     return g
 
 
@@ -418,7 +456,15 @@ def pack_lesson(lesson, lesson_num):
         out = []
         for slug in slug_list:
             if slug == "multiple_choice_grammar":
-                items = [it for it in existing_items_step7 if "options" in it and "correct" in it] + synth["multiple_choice_grammar"]
+                # Harvest only sentence-shaped MCQ items; audio_match items
+                # also have options+correct but their renderer expects
+                # `sentence`, so {audio_text,...} entries crash MCQ.
+                harvested = [
+                    it for it in existing_items_step7
+                    if "sentence" in it and "options" in it and "correct" in it
+                    and "audio_text" not in it
+                ]
+                items = harvested + synth["multiple_choice_grammar"]
                 g = {"game_type": "multiple_choice_grammar", "instruction": "Choose the correct word.", "items": items[:6]}
             elif slug == "fill_blank":
                 items = build_fill_blank(existing_items_step7 + existing_items_step8)["items"] + synth["fill_blank"]
@@ -470,25 +516,39 @@ def pack_lesson(lesson, lesson_num):
                 out.append(g)
         return out
 
-    new_step3 = {"step": 3, "type": "vocab_games", "games": vocab_pack(rot_v[0])}
-    new_step4 = {"step": 4, "type": "vocab_games", "games": vocab_pack(rot_v[1])}
-    new_step7 = {"step": 7, "type": "grammar_games", "games": grammar_pack(rot_g[0])}
-    new_step8 = {"step": 8, "type": "grammar_games", "games": grammar_pack(rot_g[1])}
+    # One Vocab Games step (6 games) and one Grammar Games step (6 games)
+    # instead of two of each. The Lesson Path sidebar shows one entry per
+    # step; two adjacent same-typed steps looked redundant.
+    new_step_vocab = {
+        "step": 3,
+        "type": "vocab_games",
+        "games": vocab_pack(rot_v[0]) + vocab_pack(rot_v[1]),
+    }
+    new_step_grammar = {
+        "step": 7,
+        "type": "grammar_games",
+        "games": grammar_pack(rot_g[0]) + grammar_pack(rot_g[1]),
+    }
 
-    # Rewrite lesson.steps preserving step 1, 2, 5, 6, 9, 10, 11
+    # Walk original steps. Replace step 3 with the merged vocab pack,
+    # replace step 7 with the merged grammar pack, drop the old step 4
+    # and step 8 entirely (their games moved into 3/7).
     new_steps = []
     for s in lesson["steps"]:
         st_num = s.get("step")
         if st_num == 3:
-            new_steps.append(new_step3)
+            new_steps.append(new_step_vocab)
         elif st_num == 4:
-            new_steps.append(new_step4)
+            continue
         elif st_num == 7:
-            new_steps.append(new_step7)
+            new_steps.append(new_step_grammar)
         elif st_num == 8:
-            new_steps.append(new_step8)
+            continue
         else:
             new_steps.append(s)
+    # Re-number steps so `step` is contiguous after removing 4 and 8.
+    for i, s in enumerate(new_steps):
+        s["step"] = i + 1
     lesson["steps"] = new_steps
 
 

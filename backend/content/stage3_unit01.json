@@ -151,108 +151,132 @@
                     {
                       "word": "hello",
                       "emoji": "👋",
+                      "image_url": "/static/vocab_images/hello.png",
                       "distractors": [
                         {
                           "word": "hi",
-                          "emoji": "🙋"
+                          "emoji": "🙋",
+                          "image_url": "/static/vocab_images/hi.png"
                         },
                         {
                           "word": "name",
-                          "emoji": "🏷️"
+                          "emoji": "🏷️",
+                          "image_url": "/static/vocab_images/name.png"
                         },
                         {
                           "word": "age",
-                          "emoji": "🎂"
+                          "emoji": "🎂",
+                          "image_url": "/static/vocab_images/stage3/age.png"
                         }
                       ]
                     },
                     {
                       "word": "hi",
                       "emoji": "🙋",
+                      "image_url": "/static/vocab_images/hi.png",
                       "distractors": [
                         {
                           "word": "hello",
-                          "emoji": "👋"
+                          "emoji": "👋",
+                          "image_url": "/static/vocab_images/hello.png"
                         },
                         {
                           "word": "name",
-                          "emoji": "🏷️"
+                          "emoji": "🏷️",
+                          "image_url": "/static/vocab_images/name.png"
                         },
                         {
                           "word": "age",
-                          "emoji": "🎂"
+                          "emoji": "🎂",
+                          "image_url": "/static/vocab_images/stage3/age.png"
                         }
                       ]
                     },
                     {
                       "word": "name",
                       "emoji": "🏷️",
+                      "image_url": "/static/vocab_images/name.png",
                       "distractors": [
                         {
                           "word": "hello",
-                          "emoji": "👋"
+                          "emoji": "👋",
+                          "image_url": "/static/vocab_images/hello.png"
                         },
                         {
                           "word": "hi",
-                          "emoji": "🙋"
+                          "emoji": "🙋",
+                          "image_url": "/static/vocab_images/hi.png"
                         },
                         {
                           "word": "age",
-                          "emoji": "🎂"
+                          "emoji": "🎂",
+                          "image_url": "/static/vocab_images/stage3/age.png"
                         }
                       ]
                     },
                     {
                       "word": "age",
                       "emoji": "🎂",
+                      "image_url": "/static/vocab_images/stage3/age.png",
                       "distractors": [
                         {
                           "word": "hello",
-                          "emoji": "👋"
+                          "emoji": "👋",
+                          "image_url": "/static/vocab_images/hello.png"
                         },
                         {
                           "word": "hi",
-                          "emoji": "🙋"
+                          "emoji": "🙋",
+                          "image_url": "/static/vocab_images/hi.png"
                         },
                         {
                           "word": "name",
-                          "emoji": "🏷️"
+                          "emoji": "🏷️",
+                          "image_url": "/static/vocab_images/name.png"
                         }
                       ]
                     },
                     {
                       "word": "live",
                       "emoji": "🏠",
+                      "image_url": "/static/vocab_images/stage3/live.png",
                       "distractors": [
                         {
                           "word": "hello",
-                          "emoji": "👋"
+                          "emoji": "👋",
+                          "image_url": "/static/vocab_images/hello.png"
                         },
                         {
                           "word": "hi",
-                          "emoji": "🙋"
+                          "emoji": "🙋",
+                          "image_url": "/static/vocab_images/hi.png"
                         },
                         {
                           "word": "name",
-                          "emoji": "🏷️"
+                          "emoji": "🏷️",
+                          "image_url": "/static/vocab_images/name.png"
                         }
                       ]
                     },
                     {
                       "word": "address",
                       "emoji": "📬",
+                      "image_url": "/static/vocab_images/stage3/address.png",
                       "distractors": [
                         {
                           "word": "hello",
-                          "emoji": "👋"
+                          "emoji": "👋",
+                          "image_url": "/static/vocab_images/hello.png"
                         },
                         {
                           "word": "hi",
-                          "emoji": "🙋"
+                          "emoji": "🙋",
+                          "image_url": "/static/vocab_images/hi.png"
                         },
                         {
                           "word": "name",
-                          "emoji": "🏷️"
+                          "emoji": "🏷️",
+                          "image_url": "/static/vocab_images/name.png"
                         }
                       ]
                     }
@@ -265,108 +289,132 @@
                     {
                       "word": "hello",
                       "emoji": "👋",
+                      "image_url": "/static/vocab_images/hello.png",
                       "distractors": [
                         {
                           "word": "hi",
-                          "emoji": "🙋"
+                          "emoji": "🙋",
+                          "image_url": "/static/vocab_images/hi.png"
                         },
                         {
                           "word": "name",
-                          "emoji": "🏷️"
+                          "emoji": "🏷️",
+                          "image_url": "/static/vocab_images/name.png"
                         },
                         {
                           "word": "age",
-                          "emoji": "🎂"
+                          "emoji": "🎂",
+                          "image_url": "/static/vocab_images/stage3/age.png"
                         }
                       ]
                     },
                     {
                       "word": "hi",
                       "emoji": "🙋",
+                      "image_url": "/static/vocab_images/hi.png",
                       "distractors": [
                         {
                           "word": "hello",
-                          "emoji": "👋"
+                          "emoji": "👋",
+                          "image_url": "/static/vocab_images/hello.png"
                         },
                         {
                           "word": "name",
-                          "emoji": "🏷️"
+                          "emoji": "🏷️",
+                          "image_url": "/static/vocab_images/name.png"
                         },
                         {
                           "word": "age",
-                          "emoji": "🎂"
+                          "emoji": "🎂",
+                          "image_url": "/static/vocab_images/stage3/age.png"
                         }
                       ]
                     },
                     {
                       "word": "name",
                       "emoji": "🏷️",
+                      "image_url": "/static/vocab_images/name.png",
                       "distractors": [
                         {
                           "word": "hello",
-                          "emoji": "👋"
+                          "emoji": "👋",
+                          "image_url": "/static/vocab_images/hello.png"
                         },
                         {
                           "word": "hi",
-                          "emoji": "🙋"
+                          "emoji": "🙋",
+                          "image_url": "/static/vocab_images/hi.png"
                         },
                         {
                           "word": "age",
-                          "emoji": "🎂"
+                          "emoji": "🎂",
+                          "image_url": "/static/vocab_images/stage3/age.png"
                         }
                       ]
                     },
                     {
                       "word": "age",
                       "emoji": "🎂",
+                      "image_url": "/static/vocab_images/stage3/age.png",
                       "distractors": [
                         {
                           "word": "hello",
-                          "emoji": "👋"
+                          "emoji": "👋",
+                          "image_url": "/static/vocab_images/hello.png"
                         },
                         {
                           "word": "hi",
-                          "emoji": "🙋"
+                          "emoji": "🙋",
+                          "image_url": "/static/vocab_images/hi.png"
                         },
                         {
                           "word": "name",
-                          "emoji": "🏷️"
+                          "emoji": "🏷️",
+                          "image_url": "/static/vocab_images/name.png"
                         }
                       ]
                     },
                     {
                       "word": "live",
                       "emoji": "🏠",
+                      "image_url": "/static/vocab_images/stage3/live.png",
                       "distractors": [
                         {
                           "word": "hello",
-                          "emoji": "👋"
+                          "emoji": "👋",
+                          "image_url": "/static/vocab_images/hello.png"
                         },
                         {
                           "word": "hi",
-                          "emoji": "🙋"
+                          "emoji": "🙋",
+                          "image_url": "/static/vocab_images/hi.png"
                         },
                         {
                           "word": "name",
-                          "emoji": "🏷️"
+                          "emoji": "🏷️",
+                          "image_url": "/static/vocab_images/name.png"
                         }
                       ]
                     },
                     {
                       "word": "address",
                       "emoji": "📬",
+                      "image_url": "/static/vocab_images/stage3/address.png",
                       "distractors": [
                         {
                           "word": "hello",
-                          "emoji": "👋"
+                          "emoji": "👋",
+                          "image_url": "/static/vocab_images/hello.png"
                         },
                         {
                           "word": "hi",
-                          "emoji": "🙋"
+                          "emoji": "🙋",
+                          "image_url": "/static/vocab_images/hi.png"
                         },
                         {
                           "word": "name",
-                          "emoji": "🏷️"
+                          "emoji": "🏷️",
+                          "image_url": "/static/vocab_images/name.png"
                         }
                       ]
                     }
@@ -378,36 +426,36 @@
                   "items": [
                     {
                       "word": "hello",
-                      "emoji": "👋"
+                      "emoji": "👋",
+                      "image_url": "/static/vocab_images/hello.png"
                     },
                     {
                       "word": "hi",
-                      "emoji": "🙋"
+                      "emoji": "🙋",
+                      "image_url": "/static/vocab_images/hi.png"
                     },
                     {
                       "word": "name",
-                      "emoji": "🏷️"
+                      "emoji": "🏷️",
+                      "image_url": "/static/vocab_images/name.png"
                     },
                     {
                       "word": "age",
-                      "emoji": "🎂"
+                      "emoji": "🎂",
+                      "image_url": "/static/vocab_images/stage3/age.png"
                     },
                     {
                       "word": "live",
-                      "emoji": "🏠"
+                      "emoji": "🏠",
+                      "image_url": "/static/vocab_images/stage3/live.png"
                     },
                     {
                       "word": "address",
-                      "emoji": "📬"
+                      "emoji": "📬",
+                      "image_url": "/static/vocab_images/stage3/address.png"
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "step": 4,
-              "type": "vocab_games",
-              "games": [
+                },
                 {
                   "game_type": "unscramble",
                   "instruction": "Unscramble the letters.",
@@ -513,7 +561,7 @@
               ]
             },
             {
-              "step": 5,
+              "step": 4,
               "type": "micro_reading",
               "title": "Meet Linh",
               "text": "Hello! My name is Linh. I am nine years old. I am a girl from Vietnam. I live in Ho Chi Minh City. My address is 14 Le Loi Street. I was born in 2016. I am in class 3A. My mum and dad are at home. I have got one brother. My brother is called Minh. He is seven. My best friend is Mai. We are happy and we love our school. Are you in our class on the internet, too?",
@@ -555,7 +603,7 @@
               ]
             },
             {
-              "step": 6,
+              "step": 5,
               "type": "grammar_focus",
               "rule_pattern": "Verb 'be' — I am, you are, he/she/it is. Plus 'be called' for names.",
               "explanation": "We use the verb 'be' to say who we are, our age and where we live. With 'I' we use 'am'. With 'he', 'she' and 'it' we use 'is'. We will add 'are' for groups in Lesson 2. For names, we can also say 'I am called…' or 'My brother is called…'.",
@@ -569,7 +617,7 @@
               ]
             },
             {
-              "step": 7,
+              "step": 6,
               "type": "grammar_games",
               "games": [
                 {
@@ -721,13 +769,7 @@
                       "correct": "true"
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "step": 8,
-              "type": "grammar_games",
-              "games": [
+                },
                 {
                   "game_type": "word_order",
                   "instruction": "Drag the words.",
@@ -863,7 +905,7 @@
               ]
             },
             {
-              "step": 9,
+              "step": 7,
               "type": "listening",
               "audio_text": "Ray: Hi everyone! I am Ray. I am your English teacher. Today we meet a new friend. Linh: Hello, Ray! My name is Linh. I am nine years old. I am from Vietnam. I live in Ho Chi Minh City. I am in class 3A. My best friend is called Mai. She is nine, too. Ray: Lovely! And Linh, you have got a little brother, yes? Linh: Yes. My brother is called Minh. He is seven.",
               "questions": [
@@ -904,7 +946,7 @@
               "audio_url": "/static/audio/stage3/unit01/lesson_01.mp3"
             },
             {
-              "step": 10,
+              "step": 8,
               "type": "production",
               "production_type": "speaking",
               "prompt": "Say hello to Ray! Tell him your name, age, and where you live.",
@@ -918,7 +960,7 @@
               ]
             },
             {
-              "step": 11,
+              "step": 9,
               "type": "exit_ticket",
               "title": "Quick check — Lesson 1",
               "questions": [
@@ -1103,61 +1145,199 @@
                     {
                       "prompt": "country",
                       "correct_emoji": "🗺️",
+                      "correct_image_url": "/static/vocab_images/stage3/country.png",
                       "options": [
                         "🗺️",
                         "🏙️",
                         "🏘️",
                         "🛖"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "🗺️",
+                          "image_url": "/static/vocab_images/stage3/country.png",
+                          "word": "country"
+                        },
+                        {
+                          "emoji": "🏙️",
+                          "image_url": "/static/vocab_images/stage3/city.png",
+                          "word": "city"
+                        },
+                        {
+                          "emoji": "🏘️",
+                          "image_url": "/static/vocab_images/stage3/town.png",
+                          "word": "town"
+                        },
+                        {
+                          "emoji": "🛖",
+                          "image_url": "/static/vocab_images/stage3/village.png",
+                          "word": "village"
+                        }
                       ]
                     },
                     {
                       "prompt": "city",
                       "correct_emoji": "🏙️",
+                      "correct_image_url": "/static/vocab_images/stage3/city.png",
                       "options": [
                         "🏙️",
                         "🗺️",
                         "🏘️",
                         "🛖"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "🏙️",
+                          "image_url": "/static/vocab_images/stage3/city.png",
+                          "word": "city"
+                        },
+                        {
+                          "emoji": "🗺️",
+                          "image_url": "/static/vocab_images/stage3/country.png",
+                          "word": "country"
+                        },
+                        {
+                          "emoji": "🏘️",
+                          "image_url": "/static/vocab_images/stage3/town.png",
+                          "word": "town"
+                        },
+                        {
+                          "emoji": "🛖",
+                          "image_url": "/static/vocab_images/stage3/village.png",
+                          "word": "village"
+                        }
                       ]
                     },
                     {
                       "prompt": "town",
                       "correct_emoji": "🏘️",
+                      "correct_image_url": "/static/vocab_images/stage3/town.png",
                       "options": [
                         "🏘️",
                         "🗺️",
                         "🏙️",
                         "🛖"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "🏘️",
+                          "image_url": "/static/vocab_images/stage3/town.png",
+                          "word": "town"
+                        },
+                        {
+                          "emoji": "🗺️",
+                          "image_url": "/static/vocab_images/stage3/country.png",
+                          "word": "country"
+                        },
+                        {
+                          "emoji": "🏙️",
+                          "image_url": "/static/vocab_images/stage3/city.png",
+                          "word": "city"
+                        },
+                        {
+                          "emoji": "🛖",
+                          "image_url": "/static/vocab_images/stage3/village.png",
+                          "word": "village"
+                        }
                       ]
                     },
                     {
                       "prompt": "village",
                       "correct_emoji": "🛖",
+                      "correct_image_url": "/static/vocab_images/stage3/village.png",
                       "options": [
                         "🛖",
                         "🗺️",
                         "🏙️",
                         "🏘️"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "🛖",
+                          "image_url": "/static/vocab_images/stage3/village.png",
+                          "word": "village"
+                        },
+                        {
+                          "emoji": "🗺️",
+                          "image_url": "/static/vocab_images/stage3/country.png",
+                          "word": "country"
+                        },
+                        {
+                          "emoji": "🏙️",
+                          "image_url": "/static/vocab_images/stage3/city.png",
+                          "word": "city"
+                        },
+                        {
+                          "emoji": "🏘️",
+                          "image_url": "/static/vocab_images/stage3/town.png",
+                          "word": "town"
+                        }
                       ]
                     },
                     {
                       "prompt": "Vietnamese",
                       "correct_emoji": "🇻🇳",
+                      "correct_image_url": "/static/vocab_images/stage3/vietnamese.png",
                       "options": [
                         "🇻🇳",
                         "🗺️",
                         "🏙️",
                         "🏘️"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "🇻🇳",
+                          "image_url": "/static/vocab_images/stage3/vietnamese.png",
+                          "word": "Vietnamese"
+                        },
+                        {
+                          "emoji": "🗺️",
+                          "image_url": "/static/vocab_images/stage3/country.png",
+                          "word": "country"
+                        },
+                        {
+                          "emoji": "🏙️",
+                          "image_url": "/static/vocab_images/stage3/city.png",
+                          "word": "city"
+                        },
+                        {
+                          "emoji": "🏘️",
+                          "image_url": "/static/vocab_images/stage3/town.png",
+                          "word": "town"
+                        }
                       ]
                     },
                     {
                       "prompt": "American",
                       "correct_emoji": "🇺🇸",
+                      "correct_image_url": "/static/vocab_images/stage3/american.png",
                       "options": [
                         "🇺🇸",
                         "🗺️",
                         "🏙️",
                         "🏘️"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "🇺🇸",
+                          "image_url": "/static/vocab_images/stage3/american.png",
+                          "word": "American"
+                        },
+                        {
+                          "emoji": "🗺️",
+                          "image_url": "/static/vocab_images/stage3/country.png",
+                          "word": "country"
+                        },
+                        {
+                          "emoji": "🏙️",
+                          "image_url": "/static/vocab_images/stage3/city.png",
+                          "word": "city"
+                        },
+                        {
+                          "emoji": "🏘️",
+                          "image_url": "/static/vocab_images/stage3/town.png",
+                          "word": "town"
+                        }
                       ]
                     }
                   ]
@@ -1169,108 +1349,132 @@
                     {
                       "word": "country",
                       "emoji": "🗺️",
+                      "image_url": "/static/vocab_images/stage3/country.png",
                       "distractors": [
                         {
                           "word": "city",
-                          "emoji": "🏙️"
+                          "emoji": "🏙️",
+                          "image_url": "/static/vocab_images/stage3/city.png"
                         },
                         {
                           "word": "town",
-                          "emoji": "🏘️"
+                          "emoji": "🏘️",
+                          "image_url": "/static/vocab_images/stage3/town.png"
                         },
                         {
                           "word": "village",
-                          "emoji": "🛖"
+                          "emoji": "🛖",
+                          "image_url": "/static/vocab_images/stage3/village.png"
                         }
                       ]
                     },
                     {
                       "word": "city",
                       "emoji": "🏙️",
+                      "image_url": "/static/vocab_images/stage3/city.png",
                       "distractors": [
                         {
                           "word": "country",
-                          "emoji": "🗺️"
+                          "emoji": "🗺️",
+                          "image_url": "/static/vocab_images/stage3/country.png"
                         },
                         {
                           "word": "town",
-                          "emoji": "🏘️"
+                          "emoji": "🏘️",
+                          "image_url": "/static/vocab_images/stage3/town.png"
                         },
                         {
                           "word": "village",
-                          "emoji": "🛖"
+                          "emoji": "🛖",
+                          "image_url": "/static/vocab_images/stage3/village.png"
                         }
                       ]
                     },
                     {
                       "word": "town",
                       "emoji": "🏘️",
+                      "image_url": "/static/vocab_images/stage3/town.png",
                       "distractors": [
                         {
                           "word": "country",
-                          "emoji": "🗺️"
+                          "emoji": "🗺️",
+                          "image_url": "/static/vocab_images/stage3/country.png"
                         },
                         {
                           "word": "city",
-                          "emoji": "🏙️"
+                          "emoji": "🏙️",
+                          "image_url": "/static/vocab_images/stage3/city.png"
                         },
                         {
                           "word": "village",
-                          "emoji": "🛖"
+                          "emoji": "🛖",
+                          "image_url": "/static/vocab_images/stage3/village.png"
                         }
                       ]
                     },
                     {
                       "word": "village",
                       "emoji": "🛖",
+                      "image_url": "/static/vocab_images/stage3/village.png",
                       "distractors": [
                         {
                           "word": "country",
-                          "emoji": "🗺️"
+                          "emoji": "🗺️",
+                          "image_url": "/static/vocab_images/stage3/country.png"
                         },
                         {
                           "word": "city",
-                          "emoji": "🏙️"
+                          "emoji": "🏙️",
+                          "image_url": "/static/vocab_images/stage3/city.png"
                         },
                         {
                           "word": "town",
-                          "emoji": "🏘️"
+                          "emoji": "🏘️",
+                          "image_url": "/static/vocab_images/stage3/town.png"
                         }
                       ]
                     },
                     {
                       "word": "Vietnamese",
                       "emoji": "🇻🇳",
+                      "image_url": "/static/vocab_images/stage3/vietnamese.png",
                       "distractors": [
                         {
                           "word": "country",
-                          "emoji": "🗺️"
+                          "emoji": "🗺️",
+                          "image_url": "/static/vocab_images/stage3/country.png"
                         },
                         {
                           "word": "city",
-                          "emoji": "🏙️"
+                          "emoji": "🏙️",
+                          "image_url": "/static/vocab_images/stage3/city.png"
                         },
                         {
                           "word": "town",
-                          "emoji": "🏘️"
+                          "emoji": "🏘️",
+                          "image_url": "/static/vocab_images/stage3/town.png"
                         }
                       ]
                     },
                     {
                       "word": "American",
                       "emoji": "🇺🇸",
+                      "image_url": "/static/vocab_images/stage3/american.png",
                       "distractors": [
                         {
                           "word": "country",
-                          "emoji": "🗺️"
+                          "emoji": "🗺️",
+                          "image_url": "/static/vocab_images/stage3/country.png"
                         },
                         {
                           "word": "city",
-                          "emoji": "🏙️"
+                          "emoji": "🏙️",
+                          "image_url": "/static/vocab_images/stage3/city.png"
                         },
                         {
                           "word": "town",
-                          "emoji": "🏘️"
+                          "emoji": "🏘️",
+                          "image_url": "/static/vocab_images/stage3/town.png"
                         }
                       ]
                     }
@@ -1282,63 +1486,69 @@
                   "items": [
                     {
                       "word": "country",
-                      "emoji": "🗺️"
+                      "emoji": "🗺️",
+                      "image_url": "/static/vocab_images/stage3/country.png"
                     },
                     {
                       "word": "city",
-                      "emoji": "🏙️"
+                      "emoji": "🏙️",
+                      "image_url": "/static/vocab_images/stage3/city.png"
                     },
                     {
                       "word": "town",
-                      "emoji": "🏘️"
+                      "emoji": "🏘️",
+                      "image_url": "/static/vocab_images/stage3/town.png"
                     },
                     {
                       "word": "village",
-                      "emoji": "🛖"
+                      "emoji": "🛖",
+                      "image_url": "/static/vocab_images/stage3/village.png"
                     },
                     {
                       "word": "Vietnamese",
-                      "emoji": "🇻🇳"
+                      "emoji": "🇻🇳",
+                      "image_url": "/static/vocab_images/stage3/vietnamese.png"
                     },
                     {
                       "word": "American",
-                      "emoji": "🇺🇸"
+                      "emoji": "🇺🇸",
+                      "image_url": "/static/vocab_images/stage3/american.png"
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "step": 4,
-              "type": "vocab_games",
-              "games": [
+                },
                 {
                   "game_type": "look_write",
                   "instruction": "Look at the picture and type the word.",
                   "items": [
                     {
                       "word": "country",
-                      "emoji": "🗺️"
+                      "emoji": "🗺️",
+                      "image_url": "/static/vocab_images/stage3/country.png"
                     },
                     {
                       "word": "city",
-                      "emoji": "🏙️"
+                      "emoji": "🏙️",
+                      "image_url": "/static/vocab_images/stage3/city.png"
                     },
                     {
                       "word": "town",
-                      "emoji": "🏘️"
+                      "emoji": "🏘️",
+                      "image_url": "/static/vocab_images/stage3/town.png"
                     },
                     {
                       "word": "village",
-                      "emoji": "🛖"
+                      "emoji": "🛖",
+                      "image_url": "/static/vocab_images/stage3/village.png"
                     },
                     {
                       "word": "Vietnamese",
-                      "emoji": "🇻🇳"
+                      "emoji": "🇻🇳",
+                      "image_url": "/static/vocab_images/stage3/vietnamese.png"
                     },
                     {
                       "word": "American",
-                      "emoji": "🇺🇸"
+                      "emoji": "🇺🇸",
+                      "image_url": "/static/vocab_images/stage3/american.png"
                     }
                   ]
                 },
@@ -1385,108 +1595,132 @@
                     {
                       "word": "country",
                       "emoji": "🗺️",
+                      "image_url": "/static/vocab_images/stage3/country.png",
                       "distractors": [
                         {
                           "word": "city",
-                          "emoji": "🏙️"
+                          "emoji": "🏙️",
+                          "image_url": "/static/vocab_images/stage3/city.png"
                         },
                         {
                           "word": "town",
-                          "emoji": "🏘️"
+                          "emoji": "🏘️",
+                          "image_url": "/static/vocab_images/stage3/town.png"
                         },
                         {
                           "word": "village",
-                          "emoji": "🛖"
+                          "emoji": "🛖",
+                          "image_url": "/static/vocab_images/stage3/village.png"
                         }
                       ]
                     },
                     {
                       "word": "city",
                       "emoji": "🏙️",
+                      "image_url": "/static/vocab_images/stage3/city.png",
                       "distractors": [
                         {
                           "word": "country",
-                          "emoji": "🗺️"
+                          "emoji": "🗺️",
+                          "image_url": "/static/vocab_images/stage3/country.png"
                         },
                         {
                           "word": "town",
-                          "emoji": "🏘️"
+                          "emoji": "🏘️",
+                          "image_url": "/static/vocab_images/stage3/town.png"
                         },
                         {
                           "word": "village",
-                          "emoji": "🛖"
+                          "emoji": "🛖",
+                          "image_url": "/static/vocab_images/stage3/village.png"
                         }
                       ]
                     },
                     {
                       "word": "town",
                       "emoji": "🏘️",
+                      "image_url": "/static/vocab_images/stage3/town.png",
                       "distractors": [
                         {
                           "word": "country",
-                          "emoji": "🗺️"
+                          "emoji": "🗺️",
+                          "image_url": "/static/vocab_images/stage3/country.png"
                         },
                         {
                           "word": "city",
-                          "emoji": "🏙️"
+                          "emoji": "🏙️",
+                          "image_url": "/static/vocab_images/stage3/city.png"
                         },
                         {
                           "word": "village",
-                          "emoji": "🛖"
+                          "emoji": "🛖",
+                          "image_url": "/static/vocab_images/stage3/village.png"
                         }
                       ]
                     },
                     {
                       "word": "village",
                       "emoji": "🛖",
+                      "image_url": "/static/vocab_images/stage3/village.png",
                       "distractors": [
                         {
                           "word": "country",
-                          "emoji": "🗺️"
+                          "emoji": "🗺️",
+                          "image_url": "/static/vocab_images/stage3/country.png"
                         },
                         {
                           "word": "city",
-                          "emoji": "🏙️"
+                          "emoji": "🏙️",
+                          "image_url": "/static/vocab_images/stage3/city.png"
                         },
                         {
                           "word": "town",
-                          "emoji": "🏘️"
+                          "emoji": "🏘️",
+                          "image_url": "/static/vocab_images/stage3/town.png"
                         }
                       ]
                     },
                     {
                       "word": "Vietnamese",
                       "emoji": "🇻🇳",
+                      "image_url": "/static/vocab_images/stage3/vietnamese.png",
                       "distractors": [
                         {
                           "word": "country",
-                          "emoji": "🗺️"
+                          "emoji": "🗺️",
+                          "image_url": "/static/vocab_images/stage3/country.png"
                         },
                         {
                           "word": "city",
-                          "emoji": "🏙️"
+                          "emoji": "🏙️",
+                          "image_url": "/static/vocab_images/stage3/city.png"
                         },
                         {
                           "word": "town",
-                          "emoji": "🏘️"
+                          "emoji": "🏘️",
+                          "image_url": "/static/vocab_images/stage3/town.png"
                         }
                       ]
                     },
                     {
                       "word": "American",
                       "emoji": "🇺🇸",
+                      "image_url": "/static/vocab_images/stage3/american.png",
                       "distractors": [
                         {
                           "word": "country",
-                          "emoji": "🗺️"
+                          "emoji": "🗺️",
+                          "image_url": "/static/vocab_images/stage3/country.png"
                         },
                         {
                           "word": "city",
-                          "emoji": "🏙️"
+                          "emoji": "🏙️",
+                          "image_url": "/static/vocab_images/stage3/city.png"
                         },
                         {
                           "word": "town",
-                          "emoji": "🏘️"
+                          "emoji": "🏘️",
+                          "image_url": "/static/vocab_images/stage3/town.png"
                         }
                       ]
                     }
@@ -1495,7 +1729,7 @@
               ]
             },
             {
-              "step": 5,
+              "step": 4,
               "type": "micro_reading",
               "title": "Our online class",
               "text": "We are class 3A. We are friends. Linh and Mai are Vietnamese. They are from Ho Chi Minh City. Tom is American. He is from a small town near New York. His mum is a daughter of a Vietnamese family, so Tom speaks a little Vietnamese, too. Sophie is British. She is from London. Lucas is Brazilian. He lives in a village near the sea. We aren't in the same country, but we are in the same class on the internet. Ray, our teacher, is from the UK. He is funny and kind.",
@@ -1535,7 +1769,7 @@
               ]
             },
             {
-              "step": 6,
+              "step": 5,
               "type": "grammar_focus",
               "rule_pattern": "Verb 'be' — plural (we are / they are) and negative (am not, isn't, aren't)",
               "explanation": "With 'you', 'we' and 'they' we use 'are'. To make 'be' negative we add 'not'. Short forms: I'm not, he isn't, she isn't, we aren't, they aren't.",
@@ -1549,7 +1783,7 @@
               ]
             },
             {
-              "step": 7,
+              "step": 6,
               "type": "grammar_games",
               "games": [
                 {
@@ -1623,40 +1857,22 @@
                   "instruction": "Choose the correct word.",
                   "items": [
                     {
-                      "audio_text": "We are in class 3A.",
+                      "sentence": "We ___ class 3A.",
                       "options": [
-                        "We are in class 3A.",
-                        "We is in class 3A.",
-                        "We am in class 3A."
+                        "am",
+                        "is",
+                        "are"
                       ],
-                      "correct": "We are in class 3A."
+                      "correct": "are"
                     },
                     {
-                      "audio_text": "They aren't British.",
+                      "sentence": "They ___ from different countries.",
                       "options": [
-                        "They aren't British.",
-                        "They isn't British.",
-                        "They am not British."
+                        "am",
+                        "is",
+                        "are"
                       ],
-                      "correct": "They aren't British."
-                    },
-                    {
-                      "audio_text": "I am not American.",
-                      "options": [
-                        "I am not American.",
-                        "I are not American.",
-                        "I is not American."
-                      ],
-                      "correct": "I am not American."
-                    },
-                    {
-                      "audio_text": "Sophie isn't from Brazil.",
-                      "options": [
-                        "Sophie isn't from Brazil.",
-                        "Sophie aren't from Brazil.",
-                        "Sophie am not from Brazil."
-                      ],
-                      "correct": "Sophie isn't from Brazil."
+                      "correct": "are"
                     },
                     {
                       "sentence": "We ___ class 3A.",
@@ -1675,15 +1891,27 @@
                         "are"
                       ],
                       "correct": "are"
+                    },
+                    {
+                      "sentence": "I ___ not American. I am Vietnamese.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "am"
+                    },
+                    {
+                      "sentence": "Sophie isn't from Brazil. She ___ from London.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "step": 8,
-              "type": "grammar_games",
-              "games": [
+                },
                 {
                   "game_type": "audio_match",
                   "instruction": "Listen and tap the sentence you hear.",
@@ -1829,8 +2057,8 @@
                       ]
                     },
                     {
-                      "sentence": "I ___ not American. I am Vietnamese.",
-                      "answer": "am",
+                      "sentence": "We ___ class 3A.",
+                      "answer": "are",
                       "options": [
                         "am",
                         "is",
@@ -1838,8 +2066,8 @@
                       ]
                     },
                     {
-                      "sentence": "Sophie isn't from Brazil. She ___ from London.",
-                      "answer": "is",
+                      "sentence": "They ___ from different countries.",
+                      "answer": "are",
                       "options": [
                         "am",
                         "is",
@@ -1851,7 +2079,7 @@
               ]
             },
             {
-              "step": 9,
+              "step": 7,
               "type": "listening",
               "audio_text": "Ray: Class, look at the map. Linh, where are you from? Linh: I am from Vietnam. I live in Ho Chi Minh City. Ray: And Tom? Tom: I'm American. I'm not from the same town as Linh, of course. I am from a small town near New York. Ray: Sophie? Sophie: I am British. I'm from London. Ray: Lucas, what about you? Lucas: I am Brazilian. I live in a village near the sea. My mum is a daughter of a fisherman, so the sea is everything for our family. We aren't far from a big city, but my village is very small.",
               "questions": [
@@ -1890,7 +2118,7 @@
               "audio_url": "/static/audio/stage3/unit01/lesson_02.mp3"
             },
             {
-              "step": 10,
+              "step": 8,
               "type": "production",
               "production_type": "speaking",
               "prompt": "Tell Ray about your country and city. Say one thing you ARE and one thing you AREN'T.",
@@ -1903,7 +2131,7 @@
               ]
             },
             {
-              "step": 11,
+              "step": 9,
               "type": "exit_ticket",
               "title": "Quick check — Lesson 2",
               "questions": [
@@ -2208,40 +2436,40 @@
                       "image_url": "/static/vocab_images/stage3/say.png"
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "step": 4,
-              "type": "vocab_games",
-              "games": [
+                },
                 {
                   "game_type": "look_write",
                   "instruction": "Look at the picture and type the word.",
                   "items": [
                     {
                       "word": "aunt",
-                      "emoji": "👩"
+                      "emoji": "👩",
+                      "image_url": "/static/vocab_images/stage3/aunt.png"
                     },
                     {
                       "word": "uncle",
-                      "emoji": "👨"
+                      "emoji": "👨",
+                      "image_url": "/static/vocab_images/stage3/uncle.png"
                     },
                     {
                       "word": "parent",
-                      "emoji": "👨‍👩‍👧"
+                      "emoji": "👨‍👩‍👧",
+                      "image_url": "/static/vocab_images/stage3/parent.png"
                     },
                     {
                       "word": "grown-up",
-                      "emoji": "🧑"
+                      "emoji": "🧑",
+                      "image_url": "/static/vocab_images/stage3/grown_up.png"
                     },
                     {
                       "word": "from",
-                      "emoji": "📍"
+                      "emoji": "📍",
+                      "image_url": "/static/vocab_images/stage3/from.png"
                     },
                     {
                       "word": "say",
-                      "emoji": "💬"
+                      "emoji": "💬",
+                      "image_url": "/static/vocab_images/stage3/say.png"
                     }
                   ]
                 },
@@ -2251,27 +2479,33 @@
                   "items": [
                     {
                       "word": "aunt",
-                      "emoji": "👩"
+                      "emoji": "👩",
+                      "image_url": "/static/vocab_images/stage3/aunt.png"
                     },
                     {
                       "word": "uncle",
-                      "emoji": "👨"
+                      "emoji": "👨",
+                      "image_url": "/static/vocab_images/stage3/uncle.png"
                     },
                     {
                       "word": "parent",
-                      "emoji": "👨‍👩‍👧"
+                      "emoji": "👨‍👩‍👧",
+                      "image_url": "/static/vocab_images/stage3/parent.png"
                     },
                     {
                       "word": "grown-up",
-                      "emoji": "🧑"
+                      "emoji": "🧑",
+                      "image_url": "/static/vocab_images/stage3/grown_up.png"
                     },
                     {
                       "word": "from",
-                      "emoji": "📍"
+                      "emoji": "📍",
+                      "image_url": "/static/vocab_images/stage3/from.png"
                     },
                     {
                       "word": "say",
-                      "emoji": "💬"
+                      "emoji": "💬",
+                      "image_url": "/static/vocab_images/stage3/say.png"
                     }
                   ]
                 },
@@ -2314,7 +2548,7 @@
               ]
             },
             {
-              "step": 5,
+              "step": 4,
               "type": "micro_reading",
               "title": "Linh's people",
               "text": "Hello again. Today I tell you about my family. My parents are Hoa and Tuan. My mum, Hoa, is a doctor. My dad, Tuan, is a teacher. He is not my English teacher — Ray is! My mum has got one sister. She is my aunt. Her name is Lan. She is a grown-up but she is funny and kind. My dad has got one brother. He is my uncle. His name is Quan. My grandparents live in a small town near a river. I love my family. Are you a son or a daughter, too? Ask your friend!",
@@ -2354,7 +2588,7 @@
               ]
             },
             {
-              "step": 6,
+              "step": 5,
               "type": "grammar_focus",
               "rule_pattern": "Verb 'be' — questions and short answers",
               "explanation": "To ask a 'be' question we put am / is / are before the person. Short answers use only 'be' (or 'be' + not). Don't repeat the rest of the sentence.",
@@ -2368,7 +2602,7 @@
               ]
             },
             {
-              "step": 7,
+              "step": 6,
               "type": "grammar_games",
               "games": [
                 {
@@ -2457,11 +2691,13 @@
                       "correct": "am"
                     },
                     {
-                      "audio_text": "Are you Linh? — Yes, I am.",
+                      "sentence": "___ you Linh? — Yes, I am.",
                       "options": [
-                        "Are you Linh? — Yes, I am."
+                        "am",
+                        "is",
+                        "are"
                       ],
-                      "correct": "Are you Linh? — Yes, I am."
+                      "correct": "are"
                     }
                   ]
                 },
@@ -2500,13 +2736,7 @@
                       "alternateErrors": []
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "step": 8,
-              "type": "grammar_games",
-              "games": [
+                },
                 {
                   "game_type": "word_order",
                   "instruction": "Drag the words.",
@@ -2608,7 +2838,7 @@
               ]
             },
             {
-              "step": 9,
+              "step": 7,
               "type": "listening",
               "audio_text": "Ray: Hi Linh! Is this a photo of your family? Linh: Yes, it is. Ray: Are the two people behind you your parents? Linh: Yes, they are. My mum is a doctor and my dad is a teacher. Ray: Is the woman on the left your aunt? Linh: Yes, she is. Her name is Lan. Ray: Is the man on the right your uncle? Linh: Yes, he is. He is called Quan. He has got two sons — they are my cousins. Ray: And the grandparents? Are they in the photo? Linh: No, they aren't. They live in a small town and they are not on the internet today.",
               "questions": [
@@ -2643,7 +2873,7 @@
               "audio_url": "/static/audio/stage3/unit01/lesson_03.mp3"
             },
             {
-              "step": 10,
+              "step": 8,
               "type": "production",
               "production_type": "speaking",
               "prompt": "Show Ray three people in your world. For each one, say who they are and use 'be' questions Ray can answer.",
@@ -2656,7 +2886,7 @@
               ]
             },
             {
-              "step": 11,
+              "step": 9,
               "type": "exit_ticket",
               "title": "Quick check — Lesson 3",
               "questions": [
@@ -2843,101 +3073,331 @@
                     {
                       "prompt": "hello",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hello"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hi"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "name"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "age"
+                        }
                       ]
                     },
                     {
                       "prompt": "hi",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hi"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hello"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "name"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "age"
+                        }
                       ]
                     },
                     {
                       "prompt": "name",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "name"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hello"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hi"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "age"
+                        }
                       ]
                     },
                     {
                       "prompt": "age",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "age"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hello"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hi"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "name"
+                        }
                       ]
                     },
                     {
                       "prompt": "live",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "live"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hello"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hi"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "name"
+                        }
                       ]
                     },
                     {
                       "prompt": "address",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "address"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hello"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hi"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "name"
+                        }
                       ]
                     },
                     {
                       "prompt": "born",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "born"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hello"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hi"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "name"
+                        }
                       ]
                     },
                     {
                       "prompt": "be called",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "be called"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hello"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hi"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "name"
+                        }
                       ]
                     },
                     {
                       "prompt": "country",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "country"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hello"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hi"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "name"
+                        }
                       ]
                     },
                     {
                       "prompt": "city",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "city"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hello"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hi"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "name"
+                        }
                       ]
                     }
                   ]
@@ -2977,40 +3437,40 @@
                       "image_url": ""
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "step": 4,
-              "type": "vocab_games",
-              "games": [
+                },
                 {
                   "game_type": "memory_game",
                   "instruction": "Flip the cards and find the pairs.",
                   "items": [
                     {
                       "word": "hello",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "hi",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "name",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "age",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "live",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "address",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     }
                   ]
                 },
@@ -3021,108 +3481,132 @@
                     {
                       "word": "hello",
                       "emoji": "📦",
+                      "image_url": "",
                       "distractors": [
                         {
                           "word": "hi",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "name",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "age",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
                       "word": "hi",
                       "emoji": "📦",
+                      "image_url": "",
                       "distractors": [
                         {
                           "word": "hello",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "name",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "age",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
                       "word": "name",
                       "emoji": "📦",
+                      "image_url": "",
                       "distractors": [
                         {
                           "word": "hello",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "hi",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "age",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
                       "word": "age",
                       "emoji": "📦",
+                      "image_url": "",
                       "distractors": [
                         {
                           "word": "hello",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "hi",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "name",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
                       "word": "live",
                       "emoji": "📦",
+                      "image_url": "",
                       "distractors": [
                         {
                           "word": "hello",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "hi",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "name",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
                       "word": "address",
                       "emoji": "📦",
+                      "image_url": "",
                       "distractors": [
                         {
                           "word": "hello",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "hi",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "name",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         }
                       ]
                     }
@@ -3134,34 +3618,40 @@
                   "items": [
                     {
                       "word": "hello",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "hi",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "name",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "age",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "live",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "address",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     }
                   ]
                 }
               ]
             },
             {
-              "step": 5,
+              "step": 4,
               "type": "micro_reading",
               "title": "Linh's whole world",
               "text": "Hello! Let me tell you all about me again. My name is Linh and I am nine years old. I was born in Vietnam. My address is 14 Le Loi Street, Ho Chi Minh City. I am Vietnamese, but my class is from many countries. Tom is American. He is from a small town near New York. Sophie is British and lives in London. Lucas is Brazilian. He lives in a quiet village near the sea. My parents are Hoa and Tuan. My mum is a doctor and my dad is a teacher. I have got one brother. He is called Minh and he is seven. My aunt is called Lan and my uncle is called Quan. My grandparents live in a small town near a river. They are not on the internet today, but they say hello to me on the phone. We aren't in the same city, but we are a happy family. Are we lucky? Yes, we are!",
@@ -3223,7 +3713,7 @@
               ]
             },
             {
-              "step": 6,
+              "step": 5,
               "type": "grammar_review",
               "patterns": [
                 "be: am / is / are (affirmative)",
@@ -3234,7 +3724,7 @@
               ]
             },
             {
-              "step": 7,
+              "step": 6,
               "type": "grammar_games",
               "games": [
                 {
@@ -3386,13 +3876,7 @@
                       "correct": "am"
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "step": 8,
-              "type": "grammar_games",
-              "games": [
+                },
                 {
                   "game_type": "sentence_builder_timed",
                   "instruction": "45 seconds! Build each sentence.",
@@ -3538,7 +4022,7 @@
               ]
             },
             {
-              "step": 9,
+              "step": 7,
               "type": "listening",
               "audio_text": "Ray: Class, today is review day. Linh, tell us all about you. Linh: Hi everyone! I am Linh. I am nine. I was born in Vietnam. I live at 14 Le Loi Street in Ho Chi Minh City. My brother is called Minh. He is seven. My best friend is called Mai. My mum is a doctor and my dad is a teacher. My aunt Lan and my uncle Quan live near us. My grandparents live in a small town near a river. Ray: Lovely! And Tom, are you Vietnamese? Tom: No, I'm not. I am American. I am from a small town near New York. My friend Sophie is British. Lucas is Brazilian. We aren't in the same country, but we are in the same class on the internet. Ray: Class, you are amazing.",
               "questions": [
@@ -3597,7 +4081,7 @@
               "audio_url": "/static/audio/stage3/unit01/lesson_04.mp3"
             },
             {
-              "step": 10,
+              "step": 8,
               "type": "production",
               "production_type": "speaking",
               "prompt": "Tell Ray all about you in 6-8 sentences. Use 'be' in different forms. Mention: name, age, country, nationality, your city / town / village, and 2 people in your family.",
@@ -3612,7 +4096,7 @@
               ]
             },
             {
-              "step": 11,
+              "step": 9,
               "type": "exit_ticket",
               "title": "Unit 1 — All about me — Final check",
               "questions": [

@@ -9,6 +9,9 @@ import { Card } from '../../ui/card';
 import { Image as ImageIcon, CheckCircle, X } from 'lucide-react';
 import { GameWrapper, GameComplete } from '../shared';
 
+const API_URL = process.env.REACT_APP_BACKEND_URL || '';
+const resolveImg = (u) => (u && u.startsWith('/') ? `${API_URL}/api${u}` : u || '');
+
 const shuffle = (arr) => {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -78,7 +81,15 @@ const ImageWordMatch = ({ items, onComplete, onSkip }) => {
     >
       <Card className="p-6 bg-white/70 backdrop-blur-sm border-emerald-200">
         <div className="text-center mb-6">
-          <div className="text-7xl mb-2">{item.emoji}</div>
+          {item.image_url ? (
+            <img
+              src={resolveImg(item.image_url)}
+              alt={item.word}
+              className="w-40 h-40 object-cover rounded-2xl mx-auto mb-2 border border-emerald-100"
+            />
+          ) : (
+            <div className="text-7xl mb-2">{item.emoji}</div>
+          )}
           <p className="text-sm text-slate-500">Choose the right word</p>
         </div>
         <div className="grid grid-cols-2 gap-3">

@@ -10,6 +10,9 @@ import { Button } from '../../ui/button';
 import { Timer, Zap, Trophy, X, CheckCircle } from 'lucide-react';
 import { GameWrapper, GameComplete } from '../shared';
 
+const API_URL = process.env.REACT_APP_BACKEND_URL || '';
+const resolveImg = (u) => (u && u.startsWith('/') ? `${API_URL}/api${u}` : u || '');
+
 const WordRace = ({ items, onComplete, onSkip, timeLimit }) => {
   const totalTime = timeLimit || 60;
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -37,12 +40,19 @@ const WordRace = ({ items, onComplete, onSkip, timeLimit }) => {
 
   if (!items?.length) return null;
   const item = items[currentIdx % items.length];
+  // Prefer options_full (objects with image_url) over options (legacy emoji
+  // strings) so games reuse the same artwork as the vocabulary cards.
+  const optionObjs = (item.options_full && item.options_full.length)
+    ? item.options_full
+    : (item.options || []).map((emoji) => ({ emoji, image_url: '' }));
+  const correctImg = item.correct_image_url || '';
 
-  const handlePick = (emoji) => {
+  const handlePick = (opt) => {
     if (feedback || isComplete) return;
-    const correct = emoji === item.correct_emoji;
-    setFeedback(correct ? 'correct' : 'wrong');
-    if (correct) setScore((s) => s + 1);
+    const isCorrect = (opt.image_url && opt.image_url === correctImg)
+      || (!opt.image_url && opt.emoji === item.correct_emoji);
+    setFeedback(isCorrect ? 'correct' : 'wrong');
+    if (isCorrect) setScore((s) => s + 1);
     else setWrongCount((w) => w + 1);
     setTimeout(() => {
       setFeedback(null);
@@ -89,22 +99,31 @@ const WordRace = ({ items, onComplete, onSkip, timeLimit }) => {
           <h3 className="text-3xl font-bold text-slate-900">{item.prompt}</h3>
         </div>
         <div className="grid grid-cols-2 gap-3">
-          {(item.options || []).map((opt, idx) => (
-            <button
-              key={idx}
-              onClick={() => handlePick(opt)}
-              disabled={!!feedback}
-              className={`p-5 rounded-2xl text-5xl bg-white border-2 transition-all active:scale-95 ${
-                feedback === 'correct' && opt === item.correct_emoji
-                  ? 'border-emerald-500 bg-emerald-50'
-                  : feedback === 'wrong' && opt === item.correct_emoji
-                  ? 'border-emerald-500 bg-emerald-50'
-                  : 'border-slate-200 hover:border-amber-400'
-              }`}
-            >
-              {opt}
-            </button>
-          ))}
+          {optionObjs.map((opt, idx) => {
+            const isCorrect = (opt.image_url && opt.image_url === correctImg)
+              || (!opt.image_url && opt.emoji === item.correct_emoji);
+            const highlight = (feedback === 'correct' || feedback === 'wrong') && isCorrect;
+            return (
+              <button
+                key={idx}
+                onClick={() => handlePick(opt)}
+                disabled={!!feedback}
+                className={`p-3 rounded-2xl bg-white border-2 transition-all active:scale-95 ${
+                  highlight ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200 hover:border-amber-400'
+                }`}
+              >
+                {opt.image_url ? (
+                  <img
+                    src={resolveImg(opt.image_url)}
+                    alt={opt.word || ''}
+                    className="w-full h-32 object-cover rounded-xl"
+                  />
+                ) : (
+                  <span className="text-5xl">{opt.emoji}</span>
+                )}
+              </button>
+            );
+          })}
         </div>
         {feedback === 'correct' && (
           <div className="mt-3 text-center text-emerald-700 font-semibold flex items-center justify-center gap-2">

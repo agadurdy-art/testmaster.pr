@@ -159,108 +159,132 @@
                     {
                       "word": "grandparent",
                       "emoji": "👴",
+                      "image_url": "/static/vocab_images/stage3/grandparent.png",
                       "distractors": [
                         {
                           "word": "grandfather",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandfather.png"
                         },
                         {
                           "word": "grandmother",
-                          "emoji": "👵"
+                          "emoji": "👵",
+                          "image_url": "/static/vocab_images/stage3/grandmother.png"
                         },
                         {
                           "word": "son",
-                          "emoji": "👦"
+                          "emoji": "👦",
+                          "image_url": "/static/vocab_images/stage3/son.png"
                         }
                       ]
                     },
                     {
                       "word": "grandfather",
                       "emoji": "👴",
+                      "image_url": "/static/vocab_images/stage3/grandfather.png",
                       "distractors": [
                         {
                           "word": "grandparent",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandparent.png"
                         },
                         {
                           "word": "grandmother",
-                          "emoji": "👵"
+                          "emoji": "👵",
+                          "image_url": "/static/vocab_images/stage3/grandmother.png"
                         },
                         {
                           "word": "son",
-                          "emoji": "👦"
+                          "emoji": "👦",
+                          "image_url": "/static/vocab_images/stage3/son.png"
                         }
                       ]
                     },
                     {
                       "word": "grandmother",
                       "emoji": "👵",
+                      "image_url": "/static/vocab_images/stage3/grandmother.png",
                       "distractors": [
                         {
                           "word": "grandparent",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandparent.png"
                         },
                         {
                           "word": "grandfather",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandfather.png"
                         },
                         {
                           "word": "son",
-                          "emoji": "👦"
+                          "emoji": "👦",
+                          "image_url": "/static/vocab_images/stage3/son.png"
                         }
                       ]
                     },
                     {
                       "word": "son",
                       "emoji": "👦",
+                      "image_url": "/static/vocab_images/stage3/son.png",
                       "distractors": [
                         {
                           "word": "grandparent",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandparent.png"
                         },
                         {
                           "word": "grandfather",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandfather.png"
                         },
                         {
                           "word": "grandmother",
-                          "emoji": "👵"
+                          "emoji": "👵",
+                          "image_url": "/static/vocab_images/stage3/grandmother.png"
                         }
                       ]
                     },
                     {
                       "word": "daughter",
                       "emoji": "👧",
+                      "image_url": "/static/vocab_images/stage3/daughter.png",
                       "distractors": [
                         {
                           "word": "grandparent",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandparent.png"
                         },
                         {
                           "word": "grandfather",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandfather.png"
                         },
                         {
                           "word": "grandmother",
-                          "emoji": "👵"
+                          "emoji": "👵",
+                          "image_url": "/static/vocab_images/stage3/grandmother.png"
                         }
                       ]
                     },
                     {
                       "word": "grandson",
                       "emoji": "👦",
+                      "image_url": "/static/vocab_images/stage3/grandson.png",
                       "distractors": [
                         {
                           "word": "grandparent",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandparent.png"
                         },
                         {
                           "word": "grandfather",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandfather.png"
                         },
                         {
                           "word": "grandmother",
-                          "emoji": "👵"
+                          "emoji": "👵",
+                          "image_url": "/static/vocab_images/stage3/grandmother.png"
                         }
                       ]
                     }
@@ -273,108 +297,132 @@
                     {
                       "word": "grandparent",
                       "emoji": "👴",
+                      "image_url": "/static/vocab_images/stage3/grandparent.png",
                       "distractors": [
                         {
                           "word": "grandfather",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandfather.png"
                         },
                         {
                           "word": "grandmother",
-                          "emoji": "👵"
+                          "emoji": "👵",
+                          "image_url": "/static/vocab_images/stage3/grandmother.png"
                         },
                         {
                           "word": "son",
-                          "emoji": "👦"
+                          "emoji": "👦",
+                          "image_url": "/static/vocab_images/stage3/son.png"
                         }
                       ]
                     },
                     {
                       "word": "grandfather",
                       "emoji": "👴",
+                      "image_url": "/static/vocab_images/stage3/grandfather.png",
                       "distractors": [
                         {
                           "word": "grandparent",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandparent.png"
                         },
                         {
                           "word": "grandmother",
-                          "emoji": "👵"
+                          "emoji": "👵",
+                          "image_url": "/static/vocab_images/stage3/grandmother.png"
                         },
                         {
                           "word": "son",
-                          "emoji": "👦"
+                          "emoji": "👦",
+                          "image_url": "/static/vocab_images/stage3/son.png"
                         }
                       ]
                     },
                     {
                       "word": "grandmother",
                       "emoji": "👵",
+                      "image_url": "/static/vocab_images/stage3/grandmother.png",
                       "distractors": [
                         {
                           "word": "grandparent",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandparent.png"
                         },
                         {
                           "word": "grandfather",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandfather.png"
                         },
                         {
                           "word": "son",
-                          "emoji": "👦"
+                          "emoji": "👦",
+                          "image_url": "/static/vocab_images/stage3/son.png"
                         }
                       ]
                     },
                     {
                       "word": "son",
                       "emoji": "👦",
+                      "image_url": "/static/vocab_images/stage3/son.png",
                       "distractors": [
                         {
                           "word": "grandparent",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandparent.png"
                         },
                         {
                           "word": "grandfather",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandfather.png"
                         },
                         {
                           "word": "grandmother",
-                          "emoji": "👵"
+                          "emoji": "👵",
+                          "image_url": "/static/vocab_images/stage3/grandmother.png"
                         }
                       ]
                     },
                     {
                       "word": "daughter",
                       "emoji": "👧",
+                      "image_url": "/static/vocab_images/stage3/daughter.png",
                       "distractors": [
                         {
                           "word": "grandparent",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandparent.png"
                         },
                         {
                           "word": "grandfather",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandfather.png"
                         },
                         {
                           "word": "grandmother",
-                          "emoji": "👵"
+                          "emoji": "👵",
+                          "image_url": "/static/vocab_images/stage3/grandmother.png"
                         }
                       ]
                     },
                     {
                       "word": "grandson",
                       "emoji": "👦",
+                      "image_url": "/static/vocab_images/stage3/grandson.png",
                       "distractors": [
                         {
                           "word": "grandparent",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandparent.png"
                         },
                         {
                           "word": "grandfather",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/grandfather.png"
                         },
                         {
                           "word": "grandmother",
-                          "emoji": "👵"
+                          "emoji": "👵",
+                          "image_url": "/static/vocab_images/stage3/grandmother.png"
                         }
                       ]
                     }
@@ -386,36 +434,36 @@
                   "items": [
                     {
                       "word": "grandparent",
-                      "emoji": "👴"
+                      "emoji": "👴",
+                      "image_url": "/static/vocab_images/stage3/grandparent.png"
                     },
                     {
                       "word": "grandfather",
-                      "emoji": "👴"
+                      "emoji": "👴",
+                      "image_url": "/static/vocab_images/stage3/grandfather.png"
                     },
                     {
                       "word": "grandmother",
-                      "emoji": "👵"
+                      "emoji": "👵",
+                      "image_url": "/static/vocab_images/stage3/grandmother.png"
                     },
                     {
                       "word": "son",
-                      "emoji": "👦"
+                      "emoji": "👦",
+                      "image_url": "/static/vocab_images/stage3/son.png"
                     },
                     {
                       "word": "daughter",
-                      "emoji": "👧"
+                      "emoji": "👧",
+                      "image_url": "/static/vocab_images/stage3/daughter.png"
                     },
                     {
                       "word": "grandson",
-                      "emoji": "👦"
+                      "emoji": "👦",
+                      "image_url": "/static/vocab_images/stage3/grandson.png"
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "step": 4,
-              "type": "vocab_games",
-              "games": [
+                },
                 {
                   "game_type": "unscramble",
                   "instruction": "Unscramble the letters.",
@@ -521,7 +569,7 @@
               ]
             },
             {
-              "step": 5,
+              "step": 4,
               "type": "micro_reading",
               "title": "Linh's grandparents",
               "text": "My grandparents live in a small town near a long river. My grandfather is called Ông Hai. He is my dad's father. My grandmother is called Bà Mai. She is my mum's mother. I am their granddaughter and my brother Minh is their grandson. We visit them in summer. My uncle Quan has two sons — they are my cousins. They are twins! Their bedroom has two beds, two desks and two big windows. The kitchen at my grandparents' house is small but it smells of soup all day.",
@@ -563,7 +611,7 @@
               ]
             },
             {
-              "step": 6,
+              "step": 5,
               "type": "grammar_focus",
               "rule_pattern": "Possessive 's — 'who something belongs to'",
               "explanation": "To say something belongs to a person, we add 's after their name or role. For two or more people, we add only the apostrophe ' after the plural: my parents' house. There is a sister bigger structure — there is/there are — that we will learn in Unit 3, but you will see it in our reading today, too.",
@@ -577,7 +625,7 @@
               ]
             },
             {
-              "step": 7,
+              "step": 6,
               "type": "grammar_games",
               "games": [
                 {
@@ -729,13 +777,7 @@
                       "correct": "false"
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "step": 8,
-              "type": "grammar_games",
-              "games": [
+                },
                 {
                   "game_type": "word_order",
                   "instruction": "Drag the words.",
@@ -863,7 +905,7 @@
               ]
             },
             {
-              "step": 9,
+              "step": 7,
               "type": "listening",
               "audio_text": "Linh: Ray, look — this is a photo of my grandparents. Ray: Lovely! What are they called? Linh: My grandfather is called Ông Hai. My grandmother is called Bà Mai. Ray: And the two boys playing in the garden? Linh: They are my cousins. They are twins! My uncle Quan is their father. They live in the same town as my grandparents. Ray: So you are your grandparents' granddaughter, and Minh is their grandson, right? Linh: Yes, that's right!",
               "audio_url": "/static/audio/stage3/unit02/lesson_01.mp3",
@@ -902,7 +944,7 @@
               ]
             },
             {
-              "step": 10,
+              "step": 8,
               "type": "production",
               "production_type": "speaking",
               "prompt": "Tell Ray about your grandparents or cousins. Use 's where you can.",
@@ -915,7 +957,7 @@
               ]
             },
             {
-              "step": 11,
+              "step": 9,
               "type": "exit_ticket",
               "title": "Quick check — Lesson 1",
               "questions": [
@@ -1099,61 +1141,199 @@
                     {
                       "prompt": "tall",
                       "correct_emoji": "🦒",
+                      "correct_image_url": "/static/vocab_images/stage3/tall.png",
                       "options": [
                         "🦒",
                         "📏",
                         "👶",
                         "👴"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "🦒",
+                          "image_url": "/static/vocab_images/stage3/tall.png",
+                          "word": "tall"
+                        },
+                        {
+                          "emoji": "📏",
+                          "image_url": "/static/vocab_images/stage3/short.png",
+                          "word": "short"
+                        },
+                        {
+                          "emoji": "👶",
+                          "image_url": "/static/vocab_images/stage3/young.png",
+                          "word": "young"
+                        },
+                        {
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/old.png",
+                          "word": "old"
+                        }
                       ]
                     },
                     {
                       "prompt": "short",
                       "correct_emoji": "📏",
+                      "correct_image_url": "/static/vocab_images/stage3/short.png",
                       "options": [
                         "📏",
                         "🦒",
                         "👶",
                         "👴"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📏",
+                          "image_url": "/static/vocab_images/stage3/short.png",
+                          "word": "short"
+                        },
+                        {
+                          "emoji": "🦒",
+                          "image_url": "/static/vocab_images/stage3/tall.png",
+                          "word": "tall"
+                        },
+                        {
+                          "emoji": "👶",
+                          "image_url": "/static/vocab_images/stage3/young.png",
+                          "word": "young"
+                        },
+                        {
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/old.png",
+                          "word": "old"
+                        }
                       ]
                     },
                     {
                       "prompt": "young",
                       "correct_emoji": "👶",
+                      "correct_image_url": "/static/vocab_images/stage3/young.png",
                       "options": [
                         "👶",
                         "🦒",
                         "📏",
                         "👴"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "👶",
+                          "image_url": "/static/vocab_images/stage3/young.png",
+                          "word": "young"
+                        },
+                        {
+                          "emoji": "🦒",
+                          "image_url": "/static/vocab_images/stage3/tall.png",
+                          "word": "tall"
+                        },
+                        {
+                          "emoji": "📏",
+                          "image_url": "/static/vocab_images/stage3/short.png",
+                          "word": "short"
+                        },
+                        {
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/old.png",
+                          "word": "old"
+                        }
                       ]
                     },
                     {
                       "prompt": "old",
                       "correct_emoji": "👴",
+                      "correct_image_url": "/static/vocab_images/stage3/old.png",
                       "options": [
                         "👴",
                         "🦒",
                         "📏",
                         "👶"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/old.png",
+                          "word": "old"
+                        },
+                        {
+                          "emoji": "🦒",
+                          "image_url": "/static/vocab_images/stage3/tall.png",
+                          "word": "tall"
+                        },
+                        {
+                          "emoji": "📏",
+                          "image_url": "/static/vocab_images/stage3/short.png",
+                          "word": "short"
+                        },
+                        {
+                          "emoji": "👶",
+                          "image_url": "/static/vocab_images/stage3/young.png",
+                          "word": "young"
+                        }
                       ]
                     },
                     {
                       "prompt": "blonde",
                       "correct_emoji": "👱",
+                      "correct_image_url": "/static/vocab_images/stage3/blonde.png",
                       "options": [
                         "👱",
                         "🦒",
                         "📏",
                         "👶"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "👱",
+                          "image_url": "/static/vocab_images/stage3/blonde.png",
+                          "word": "blonde"
+                        },
+                        {
+                          "emoji": "🦒",
+                          "image_url": "/static/vocab_images/stage3/tall.png",
+                          "word": "tall"
+                        },
+                        {
+                          "emoji": "📏",
+                          "image_url": "/static/vocab_images/stage3/short.png",
+                          "word": "short"
+                        },
+                        {
+                          "emoji": "👶",
+                          "image_url": "/static/vocab_images/stage3/young.png",
+                          "word": "young"
+                        }
                       ]
                     },
                     {
                       "prompt": "curly",
                       "correct_emoji": "🦱",
+                      "correct_image_url": "/static/vocab_images/stage3/curly.png",
                       "options": [
                         "🦱",
                         "🦒",
                         "📏",
                         "👶"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "🦱",
+                          "image_url": "/static/vocab_images/stage3/curly.png",
+                          "word": "curly"
+                        },
+                        {
+                          "emoji": "🦒",
+                          "image_url": "/static/vocab_images/stage3/tall.png",
+                          "word": "tall"
+                        },
+                        {
+                          "emoji": "📏",
+                          "image_url": "/static/vocab_images/stage3/short.png",
+                          "word": "short"
+                        },
+                        {
+                          "emoji": "👶",
+                          "image_url": "/static/vocab_images/stage3/young.png",
+                          "word": "young"
+                        }
                       ]
                     }
                   ]
@@ -1165,108 +1345,132 @@
                     {
                       "word": "tall",
                       "emoji": "🦒",
+                      "image_url": "/static/vocab_images/stage3/tall.png",
                       "distractors": [
                         {
                           "word": "short",
-                          "emoji": "📏"
+                          "emoji": "📏",
+                          "image_url": "/static/vocab_images/stage3/short.png"
                         },
                         {
                           "word": "young",
-                          "emoji": "👶"
+                          "emoji": "👶",
+                          "image_url": "/static/vocab_images/stage3/young.png"
                         },
                         {
                           "word": "old",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/old.png"
                         }
                       ]
                     },
                     {
                       "word": "short",
                       "emoji": "📏",
+                      "image_url": "/static/vocab_images/stage3/short.png",
                       "distractors": [
                         {
                           "word": "tall",
-                          "emoji": "🦒"
+                          "emoji": "🦒",
+                          "image_url": "/static/vocab_images/stage3/tall.png"
                         },
                         {
                           "word": "young",
-                          "emoji": "👶"
+                          "emoji": "👶",
+                          "image_url": "/static/vocab_images/stage3/young.png"
                         },
                         {
                           "word": "old",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/old.png"
                         }
                       ]
                     },
                     {
                       "word": "young",
                       "emoji": "👶",
+                      "image_url": "/static/vocab_images/stage3/young.png",
                       "distractors": [
                         {
                           "word": "tall",
-                          "emoji": "🦒"
+                          "emoji": "🦒",
+                          "image_url": "/static/vocab_images/stage3/tall.png"
                         },
                         {
                           "word": "short",
-                          "emoji": "📏"
+                          "emoji": "📏",
+                          "image_url": "/static/vocab_images/stage3/short.png"
                         },
                         {
                           "word": "old",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/old.png"
                         }
                       ]
                     },
                     {
                       "word": "old",
                       "emoji": "👴",
+                      "image_url": "/static/vocab_images/stage3/old.png",
                       "distractors": [
                         {
                           "word": "tall",
-                          "emoji": "🦒"
+                          "emoji": "🦒",
+                          "image_url": "/static/vocab_images/stage3/tall.png"
                         },
                         {
                           "word": "short",
-                          "emoji": "📏"
+                          "emoji": "📏",
+                          "image_url": "/static/vocab_images/stage3/short.png"
                         },
                         {
                           "word": "young",
-                          "emoji": "👶"
+                          "emoji": "👶",
+                          "image_url": "/static/vocab_images/stage3/young.png"
                         }
                       ]
                     },
                     {
                       "word": "blonde",
                       "emoji": "👱",
+                      "image_url": "/static/vocab_images/stage3/blonde.png",
                       "distractors": [
                         {
                           "word": "tall",
-                          "emoji": "🦒"
+                          "emoji": "🦒",
+                          "image_url": "/static/vocab_images/stage3/tall.png"
                         },
                         {
                           "word": "short",
-                          "emoji": "📏"
+                          "emoji": "📏",
+                          "image_url": "/static/vocab_images/stage3/short.png"
                         },
                         {
                           "word": "young",
-                          "emoji": "👶"
+                          "emoji": "👶",
+                          "image_url": "/static/vocab_images/stage3/young.png"
                         }
                       ]
                     },
                     {
                       "word": "curly",
                       "emoji": "🦱",
+                      "image_url": "/static/vocab_images/stage3/curly.png",
                       "distractors": [
                         {
                           "word": "tall",
-                          "emoji": "🦒"
+                          "emoji": "🦒",
+                          "image_url": "/static/vocab_images/stage3/tall.png"
                         },
                         {
                           "word": "short",
-                          "emoji": "📏"
+                          "emoji": "📏",
+                          "image_url": "/static/vocab_images/stage3/short.png"
                         },
                         {
                           "word": "young",
-                          "emoji": "👶"
+                          "emoji": "👶",
+                          "image_url": "/static/vocab_images/stage3/young.png"
                         }
                       ]
                     }
@@ -1278,63 +1482,69 @@
                   "items": [
                     {
                       "word": "tall",
-                      "emoji": "🦒"
+                      "emoji": "🦒",
+                      "image_url": "/static/vocab_images/stage3/tall.png"
                     },
                     {
                       "word": "short",
-                      "emoji": "📏"
+                      "emoji": "📏",
+                      "image_url": "/static/vocab_images/stage3/short.png"
                     },
                     {
                       "word": "young",
-                      "emoji": "👶"
+                      "emoji": "👶",
+                      "image_url": "/static/vocab_images/stage3/young.png"
                     },
                     {
                       "word": "old",
-                      "emoji": "👴"
+                      "emoji": "👴",
+                      "image_url": "/static/vocab_images/stage3/old.png"
                     },
                     {
                       "word": "blonde",
-                      "emoji": "👱"
+                      "emoji": "👱",
+                      "image_url": "/static/vocab_images/stage3/blonde.png"
                     },
                     {
                       "word": "curly",
-                      "emoji": "🦱"
+                      "emoji": "🦱",
+                      "image_url": "/static/vocab_images/stage3/curly.png"
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "step": 4,
-              "type": "vocab_games",
-              "games": [
+                },
                 {
                   "game_type": "look_write",
                   "instruction": "Look at the picture and type the word.",
                   "items": [
                     {
                       "word": "tall",
-                      "emoji": "🦒"
+                      "emoji": "🦒",
+                      "image_url": "/static/vocab_images/stage3/tall.png"
                     },
                     {
                       "word": "short",
-                      "emoji": "📏"
+                      "emoji": "📏",
+                      "image_url": "/static/vocab_images/stage3/short.png"
                     },
                     {
                       "word": "young",
-                      "emoji": "👶"
+                      "emoji": "👶",
+                      "image_url": "/static/vocab_images/stage3/young.png"
                     },
                     {
                       "word": "old",
-                      "emoji": "👴"
+                      "emoji": "👴",
+                      "image_url": "/static/vocab_images/stage3/old.png"
                     },
                     {
                       "word": "blonde",
-                      "emoji": "👱"
+                      "emoji": "👱",
+                      "image_url": "/static/vocab_images/stage3/blonde.png"
                     },
                     {
                       "word": "curly",
-                      "emoji": "🦱"
+                      "emoji": "🦱",
+                      "image_url": "/static/vocab_images/stage3/curly.png"
                     }
                   ]
                 },
@@ -1381,108 +1591,132 @@
                     {
                       "word": "tall",
                       "emoji": "🦒",
+                      "image_url": "/static/vocab_images/stage3/tall.png",
                       "distractors": [
                         {
                           "word": "short",
-                          "emoji": "📏"
+                          "emoji": "📏",
+                          "image_url": "/static/vocab_images/stage3/short.png"
                         },
                         {
                           "word": "young",
-                          "emoji": "👶"
+                          "emoji": "👶",
+                          "image_url": "/static/vocab_images/stage3/young.png"
                         },
                         {
                           "word": "old",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/old.png"
                         }
                       ]
                     },
                     {
                       "word": "short",
                       "emoji": "📏",
+                      "image_url": "/static/vocab_images/stage3/short.png",
                       "distractors": [
                         {
                           "word": "tall",
-                          "emoji": "🦒"
+                          "emoji": "🦒",
+                          "image_url": "/static/vocab_images/stage3/tall.png"
                         },
                         {
                           "word": "young",
-                          "emoji": "👶"
+                          "emoji": "👶",
+                          "image_url": "/static/vocab_images/stage3/young.png"
                         },
                         {
                           "word": "old",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/old.png"
                         }
                       ]
                     },
                     {
                       "word": "young",
                       "emoji": "👶",
+                      "image_url": "/static/vocab_images/stage3/young.png",
                       "distractors": [
                         {
                           "word": "tall",
-                          "emoji": "🦒"
+                          "emoji": "🦒",
+                          "image_url": "/static/vocab_images/stage3/tall.png"
                         },
                         {
                           "word": "short",
-                          "emoji": "📏"
+                          "emoji": "📏",
+                          "image_url": "/static/vocab_images/stage3/short.png"
                         },
                         {
                           "word": "old",
-                          "emoji": "👴"
+                          "emoji": "👴",
+                          "image_url": "/static/vocab_images/stage3/old.png"
                         }
                       ]
                     },
                     {
                       "word": "old",
                       "emoji": "👴",
+                      "image_url": "/static/vocab_images/stage3/old.png",
                       "distractors": [
                         {
                           "word": "tall",
-                          "emoji": "🦒"
+                          "emoji": "🦒",
+                          "image_url": "/static/vocab_images/stage3/tall.png"
                         },
                         {
                           "word": "short",
-                          "emoji": "📏"
+                          "emoji": "📏",
+                          "image_url": "/static/vocab_images/stage3/short.png"
                         },
                         {
                           "word": "young",
-                          "emoji": "👶"
+                          "emoji": "👶",
+                          "image_url": "/static/vocab_images/stage3/young.png"
                         }
                       ]
                     },
                     {
                       "word": "blonde",
                       "emoji": "👱",
+                      "image_url": "/static/vocab_images/stage3/blonde.png",
                       "distractors": [
                         {
                           "word": "tall",
-                          "emoji": "🦒"
+                          "emoji": "🦒",
+                          "image_url": "/static/vocab_images/stage3/tall.png"
                         },
                         {
                           "word": "short",
-                          "emoji": "📏"
+                          "emoji": "📏",
+                          "image_url": "/static/vocab_images/stage3/short.png"
                         },
                         {
                           "word": "young",
-                          "emoji": "👶"
+                          "emoji": "👶",
+                          "image_url": "/static/vocab_images/stage3/young.png"
                         }
                       ]
                     },
                     {
                       "word": "curly",
                       "emoji": "🦱",
+                      "image_url": "/static/vocab_images/stage3/curly.png",
                       "distractors": [
                         {
                           "word": "tall",
-                          "emoji": "🦒"
+                          "emoji": "🦒",
+                          "image_url": "/static/vocab_images/stage3/tall.png"
                         },
                         {
                           "word": "short",
-                          "emoji": "📏"
+                          "emoji": "📏",
+                          "image_url": "/static/vocab_images/stage3/short.png"
                         },
                         {
                           "word": "young",
-                          "emoji": "👶"
+                          "emoji": "👶",
+                          "image_url": "/static/vocab_images/stage3/young.png"
                         }
                       ]
                     }
@@ -1491,7 +1725,7 @@
               ]
             },
             {
-              "step": 5,
+              "step": 4,
               "type": "micro_reading",
               "title": "My online class — what we look like",
               "text": "I love my online class. We are all different. Tom is tall for nine. He is American and his hair is short and dark. Sophie is from London. She is fair and her hair is blonde and a bit curly. She is not very tall. Lucas is Brazilian. He has curly black hair and big brown eyes. He is thin and very quick when we play. My best friend Mai is short and young — like me. We are all nine, but we look very different. Our class is like a big family on the internet.",
@@ -1533,7 +1767,7 @@
               ]
             },
             {
-              "step": 6,
+              "step": 5,
               "type": "grammar_focus",
               "rule_pattern": "Possessive pronouns — mine, yours, his, hers, ours, theirs",
               "explanation": "Possessive pronouns replace 'my/your/his/her/our/their + noun'. We don't say 'this is my pen' twice; we say 'This pen is mine.' Hers, his and ours work the same way. We will use 'there is/there are' a little in our reading today — that's coming in Unit 3.",
@@ -1547,7 +1781,7 @@
               ]
             },
             {
-              "step": 7,
+              "step": 6,
               "type": "grammar_games",
               "games": [
                 {
@@ -1621,40 +1855,22 @@
                   "instruction": "Choose the correct word.",
                   "items": [
                     {
-                      "audio_text": "This bag is mine.",
+                      "sentence": "This bag ___ mine. (= my bag)",
                       "options": [
-                        "This bag is mine.",
-                        "This bag is my.",
-                        "This is my bag mine."
+                        "am",
+                        "is",
+                        "are"
                       ],
-                      "correct": "This bag is mine."
+                      "correct": "is"
                     },
                     {
-                      "audio_text": "The pink pencil case is hers.",
+                      "sentence": "That book ___ yours. (= your book)",
                       "options": [
-                        "The pink pencil case is hers.",
-                        "The pink pencil case is her.",
-                        "Hers is the pink pencil case is."
+                        "am",
+                        "is",
+                        "are"
                       ],
-                      "correct": "The pink pencil case is hers."
-                    },
-                    {
-                      "audio_text": "These photos are ours.",
-                      "options": [
-                        "These photos are ours.",
-                        "These photos is ours.",
-                        "These photos are our."
-                      ],
-                      "correct": "These photos are ours."
-                    },
-                    {
-                      "audio_text": "That book is yours.",
-                      "options": [
-                        "That book is yours.",
-                        "That book is your.",
-                        "Yours that book is."
-                      ],
-                      "correct": "That book is yours."
+                      "correct": "is"
                     },
                     {
                       "sentence": "This bag ___ mine. (= my bag)",
@@ -1673,15 +1889,27 @@
                         "are"
                       ],
                       "correct": "is"
+                    },
+                    {
+                      "sentence": "The brown pencil ___ his.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "The pink pencil case ___ hers.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "step": 8,
-              "type": "grammar_games",
-              "games": [
+                },
                 {
                   "game_type": "audio_match",
                   "instruction": "Listen and tap the sentence you hear.",
@@ -1824,7 +2052,7 @@
                       ]
                     },
                     {
-                      "sentence": "The brown pencil ___ his.",
+                      "sentence": "This bag ___ mine. (= my bag)",
                       "answer": "is",
                       "options": [
                         "am",
@@ -1833,7 +2061,7 @@
                       ]
                     },
                     {
-                      "sentence": "The pink pencil case ___ hers.",
+                      "sentence": "That book ___ yours. (= your book)",
                       "answer": "is",
                       "options": [
                         "am",
@@ -1846,7 +2074,7 @@
               ]
             },
             {
-              "step": 9,
+              "step": 7,
               "type": "listening",
               "audio_text": "Ray: Class, look at the photos on your screen. Tom: Ray, I am the tall boy with short dark hair. Ray: Yes — that one is yours. Tom: And this blonde girl — who is she? Sophie: That one is mine! I am the blonde girl with curly hair. Lucas: And the one with very curly black hair is mine. I am Lucas. I am thin and quick! Linh: My photo is the one with the short Vietnamese girl. That photo is mine. My brother Minh is young — only seven. Ray: Excellent class! All your photos are different and all of them are amazing.",
               "audio_url": "/static/audio/stage3/unit02/lesson_02.mp3",
@@ -1885,7 +2113,7 @@
               ]
             },
             {
-              "step": 10,
+              "step": 8,
               "type": "production",
               "production_type": "speaking",
               "prompt": "Describe yourself or a friend with at least 3 adjectives from this lesson.",
@@ -1898,7 +2126,7 @@
               ]
             },
             {
-              "step": 11,
+              "step": 9,
               "type": "exit_ticket",
               "title": "Quick check — Lesson 2",
               "questions": [
@@ -2204,40 +2432,40 @@
                       "image_url": "/static/vocab_images/stage3/look_like.png"
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "step": 4,
-              "type": "vocab_games",
-              "games": [
+                },
                 {
                   "game_type": "look_write",
                   "instruction": "Look at the picture and type the word.",
                   "items": [
                     {
                       "word": "moustache",
-                      "emoji": "👨"
+                      "emoji": "👨",
+                      "image_url": "/static/vocab_images/stage3/moustache.png"
                     },
                     {
                       "word": "beard",
-                      "emoji": "🧔"
+                      "emoji": "🧔",
+                      "image_url": "/static/vocab_images/stage3/beard.png"
                     },
                     {
                       "word": "hair",
-                      "emoji": "💇"
+                      "emoji": "💇",
+                      "image_url": "/static/vocab_images/stage3/hair.png"
                     },
                     {
                       "word": "eyes",
-                      "emoji": "👀"
+                      "emoji": "👀",
+                      "image_url": "/static/vocab_images/stage3/eyes.png"
                     },
                     {
                       "word": "smile",
-                      "emoji": "😊"
+                      "emoji": "😊",
+                      "image_url": "/static/vocab_images/stage3/smile.png"
                     },
                     {
                       "word": "look like",
-                      "emoji": "🔍"
+                      "emoji": "🔍",
+                      "image_url": "/static/vocab_images/stage3/look_like.png"
                     }
                   ]
                 },
@@ -2247,27 +2475,33 @@
                   "items": [
                     {
                       "word": "moustache",
-                      "emoji": "👨"
+                      "emoji": "👨",
+                      "image_url": "/static/vocab_images/stage3/moustache.png"
                     },
                     {
                       "word": "beard",
-                      "emoji": "🧔"
+                      "emoji": "🧔",
+                      "image_url": "/static/vocab_images/stage3/beard.png"
                     },
                     {
                       "word": "hair",
-                      "emoji": "💇"
+                      "emoji": "💇",
+                      "image_url": "/static/vocab_images/stage3/hair.png"
                     },
                     {
                       "word": "eyes",
-                      "emoji": "👀"
+                      "emoji": "👀",
+                      "image_url": "/static/vocab_images/stage3/eyes.png"
                     },
                     {
                       "word": "smile",
-                      "emoji": "😊"
+                      "emoji": "😊",
+                      "image_url": "/static/vocab_images/stage3/smile.png"
                     },
                     {
                       "word": "look like",
-                      "emoji": "🔍"
+                      "emoji": "🔍",
+                      "image_url": "/static/vocab_images/stage3/look_like.png"
                     }
                   ]
                 },
@@ -2310,7 +2544,7 @@
               ]
             },
             {
-              "step": 5,
+              "step": 4,
               "type": "micro_reading",
               "title": "Our family photo on the wall",
               "text": "On the wall in my bedroom there is a family photo. My grandfather has a small white beard and kind eyes. My grandmother has short fair hair and a beautiful smile. My dad has a thin moustache. He looks like my grandfather, but he is younger. My mum has long dark hair. People say I look like her. Minh looks like my dad — he has the same big eyes. My cousins, the twins, look like each other! It is hard to know whose photo is whose. This photo is ours, and we love it. In the kitchen we have one more family photo, with our aunt and uncle, too.",
@@ -2352,7 +2586,7 @@
               ]
             },
             {
-              "step": 6,
+              "step": 5,
               "type": "grammar_focus",
               "rule_pattern": "Mixing possessive 's + possessive pronouns + 'look like'",
               "explanation": "To talk about appearance: 'X looks like Y.' or 'X has Y's eyes/smile/nose.' Mix this with possessive pronouns: 'This photo is ours.' Notice that we will say 'there is a photo on the wall' fully in Unit 3 — for today, just use 'is' as in 'There is a family photo.'",
@@ -2366,7 +2600,7 @@
               ]
             },
             {
-              "step": 7,
+              "step": 6,
               "type": "grammar_games",
               "games": [
                 {
@@ -2437,25 +2671,31 @@
                       "correct": "is"
                     },
                     {
-                      "audio_text": "Minh looks like Dad.",
+                      "sentence": "This photo ___ ours.",
                       "options": [
-                        "Minh looks like Dad."
+                        "am",
+                        "is",
+                        "are"
                       ],
-                      "correct": "Minh looks like Dad."
+                      "correct": "is"
                     },
                     {
-                      "audio_text": "I look like my mum.",
+                      "sentence": "Whose photo ___ this? — It's mine.",
                       "options": [
-                        "I look like my mum."
+                        "am",
+                        "is",
+                        "are"
                       ],
-                      "correct": "I look like my mum."
+                      "correct": "is"
                     },
                     {
-                      "audio_text": "My grandfather has a small white beard.",
+                      "sentence": "There ___ a family photo on the wall. (Full 'there is/are' in Unit 3.)",
                       "options": [
-                        "My grandfather has a small white beard."
+                        "am",
+                        "is",
+                        "are"
                       ],
-                      "correct": "My grandfather has a small white beard."
+                      "correct": "is"
                     }
                   ]
                 },
@@ -2494,13 +2734,7 @@
                       "alternateErrors": []
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "step": 8,
-              "type": "grammar_games",
-              "games": [
+                },
                 {
                   "game_type": "transform_sentence",
                   "instruction": "Transform the sentence.",
@@ -2614,7 +2848,7 @@
               ]
             },
             {
-              "step": 9,
+              "step": 7,
               "type": "listening",
               "audio_text": "Ray: Linh, can you describe the people in your family photo? Linh: Of course. My grandfather has a small white beard and kind eyes. My grandmother has short fair hair and a beautiful smile. Ray: Does your dad have a beard, too? Linh: No, he has a thin moustache. He looks like my grandfather, but he is younger. Ray: And your mum? Linh: My mum has long dark hair. People say I look like her. Ray: What about Minh? Linh: Minh looks like my dad. He has big eyes, like my dad. Ray: Lovely photo! And this photo is yours, of course. Linh: Yes, this one is mine — well, it's ours.",
               "audio_url": "/static/audio/stage3/unit02/lesson_03.mp3",
@@ -2653,7 +2887,7 @@
               ]
             },
             {
-              "step": 10,
+              "step": 8,
               "type": "production",
               "production_type": "speaking",
               "prompt": "Describe one person in your family photo. Use 2-3 face words and one 'look like' sentence.",
@@ -2665,7 +2899,7 @@
               ]
             },
             {
-              "step": 11,
+              "step": 9,
               "type": "exit_ticket",
               "title": "Quick check — Lesson 3",
               "questions": [
@@ -2854,101 +3088,331 @@
                     {
                       "prompt": "grandparent",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandparent"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandfather"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandmother"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandson"
+                        }
                       ]
                     },
                     {
                       "prompt": "grandfather",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandfather"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandparent"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandmother"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandson"
+                        }
                       ]
                     },
                     {
                       "prompt": "grandmother",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandmother"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandparent"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandfather"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandson"
+                        }
                       ]
                     },
                     {
                       "prompt": "grandson",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandson"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandparent"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandfather"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandmother"
+                        }
                       ]
                     },
                     {
                       "prompt": "granddaughter",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "granddaughter"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandparent"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandfather"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandmother"
+                        }
                       ]
                     },
                     {
                       "prompt": "son",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "son"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandparent"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandfather"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandmother"
+                        }
                       ]
                     },
                     {
                       "prompt": "daughter",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "daughter"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandparent"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandfather"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandmother"
+                        }
                       ]
                     },
                     {
                       "prompt": "cousin",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "cousin"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandparent"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandfather"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandmother"
+                        }
                       ]
                     },
                     {
                       "prompt": "twin",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "twin"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandparent"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandfather"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandmother"
+                        }
                       ]
                     },
                     {
                       "prompt": "tall",
                       "correct_emoji": "📦",
+                      "correct_image_url": "",
                       "options": [
                         "📦",
                         "📦",
                         "📦",
                         "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "tall"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandparent"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandfather"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "grandmother"
+                        }
                       ]
                     }
                   ]
@@ -2988,40 +3452,40 @@
                       "image_url": ""
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "step": 4,
-              "type": "vocab_games",
-              "games": [
+                },
                 {
                   "game_type": "memory_game",
                   "instruction": "Flip the cards and find the pairs.",
                   "items": [
                     {
                       "word": "grandparent",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "grandfather",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "grandmother",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "grandson",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "granddaughter",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "son",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     }
                   ]
                 },
@@ -3032,108 +3496,132 @@
                     {
                       "word": "grandparent",
                       "emoji": "📦",
+                      "image_url": "",
                       "distractors": [
                         {
                           "word": "grandfather",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "grandmother",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "grandson",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
                       "word": "grandfather",
                       "emoji": "📦",
+                      "image_url": "",
                       "distractors": [
                         {
                           "word": "grandparent",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "grandmother",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "grandson",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
                       "word": "grandmother",
                       "emoji": "📦",
+                      "image_url": "",
                       "distractors": [
                         {
                           "word": "grandparent",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "grandfather",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "grandson",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
                       "word": "grandson",
                       "emoji": "📦",
+                      "image_url": "",
                       "distractors": [
                         {
                           "word": "grandparent",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "grandfather",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "grandmother",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
                       "word": "granddaughter",
                       "emoji": "📦",
+                      "image_url": "",
                       "distractors": [
                         {
                           "word": "grandparent",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "grandfather",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "grandmother",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
                       "word": "son",
                       "emoji": "📦",
+                      "image_url": "",
                       "distractors": [
                         {
                           "word": "grandparent",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "grandfather",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         },
                         {
                           "word": "grandmother",
-                          "emoji": "📦"
+                          "emoji": "📦",
+                          "image_url": ""
                         }
                       ]
                     }
@@ -3145,34 +3633,40 @@
                   "items": [
                     {
                       "word": "grandparent",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "grandfather",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "grandmother",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "grandson",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "granddaughter",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     },
                     {
                       "word": "son",
-                      "emoji": "📦"
+                      "emoji": "📦",
+                      "image_url": ""
                     }
                   ]
                 }
               ]
             },
             {
-              "step": 5,
+              "step": 4,
               "type": "micro_reading",
               "title": "Our big family photo",
               "text": "This is my big family photo. There are eleven people in it. My grandparents are at the back. My grandfather has a small white beard and kind eyes. My grandmother has short fair hair and a beautiful smile. My dad has a thin moustache. He looks like my grandfather, but he is younger. My mum has long dark hair. I look like her. Minh, my brother, is seven and very young. He looks like Dad. Our uncle Quan is tall and a little bit fat. His sons are my cousins — they are twins! They are both thin and short. We also have one big family rule: when we eat in the kitchen, everyone helps. The photo is ours, and it lives near the door of my bedroom. We are not a big family by Vietnamese standards, but for me, this family is the best.",
@@ -3236,7 +3730,7 @@
               ]
             },
             {
-              "step": 6,
+              "step": 5,
               "type": "grammar_review",
               "patterns": [
                 "Possessive 's: Minh's bag, my parents' house, grandfather's beard",
@@ -3246,7 +3740,7 @@
               ]
             },
             {
-              "step": 7,
+              "step": 6,
               "type": "grammar_games",
               "games": [
                 {
@@ -3398,13 +3892,7 @@
                       "correct": "are"
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "step": 8,
-              "type": "grammar_games",
-              "games": [
+                },
                 {
                   "game_type": "sentence_builder_timed",
                   "instruction": "45 seconds! Build each sentence.",
@@ -3551,7 +4039,7 @@
               ]
             },
             {
-              "step": 9,
+              "step": 7,
               "type": "listening",
               "audio_text": "Ray: Class, today is family-photo day. Linh, start! Linh: Hi everyone. This is my big family photo. My grandfather has a white beard and a kind smile. My grandmother has short fair hair. My dad has a thin moustache and my mum has long dark hair. I look like my mum and Minh looks like Dad. My cousins are twins — they are thin and short. Ray: Tom, what about you? Tom: My family is small. I have one little sister. She is blonde and very young. I am tall and my hair is short. Ray: Sophie? Sophie: My family is small, too. My grandparents are in London. My grandmother has curly fair hair like mine. We look like each other. Ray: Lovely! Each photo is yours and it's special.",
               "audio_url": "/static/audio/stage3/unit02/lesson_04.mp3",
@@ -3603,7 +4091,7 @@
               ]
             },
             {
-              "step": 10,
+              "step": 8,
               "type": "production",
               "production_type": "speaking",
               "prompt": "Tell Ray about your whole family in 6-8 sentences. Use 's, possessive pronouns and 'look like' at least once each.",
@@ -3618,7 +4106,7 @@
               ]
             },
             {
-              "step": 11,
+              "step": 9,
               "type": "exit_ticket",
               "title": "Unit 2 — My family — Final check",
               "questions": [
