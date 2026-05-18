@@ -242,13 +242,13 @@ export default function UnifiedStagePage({ user }) {
         style={{ backgroundColor: stage.color }}
       >
         <div className="max-w-7xl mx-auto px-4">
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             className="text-white hover:bg-white/20 mb-4 rounded-full"
-            onClick={() => navigate('/unified')}
+            onClick={() => navigate('/dashboard')}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            All Stages
+            Back to Dashboard
           </Button>
           
           <div className="flex items-center gap-4">
