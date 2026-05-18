@@ -551,11 +551,20 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None, stage
                 await db.unified_lessons.update_one(
                     {"lesson_id": lesson_id},
                     {"$set": {
+                        "lesson_id": lesson_id,
+                        "unit_id": unit_id,
+                        "stage_id": _stage_id_from_prefix(stage_prefix),
+                        "lesson_num": orig_lesson.get('lesson_num'),
+                        "number": orig_lesson.get('lesson_num'),
+                        "title": orig_lesson.get('title'),
+                        "topic": orig_lesson.get('topic', ''),
+                        "is_review": orig_lesson.get('is_review', False),
                         "activity_flow": activity_flow,
                         "merged": True,
                         "merged_at": TS,
                         "context": {"enriched": True, "enriched_at": TS}
-                    }}
+                    }},
+                    upsert=True,
                 )
                 seeded_count += 1
     
