@@ -23,11 +23,15 @@ export default function Step4Language({
   onSelect,
   nativeLanguage,
   onSelectNative,
+  path,
 }) {
+  // GE users see Ray, IELTS users see Liz. Keeps onboarding voice consistent
+  // with whichever tutor will appear on the dashboard after sign-up.
+  const tutor = path === 'general' ? 'Ray' : 'Liz';
   return (
     <section className={`step${direction === 'rev' ? ' rev' : ''}`}>
       <h1 className="step-title">
-        Which language should Liz{' '}
+        Which language should {tutor}{' '}
         <span className="ital">explain things in?</span>
       </h1>
       <p className="step-sub">
@@ -60,8 +64,8 @@ export default function Step4Language({
         <div className="native-lang-block">
           <div className="q-label">What's your native language?</div>
           <div className="q-hint">
-            Helps Liz spot L1-driven mistakes (false friends, article use, word
-            order). Optional.
+            Helps {tutor} spot L1-driven mistakes (false friends, article use,
+            word order). Optional.
           </div>
           <div className="lang-grid native">
             {LANGUAGES.map((l) => {

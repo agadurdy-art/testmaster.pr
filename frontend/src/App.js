@@ -381,6 +381,12 @@ function AppWithSessionHandler() {
     const preservedLang = localStorage.getItem('ieltsace_language');
     localStorage.clear();
     if (preservedLang) localStorage.setItem('ieltsace_language', preservedLang);
+    // PathPickerGate caches the prior track choice in sessionStorage
+    // (`tm_demo_path`). If we don't drop it on logout, the next "/" visit
+    // skips the picker and lands straight on whichever surface the user
+    // chose last — meaning both IELTS and GE logouts always show the IELTS
+    // landing. Clearing the session forces the gate to ask again.
+    try { sessionStorage.clear(); } catch (_) {}
     // Hard-redirect to "/" so PathPickerGate remounts with an empty choice
     // and the visitor sees the IELTS/GE picker again instead of landing
     // straight on whichever flavour they picked last session.

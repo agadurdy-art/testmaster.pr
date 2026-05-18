@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { MONTHS, DAY_SHORT } from '../constants';
 import LizAvatar from '../../landing/components/LizAvatar';
+import RayAvatar from '../../landing/components/RayAvatar';
 import { useLizVoice } from '../../../hooks/useLizVoice';
 
 // Short, natural Liz greeting per supported language. The placeholder
@@ -147,7 +148,7 @@ export default function Step5LizIntro({ direction, state, onMotivationChange }) 
       <section className={`step${direction === 'rev' ? ' rev' : ''}`}>
         <div className="liz-screen">
           <Confetti enabled={showConfetti} />
-          <LizAvatar size={120} ring className="liz-avatar-lg" />
+          <RayAvatar size={120} ring className="liz-avatar-lg" />
           <div className="liz-name">{GE_TUTOR_NAME} · Your General English guide</div>
           <h2 className="liz-heading">
             Hi {name}! Welcome to your{' '}

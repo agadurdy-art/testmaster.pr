@@ -89,6 +89,7 @@ export default function OnboardingQuiz({ onFinish }) {
             onSelect={(language) => update({ language })}
             nativeLanguage={state.nativeLanguage}
             onSelectNative={(nativeLanguage) => update({ nativeLanguage })}
+            path={state.path}
           />
         )}
         {step === 5 && (
