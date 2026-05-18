@@ -67,7 +67,17 @@ class ContentMerger:
         """
         Merge by walking the ORIGINAL steps and selectively replacing with enriched data.
         """
-        enriched_steps = {s.get('type'): s for s in enriched_lesson.get('steps', [])}
+        # Group enriched steps by type but preserve order — a lesson can
+        # have multiple steps of the same type (e.g. two vocab_games packs
+        # in Stage 3). Dict-by-type collapses duplicates and makes every
+        # same-typed orig step point at the LAST enriched step of that
+        # type, so step N+1's content leaks into step N.
+        enriched_by_type: Dict[str, list] = {}
+        for s in enriched_lesson.get('steps', []):
+            enriched_by_type.setdefault(s.get('type'), []).append(s)
+
+        # Track consumption per type to walk same-typed packs in order.
+        consumed: Dict[str, int] = {}
         merged_steps = []
 
         for i, orig_step in enumerate(original_lesson.get('steps', [])):
@@ -75,9 +85,11 @@ class ContentMerger:
             enriched_key = ENRICH_MAP.get(step_type)
 
             if enriched_key:
-                enriched_step = enriched_steps.get(enriched_key)
+                bucket = enriched_by_type.get(enriched_key, [])
+                idx = consumed.get(enriched_key, 0)
+                enriched_step = bucket[idx] if idx < len(bucket) else None
                 if enriched_step and _enriched_has_content(enriched_step, enriched_key):
-                    # Use enriched version, keep type as the enriched key
+                    consumed[enriched_key] = idx + 1
                     merged_step = {**enriched_step, 'step': i + 1}
                     merged_steps.append(merged_step)
                     continue
