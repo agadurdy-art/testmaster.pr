@@ -341,6 +341,30 @@ const STAGE_CSS = `
     transform: none !important;
   }
 }
+
+/* Mobile: hide bleeding decorations + reposition Back-to-Dashboard out of
+   the hero card so it reads as page chrome, not part of the title block. */
+@media (max-width: 768px) {
+  .gstg-page {
+    overflow-x: hidden;
+  }
+  .gstg-deco {
+    display: none !important;
+  }
+  .gstg-back-pill {
+    position: relative !important;
+    margin: 12px 0 4px;
+    align-self: flex-start;
+    background: rgba(0,0,0,0.06) !important;
+    color: #334155 !important;
+    backdrop-filter: none !important;
+    border: 1px solid rgba(0,0,0,0.08) !important;
+  }
+  .gstg-back-pill:hover { background: rgba(0,0,0,0.1) !important; }
+  .gstg-cover {
+    padding-top: 18px !important;
+  }
+}
 `;
 
 // ───── Chapter (Unit) card ─────
@@ -417,7 +441,7 @@ function ChapterCard({ unit, lessons, userProgress, onLessonClick, isUnitUnlocke
                 </span>
                 <div className="gstg-lesson-info">
                   <div className="gstg-lesson-title">
-                    {lesson.number}. {lesson.title}
+                    {lessonIdx + 1}. {String(lesson.title || '').replace(/^\d+\.\s*/, '')}
                   </div>
                   <div className="gstg-lesson-meta">
                     <span className="gstg-lesson-meta-item">⏱ {lesson.estimated_duration_minutes} min</span>
@@ -595,10 +619,16 @@ export default function UnifiedStagePage({ user }) {
               {stage.description}
             </p>
           )}
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-4 text-sm font-medium opacity-95">
-            <span className="inline-flex items-center gap-1.5">📚 <strong>{stage.total_units || units.length} chapters</strong></span>
-            <span className="inline-flex items-center gap-1.5">📜 <strong>{stage.total_lessons || (stage.total_units * (stage.lessons_per_unit || 4)) || 0} lessons</strong></span>
-          </div>
+          {units.length > 0 && (
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-4 text-sm font-medium opacity-95">
+              <span className="inline-flex items-center gap-1.5">📚 <strong>{units.length} chapters</strong></span>
+              <span className="inline-flex items-center gap-1.5">
+                📜 <strong>
+                  {units.reduce((sum, u) => sum + (u.lessons?.length || u.total_lessons || 0), 0)} lessons
+                </strong>
+              </span>
+            </div>
+          )}
           <span className="gstg-sparkle" style={{ top: '18%', left: '70%', color: '#FFD700' }}>✨</span>
           <span className="gstg-sparkle" style={{ top: '70%', left: '80%', color: '#FFE066', animationDelay: '0.6s' }}>⭐</span>
         </div>

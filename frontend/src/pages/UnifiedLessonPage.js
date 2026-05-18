@@ -474,6 +474,75 @@ const ADVENTURE_CSS = `
 
 .adv-bubble { position: relative; background: white; border-radius: 14px; padding: 7px 11px; box-shadow: 0 6px 18px rgba(0,0,0,0.12); font-size: 12px; font-weight: 500; color: #334155; white-space: nowrap; }
 .adv-bubble::after { content: ''; position: absolute; bottom: -6px; left: 18px; width: 12px; height: 12px; background: white; transform: rotate(45deg); border-radius: 0 0 4px 0; }
+
+/* ─── MOBILE: vertical timeline (treasure-map collapses on small screens) ─── */
+@media (max-width: 768px) {
+  .adv-roadmap .adv-deco,
+  .adv-roadmap .adv-sparkle,
+  .adv-roadmap .adv-island,
+  .adv-roadmap .adv-cloud,
+  .adv-roadmap svg.adv-path-svg,
+  .adv-roadmap .adv-mapwrap > svg { display: none !important; }
+
+  .adv-mapwrap {
+    aspect-ratio: auto !important;
+    max-width: 100% !important;
+    padding: 8px 0 24px;
+  }
+  /* Vertical column with a connecting line down the middle of each badge */
+  .adv-mapwrap::before {
+    content: '';
+    position: absolute;
+    left: 51px; top: 30px; bottom: 30px;
+    width: 3px;
+    background: repeating-linear-gradient(to bottom, #FFB75E 0 8px, transparent 8px 14px);
+    border-radius: 2px;
+    z-index: 0;
+  }
+  .adv-stop {
+    position: relative !important;
+    left: 0 !important; top: 0 !important;
+    transform: none !important;
+    width: 100%;
+    margin: 10px 0;
+    padding: 0 16px;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 14px;
+    animation: lessonFadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .adv-stop .adv-badge {
+    width: 78px; height: 78px;
+    font-size: 38px;
+    flex-shrink: 0;
+    z-index: 2;
+  }
+  .adv-stop .adv-card {
+    flex: 1;
+    transform: none !important;
+    margin-top: 0 !important;
+    padding: 10px 14px;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    text-align: left;
+  }
+  .adv-stop .adv-num { font-size: 11px; padding: 2px 8px; }
+  .adv-stop .adv-title { font-size: 16px; margin-top: 2px; }
+  .adv-stop .adv-meta { font-size: 12px; }
+  .adv-stop.adv-locked { opacity: 0.55; }
+  .adv-stop.adv-locked .adv-card { filter: grayscale(0.4); }
+
+  /* Mascot row + Start button: stack mascot above sticky CTA */
+  .adv-roadmap .adv-mascot { margin-bottom: 12px; }
+  .adv-roadmap .adv-start-btn {
+    position: sticky;
+    bottom: 16px;
+    width: calc(100% - 32px);
+    margin: 8px auto 0;
+    justify-content: center;
+  }
+}
 `;
 
 // ═══════ LESSON ROADMAP (Adventure / Treasure-Map) ═══════
