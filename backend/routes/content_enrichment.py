@@ -438,10 +438,28 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None, stage
         if original_data is None and enriched_data is not None:
             for enrich_unit_only in enriched_data.get('units', []):
                 unit_id = enrich_unit_only.get('unit_id')
-                # Ensure unit doc exists / mark enriched
+                unit_num_val = enrich_unit_only.get('unit_num') or enrich_unit_only.get('unit_number')
+                # Upsert full unit metadata — without this, late-added Stage 3+
+                # units (e.g. U3, U4 after a deploy where DB only had U1+U2)
+                # never get a unified_units doc and the stage page silently
+                # caps at the older unit count. update_one without upsert=True
+                # was a no-op for missing docs.
                 await db.unified_units.update_one(
                     {"unit_id": unit_id},
-                    {"$set": {"ai_enriched": True, "enriched_at": TS}}
+                    {"$set": {
+                        "unit_id": unit_id,
+                        "stage_id": _stage_id_from_prefix(stage_prefix),
+                        "unit_number": unit_num_val,
+                        "number": unit_num_val,
+                        "title": enrich_unit_only.get('title', ''),
+                        "subtitle": enrich_unit_only.get('subtitle', ''),
+                        "phonics_focus": enrich_unit_only.get('phonics_focus', ''),
+                        "grammar_focus": enrich_unit_only.get('grammar_focus', ''),
+                        "total_lessons": len(enrich_unit_only.get('lessons', [])),
+                        "ai_enriched": True,
+                        "enriched_at": TS,
+                    }},
+                    upsert=True,
                 )
                 for elesson in enrich_unit_only.get('lessons', []):
                     lesson_id = elesson.get('lesson_id')
