@@ -554,6 +554,16 @@
                   "instruction": "Choose the correct word.",
                   "items": [
                     {
+                      "sentence": "I ___ a phone.",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ],
+                      "correct": "have"
+                    },
+                    {
                       "sentence": "She ___ a student.",
                       "options": [
                         "am",
@@ -561,6 +571,16 @@
                         "are"
                       ],
                       "correct": "is"
+                    },
+                    {
+                      "sentence": "He ___ an orange.",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ],
+                      "correct": "has"
                     },
                     {
                       "sentence": "Sofia ___ a friend.",
@@ -578,12 +598,32 @@
                   "instruction": "Fill the gap.",
                   "items": [
                     {
+                      "sentence": "I ___ a phone.",
+                      "answer": "have",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ]
+                    },
+                    {
                       "sentence": "She ___ a student.",
                       "answer": "is",
                       "options": [
                         "am",
                         "is",
                         "are"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ an orange.",
+                      "answer": "has",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
                       ]
                     },
                     {
@@ -603,23 +643,29 @@
                   "items": [
                     {
                       "sentence": "I have a phone.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "She am a student.",
-                      "correct": "false"
+                      "correct": "false",
+                      "is_correct": false,
+                      "corrected": "She is a student."
                     },
                     {
                       "sentence": "He has an orange.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "It's a camera.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "Sofia is a friend.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     }
                   ]
                 }
@@ -1392,23 +1438,30 @@
                   "items": [
                     {
                       "sentence": "I am from Argentina. → I'm from Argentina.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "You am 12. → You're 12.",
-                      "correct": "false"
+                      "correct": "false",
+                      "is_correct": false,
+                      "corrected": "You are 12. → You're 12."
                     },
                     {
                       "sentence": "He is Chinese. → He's Chinese.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "She am from Brazil. → She's from Brazil.",
-                      "correct": "false"
+                      "correct": "false",
+                      "is_correct": false,
+                      "corrected": "She is from Brazil. → She's from Brazil."
                     },
                     {
                       "sentence": "It is a phone. → It's a phone.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     }
                   ]
                 },
@@ -2822,27 +2875,36 @@
                   "items": [
                     {
                       "sentence": "Determiners (singular): a / an",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "be — singular: I is you are, he/she/it is",
-                      "correct": "false"
+                      "correct": "false",
+                      "is_correct": false,
+                      "corrected": "be — singular: I am, you are, he/she/it is"
                     },
                     {
                       "sentence": "be — plural: we are, you are, they are",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "I is Vietnamese.",
-                      "correct": "false"
+                      "correct": "false",
+                      "is_correct": false,
+                      "corrected": "I am Vietnamese."
                     },
                     {
                       "sentence": "She is my friend.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "He am my brother.",
-                      "correct": "false"
+                      "correct": "false",
+                      "is_correct": false,
+                      "corrected": "He is my brother."
                     }
                   ]
                 },

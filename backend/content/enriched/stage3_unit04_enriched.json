@@ -580,23 +580,29 @@
                   "items": [
                     {
                       "sentence": "I've got a pen.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "I has got two books.",
-                      "correct": "false"
+                      "correct": "false",
+                      "is_correct": false,
+                      "corrected": "I have got two books."
                     },
                     {
                       "sentence": "You've got a nice schoolbag.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "We've got pencils.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "They have got rulers.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     }
                   ]
                 }
@@ -1319,23 +1325,29 @@
                   "items": [
                     {
                       "sentence": "He has got a small bag.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "She's got a new tablet.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "It has got two pockets.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "My dad have got an old dictionary.",
-                      "correct": "false"
+                      "correct": "false",
+                      "is_correct": false,
+                      "corrected": "My dad has got an old dictionary."
                     },
                     {
                       "sentence": "Emma's got a pink water bottle.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     }
                   ]
                 },
@@ -2683,27 +2695,36 @@
                   "items": [
                     {
                       "sentence": "have got — positive (I/you/we/they 've got; he/she/it 's got)",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "has got — negative (haven't got / hasn't got)",
-                      "correct": "false"
+                      "correct": "false",
+                      "is_correct": false,
+                      "corrected": "have got — negative (haven't got / hasn't got)"
                     },
                     {
                       "sentence": "Adjectives: big, small, new, old, beautiful, nice, ugly, long, short, favourite",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "I is Vietnamese.",
-                      "correct": "false"
+                      "correct": "false",
+                      "is_correct": false,
+                      "corrected": "I am Vietnamese."
                     },
                     {
                       "sentence": "She is my friend.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "He am my brother.",
-                      "correct": "false"
+                      "correct": "false",
+                      "is_correct": false,
+                      "corrected": "He is my brother."
                     }
                   ]
                 },

@@ -21,7 +21,22 @@ const TrueFalseGrammar = ({
   const [isComplete, setIsComplete] = useState(false);
 
   if (!items?.length) return null;
-  const currentItem = items[currentIdx];
+  const rawItem = items[currentIdx];
+
+  // Defensive normalisation — pack_unit_games emits `correct: "true"|"false"`
+  // (string), authored content sometimes uses `is_correct: boolean`. Accept
+  // both. Without this the component compared `selectedAnswer (boolean) ===
+  // undefined` and "always wrong" — visible to Aga 2026-05-19.
+  const correctAsBool = (() => {
+    if (rawItem == null) return null;
+    if (typeof rawItem.is_correct === 'boolean') return rawItem.is_correct;
+    if (typeof rawItem.correct === 'boolean') return rawItem.correct;
+    const s = String(rawItem.correct ?? rawItem.is_correct ?? '').toLowerCase().trim();
+    if (s === 'true' || s === '1' || s === 'yes') return true;
+    if (s === 'false' || s === '0' || s === 'no') return false;
+    return null;
+  })();
+  const currentItem = rawItem ? { ...rawItem, is_correct: correctAsBool } : rawItem;
 
   const handleSelect = (answer) => {
     if (showFeedback) return;

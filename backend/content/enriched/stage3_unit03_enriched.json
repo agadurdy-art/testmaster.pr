@@ -586,23 +586,28 @@
                   "items": [
                     {
                       "sentence": "There is a sofa in the living room.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "There's a bed in my bedroom.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "There is a garden.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "There's a mirror on the wall.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "There is a cat in the kitchen.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     }
                   ]
                 }
@@ -1343,23 +1348,30 @@
                   "items": [
                     {
                       "sentence": "There are two chairs.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "There am three shelves.",
-                      "correct": "false"
+                      "correct": "false",
+                      "is_correct": false,
+                      "corrected": "There are three shelves."
                     },
                     {
                       "sentence": "There are five books on the desk.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "There am four students in the room.",
-                      "correct": "false"
+                      "correct": "false",
+                      "is_correct": false,
+                      "corrected": "There are four students in the room."
                     },
                     {
                       "sentence": "There are two mirrors on the wall.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     }
                   ]
                 },
@@ -2733,27 +2745,36 @@
                   "items": [
                     {
                       "sentence": "there is + singular (a kitchen, a bed)",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "there am + plural (two chairs, three books)",
-                      "correct": "false"
+                      "correct": "false",
+                      "is_correct": false,
+                      "corrected": "there are + plural (two chairs, three books)"
                     },
                     {
                       "sentence": "Prepositions: in, on, under, behind, next to",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
-                      "sentence": "have got — introduction (I have a desk. She has a computer.)",
-                      "correct": "true"
+                      "sentence": "has got — introduction (I have a desk. She has a computer.)",
+                      "correct": "false",
+                      "is_correct": false,
+                      "corrected": "have got — introduction (I have a desk. She has a computer.)"
                     },
                     {
                       "sentence": "I am Vietnamese.",
-                      "correct": "true"
+                      "correct": "true",
+                      "is_correct": true
                     },
                     {
                       "sentence": "She am my friend.",
-                      "correct": "false"
+                      "correct": "false",
+                      "is_correct": false,
+                      "corrected": "She is my friend."
                     }
                   ]
                 },
@@ -2780,6 +2801,16 @@
                       ]
                     },
                     {
+                      "sentence": "___ got — introduction (I have a desk. She has a computer.)",
+                      "answer": "have",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ]
+                    },
+                    {
                       "sentence": "I ___ Vietnamese.",
                       "answer": "am",
                       "options": [
@@ -2800,15 +2831,6 @@
                     {
                       "sentence": "He ___ my brother.",
                       "answer": "is",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ]
-                    },
-                    {
-                      "sentence": "We ___ classmates.",
-                      "answer": "are",
                       "options": [
                         "am",
                         "is",
@@ -2840,6 +2862,16 @@
                       "correct": "are"
                     },
                     {
+                      "sentence": "___ got — introduction (I have a desk. She has a computer.)",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ],
+                      "correct": "have"
+                    },
+                    {
                       "sentence": "I ___ Vietnamese.",
                       "options": [
                         "am",
@@ -2865,15 +2897,6 @@
                         "are"
                       ],
                       "correct": "is"
-                    },
-                    {
-                      "sentence": "We ___ classmates.",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "are"
                     }
                   ]
                 }

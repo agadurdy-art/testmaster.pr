@@ -278,9 +278,18 @@ def synthesize_grammar_items(examples):
             be_word = words[be_at].strip(".,!?").lower()
             wrong = next((b for b in _options_for(be_word) if b != be_word), "is")
             twisted = " ".join([wrong if i == be_at else w for i, w in enumerate(words)])
-            out["true_false"].append({"sentence": twisted, "correct": "false"})
+            out["true_false"].append({
+                "sentence": twisted,
+                "correct": "false",
+                "is_correct": False,  # frontend reads boolean form
+                "corrected": clean,
+            })
         else:
-            out["true_false"].append({"sentence": clean, "correct": "true"})
+            out["true_false"].append({
+                "sentence": clean,
+                "correct": "true",
+                "is_correct": True,
+            })
         # error_hunter: deliberately wrong be-form
         if be_at >= 0:
             be_word = words[be_at].strip(".,!?").lower()

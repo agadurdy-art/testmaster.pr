@@ -163,13 +163,16 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None, stage
     enriched_dir = _ENRICHED_DIR
     
     if unit_numbers is None:
-        unit_numbers = list(range(1, 13))
-    
-    # Determine which stages to process
+        unit_numbers = list(range(1, 21))  # cover Stage 3 U1-U20 too
+
+    # Determine which stages to process. Stage 3+ enriched-only files now
+    # live under backend/content/enriched/ as stage3_unitNN_enriched.json
+    # — include them in the default "all" sweep so a fresh deploy seeds
+    # Movers content automatically.
     stage_prefixes = []
     if stage == "all":
-        stage_prefixes = ["stage1", "stage2"]
-    elif stage in ("stage1", "stage2"):
+        stage_prefixes = ["stage1", "stage2", "stage3"]
+    elif stage in ("stage1", "stage2", "stage3"):
         stage_prefixes = [stage]
     else:
         stage_prefixes = [stage]
