@@ -79,7 +79,7 @@
                   "word": "bag",
                   "definition": "Something you carry your things in.",
                   "image_emoji": "🎒",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png",
                   "example_sentence": "My bag is on the chair.",
                   "asset_slug": "stage3_u01_bag"
                 },
@@ -87,7 +87,7 @@
                   "word": "camera",
                   "definition": "A thing that takes photos.",
                   "image_emoji": "📷",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png",
                   "example_sentence": "This camera is new.",
                   "asset_slug": "stage3_u01_camera"
                 },
@@ -95,7 +95,7 @@
                   "word": "chair",
                   "definition": "A thing you sit on.",
                   "image_emoji": "🪑",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png",
                   "example_sentence": "The chair is blue.",
                   "asset_slug": "stage3_u01_chair"
                 },
@@ -103,7 +103,7 @@
                   "word": "phone",
                   "definition": "A thing you talk and message with.",
                   "image_emoji": "📱",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20smartphone%2C%20single%20object%2C%20screen%20facing%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29423&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/phone.png",
                   "example_sentence": "My phone is small.",
                   "asset_slug": "stage3_u01_phone"
                 },
@@ -111,7 +111,7 @@
                   "word": "photo",
                   "definition": "A picture you take with a camera.",
                   "image_emoji": "🖼️",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20printed%20photograph%20in%20a%20small%20frame%2C%20single%20object%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=55777&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/photo.png",
                   "example_sentence": "Look at the photo of my family.",
                   "asset_slug": "stage3_u01_photo"
                 },
@@ -119,7 +119,7 @@
                   "word": "table",
                   "definition": "A flat thing with legs you put things on.",
                   "image_emoji": "🪑",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20small%20wooden%20classroom%20table%2C%20top%20view%20slightly%20tilted%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=88705&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/table.png",
                   "example_sentence": "The book is on the table.",
                   "asset_slug": "stage3_u01_table"
                 },
@@ -127,7 +127,7 @@
                   "word": "watch",
                   "definition": "A small clock on your hand.",
                   "image_emoji": "⌚",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20child%27s%20wristwatch%2C%20single%20object%20on%20plain%20surface%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=1292&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/watch.png",
                   "example_sentence": "My watch is black.",
                   "asset_slug": "stage3_u01_watch"
                 },
@@ -135,7 +135,7 @@
                   "word": "student",
                   "definition": "Someone who studies at school.",
                   "image_emoji": "👨‍🎓",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20happy%20primary-school%20student%20wearing%20a%20backpack%2C%20big%20smile%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=64400&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/student.png",
                   "example_sentence": "I'm a student in class 6.",
                   "asset_slug": "stage3_u01_student"
                 },
@@ -143,7 +143,7 @@
                   "word": "friend",
                   "definition": "Someone you like and play with.",
                   "image_emoji": "🤝",
-                  "image_url": "https://image.pollinations.ai/prompt/two%20children%20smiling%20and%20high-fiving%2C%20classroom%20background%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=62540&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/friend.png",
                   "example_sentence": "Sam is my friend.",
                   "asset_slug": "stage3_u01_friend"
                 },
@@ -151,7 +151,7 @@
                   "word": "teacher",
                   "definition": "Someone who teaches you at school.",
                   "image_emoji": "👩‍🏫",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20friendly%20female%20teacher%20pointing%20at%20a%20whiteboard%2C%20smiling%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71427&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/teacher.png",
                   "example_sentence": "Our teacher is kind.",
                   "asset_slug": "stage3_u01_teacher"
                 }
@@ -168,132 +168,132 @@
                     {
                       "word": "bag",
                       "emoji": "🎒",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png",
                       "distractors": [
                         {
                           "word": "camera",
                           "emoji": "📷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png"
                         },
                         {
                           "word": "chair",
                           "emoji": "🪑",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png"
                         },
                         {
                           "word": "phone",
                           "emoji": "📱",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20smartphone%2C%20single%20object%2C%20screen%20facing%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29423&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/phone.png"
                         }
                       ]
                     },
                     {
                       "word": "camera",
                       "emoji": "📷",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png",
                       "distractors": [
                         {
                           "word": "bag",
                           "emoji": "🎒",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png"
                         },
                         {
                           "word": "chair",
                           "emoji": "🪑",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png"
                         },
                         {
                           "word": "phone",
                           "emoji": "📱",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20smartphone%2C%20single%20object%2C%20screen%20facing%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29423&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/phone.png"
                         }
                       ]
                     },
                     {
                       "word": "chair",
                       "emoji": "🪑",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png",
                       "distractors": [
                         {
                           "word": "bag",
                           "emoji": "🎒",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png"
                         },
                         {
                           "word": "camera",
                           "emoji": "📷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png"
                         },
                         {
                           "word": "phone",
                           "emoji": "📱",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20smartphone%2C%20single%20object%2C%20screen%20facing%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29423&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/phone.png"
                         }
                       ]
                     },
                     {
                       "word": "phone",
                       "emoji": "📱",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20smartphone%2C%20single%20object%2C%20screen%20facing%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29423&model=flux&nologo=true",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/phone.png",
                       "distractors": [
                         {
                           "word": "bag",
                           "emoji": "🎒",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png"
                         },
                         {
                           "word": "camera",
                           "emoji": "📷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png"
                         },
                         {
                           "word": "chair",
                           "emoji": "🪑",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png"
                         }
                       ]
                     },
                     {
                       "word": "photo",
                       "emoji": "🖼️",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20printed%20photograph%20in%20a%20small%20frame%2C%20single%20object%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=55777&model=flux&nologo=true",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/photo.png",
                       "distractors": [
                         {
                           "word": "bag",
                           "emoji": "🎒",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png"
                         },
                         {
                           "word": "camera",
                           "emoji": "📷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png"
                         },
                         {
                           "word": "chair",
                           "emoji": "🪑",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png"
                         }
                       ]
                     },
                     {
                       "word": "table",
                       "emoji": "🪑",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20small%20wooden%20classroom%20table%2C%20top%20view%20slightly%20tilted%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=88705&model=flux&nologo=true",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/table.png",
                       "distractors": [
                         {
                           "word": "bag",
                           "emoji": "🎒",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png"
                         },
                         {
                           "word": "camera",
                           "emoji": "📷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png"
                         },
                         {
                           "word": "chair",
                           "emoji": "🪑",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png"
                         }
                       ]
                     }
@@ -306,132 +306,132 @@
                     {
                       "word": "bag",
                       "emoji": "🎒",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png",
                       "distractors": [
                         {
                           "word": "camera",
                           "emoji": "📷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png"
                         },
                         {
                           "word": "chair",
                           "emoji": "🪑",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png"
                         },
                         {
                           "word": "phone",
                           "emoji": "📱",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20smartphone%2C%20single%20object%2C%20screen%20facing%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29423&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/phone.png"
                         }
                       ]
                     },
                     {
                       "word": "camera",
                       "emoji": "📷",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png",
                       "distractors": [
                         {
                           "word": "bag",
                           "emoji": "🎒",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png"
                         },
                         {
                           "word": "chair",
                           "emoji": "🪑",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png"
                         },
                         {
                           "word": "phone",
                           "emoji": "📱",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20smartphone%2C%20single%20object%2C%20screen%20facing%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29423&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/phone.png"
                         }
                       ]
                     },
                     {
                       "word": "chair",
                       "emoji": "🪑",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png",
                       "distractors": [
                         {
                           "word": "bag",
                           "emoji": "🎒",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png"
                         },
                         {
                           "word": "camera",
                           "emoji": "📷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png"
                         },
                         {
                           "word": "phone",
                           "emoji": "📱",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20smartphone%2C%20single%20object%2C%20screen%20facing%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29423&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/phone.png"
                         }
                       ]
                     },
                     {
                       "word": "phone",
                       "emoji": "📱",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20smartphone%2C%20single%20object%2C%20screen%20facing%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29423&model=flux&nologo=true",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/phone.png",
                       "distractors": [
                         {
                           "word": "bag",
                           "emoji": "🎒",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png"
                         },
                         {
                           "word": "camera",
                           "emoji": "📷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png"
                         },
                         {
                           "word": "chair",
                           "emoji": "🪑",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png"
                         }
                       ]
                     },
                     {
                       "word": "photo",
                       "emoji": "🖼️",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20printed%20photograph%20in%20a%20small%20frame%2C%20single%20object%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=55777&model=flux&nologo=true",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/photo.png",
                       "distractors": [
                         {
                           "word": "bag",
                           "emoji": "🎒",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png"
                         },
                         {
                           "word": "camera",
                           "emoji": "📷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png"
                         },
                         {
                           "word": "chair",
                           "emoji": "🪑",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png"
                         }
                       ]
                     },
                     {
                       "word": "table",
                       "emoji": "🪑",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20small%20wooden%20classroom%20table%2C%20top%20view%20slightly%20tilted%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=88705&model=flux&nologo=true",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/table.png",
                       "distractors": [
                         {
                           "word": "bag",
                           "emoji": "🎒",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png"
                         },
                         {
                           "word": "camera",
                           "emoji": "📷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png"
                         },
                         {
                           "word": "chair",
                           "emoji": "🪑",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png"
                         }
                       ]
                     }
@@ -444,32 +444,32 @@
                     {
                       "word": "bag",
                       "emoji": "🎒",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png"
                     },
                     {
                       "word": "camera",
                       "emoji": "📷",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png"
                     },
                     {
                       "word": "chair",
                       "emoji": "🪑",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png"
                     },
                     {
                       "word": "phone",
                       "emoji": "📱",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20smartphone%2C%20single%20object%2C%20screen%20facing%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29423&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/phone.png"
                     },
                     {
                       "word": "photo",
                       "emoji": "🖼️",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20printed%20photograph%20in%20a%20small%20frame%2C%20single%20object%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=55777&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/photo.png"
                     },
                     {
                       "word": "table",
                       "emoji": "🪑",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20small%20wooden%20classroom%20table%2C%20top%20view%20slightly%20tilted%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=88705&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/table.png"
                     }
                   ]
                 }
@@ -838,7 +838,7 @@
                   "word": "Argentina",
                   "definition": "A big country in South America.",
                   "image_emoji": "🇦🇷",
-                  "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Argentina%20shown%20as%20a%20stylised%20map%20outline%20with%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=87422&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentina.png",
                   "example_sentence": "Alejandra is from Argentina.",
                   "asset_slug": "stage3_u01_argentina"
                 },
@@ -846,7 +846,7 @@
                   "word": "Argentinian",
                   "definition": "From Argentina.",
                   "image_emoji": "🇦🇷",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20young%20Argentinian%20person%20wearing%20a%20friendly%20smile%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=69738&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentinian.png",
                   "example_sentence": "Alejandra is Argentinian.",
                   "asset_slug": "stage3_u01_argentinian"
                 },
@@ -854,7 +854,7 @@
                   "word": "Brazil",
                   "definition": "The biggest country in South America.",
                   "image_emoji": "🇧🇷",
-                  "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Brazil%20shown%20as%20a%20stylised%20map%20outline%20with%20green-yellow%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=46751&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazil.png",
                   "example_sentence": "Sara is from Brazil.",
                   "asset_slug": "stage3_u01_brazil"
                 },
@@ -862,7 +862,7 @@
                   "word": "Brazilian",
                   "definition": "From Brazil.",
                   "image_emoji": "🇧🇷",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20young%20Brazilian%20person%20smiling%20warmly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=10581&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazilian.png",
                   "example_sentence": "Sara is Brazilian.",
                   "asset_slug": "stage3_u01_brazilian"
                 },
@@ -870,7 +870,7 @@
                   "word": "China",
                   "definition": "A big country in Asia.",
                   "image_emoji": "🇨🇳",
-                  "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20China%20shown%20as%20a%20stylised%20map%20outline%20with%20red%20color%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=24933&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/china.png",
                   "example_sentence": "Lin is from China.",
                   "asset_slug": "stage3_u01_china"
                 },
@@ -878,7 +878,7 @@
                   "word": "Chinese",
                   "definition": "From China.",
                   "image_emoji": "🇨🇳",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20young%20Chinese%20student%20smiling%20friendly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=76369&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chinese.png",
                   "example_sentence": "Lin is Chinese.",
                   "asset_slug": "stage3_u01_chinese"
                 },
@@ -886,7 +886,7 @@
                   "word": "Russia",
                   "definition": "The biggest country in the world.",
                   "image_emoji": "🇷🇺",
-                  "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Russia%20shown%20as%20a%20wide%20stylised%20map%20outline%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=86102&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/russia.png",
                   "example_sentence": "Lana is from Russia.",
                   "asset_slug": "stage3_u01_russia"
                 },
@@ -894,7 +894,7 @@
                   "word": "Russian",
                   "definition": "From Russia.",
                   "image_emoji": "🇷🇺",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20young%20Russian%20student%20smiling%20friendly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=96713&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/russian.png",
                   "example_sentence": "Lana is Russian.",
                   "asset_slug": "stage3_u01_russian"
                 },
@@ -902,7 +902,7 @@
                   "word": "Turkey",
                   "definition": "A country between Europe and Asia.",
                   "image_emoji": "🇹🇷",
-                  "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Turkey%20shown%20as%20a%20stylised%20map%20outline%20between%20Europe%20and%20Asia%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=35615&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/turkey.png",
                   "example_sentence": "Tariq is from Turkey.",
                   "asset_slug": "stage3_u01_turkey"
                 },
@@ -910,7 +910,7 @@
                   "word": "Turkish",
                   "definition": "From Turkey.",
                   "image_emoji": "🇹🇷",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20young%20Turkish%20person%20smiling%20warmly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73323&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/turkish.png",
                   "example_sentence": "Tariq is Turkish.",
                   "asset_slug": "stage3_u01_turkish"
                 },
@@ -918,7 +918,7 @@
                   "word": "Vietnam",
                   "definition": "A country in Southeast Asia.",
                   "image_emoji": "🇻🇳",
-                  "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Vietnam%20shown%20as%20a%20stylised%20S-shaped%20map%20outline%20with%20red%20and%20yellow%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=41901&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/vietnam.png",
                   "example_sentence": "Sang is from Vietnam.",
                   "asset_slug": "stage3_u01_vietnam"
                 },
@@ -926,7 +926,7 @@
                   "word": "Vietnamese",
                   "definition": "From Vietnam.",
                   "image_emoji": "🇻🇳",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20young%20Vietnamese%20student%20smiling%20warmly%2C%20wearing%20a%20school%20uniform%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=93946&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/vietnamese.png",
                   "example_sentence": "Sang is Vietnamese.",
                   "asset_slug": "stage3_u01_vietnamese"
                 }
@@ -954,22 +954,22 @@
                       "options_full": [
                         {
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Argentina%20shown%20as%20a%20stylised%20map%20outline%20with%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=87422&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentina.png",
                           "word": "Argentina"
                         },
                         {
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20Argentinian%20person%20wearing%20a%20friendly%20smile%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=69738&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentinian.png",
                           "word": "Argentinian"
                         },
                         {
                           "emoji": "🇧🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Brazil%20shown%20as%20a%20stylised%20map%20outline%20with%20green-yellow%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=46751&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazil.png",
                           "word": "Brazil"
                         },
                         {
                           "emoji": "🇧🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20Brazilian%20person%20smiling%20warmly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=10581&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazilian.png",
                           "word": "Brazilian"
                         }
                       ]
@@ -987,22 +987,22 @@
                       "options_full": [
                         {
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20Argentinian%20person%20wearing%20a%20friendly%20smile%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=69738&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentinian.png",
                           "word": "Argentinian"
                         },
                         {
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Argentina%20shown%20as%20a%20stylised%20map%20outline%20with%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=87422&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentina.png",
                           "word": "Argentina"
                         },
                         {
                           "emoji": "🇧🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Brazil%20shown%20as%20a%20stylised%20map%20outline%20with%20green-yellow%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=46751&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazil.png",
                           "word": "Brazil"
                         },
                         {
                           "emoji": "🇧🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20Brazilian%20person%20smiling%20warmly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=10581&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazilian.png",
                           "word": "Brazilian"
                         }
                       ]
@@ -1020,22 +1020,22 @@
                       "options_full": [
                         {
                           "emoji": "🇧🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Brazil%20shown%20as%20a%20stylised%20map%20outline%20with%20green-yellow%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=46751&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazil.png",
                           "word": "Brazil"
                         },
                         {
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Argentina%20shown%20as%20a%20stylised%20map%20outline%20with%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=87422&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentina.png",
                           "word": "Argentina"
                         },
                         {
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20Argentinian%20person%20wearing%20a%20friendly%20smile%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=69738&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentinian.png",
                           "word": "Argentinian"
                         },
                         {
                           "emoji": "🇧🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20Brazilian%20person%20smiling%20warmly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=10581&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazilian.png",
                           "word": "Brazilian"
                         }
                       ]
@@ -1053,22 +1053,22 @@
                       "options_full": [
                         {
                           "emoji": "🇧🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20Brazilian%20person%20smiling%20warmly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=10581&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazilian.png",
                           "word": "Brazilian"
                         },
                         {
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Argentina%20shown%20as%20a%20stylised%20map%20outline%20with%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=87422&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentina.png",
                           "word": "Argentina"
                         },
                         {
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20Argentinian%20person%20wearing%20a%20friendly%20smile%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=69738&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentinian.png",
                           "word": "Argentinian"
                         },
                         {
                           "emoji": "🇧🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Brazil%20shown%20as%20a%20stylised%20map%20outline%20with%20green-yellow%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=46751&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazil.png",
                           "word": "Brazil"
                         }
                       ]
@@ -1086,22 +1086,22 @@
                       "options_full": [
                         {
                           "emoji": "🇨🇳",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20China%20shown%20as%20a%20stylised%20map%20outline%20with%20red%20color%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=24933&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/china.png",
                           "word": "China"
                         },
                         {
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Argentina%20shown%20as%20a%20stylised%20map%20outline%20with%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=87422&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentina.png",
                           "word": "Argentina"
                         },
                         {
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20Argentinian%20person%20wearing%20a%20friendly%20smile%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=69738&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentinian.png",
                           "word": "Argentinian"
                         },
                         {
                           "emoji": "🇧🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Brazil%20shown%20as%20a%20stylised%20map%20outline%20with%20green-yellow%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=46751&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazil.png",
                           "word": "Brazil"
                         }
                       ]
@@ -1119,22 +1119,22 @@
                       "options_full": [
                         {
                           "emoji": "🇨🇳",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20Chinese%20student%20smiling%20friendly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=76369&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chinese.png",
                           "word": "Chinese"
                         },
                         {
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Argentina%20shown%20as%20a%20stylised%20map%20outline%20with%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=87422&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentina.png",
                           "word": "Argentina"
                         },
                         {
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20Argentinian%20person%20wearing%20a%20friendly%20smile%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=69738&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentinian.png",
                           "word": "Argentinian"
                         },
                         {
                           "emoji": "🇧🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Brazil%20shown%20as%20a%20stylised%20map%20outline%20with%20green-yellow%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=46751&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazil.png",
                           "word": "Brazil"
                         }
                       ]
@@ -1148,132 +1148,132 @@
                     {
                       "word": "Argentina",
                       "emoji": "🇦🇷",
-                      "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Argentina%20shown%20as%20a%20stylised%20map%20outline%20with%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=87422&model=flux&nologo=true",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentina.png",
                       "distractors": [
                         {
                           "word": "Argentinian",
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20Argentinian%20person%20wearing%20a%20friendly%20smile%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=69738&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentinian.png"
                         },
                         {
                           "word": "Brazil",
                           "emoji": "🇧🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Brazil%20shown%20as%20a%20stylised%20map%20outline%20with%20green-yellow%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=46751&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazil.png"
                         },
                         {
                           "word": "Brazilian",
                           "emoji": "🇧🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20Brazilian%20person%20smiling%20warmly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=10581&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazilian.png"
                         }
                       ]
                     },
                     {
                       "word": "Argentinian",
                       "emoji": "🇦🇷",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20Argentinian%20person%20wearing%20a%20friendly%20smile%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=69738&model=flux&nologo=true",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentinian.png",
                       "distractors": [
                         {
                           "word": "Argentina",
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Argentina%20shown%20as%20a%20stylised%20map%20outline%20with%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=87422&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentina.png"
                         },
                         {
                           "word": "Brazil",
                           "emoji": "🇧🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Brazil%20shown%20as%20a%20stylised%20map%20outline%20with%20green-yellow%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=46751&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazil.png"
                         },
                         {
                           "word": "Brazilian",
                           "emoji": "🇧🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20Brazilian%20person%20smiling%20warmly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=10581&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazilian.png"
                         }
                       ]
                     },
                     {
                       "word": "Brazil",
                       "emoji": "🇧🇷",
-                      "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Brazil%20shown%20as%20a%20stylised%20map%20outline%20with%20green-yellow%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=46751&model=flux&nologo=true",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazil.png",
                       "distractors": [
                         {
                           "word": "Argentina",
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Argentina%20shown%20as%20a%20stylised%20map%20outline%20with%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=87422&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentina.png"
                         },
                         {
                           "word": "Argentinian",
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20Argentinian%20person%20wearing%20a%20friendly%20smile%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=69738&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentinian.png"
                         },
                         {
                           "word": "Brazilian",
                           "emoji": "🇧🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20Brazilian%20person%20smiling%20warmly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=10581&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazilian.png"
                         }
                       ]
                     },
                     {
                       "word": "Brazilian",
                       "emoji": "🇧🇷",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20Brazilian%20person%20smiling%20warmly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=10581&model=flux&nologo=true",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazilian.png",
                       "distractors": [
                         {
                           "word": "Argentina",
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Argentina%20shown%20as%20a%20stylised%20map%20outline%20with%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=87422&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentina.png"
                         },
                         {
                           "word": "Argentinian",
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20Argentinian%20person%20wearing%20a%20friendly%20smile%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=69738&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentinian.png"
                         },
                         {
                           "word": "Brazil",
                           "emoji": "🇧🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Brazil%20shown%20as%20a%20stylised%20map%20outline%20with%20green-yellow%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=46751&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazil.png"
                         }
                       ]
                     },
                     {
                       "word": "China",
                       "emoji": "🇨🇳",
-                      "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20China%20shown%20as%20a%20stylised%20map%20outline%20with%20red%20color%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=24933&model=flux&nologo=true",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/china.png",
                       "distractors": [
                         {
                           "word": "Argentina",
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Argentina%20shown%20as%20a%20stylised%20map%20outline%20with%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=87422&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentina.png"
                         },
                         {
                           "word": "Argentinian",
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20Argentinian%20person%20wearing%20a%20friendly%20smile%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=69738&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentinian.png"
                         },
                         {
                           "word": "Brazil",
                           "emoji": "🇧🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Brazil%20shown%20as%20a%20stylised%20map%20outline%20with%20green-yellow%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=46751&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazil.png"
                         }
                       ]
                     },
                     {
                       "word": "Chinese",
                       "emoji": "🇨🇳",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20Chinese%20student%20smiling%20friendly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=76369&model=flux&nologo=true",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chinese.png",
                       "distractors": [
                         {
                           "word": "Argentina",
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Argentina%20shown%20as%20a%20stylised%20map%20outline%20with%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=87422&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentina.png"
                         },
                         {
                           "word": "Argentinian",
                           "emoji": "🇦🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20Argentinian%20person%20wearing%20a%20friendly%20smile%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=69738&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentinian.png"
                         },
                         {
                           "word": "Brazil",
                           "emoji": "🇧🇷",
-                          "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Brazil%20shown%20as%20a%20stylised%20map%20outline%20with%20green-yellow%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=46751&model=flux&nologo=true"
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazil.png"
                         }
                       ]
                     }
@@ -1286,32 +1286,32 @@
                     {
                       "word": "Argentina",
                       "emoji": "🇦🇷",
-                      "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Argentina%20shown%20as%20a%20stylised%20map%20outline%20with%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=87422&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentina.png"
                     },
                     {
                       "word": "Argentinian",
                       "emoji": "🇦🇷",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20Argentinian%20person%20wearing%20a%20friendly%20smile%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=69738&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/argentinian.png"
                     },
                     {
                       "word": "Brazil",
                       "emoji": "🇧🇷",
-                      "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Brazil%20shown%20as%20a%20stylised%20map%20outline%20with%20green-yellow%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=46751&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazil.png"
                     },
                     {
                       "word": "Brazilian",
                       "emoji": "🇧🇷",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20Brazilian%20person%20smiling%20warmly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=10581&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brazilian.png"
                     },
                     {
                       "word": "China",
                       "emoji": "🇨🇳",
-                      "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20China%20shown%20as%20a%20stylised%20map%20outline%20with%20red%20color%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=24933&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/china.png"
                     },
                     {
                       "word": "Chinese",
                       "emoji": "🇨🇳",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20Chinese%20student%20smiling%20friendly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=76369&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chinese.png"
                     }
                   ]
                 }
@@ -1688,7 +1688,7 @@
                   "word": "Italy",
                   "definition": "A country in Europe shaped like a boot.",
                   "image_emoji": "🇮🇹",
-                  "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Italy%20shown%20as%20a%20stylised%20boot-shaped%20map%20outline%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=50593&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/italy.png",
                   "example_sentence": "Marco is from Italy.",
                   "asset_slug": "stage3_u01_italy"
                 },
@@ -1696,7 +1696,7 @@
                   "word": "Italian",
                   "definition": "From Italy.",
                   "image_emoji": "🇮🇹",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20young%20Italian%20person%20smiling%20warmly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74816&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/italian.png",
                   "example_sentence": "Marco is Italian.",
                   "asset_slug": "stage3_u01_italian"
                 },
@@ -1704,7 +1704,7 @@
                   "word": "Japan",
                   "definition": "A country in East Asia, made of islands.",
                   "image_emoji": "🇯🇵",
-                  "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Japan%20shown%20as%20a%20stylised%20map%20outline%20of%20islands%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=81847&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/japan.png",
                   "example_sentence": "Yuki is from Japan.",
                   "asset_slug": "stage3_u01_japan"
                 },
@@ -1712,7 +1712,7 @@
                   "word": "Japanese",
                   "definition": "From Japan.",
                   "image_emoji": "🇯🇵",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20young%20Japanese%20student%20smiling%20friendly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=36749&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/japanese.png",
                   "example_sentence": "Yuki is Japanese.",
                   "asset_slug": "stage3_u01_japanese"
                 },
@@ -1720,7 +1720,7 @@
                   "word": "Mexico",
                   "definition": "A country south of the USA.",
                   "image_emoji": "🇲🇽",
-                  "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Mexico%20shown%20as%20a%20stylised%20map%20outline%20with%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=88455&model=flux&nologo=true",
+                  "image_url": "",
                   "example_sentence": "Diego is from Mexico.",
                   "asset_slug": "stage3_u01_mexico"
                 },
@@ -1728,7 +1728,7 @@
                   "word": "Mexican",
                   "definition": "From Mexico.",
                   "image_emoji": "🇲🇽",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20young%20Mexican%20person%20smiling%20friendly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=45001&model=flux&nologo=true",
+                  "image_url": "",
                   "example_sentence": "Diego is Mexican.",
                   "asset_slug": "stage3_u01_mexican"
                 },
@@ -1736,7 +1736,7 @@
                   "word": "Spain",
                   "definition": "A country in Europe.",
                   "image_emoji": "🇪🇸",
-                  "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Spain%20shown%20as%20a%20stylised%20map%20outline%20with%20red%20and%20yellow%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=69626&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/spain.png",
                   "example_sentence": "Sofia is from Spain.",
                   "asset_slug": "stage3_u01_spain"
                 },
@@ -1744,7 +1744,7 @@
                   "word": "Spanish",
                   "definition": "From Spain.",
                   "image_emoji": "🇪🇸",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20young%20Spanish%20person%20smiling%20warmly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=25440&model=flux&nologo=true",
+                  "image_url": "",
                   "example_sentence": "Sofia is Spanish.",
                   "asset_slug": "stage3_u01_spanish"
                 },
@@ -1752,7 +1752,7 @@
                   "word": "the UK",
                   "definition": "The United Kingdom — England, Scotland, Wales, N. Ireland.",
                   "image_emoji": "🇬🇧",
-                  "image_url": "https://image.pollinations.ai/prompt/the%20United%20Kingdom%20shown%20as%20a%20stylised%20map%20outline%20with%20Union%20Jack%20accents%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=5803&model=flux&nologo=true",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/the_uk.png",
                   "example_sentence": "Mark is from the UK.",
                   "asset_slug": "stage3_u01_the_uk"
                 },
@@ -1760,7 +1760,7 @@
                   "word": "British",
                   "definition": "From the UK.",
                   "image_emoji": "🇬🇧",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20young%20British%20student%20smiling%20warmly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=4614&model=flux&nologo=true",
+                  "image_url": "",
                   "example_sentence": "Mark is British.",
                   "asset_slug": "stage3_u01_british"
                 },
@@ -1768,7 +1768,7 @@
                   "word": "the USA",
                   "definition": "The United States of America.",
                   "image_emoji": "🇺🇸",
-                  "image_url": "https://image.pollinations.ai/prompt/the%20United%20States%20shown%20as%20a%20stylised%20map%20outline%20with%20stars%20and%20stripes%20accents%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=44548&model=flux&nologo=true",
+                  "image_url": "",
                   "example_sentence": "Jake is from the USA.",
                   "asset_slug": "stage3_u01_the_usa"
                 },
@@ -1776,7 +1776,7 @@
                   "word": "American",
                   "definition": "From the USA.",
                   "image_emoji": "🇺🇸",
-                  "image_url": "https://image.pollinations.ai/prompt/a%20young%20American%20student%20smiling%20friendly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27056&model=flux&nologo=true",
+                  "image_url": "",
                   "example_sentence": "Jake is American.",
                   "asset_slug": "stage3_u01_american"
                 },
@@ -1784,7 +1784,7 @@
                   "word": "classmate",
                   "definition": "Someone who is in your class.",
                   "image_emoji": "🧑‍🤝‍🧑",
-                  "image_url": "https://image.pollinations.ai/prompt/two%20students%20sitting%20at%20a%20desk%20together%2C%20both%20smiling%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=49109&model=flux&nologo=true",
+                  "image_url": "",
                   "example_sentence": "Inca is my classmate.",
                   "asset_slug": "stage3_u01_classmate"
                 }
@@ -1838,7 +1838,7 @@
                         "Japanese"
                       ],
                       "correct": "Italy",
-                      "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Italy%20shown%20as%20a%20stylised%20boot-shaped%20map%20outline%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=50593&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/italy.png"
                     },
                     {
                       "audio_text": "Italian",
@@ -1850,7 +1850,7 @@
                         "Japanese"
                       ],
                       "correct": "Italian",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20Italian%20person%20smiling%20warmly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74816&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/italian.png"
                     },
                     {
                       "audio_text": "Japan",
@@ -1862,7 +1862,7 @@
                         "Japanese"
                       ],
                       "correct": "Japan",
-                      "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Japan%20shown%20as%20a%20stylised%20map%20outline%20of%20islands%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=81847&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/japan.png"
                     },
                     {
                       "audio_text": "Japanese",
@@ -1874,7 +1874,7 @@
                         "Japan"
                       ],
                       "correct": "Japanese",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20Japanese%20student%20smiling%20friendly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=36749&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/japanese.png"
                     },
                     {
                       "audio_text": "Mexico",
@@ -1886,7 +1886,7 @@
                         "Japan"
                       ],
                       "correct": "Mexico",
-                      "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Mexico%20shown%20as%20a%20stylised%20map%20outline%20with%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=88455&model=flux&nologo=true"
+                      "image_url": ""
                     },
                     {
                       "audio_text": "Mexican",
@@ -1898,7 +1898,7 @@
                         "Japan"
                       ],
                       "correct": "Mexican",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20Mexican%20person%20smiling%20friendly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=45001&model=flux&nologo=true"
+                      "image_url": ""
                     }
                   ]
                 },
@@ -1909,32 +1909,32 @@
                     {
                       "word": "Italy",
                       "emoji": "🇮🇹",
-                      "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Italy%20shown%20as%20a%20stylised%20boot-shaped%20map%20outline%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=50593&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/italy.png"
                     },
                     {
                       "word": "Italian",
                       "emoji": "🇮🇹",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20Italian%20person%20smiling%20warmly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74816&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/italian.png"
                     },
                     {
                       "word": "Japan",
                       "emoji": "🇯🇵",
-                      "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Japan%20shown%20as%20a%20stylised%20map%20outline%20of%20islands%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=81847&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/japan.png"
                     },
                     {
                       "word": "Japanese",
                       "emoji": "🇯🇵",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20Japanese%20student%20smiling%20friendly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=36749&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/japanese.png"
                     },
                     {
                       "word": "Mexico",
                       "emoji": "🇲🇽",
-                      "image_url": "https://image.pollinations.ai/prompt/the%20country%20of%20Mexico%20shown%20as%20a%20stylised%20map%20outline%20with%20national%20colors%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=88455&model=flux&nologo=true"
+                      "image_url": ""
                     },
                     {
                       "word": "Mexican",
                       "emoji": "🇲🇽",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20Mexican%20person%20smiling%20friendly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=45001&model=flux&nologo=true"
+                      "image_url": ""
                     }
                   ]
                 }
@@ -2432,22 +2432,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png",
                           "word": "bag"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png",
                           "word": "camera"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png",
                           "word": "chair"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20smartphone%2C%20single%20object%2C%20screen%20facing%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29423&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/phone.png",
                           "word": "phone"
                         }
                       ]
@@ -2465,22 +2465,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png",
                           "word": "camera"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png",
                           "word": "bag"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png",
                           "word": "chair"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20smartphone%2C%20single%20object%2C%20screen%20facing%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29423&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/phone.png",
                           "word": "phone"
                         }
                       ]
@@ -2498,22 +2498,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png",
                           "word": "chair"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png",
                           "word": "bag"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png",
                           "word": "camera"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20smartphone%2C%20single%20object%2C%20screen%20facing%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29423&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/phone.png",
                           "word": "phone"
                         }
                       ]
@@ -2531,22 +2531,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20smartphone%2C%20single%20object%2C%20screen%20facing%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29423&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/phone.png",
                           "word": "phone"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png",
                           "word": "bag"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png",
                           "word": "camera"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png",
                           "word": "chair"
                         }
                       ]
@@ -2564,22 +2564,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20printed%20photograph%20in%20a%20small%20frame%2C%20single%20object%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=55777&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/photo.png",
                           "word": "photo"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png",
                           "word": "bag"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png",
                           "word": "camera"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png",
                           "word": "chair"
                         }
                       ]
@@ -2597,22 +2597,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20small%20wooden%20classroom%20table%2C%20top%20view%20slightly%20tilted%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=88705&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/table.png",
                           "word": "table"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png",
                           "word": "bag"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png",
                           "word": "camera"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png",
                           "word": "chair"
                         }
                       ]
@@ -2630,22 +2630,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20child%27s%20wristwatch%2C%20single%20object%20on%20plain%20surface%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=1292&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/watch.png",
                           "word": "watch"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png",
                           "word": "bag"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png",
                           "word": "camera"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png",
                           "word": "chair"
                         }
                       ]
@@ -2663,22 +2663,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20happy%20primary-school%20student%20wearing%20a%20backpack%2C%20big%20smile%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=64400&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/student.png",
                           "word": "student"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png",
                           "word": "bag"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png",
                           "word": "camera"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png",
                           "word": "chair"
                         }
                       ]
@@ -2696,22 +2696,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/two%20children%20smiling%20and%20high-fiving%2C%20classroom%20background%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=62540&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/friend.png",
                           "word": "friend"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png",
                           "word": "bag"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png",
                           "word": "camera"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png",
                           "word": "chair"
                         }
                       ]
@@ -2729,22 +2729,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20friendly%20female%20teacher%20pointing%20at%20a%20whiteboard%2C%20smiling%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71427&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/teacher.png",
                           "word": "teacher"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png",
                           "word": "bag"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png",
                           "word": "camera"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png",
                           "word": "chair"
                         }
                       ]
@@ -2758,32 +2758,32 @@
                     {
                       "word": "bag",
                       "emoji": "📦",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20school%20backpack%2C%20blue%20and%20red%2C%20standing%20upright%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=83057&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bag.png"
                     },
                     {
                       "word": "camera",
                       "emoji": "📦",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20small%20modern%20camera%2C%20black%2C%20single%20object%20on%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11405&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/camera.png"
                     },
                     {
                       "word": "chair",
                       "emoji": "📦",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/chair.png"
                     },
                     {
                       "word": "phone",
                       "emoji": "📦",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20smartphone%2C%20single%20object%2C%20screen%20facing%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29423&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/phone.png"
                     },
                     {
                       "word": "photo",
                       "emoji": "📦",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20printed%20photograph%20in%20a%20small%20frame%2C%20single%20object%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=55777&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/photo.png"
                     },
                     {
                       "word": "table",
                       "emoji": "📦",
-                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20small%20wooden%20classroom%20table%2C%20top%20view%20slightly%20tilted%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=88705&model=flux&nologo=true"
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/table.png"
                     }
                   ]
                 }

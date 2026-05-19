@@ -75,9 +75,8 @@ const WordRace = ({ items, onComplete, onSkip, timeLimit }) => {
     const pct = total > 0 ? Math.round((score / total) * 100) : 0;
     return (
       <GameComplete
-        score={pct}
-        correctCount={score}
-        totalCount={total}
+        score={score}
+        totalQuestions={total || 1}
         message={`You raced through ${score} word${score === 1 ? '' : 's'}!`}
         onContinue={() => onComplete(pct)}
       />
@@ -126,7 +125,18 @@ const WordRace = ({ items, onComplete, onSkip, timeLimit }) => {
                     src={resolveImg(opt.image_url)}
                     alt={opt.word || ''}
                     className="w-full h-32 object-cover rounded-xl"
+                    onError={(e) => {
+                      // Hide the broken image and reveal the emoji sibling so the
+                      // card never renders as a blank white square (Pollinations
+                      // cold-fetch sometimes drops on slow networks).
+                      e.currentTarget.style.display = 'none';
+                      const sib = e.currentTarget.nextElementSibling;
+                      if (sib) sib.style.display = 'block';
+                    }}
                   />
+                ) : null}
+                {opt.image_url ? (
+                  <span className="text-5xl" style={{ display: 'none' }}>{opt.emoji || '·'}</span>
                 ) : (
                   <span className="text-5xl">{opt.emoji}</span>
                 )}
