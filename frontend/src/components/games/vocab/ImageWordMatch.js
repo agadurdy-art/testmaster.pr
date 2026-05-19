@@ -82,11 +82,19 @@ const ImageWordMatch = ({ items, onComplete, onSkip }) => {
       <Card className="p-6 bg-white/70 backdrop-blur-sm border-emerald-200">
         <div className="text-center mb-6">
           {item.image_url ? (
-            <img
-              src={resolveImg(item.image_url)}
-              alt={item.word}
-              className="w-40 h-40 object-cover rounded-2xl mx-auto mb-2 border border-emerald-100"
-            />
+            <>
+              <img
+                src={resolveImg(item.image_url)}
+                alt={item.word}
+                className="w-40 h-40 object-cover rounded-2xl mx-auto mb-2 border border-emerald-100"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  const sib = e.currentTarget.nextElementSibling;
+                  if (sib) sib.style.display = 'block';
+                }}
+              />
+              <div className="text-7xl mb-2" style={{ display: 'none' }}>{item.emoji}</div>
+            </>
           ) : (
             <div className="text-7xl mb-2">{item.emoji}</div>
           )}

@@ -983,7 +983,19 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
               } else { speakWord(word.word); }
             }} className="p-3 bg-white rounded-xl border-2 border-gray-100 hover:border-amber-300 hover:shadow-md transition-all text-center cursor-pointer" data-testid={`review-word-${i}`}>
               {word.image_url ? (
-                <img src={word.image_url.startsWith('/') ? `${API_URL}/api${word.image_url}` : word.image_url} alt={word.word} className="w-16 h-16 object-cover rounded-lg mx-auto mb-1" />
+                <>
+                  <img
+                    src={word.image_url.startsWith('/') ? `${API_URL}/api${word.image_url}` : word.image_url}
+                    alt={word.word}
+                    className="w-16 h-16 object-cover rounded-lg mx-auto mb-1"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      const sib = e.currentTarget.nextElementSibling;
+                      if (sib) sib.style.display = 'block';
+                    }}
+                  />
+                  <span className="text-2xl block mb-1" style={{ display: 'none' }}>{word.image_emoji || '📝'}</span>
+                </>
               ) : (
                 <span className="text-2xl block mb-1">{word.image_emoji || '📝'}</span>
               )}
@@ -1035,8 +1047,19 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
             {/* Word display with image area */}
             <div className="flex flex-col md:flex-row gap-6 items-center mb-6">
               {w.image_url ? (
-                <div className="w-36 h-36 rounded-2xl overflow-hidden border border-blue-100 shadow-sm shrink-0">
-                  <img src={w.image_url.startsWith('/') ? `${API_URL}/api${w.image_url}` : w.image_url} alt={w.word} className="w-full h-full object-cover" loading="lazy" />
+                <div className="w-36 h-36 rounded-2xl overflow-hidden border border-blue-100 shadow-sm shrink-0 relative bg-gradient-to-br from-sky-100 to-blue-50 flex items-center justify-center">
+                  <img
+                    src={w.image_url.startsWith('/') ? `${API_URL}/api${w.image_url}` : w.image_url}
+                    alt={w.word}
+                    className="w-full h-full object-cover absolute inset-0"
+                    loading="lazy"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      const sib = e.currentTarget.nextElementSibling;
+                      if (sib) sib.style.display = 'flex';
+                    }}
+                  />
+                  <span className="text-5xl absolute inset-0 items-center justify-center" style={{ display: 'none' }}>{w.image_emoji || '📖'}</span>
                 </div>
               ) : (
                 <div className="w-36 h-36 bg-gradient-to-br from-sky-100 to-blue-50 rounded-2xl flex items-center justify-center border border-blue-100 shrink-0">

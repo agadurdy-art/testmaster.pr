@@ -108,7 +108,19 @@ const LookWrite = ({
         <div className="mb-6">
           <div className="w-32 h-32 mx-auto bg-yellow-50 rounded-3xl flex items-center justify-center shadow-inner overflow-hidden">
             {currentItem.image_url ? (
-              <img src={currentItem.image_url.startsWith('http') ? currentItem.image_url : `${process.env.REACT_APP_BACKEND_URL}/api${currentItem.image_url}`} alt="" className="w-full h-full object-contain p-2" />
+              <>
+                <img
+                  src={currentItem.image_url.startsWith('http') ? currentItem.image_url : `${process.env.REACT_APP_BACKEND_URL}/api${currentItem.image_url}`}
+                  alt=""
+                  className="w-full h-full object-contain p-2"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    const sib = e.currentTarget.nextElementSibling;
+                    if (sib) sib.style.display = 'inline';
+                  }}
+                />
+                <span className="text-7xl" style={{ display: 'none' }}>{currentItem.emoji}</span>
+              </>
             ) : (
               <span className="text-7xl">{currentItem.emoji}</span>
             )}

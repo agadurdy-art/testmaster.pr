@@ -167,7 +167,19 @@ const MemoryGame = ({
                   <div className="w-full h-full flex items-center justify-center p-2">
                     {card.type === 'emoji' ? (
                       card.imageUrl ? (
-                        <img src={card.imageUrl.startsWith('http') ? card.imageUrl : `${process.env.REACT_APP_BACKEND_URL}/api${card.imageUrl}`} alt="" className="w-full h-full object-contain p-1" />
+                        <>
+                          <img
+                            src={card.imageUrl.startsWith('http') ? card.imageUrl : `${process.env.REACT_APP_BACKEND_URL}/api${card.imageUrl}`}
+                            alt=""
+                            className="w-full h-full object-contain p-1"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                              const sib = e.currentTarget.nextElementSibling;
+                              if (sib) sib.style.display = 'inline';
+                            }}
+                          />
+                          <span className="text-4xl" style={{ display: 'none' }}>{card.content}</span>
+                        </>
                       ) : (
                         <span className="text-4xl">{card.content}</span>
                       )
