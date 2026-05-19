@@ -320,7 +320,7 @@ function BookCard({ stage, isUnlocked, isCurrent, progressPct, tilt, onClick }) 
 function LibraryHeader({ user, userProgress, onLogout, navigate }) {
   return (
     <header className="glib-topbar px-4 md:px-6 py-3 flex items-center justify-between gap-3">
-      <a href="/dashboard" className="flex items-center gap-2 flex-shrink-0">
+      <a href="/ge/dashboard" className="flex items-center gap-2 flex-shrink-0">
         <img
           src={RAY_LOGO}
           alt="Ray English"
@@ -348,7 +348,7 @@ function LibraryHeader({ user, userProgress, onLogout, navigate }) {
 
         <div className="hidden md:flex items-center gap-3 pl-3 border-l border-slate-300/50">
           <button
-            onClick={() => navigate('/pricing')}
+            onClick={() => navigate('/pricing/ge')}
             className="text-sm text-slate-600 hover:text-violet-600 font-medium"
             data-testid="ge-nav-pricing"
           >

@@ -126,6 +126,16 @@ export default function Profile({ user, onLogout }) {
     : fullUser?.learning_mode === 'ielts'
     ? 'IELTS Ace'
     : null;
+  // GE user'ı bu sayfanın header'ındaki "IELTS Ace" başlığını + "Back to
+  // Dashboard" link'ini IELTS dashboard'a yönlendirilirse hemen üründen
+  // düşer — Aga 2026-05-19'da bunu rapor etti. Sadece bu iki yere
+  // GE-aware patch ekledik; ilerideki QuotaCard/InfoTile alanları (Liz
+  // Live, target band, exam date) hâlâ IELTS-flavoured ve ayrı bir
+  // ProfileGE.js / conditional refactor gerekiyor.
+  const isGE = fullUser?.learning_mode === 'general_english'
+    || (typeof window !== 'undefined' && JSON.parse(localStorage.getItem('user') || 'null')?.learning_mode === 'general_english');
+  const productName = isGE ? 'Ray English' : 'IELTS Ace';
+  const dashboardPath = isGE ? '/ge/dashboard' : '/dashboard';
 
   return (
     <div className={`min-h-screen ${bgMain} transition-colors duration-300`}>
@@ -135,14 +145,14 @@ export default function Profile({ user, onLogout }) {
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-sky-500 to-cyan-500 flex items-center justify-center">
               <Trophy className="w-6 h-6 text-white" />
             </div>
-            <h1 className={`text-2xl font-bold ${textPrimary}`}>IELTS Ace</h1>
+            <h1 className={`text-2xl font-bold ${textPrimary}`}>{productName}</h1>
           </div>
           <div className="flex items-center gap-2">
             <LanguageSwitcher iconOnly />
             <ThemeToggle />
             <Button
               variant="outline"
-              onClick={() => navigate('/dashboard')}
+              onClick={() => navigate(dashboardPath)}
               className={isDark ? 'border-gray-600' : ''}
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
