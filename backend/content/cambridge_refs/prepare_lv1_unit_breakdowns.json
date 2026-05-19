@@ -70,6 +70,30 @@
       "writing_topic": "A web page introducing yourself"
     },
     {
+      "unit_num": 4,
+      "title": "My things",
+      "sb_page": 30,
+      "topic": "School-bag things and adjectives to describe them",
+      "vocab_sections": {
+        "things_in_my_school_bag": ["book", "calculator", "dictionary", "notebook", "pen", "pencil", "pencil case", "rubber", "ruler", "schoolbag", "tablet", "water bottle"],
+        "adjectives_things": ["beautiful", "big", "good", "long", "new", "nice", "old", "short", "small", "ugly", "favourite"]
+      },
+      "target_grammar": [
+        "have got — positive (I/we/they have got; he/she/it has got)",
+        "have got — negative (I/we haven't got; he/she hasn't got)"
+      ],
+      "pronunciation": "/v/ sound in 'have got' (not /f/)",
+      "reading_topic": "What have you got in your school bag today? — students compare bags",
+      "listening_topic": "A conversation about school things",
+      "speaking_topic": "Asking and answering about what you have got",
+      "writing_topic": "A list of things in your school bag",
+      "do_not_include_words_here_belong_to_later_units": [
+        "Activities like swim/run (Unit 5)",
+        "Food/drink (Unit 6)",
+        "School subjects (Unit 8)"
+      ]
+    },
+    {
       "unit_num": 3,
       "title": "My home",
       "sb_page": 24,

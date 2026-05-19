@@ -232,6 +232,21 @@ VOCAB_BUILDERS = {
 # ─── Grammar item synthesis from grammar_focus.examples ──────────────────────
 
 BE_FORMS = ["am", "is", "are"]
+HAVE_FORMS = ["have", "has", "haven't", "hasn't", "'ve", "'s"]
+# Verb tokens that can be blanked / swapped for the synth fallback. The
+# extended set lets pack_unit_games handle Unit 4 ('have got') and beyond
+# without falling back to empty grammar packs.
+TARGET_VERB_TOKENS = BE_FORMS + ["have", "has", "haven't", "hasn't"]
+
+
+def _options_for(verb):
+    """Distractor set for a target verb token. BE-forms get the BE_FORMS
+    set; have/has variants get the have-family set so distractors stay in
+    the same paradigm."""
+    v = (verb or "").lower().strip()
+    if v in HAVE_FORMS:
+        return ["have", "has", "haven't", "hasn't"]
+    return BE_FORMS
 
 def _split_words(sent):
     return re.findall(r"[A-Za-z']+|[.?!,]", sent)
@@ -251,17 +266,17 @@ def synthesize_grammar_items(examples):
             continue
         words = clean.split()
         # MCQ + fill_blank: blank a be-form if present
-        be_at = next((i for i, w in enumerate(words) if w.lower().strip(".,!?") in BE_FORMS), -1)
+        be_at = next((i for i, w in enumerate(words) if w.lower().strip(".,!?") in TARGET_VERB_TOKENS), -1)
         if be_at >= 0:
             be_word = words[be_at].strip(".,!?")
             blanked = " ".join(["___" if i == be_at else w for i, w in enumerate(words)])
-            mcq_item = {"sentence": blanked, "options": list(BE_FORMS), "correct": be_word.lower()}
+            mcq_item = {"sentence": blanked, "options": list(_options_for(be_word)), "correct": be_word.lower()}
             out["multiple_choice_grammar"].append(mcq_item)
-            out["fill_blank"].append({"sentence": blanked, "answer": be_word.lower(), "options": list(BE_FORMS)})
+            out["fill_blank"].append({"sentence": blanked, "answer": be_word.lower(), "options": list(_options_for(be_word))})
         # true_false: alternate true / false (false = swap be-form)
         if be_at >= 0 and idx % 2 == 1:
             be_word = words[be_at].strip(".,!?").lower()
-            wrong = next((b for b in BE_FORMS if b != be_word), "is")
+            wrong = next((b for b in _options_for(be_word) if b != be_word), "is")
             twisted = " ".join([wrong if i == be_at else w for i, w in enumerate(words)])
             out["true_false"].append({"sentence": twisted, "correct": "false"})
         else:
@@ -269,7 +284,7 @@ def synthesize_grammar_items(examples):
         # error_hunter: deliberately wrong be-form
         if be_at >= 0:
             be_word = words[be_at].strip(".,!?").lower()
-            wrong = next((b for b in BE_FORMS if b != be_word), "is")
+            wrong = next((b for b in _options_for(be_word) if b != be_word), "is")
             twisted_words = list(words)
             twisted_words[be_at] = wrong
             out["error_hunter"].append({

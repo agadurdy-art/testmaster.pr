@@ -1,0 +1,2960 @@
+{
+  "stage": "stage_3",
+  "stage_title": "Movers (A1)",
+  "units": [
+    {
+      "unit_id": "stage_3_movers_unit_04",
+      "unit_num": 4,
+      "title": "My things",
+      "subtitle": "What's in your schoolbag? Things and adjectives — aligned with Cambridge Prepare Lv1 Unit 4.",
+      "phonics_focus": "/v/ sound in 'have got' (not /f/)",
+      "grammar_focus": "have got — positive and negative; descriptive adjectives.",
+      "spiral_meta": {
+        "prepare_alignment": {
+          "source": "Cambridge Prepare 2nd Edition Level 1 — Unit 4 'My things' (SB p30-33)",
+          "wordlist_coverage_pct": 100,
+          "extracted_from": "backend/content/cambridge_refs/prepare_lv1_unit_breakdowns.json"
+        },
+        "anchor_character_names_recycled": [
+          "Ben",
+          "Emma",
+          "Pablo"
+        ]
+      },
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_3_movers_unit_04_lesson_01",
+          "number": 1,
+          "title": "Inside my schoolbag",
+          "topic": "8 school-bag things + simple 'I have' / 'I've got' intro",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Look at Ben's schoolbag. What can you see?",
+              "questions": [
+                {
+                  "question_text": "Something you write with in ink:",
+                  "correct_answer": "a pen",
+                  "options": [
+                    "a pen",
+                    "a rubber",
+                    "a ruler",
+                    "a notebook"
+                  ],
+                  "image_emoji": "🖊️"
+                },
+                {
+                  "question_text": "Something you use to remove pencil marks:",
+                  "correct_answer": "a rubber",
+                  "options": [
+                    "a rubber",
+                    "a book",
+                    "a ruler",
+                    "a pencil"
+                  ],
+                  "image_emoji": "🧽"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "schoolbag",
+                  "definition": "A bag you take to school for books and pens.",
+                  "image_emoji": "🎒",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true",
+                  "example_sentence": "My schoolbag is heavy today.",
+                  "asset_slug": "stage3_u04_schoolbag"
+                },
+                {
+                  "word": "book",
+                  "definition": "Pages with words you read.",
+                  "image_emoji": "📖",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true",
+                  "example_sentence": "I read a book about animals.",
+                  "asset_slug": "stage3_u04_book"
+                },
+                {
+                  "word": "notebook",
+                  "definition": "A small book with empty pages for writing.",
+                  "image_emoji": "📓",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true",
+                  "example_sentence": "My notebook is blue.",
+                  "asset_slug": "stage3_u04_notebook"
+                },
+                {
+                  "word": "pen",
+                  "definition": "A thing you write with — in ink.",
+                  "image_emoji": "🖊️",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20pen%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=58062&model=flux&nologo=true",
+                  "example_sentence": "Can I use your pen?",
+                  "asset_slug": "stage3_u04_pen"
+                },
+                {
+                  "word": "pencil",
+                  "definition": "A thing you write or draw with — in grey.",
+                  "image_emoji": "✏️",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20pencil%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73155&model=flux&nologo=true",
+                  "example_sentence": "I have two pencils.",
+                  "asset_slug": "stage3_u04_pencil"
+                },
+                {
+                  "word": "rubber",
+                  "definition": "A small thing that removes pencil marks.",
+                  "image_emoji": "🧽",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20rubber%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=24244&model=flux&nologo=true",
+                  "example_sentence": "Where is my rubber? I made a mistake.",
+                  "asset_slug": "stage3_u04_rubber"
+                },
+                {
+                  "word": "ruler",
+                  "definition": "A flat thing for measuring or drawing straight lines.",
+                  "image_emoji": "📏",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20ruler%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29619&model=flux&nologo=true",
+                  "example_sentence": "Use a ruler to draw a line.",
+                  "asset_slug": "stage3_u04_ruler"
+                },
+                {
+                  "word": "pencil case",
+                  "definition": "A small bag for your pens and pencils.",
+                  "image_emoji": "🖍️",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20pencil%20case%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=22774&model=flux&nologo=true",
+                  "example_sentence": "My pencil case is full.",
+                  "asset_slug": "stage3_u04_pencil_case"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "image_word_match",
+                  "instruction": "Match each picture with the right word.",
+                  "items": [
+                    {
+                      "word": "schoolbag",
+                      "emoji": "🎒",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true",
+                      "distractors": [
+                        {
+                          "word": "book",
+                          "emoji": "📖",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "notebook",
+                          "emoji": "📓",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "pen",
+                          "emoji": "🖊️",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20pen%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=58062&model=flux&nologo=true"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "book",
+                      "emoji": "📖",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true",
+                      "distractors": [
+                        {
+                          "word": "schoolbag",
+                          "emoji": "🎒",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "notebook",
+                          "emoji": "📓",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "pen",
+                          "emoji": "🖊️",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20pen%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=58062&model=flux&nologo=true"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "notebook",
+                      "emoji": "📓",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true",
+                      "distractors": [
+                        {
+                          "word": "schoolbag",
+                          "emoji": "🎒",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "book",
+                          "emoji": "📖",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "pen",
+                          "emoji": "🖊️",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20pen%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=58062&model=flux&nologo=true"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "pen",
+                      "emoji": "🖊️",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20pen%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=58062&model=flux&nologo=true",
+                      "distractors": [
+                        {
+                          "word": "schoolbag",
+                          "emoji": "🎒",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "book",
+                          "emoji": "📖",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "notebook",
+                          "emoji": "📓",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "pencil",
+                      "emoji": "✏️",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20pencil%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73155&model=flux&nologo=true",
+                      "distractors": [
+                        {
+                          "word": "schoolbag",
+                          "emoji": "🎒",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "book",
+                          "emoji": "📖",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "notebook",
+                          "emoji": "📓",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "rubber",
+                      "emoji": "🧽",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20rubber%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=24244&model=flux&nologo=true",
+                      "distractors": [
+                        {
+                          "word": "schoolbag",
+                          "emoji": "🎒",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "book",
+                          "emoji": "📖",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "notebook",
+                          "emoji": "📓",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "listen_choose_picture",
+                  "instruction": "Listen to the word and tap the right picture.",
+                  "items": [
+                    {
+                      "word": "schoolbag",
+                      "emoji": "🎒",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true",
+                      "distractors": [
+                        {
+                          "word": "book",
+                          "emoji": "📖",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "notebook",
+                          "emoji": "📓",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "pen",
+                          "emoji": "🖊️",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20pen%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=58062&model=flux&nologo=true"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "book",
+                      "emoji": "📖",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true",
+                      "distractors": [
+                        {
+                          "word": "schoolbag",
+                          "emoji": "🎒",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "notebook",
+                          "emoji": "📓",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "pen",
+                          "emoji": "🖊️",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20pen%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=58062&model=flux&nologo=true"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "notebook",
+                      "emoji": "📓",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true",
+                      "distractors": [
+                        {
+                          "word": "schoolbag",
+                          "emoji": "🎒",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "book",
+                          "emoji": "📖",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "pen",
+                          "emoji": "🖊️",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20pen%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=58062&model=flux&nologo=true"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "pen",
+                      "emoji": "🖊️",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20pen%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=58062&model=flux&nologo=true",
+                      "distractors": [
+                        {
+                          "word": "schoolbag",
+                          "emoji": "🎒",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "book",
+                          "emoji": "📖",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "notebook",
+                          "emoji": "📓",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "pencil",
+                      "emoji": "✏️",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20pencil%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73155&model=flux&nologo=true",
+                      "distractors": [
+                        {
+                          "word": "schoolbag",
+                          "emoji": "🎒",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "book",
+                          "emoji": "📖",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "notebook",
+                          "emoji": "📓",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "rubber",
+                      "emoji": "🧽",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20rubber%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=24244&model=flux&nologo=true",
+                      "distractors": [
+                        {
+                          "word": "schoolbag",
+                          "emoji": "🎒",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "book",
+                          "emoji": "📖",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "notebook",
+                          "emoji": "📓",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "look_write",
+                  "instruction": "Look at the picture and type the word.",
+                  "items": [
+                    {
+                      "word": "schoolbag",
+                      "emoji": "🎒",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "book",
+                      "emoji": "📖",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "notebook",
+                      "emoji": "📓",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "pen",
+                      "emoji": "🖊️",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20pen%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=58062&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "pencil",
+                      "emoji": "✏️",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20pencil%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73155&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "rubber",
+                      "emoji": "🧽",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20rubber%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=24244&model=flux&nologo=true"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Ben's schoolbag",
+              "text": "Hi! I'm Ben. This is my schoolbag. It's blue and very big. Look inside! I've got a book — it's my English book. I've got a notebook. It's small and red. I've got two pens and three pencils in my pencil case. I've got a rubber and a ruler too. My schoolbag is heavy today, but it's ready for school. What have you got in your schoolbag?",
+              "scene_description": "A teenager's blue schoolbag with the contents spread out on a desk.",
+              "questions": [
+                {
+                  "question": "What colour is Ben's schoolbag?",
+                  "options": [
+                    "blue",
+                    "red",
+                    "black",
+                    "green"
+                  ],
+                  "correct_answer": "blue"
+                },
+                {
+                  "question": "Is Ben's schoolbag big or small?",
+                  "options": [
+                    "big",
+                    "small",
+                    "medium",
+                    "tiny"
+                  ],
+                  "correct_answer": "big"
+                },
+                {
+                  "question": "How many pencils has Ben got?",
+                  "options": [
+                    "three",
+                    "two",
+                    "one",
+                    "four"
+                  ],
+                  "correct_answer": "three"
+                },
+                {
+                  "question": "What colour is the notebook?",
+                  "options": [
+                    "red",
+                    "blue",
+                    "green",
+                    "white"
+                  ],
+                  "correct_answer": "red"
+                },
+                {
+                  "question": "Has Ben got a rubber?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "have got — introduction (positive)",
+              "explanation": "We use 'have got' to talk about things that are ours. With I, you, we, they we say 'have got'. We often shorten 'I have got' to 'I've got'. We use 'have got' for things, family, or pets.",
+              "examples": [
+                "I've got a pen.",
+                "I have got two books.",
+                "You've got a nice schoolbag.",
+                "We've got pencils.",
+                "They have got rulers."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "instruction": "Choose the correct word.",
+                  "items": [
+                    {
+                      "sentence": "I ___ got two books.",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ],
+                      "correct": "have"
+                    },
+                    {
+                      "sentence": "They ___ got rulers.",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ],
+                      "correct": "have"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "instruction": "Fill the gap.",
+                  "items": [
+                    {
+                      "sentence": "I ___ got two books.",
+                      "answer": "have",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ got rulers.",
+                      "answer": "have",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "instruction": "Is the grammar correct?",
+                  "items": [
+                    {
+                      "sentence": "I've got a pen.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "I has got two books.",
+                      "correct": "false"
+                    },
+                    {
+                      "sentence": "You've got a nice schoolbag.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "We've got pencils.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "They have got rulers.",
+                      "correct": "true"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "TEACHER: Open your bags, please. Ben, what have you got? BEN: I've got a book, a notebook and three pencils. TEACHER: Have you got a pen? BEN: Yes, I have. I've got two pens. TEACHER: Good. And a ruler? BEN: Yes, I've got a ruler and a rubber. TEACHER: Excellent! You're ready for the lesson, Ben.",
+              "audio_url": "/static/audio/stage3/unit04/lesson_01.mp3",
+              "scene_description": "A teacher checks Ben's bag at the start of class.",
+              "questions": [
+                {
+                  "question": "What does the teacher say first?",
+                  "options": [
+                    "Open your bags",
+                    "Close your books",
+                    "Sit down",
+                    "Stand up"
+                  ],
+                  "correct_answer": "Open your bags"
+                },
+                {
+                  "question": "How many pens has Ben got?",
+                  "options": [
+                    "two",
+                    "one",
+                    "three",
+                    "none"
+                  ],
+                  "correct_answer": "two"
+                },
+                {
+                  "question": "Has Ben got a ruler?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
+                },
+                {
+                  "question": "Is Ben ready for the lesson?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
+                },
+                {
+                  "question": "What does Ben have apart from pens and pencils?",
+                  "options": [
+                    "a notebook and a rubber",
+                    "a phone",
+                    "a sandwich",
+                    "a poster"
+                  ],
+                  "correct_answer": "a notebook and a rubber"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "What have YOU got in your schoolbag? Tell us 3 things using 'I've got...'",
+              "expected_text": "I've got a pen and two pencils. I've got a notebook and a book.",
+              "prompts": [
+                "Pick 3 things: pen / pencil / book / notebook / rubber / ruler",
+                "Use: 'I've got a ___ and a ___.'",
+                "Add a number: 'I've got two pencils.'"
+              ],
+              "image_url": ""
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "What did you learn?",
+              "questions": [
+                {
+                  "question": "Something you write with in ink is a ___.",
+                  "options": [
+                    "pen",
+                    "rubber",
+                    "ruler"
+                  ],
+                  "correct_answer": "pen"
+                },
+                {
+                  "question": "Choose: I ___ got a book.",
+                  "options": [
+                    "have",
+                    "is",
+                    "are"
+                  ],
+                  "correct_answer": "have"
+                },
+                {
+                  "question": "Choose: She ___ got a pencil.",
+                  "options": [
+                    "has",
+                    "have",
+                    "is"
+                  ],
+                  "correct_answer": "has"
+                },
+                {
+                  "question": "A small bag for pens is a ___.",
+                  "options": [
+                    "pencil case",
+                    "schoolbag",
+                    "notebook"
+                  ],
+                  "correct_answer": "pencil case"
+                },
+                {
+                  "question": "True or false: 'I've got' means 'I have'.",
+                  "options": [
+                    "True",
+                    "False"
+                  ],
+                  "correct_answer": "True"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_3_movers_unit_04_lesson_02",
+          "number": 2,
+          "title": "Big or small?",
+          "topic": "4 more things + adjectives big/small/new/old + have got (he/she/it)",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Look at Emma's old tablet and new tablet. Match the adjective.",
+              "questions": [
+                {
+                  "question_text": "Not new — used for a long time:",
+                  "correct_answer": "old",
+                  "options": [
+                    "old",
+                    "new",
+                    "big",
+                    "small"
+                  ],
+                  "image_emoji": "🕰️"
+                },
+                {
+                  "question_text": "Just bought — never used:",
+                  "correct_answer": "new",
+                  "options": [
+                    "new",
+                    "old",
+                    "big",
+                    "small"
+                  ],
+                  "image_emoji": "✨"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "dictionary",
+                  "definition": "A book that explains the meaning of words.",
+                  "image_emoji": "📚",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20dictionary%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=56333&model=flux&nologo=true",
+                  "example_sentence": "Look up the word in the dictionary.",
+                  "asset_slug": "stage3_u04_dictionary"
+                },
+                {
+                  "word": "calculator",
+                  "definition": "A small machine for doing maths.",
+                  "image_emoji": "🔢",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20calculator%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=51478&model=flux&nologo=true",
+                  "example_sentence": "I need a calculator for this question.",
+                  "asset_slug": "stage3_u04_calculator"
+                },
+                {
+                  "word": "tablet",
+                  "definition": "A flat computer with a touch screen.",
+                  "image_emoji": "📱",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20tablet%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=2586&model=flux&nologo=true",
+                  "example_sentence": "I read books on my tablet.",
+                  "asset_slug": "stage3_u04_tablet"
+                },
+                {
+                  "word": "water bottle",
+                  "definition": "A bottle for drinking water.",
+                  "image_emoji": "💧",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20water%20bottle%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=91795&model=flux&nologo=true",
+                  "example_sentence": "My water bottle is empty.",
+                  "asset_slug": "stage3_u04_water_bottle"
+                },
+                {
+                  "word": "big",
+                  "definition": "Not small. Large in size.",
+                  "image_emoji": "🦒",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20big%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=80743&model=flux&nologo=true",
+                  "example_sentence": "My schoolbag is big.",
+                  "asset_slug": "stage3_u04_big"
+                },
+                {
+                  "word": "small",
+                  "definition": "Not big. Little in size.",
+                  "image_emoji": "🐭",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20small%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=24531&model=flux&nologo=true",
+                  "example_sentence": "I have a small calculator.",
+                  "asset_slug": "stage3_u04_small"
+                },
+                {
+                  "word": "new",
+                  "definition": "Just bought. Not used yet.",
+                  "image_emoji": "✨",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20new%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73124&model=flux&nologo=true",
+                  "example_sentence": "Ben has a new pen.",
+                  "asset_slug": "stage3_u04_new"
+                },
+                {
+                  "word": "old",
+                  "definition": "Not new. Used for a long time.",
+                  "image_emoji": "🕰️",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20old%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=49123&model=flux&nologo=true",
+                  "example_sentence": "Emma's notebook is old.",
+                  "asset_slug": "stage3_u04_old"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "word_race",
+                  "instruction": "60 seconds! Tap the right picture for each word.",
+                  "time_limit_seconds": 60,
+                  "items": [
+                    {
+                      "prompt": "dictionary",
+                      "correct_emoji": "📚",
+                      "correct_image_url": "",
+                      "options": [
+                        "📚",
+                        "🔢",
+                        "📱",
+                        "💧"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📚",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20dictionary%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=56333&model=flux&nologo=true",
+                          "word": "dictionary"
+                        },
+                        {
+                          "emoji": "🔢",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20calculator%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=51478&model=flux&nologo=true",
+                          "word": "calculator"
+                        },
+                        {
+                          "emoji": "📱",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20tablet%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=2586&model=flux&nologo=true",
+                          "word": "tablet"
+                        },
+                        {
+                          "emoji": "💧",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20water%20bottle%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=91795&model=flux&nologo=true",
+                          "word": "water bottle"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "calculator",
+                      "correct_emoji": "🔢",
+                      "correct_image_url": "",
+                      "options": [
+                        "🔢",
+                        "📚",
+                        "📱",
+                        "💧"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "🔢",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20calculator%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=51478&model=flux&nologo=true",
+                          "word": "calculator"
+                        },
+                        {
+                          "emoji": "📚",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20dictionary%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=56333&model=flux&nologo=true",
+                          "word": "dictionary"
+                        },
+                        {
+                          "emoji": "📱",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20tablet%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=2586&model=flux&nologo=true",
+                          "word": "tablet"
+                        },
+                        {
+                          "emoji": "💧",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20water%20bottle%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=91795&model=flux&nologo=true",
+                          "word": "water bottle"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "tablet",
+                      "correct_emoji": "📱",
+                      "correct_image_url": "",
+                      "options": [
+                        "📱",
+                        "📚",
+                        "🔢",
+                        "💧"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📱",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20tablet%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=2586&model=flux&nologo=true",
+                          "word": "tablet"
+                        },
+                        {
+                          "emoji": "📚",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20dictionary%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=56333&model=flux&nologo=true",
+                          "word": "dictionary"
+                        },
+                        {
+                          "emoji": "🔢",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20calculator%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=51478&model=flux&nologo=true",
+                          "word": "calculator"
+                        },
+                        {
+                          "emoji": "💧",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20water%20bottle%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=91795&model=flux&nologo=true",
+                          "word": "water bottle"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "water bottle",
+                      "correct_emoji": "💧",
+                      "correct_image_url": "",
+                      "options": [
+                        "💧",
+                        "📚",
+                        "🔢",
+                        "📱"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "💧",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20water%20bottle%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=91795&model=flux&nologo=true",
+                          "word": "water bottle"
+                        },
+                        {
+                          "emoji": "📚",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20dictionary%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=56333&model=flux&nologo=true",
+                          "word": "dictionary"
+                        },
+                        {
+                          "emoji": "🔢",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20calculator%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=51478&model=flux&nologo=true",
+                          "word": "calculator"
+                        },
+                        {
+                          "emoji": "📱",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20tablet%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=2586&model=flux&nologo=true",
+                          "word": "tablet"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "big",
+                      "correct_emoji": "🦒",
+                      "correct_image_url": "",
+                      "options": [
+                        "🦒",
+                        "📚",
+                        "🔢",
+                        "📱"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "🦒",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20big%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=80743&model=flux&nologo=true",
+                          "word": "big"
+                        },
+                        {
+                          "emoji": "📚",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20dictionary%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=56333&model=flux&nologo=true",
+                          "word": "dictionary"
+                        },
+                        {
+                          "emoji": "🔢",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20calculator%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=51478&model=flux&nologo=true",
+                          "word": "calculator"
+                        },
+                        {
+                          "emoji": "📱",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20tablet%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=2586&model=flux&nologo=true",
+                          "word": "tablet"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "small",
+                      "correct_emoji": "🐭",
+                      "correct_image_url": "",
+                      "options": [
+                        "🐭",
+                        "📚",
+                        "🔢",
+                        "📱"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "🐭",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20small%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=24531&model=flux&nologo=true",
+                          "word": "small"
+                        },
+                        {
+                          "emoji": "📚",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20dictionary%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=56333&model=flux&nologo=true",
+                          "word": "dictionary"
+                        },
+                        {
+                          "emoji": "🔢",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20calculator%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=51478&model=flux&nologo=true",
+                          "word": "calculator"
+                        },
+                        {
+                          "emoji": "📱",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20tablet%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=2586&model=flux&nologo=true",
+                          "word": "tablet"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "instruction": "Read the word and tap the right picture.",
+                  "items": [
+                    {
+                      "word": "dictionary",
+                      "emoji": "📚",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20dictionary%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=56333&model=flux&nologo=true",
+                      "distractors": [
+                        {
+                          "word": "calculator",
+                          "emoji": "🔢",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20calculator%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=51478&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "tablet",
+                          "emoji": "📱",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20tablet%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=2586&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "water bottle",
+                          "emoji": "💧",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20water%20bottle%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=91795&model=flux&nologo=true"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "calculator",
+                      "emoji": "🔢",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20calculator%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=51478&model=flux&nologo=true",
+                      "distractors": [
+                        {
+                          "word": "dictionary",
+                          "emoji": "📚",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20dictionary%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=56333&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "tablet",
+                          "emoji": "📱",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20tablet%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=2586&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "water bottle",
+                          "emoji": "💧",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20water%20bottle%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=91795&model=flux&nologo=true"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "tablet",
+                      "emoji": "📱",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20tablet%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=2586&model=flux&nologo=true",
+                      "distractors": [
+                        {
+                          "word": "dictionary",
+                          "emoji": "📚",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20dictionary%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=56333&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "calculator",
+                          "emoji": "🔢",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20calculator%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=51478&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "water bottle",
+                          "emoji": "💧",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20water%20bottle%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=91795&model=flux&nologo=true"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "water bottle",
+                      "emoji": "💧",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20water%20bottle%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=91795&model=flux&nologo=true",
+                      "distractors": [
+                        {
+                          "word": "dictionary",
+                          "emoji": "📚",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20dictionary%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=56333&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "calculator",
+                          "emoji": "🔢",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20calculator%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=51478&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "tablet",
+                          "emoji": "📱",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20tablet%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=2586&model=flux&nologo=true"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "big",
+                      "emoji": "🦒",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20big%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=80743&model=flux&nologo=true",
+                      "distractors": [
+                        {
+                          "word": "dictionary",
+                          "emoji": "📚",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20dictionary%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=56333&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "calculator",
+                          "emoji": "🔢",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20calculator%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=51478&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "tablet",
+                          "emoji": "📱",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20tablet%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=2586&model=flux&nologo=true"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "small",
+                      "emoji": "🐭",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20small%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=24531&model=flux&nologo=true",
+                      "distractors": [
+                        {
+                          "word": "dictionary",
+                          "emoji": "📚",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20dictionary%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=56333&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "calculator",
+                          "emoji": "🔢",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20calculator%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=51478&model=flux&nologo=true"
+                        },
+                        {
+                          "word": "tablet",
+                          "emoji": "📱",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20tablet%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=2586&model=flux&nologo=true"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "memory_game",
+                  "instruction": "Flip the cards and find the pairs.",
+                  "items": [
+                    {
+                      "word": "dictionary",
+                      "emoji": "📚",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20dictionary%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=56333&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "calculator",
+                      "emoji": "🔢",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20calculator%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=51478&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "tablet",
+                      "emoji": "📱",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20tablet%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=2586&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "water bottle",
+                      "emoji": "💧",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20water%20bottle%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=91795&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "big",
+                      "emoji": "🦒",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20big%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=80743&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "small",
+                      "emoji": "🐭",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20small%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=24531&model=flux&nologo=true"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Emma's school things",
+              "text": "Hi! I'm Emma. I'm 11. My friend Ben has got a small schoolbag. Mine is big — much bigger! In my big bag, I've got a new tablet for English lessons. I've got a small dictionary too. It's old but I love it. It's from my dad. I've got a calculator for maths. It's small and new. I've also got a water bottle. It's pink. My favourite thing? My new tablet, of course!",
+              "scene_description": "A girl holding a big schoolbag with new and old items on a table.",
+              "questions": [
+                {
+                  "question": "Whose schoolbag is bigger — Ben's or Emma's?",
+                  "options": [
+                    "Emma's",
+                    "Ben's",
+                    "the same size",
+                    "we don't know"
+                  ],
+                  "correct_answer": "Emma's"
+                },
+                {
+                  "question": "Emma's tablet is...",
+                  "options": [
+                    "new",
+                    "old",
+                    "big",
+                    "small"
+                  ],
+                  "correct_answer": "new"
+                },
+                {
+                  "question": "Who gave Emma the dictionary?",
+                  "options": [
+                    "her dad",
+                    "her mum",
+                    "her teacher",
+                    "her brother"
+                  ],
+                  "correct_answer": "her dad"
+                },
+                {
+                  "question": "What colour is Emma's water bottle?",
+                  "options": [
+                    "pink",
+                    "blue",
+                    "red",
+                    "green"
+                  ],
+                  "correct_answer": "pink"
+                },
+                {
+                  "question": "What is Emma's favourite thing?",
+                  "options": [
+                    "her new tablet",
+                    "her dictionary",
+                    "her calculator",
+                    "her water bottle"
+                  ],
+                  "correct_answer": "her new tablet"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "have got — he / she / it",
+              "explanation": "When we talk about ONE other person (he or she) or a thing (it), we use 'has got' (not 'have got'). We often shorten 'he has got' to 'he's got'. Note: 'he's got' = he HAS got, not 'he is'.",
+              "examples": [
+                "He has got a small bag.",
+                "She's got a new tablet.",
+                "It has got two pockets.",
+                "My dad has got an old dictionary.",
+                "Emma's got a pink water bottle."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "error_hunter",
+                  "instruction": "Tap the wrong word.",
+                  "items": [
+                    {
+                      "sentence": "He have got a small bag.",
+                      "errorWord": "have",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "It have got two pockets.",
+                      "errorWord": "have",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "My dad have got an old dictionary.",
+                      "errorWord": "have",
+                      "alternateErrors": []
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "instruction": "Is the grammar correct?",
+                  "items": [
+                    {
+                      "sentence": "He has got a small bag.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "She's got a new tablet.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "It has got two pockets.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "My dad have got an old dictionary.",
+                      "correct": "false"
+                    },
+                    {
+                      "sentence": "Emma's got a pink water bottle.",
+                      "correct": "true"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "instruction": "Choose the correct word.",
+                  "items": [
+                    {
+                      "sentence": "He ___ got a small bag.",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ],
+                      "correct": "has"
+                    },
+                    {
+                      "sentence": "It ___ got two pockets.",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ],
+                      "correct": "has"
+                    },
+                    {
+                      "sentence": "My dad ___ got an old dictionary.",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ],
+                      "correct": "has"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "EMMA: Look at my new tablet, Pablo! PABLO: Wow! It's nice and big. EMMA: Yes, it's new. Have you got a tablet? PABLO: No, I haven't. But I've got a small calculator. EMMA: My calculator is small too. Look. PABLO: Nice. And what about a dictionary? EMMA: Yes, I've got one. It's old, but it's good. My dad has got the same one. PABLO: Cool! My sister has got a dictionary too.",
+              "audio_url": "/static/audio/stage3/unit04/lesson_02.mp3",
+              "scene_description": "Two friends compare what they have got.",
+              "questions": [
+                {
+                  "question": "Whose tablet is new?",
+                  "options": [
+                    "Emma's",
+                    "Pablo's",
+                    "Pablo's sister's",
+                    "Emma's dad's"
+                  ],
+                  "correct_answer": "Emma's"
+                },
+                {
+                  "question": "Has Pablo got a tablet?",
+                  "options": [
+                    "no",
+                    "yes"
+                  ],
+                  "correct_answer": "no"
+                },
+                {
+                  "question": "What has Pablo got for maths?",
+                  "options": [
+                    "a small calculator",
+                    "a big calculator",
+                    "a phone",
+                    "nothing"
+                  ],
+                  "correct_answer": "a small calculator"
+                },
+                {
+                  "question": "Is Emma's dictionary new?",
+                  "options": [
+                    "no, it's old",
+                    "yes, it's new",
+                    "very new",
+                    "we don't know"
+                  ],
+                  "correct_answer": "no, it's old"
+                },
+                {
+                  "question": "Who has got the same dictionary as Emma?",
+                  "options": [
+                    "her dad",
+                    "Pablo",
+                    "her mum",
+                    "Pablo's sister"
+                  ],
+                  "correct_answer": "her dad"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Tell us about a friend's school things. Use 'He/She has got...'",
+              "expected_text": "She's got a new tablet. He's got an old book. She's got a small pencil case.",
+              "prompts": [
+                "Pick a friend: 'My friend ___'",
+                "Use 'He's got' or 'She's got' + thing.",
+                "Add an adjective: 'small / big / new / old'."
+              ],
+              "image_url": ""
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "What did you learn?",
+              "questions": [
+                {
+                  "question": "Choose: He ___ got a calculator.",
+                  "options": [
+                    "has",
+                    "have",
+                    "is"
+                  ],
+                  "correct_answer": "has"
+                },
+                {
+                  "question": "Choose: She ___ a new pen.",
+                  "options": [
+                    "has got",
+                    "have got",
+                    "is got"
+                  ],
+                  "correct_answer": "has got"
+                },
+                {
+                  "question": "Just bought, never used =",
+                  "options": [
+                    "new",
+                    "old",
+                    "big"
+                  ],
+                  "correct_answer": "new"
+                },
+                {
+                  "question": "A small machine for maths is a ___.",
+                  "options": [
+                    "calculator",
+                    "dictionary",
+                    "tablet"
+                  ],
+                  "correct_answer": "calculator"
+                },
+                {
+                  "question": "True or false: 'She's got' can mean 'she has got'.",
+                  "options": [
+                    "True",
+                    "False"
+                  ],
+                  "correct_answer": "True"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_3_movers_unit_04_lesson_03",
+          "number": 3,
+          "title": "What's it like?",
+          "topic": "More adjectives (beautiful, good, nice, ugly, long, short, favourite) + have got — negative",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Look at Pablo's two rulers. Which is which?",
+              "questions": [
+                {
+                  "question_text": "30 cm = ___",
+                  "correct_answer": "long",
+                  "options": [
+                    "long",
+                    "short",
+                    "small",
+                    "ugly"
+                  ],
+                  "image_emoji": "📏"
+                },
+                {
+                  "question_text": "10 cm = ___",
+                  "correct_answer": "short",
+                  "options": [
+                    "short",
+                    "long",
+                    "big",
+                    "beautiful"
+                  ],
+                  "image_emoji": "📐"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "beautiful",
+                  "definition": "Very nice to look at.",
+                  "image_emoji": "🌸",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20beautiful%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=4494&model=flux&nologo=true",
+                  "example_sentence": "She has a beautiful pencil case.",
+                  "asset_slug": "stage3_u04_beautiful"
+                },
+                {
+                  "word": "good",
+                  "definition": "Useful or nice.",
+                  "image_emoji": "👍",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20good%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=92165&model=flux&nologo=true",
+                  "example_sentence": "It's a good book.",
+                  "asset_slug": "stage3_u04_good"
+                },
+                {
+                  "word": "nice",
+                  "definition": "Pleasant. You like it.",
+                  "image_emoji": "😊",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20nice%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=52195&model=flux&nologo=true",
+                  "example_sentence": "What a nice pencil!",
+                  "asset_slug": "stage3_u04_nice"
+                },
+                {
+                  "word": "ugly",
+                  "definition": "Not nice to look at.",
+                  "image_emoji": "👎",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20ugly%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=20541&model=flux&nologo=true",
+                  "example_sentence": "My old bag is a bit ugly.",
+                  "asset_slug": "stage3_u04_ugly"
+                },
+                {
+                  "word": "long",
+                  "definition": "Not short. From end to end is far.",
+                  "image_emoji": "📏",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20long%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=4132&model=flux&nologo=true",
+                  "example_sentence": "I have a long ruler.",
+                  "asset_slug": "stage3_u04_long"
+                },
+                {
+                  "word": "short",
+                  "definition": "Not long. From end to end is small.",
+                  "image_emoji": "📐",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20short%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=79866&model=flux&nologo=true",
+                  "example_sentence": "My pencil is short now.",
+                  "asset_slug": "stage3_u04_short"
+                },
+                {
+                  "word": "favourite",
+                  "definition": "The one you like most.",
+                  "image_emoji": "⭐",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20favourite%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=21933&model=flux&nologo=true",
+                  "example_sentence": "Red is my favourite colour.",
+                  "asset_slug": "stage3_u04_favourite"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_write",
+                  "instruction": "Listen to the word, then type it.",
+                  "items": [
+                    {
+                      "audio_text": "beautiful",
+                      "answer": "beautiful"
+                    },
+                    {
+                      "audio_text": "good",
+                      "answer": "good"
+                    },
+                    {
+                      "audio_text": "nice",
+                      "answer": "nice"
+                    },
+                    {
+                      "audio_text": "ugly",
+                      "answer": "ugly"
+                    },
+                    {
+                      "audio_text": "long",
+                      "answer": "long"
+                    },
+                    {
+                      "audio_text": "short",
+                      "answer": "short"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "listen_choose_word",
+                  "instruction": "Listen and tap the right word.",
+                  "items": [
+                    {
+                      "audio_text": "beautiful",
+                      "word": "beautiful",
+                      "options": [
+                        "beautiful",
+                        "good",
+                        "nice",
+                        "ugly"
+                      ],
+                      "correct": "beautiful",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20beautiful%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=4494&model=flux&nologo=true"
+                    },
+                    {
+                      "audio_text": "good",
+                      "word": "good",
+                      "options": [
+                        "good",
+                        "beautiful",
+                        "nice",
+                        "ugly"
+                      ],
+                      "correct": "good",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20good%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=92165&model=flux&nologo=true"
+                    },
+                    {
+                      "audio_text": "nice",
+                      "word": "nice",
+                      "options": [
+                        "nice",
+                        "beautiful",
+                        "good",
+                        "ugly"
+                      ],
+                      "correct": "nice",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20nice%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=52195&model=flux&nologo=true"
+                    },
+                    {
+                      "audio_text": "ugly",
+                      "word": "ugly",
+                      "options": [
+                        "ugly",
+                        "beautiful",
+                        "good",
+                        "nice"
+                      ],
+                      "correct": "ugly",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20ugly%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=20541&model=flux&nologo=true"
+                    },
+                    {
+                      "audio_text": "long",
+                      "word": "long",
+                      "options": [
+                        "long",
+                        "beautiful",
+                        "good",
+                        "nice"
+                      ],
+                      "correct": "long",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20long%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=4132&model=flux&nologo=true"
+                    },
+                    {
+                      "audio_text": "short",
+                      "word": "short",
+                      "options": [
+                        "short",
+                        "beautiful",
+                        "good",
+                        "nice"
+                      ],
+                      "correct": "short",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20short%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=79866&model=flux&nologo=true"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "flashcard_match",
+                  "instruction": "Match pairs: word ↔ picture.",
+                  "items": [
+                    {
+                      "word": "beautiful",
+                      "emoji": "🌸",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20beautiful%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=4494&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "good",
+                      "emoji": "👍",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20good%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=92165&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "nice",
+                      "emoji": "😊",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20nice%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=52195&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "ugly",
+                      "emoji": "👎",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20ugly%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=20541&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "long",
+                      "emoji": "📏",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20long%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=4132&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "short",
+                      "emoji": "📐",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20short%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=79866&model=flux&nologo=true"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Pablo's favourite things",
+              "text": "Hi! I'm Pablo. I'm from Spain. I've got some favourite things in my schoolbag. My favourite pencil case is small and beautiful. It's green with stars on it. I've got a new pen — it's long and nice. I haven't got an old pen — only this new one. My ruler is short, only 15 centimetres. My friend Ben has got a long ruler. I've got a good dictionary, but I haven't got a calculator. Mum says, 'You don't need one, Pablo!' But I want one!",
+              "scene_description": "A schoolboy showing his favourite school items with pride.",
+              "questions": [
+                {
+                  "question": "Where is Pablo from?",
+                  "options": [
+                    "Spain",
+                    "Brazil",
+                    "Italy",
+                    "Russia"
+                  ],
+                  "correct_answer": "Spain"
+                },
+                {
+                  "question": "What is Pablo's pencil case like?",
+                  "options": [
+                    "small and beautiful",
+                    "big and ugly",
+                    "long and old",
+                    "new but small"
+                  ],
+                  "correct_answer": "small and beautiful"
+                },
+                {
+                  "question": "Has Pablo got an old pen?",
+                  "options": [
+                    "no",
+                    "yes"
+                  ],
+                  "correct_answer": "no"
+                },
+                {
+                  "question": "How long is Pablo's ruler?",
+                  "options": [
+                    "15 cm",
+                    "30 cm",
+                    "10 cm",
+                    "20 cm"
+                  ],
+                  "correct_answer": "15 cm"
+                },
+                {
+                  "question": "Has Pablo got a calculator?",
+                  "options": [
+                    "no",
+                    "yes"
+                  ],
+                  "correct_answer": "no"
+                },
+                {
+                  "question": "Who has got a long ruler?",
+                  "options": [
+                    "Ben",
+                    "Pablo",
+                    "Mum",
+                    "Emma"
+                  ],
+                  "correct_answer": "Ben"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "have got — negative",
+              "explanation": "To say 'no, I don't have something', we use 'haven't got' (I/you/we/they) or 'hasn't got' (he/she/it). 'Haven't' is short for 'have not'; 'hasn't' is short for 'has not'.",
+              "examples": [
+                "I haven't got a calculator.",
+                "You haven't got a tablet.",
+                "She hasn't got an old dictionary.",
+                "He hasn't got a long ruler.",
+                "We haven't got a pencil case."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "fill_blank",
+                  "instruction": "Fill the gap.",
+                  "items": [
+                    {
+                      "sentence": "I ___ got a calculator.",
+                      "answer": "haven't",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ]
+                    },
+                    {
+                      "sentence": "You ___ got a tablet.",
+                      "answer": "haven't",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ got an old dictionary.",
+                      "answer": "hasn't",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ got a long ruler.",
+                      "answer": "hasn't",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ]
+                    },
+                    {
+                      "sentence": "We ___ got a pencil case.",
+                      "answer": "haven't",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "instruction": "Choose the correct word.",
+                  "items": [
+                    {
+                      "sentence": "I ___ got a calculator.",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ],
+                      "correct": "haven't"
+                    },
+                    {
+                      "sentence": "You ___ got a tablet.",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ],
+                      "correct": "haven't"
+                    },
+                    {
+                      "sentence": "She ___ got an old dictionary.",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ],
+                      "correct": "hasn't"
+                    },
+                    {
+                      "sentence": "He ___ got a long ruler.",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ],
+                      "correct": "hasn't"
+                    },
+                    {
+                      "sentence": "We ___ got a pencil case.",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ],
+                      "correct": "haven't"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "instruction": "Tap the wrong word.",
+                  "items": [
+                    {
+                      "sentence": "I have got a calculator.",
+                      "errorWord": "have",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "You have got a tablet.",
+                      "errorWord": "have",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "She have got an old dictionary.",
+                      "errorWord": "have",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "He have got a long ruler.",
+                      "errorWord": "have",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "We have got a pencil case.",
+                      "errorWord": "have",
+                      "alternateErrors": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "BEN: Pablo, have you got a calculator? I need one for maths. PABLO: No, I haven't. Sorry. BEN: Emma, have you got one? EMMA: Yes, I have. Here you are. BEN: Thanks, Emma! It's new. EMMA: Yes, it is. It's small and new. BEN: My calculator is at home. I haven't got it today. EMMA: No problem. You can use mine.",
+              "audio_url": "/static/audio/stage3/unit04/lesson_03.mp3",
+              "scene_description": "Three classmates help each other with school things.",
+              "questions": [
+                {
+                  "question": "What does Ben need?",
+                  "options": [
+                    "a calculator",
+                    "a pen",
+                    "a ruler",
+                    "a dictionary"
+                  ],
+                  "correct_answer": "a calculator"
+                },
+                {
+                  "question": "Has Pablo got a calculator?",
+                  "options": [
+                    "no",
+                    "yes"
+                  ],
+                  "correct_answer": "no"
+                },
+                {
+                  "question": "Who lends Ben a calculator?",
+                  "options": [
+                    "Emma",
+                    "Pablo",
+                    "the teacher",
+                    "Mum"
+                  ],
+                  "correct_answer": "Emma"
+                },
+                {
+                  "question": "What is Emma's calculator like?",
+                  "options": [
+                    "small and new",
+                    "big and old",
+                    "long and new",
+                    "small and ugly"
+                  ],
+                  "correct_answer": "small and new"
+                },
+                {
+                  "question": "Why hasn't Ben got his calculator?",
+                  "options": [
+                    "it's at home",
+                    "it's broken",
+                    "he lost it",
+                    "he doesn't have one"
+                  ],
+                  "correct_answer": "it's at home"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Tell us TWO things you've got and ONE thing you haven't got.",
+              "expected_text": "I've got a new pen and a small calculator. I haven't got a tablet.",
+              "prompts": [
+                "Two things you have: 'I've got a ___ and a ___'",
+                "One thing you don't: 'I haven't got a ___'",
+                "Add an adjective: 'small / new / beautiful / good'."
+              ],
+              "image_url": ""
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "What did you learn?",
+              "questions": [
+                {
+                  "question": "Choose: I ___ got a tablet.",
+                  "options": [
+                    "haven't",
+                    "hasn't",
+                    "isn't"
+                  ],
+                  "correct_answer": "haven't"
+                },
+                {
+                  "question": "Choose: He ___ got a ruler.",
+                  "options": [
+                    "hasn't",
+                    "haven't",
+                    "isn't"
+                  ],
+                  "correct_answer": "hasn't"
+                },
+                {
+                  "question": "Very nice to look at =",
+                  "options": [
+                    "beautiful",
+                    "ugly",
+                    "old"
+                  ],
+                  "correct_answer": "beautiful"
+                },
+                {
+                  "question": "The one you like most =",
+                  "options": [
+                    "favourite",
+                    "new",
+                    "short"
+                  ],
+                  "correct_answer": "favourite"
+                },
+                {
+                  "question": "True or false: 'haven't got' means 'don't have'.",
+                  "options": [
+                    "True",
+                    "False"
+                  ],
+                  "correct_answer": "True"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_3_movers_unit_04_lesson_04",
+          "number": 4,
+          "title": "My things — Review",
+          "topic": "Recycle all schoolbag vocab + have got pos/neg.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Look at three schoolbags. Whose is whose?",
+              "questions": [
+                {
+                  "question_text": "A small green bag with a beautiful pencil case = ___",
+                  "correct_answer": "Pablo's",
+                  "options": [
+                    "Pablo's",
+                    "Ben's",
+                    "Emma's",
+                    "Mum's"
+                  ],
+                  "image_emoji": "🟢"
+                },
+                {
+                  "question_text": "A big bag with a new tablet = ___",
+                  "correct_answer": "Emma's",
+                  "options": [
+                    "Emma's",
+                    "Ben's",
+                    "Pablo's",
+                    "Dad's"
+                  ],
+                  "image_emoji": "📱"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "schoolbag",
+                "book",
+                "notebook",
+                "pen",
+                "pencil",
+                "rubber",
+                "ruler",
+                "pencil case",
+                "dictionary",
+                "calculator",
+                "tablet",
+                "water bottle",
+                "big",
+                "small",
+                "new",
+                "old",
+                "beautiful",
+                "good",
+                "nice",
+                "ugly",
+                "long",
+                "short",
+                "favourite"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "word_ladder",
+                  "instruction": "Climb the ladder! Choose the right word for each step.",
+                  "items": [
+                    {
+                      "prompt": "Which word matches: ",
+                      "options": [
+                        "schoolbag",
+                        "book",
+                        "notebook"
+                      ],
+                      "correct": "schoolbag"
+                    },
+                    {
+                      "prompt": "Which word matches: ",
+                      "options": [
+                        "book",
+                        "schoolbag",
+                        "notebook"
+                      ],
+                      "correct": "book"
+                    },
+                    {
+                      "prompt": "Which word matches: ",
+                      "options": [
+                        "notebook",
+                        "schoolbag",
+                        "book"
+                      ],
+                      "correct": "notebook"
+                    },
+                    {
+                      "prompt": "Which word matches: ",
+                      "options": [
+                        "pen",
+                        "schoolbag",
+                        "book"
+                      ],
+                      "correct": "pen"
+                    },
+                    {
+                      "prompt": "Which word matches: ",
+                      "options": [
+                        "pencil",
+                        "schoolbag",
+                        "book"
+                      ],
+                      "correct": "pencil"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "cumulative_race",
+                  "instruction": "90 seconds! Race through all the words you learned.",
+                  "time_limit_seconds": 90,
+                  "items": [
+                    {
+                      "prompt": "schoolbag",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true",
+                          "word": "schoolbag"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true",
+                          "word": "book"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true",
+                          "word": "notebook"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20pen%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=58062&model=flux&nologo=true",
+                          "word": "pen"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "book",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true",
+                          "word": "book"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true",
+                          "word": "schoolbag"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true",
+                          "word": "notebook"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20pen%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=58062&model=flux&nologo=true",
+                          "word": "pen"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "notebook",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true",
+                          "word": "notebook"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true",
+                          "word": "schoolbag"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true",
+                          "word": "book"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20pen%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=58062&model=flux&nologo=true",
+                          "word": "pen"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "pen",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20pen%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=58062&model=flux&nologo=true",
+                          "word": "pen"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true",
+                          "word": "schoolbag"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true",
+                          "word": "book"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true",
+                          "word": "notebook"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "pencil",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20pencil%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73155&model=flux&nologo=true",
+                          "word": "pencil"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true",
+                          "word": "schoolbag"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true",
+                          "word": "book"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true",
+                          "word": "notebook"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "rubber",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20rubber%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=24244&model=flux&nologo=true",
+                          "word": "rubber"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true",
+                          "word": "schoolbag"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true",
+                          "word": "book"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true",
+                          "word": "notebook"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "ruler",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20ruler%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29619&model=flux&nologo=true",
+                          "word": "ruler"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true",
+                          "word": "schoolbag"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true",
+                          "word": "book"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true",
+                          "word": "notebook"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "pencil case",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20pencil%20case%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=22774&model=flux&nologo=true",
+                          "word": "pencil case"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true",
+                          "word": "schoolbag"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true",
+                          "word": "book"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true",
+                          "word": "notebook"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "dictionary",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20dictionary%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=56333&model=flux&nologo=true",
+                          "word": "dictionary"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true",
+                          "word": "schoolbag"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true",
+                          "word": "book"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true",
+                          "word": "notebook"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "calculator",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20calculator%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=51478&model=flux&nologo=true",
+                          "word": "calculator"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true",
+                          "word": "schoolbag"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true",
+                          "word": "book"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true",
+                          "word": "notebook"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "flashcard_match",
+                  "instruction": "Match pairs: word ↔ picture.",
+                  "items": [
+                    {
+                      "word": "schoolbag",
+                      "emoji": "📦",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20schoolbag%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=3007&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "book",
+                      "emoji": "📦",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20book%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=27619&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "notebook",
+                      "emoji": "📦",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20notebook%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73371&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "pen",
+                      "emoji": "📦",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20pen%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=58062&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "pencil",
+                      "emoji": "📦",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20pencil%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73155&model=flux&nologo=true"
+                    },
+                    {
+                      "word": "rubber",
+                      "emoji": "📦",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20rubber%2C%20simple%20clear%20composition%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=24244&model=flux&nologo=true"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Whose schoolbag?",
+              "text": "Three schoolbags, three friends. Ben's bag is blue and big. He's got two pens, three pencils, a ruler and a rubber. Emma's bag is big and red. She's got a new tablet, a small calculator and a pink water bottle. Her dictionary is old but good. Pablo's bag is green and small. He's got a beautiful pencil case but he hasn't got a calculator. His ruler is short. All three friends are happy with their things!",
+              "scene_description": "Three schoolbags side by side with the owners' names labelled.",
+              "questions": [
+                {
+                  "question": "Whose bag is blue?",
+                  "options": [
+                    "Ben's",
+                    "Emma's",
+                    "Pablo's",
+                    "Dad's"
+                  ],
+                  "correct_answer": "Ben's"
+                },
+                {
+                  "question": "Who has got a new tablet?",
+                  "options": [
+                    "Emma",
+                    "Ben",
+                    "Pablo",
+                    "Mum"
+                  ],
+                  "correct_answer": "Emma"
+                },
+                {
+                  "question": "Whose ruler is short?",
+                  "options": [
+                    "Pablo's",
+                    "Ben's",
+                    "Emma's",
+                    "the teacher's"
+                  ],
+                  "correct_answer": "Pablo's"
+                },
+                {
+                  "question": "Who hasn't got a calculator?",
+                  "options": [
+                    "Pablo",
+                    "Ben",
+                    "Emma",
+                    "everyone"
+                  ],
+                  "correct_answer": "Pablo"
+                },
+                {
+                  "question": "Are the friends happy?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
+                },
+                {
+                  "question": "How many friends?",
+                  "options": [
+                    "three",
+                    "two",
+                    "four",
+                    "one"
+                  ],
+                  "correct_answer": "three"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "have got — positive (I/you/we/they 've got; he/she/it 's got)",
+                "have got — negative (haven't got / hasn't got)",
+                "Adjectives: big, small, new, old, beautiful, nice, ugly, long, short, favourite"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "true_false",
+                  "instruction": "Is the grammar correct?",
+                  "items": [
+                    {
+                      "sentence": "have got — positive (I/you/we/they 've got; he/she/it 's got)",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "has got — negative (haven't got / hasn't got)",
+                      "correct": "false"
+                    },
+                    {
+                      "sentence": "Adjectives: big, small, new, old, beautiful, nice, ugly, long, short, favourite",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "I is Vietnamese.",
+                      "correct": "false"
+                    },
+                    {
+                      "sentence": "She is my friend.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "He am my brother.",
+                      "correct": "false"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "instruction": "Fill the gap.",
+                  "items": [
+                    {
+                      "sentence": "___ got — positive (I/you/we/they 've got; he/she/it 's got)",
+                      "answer": "have",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ]
+                    },
+                    {
+                      "sentence": "___ got — negative (haven't got / hasn't got)",
+                      "answer": "have",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ Vietnamese.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ my friend.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ my brother.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "We ___ classmates.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "instruction": "Choose the correct word.",
+                  "items": [
+                    {
+                      "sentence": "___ got — positive (I/you/we/they 've got; he/she/it 's got)",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ],
+                      "correct": "have"
+                    },
+                    {
+                      "sentence": "___ got — negative (haven't got / hasn't got)",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ],
+                      "correct": "have"
+                    },
+                    {
+                      "sentence": "I ___ Vietnamese.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "am"
+                    },
+                    {
+                      "sentence": "She ___ my friend.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "He ___ my brother.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "We ___ classmates.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "are"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "TEACHER: OK, class. Let's check your bags. Emma? EMMA: I've got a tablet, a calculator and a dictionary. TEACHER: Have you got a pen? EMMA: Yes, two pens. TEACHER: Pablo? PABLO: I've got a notebook and three pencils. I haven't got a calculator. TEACHER: That's OK. Ben? BEN: I've got everything! Books, pens, a ruler, a rubber. My bag is heavy. TEACHER: Excellent. You're all ready for the lesson!",
+              "audio_url": "/static/audio/stage3/unit04/lesson_04.mp3",
+              "scene_description": "A teacher checks the class's school things.",
+              "questions": [
+                {
+                  "question": "How many pens has Emma got?",
+                  "options": [
+                    "two",
+                    "one",
+                    "three",
+                    "none"
+                  ],
+                  "correct_answer": "two"
+                },
+                {
+                  "question": "Has Pablo got a calculator?",
+                  "options": [
+                    "no",
+                    "yes"
+                  ],
+                  "correct_answer": "no"
+                },
+                {
+                  "question": "Whose bag is heavy?",
+                  "options": [
+                    "Ben's",
+                    "Emma's",
+                    "Pablo's",
+                    "the teacher's"
+                  ],
+                  "correct_answer": "Ben's"
+                },
+                {
+                  "question": "Are the class ready?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
+                },
+                {
+                  "question": "What does Pablo have?",
+                  "options": [
+                    "a notebook and three pencils",
+                    "two pens",
+                    "a tablet",
+                    "a long ruler"
+                  ],
+                  "correct_answer": "a notebook and three pencils"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Describe your schoolbag in 30 seconds. Use have got + 2 adjectives + 1 negative.",
+              "expected_text": "I've got a big blue schoolbag. I've got two new pens. I haven't got a tablet.",
+              "prompts": [
+                "Bag: 'I've got a [colour] schoolbag.'",
+                "Two things + adjective: 'I've got a [adj] [thing].'",
+                "Negative: 'I haven't got a [thing].'"
+              ],
+              "image_url": ""
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Unit 4 review",
+              "questions": [
+                {
+                  "question": "Choose: She ___ got a calculator.",
+                  "options": [
+                    "has",
+                    "have",
+                    "is"
+                  ],
+                  "correct_answer": "has"
+                },
+                {
+                  "question": "Choose: I ___ got a tablet.",
+                  "options": [
+                    "haven't",
+                    "hasn't",
+                    "isn't"
+                  ],
+                  "correct_answer": "haven't"
+                },
+                {
+                  "question": "30 cm is ___.",
+                  "options": [
+                    "long",
+                    "short",
+                    "ugly"
+                  ],
+                  "correct_answer": "long"
+                },
+                {
+                  "question": "The one you like most is your ___ thing.",
+                  "options": [
+                    "favourite",
+                    "old",
+                    "new"
+                  ],
+                  "correct_answer": "favourite"
+                },
+                {
+                  "question": "True or false: 'He's got a pen' = 'He has got a pen'.",
+                  "options": [
+                    "True",
+                    "False"
+                  ],
+                  "correct_answer": "True"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
