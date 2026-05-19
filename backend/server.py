@@ -8230,6 +8230,20 @@ async def auto_seed_unified_learning():
                 logger.info(f"✅ Merge complete: {result.get('message', 'done')}")
             else:
                 logger.info(f"✅ All lessons already merged with enriched content")
+
+            # Stage 3 (Movers) iterates quickly during launch; force-merge
+            # Stage 3 on every boot so the live DB reflects the latest
+            # enriched JSON. Once Stage 3 stabilises (~Unit 20 shipped) this
+            # can drop back to needs_enrich-only.
+            try:
+                stage3_files = glob.glob(f"{enriched_dir}/stage3_unit*_enriched.json")
+                if stage3_files:
+                    from routes.content_enrichment import merge_and_seed_content
+                    logger.info(f"⟳ Force-merging Stage 3 ({len(stage3_files)} files) on boot...")
+                    result3 = await merge_and_seed_content(stage="stage3")
+                    logger.info(f"✅ Stage 3 force-merge: {result3.get('message', 'done')}")
+            except Exception as e3:
+                logger.warning(f"Stage 3 force-merge failed (non-fatal): {e3}")
         
         # Always restore image mappings after seed/merge to ensure images are preserved
         await _restore_vocab_image_mappings()
