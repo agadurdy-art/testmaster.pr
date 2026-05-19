@@ -36,7 +36,7 @@
       "sb_page": 14,
       "topic": "Me, my things and my nationality",
       "vocab_sections": {
-        "objects_and_people": ["bag", "camera", "chair", "phone", "photo", "students", "friends", "table", "watch", "teacher", "classmates"],
+        "objects_and_people": ["bag", "camera", "chair", "phone", "photo", "table", "watch", "student", "friend", "teacher", "classmate"],
         "countries_and_nationalities": [
           {"country": "Argentina", "nationality": "Argentinian"},
           {"country": "Brazil", "nationality": "Brazilian"},
@@ -48,9 +48,17 @@
           {"country": "Spain", "nationality": "Spanish"},
           {"country": "Turkey", "nationality": "Turkish"},
           {"country": "the UK", "nationality": "British"},
-          {"country": "the USA", "nationality": "American"}
+          {"country": "the USA", "nationality": "American"},
+          {"country": "Vietnam", "nationality": "Vietnamese"}
         ]
       },
+      "do_not_include_words_here_belong_to_later_units": [
+        "book (Unit 4 — school bag things)",
+        "pen (Unit 4)",
+        "pencil (Unit 4)",
+        "boy / girl (taught implicitly via he/she)",
+        "ruler / rubber / notebook (Unit 4)"
+      ],
       "target_grammar": [
         "Determiners — singular and plural (a/the, no article)",
         "be — singular and plural (I am, you are, he/she/it is, we are, they are)"
