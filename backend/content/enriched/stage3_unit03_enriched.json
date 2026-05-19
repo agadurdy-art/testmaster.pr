@@ -1,0 +1,3004 @@
+{
+  "stage": "stage_3",
+  "stage_title": "Movers (A1)",
+  "units": [
+    {
+      "unit_id": "stage_3_movers_unit_03",
+      "unit_num": 3,
+      "title": "My home",
+      "subtitle": "Rooms, things in your room, and where they are — aligned with Cambridge Prepare Lv1 Unit 3.",
+      "phonics_focus": "/ð/ vs /θ/ in 'this' / 'three' / 'bathroom'",
+      "grammar_focus": "there is / there are; prepositions (in/on/under/behind/next to); have got (intro).",
+      "spiral_meta": {
+        "prepare_alignment": {
+          "source": "Cambridge Prepare 2nd Edition Level 1 — Unit 3 'My home' (SB p24-27)",
+          "wordlist_coverage_pct": 100,
+          "extracted_from": "backend/content/cambridge_refs/prepare_lv1_unit_breakdowns.json"
+        },
+        "anchor_character_names_recycled": [
+          "Lucia",
+          "Tom",
+          "Alex"
+        ]
+      },
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_3_movers_unit_03_lesson_01",
+          "number": 1,
+          "title": "Rooms in a house",
+          "topic": "7 rooms + 'there is/are' singular",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Look at Lucia's house. Match the room.",
+              "questions": [
+                {
+                  "question_text": "Where do you sleep?",
+                  "correct_answer": "bedroom",
+                  "options": [
+                    "bedroom",
+                    "kitchen",
+                    "garden",
+                    "hall"
+                  ],
+                  "image_emoji": "🛏️"
+                },
+                {
+                  "question_text": "Where do you cook?",
+                  "correct_answer": "kitchen",
+                  "options": [
+                    "kitchen",
+                    "bathroom",
+                    "living room",
+                    "garden"
+                  ],
+                  "image_emoji": "🍳"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "bathroom",
+                  "definition": "The room with a bath, shower and toilet.",
+                  "image_emoji": "🛁",
+                  "image_url": "",
+                  "example_sentence": "I brush my teeth in the bathroom.",
+                  "asset_slug": "stage3_u03_bathroom"
+                },
+                {
+                  "word": "bedroom",
+                  "definition": "The room where you sleep.",
+                  "image_emoji": "🛏️",
+                  "image_url": "",
+                  "example_sentence": "My bedroom is small.",
+                  "asset_slug": "stage3_u03_bedroom"
+                },
+                {
+                  "word": "dining room",
+                  "definition": "The room where you eat at a table.",
+                  "image_emoji": "🍽️",
+                  "image_url": "",
+                  "example_sentence": "We eat dinner in the dining room.",
+                  "asset_slug": "stage3_u03_dining_room"
+                },
+                {
+                  "word": "garden",
+                  "definition": "The space outside with plants and grass.",
+                  "image_emoji": "🌳",
+                  "image_url": "",
+                  "example_sentence": "The cat is in the garden.",
+                  "asset_slug": "stage3_u03_garden"
+                },
+                {
+                  "word": "hall",
+                  "definition": "The room you enter from the front door.",
+                  "image_emoji": "🚪",
+                  "image_url": "",
+                  "example_sentence": "Hang your coat in the hall.",
+                  "asset_slug": "stage3_u03_hall"
+                },
+                {
+                  "word": "kitchen",
+                  "definition": "The room where you cook food.",
+                  "image_emoji": "🍳",
+                  "image_url": "",
+                  "example_sentence": "Mum is in the kitchen.",
+                  "asset_slug": "stage3_u03_kitchen"
+                },
+                {
+                  "word": "living room",
+                  "definition": "The room with a sofa where you watch TV.",
+                  "image_emoji": "🛋️",
+                  "image_url": "",
+                  "example_sentence": "We watch TV in the living room.",
+                  "asset_slug": "stage3_u03_living_room"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "image_word_match",
+                  "instruction": "Match each picture with the right word.",
+                  "items": [
+                    {
+                      "word": "bathroom",
+                      "emoji": "🛁",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "bedroom",
+                          "emoji": "🛏️",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "dining room",
+                          "emoji": "🍽️",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "garden",
+                          "emoji": "🌳",
+                          "image_url": ""
+                        }
+                      ]
+                    },
+                    {
+                      "word": "bedroom",
+                      "emoji": "🛏️",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "bathroom",
+                          "emoji": "🛁",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "dining room",
+                          "emoji": "🍽️",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "garden",
+                          "emoji": "🌳",
+                          "image_url": ""
+                        }
+                      ]
+                    },
+                    {
+                      "word": "dining room",
+                      "emoji": "🍽️",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "bathroom",
+                          "emoji": "🛁",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "bedroom",
+                          "emoji": "🛏️",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "garden",
+                          "emoji": "🌳",
+                          "image_url": ""
+                        }
+                      ]
+                    },
+                    {
+                      "word": "garden",
+                      "emoji": "🌳",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "bathroom",
+                          "emoji": "🛁",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "bedroom",
+                          "emoji": "🛏️",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "dining room",
+                          "emoji": "🍽️",
+                          "image_url": ""
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hall",
+                      "emoji": "🚪",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "bathroom",
+                          "emoji": "🛁",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "bedroom",
+                          "emoji": "🛏️",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "dining room",
+                          "emoji": "🍽️",
+                          "image_url": ""
+                        }
+                      ]
+                    },
+                    {
+                      "word": "kitchen",
+                      "emoji": "🍳",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "bathroom",
+                          "emoji": "🛁",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "bedroom",
+                          "emoji": "🛏️",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "dining room",
+                          "emoji": "🍽️",
+                          "image_url": ""
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "listen_choose_picture",
+                  "instruction": "Listen to the word and tap the right picture.",
+                  "items": [
+                    {
+                      "word": "bathroom",
+                      "emoji": "🛁",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "bedroom",
+                          "emoji": "🛏️",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "dining room",
+                          "emoji": "🍽️",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "garden",
+                          "emoji": "🌳",
+                          "image_url": ""
+                        }
+                      ]
+                    },
+                    {
+                      "word": "bedroom",
+                      "emoji": "🛏️",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "bathroom",
+                          "emoji": "🛁",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "dining room",
+                          "emoji": "🍽️",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "garden",
+                          "emoji": "🌳",
+                          "image_url": ""
+                        }
+                      ]
+                    },
+                    {
+                      "word": "dining room",
+                      "emoji": "🍽️",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "bathroom",
+                          "emoji": "🛁",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "bedroom",
+                          "emoji": "🛏️",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "garden",
+                          "emoji": "🌳",
+                          "image_url": ""
+                        }
+                      ]
+                    },
+                    {
+                      "word": "garden",
+                      "emoji": "🌳",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "bathroom",
+                          "emoji": "🛁",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "bedroom",
+                          "emoji": "🛏️",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "dining room",
+                          "emoji": "🍽️",
+                          "image_url": ""
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hall",
+                      "emoji": "🚪",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "bathroom",
+                          "emoji": "🛁",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "bedroom",
+                          "emoji": "🛏️",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "dining room",
+                          "emoji": "🍽️",
+                          "image_url": ""
+                        }
+                      ]
+                    },
+                    {
+                      "word": "kitchen",
+                      "emoji": "🍳",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "bathroom",
+                          "emoji": "🛁",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "bedroom",
+                          "emoji": "🛏️",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "dining room",
+                          "emoji": "🍽️",
+                          "image_url": ""
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "look_write",
+                  "instruction": "Look at the picture and type the word.",
+                  "items": [
+                    {
+                      "word": "bathroom",
+                      "emoji": "🛁",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "bedroom",
+                      "emoji": "🛏️",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "dining room",
+                      "emoji": "🍽️",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "garden",
+                      "emoji": "🌳",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "hall",
+                      "emoji": "🚪",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "kitchen",
+                      "emoji": "🍳",
+                      "image_url": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Lucia's house",
+              "text": "Hi! I'm Lucia. This is my house. We have seven rooms. There is a kitchen. We cook in the kitchen. There is a living room with a big sofa. There is a dining room with a long table. We have two bathrooms — one upstairs and one downstairs. There is a bedroom for me and a bedroom for my brother. We have a small garden too. I love my home!",
+              "scene_description": "A two-storey house with seven rooms labeled.",
+              "questions": [
+                {
+                  "question": "How many rooms does Lucia's house have?",
+                  "options": [
+                    "seven",
+                    "five",
+                    "ten",
+                    "three"
+                  ],
+                  "correct_answer": "seven"
+                },
+                {
+                  "question": "Where do they cook?",
+                  "options": [
+                    "in the kitchen",
+                    "in the bedroom",
+                    "in the garden",
+                    "in the hall"
+                  ],
+                  "correct_answer": "in the kitchen"
+                },
+                {
+                  "question": "How many bathrooms?",
+                  "options": [
+                    "two",
+                    "one",
+                    "three",
+                    "four"
+                  ],
+                  "correct_answer": "two"
+                },
+                {
+                  "question": "Is there a garden?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
+                },
+                {
+                  "question": "Whose house is this?",
+                  "options": [
+                    "Lucia's",
+                    "Tom's",
+                    "Alex's",
+                    "Sara's"
+                  ],
+                  "correct_answer": "Lucia's"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "there is / there are — singular",
+              "explanation": "We use 'there is' (or short 'there's') to talk about ONE thing in a place. 'There is a kitchen' = a kitchen exists in this place. For more than one we use 'there are' (next lesson).",
+              "examples": [
+                "There is a sofa in the living room.",
+                "There's a bed in my bedroom.",
+                "There is a garden.",
+                "There's a mirror on the wall.",
+                "There is a cat in the kitchen."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "instruction": "Choose the correct word.",
+                  "items": [
+                    {
+                      "sentence": "There ___ a sofa in the living room.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "There ___ a garden.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "There ___ a cat in the kitchen.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "instruction": "Fill the gap.",
+                  "items": [
+                    {
+                      "sentence": "There ___ a sofa in the living room.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "There ___ a garden.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "There ___ a cat in the kitchen.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "instruction": "Is the grammar correct?",
+                  "items": [
+                    {
+                      "sentence": "There is a sofa in the living room.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "There's a bed in my bedroom.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "There is a garden.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "There's a mirror on the wall.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "There is a cat in the kitchen.",
+                      "correct": "true"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "TOM: Hi Lucia! Welcome to my new house. LUCIA: Wow, Tom! It's big. How many rooms? TOM: There are five. Look — there's a kitchen here. LUCIA: It's nice. Is there a garden? TOM: Yes, there's a small garden at the back. LUCIA: And a dining room? TOM: No, we eat in the kitchen. But there is a living room. Come and see!",
+              "audio_url": "/static/audio/stage3/unit03/lesson_01.mp3",
+              "scene_description": "Tom shows Lucia his new house.",
+              "questions": [
+                {
+                  "question": "Whose house is it?",
+                  "options": [
+                    "Tom's",
+                    "Lucia's",
+                    "Alex's",
+                    "Mum's"
+                  ],
+                  "correct_answer": "Tom's"
+                },
+                {
+                  "question": "How many rooms?",
+                  "options": [
+                    "five",
+                    "seven",
+                    "three",
+                    "ten"
+                  ],
+                  "correct_answer": "five"
+                },
+                {
+                  "question": "Is there a garden?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
+                },
+                {
+                  "question": "Where do they eat?",
+                  "options": [
+                    "in the kitchen",
+                    "in the dining room",
+                    "in the garden",
+                    "in the living room"
+                  ],
+                  "correct_answer": "in the kitchen"
+                },
+                {
+                  "question": "Is there a living room?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Describe your house. Use 'There is...' for 3 rooms.",
+              "expected_text": "There is a kitchen. There is a living room. There is a bedroom for me.",
+              "prompts": [
+                "Pick 3 rooms: kitchen / bedroom / bathroom / living room / garden.",
+                "Use 'There is a...' for each.",
+                "Add one detail: 'It's big.' or 'It's small.'"
+              ],
+              "image_url": ""
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "What did you learn?",
+              "questions": [
+                {
+                  "question": "Choose: ___ is a kitchen in my house.",
+                  "options": [
+                    "There",
+                    "It",
+                    "He"
+                  ],
+                  "correct_answer": "There"
+                },
+                {
+                  "question": "Where do you sleep?",
+                  "options": [
+                    "bedroom",
+                    "kitchen",
+                    "bathroom"
+                  ],
+                  "correct_answer": "bedroom"
+                },
+                {
+                  "question": "Where do you eat at a table?",
+                  "options": [
+                    "dining room",
+                    "garden",
+                    "hall"
+                  ],
+                  "correct_answer": "dining room"
+                },
+                {
+                  "question": "Choose: There ___ a garden.",
+                  "options": [
+                    "is",
+                    "are",
+                    "am"
+                  ],
+                  "correct_answer": "is"
+                },
+                {
+                  "question": "True or false: 'living room' is where you watch TV.",
+                  "options": [
+                    "True",
+                    "False"
+                  ],
+                  "correct_answer": "True"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_3_movers_unit_03_lesson_02",
+          "number": 2,
+          "title": "Things in my bedroom",
+          "topic": "Furniture + 'there are' plural",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Look in Tom's bedroom. What can you see?",
+              "questions": [
+                {
+                  "question_text": "What is the thing you sleep on?",
+                  "correct_answer": "a bed",
+                  "options": [
+                    "a bed",
+                    "a chair",
+                    "a desk",
+                    "a lamp"
+                  ],
+                  "image_emoji": "🛏️"
+                },
+                {
+                  "question_text": "Where do you put your books?",
+                  "correct_answer": "on a shelf",
+                  "options": [
+                    "on a shelf",
+                    "in the garden",
+                    "on the bed",
+                    "under the chair"
+                  ],
+                  "image_emoji": "📚"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "bed",
+                  "definition": "A thing in your bedroom where you sleep.",
+                  "image_emoji": "🛏️",
+                  "image_url": "",
+                  "example_sentence": "My bed is big and soft.",
+                  "asset_slug": "stage3_u03_bed"
+                },
+                {
+                  "word": "chair",
+                  "definition": "A thing with four legs you sit on.",
+                  "image_emoji": "🪑",
+                  "image_url": "",
+                  "example_sentence": "The chair is at the desk.",
+                  "asset_slug": "stage3_u03_chair"
+                },
+                {
+                  "word": "computer",
+                  "definition": "An electronic thing you work and play on.",
+                  "image_emoji": "💻",
+                  "image_url": "",
+                  "example_sentence": "My computer is on the desk.",
+                  "asset_slug": "stage3_u03_computer"
+                },
+                {
+                  "word": "cupboard",
+                  "definition": "A wooden box with doors for storing things.",
+                  "image_emoji": "🗄️",
+                  "image_url": "",
+                  "example_sentence": "The plates are in the cupboard.",
+                  "asset_slug": "stage3_u03_cupboard"
+                },
+                {
+                  "word": "desk",
+                  "definition": "A table where you do homework.",
+                  "image_emoji": "📋",
+                  "image_url": "",
+                  "example_sentence": "My desk is near the window.",
+                  "asset_slug": "stage3_u03_desk"
+                },
+                {
+                  "word": "lamp",
+                  "definition": "A small light on a table or wall.",
+                  "image_emoji": "💡",
+                  "image_url": "",
+                  "example_sentence": "Turn on the lamp, please.",
+                  "asset_slug": "stage3_u03_lamp"
+                },
+                {
+                  "word": "mirror",
+                  "definition": "A flat thing that shows your face.",
+                  "image_emoji": "🪞",
+                  "image_url": "",
+                  "example_sentence": "I look in the mirror in the morning.",
+                  "asset_slug": "stage3_u03_mirror"
+                },
+                {
+                  "word": "shelf",
+                  "definition": "A flat board on a wall for books or things.",
+                  "image_emoji": "📚",
+                  "image_url": "",
+                  "example_sentence": "There are books on the shelf.",
+                  "asset_slug": "stage3_u03_shelf"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "word_race",
+                  "instruction": "60 seconds! Tap the right picture for each word.",
+                  "time_limit_seconds": 60,
+                  "items": [
+                    {
+                      "prompt": "bed",
+                      "correct_emoji": "🛏️",
+                      "correct_image_url": "",
+                      "options": [
+                        "🛏️",
+                        "🪑",
+                        "💻",
+                        "🗄️"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "🛏️",
+                          "image_url": "",
+                          "word": "bed"
+                        },
+                        {
+                          "emoji": "🪑",
+                          "image_url": "",
+                          "word": "chair"
+                        },
+                        {
+                          "emoji": "💻",
+                          "image_url": "",
+                          "word": "computer"
+                        },
+                        {
+                          "emoji": "🗄️",
+                          "image_url": "",
+                          "word": "cupboard"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "chair",
+                      "correct_emoji": "🪑",
+                      "correct_image_url": "",
+                      "options": [
+                        "🪑",
+                        "🛏️",
+                        "💻",
+                        "🗄️"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "🪑",
+                          "image_url": "",
+                          "word": "chair"
+                        },
+                        {
+                          "emoji": "🛏️",
+                          "image_url": "",
+                          "word": "bed"
+                        },
+                        {
+                          "emoji": "💻",
+                          "image_url": "",
+                          "word": "computer"
+                        },
+                        {
+                          "emoji": "🗄️",
+                          "image_url": "",
+                          "word": "cupboard"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "computer",
+                      "correct_emoji": "💻",
+                      "correct_image_url": "",
+                      "options": [
+                        "💻",
+                        "🛏️",
+                        "🪑",
+                        "🗄️"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "💻",
+                          "image_url": "",
+                          "word": "computer"
+                        },
+                        {
+                          "emoji": "🛏️",
+                          "image_url": "",
+                          "word": "bed"
+                        },
+                        {
+                          "emoji": "🪑",
+                          "image_url": "",
+                          "word": "chair"
+                        },
+                        {
+                          "emoji": "🗄️",
+                          "image_url": "",
+                          "word": "cupboard"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "cupboard",
+                      "correct_emoji": "🗄️",
+                      "correct_image_url": "",
+                      "options": [
+                        "🗄️",
+                        "🛏️",
+                        "🪑",
+                        "💻"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "🗄️",
+                          "image_url": "",
+                          "word": "cupboard"
+                        },
+                        {
+                          "emoji": "🛏️",
+                          "image_url": "",
+                          "word": "bed"
+                        },
+                        {
+                          "emoji": "🪑",
+                          "image_url": "",
+                          "word": "chair"
+                        },
+                        {
+                          "emoji": "💻",
+                          "image_url": "",
+                          "word": "computer"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "desk",
+                      "correct_emoji": "📋",
+                      "correct_image_url": "",
+                      "options": [
+                        "📋",
+                        "🛏️",
+                        "🪑",
+                        "💻"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📋",
+                          "image_url": "",
+                          "word": "desk"
+                        },
+                        {
+                          "emoji": "🛏️",
+                          "image_url": "",
+                          "word": "bed"
+                        },
+                        {
+                          "emoji": "🪑",
+                          "image_url": "",
+                          "word": "chair"
+                        },
+                        {
+                          "emoji": "💻",
+                          "image_url": "",
+                          "word": "computer"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "lamp",
+                      "correct_emoji": "💡",
+                      "correct_image_url": "",
+                      "options": [
+                        "💡",
+                        "🛏️",
+                        "🪑",
+                        "💻"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "💡",
+                          "image_url": "",
+                          "word": "lamp"
+                        },
+                        {
+                          "emoji": "🛏️",
+                          "image_url": "",
+                          "word": "bed"
+                        },
+                        {
+                          "emoji": "🪑",
+                          "image_url": "",
+                          "word": "chair"
+                        },
+                        {
+                          "emoji": "💻",
+                          "image_url": "",
+                          "word": "computer"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "instruction": "Read the word and tap the right picture.",
+                  "items": [
+                    {
+                      "word": "bed",
+                      "emoji": "🛏️",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "chair",
+                          "emoji": "🪑",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "computer",
+                          "emoji": "💻",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "cupboard",
+                          "emoji": "🗄️",
+                          "image_url": ""
+                        }
+                      ]
+                    },
+                    {
+                      "word": "chair",
+                      "emoji": "🪑",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "bed",
+                          "emoji": "🛏️",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "computer",
+                          "emoji": "💻",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "cupboard",
+                          "emoji": "🗄️",
+                          "image_url": ""
+                        }
+                      ]
+                    },
+                    {
+                      "word": "computer",
+                      "emoji": "💻",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "bed",
+                          "emoji": "🛏️",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "chair",
+                          "emoji": "🪑",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "cupboard",
+                          "emoji": "🗄️",
+                          "image_url": ""
+                        }
+                      ]
+                    },
+                    {
+                      "word": "cupboard",
+                      "emoji": "🗄️",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "bed",
+                          "emoji": "🛏️",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "chair",
+                          "emoji": "🪑",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "computer",
+                          "emoji": "💻",
+                          "image_url": ""
+                        }
+                      ]
+                    },
+                    {
+                      "word": "desk",
+                      "emoji": "📋",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "bed",
+                          "emoji": "🛏️",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "chair",
+                          "emoji": "🪑",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "computer",
+                          "emoji": "💻",
+                          "image_url": ""
+                        }
+                      ]
+                    },
+                    {
+                      "word": "lamp",
+                      "emoji": "💡",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "bed",
+                          "emoji": "🛏️",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "chair",
+                          "emoji": "🪑",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "computer",
+                          "emoji": "💻",
+                          "image_url": ""
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "memory_game",
+                  "instruction": "Flip the cards and find the pairs.",
+                  "items": [
+                    {
+                      "word": "bed",
+                      "emoji": "🛏️",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "chair",
+                      "emoji": "🪑",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "computer",
+                      "emoji": "💻",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "cupboard",
+                      "emoji": "🗄️",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "desk",
+                      "emoji": "📋",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "lamp",
+                      "emoji": "💡",
+                      "image_url": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Your Rooms! — Tom's bedroom",
+              "text": "Hi! I'm Tom. This is my bedroom. There is a bed and there is a desk for my homework. There is a computer on my desk. There are two chairs — one at the desk and one near the window. There are three shelves with my books. There is a small lamp on the desk. There are two mirrors and a big cupboard for my clothes. My room is busy but I love it!",
+              "scene_description": "A teenager's bedroom with desk, computer, shelves of books, and two chairs.",
+              "questions": [
+                {
+                  "question": "Whose bedroom is this?",
+                  "options": [
+                    "Tom's",
+                    "Lucia's",
+                    "Alex's",
+                    "Sam's"
+                  ],
+                  "correct_answer": "Tom's"
+                },
+                {
+                  "question": "What is on Tom's desk?",
+                  "options": [
+                    "a computer",
+                    "a bed",
+                    "a sofa",
+                    "a TV"
+                  ],
+                  "correct_answer": "a computer"
+                },
+                {
+                  "question": "How many chairs are there?",
+                  "options": [
+                    "two",
+                    "one",
+                    "three",
+                    "four"
+                  ],
+                  "correct_answer": "two"
+                },
+                {
+                  "question": "How many shelves are there?",
+                  "options": [
+                    "three",
+                    "two",
+                    "one",
+                    "five"
+                  ],
+                  "correct_answer": "three"
+                },
+                {
+                  "question": "Where is the lamp?",
+                  "options": [
+                    "on the desk",
+                    "on the bed",
+                    "on the shelf",
+                    "on the chair"
+                  ],
+                  "correct_answer": "on the desk"
+                },
+                {
+                  "question": "Does Tom like his room?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "there are — plural",
+              "explanation": "When there is MORE THAN ONE thing in a place, we use 'there are'. 'There are two chairs' = two chairs exist here. The thing after 'there are' is always plural — add -s (chairs, shelves, books).",
+              "examples": [
+                "There are two chairs.",
+                "There are three shelves.",
+                "There are five books on the desk.",
+                "There are four students in the room.",
+                "There are two mirrors on the wall."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "error_hunter",
+                  "instruction": "Tap the wrong word.",
+                  "items": [
+                    {
+                      "sentence": "There am two chairs.",
+                      "errorWord": "am",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "There am three shelves.",
+                      "errorWord": "am",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "There am five books on the desk.",
+                      "errorWord": "am",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "There am four students in the room.",
+                      "errorWord": "am",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "There am two mirrors on the wall.",
+                      "errorWord": "am",
+                      "alternateErrors": []
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "instruction": "Is the grammar correct?",
+                  "items": [
+                    {
+                      "sentence": "There are two chairs.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "There am three shelves.",
+                      "correct": "false"
+                    },
+                    {
+                      "sentence": "There are five books on the desk.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "There am four students in the room.",
+                      "correct": "false"
+                    },
+                    {
+                      "sentence": "There are two mirrors on the wall.",
+                      "correct": "true"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "instruction": "Choose the correct word.",
+                  "items": [
+                    {
+                      "sentence": "There ___ two chairs.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "are"
+                    },
+                    {
+                      "sentence": "There ___ three shelves.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "are"
+                    },
+                    {
+                      "sentence": "There ___ five books on the desk.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "are"
+                    },
+                    {
+                      "sentence": "There ___ four students in the room.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "are"
+                    },
+                    {
+                      "sentence": "There ___ two mirrors on the wall.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "are"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "MUM: Tom, where are you? TOM: I'm in my bedroom, Mum. MUM: What are you doing? TOM: I'm doing my homework. MUM: Are there books on your desk? TOM: Yes, there are five books. And there's a computer. MUM: Is there a lamp on? TOM: Yes, there is. The lamp is on my desk. MUM: Good. Dinner is in ten minutes!",
+              "audio_url": "/static/audio/stage3/unit03/lesson_02.mp3",
+              "scene_description": "A mum and son talk through the door.",
+              "questions": [
+                {
+                  "question": "Where is Tom?",
+                  "options": [
+                    "in his bedroom",
+                    "in the kitchen",
+                    "in the garden",
+                    "at school"
+                  ],
+                  "correct_answer": "in his bedroom"
+                },
+                {
+                  "question": "What is Tom doing?",
+                  "options": [
+                    "homework",
+                    "watching TV",
+                    "sleeping",
+                    "eating"
+                  ],
+                  "correct_answer": "homework"
+                },
+                {
+                  "question": "How many books?",
+                  "options": [
+                    "five",
+                    "three",
+                    "two",
+                    "ten"
+                  ],
+                  "correct_answer": "five"
+                },
+                {
+                  "question": "Is the lamp on?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
+                },
+                {
+                  "question": "When is dinner?",
+                  "options": [
+                    "in ten minutes",
+                    "now",
+                    "in one hour",
+                    "tomorrow"
+                  ],
+                  "correct_answer": "in ten minutes"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Describe your bedroom. Use 'There is...' and 'There are...'.",
+              "expected_text": "There is a bed and a desk. There are two chairs and a computer.",
+              "prompts": [
+                "One thing: 'There is a bed.'",
+                "More than one: 'There are two chairs.'",
+                "Where it is: 'on the desk', 'next to the bed'."
+              ],
+              "image_url": ""
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "What did you learn?",
+              "questions": [
+                {
+                  "question": "Choose: There ___ three books.",
+                  "options": [
+                    "are",
+                    "is",
+                    "am"
+                  ],
+                  "correct_answer": "are"
+                },
+                {
+                  "question": "Choose: There ___ a lamp.",
+                  "options": [
+                    "is",
+                    "are",
+                    "am"
+                  ],
+                  "correct_answer": "is"
+                },
+                {
+                  "question": "What do you sleep on?",
+                  "options": [
+                    "a bed",
+                    "a sofa",
+                    "a chair"
+                  ],
+                  "correct_answer": "a bed"
+                },
+                {
+                  "question": "Where do you put clothes?",
+                  "options": [
+                    "cupboard",
+                    "shelf",
+                    "desk"
+                  ],
+                  "correct_answer": "cupboard"
+                },
+                {
+                  "question": "True or false: 'shelves' is the plural of 'shelf'.",
+                  "options": [
+                    "True",
+                    "False"
+                  ],
+                  "correct_answer": "True"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_3_movers_unit_03_lesson_03",
+          "number": 3,
+          "title": "Where are my things?",
+          "topic": "More furniture + prepositions (in/on/under/behind/next to)",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Look at Alex's messy room. Where are the things?",
+              "questions": [
+                {
+                  "question_text": "The book is on the desk. The cat is ___ the bed.",
+                  "correct_answer": "under",
+                  "options": [
+                    "under",
+                    "in",
+                    "next to",
+                    "behind"
+                  ],
+                  "image_emoji": "🐱"
+                },
+                {
+                  "question_text": "The lamp is ___ the desk.",
+                  "correct_answer": "on",
+                  "options": [
+                    "on",
+                    "under",
+                    "behind",
+                    "next to"
+                  ],
+                  "image_emoji": "💡"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "sofa",
+                  "definition": "A long soft seat for two or three people.",
+                  "image_emoji": "🛋️",
+                  "image_url": "",
+                  "example_sentence": "The sofa is in the living room.",
+                  "asset_slug": "stage3_u03_sofa"
+                },
+                {
+                  "word": "table",
+                  "definition": "A flat thing with legs you put things on.",
+                  "image_emoji": "🪑",
+                  "image_url": "",
+                  "example_sentence": "The book is on the table.",
+                  "asset_slug": "stage3_u03_table"
+                },
+                {
+                  "word": "TV",
+                  "definition": "A screen for watching shows.",
+                  "image_emoji": "📺",
+                  "image_url": "",
+                  "example_sentence": "The TV is in the living room.",
+                  "asset_slug": "stage3_u03_tv"
+                },
+                {
+                  "word": "wardrobe",
+                  "definition": "A big cupboard for your clothes.",
+                  "image_emoji": "👕",
+                  "image_url": "",
+                  "example_sentence": "My clothes are in the wardrobe.",
+                  "asset_slug": "stage3_u03_wardrobe"
+                },
+                {
+                  "word": "poster",
+                  "definition": "A big paper picture you put on the wall.",
+                  "image_emoji": "🖼️",
+                  "image_url": "",
+                  "example_sentence": "I have a poster of a footballer.",
+                  "asset_slug": "stage3_u03_poster"
+                },
+                {
+                  "word": "in",
+                  "definition": "Inside something.",
+                  "image_emoji": "📦",
+                  "image_url": "",
+                  "example_sentence": "The cat is in the box.",
+                  "asset_slug": "stage3_u03_in"
+                },
+                {
+                  "word": "on",
+                  "definition": "On top of something.",
+                  "image_emoji": "📍",
+                  "image_url": "",
+                  "example_sentence": "The book is on the table.",
+                  "asset_slug": "stage3_u03_on"
+                },
+                {
+                  "word": "under",
+                  "definition": "Below something.",
+                  "image_emoji": "⬇️",
+                  "image_url": "",
+                  "example_sentence": "My shoes are under the bed.",
+                  "asset_slug": "stage3_u03_under"
+                },
+                {
+                  "word": "behind",
+                  "definition": "At the back of something.",
+                  "image_emoji": "🚪",
+                  "image_url": "",
+                  "example_sentence": "The ball is behind the door.",
+                  "asset_slug": "stage3_u03_behind"
+                },
+                {
+                  "word": "next to",
+                  "definition": "Beside something.",
+                  "image_emoji": "↔️",
+                  "image_url": "",
+                  "example_sentence": "My chair is next to the desk.",
+                  "asset_slug": "stage3_u03_next_to"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_write",
+                  "instruction": "Listen to the word, then type it.",
+                  "items": [
+                    {
+                      "audio_text": "sofa",
+                      "answer": "sofa"
+                    },
+                    {
+                      "audio_text": "table",
+                      "answer": "table"
+                    },
+                    {
+                      "audio_text": "TV",
+                      "answer": "TV"
+                    },
+                    {
+                      "audio_text": "wardrobe",
+                      "answer": "wardrobe"
+                    },
+                    {
+                      "audio_text": "poster",
+                      "answer": "poster"
+                    },
+                    {
+                      "audio_text": "in",
+                      "answer": "in"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "listen_choose_word",
+                  "instruction": "Listen and tap the right word.",
+                  "items": [
+                    {
+                      "audio_text": "sofa",
+                      "word": "sofa",
+                      "options": [
+                        "sofa",
+                        "table",
+                        "TV",
+                        "wardrobe"
+                      ],
+                      "correct": "sofa"
+                    },
+                    {
+                      "audio_text": "table",
+                      "word": "table",
+                      "options": [
+                        "table",
+                        "sofa",
+                        "TV",
+                        "wardrobe"
+                      ],
+                      "correct": "table"
+                    },
+                    {
+                      "audio_text": "TV",
+                      "word": "TV",
+                      "options": [
+                        "TV",
+                        "sofa",
+                        "table",
+                        "wardrobe"
+                      ],
+                      "correct": "TV"
+                    },
+                    {
+                      "audio_text": "wardrobe",
+                      "word": "wardrobe",
+                      "options": [
+                        "wardrobe",
+                        "sofa",
+                        "table",
+                        "TV"
+                      ],
+                      "correct": "wardrobe"
+                    },
+                    {
+                      "audio_text": "poster",
+                      "word": "poster",
+                      "options": [
+                        "poster",
+                        "sofa",
+                        "table",
+                        "TV"
+                      ],
+                      "correct": "poster"
+                    },
+                    {
+                      "audio_text": "in",
+                      "word": "in",
+                      "options": [
+                        "in",
+                        "sofa",
+                        "table",
+                        "TV"
+                      ],
+                      "correct": "in"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "flashcard_match",
+                  "instruction": "Match pairs: word ↔ picture.",
+                  "items": [
+                    {
+                      "word": "sofa",
+                      "emoji": "🛋️",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "table",
+                      "emoji": "🪑",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "TV",
+                      "emoji": "📺",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "wardrobe",
+                      "emoji": "👕",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "poster",
+                      "emoji": "🖼️",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "in",
+                      "emoji": "📦",
+                      "image_url": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Alex's busy room",
+              "text": "Hi! I'm Alex. My room is small but it has lots of things! There is a bed in the corner. There is a wardrobe next to the bed. The wardrobe is big — my clothes are in it. There is a sofa under the window. There is a TV on a small table. My football poster is on the wall behind the bed. My school bag is under the desk. And my cat? She is on the sofa! She loves my room too.",
+              "scene_description": "A small bedroom with bed, wardrobe, sofa, TV, poster, and a cat on the sofa.",
+              "questions": [
+                {
+                  "question": "Is Alex's room big?",
+                  "options": [
+                    "no, it's small",
+                    "yes, very big",
+                    "yes, medium",
+                    "no, very big"
+                  ],
+                  "correct_answer": "no, it's small"
+                },
+                {
+                  "question": "Where is the wardrobe?",
+                  "options": [
+                    "next to the bed",
+                    "under the bed",
+                    "in the kitchen",
+                    "behind the sofa"
+                  ],
+                  "correct_answer": "next to the bed"
+                },
+                {
+                  "question": "Where is the sofa?",
+                  "options": [
+                    "under the window",
+                    "on the bed",
+                    "in the wardrobe",
+                    "next to the TV"
+                  ],
+                  "correct_answer": "under the window"
+                },
+                {
+                  "question": "What is on the wall?",
+                  "options": [
+                    "a football poster",
+                    "a TV",
+                    "a mirror",
+                    "a shelf"
+                  ],
+                  "correct_answer": "a football poster"
+                },
+                {
+                  "question": "Where is the cat?",
+                  "options": [
+                    "on the sofa",
+                    "under the bed",
+                    "in the wardrobe",
+                    "on the desk"
+                  ],
+                  "correct_answer": "on the sofa"
+                },
+                {
+                  "question": "Where is the school bag?",
+                  "options": [
+                    "under the desk",
+                    "on the bed",
+                    "behind the door",
+                    "in the wardrobe"
+                  ],
+                  "correct_answer": "under the desk"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Prepositions — in, on, under, behind, next to",
+              "explanation": "Prepositions tell us WHERE something is. 'in' = inside. 'on' = on top of. 'under' = below. 'behind' = at the back of. 'next to' = beside. We put the preposition before the place: 'The cat is on the sofa.'",
+              "examples": [
+                "The cat is on the sofa.",
+                "My books are in the bag.",
+                "The ball is under the chair.",
+                "The poster is behind the bed.",
+                "The lamp is next to the bed."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "fill_blank",
+                  "instruction": "Fill the gap.",
+                  "items": [
+                    {
+                      "sentence": "The cat ___ on the sofa.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "My books ___ in the bag.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "The ball ___ under the chair.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "The poster ___ behind the bed.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "The lamp ___ next to the bed.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "instruction": "Choose the correct word.",
+                  "items": [
+                    {
+                      "sentence": "The cat ___ on the sofa.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "My books ___ in the bag.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "are"
+                    },
+                    {
+                      "sentence": "The ball ___ under the chair.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "The poster ___ behind the bed.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "The lamp ___ next to the bed.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "instruction": "Tap the wrong word.",
+                  "items": [
+                    {
+                      "sentence": "The cat am on the sofa.",
+                      "errorWord": "am",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "My books am in the bag.",
+                      "errorWord": "am",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "The ball am under the chair.",
+                      "errorWord": "am",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "The poster am behind the bed.",
+                      "errorWord": "am",
+                      "alternateErrors": []
+                    },
+                    {
+                      "sentence": "The lamp am next to the bed.",
+                      "errorWord": "am",
+                      "alternateErrors": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "ALEX: Where is my phone? MUM: Is it on your desk? ALEX: No, it isn't. MUM: Is it in your bag? ALEX: No, my bag is under the desk and the phone is not in it. MUM: Look behind the sofa. ALEX: Yes! It's here, behind the sofa. Thanks, Mum! MUM: Always behind something! Look next time.",
+              "audio_url": "/static/audio/stage3/unit03/lesson_03.mp3",
+              "scene_description": "Alex can't find his phone and Mum helps.",
+              "questions": [
+                {
+                  "question": "What is Alex looking for?",
+                  "options": [
+                    "his phone",
+                    "his book",
+                    "his cat",
+                    "his bag"
+                  ],
+                  "correct_answer": "his phone"
+                },
+                {
+                  "question": "Is the phone on the desk?",
+                  "options": [
+                    "no",
+                    "yes"
+                  ],
+                  "correct_answer": "no"
+                },
+                {
+                  "question": "Where is Alex's bag?",
+                  "options": [
+                    "under the desk",
+                    "on the bed",
+                    "in the wardrobe",
+                    "next to the sofa"
+                  ],
+                  "correct_answer": "under the desk"
+                },
+                {
+                  "question": "Where is the phone?",
+                  "options": [
+                    "behind the sofa",
+                    "on the desk",
+                    "in the bag",
+                    "under the bed"
+                  ],
+                  "correct_answer": "behind the sofa"
+                },
+                {
+                  "question": "Who helps Alex?",
+                  "options": [
+                    "Mum",
+                    "Dad",
+                    "Lucia",
+                    "Tom"
+                  ],
+                  "correct_answer": "Mum"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Hide something in your room (real or imagined). Tell a friend where it is using 3 prepositions.",
+              "expected_text": "My bag is under the desk. My phone is on the chair. My book is next to the lamp.",
+              "prompts": [
+                "Pick a thing: 'My ___'",
+                "Pick a preposition: in / on / under / behind / next to",
+                "Say it: 'My ___ is ___ the ___.'"
+              ],
+              "image_url": ""
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "What did you learn?",
+              "questions": [
+                {
+                  "question": "The book is ___ the table.",
+                  "options": [
+                    "on",
+                    "in",
+                    "under"
+                  ],
+                  "correct_answer": "on"
+                },
+                {
+                  "question": "The cat is ___ the bed (below it).",
+                  "options": [
+                    "under",
+                    "on",
+                    "behind"
+                  ],
+                  "correct_answer": "under"
+                },
+                {
+                  "question": "The chair is ___ the desk (beside).",
+                  "options": [
+                    "next to",
+                    "in",
+                    "behind"
+                  ],
+                  "correct_answer": "next to"
+                },
+                {
+                  "question": "A long soft seat in the living room is a ___.",
+                  "options": [
+                    "sofa",
+                    "bed",
+                    "shelf"
+                  ],
+                  "correct_answer": "sofa"
+                },
+                {
+                  "question": "True or false: 'My clothes are in the wardrobe' means inside the wardrobe.",
+                  "options": [
+                    "True",
+                    "False"
+                  ],
+                  "correct_answer": "True"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_3_movers_unit_03_lesson_04",
+          "number": 4,
+          "title": "My home — Review",
+          "topic": "Recycle rooms + things + prepositions. have got introduction.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Look at three different rooms. Whose is whose?",
+              "questions": [
+                {
+                  "question_text": "It has a sofa, a TV and a small table. It's a...",
+                  "correct_answer": "living room",
+                  "options": [
+                    "living room",
+                    "bedroom",
+                    "kitchen",
+                    "garden"
+                  ],
+                  "image_emoji": "🛋️"
+                },
+                {
+                  "question_text": "It has a bed, a wardrobe and a desk. It's a...",
+                  "correct_answer": "bedroom",
+                  "options": [
+                    "bedroom",
+                    "living room",
+                    "bathroom",
+                    "hall"
+                  ],
+                  "image_emoji": "🛏️"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "bathroom",
+                "bedroom",
+                "dining room",
+                "garden",
+                "hall",
+                "kitchen",
+                "living room",
+                "bed",
+                "chair",
+                "computer",
+                "cupboard",
+                "desk",
+                "lamp",
+                "mirror",
+                "shelf",
+                "sofa",
+                "table",
+                "TV",
+                "wardrobe",
+                "poster",
+                "in",
+                "on",
+                "under",
+                "behind",
+                "next to"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "word_ladder",
+                  "instruction": "Climb the ladder! Choose the right word for each step.",
+                  "items": [
+                    {
+                      "prompt": "Which word matches: ",
+                      "options": [
+                        "bathroom",
+                        "bedroom",
+                        "dining room"
+                      ],
+                      "correct": "bathroom"
+                    },
+                    {
+                      "prompt": "Which word matches: ",
+                      "options": [
+                        "bedroom",
+                        "bathroom",
+                        "dining room"
+                      ],
+                      "correct": "bedroom"
+                    },
+                    {
+                      "prompt": "Which word matches: ",
+                      "options": [
+                        "dining room",
+                        "bathroom",
+                        "bedroom"
+                      ],
+                      "correct": "dining room"
+                    },
+                    {
+                      "prompt": "Which word matches: ",
+                      "options": [
+                        "garden",
+                        "bathroom",
+                        "bedroom"
+                      ],
+                      "correct": "garden"
+                    },
+                    {
+                      "prompt": "Which word matches: ",
+                      "options": [
+                        "hall",
+                        "bathroom",
+                        "bedroom"
+                      ],
+                      "correct": "hall"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "cumulative_race",
+                  "instruction": "90 seconds! Race through all the words you learned.",
+                  "time_limit_seconds": 90,
+                  "items": [
+                    {
+                      "prompt": "bathroom",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bathroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bedroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "dining room"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "garden"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "bedroom",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bedroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bathroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "dining room"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "garden"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "dining room",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "dining room"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bathroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bedroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "garden"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "garden",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "garden"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bathroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bedroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "dining room"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "hall",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "hall"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bathroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bedroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "dining room"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "kitchen",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "kitchen"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bathroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bedroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "dining room"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "living room",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "living room"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bathroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bedroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "dining room"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "bed",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bed"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bathroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bedroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "dining room"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "chair",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "chair"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bathroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bedroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "dining room"
+                        }
+                      ]
+                    },
+                    {
+                      "prompt": "computer",
+                      "correct_emoji": "📦",
+                      "correct_image_url": "",
+                      "options": [
+                        "📦",
+                        "📦",
+                        "📦",
+                        "📦"
+                      ],
+                      "options_full": [
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "computer"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bathroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "bedroom"
+                        },
+                        {
+                          "emoji": "📦",
+                          "image_url": "",
+                          "word": "dining room"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "flashcard_match",
+                  "instruction": "Match pairs: word ↔ picture.",
+                  "items": [
+                    {
+                      "word": "bathroom",
+                      "emoji": "📦",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "bedroom",
+                      "emoji": "📦",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "dining room",
+                      "emoji": "📦",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "garden",
+                      "emoji": "📦",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "hall",
+                      "emoji": "📦",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "kitchen",
+                      "emoji": "📦",
+                      "image_url": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Three rooms",
+              "text": "Look at three friends' rooms. Lucia's room is big. There is a bed and a wardrobe. There are two posters on the wall. Tom's room is busy. There is a desk with a computer. There are three shelves with books. There are two chairs. Alex's room is small. There is a bed in the corner. The cat is on the sofa under the window. Three friends, three different rooms — but they are all happy with their rooms.",
+              "scene_description": "Three teenagers' bedrooms side by side.",
+              "questions": [
+                {
+                  "question": "Whose room is big?",
+                  "options": [
+                    "Lucia's",
+                    "Tom's",
+                    "Alex's",
+                    "Mum's"
+                  ],
+                  "correct_answer": "Lucia's"
+                },
+                {
+                  "question": "Whose room has a computer?",
+                  "options": [
+                    "Tom's",
+                    "Lucia's",
+                    "Alex's",
+                    "Mum's"
+                  ],
+                  "correct_answer": "Tom's"
+                },
+                {
+                  "question": "Where is Alex's cat?",
+                  "options": [
+                    "on the sofa",
+                    "under the bed",
+                    "in the wardrobe",
+                    "on the desk"
+                  ],
+                  "correct_answer": "on the sofa"
+                },
+                {
+                  "question": "How many friends?",
+                  "options": [
+                    "three",
+                    "two",
+                    "four",
+                    "five"
+                  ],
+                  "correct_answer": "three"
+                },
+                {
+                  "question": "Are they all happy?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "there is + singular (a kitchen, a bed)",
+                "there are + plural (two chairs, three books)",
+                "Prepositions: in, on, under, behind, next to",
+                "have got — introduction (I have a desk. She has a computer.)"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "true_false",
+                  "instruction": "Is the grammar correct?",
+                  "items": [
+                    {
+                      "sentence": "there is + singular (a kitchen, a bed)",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "there am + plural (two chairs, three books)",
+                      "correct": "false"
+                    },
+                    {
+                      "sentence": "Prepositions: in, on, under, behind, next to",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "have got — introduction (I have a desk. She has a computer.)",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "I am Vietnamese.",
+                      "correct": "true"
+                    },
+                    {
+                      "sentence": "She am my friend.",
+                      "correct": "false"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "instruction": "Fill the gap.",
+                  "items": [
+                    {
+                      "sentence": "there ___ + singular (a kitchen, a bed)",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "there ___ + plural (two chairs, three books)",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ Vietnamese.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ my friend.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ my brother.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "We ___ classmates.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "instruction": "Choose the correct word.",
+                  "items": [
+                    {
+                      "sentence": "there ___ + singular (a kitchen, a bed)",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "there ___ + plural (two chairs, three books)",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "are"
+                    },
+                    {
+                      "sentence": "I ___ Vietnamese.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "am"
+                    },
+                    {
+                      "sentence": "She ___ my friend.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "He ___ my brother.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "We ___ classmates.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "are"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "GUIDE: Welcome to our house! Let me show you. This is the hall. VISITOR: Lovely. GUIDE: There's the kitchen on the right. We cook there. There are three windows. VISITOR: And the living room? GUIDE: It's here, next to the kitchen. There is a big sofa and a TV. VISITOR: Are there bedrooms upstairs? GUIDE: Yes, there are four bedrooms and two bathrooms. And we have a small garden at the back. VISITOR: It's a beautiful home!",
+              "audio_url": "/static/audio/stage3/unit03/lesson_04.mp3",
+              "scene_description": "A guide shows a visitor around a house.",
+              "questions": [
+                {
+                  "question": "What is the first room?",
+                  "options": [
+                    "the hall",
+                    "the kitchen",
+                    "the garden",
+                    "the bedroom"
+                  ],
+                  "correct_answer": "the hall"
+                },
+                {
+                  "question": "How many windows in the kitchen?",
+                  "options": [
+                    "three",
+                    "two",
+                    "one",
+                    "four"
+                  ],
+                  "correct_answer": "three"
+                },
+                {
+                  "question": "Where is the living room?",
+                  "options": [
+                    "next to the kitchen",
+                    "upstairs",
+                    "in the garden",
+                    "near the bathroom"
+                  ],
+                  "correct_answer": "next to the kitchen"
+                },
+                {
+                  "question": "How many bedrooms?",
+                  "options": [
+                    "four",
+                    "three",
+                    "two",
+                    "five"
+                  ],
+                  "correct_answer": "four"
+                },
+                {
+                  "question": "Is there a garden?",
+                  "options": [
+                    "yes, a small one",
+                    "no",
+                    "yes, a big one",
+                    "only a kitchen garden"
+                  ],
+                  "correct_answer": "yes, a small one"
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Welcome a friend to your home. Describe 2 rooms in 30 seconds.",
+              "expected_text": "This is the kitchen. There is a fridge and a table. This is the living room. There is a sofa and a TV.",
+              "prompts": [
+                "Pick room 1: 'This is the [room].'",
+                "Add 1-2 things: 'There is a [thing].'",
+                "Move to room 2: 'And this is the [room].'"
+              ],
+              "image_url": ""
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Unit 3 review",
+              "questions": [
+                {
+                  "question": "There ___ five rooms in my house.",
+                  "options": [
+                    "are",
+                    "is",
+                    "am"
+                  ],
+                  "correct_answer": "are"
+                },
+                {
+                  "question": "Where do you sleep?",
+                  "options": [
+                    "bedroom",
+                    "kitchen",
+                    "garden"
+                  ],
+                  "correct_answer": "bedroom"
+                },
+                {
+                  "question": "The cat is ___ the sofa (on top of).",
+                  "options": [
+                    "on",
+                    "under",
+                    "behind"
+                  ],
+                  "correct_answer": "on"
+                },
+                {
+                  "question": "A long seat for 2-3 people is a ___.",
+                  "options": [
+                    "sofa",
+                    "shelf",
+                    "chair"
+                  ],
+                  "correct_answer": "sofa"
+                },
+                {
+                  "question": "True or false: 'There is a TV.' is about ONE TV.",
+                  "options": [
+                    "True",
+                    "False"
+                  ],
+                  "correct_answer": "True"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

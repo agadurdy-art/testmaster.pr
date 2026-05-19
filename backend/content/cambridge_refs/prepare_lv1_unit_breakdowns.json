@@ -70,6 +70,30 @@
       "writing_topic": "A web page introducing yourself"
     },
     {
+      "unit_num": 3,
+      "title": "My home",
+      "sb_page": 24,
+      "topic": "Rooms and things in my room",
+      "vocab_sections": {
+        "rooms": ["bathroom", "bedroom", "dining room", "garden", "hall", "kitchen", "living room"],
+        "things_in_my_room": ["bed", "chair", "computer", "cupboard", "desk", "lamp", "mirror", "poster", "shelf", "sofa", "table", "TV", "wardrobe"]
+      },
+      "target_grammar": [
+        "there is / there are (singular and plural)",
+        "Prepositions: in, on, under, behind, next to",
+        "have got (singular and plural — affirmative)"
+      ],
+      "pronunciation": "/ð/ vs /θ/ in 'this' / 'three' / 'bathroom'",
+      "reading_topic": "Your Rooms! — three students describe their bedrooms",
+      "listening_topic": "A conversation about a house",
+      "speaking_topic": "Describing what is in your bedroom",
+      "writing_topic": "A description of your room",
+      "do_not_include_words_here_belong_to_later_units": [
+        "School-bag things (Unit 4)",
+        "Activities like swim/dance (Unit 5)"
+      ]
+    },
+    {
       "unit_num": 2,
       "title": "My family",
       "sb_page": 18,
