@@ -120,11 +120,11 @@ function normalizeGameItem(rawItem, gameType, peerItems) {
     item.distractors = distractors;
   }
 
-  // AudioMatch / multiple_choice_grammar: pad options if too few — data
+  // AudioMatch / multiple_choice_grammar: ensure 4 options total. Data
   // sometimes emits a single-option array which leaves the user with no
   // choice to make. Pull alternatives from peer items.
   if ((gameType === 'audio_match' || gameType === 'multiple_choice_grammar')
-      && Array.isArray(item.options) && item.options.length < 2) {
+      && Array.isArray(item.options) && item.options.length < 4) {
     const correct = item.correct || item.answer;
     const extras = synthesizeDistractors(correct, peerItems, ['correct', 'answer', 'audio_text', 'sentence']);
     item.options = Array.from(new Set([...(item.options || []), ...extras])).slice(0, 4);

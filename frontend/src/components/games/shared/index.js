@@ -144,18 +144,20 @@ export const OptionButton = ({
   size = 'md',
   className = ''
 }) => {
-  let stateClasses = 'bg-white/70 border-white/50 hover:bg-white hover:border-emerald-200 hover:shadow-lg';
-  
+  // Solid visible border + light fill so kids can clearly see the option
+  // is a tappable button (Aga's feedback 2026-05-19: "buttons cerceveli olsun").
+  let stateClasses = 'bg-white border-slate-300 hover:bg-emerald-50 hover:border-emerald-400 hover:shadow-md';
+
   if (showFeedback) {
     if (isCorrect) {
-      stateClasses = 'bg-emerald-50 border-emerald-400 text-emerald-800 shadow-emerald';
+      stateClasses = 'bg-emerald-50 border-emerald-500 text-emerald-800 shadow-md';
     } else if (isSelected && !isCorrect) {
-      stateClasses = 'bg-red-50 border-red-300 text-red-700';
+      stateClasses = 'bg-red-50 border-red-400 text-red-700';
     } else {
-      stateClasses = 'bg-white/40 border-white/30 opacity-50';
+      stateClasses = 'bg-white border-slate-200 opacity-60';
     }
   } else if (isSelected) {
-    stateClasses = 'bg-emerald-50 border-emerald-400 shadow-lg';
+    stateClasses = 'bg-emerald-50 border-emerald-500 shadow-md';
   }
 
   const sizeClasses = {

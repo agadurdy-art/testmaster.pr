@@ -40,7 +40,14 @@ const FillTheBlank = ({
         .map(p => String(p?.answer || p?.correct || '').trim())
         .filter(a => a && a.toLowerCase() !== correct.toLowerCase());
       const uniquePeers = Array.from(new Set(peers));
-      opts = [correct, ...uniquePeers.slice(0, 2)];
+      opts = [correct, ...uniquePeers.slice(0, 3)];  // 4 total: correct + 3 distractors
+    }
+    // Pad with peer answers when item.options came in too thin
+    if (opts.length < 4) {
+      const peers = items
+        .map(p => String(p?.answer || p?.correct || '').trim())
+        .filter(a => a && !opts.some(o => String(o).toLowerCase() === a.toLowerCase()));
+      opts = [...opts, ...Array.from(new Set(peers)).slice(0, 4 - opts.length)];
     }
     if (!opts.some(o => String(o).toLowerCase() === correct.toLowerCase())) {
       opts.push(correct);
