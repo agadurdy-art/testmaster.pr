@@ -107,8 +107,8 @@
                 {
                   "word": "rubber",
                   "definition": "A small thing that removes pencil marks.",
-                  "image_emoji": "🧽",
-                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/rubber.png",
+                  "image_emoji": "✏️",
+                  "image_url": "",
                   "example_sentence": "Where is my rubber? I made a mistake.",
                   "asset_slug": "stage3_u04_rubber"
                 },
@@ -123,7 +123,7 @@
                 {
                   "word": "pencil case",
                   "definition": "A small bag for your pens and pencils.",
-                  "image_emoji": "🖍️",
+                  "image_emoji": "👝",
                   "image_url": "",
                   "example_sentence": "My pencil case is full.",
                   "asset_slug": "stage3_u04_pencil_case"
@@ -250,8 +250,8 @@
                     },
                     {
                       "word": "rubber",
-                      "emoji": "🧽",
-                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/rubber.png",
+                      "emoji": "✏️",
+                      "image_url": "",
                       "distractors": [
                         {
                           "word": "schoolbag",
@@ -388,8 +388,8 @@
                     },
                     {
                       "word": "rubber",
-                      "emoji": "🧽",
-                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/rubber.png",
+                      "emoji": "✏️",
+                      "image_url": "",
                       "distractors": [
                         {
                           "word": "schoolbag",
@@ -441,8 +441,8 @@
                     },
                     {
                       "word": "rubber",
-                      "emoji": "🧽",
-                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/rubber.png"
+                      "emoji": "✏️",
+                      "image_url": ""
                     }
                   ]
                 }
@@ -2416,8 +2416,8 @@
                       ],
                       "options_full": [
                         {
-                          "emoji": "📦",
-                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/rubber.png",
+                          "emoji": "✏️",
+                          "image_url": "",
                           "word": "rubber"
                         },
                         {
@@ -2482,7 +2482,7 @@
                       ],
                       "options_full": [
                         {
-                          "emoji": "📦",
+                          "emoji": "👝",
                           "image_url": "",
                           "word": "pencil case"
                         },
@@ -2602,8 +2602,8 @@
                     },
                     {
                       "word": "rubber",
-                      "emoji": "📦",
-                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/rubber.png"
+                      "emoji": "✏️",
+                      "image_url": ""
                     }
                   ]
                 }
