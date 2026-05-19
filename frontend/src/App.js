@@ -112,6 +112,7 @@ const CambridgeTestInterface = lazy(() => import('./pages/CambridgeTestInterface
 const CambridgeTestResults = lazy(() => import('./pages/CambridgeTestResults'));
 const FocusPlan = lazy(() => import('./pages/FocusPlan'));
 const LizTeacher = lazy(() => import('./pages/LizTeacher'));
+const RayTeacher = lazy(() => import('./pages/RayTeacher'));
 const LizFloatingButton = lazy(() => import('./components/LizFloatingButton'));
 const FeedbackLauncher = lazy(() => import('./components/FeedbackLauncher'));
 const VocabularyLearnMode = lazy(() => import('./pages/VocabularyLearnMode'));
@@ -774,9 +775,13 @@ function AppWithSessionHandler() {
           path="/learning-tools"
           element={user ? <LearningToolsIndex user={user} /> : <RedirectToLogin />}
         />
-        <Route 
-          path="/liz" 
-          element={user ? <LizTeacher user={user} /> : <RedirectToLogin />} 
+        <Route
+          path="/liz"
+          element={user ? <LizTeacher user={user} /> : <RedirectToLogin />}
+        />
+        <Route
+          path="/ray"
+          element={user ? <RayTeacher user={user} /> : <RedirectToLogin />}
         />
         <Route 
           path="/question-bank" 

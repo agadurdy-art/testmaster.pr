@@ -24,7 +24,7 @@ const IELTS_TABS = [
 const GE_TABS = [
   { key: 'home', label: 'Home', path: '/dashboard', Icon: Home, matchPrefix: ['/dashboard', '/ge/dashboard'] },
   { key: 'review', label: 'Review', path: '/daily-practice', Icon: Repeat, matchPrefix: ['/daily-practice'] },
-  { key: 'coach', label: 'Ray', path: '/landing/ge', Icon: GraduationCap, matchPrefix: ['/landing/ge'], center: true, avatar: RAY_AVATAR_URL },
+  { key: 'coach', label: 'Ray', path: '/ray', Icon: GraduationCap, matchPrefix: ['/ray'], center: true, avatar: RAY_AVATAR_URL },
   { key: 'stages', label: 'Stages', path: '/unified', Icon: BookOpen, matchPrefix: ['/unified', '/game-bank'] },
   { key: 'profile', label: 'Profile', path: '/profile', Icon: User, matchPrefix: ['/profile', '/settings'] },
 ];
