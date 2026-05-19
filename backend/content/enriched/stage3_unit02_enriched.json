@@ -77,7 +77,7 @@
                   "word": "mum",
                   "definition": "Your female parent. Same as 'mother', friendly word.",
                   "image_emoji": "👩",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true",
                   "example_sentence": "My mum is from Brazil.",
                   "asset_slug": "stage3_u02_mum"
                 },
@@ -85,7 +85,7 @@
                   "word": "dad",
                   "definition": "Your male parent. Same as 'father', friendly word.",
                   "image_emoji": "👨",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true",
                   "example_sentence": "My dad is a teacher.",
                   "asset_slug": "stage3_u02_dad"
                 },
@@ -93,7 +93,7 @@
                   "word": "brother",
                   "definition": "A boy with the same parents as you.",
                   "image_emoji": "👦",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true",
                   "example_sentence": "I have one brother, his name is Sam.",
                   "asset_slug": "stage3_u02_brother"
                 },
@@ -101,7 +101,7 @@
                   "word": "sister",
                   "definition": "A girl with the same parents as you.",
                   "image_emoji": "👧",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20girl%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=52341&model=flux&nologo=true",
                   "example_sentence": "Inca's sister is Eva.",
                   "asset_slug": "stage3_u02_sister"
                 },
@@ -109,7 +109,7 @@
                   "word": "baby",
                   "definition": "A very young child.",
                   "image_emoji": "👶",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20happy%20baby%20smiling%2C%20plain%20background%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=34391&model=flux&nologo=true",
                   "example_sentence": "Helena's baby is six months old.",
                   "asset_slug": "stage3_u02_baby"
                 },
@@ -117,7 +117,7 @@
                   "word": "parents",
                   "definition": "Your mother and father together.",
                   "image_emoji": "👨‍👩‍👧",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/two%20parents%20standing%20together%2C%20both%20smiling%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11673&model=flux&nologo=true",
                   "example_sentence": "Inca's parents are Helena and David.",
                   "asset_slug": "stage3_u02_parents"
                 }
@@ -134,132 +134,132 @@
                     {
                       "word": "mum",
                       "emoji": "👩",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true"
                         },
                         {
                           "word": "sister",
                           "emoji": "👧",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20girl%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=52341&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "dad",
                       "emoji": "👨",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true"
                         },
                         {
                           "word": "sister",
                           "emoji": "👧",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20girl%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=52341&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "brother",
                       "emoji": "👦",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true"
                         },
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true"
                         },
                         {
                           "word": "sister",
                           "emoji": "👧",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20girl%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=52341&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "sister",
                       "emoji": "👧",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20girl%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=52341&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true"
                         },
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "baby",
                       "emoji": "👶",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20happy%20baby%20smiling%2C%20plain%20background%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=34391&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true"
                         },
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "parents",
                       "emoji": "👨‍👩‍👧",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/two%20parents%20standing%20together%2C%20both%20smiling%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11673&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true"
                         },
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true"
                         }
                       ]
                     }
@@ -272,132 +272,132 @@
                     {
                       "word": "mum",
                       "emoji": "👩",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true"
                         },
                         {
                           "word": "sister",
                           "emoji": "👧",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20girl%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=52341&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "dad",
                       "emoji": "👨",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true"
                         },
                         {
                           "word": "sister",
                           "emoji": "👧",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20girl%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=52341&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "brother",
                       "emoji": "👦",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true"
                         },
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true"
                         },
                         {
                           "word": "sister",
                           "emoji": "👧",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20girl%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=52341&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "sister",
                       "emoji": "👧",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20girl%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=52341&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true"
                         },
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "baby",
                       "emoji": "👶",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20happy%20baby%20smiling%2C%20plain%20background%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=34391&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true"
                         },
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "parents",
                       "emoji": "👨‍👩‍👧",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/two%20parents%20standing%20together%2C%20both%20smiling%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11673&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true"
                         },
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true"
                         }
                       ]
                     }
@@ -410,32 +410,32 @@
                     {
                       "word": "mum",
                       "emoji": "👩",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true"
                     },
                     {
                       "word": "dad",
                       "emoji": "👨",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true"
                     },
                     {
                       "word": "brother",
                       "emoji": "👦",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true"
                     },
                     {
                       "word": "sister",
                       "emoji": "👧",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20girl%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=52341&model=flux&nologo=true"
                     },
                     {
                       "word": "baby",
                       "emoji": "👶",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20happy%20baby%20smiling%2C%20plain%20background%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=34391&model=flux&nologo=true"
                     },
                     {
                       "word": "parents",
                       "emoji": "👨‍👩‍👧",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/two%20parents%20standing%20together%2C%20both%20smiling%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11673&model=flux&nologo=true"
                     }
                   ]
                 }
@@ -812,7 +812,7 @@
                   "word": "mother",
                   "definition": "Your female parent.",
                   "image_emoji": "👩‍🦱",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20young%20mother%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=68002&model=flux&nologo=true",
                   "example_sentence": "Helena is the mother of three children.",
                   "asset_slug": "stage3_u02_mother"
                 },
@@ -820,7 +820,7 @@
                   "word": "father",
                   "definition": "Your male parent.",
                   "image_emoji": "👨‍🦱",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20young%20father%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11705&model=flux&nologo=true",
                   "example_sentence": "David is Isabel's father.",
                   "asset_slug": "stage3_u02_father"
                 },
@@ -828,7 +828,7 @@
                   "word": "husband",
                   "definition": "A woman's male partner in marriage.",
                   "image_emoji": "🤵",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20husband%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71120&model=flux&nologo=true",
                   "example_sentence": "Helena's husband is David.",
                   "asset_slug": "stage3_u02_husband"
                 },
@@ -836,7 +836,7 @@
                   "word": "wife",
                   "definition": "A man's female partner in marriage.",
                   "image_emoji": "👰",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20wife%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73300&model=flux&nologo=true",
                   "example_sentence": "David's wife is Helena.",
                   "asset_slug": "stage3_u02_wife"
                 },
@@ -844,7 +844,7 @@
                   "word": "son",
                   "definition": "A male child of a parent.",
                   "image_emoji": "🧒",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20happy%20son%20hugging%20his%20parents%2C%20head-and-shoulders%2C%20son%20smiling%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=20284&model=flux&nologo=true",
                   "example_sentence": "They have one son.",
                   "asset_slug": "stage3_u02_son"
                 },
@@ -852,7 +852,7 @@
                   "word": "daughter",
                   "definition": "A female child of a parent.",
                   "image_emoji": "👧",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20happy%20daughter%20standing%20with%20her%20parents%2C%20daughter%20smiling%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=21369&model=flux&nologo=true",
                   "example_sentence": "Inca is David's daughter.",
                   "asset_slug": "stage3_u02_daughter"
                 },
@@ -860,7 +860,7 @@
                   "word": "children",
                   "definition": "More than one boy or girl.",
                   "image_emoji": "👨‍👩‍👧‍👦",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/three%20smiling%20children%20standing%20together%2C%20school%20clothes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23524&model=flux&nologo=true",
                   "example_sentence": "Helena has four children.",
                   "asset_slug": "stage3_u02_children"
                 },
@@ -868,7 +868,7 @@
                   "word": "family",
                   "definition": "A group of people related to you.",
                   "image_emoji": "👪",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20happy%20family%20of%20four%20%28mum%2C%20dad%2C%20son%2C%20daughter%29%20smiling%20together%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=68314&model=flux&nologo=true",
                   "example_sentence": "We are a big family — six of us.",
                   "asset_slug": "stage3_u02_family"
                 }
@@ -896,22 +896,22 @@
                       "options_full": [
                         {
                           "emoji": "👩‍🦱",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20mother%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=68002&model=flux&nologo=true",
                           "word": "mother"
                         },
                         {
                           "emoji": "👨‍🦱",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20father%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11705&model=flux&nologo=true",
                           "word": "father"
                         },
                         {
                           "emoji": "🤵",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20husband%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71120&model=flux&nologo=true",
                           "word": "husband"
                         },
                         {
                           "emoji": "👰",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20wife%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73300&model=flux&nologo=true",
                           "word": "wife"
                         }
                       ]
@@ -929,22 +929,22 @@
                       "options_full": [
                         {
                           "emoji": "👨‍🦱",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20father%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11705&model=flux&nologo=true",
                           "word": "father"
                         },
                         {
                           "emoji": "👩‍🦱",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20mother%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=68002&model=flux&nologo=true",
                           "word": "mother"
                         },
                         {
                           "emoji": "🤵",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20husband%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71120&model=flux&nologo=true",
                           "word": "husband"
                         },
                         {
                           "emoji": "👰",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20wife%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73300&model=flux&nologo=true",
                           "word": "wife"
                         }
                       ]
@@ -962,22 +962,22 @@
                       "options_full": [
                         {
                           "emoji": "🤵",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20husband%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71120&model=flux&nologo=true",
                           "word": "husband"
                         },
                         {
                           "emoji": "👩‍🦱",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20mother%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=68002&model=flux&nologo=true",
                           "word": "mother"
                         },
                         {
                           "emoji": "👨‍🦱",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20father%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11705&model=flux&nologo=true",
                           "word": "father"
                         },
                         {
                           "emoji": "👰",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20wife%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73300&model=flux&nologo=true",
                           "word": "wife"
                         }
                       ]
@@ -995,22 +995,22 @@
                       "options_full": [
                         {
                           "emoji": "👰",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20wife%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73300&model=flux&nologo=true",
                           "word": "wife"
                         },
                         {
                           "emoji": "👩‍🦱",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20mother%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=68002&model=flux&nologo=true",
                           "word": "mother"
                         },
                         {
                           "emoji": "👨‍🦱",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20father%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11705&model=flux&nologo=true",
                           "word": "father"
                         },
                         {
                           "emoji": "🤵",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20husband%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71120&model=flux&nologo=true",
                           "word": "husband"
                         }
                       ]
@@ -1028,22 +1028,22 @@
                       "options_full": [
                         {
                           "emoji": "🧒",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20happy%20son%20hugging%20his%20parents%2C%20head-and-shoulders%2C%20son%20smiling%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=20284&model=flux&nologo=true",
                           "word": "son"
                         },
                         {
                           "emoji": "👩‍🦱",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20mother%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=68002&model=flux&nologo=true",
                           "word": "mother"
                         },
                         {
                           "emoji": "👨‍🦱",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20father%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11705&model=flux&nologo=true",
                           "word": "father"
                         },
                         {
                           "emoji": "🤵",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20husband%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71120&model=flux&nologo=true",
                           "word": "husband"
                         }
                       ]
@@ -1061,22 +1061,22 @@
                       "options_full": [
                         {
                           "emoji": "👧",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20happy%20daughter%20standing%20with%20her%20parents%2C%20daughter%20smiling%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=21369&model=flux&nologo=true",
                           "word": "daughter"
                         },
                         {
                           "emoji": "👩‍🦱",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20mother%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=68002&model=flux&nologo=true",
                           "word": "mother"
                         },
                         {
                           "emoji": "👨‍🦱",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20father%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11705&model=flux&nologo=true",
                           "word": "father"
                         },
                         {
                           "emoji": "🤵",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20husband%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71120&model=flux&nologo=true",
                           "word": "husband"
                         }
                       ]
@@ -1090,132 +1090,132 @@
                     {
                       "word": "mother",
                       "emoji": "👩‍🦱",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20mother%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=68002&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "father",
                           "emoji": "👨‍🦱",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20father%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11705&model=flux&nologo=true"
                         },
                         {
                           "word": "husband",
                           "emoji": "🤵",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20husband%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71120&model=flux&nologo=true"
                         },
                         {
                           "word": "wife",
                           "emoji": "👰",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20wife%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73300&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "father",
                       "emoji": "👨‍🦱",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20father%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11705&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "mother",
                           "emoji": "👩‍🦱",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20mother%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=68002&model=flux&nologo=true"
                         },
                         {
                           "word": "husband",
                           "emoji": "🤵",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20husband%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71120&model=flux&nologo=true"
                         },
                         {
                           "word": "wife",
                           "emoji": "👰",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20wife%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73300&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "husband",
                       "emoji": "🤵",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20husband%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71120&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "mother",
                           "emoji": "👩‍🦱",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20mother%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=68002&model=flux&nologo=true"
                         },
                         {
                           "word": "father",
                           "emoji": "👨‍🦱",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20father%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11705&model=flux&nologo=true"
                         },
                         {
                           "word": "wife",
                           "emoji": "👰",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20wife%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73300&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "wife",
                       "emoji": "👰",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20wife%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73300&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "mother",
                           "emoji": "👩‍🦱",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20mother%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=68002&model=flux&nologo=true"
                         },
                         {
                           "word": "father",
                           "emoji": "👨‍🦱",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20father%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11705&model=flux&nologo=true"
                         },
                         {
                           "word": "husband",
                           "emoji": "🤵",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20husband%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71120&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "son",
                       "emoji": "🧒",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20happy%20son%20hugging%20his%20parents%2C%20head-and-shoulders%2C%20son%20smiling%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=20284&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "mother",
                           "emoji": "👩‍🦱",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20mother%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=68002&model=flux&nologo=true"
                         },
                         {
                           "word": "father",
                           "emoji": "👨‍🦱",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20father%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11705&model=flux&nologo=true"
                         },
                         {
                           "word": "husband",
                           "emoji": "🤵",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20husband%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71120&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "daughter",
                       "emoji": "👧",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20happy%20daughter%20standing%20with%20her%20parents%2C%20daughter%20smiling%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=21369&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "mother",
                           "emoji": "👩‍🦱",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20mother%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=68002&model=flux&nologo=true"
                         },
                         {
                           "word": "father",
                           "emoji": "👨‍🦱",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20father%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11705&model=flux&nologo=true"
                         },
                         {
                           "word": "husband",
                           "emoji": "🤵",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20husband%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71120&model=flux&nologo=true"
                         }
                       ]
                     }
@@ -1228,32 +1228,32 @@
                     {
                       "word": "mother",
                       "emoji": "👩‍🦱",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20mother%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=68002&model=flux&nologo=true"
                     },
                     {
                       "word": "father",
                       "emoji": "👨‍🦱",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20father%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11705&model=flux&nologo=true"
                     },
                     {
                       "word": "husband",
                       "emoji": "🤵",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20husband%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71120&model=flux&nologo=true"
                     },
                     {
                       "word": "wife",
                       "emoji": "👰",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20wife%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73300&model=flux&nologo=true"
                     },
                     {
                       "word": "son",
                       "emoji": "🧒",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20happy%20son%20hugging%20his%20parents%2C%20head-and-shoulders%2C%20son%20smiling%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=20284&model=flux&nologo=true"
                     },
                     {
                       "word": "daughter",
                       "emoji": "👧",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20happy%20daughter%20standing%20with%20her%20parents%2C%20daughter%20smiling%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=21369&model=flux&nologo=true"
                     }
                   ]
                 }
@@ -1263,7 +1263,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Helena's family",
-              "text": "My name is Helena. I'm a mother. My husband is David. We have three children — three daughters. Their names are Isabel, Inca and Eva. Isabel is 14. Inca and Eva are twins — they are 11. We are a big family. We're happy together.",
+              "text": "Hello! My name is Helena. I'm a mother. My husband is David. We are a happy family. We have three children — three daughters. Their names are Isabel, Inca and Eva. Isabel is our daughter too. She is 14. Inca and Eva are sisters and they are twins — they are 11. So Isabel has two sisters in our family. We love each other. We are five people: mother, father and three children. We are a big family!",
               "scene_description": "A mother stands with her husband and three daughters in a garden.",
               "questions": [
                 {
@@ -1612,7 +1612,7 @@
                   "word": "bored",
                   "definition": "Not interested. Nothing fun to do.",
                   "image_emoji": "😑",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20child%20looking%20bored%2C%20leaning%20on%20a%20desk%2C%20head%20on%20hand%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=2850&model=flux&nologo=true",
                   "example_sentence": "I'm bored in this lesson.",
                   "asset_slug": "stage3_u02_bored"
                 },
@@ -1620,7 +1620,7 @@
                   "word": "clever",
                   "definition": "Quick at learning. Smart.",
                   "image_emoji": "🧠",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20happy%20clever%20child%20holding%20a%20book%2C%20lightbulb%20above%20the%20head%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12762&model=flux&nologo=true",
                   "example_sentence": "She's a clever student.",
                   "asset_slug": "stage3_u02_clever"
                 },
@@ -1628,7 +1628,7 @@
                   "word": "funny",
                   "definition": "Makes you laugh.",
                   "image_emoji": "😂",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20child%20laughing%20hard%2C%20making%20a%20funny%20face%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=48602&model=flux&nologo=true",
                   "example_sentence": "Dad is funny.",
                   "asset_slug": "stage3_u02_funny"
                 },
@@ -1636,7 +1636,7 @@
                   "word": "happy",
                   "definition": "You feel good. You smile.",
                   "image_emoji": "😊",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20child%20smiling%20big%2C%20both%20thumbs%20up%2C%20sunny%20background%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=79908&model=flux&nologo=true",
                   "example_sentence": "The baby is happy today.",
                   "asset_slug": "stage3_u02_happy"
                 },
@@ -1644,7 +1644,7 @@
                   "word": "hot",
                   "definition": "Too warm — you feel uncomfortable.",
                   "image_emoji": "🥵",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20child%20fanning%20their%20face%2C%20tongue%20out%2C%20feeling%20hot%20in%20summer%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=69883&model=flux&nologo=true",
                   "example_sentence": "I'm hot — open the window!",
                   "asset_slug": "stage3_u02_hot"
                 },
@@ -1652,7 +1652,7 @@
                   "word": "hungry",
                   "definition": "You want to eat food.",
                   "image_emoji": "🍽️",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20child%20holding%20their%20stomach%2C%20looking%20at%20a%20sandwich%2C%20hungry%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=37395&model=flux&nologo=true",
                   "example_sentence": "Are you hungry? Let's eat.",
                   "asset_slug": "stage3_u02_hungry"
                 },
@@ -1660,7 +1660,7 @@
                   "word": "sad",
                   "definition": "You don't feel good. You cry.",
                   "image_emoji": "😢",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20child%20with%20a%20small%20frown%2C%20looking%20down%20sadly%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=45754&model=flux&nologo=true",
                   "example_sentence": "Inca is sad — her cat is sick.",
                   "asset_slug": "stage3_u02_sad"
                 },
@@ -1668,7 +1668,7 @@
                   "word": "thirsty",
                   "definition": "You want to drink water.",
                   "image_emoji": "💧",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20child%20holding%20an%20empty%20glass%2C%20asking%20for%20water%2C%20thirsty%20look%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=31031&model=flux&nologo=true",
                   "example_sentence": "I'm thirsty — water, please.",
                   "asset_slug": "stage3_u02_thirsty"
                 },
@@ -1676,7 +1676,7 @@
                   "word": "tired",
                   "definition": "You want to sleep or rest.",
                   "image_emoji": "😴",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20child%20yawning%2C%20eyes%20half%20closed%2C%20sleepy%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=54020&model=flux&nologo=true",
                   "example_sentence": "It's late — I'm tired.",
                   "asset_slug": "stage3_u02_tired"
                 }
@@ -1729,7 +1729,8 @@
                         "funny",
                         "happy"
                       ],
-                      "correct": "bored"
+                      "correct": "bored",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20child%20looking%20bored%2C%20leaning%20on%20a%20desk%2C%20head%20on%20hand%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=2850&model=flux&nologo=true"
                     },
                     {
                       "audio_text": "clever",
@@ -1740,7 +1741,8 @@
                         "funny",
                         "happy"
                       ],
-                      "correct": "clever"
+                      "correct": "clever",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20happy%20clever%20child%20holding%20a%20book%2C%20lightbulb%20above%20the%20head%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12762&model=flux&nologo=true"
                     },
                     {
                       "audio_text": "funny",
@@ -1751,7 +1753,8 @@
                         "clever",
                         "happy"
                       ],
-                      "correct": "funny"
+                      "correct": "funny",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20child%20laughing%20hard%2C%20making%20a%20funny%20face%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=48602&model=flux&nologo=true"
                     },
                     {
                       "audio_text": "happy",
@@ -1762,7 +1765,8 @@
                         "clever",
                         "funny"
                       ],
-                      "correct": "happy"
+                      "correct": "happy",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20child%20smiling%20big%2C%20both%20thumbs%20up%2C%20sunny%20background%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=79908&model=flux&nologo=true"
                     },
                     {
                       "audio_text": "hot",
@@ -1773,7 +1777,8 @@
                         "clever",
                         "funny"
                       ],
-                      "correct": "hot"
+                      "correct": "hot",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20child%20fanning%20their%20face%2C%20tongue%20out%2C%20feeling%20hot%20in%20summer%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=69883&model=flux&nologo=true"
                     },
                     {
                       "audio_text": "hungry",
@@ -1784,7 +1789,8 @@
                         "clever",
                         "funny"
                       ],
-                      "correct": "hungry"
+                      "correct": "hungry",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20child%20holding%20their%20stomach%2C%20looking%20at%20a%20sandwich%2C%20hungry%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=37395&model=flux&nologo=true"
                     }
                   ]
                 },
@@ -1795,32 +1801,32 @@
                     {
                       "word": "bored",
                       "emoji": "😑",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20child%20looking%20bored%2C%20leaning%20on%20a%20desk%2C%20head%20on%20hand%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=2850&model=flux&nologo=true"
                     },
                     {
                       "word": "clever",
                       "emoji": "🧠",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20happy%20clever%20child%20holding%20a%20book%2C%20lightbulb%20above%20the%20head%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12762&model=flux&nologo=true"
                     },
                     {
                       "word": "funny",
                       "emoji": "😂",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20child%20laughing%20hard%2C%20making%20a%20funny%20face%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=48602&model=flux&nologo=true"
                     },
                     {
                       "word": "happy",
                       "emoji": "😊",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20child%20smiling%20big%2C%20both%20thumbs%20up%2C%20sunny%20background%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=79908&model=flux&nologo=true"
                     },
                     {
                       "word": "hot",
                       "emoji": "🥵",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20child%20fanning%20their%20face%2C%20tongue%20out%2C%20feeling%20hot%20in%20summer%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=69883&model=flux&nologo=true"
                     },
                     {
                       "word": "hungry",
                       "emoji": "🍽️",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20child%20holding%20their%20stomach%2C%20looking%20at%20a%20sandwich%2C%20hungry%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=37395&model=flux&nologo=true"
                     }
                   ]
                 }
@@ -2296,22 +2302,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true",
                           "word": "brother"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20girl%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=52341&model=flux&nologo=true",
                           "word": "sister"
                         }
                       ]
@@ -2329,22 +2335,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true",
                           "word": "brother"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20girl%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=52341&model=flux&nologo=true",
                           "word": "sister"
                         }
                       ]
@@ -2362,22 +2368,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true",
                           "word": "brother"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20girl%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=52341&model=flux&nologo=true",
                           "word": "sister"
                         }
                       ]
@@ -2395,22 +2401,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20girl%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=52341&model=flux&nologo=true",
                           "word": "sister"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true",
                           "word": "brother"
                         }
                       ]
@@ -2428,22 +2434,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20happy%20baby%20smiling%2C%20plain%20background%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=34391&model=flux&nologo=true",
                           "word": "baby"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true",
                           "word": "brother"
                         }
                       ]
@@ -2461,22 +2467,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/two%20parents%20standing%20together%2C%20both%20smiling%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11673&model=flux&nologo=true",
                           "word": "parents"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true",
                           "word": "brother"
                         }
                       ]
@@ -2494,22 +2500,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20mother%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=68002&model=flux&nologo=true",
                           "word": "mother"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true",
                           "word": "brother"
                         }
                       ]
@@ -2527,22 +2533,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20father%20smiling%20at%20the%20camera%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11705&model=flux&nologo=true",
                           "word": "father"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true",
                           "word": "brother"
                         }
                       ]
@@ -2560,22 +2566,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20husband%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71120&model=flux&nologo=true",
                           "word": "husband"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true",
                           "word": "brother"
                         }
                       ]
@@ -2593,22 +2599,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20young%20husband%20and%20wife%20smiling%2C%20the%20wife%20looking%20at%20the%20camera%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=73300&model=flux&nologo=true",
                           "word": "wife"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true",
                           "word": "brother"
                         }
                       ]
@@ -2622,32 +2628,32 @@
                     {
                       "word": "mum",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20kind%20mother%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=40555&model=flux&nologo=true"
                     },
                     {
                       "word": "dad",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20kind%20father%20smiling%20warmly%2C%20head-and-shoulders%20portrait%2C%20friendly%20eyes%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29177&model=flux&nologo=true"
                     },
                     {
                       "word": "brother",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20boy%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=12322&model=flux&nologo=true"
                     },
                     {
                       "word": "sister",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20smiling%20girl%20aged%209%2C%20school%20clothes%2C%20head-and-shoulders%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=52341&model=flux&nologo=true"
                     },
                     {
                       "word": "baby",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20happy%20baby%20smiling%2C%20plain%20background%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=34391&model=flux&nologo=true"
                     },
                     {
                       "word": "parents",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/two%20parents%20standing%20together%2C%20both%20smiling%2C%20head-and-shoulders%20portrait%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=11673&model=flux&nologo=true"
                     }
                   ]
                 }

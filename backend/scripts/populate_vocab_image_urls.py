@@ -157,8 +157,30 @@ def patch_unit(unit_num, force=False):
                         if force or not item.get("image_url"):
                             item["image_url"] = url_for(item["word"])
                             patched += 1
-                # Also patch game items that reuse vocab cards
-                pass
+
+        # Also patch game items: image_word_match, look_write, memory_game,
+        # flashcard_match, listen_choose_picture, listen_choose_word reuse
+        # vocab cards via {word, emoji, image_url}. Pack runs before
+        # populate, so image_url is empty there; backfill now.
+        for lesson in u.get("lessons", []):
+            for step in lesson.get("steps", []):
+                if step.get("type") not in ("vocab_games", "grammar_games"):
+                    continue
+                for g in step.get("games", []) or []:
+                    for item in g.get("items", []) or []:
+                        if isinstance(item, dict) and item.get("word") and not item.get("image_url"):
+                            item["image_url"] = url_for(item["word"])
+                            patched += 1
+                        # distractors are nested
+                        for d in (item.get("distractors") or []):
+                            if isinstance(d, dict) and d.get("word") and not d.get("image_url"):
+                                d["image_url"] = url_for(d["word"])
+                                patched += 1
+                        # 'options_full' in word_race etc.
+                        for o in (item.get("options_full") or []):
+                            if isinstance(o, dict) and o.get("word") and not o.get("image_url"):
+                                o["image_url"] = url_for(o["word"])
+                                patched += 1
     p.write_text(json.dumps(data, indent=2, ensure_ascii=False))
     print(f"  ✓ {p.name}: patched {patched} vocab image URLs")
     return patched

@@ -275,9 +275,11 @@ L2 = {
         micro_reading(
             title="Helena's family",
             text=(
-                "My name is Helena. I'm a mother. My husband is David. We have three children — "
-                "three daughters. Their names are Isabel, Inca and Eva. Isabel is 14. Inca and Eva are twins — "
-                "they are 11. We are a big family. We're happy together."
+                "Hello! My name is Helena. I'm a mother. My husband is David. We are a happy family. "
+                "We have three children — three daughters. Their names are Isabel, Inca and Eva. "
+                "Isabel is our daughter too. She is 14. Inca and Eva are sisters and they are twins — "
+                "they are 11. So Isabel has two sisters in our family. We love each other. "
+                "We are five people: mother, father and three children. We are a big family!"
             ),
             scene_description="A mother stands with her husband and three daughters in a garden.",
             questions=[

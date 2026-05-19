@@ -68,7 +68,7 @@
                   "word": "bathroom",
                   "definition": "The room with a bath, shower and toilet.",
                   "image_emoji": "🛁",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true",
                   "example_sentence": "I brush my teeth in the bathroom.",
                   "asset_slug": "stage3_u03_bathroom"
                 },
@@ -76,7 +76,7 @@
                   "word": "bedroom",
                   "definition": "The room where you sleep.",
                   "image_emoji": "🛏️",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true",
                   "example_sentence": "My bedroom is small.",
                   "asset_slug": "stage3_u03_bedroom"
                 },
@@ -84,7 +84,7 @@
                   "word": "dining room",
                   "definition": "The room where you eat at a table.",
                   "image_emoji": "🍽️",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true",
                   "example_sentence": "We eat dinner in the dining room.",
                   "asset_slug": "stage3_u03_dining_room"
                 },
@@ -92,7 +92,7 @@
                   "word": "garden",
                   "definition": "The space outside with plants and grass.",
                   "image_emoji": "🌳",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20small%20home%20garden%20with%20grass%2C%20flowers%20and%20a%20tree%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=39887&model=flux&nologo=true",
                   "example_sentence": "The cat is in the garden.",
                   "asset_slug": "stage3_u03_garden"
                 },
@@ -100,7 +100,7 @@
                   "word": "hall",
                   "definition": "The room you enter from the front door.",
                   "image_emoji": "🚪",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20small%20entrance%20hall%20with%20a%20coat%20hook%20and%20a%20front%20door%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=43399&model=flux&nologo=true",
                   "example_sentence": "Hang your coat in the hall.",
                   "asset_slug": "stage3_u03_hall"
                 },
@@ -108,7 +108,7 @@
                   "word": "kitchen",
                   "definition": "The room where you cook food.",
                   "image_emoji": "🍳",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20bright%20small%20kitchen%20with%20cooker%2C%20fridge%20and%20a%20countertop%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=98669&model=flux&nologo=true",
                   "example_sentence": "Mum is in the kitchen.",
                   "asset_slug": "stage3_u03_kitchen"
                 },
@@ -116,7 +116,7 @@
                   "word": "living room",
                   "definition": "The room with a sofa where you watch TV.",
                   "image_emoji": "🛋️",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20cozy%20living%20room%20with%20a%20sofa%2C%20TV%20and%20a%20small%20coffee%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=53697&model=flux&nologo=true",
                   "example_sentence": "We watch TV in the living room.",
                   "asset_slug": "stage3_u03_living_room"
                 }
@@ -133,132 +133,132 @@
                     {
                       "word": "bathroom",
                       "emoji": "🛁",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true"
                         },
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true"
                         },
                         {
                           "word": "garden",
                           "emoji": "🌳",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20home%20garden%20with%20grass%2C%20flowers%20and%20a%20tree%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=39887&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "bedroom",
                       "emoji": "🛏️",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "bathroom",
                           "emoji": "🛁",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true"
                         },
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true"
                         },
                         {
                           "word": "garden",
                           "emoji": "🌳",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20home%20garden%20with%20grass%2C%20flowers%20and%20a%20tree%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=39887&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "dining room",
                       "emoji": "🍽️",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "bathroom",
                           "emoji": "🛁",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true"
                         },
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true"
                         },
                         {
                           "word": "garden",
                           "emoji": "🌳",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20home%20garden%20with%20grass%2C%20flowers%20and%20a%20tree%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=39887&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "garden",
                       "emoji": "🌳",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20small%20home%20garden%20with%20grass%2C%20flowers%20and%20a%20tree%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=39887&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "bathroom",
                           "emoji": "🛁",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true"
                         },
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true"
                         },
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "hall",
                       "emoji": "🚪",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20small%20entrance%20hall%20with%20a%20coat%20hook%20and%20a%20front%20door%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=43399&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "bathroom",
                           "emoji": "🛁",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true"
                         },
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true"
                         },
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "kitchen",
                       "emoji": "🍳",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20bright%20small%20kitchen%20with%20cooker%2C%20fridge%20and%20a%20countertop%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=98669&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "bathroom",
                           "emoji": "🛁",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true"
                         },
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true"
                         },
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true"
                         }
                       ]
                     }
@@ -271,132 +271,132 @@
                     {
                       "word": "bathroom",
                       "emoji": "🛁",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true"
                         },
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true"
                         },
                         {
                           "word": "garden",
                           "emoji": "🌳",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20home%20garden%20with%20grass%2C%20flowers%20and%20a%20tree%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=39887&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "bedroom",
                       "emoji": "🛏️",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "bathroom",
                           "emoji": "🛁",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true"
                         },
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true"
                         },
                         {
                           "word": "garden",
                           "emoji": "🌳",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20home%20garden%20with%20grass%2C%20flowers%20and%20a%20tree%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=39887&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "dining room",
                       "emoji": "🍽️",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "bathroom",
                           "emoji": "🛁",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true"
                         },
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true"
                         },
                         {
                           "word": "garden",
                           "emoji": "🌳",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20home%20garden%20with%20grass%2C%20flowers%20and%20a%20tree%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=39887&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "garden",
                       "emoji": "🌳",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20small%20home%20garden%20with%20grass%2C%20flowers%20and%20a%20tree%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=39887&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "bathroom",
                           "emoji": "🛁",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true"
                         },
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true"
                         },
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "hall",
                       "emoji": "🚪",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20small%20entrance%20hall%20with%20a%20coat%20hook%20and%20a%20front%20door%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=43399&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "bathroom",
                           "emoji": "🛁",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true"
                         },
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true"
                         },
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "kitchen",
                       "emoji": "🍳",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20bright%20small%20kitchen%20with%20cooker%2C%20fridge%20and%20a%20countertop%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=98669&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "bathroom",
                           "emoji": "🛁",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true"
                         },
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true"
                         },
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true"
                         }
                       ]
                     }
@@ -409,32 +409,32 @@
                     {
                       "word": "bathroom",
                       "emoji": "🛁",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true"
                     },
                     {
                       "word": "bedroom",
                       "emoji": "🛏️",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true"
                     },
                     {
                       "word": "dining room",
                       "emoji": "🍽️",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true"
                     },
                     {
                       "word": "garden",
                       "emoji": "🌳",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20small%20home%20garden%20with%20grass%2C%20flowers%20and%20a%20tree%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=39887&model=flux&nologo=true"
                     },
                     {
                       "word": "hall",
                       "emoji": "🚪",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20small%20entrance%20hall%20with%20a%20coat%20hook%20and%20a%20front%20door%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=43399&model=flux&nologo=true"
                     },
                     {
                       "word": "kitchen",
                       "emoji": "🍳",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20bright%20small%20kitchen%20with%20cooker%2C%20fridge%20and%20a%20countertop%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=98669&model=flux&nologo=true"
                     }
                   ]
                 }
@@ -775,7 +775,7 @@
                   "word": "bed",
                   "definition": "A thing in your bedroom where you sleep.",
                   "image_emoji": "🛏️",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20neatly-made%20child%27s%20bed%20with%20a%20pillow%20and%20a%20blanket%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=7356&model=flux&nologo=true",
                   "example_sentence": "My bed is big and soft.",
                   "asset_slug": "stage3_u03_bed"
                 },
@@ -783,7 +783,7 @@
                   "word": "chair",
                   "definition": "A thing with four legs you sit on.",
                   "image_emoji": "🪑",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
                   "example_sentence": "The chair is at the desk.",
                   "asset_slug": "stage3_u03_chair"
                 },
@@ -791,7 +791,7 @@
                   "word": "computer",
                   "definition": "An electronic thing you work and play on.",
                   "image_emoji": "💻",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20desktop%20computer%20with%20monitor%2C%20keyboard%2C%20mouse%20on%20a%20desk%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=35978&model=flux&nologo=true",
                   "example_sentence": "My computer is on the desk.",
                   "asset_slug": "stage3_u03_computer"
                 },
@@ -799,7 +799,7 @@
                   "word": "cupboard",
                   "definition": "A wooden box with doors for storing things.",
                   "image_emoji": "🗄️",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20tall%20wooden%20kitchen%20cupboard%20with%20two%20doors%20closed%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=45888&model=flux&nologo=true",
                   "example_sentence": "The plates are in the cupboard.",
                   "asset_slug": "stage3_u03_cupboard"
                 },
@@ -807,7 +807,7 @@
                   "word": "desk",
                   "definition": "A table where you do homework.",
                   "image_emoji": "📋",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20child%27s%20study%20desk%20with%20a%20lamp%2C%20book%20and%20pencil%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=63776&model=flux&nologo=true",
                   "example_sentence": "My desk is near the window.",
                   "asset_slug": "stage3_u03_desk"
                 },
@@ -815,7 +815,7 @@
                   "word": "lamp",
                   "definition": "A small light on a table or wall.",
                   "image_emoji": "💡",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20small%20reading%20lamp%20turned%20on%2C%20single%20object%20on%20a%20desk%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=5437&model=flux&nologo=true",
                   "example_sentence": "Turn on the lamp, please.",
                   "asset_slug": "stage3_u03_lamp"
                 },
@@ -823,7 +823,7 @@
                   "word": "mirror",
                   "definition": "A flat thing that shows your face.",
                   "image_emoji": "🪞",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20round%20mirror%20hanging%20on%20a%20wall%20reflecting%20daylight%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=7682&model=flux&nologo=true",
                   "example_sentence": "I look in the mirror in the morning.",
                   "asset_slug": "stage3_u03_mirror"
                 },
@@ -831,7 +831,7 @@
                   "word": "shelf",
                   "definition": "A flat board on a wall for books or things.",
                   "image_emoji": "📚",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20wooden%20wall%20shelf%20with%20three%20books%20and%20a%20small%20plant%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=57475&model=flux&nologo=true",
                   "example_sentence": "There are books on the shelf.",
                   "asset_slug": "stage3_u03_shelf"
                 }
@@ -859,22 +859,22 @@
                       "options_full": [
                         {
                           "emoji": "🛏️",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20neatly-made%20child%27s%20bed%20with%20a%20pillow%20and%20a%20blanket%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=7356&model=flux&nologo=true",
                           "word": "bed"
                         },
                         {
                           "emoji": "🪑",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
                           "word": "chair"
                         },
                         {
                           "emoji": "💻",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20desktop%20computer%20with%20monitor%2C%20keyboard%2C%20mouse%20on%20a%20desk%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=35978&model=flux&nologo=true",
                           "word": "computer"
                         },
                         {
                           "emoji": "🗄️",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tall%20wooden%20kitchen%20cupboard%20with%20two%20doors%20closed%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=45888&model=flux&nologo=true",
                           "word": "cupboard"
                         }
                       ]
@@ -892,22 +892,22 @@
                       "options_full": [
                         {
                           "emoji": "🪑",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
                           "word": "chair"
                         },
                         {
                           "emoji": "🛏️",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20neatly-made%20child%27s%20bed%20with%20a%20pillow%20and%20a%20blanket%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=7356&model=flux&nologo=true",
                           "word": "bed"
                         },
                         {
                           "emoji": "💻",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20desktop%20computer%20with%20monitor%2C%20keyboard%2C%20mouse%20on%20a%20desk%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=35978&model=flux&nologo=true",
                           "word": "computer"
                         },
                         {
                           "emoji": "🗄️",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tall%20wooden%20kitchen%20cupboard%20with%20two%20doors%20closed%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=45888&model=flux&nologo=true",
                           "word": "cupboard"
                         }
                       ]
@@ -925,22 +925,22 @@
                       "options_full": [
                         {
                           "emoji": "💻",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20desktop%20computer%20with%20monitor%2C%20keyboard%2C%20mouse%20on%20a%20desk%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=35978&model=flux&nologo=true",
                           "word": "computer"
                         },
                         {
                           "emoji": "🛏️",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20neatly-made%20child%27s%20bed%20with%20a%20pillow%20and%20a%20blanket%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=7356&model=flux&nologo=true",
                           "word": "bed"
                         },
                         {
                           "emoji": "🪑",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
                           "word": "chair"
                         },
                         {
                           "emoji": "🗄️",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tall%20wooden%20kitchen%20cupboard%20with%20two%20doors%20closed%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=45888&model=flux&nologo=true",
                           "word": "cupboard"
                         }
                       ]
@@ -958,22 +958,22 @@
                       "options_full": [
                         {
                           "emoji": "🗄️",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tall%20wooden%20kitchen%20cupboard%20with%20two%20doors%20closed%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=45888&model=flux&nologo=true",
                           "word": "cupboard"
                         },
                         {
                           "emoji": "🛏️",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20neatly-made%20child%27s%20bed%20with%20a%20pillow%20and%20a%20blanket%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=7356&model=flux&nologo=true",
                           "word": "bed"
                         },
                         {
                           "emoji": "🪑",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
                           "word": "chair"
                         },
                         {
                           "emoji": "💻",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20desktop%20computer%20with%20monitor%2C%20keyboard%2C%20mouse%20on%20a%20desk%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=35978&model=flux&nologo=true",
                           "word": "computer"
                         }
                       ]
@@ -991,22 +991,22 @@
                       "options_full": [
                         {
                           "emoji": "📋",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20child%27s%20study%20desk%20with%20a%20lamp%2C%20book%20and%20pencil%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=63776&model=flux&nologo=true",
                           "word": "desk"
                         },
                         {
                           "emoji": "🛏️",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20neatly-made%20child%27s%20bed%20with%20a%20pillow%20and%20a%20blanket%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=7356&model=flux&nologo=true",
                           "word": "bed"
                         },
                         {
                           "emoji": "🪑",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
                           "word": "chair"
                         },
                         {
                           "emoji": "💻",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20desktop%20computer%20with%20monitor%2C%20keyboard%2C%20mouse%20on%20a%20desk%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=35978&model=flux&nologo=true",
                           "word": "computer"
                         }
                       ]
@@ -1024,22 +1024,22 @@
                       "options_full": [
                         {
                           "emoji": "💡",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20reading%20lamp%20turned%20on%2C%20single%20object%20on%20a%20desk%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=5437&model=flux&nologo=true",
                           "word": "lamp"
                         },
                         {
                           "emoji": "🛏️",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20neatly-made%20child%27s%20bed%20with%20a%20pillow%20and%20a%20blanket%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=7356&model=flux&nologo=true",
                           "word": "bed"
                         },
                         {
                           "emoji": "🪑",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
                           "word": "chair"
                         },
                         {
                           "emoji": "💻",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20desktop%20computer%20with%20monitor%2C%20keyboard%2C%20mouse%20on%20a%20desk%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=35978&model=flux&nologo=true",
                           "word": "computer"
                         }
                       ]
@@ -1053,132 +1053,132 @@
                     {
                       "word": "bed",
                       "emoji": "🛏️",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20neatly-made%20child%27s%20bed%20with%20a%20pillow%20and%20a%20blanket%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=7356&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "chair",
                           "emoji": "🪑",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true"
                         },
                         {
                           "word": "computer",
                           "emoji": "💻",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20desktop%20computer%20with%20monitor%2C%20keyboard%2C%20mouse%20on%20a%20desk%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=35978&model=flux&nologo=true"
                         },
                         {
                           "word": "cupboard",
                           "emoji": "🗄️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tall%20wooden%20kitchen%20cupboard%20with%20two%20doors%20closed%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=45888&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "chair",
                       "emoji": "🪑",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "bed",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20neatly-made%20child%27s%20bed%20with%20a%20pillow%20and%20a%20blanket%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=7356&model=flux&nologo=true"
                         },
                         {
                           "word": "computer",
                           "emoji": "💻",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20desktop%20computer%20with%20monitor%2C%20keyboard%2C%20mouse%20on%20a%20desk%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=35978&model=flux&nologo=true"
                         },
                         {
                           "word": "cupboard",
                           "emoji": "🗄️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tall%20wooden%20kitchen%20cupboard%20with%20two%20doors%20closed%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=45888&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "computer",
                       "emoji": "💻",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20desktop%20computer%20with%20monitor%2C%20keyboard%2C%20mouse%20on%20a%20desk%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=35978&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "bed",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20neatly-made%20child%27s%20bed%20with%20a%20pillow%20and%20a%20blanket%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=7356&model=flux&nologo=true"
                         },
                         {
                           "word": "chair",
                           "emoji": "🪑",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true"
                         },
                         {
                           "word": "cupboard",
                           "emoji": "🗄️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tall%20wooden%20kitchen%20cupboard%20with%20two%20doors%20closed%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=45888&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "cupboard",
                       "emoji": "🗄️",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20tall%20wooden%20kitchen%20cupboard%20with%20two%20doors%20closed%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=45888&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "bed",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20neatly-made%20child%27s%20bed%20with%20a%20pillow%20and%20a%20blanket%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=7356&model=flux&nologo=true"
                         },
                         {
                           "word": "chair",
                           "emoji": "🪑",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true"
                         },
                         {
                           "word": "computer",
                           "emoji": "💻",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20desktop%20computer%20with%20monitor%2C%20keyboard%2C%20mouse%20on%20a%20desk%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=35978&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "desk",
                       "emoji": "📋",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20child%27s%20study%20desk%20with%20a%20lamp%2C%20book%20and%20pencil%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=63776&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "bed",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20neatly-made%20child%27s%20bed%20with%20a%20pillow%20and%20a%20blanket%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=7356&model=flux&nologo=true"
                         },
                         {
                           "word": "chair",
                           "emoji": "🪑",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true"
                         },
                         {
                           "word": "computer",
                           "emoji": "💻",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20desktop%20computer%20with%20monitor%2C%20keyboard%2C%20mouse%20on%20a%20desk%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=35978&model=flux&nologo=true"
                         }
                       ]
                     },
                     {
                       "word": "lamp",
                       "emoji": "💡",
-                      "image_url": "",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20small%20reading%20lamp%20turned%20on%2C%20single%20object%20on%20a%20desk%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=5437&model=flux&nologo=true",
                       "distractors": [
                         {
                           "word": "bed",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20neatly-made%20child%27s%20bed%20with%20a%20pillow%20and%20a%20blanket%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=7356&model=flux&nologo=true"
                         },
                         {
                           "word": "chair",
                           "emoji": "🪑",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true"
                         },
                         {
                           "word": "computer",
                           "emoji": "💻",
-                          "image_url": ""
+                          "image_url": "https://image.pollinations.ai/prompt/a%20desktop%20computer%20with%20monitor%2C%20keyboard%2C%20mouse%20on%20a%20desk%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=35978&model=flux&nologo=true"
                         }
                       ]
                     }
@@ -1191,32 +1191,32 @@
                     {
                       "word": "bed",
                       "emoji": "🛏️",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20neatly-made%20child%27s%20bed%20with%20a%20pillow%20and%20a%20blanket%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=7356&model=flux&nologo=true"
                     },
                     {
                       "word": "chair",
                       "emoji": "🪑",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true"
                     },
                     {
                       "word": "computer",
                       "emoji": "💻",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20desktop%20computer%20with%20monitor%2C%20keyboard%2C%20mouse%20on%20a%20desk%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=35978&model=flux&nologo=true"
                     },
                     {
                       "word": "cupboard",
                       "emoji": "🗄️",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20tall%20wooden%20kitchen%20cupboard%20with%20two%20doors%20closed%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=45888&model=flux&nologo=true"
                     },
                     {
                       "word": "desk",
                       "emoji": "📋",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20child%27s%20study%20desk%20with%20a%20lamp%2C%20book%20and%20pencil%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=63776&model=flux&nologo=true"
                     },
                     {
                       "word": "lamp",
                       "emoji": "💡",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20small%20reading%20lamp%20turned%20on%2C%20single%20object%20on%20a%20desk%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=5437&model=flux&nologo=true"
                     }
                   ]
                 }
@@ -1585,7 +1585,7 @@
                   "word": "sofa",
                   "definition": "A long soft seat for two or three people.",
                   "image_emoji": "🛋️",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20comfortable%20grey%20sofa%20for%20three%20people%20in%20a%20living%20room%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=6856&model=flux&nologo=true",
                   "example_sentence": "The sofa is in the living room.",
                   "asset_slug": "stage3_u03_sofa"
                 },
@@ -1593,7 +1593,7 @@
                   "word": "table",
                   "definition": "A flat thing with legs you put things on.",
                   "image_emoji": "🪑",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20single%20small%20wooden%20classroom%20table%2C%20top%20view%20slightly%20tilted%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=88705&model=flux&nologo=true",
                   "example_sentence": "The book is on the table.",
                   "asset_slug": "stage3_u03_table"
                 },
@@ -1601,7 +1601,7 @@
                   "word": "TV",
                   "definition": "A screen for watching shows.",
                   "image_emoji": "📺",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20flat-screen%20television%20on%20a%20low%20cabinet%2C%20switched%20off%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=63551&model=flux&nologo=true",
                   "example_sentence": "The TV is in the living room.",
                   "asset_slug": "stage3_u03_tv"
                 },
@@ -1609,7 +1609,7 @@
                   "word": "wardrobe",
                   "definition": "A big cupboard for your clothes.",
                   "image_emoji": "👕",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20tall%20wooden%20wardrobe%20with%20two%20doors%20closed%2C%20single%20object%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=96972&model=flux&nologo=true",
                   "example_sentence": "My clothes are in the wardrobe.",
                   "asset_slug": "stage3_u03_wardrobe"
                 },
@@ -1617,7 +1617,7 @@
                   "word": "poster",
                   "definition": "A big paper picture you put on the wall.",
                   "image_emoji": "🖼️",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20colorful%20sport%20poster%20on%20a%20bedroom%20wall%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=41995&model=flux&nologo=true",
                   "example_sentence": "I have a poster of a footballer.",
                   "asset_slug": "stage3_u03_poster"
                 },
@@ -1625,7 +1625,7 @@
                   "word": "in",
                   "definition": "Inside something.",
                   "image_emoji": "📦",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20cat%20sitting%20INSIDE%20a%20cardboard%20box%2C%20only%20head%20visible%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=91711&model=flux&nologo=true",
                   "example_sentence": "The cat is in the box.",
                   "asset_slug": "stage3_u03_in"
                 },
@@ -1633,7 +1633,7 @@
                   "word": "on",
                   "definition": "On top of something.",
                   "image_emoji": "📍",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20book%20lying%20ON%20TOP%20of%20a%20wooden%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=43132&model=flux&nologo=true",
                   "example_sentence": "The book is on the table.",
                   "asset_slug": "stage3_u03_on"
                 },
@@ -1641,7 +1641,7 @@
                   "word": "under",
                   "definition": "Below something.",
                   "image_emoji": "⬇️",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20soccer%20ball%20UNDER%20a%20wooden%20chair%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=6786&model=flux&nologo=true",
                   "example_sentence": "My shoes are under the bed.",
                   "asset_slug": "stage3_u03_under"
                 },
@@ -1649,7 +1649,7 @@
                   "word": "behind",
                   "definition": "At the back of something.",
                   "image_emoji": "🚪",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20small%20dog%20peeking%20out%20BEHIND%20a%20door%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=31070&model=flux&nologo=true",
                   "example_sentence": "The ball is behind the door.",
                   "asset_slug": "stage3_u03_behind"
                 },
@@ -1657,7 +1657,7 @@
                   "word": "next to",
                   "definition": "Beside something.",
                   "image_emoji": "↔️",
-                  "image_url": "",
+                  "image_url": "https://image.pollinations.ai/prompt/a%20chair%20standing%20NEXT%20TO%20a%20desk%2C%20side%20by%20side%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=30660&model=flux&nologo=true",
                   "example_sentence": "My chair is next to the desk.",
                   "asset_slug": "stage3_u03_next_to"
                 }
@@ -1710,7 +1710,8 @@
                         "TV",
                         "wardrobe"
                       ],
-                      "correct": "sofa"
+                      "correct": "sofa",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20comfortable%20grey%20sofa%20for%20three%20people%20in%20a%20living%20room%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=6856&model=flux&nologo=true"
                     },
                     {
                       "audio_text": "table",
@@ -1721,7 +1722,8 @@
                         "TV",
                         "wardrobe"
                       ],
-                      "correct": "table"
+                      "correct": "table",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20small%20wooden%20classroom%20table%2C%20top%20view%20slightly%20tilted%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=88705&model=flux&nologo=true"
                     },
                     {
                       "audio_text": "TV",
@@ -1732,7 +1734,8 @@
                         "table",
                         "wardrobe"
                       ],
-                      "correct": "TV"
+                      "correct": "TV",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20flat-screen%20television%20on%20a%20low%20cabinet%2C%20switched%20off%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=63551&model=flux&nologo=true"
                     },
                     {
                       "audio_text": "wardrobe",
@@ -1743,7 +1746,8 @@
                         "table",
                         "TV"
                       ],
-                      "correct": "wardrobe"
+                      "correct": "wardrobe",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20tall%20wooden%20wardrobe%20with%20two%20doors%20closed%2C%20single%20object%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=96972&model=flux&nologo=true"
                     },
                     {
                       "audio_text": "poster",
@@ -1754,7 +1758,8 @@
                         "table",
                         "TV"
                       ],
-                      "correct": "poster"
+                      "correct": "poster",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20colorful%20sport%20poster%20on%20a%20bedroom%20wall%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=41995&model=flux&nologo=true"
                     },
                     {
                       "audio_text": "in",
@@ -1765,7 +1770,8 @@
                         "table",
                         "TV"
                       ],
-                      "correct": "in"
+                      "correct": "in",
+                      "image_url": "https://image.pollinations.ai/prompt/a%20cat%20sitting%20INSIDE%20a%20cardboard%20box%2C%20only%20head%20visible%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=91711&model=flux&nologo=true"
                     }
                   ]
                 },
@@ -1776,32 +1782,32 @@
                     {
                       "word": "sofa",
                       "emoji": "🛋️",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20comfortable%20grey%20sofa%20for%20three%20people%20in%20a%20living%20room%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=6856&model=flux&nologo=true"
                     },
                     {
                       "word": "table",
                       "emoji": "🪑",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20single%20small%20wooden%20classroom%20table%2C%20top%20view%20slightly%20tilted%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=88705&model=flux&nologo=true"
                     },
                     {
                       "word": "TV",
                       "emoji": "📺",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20flat-screen%20television%20on%20a%20low%20cabinet%2C%20switched%20off%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=63551&model=flux&nologo=true"
                     },
                     {
                       "word": "wardrobe",
                       "emoji": "👕",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20tall%20wooden%20wardrobe%20with%20two%20doors%20closed%2C%20single%20object%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=96972&model=flux&nologo=true"
                     },
                     {
                       "word": "poster",
                       "emoji": "🖼️",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20colorful%20sport%20poster%20on%20a%20bedroom%20wall%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=41995&model=flux&nologo=true"
                     },
                     {
                       "word": "in",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20cat%20sitting%20INSIDE%20a%20cardboard%20box%2C%20only%20head%20visible%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=91711&model=flux&nologo=true"
                     }
                   ]
                 }
@@ -2293,22 +2299,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true",
                           "word": "bathroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true",
                           "word": "bedroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true",
                           "word": "dining room"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20home%20garden%20with%20grass%2C%20flowers%20and%20a%20tree%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=39887&model=flux&nologo=true",
                           "word": "garden"
                         }
                       ]
@@ -2326,22 +2332,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true",
                           "word": "bedroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true",
                           "word": "bathroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true",
                           "word": "dining room"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20home%20garden%20with%20grass%2C%20flowers%20and%20a%20tree%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=39887&model=flux&nologo=true",
                           "word": "garden"
                         }
                       ]
@@ -2359,22 +2365,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true",
                           "word": "dining room"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true",
                           "word": "bathroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true",
                           "word": "bedroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20home%20garden%20with%20grass%2C%20flowers%20and%20a%20tree%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=39887&model=flux&nologo=true",
                           "word": "garden"
                         }
                       ]
@@ -2392,22 +2398,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20home%20garden%20with%20grass%2C%20flowers%20and%20a%20tree%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=39887&model=flux&nologo=true",
                           "word": "garden"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true",
                           "word": "bathroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true",
                           "word": "bedroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true",
                           "word": "dining room"
                         }
                       ]
@@ -2425,22 +2431,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20entrance%20hall%20with%20a%20coat%20hook%20and%20a%20front%20door%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=43399&model=flux&nologo=true",
                           "word": "hall"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true",
                           "word": "bathroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true",
                           "word": "bedroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true",
                           "word": "dining room"
                         }
                       ]
@@ -2458,22 +2464,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20bright%20small%20kitchen%20with%20cooker%2C%20fridge%20and%20a%20countertop%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=98669&model=flux&nologo=true",
                           "word": "kitchen"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true",
                           "word": "bathroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true",
                           "word": "bedroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true",
                           "word": "dining room"
                         }
                       ]
@@ -2491,22 +2497,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20cozy%20living%20room%20with%20a%20sofa%2C%20TV%20and%20a%20small%20coffee%20table%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=53697&model=flux&nologo=true",
                           "word": "living room"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true",
                           "word": "bathroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true",
                           "word": "bedroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true",
                           "word": "dining room"
                         }
                       ]
@@ -2524,22 +2530,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20neatly-made%20child%27s%20bed%20with%20a%20pillow%20and%20a%20blanket%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=7356&model=flux&nologo=true",
                           "word": "bed"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true",
                           "word": "bathroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true",
                           "word": "bedroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true",
                           "word": "dining room"
                         }
                       ]
@@ -2557,22 +2563,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20single%20wooden%20classroom%20chair%2C%20simple%20shape%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=23250&model=flux&nologo=true",
                           "word": "chair"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true",
                           "word": "bathroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true",
                           "word": "bedroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true",
                           "word": "dining room"
                         }
                       ]
@@ -2590,22 +2596,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20desktop%20computer%20with%20monitor%2C%20keyboard%2C%20mouse%20on%20a%20desk%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=35978&model=flux&nologo=true",
                           "word": "computer"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true",
                           "word": "bathroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true",
                           "word": "bedroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true",
                           "word": "dining room"
                         }
                       ]
@@ -2619,32 +2625,32 @@
                     {
                       "word": "bathroom",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20clean%20bathroom%20with%20a%20bath%2C%20sink%20and%20toilet%2C%20bright%20tiles%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=71085&model=flux&nologo=true"
                     },
                     {
                       "word": "bedroom",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20tidy%20children%27s%20bedroom%20with%20a%20single%20bed%20and%20desk%2C%20sunny%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=29617&model=flux&nologo=true"
                     },
                     {
                       "word": "dining room",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20small%20dining%20room%20with%20a%20table%20set%20for%20dinner%2C%20four%20chairs%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=74307&model=flux&nologo=true"
                     },
                     {
                       "word": "garden",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20small%20home%20garden%20with%20grass%2C%20flowers%20and%20a%20tree%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=39887&model=flux&nologo=true"
                     },
                     {
                       "word": "hall",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20small%20entrance%20hall%20with%20a%20coat%20hook%20and%20a%20front%20door%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=43399&model=flux&nologo=true"
                     },
                     {
                       "word": "kitchen",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://image.pollinations.ai/prompt/a%20bright%20small%20kitchen%20with%20cooker%2C%20fridge%20and%20a%20countertop%2C%20cartoon%20flat%20illustration%2C%20kid-friendly%2C%20bright%20friendly%20colors%2C%20soft%20shading%2C%20white%20background%2C%20simple%20clear%20composition%20for%20a%20vocabulary%20card%2C%20no%20text%2C%20no%20letters%2C%20no%20watermark%2C%20no%20logos?width=512&height=512&seed=98669&model=flux&nologo=true"
                     }
                   ]
                 }
