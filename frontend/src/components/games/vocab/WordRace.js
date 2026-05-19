@@ -47,10 +47,20 @@ const WordRace = ({ items, onComplete, onSkip, timeLimit }) => {
     : (item.options || []).map((emoji) => ({ emoji, image_url: '' }));
   const correctImg = item.correct_image_url || '';
 
+  // Robust correctness: try image, then emoji, then word match against prompt.
+  // Pack scripts don't always populate `correct_image_url`, so the old
+  // image-only check silently marked every answer wrong (Aga 2026-05-19).
+  const promptWord = String(item.prompt || '').trim().toLowerCase();
+  const isOptionCorrect = (opt) => {
+    if (correctImg && opt.image_url && opt.image_url === correctImg) return true;
+    if (item.correct_emoji && opt.emoji && opt.emoji === item.correct_emoji) return true;
+    if (promptWord && opt.word && opt.word.toLowerCase() === promptWord) return true;
+    return false;
+  };
+
   const handlePick = (opt) => {
     if (feedback || isComplete) return;
-    const isCorrect = (opt.image_url && opt.image_url === correctImg)
-      || (!opt.image_url && opt.emoji === item.correct_emoji);
+    const isCorrect = isOptionCorrect(opt);
     setFeedback(isCorrect ? 'correct' : 'wrong');
     if (isCorrect) setScore((s) => s + 1);
     else setWrongCount((w) => w + 1);
@@ -100,8 +110,7 @@ const WordRace = ({ items, onComplete, onSkip, timeLimit }) => {
         </div>
         <div className="grid grid-cols-2 gap-3">
           {optionObjs.map((opt, idx) => {
-            const isCorrect = (opt.image_url && opt.image_url === correctImg)
-              || (!opt.image_url && opt.emoji === item.correct_emoji);
+            const isCorrect = isOptionCorrect(opt);
             const highlight = (feedback === 'correct' || feedback === 'wrong') && isCorrect;
             return (
               <button

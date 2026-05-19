@@ -143,48 +143,73 @@ def url_for(word):
 
 
 def patch_unit(unit_num, force=False):
+    """Single source of truth: vocab step words own the image URLs; every
+    game inside the same unit references the same URL by word lookup.
+
+    Aga's 2026-05-19 rule: do not generate one image for the vocab card
+    and a different image for the same word inside a game. If a game item
+    uses a word that the vocab step never taught (rare — typically a
+    distractor like "mother" while vocab teaches "mum"), leave image_url
+    empty so the renderer falls back to emoji. Authoring the game with
+    in-vocab words is the long-term fix.
+    """
     p = ENRICHED / f"stage3_unit{unit_num:02d}_enriched.json"
     if not p.exists():
         print(f"  skip — {p.name} not found")
         return 0
     data = json.loads(p.read_text())
     patched = 0
+
     for u in data.get("units", []):
+        # ── Build per-unit vocab pool from the vocabulary step. This is
+        # the ONLY place image URLs are minted.
+        vocab_pool = {}
         for lesson in u.get("lessons", []):
             for step in lesson.get("steps", []):
                 if step.get("type") not in ("vocabulary", "vocabulary_review"):
                     continue
                 for item in step.get("items", []) or []:
                     if isinstance(item, dict) and item.get("word"):
+                        word = item["word"]
+                        key = word.lower().strip()
                         if force or not item.get("image_url"):
-                            item["image_url"] = url_for(item["word"])
+                            item["image_url"] = url_for(word)
                             patched += 1
+                        if key not in vocab_pool:
+                            vocab_pool[key] = item["image_url"]
 
-        # Also patch game items: image_word_match, look_write, memory_game,
-        # flashcard_match, listen_choose_picture, listen_choose_word reuse
-        # vocab cards via {word, emoji, image_url}. Pack runs before
-        # populate, so image_url is empty there; backfill now.
+        # ── Games reuse the vocab pool. No new URLs generated here.
+        def _reuse(obj):
+            """If obj has a word that exists in vocab_pool, copy the URL;
+            otherwise clear any stale URL so emoji fallback kicks in."""
+            nonlocal patched
+            if not isinstance(obj, dict):
+                return
+            word = obj.get("word")
+            if not word:
+                return
+            key = word.lower().strip()
+            pool_url = vocab_pool.get(key)
+            old_url = obj.get("image_url")
+            new_url = pool_url or ""
+            if old_url != new_url:
+                obj["image_url"] = new_url
+                patched += 1
+
         for lesson in u.get("lessons", []):
             for step in lesson.get("steps", []):
                 if step.get("type") not in ("vocab_games", "grammar_games"):
                     continue
                 for g in step.get("games", []) or []:
                     for item in g.get("items", []) or []:
-                        if isinstance(item, dict) and item.get("word") and not item.get("image_url"):
-                            item["image_url"] = url_for(item["word"])
-                            patched += 1
-                        # distractors are nested
+                        _reuse(item)
                         for d in (item.get("distractors") or []):
-                            if isinstance(d, dict) and d.get("word") and not d.get("image_url"):
-                                d["image_url"] = url_for(d["word"])
-                                patched += 1
-                        # 'options_full' in word_race etc.
+                            _reuse(d)
                         for o in (item.get("options_full") or []):
-                            if isinstance(o, dict) and o.get("word") and not o.get("image_url"):
-                                o["image_url"] = url_for(o["word"])
-                                patched += 1
+                            _reuse(o)
+
     p.write_text(json.dumps(data, indent=2, ensure_ascii=False))
-    print(f"  ✓ {p.name}: patched {patched} vocab image URLs")
+    print(f"  ✓ {p.name}: synced {patched} image URLs (vocab→games)")
     return patched
 
 
