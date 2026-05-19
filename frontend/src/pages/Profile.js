@@ -238,62 +238,89 @@ export default function Profile({ user, onLogout }) {
               {/* Subscription / quota */}
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Subscription & quota</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <QuotaCard
-                    icon={<FileText className="w-5 h-5 text-violet-600" />}
-                    label="Writing evaluations"
-                    sub="Essays graded this period"
-                    counter={usage?.counters?.evaluations}
-                    accent="violet"
-                  />
-                  <QuotaCard
-                    icon={<Trophy className="w-5 h-5 text-amber-600" />}
-                    label="Mock tests"
-                    sub="Full IELTS mocks"
-                    counter={usage?.counters?.mocks}
-                    accent="amber"
-                  />
-                </div>
-                <p className="mt-3 text-xs text-gray-500 flex items-center gap-1.5">
-                  <Mic className="w-3.5 h-3.5 text-rose-500" />
-                  Speaking evaluations are tracked separately by your plan — see <a href="/pricing" className="text-violet-600 hover:underline ml-1">pricing</a> for the cap.
-                </p>
-                {(fullUser?.examCredits ?? 0) > 0 && (
-                  <div className="mt-3 text-sm text-gray-600">
-                    <strong>{fullUser.examCredits}</strong> exam credits remaining
+                {isGE ? (
+                  // GE: kids don't have writing/mock quotas, show lesson +
+                  // streak counters instead so the page is meaningful.
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <QuotaCard
+                      icon={<BookOpen className="w-5 h-5 text-violet-600" />}
+                      label="Lessons completed"
+                      sub="Across all stages"
+                      counter={fullUser?.lessons_completed_count != null ? { used: fullUser.lessons_completed_count } : undefined}
+                      accent="violet"
+                    />
+                    <QuotaCard
+                      icon={<Trophy className="w-5 h-5 text-amber-600" />}
+                      label="Daily streak"
+                      sub="Keep practising every day"
+                      counter={fullUser?.daily_streak != null ? { used: fullUser.daily_streak } : undefined}
+                      accent="amber"
+                    />
                   </div>
-                )}
-                {(fullUser?.liz_live_seconds_remaining ?? 0) > 0 && (
-                  <div className="mt-1 text-sm text-gray-600">
-                    Liz Live: <strong>{Math.floor(fullUser.liz_live_seconds_remaining / 60)}m {fullUser.liz_live_seconds_remaining % 60}s</strong> remaining
-                  </div>
+                ) : (
+                  <>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <QuotaCard
+                        icon={<FileText className="w-5 h-5 text-violet-600" />}
+                        label="Writing evaluations"
+                        sub="Essays graded this period"
+                        counter={usage?.counters?.evaluations}
+                        accent="violet"
+                      />
+                      <QuotaCard
+                        icon={<Trophy className="w-5 h-5 text-amber-600" />}
+                        label="Mock tests"
+                        sub="Full IELTS mocks"
+                        counter={usage?.counters?.mocks}
+                        accent="amber"
+                      />
+                    </div>
+                    <p className="mt-3 text-xs text-gray-500 flex items-center gap-1.5">
+                      <Mic className="w-3.5 h-3.5 text-rose-500" />
+                      Speaking evaluations are tracked separately by your plan — see <a href="/pricing" className="text-violet-600 hover:underline ml-1">pricing</a> for the cap.
+                    </p>
+                    {(fullUser?.examCredits ?? 0) > 0 && (
+                      <div className="mt-3 text-sm text-gray-600">
+                        <strong>{fullUser.examCredits}</strong> exam credits remaining
+                      </div>
+                    )}
+                    {(fullUser?.liz_live_seconds_remaining ?? 0) > 0 && (
+                      <div className="mt-1 text-sm text-gray-600">
+                        Liz Live: <strong>{Math.floor(fullUser.liz_live_seconds_remaining / 60)}m {fullUser.liz_live_seconds_remaining % 60}s</strong> remaining
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
 
-              {/* Learning profile */}
-              <div className="pt-6 border-t">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Learning profile</h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <InfoTile label="Target band" value={fullUser?.target_band ?? '—'} icon={<Target className="w-4 h-4 text-emerald-600" />} />
-                  <InfoTile label="Current band" value={fullUser?.current_band ?? '—'} icon={<Award className="w-4 h-4 text-blue-600" />} />
-                  <InfoTile label="Exam date" value={fullUser?.exam_date || '—'} icon={<Calendar className="w-4 h-4 text-rose-600" />} />
-                  <InfoTile
-                    label="Onboarding"
-                    value={fullUser?.onboarding_complete ? 'Complete' : 'Incomplete'}
-                    valueClass={fullUser?.onboarding_complete ? 'text-emerald-600' : 'text-amber-600'}
-                  />
-                </div>
-                {!fullUser?.onboarding_complete && (
-                  <div className="mt-3">
-                    <Button size="sm" variant="outline" onClick={() => navigate('/onboarding')}>
-                      Complete onboarding
-                    </Button>
+              {/* Learning profile — IELTS-specific (target/current band, exam
+                  date) is hidden for GE users since none of it applies. */}
+              {!isGE && (
+                <div className="pt-6 border-t">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Learning profile</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <InfoTile label="Target band" value={fullUser?.target_band ?? '—'} icon={<Target className="w-4 h-4 text-emerald-600" />} />
+                    <InfoTile label="Current band" value={fullUser?.current_band ?? '—'} icon={<Award className="w-4 h-4 text-blue-600" />} />
+                    <InfoTile label="Exam date" value={fullUser?.exam_date || '—'} icon={<Calendar className="w-4 h-4 text-rose-600" />} />
+                    <InfoTile
+                      label="Onboarding"
+                      value={fullUser?.onboarding_complete ? 'Complete' : 'Incomplete'}
+                      valueClass={fullUser?.onboarding_complete ? 'text-emerald-600' : 'text-amber-600'}
+                    />
                   </div>
-                )}
-              </div>
+                  {!fullUser?.onboarding_complete && (
+                    <div className="mt-3">
+                      <Button size="sm" variant="outline" onClick={() => navigate('/onboarding')}>
+                        Complete onboarding
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              )}
 
-              {/* Tests progress */}
-              {progress && (
+              {/* Tests progress — IELTS only. GE doesn't sit IELTS-style
+                  mocks, so the "Tests progress" block is suppressed. */}
+              {progress && !isGE && (
                 <div className="pt-6 border-t">
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">Tests progress</h3>
                   <div className="grid md:grid-cols-2 gap-6">
@@ -352,26 +379,30 @@ export default function Profile({ user, onLogout }) {
                 </div>
               </div>
 
-              {/* Soft prompt: existing students can submit a story. The form
-                  itself lives at /share-your-story; admin moderates before it
-                  appears on the landing page. */}
-              <div className="pt-6 border-t">
-                <button
-                  type="button"
-                  onClick={() => navigate('/share-your-story')}
-                  className="w-full text-left bg-gradient-to-r from-teal-50 to-emerald-50 border border-teal-200 rounded-xl p-4 hover:border-teal-300 transition-colors"
-                >
-                  <div className="flex items-start gap-3">
-                    <Trophy className="w-5 h-5 text-teal-600 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <div className="font-semibold text-teal-900">Reached your target band?</div>
-                      <div className="text-xs text-teal-700 mt-1">
-                        Share your story — moderated, then featured on the landing page so other learners can see what's possible.
+              {/* Soft prompt: existing IELTS students can submit a story. The
+                  form itself lives at /share-your-story; admin moderates
+                  before it appears on the landing page. Hidden for GE
+                  because the copy ("Reached your target band?") is IELTS-
+                  framed. */}
+              {!isGE && (
+                <div className="pt-6 border-t">
+                  <button
+                    type="button"
+                    onClick={() => navigate('/share-your-story')}
+                    className="w-full text-left bg-gradient-to-r from-teal-50 to-emerald-50 border border-teal-200 rounded-xl p-4 hover:border-teal-300 transition-colors"
+                  >
+                    <div className="flex items-start gap-3">
+                      <Trophy className="w-5 h-5 text-teal-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <div className="font-semibold text-teal-900">Reached your target band?</div>
+                        <div className="text-xs text-teal-700 mt-1">
+                          Share your story — moderated, then featured on the landing page so other learners can see what's possible.
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </button>
-              </div>
+                  </button>
+                </div>
+              )}
 
               <div className="pt-6 border-t">
                 <Button

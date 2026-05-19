@@ -1,57 +1,71 @@
 /**
- * Error Hunter Grammar Game - FIXED
- * Find the grammar mistake in a sentence
- * Now handles sentences with multiple errors by accepting ANY valid error
+ * "Choose the right word" — kid-friendly redesign of the legacy
+ * Find-the-Mistake game. Aga 2026-05-19: 8-10 year olds didn't parse the
+ * "find the wrong word" concept. The new flow shows the sentence with the
+ * error position blanked out, and two big option buttons (correct vs the
+ * mistake) — concretely a fill-in-the-blank choice, not abstract error
+ * spotting.
+ *
+ * Data shape unchanged: { sentence, errorWord, correctWord, explanation,
+ * alternateErrors? } — same items as before, just rendered differently.
  */
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Card } from '../../ui/card';
 import { Button } from '../../ui/button';
-import { Search } from 'lucide-react';
-import { GameWrapper, GameComplete } from '../shared';
+import { Search, CheckCircle2, XCircle } from 'lucide-react';
+import { GameWrapper, GameComplete, shuffleArray } from '../shared';
 
 const ErrorHunter = ({ items, onComplete, onSkip }) => {
   const [currentIdx, setCurrentIdx] = useState(0);
-  const [selectedWord, setSelectedWord] = useState(null);
-  const [showFeedback, setShowFeedback] = useState(false);
+  const [pickedIdx, setPickedIdx] = useState(null);
   const [score, setScore] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
 
   if (!items?.length) return null;
-  const currentItem = items[currentIdx];
+  const currentItem = items[currentIdx] || {};
 
-  const handleWordClick = (word, index) => {
-    if (showFeedback) return;
-    
-    setSelectedWord({ word, index });
-    setShowFeedback(true);
-    
-    // PRIMARY: Check against the designated errorWord
-    const cleanClicked = word.toLowerCase().replace(/[.,!?;:'"]/g, '');
-    const cleanError = currentItem.errorWord.toLowerCase().replace(/[.,!?;:'"]/g, '');
-    
-    const isPrimaryError = 
-      word.toLowerCase() === currentItem.errorWord.toLowerCase() ||
-      (cleanError.length > 0 && cleanClicked === cleanError) ||
-      (currentItem.errorWord.length <= 2 && word.includes(currentItem.errorWord));
-    
-    // SECONDARY: Also accept if user clicked a word that IS actually wrong
-    // (for sentences with multiple errors like "She have two friend.")
-    const alternateErrors = currentItem.alternateErrors || [];
-    const isAlternateError = alternateErrors.some(alt => 
-      cleanClicked === alt.toLowerCase().replace(/[.,!?;:'"]/g, '')
-    );
-    
-    if (isPrimaryError || isAlternateError) {
-      setScore(s => s + 1);
-    }
+  // Build the two option buttons (correct + mistake), shuffled per item.
+  const options = useMemo(() => {
+    const correct = String(currentItem.correctWord || '').trim();
+    const wrong = String(currentItem.errorWord || '').trim();
+    if (!correct || !wrong) return [];
+    return shuffleArray([
+      { word: correct, isCorrect: true },
+      { word: wrong, isCorrect: false },
+    ]);
+  }, [currentItem.correctWord, currentItem.errorWord, currentIdx]);
+
+  // Render the sentence with the error position replaced by a visible blank.
+  // Match the first occurrence of errorWord (case-insensitive, punctuation-
+  // tolerant) so "She are happy." → ["She", "___", "happy."].
+  const sentenceWords = useMemo(() => {
+    const raw = String(currentItem.sentence || '').split(/(\s+)/);
+    const target = String(currentItem.errorWord || '').toLowerCase().replace(/[.,!?;:'"]/g, '');
+    let replaced = false;
+    return raw.map((tok) => {
+      if (replaced) return { text: tok, blank: false };
+      const clean = tok.toLowerCase().replace(/[.,!?;:'"]/g, '');
+      if (clean && target && clean === target) {
+        replaced = true;
+        // Preserve trailing punctuation when blanking ("Isabel." → "___.")
+        const trail = tok.match(/[.,!?;:'"]+$/)?.[0] || '';
+        return { text: '___' + trail, blank: true };
+      }
+      return { text: tok, blank: false };
+    });
+  }, [currentItem.sentence, currentItem.errorWord]);
+
+  const handlePick = (idx) => {
+    if (pickedIdx !== null) return;
+    setPickedIdx(idx);
+    if (options[idx]?.isCorrect) setScore((s) => s + 1);
   };
 
   const handleNext = () => {
-    setSelectedWord(null);
-    setShowFeedback(false);
+    setPickedIdx(null);
     if (currentIdx < items.length - 1) {
-      setCurrentIdx(i => i + 1);
+      setCurrentIdx((i) => i + 1);
     } else {
       setIsComplete(true);
     }
@@ -63,102 +77,111 @@ const ErrorHunter = ({ items, onComplete, onSkip }) => {
         score={score}
         totalQuestions={items.length}
         onContinue={() => onComplete(Math.round((score / items.length) * 100))}
-        onRetry={() => { setCurrentIdx(0); setScore(0); setIsComplete(false); setSelectedWord(null); setShowFeedback(false); }}
-        title="Error Detective!"
+        onRetry={() => {
+          setCurrentIdx(0);
+          setScore(0);
+          setIsComplete(false);
+          setPickedIdx(null);
+        }}
+        title="Grammar Detective!"
       />
     );
   }
 
-  if (!currentItem) return null;
-
-  const words = currentItem.sentence.split(/\s+/);
-  const cleanClicked = selectedWord?.word.toLowerCase().replace(/[.,!?;:'"]/g, '') || '';
-  const cleanError = currentItem.errorWord.toLowerCase().replace(/[.,!?;:'"]/g, '');
-  const alternateErrors = (currentItem.alternateErrors || []).map(e => e.toLowerCase().replace(/[.,!?;:'"]/g, ''));
-  
-  const isCorrectSelection = (() => {
-    if (!selectedWord) return false;
-    const w = selectedWord.word;
-    const cw = w.toLowerCase().replace(/[.,!?;:'"]/g, '');
-    return (
-      w.toLowerCase() === currentItem.errorWord.toLowerCase() ||
-      (cleanError.length > 0 && cw === cleanError) ||
-      (currentItem.errorWord.length <= 2 && w.includes(currentItem.errorWord)) ||
-      alternateErrors.includes(cw)
-    );
-  })();
+  const showFeedback = pickedIdx !== null;
+  const userIsRight = showFeedback && options[pickedIdx]?.isCorrect;
 
   return (
     <GameWrapper
-      title="Find the Mistake"
-      subtitle="Tap the wrong word in the sentence"
+      title="Choose the right word"
+      subtitle="Tap the word that fits the sentence"
       icon={Search}
       iconColor="orange"
       currentQuestion={currentIdx + 1}
       totalQuestions={items.length}
       onSkip={onSkip}
     >
-      <Card className="p-8 text-center">
-        <div className="bg-orange-50 rounded-2xl p-6 mb-6 border border-orange-100">
-          <p className="text-gray-500 text-base mb-4">Tap the word with the mistake</p>
-          
-          <div className="flex flex-wrap gap-3 justify-center">
-            {words.map((word, idx) => {
-              const cw = word.toLowerCase().replace(/[.,!?;:'"]/g, '');
-              const isError = cw === cleanError ||
-                word.toLowerCase() === currentItem.errorWord.toLowerCase() ||
-                (currentItem.errorWord.length <= 2 && word.includes(currentItem.errorWord)) ||
-                alternateErrors.includes(cw);
-              const isSelected = selectedWord?.index === idx;
-              
-              let wordClass = 'px-4 py-3 rounded-lg font-medium text-xl transition-all cursor-pointer ';
-              if (showFeedback) {
-                if (isSelected && isCorrectSelection) {
-                  wordClass += 'bg-red-200 text-red-800 border-2 border-red-400 line-through';
-                } else if (isSelected && !isCorrectSelection) {
-                  wordClass += 'bg-yellow-200 text-yellow-800 border-2 border-yellow-400';
-                } else if (isError) {
-                  wordClass += 'bg-red-100 text-red-600 border-2 border-red-300';
-                } else {
-                  wordClass += 'bg-gray-100 text-gray-400';
+      <Card className="p-6 md:p-8 text-center">
+        {/* Sentence with the error position blanked. Kid sees the gap. */}
+        <div className="bg-orange-50 rounded-2xl p-6 mb-6 border-2 border-orange-100">
+          <p className="text-2xl md:text-3xl font-medium text-gray-800 leading-relaxed">
+            {sentenceWords.map((w, i) => (
+              <span
+                key={i}
+                className={w.blank ? 'inline-block mx-1 px-3 py-0.5 rounded-md font-bold' : ''}
+                style={
+                  w.blank
+                    ? { background: '#fffbeb', borderBottom: '3px solid #f59e0b', color: '#b45309' }
+                    : undefined
                 }
-              } else {
-                wordClass += 'bg-white border-2 border-gray-200 hover:border-orange-400 hover:bg-orange-50 text-gray-800';
-              }
+              >
+                {w.text}
+              </span>
+            ))}
+          </p>
+        </div>
 
-              return (
-                <button
-                  key={idx}
-                  onClick={() => handleWordClick(word, idx)}
-                  disabled={showFeedback}
-                  data-testid={`error-word-${idx}`}
-                  className={wordClass}
-                >
-                  {word}
-                </button>
-              );
-            })}
-          </div>
+        {/* Two big buttons — the correct word and the mistake, shuffled */}
+        <div className="grid grid-cols-2 gap-3 md:gap-4 max-w-md mx-auto mb-6">
+          {options.map((opt, idx) => {
+            const isPickedHere = pickedIdx === idx;
+            const correctHere = opt.isCorrect;
+            let cls = 'p-5 md:p-6 rounded-2xl text-xl md:text-2xl font-bold border-2 transition-all bg-white text-slate-800 border-slate-300 ';
+            if (showFeedback) {
+              if (isPickedHere && correctHere) {
+                cls += 'bg-green-100 border-green-500 text-green-700';
+              } else if (isPickedHere && !correctHere) {
+                cls += 'bg-red-100 border-red-500 text-red-700';
+              } else if (correctHere) {
+                // reveal the correct answer when the kid picked wrong
+                cls += 'bg-green-50 border-green-400 text-green-600';
+              } else {
+                cls += 'bg-slate-50 border-slate-200 text-slate-400';
+              }
+            } else {
+              cls += 'hover:border-orange-400 hover:bg-orange-50 cursor-pointer';
+            }
+            return (
+              <button
+                key={idx}
+                onClick={() => handlePick(idx)}
+                disabled={showFeedback}
+                data-testid={`choose-word-${idx}`}
+                className={cls}
+              >
+                {opt.word}
+              </button>
+            );
+          })}
         </div>
 
         {showFeedback && (
-          <div className={`p-5 rounded-xl ${isCorrectSelection ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
-            <p className="text-lg font-bold mb-1">
-              {isCorrectSelection ? 'Great catch!' : 'Not that one!'}
-            </p>
-            <p className="text-base">
-              <span className="text-red-600 line-through font-medium">{currentItem.errorWord}</span>
-              <span className="mx-2">→</span>
-              <span className="text-green-600 font-bold">{currentItem.correctWord}</span>
-            </p>
-            {currentItem.explanation && (
-              <p className="text-sm text-gray-500 mt-2">{currentItem.explanation}</p>
+          <div
+            className={`p-4 md:p-5 rounded-xl mb-4 flex items-start gap-3 text-left max-w-md mx-auto ${
+              userIsRight ? 'bg-green-50 border border-green-200' : 'bg-amber-50 border border-amber-200'
+            }`}
+          >
+            {userIsRight ? (
+              <CheckCircle2 className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
+            ) : (
+              <XCircle className="w-6 h-6 text-amber-600 flex-shrink-0 mt-0.5" />
             )}
+            <div className="flex-1">
+              <p className="text-base md:text-lg font-bold mb-1">
+                {userIsRight ? 'Well done!' : 'Not quite!'}
+              </p>
+              <p className="text-sm md:text-base text-gray-700">
+                The right word is <strong className="text-green-700">{currentItem.correctWord}</strong>.
+              </p>
+              {currentItem.explanation && (
+                <p className="text-xs md:text-sm text-gray-500 mt-1">{currentItem.explanation}</p>
+              )}
+            </div>
           </div>
         )}
 
         {showFeedback && (
-          <div className="mt-5">
+          <div className="text-center">
             <Button onClick={handleNext} data-testid="error-next-btn">
               {currentIdx < items.length - 1 ? 'Next' : 'See Results'}
             </Button>
