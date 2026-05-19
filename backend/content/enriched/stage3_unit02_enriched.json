@@ -6,67 +6,66 @@
       "unit_id": "stage_3_movers_unit_02",
       "unit_num": 2,
       "title": "My family",
-      "subtitle": "Meet your grandparents and cousins, and learn to describe the people in your photos.",
-      "phonics_focus": "",
-      "grammar_focus": "Possessive 's (Minh's school) and possessive pronouns (mine, yours, his, hers, ours, theirs).",
+      "subtitle": "Meet the family and learn how to talk about feelings — aligned with Cambridge Prepare Lv1 Unit 2.",
+      "phonics_focus": "/ə/ schwa (mum, brother, son, father, mother, parents)",
+      "grammar_focus": "Determiners (my/your/...); Possessive 's; be — short answers.",
       "spiral_meta": {
-        "target_vocab_count": 26,
-        "anticipation_pool_used": [
-          "bedroom",
-          "kitchen",
-          "live in",
-          "near"
+        "prepare_alignment": {
+          "source": "Cambridge Prepare 2nd Edition Level 1 — Unit 2 'My family' (SB p18-21)",
+          "wordlist_coverage_pct": 100,
+          "extracted_from": "backend/content/cambridge_refs/prepare_lv1_unit_breakdowns.json"
+        },
+        "target_vocab_count": 23,
+        "anchor_character_names_recycled": [
+          "David",
+          "Helena",
+          "Isabel",
+          "Inca",
+          "Eva",
+          "Ruby",
+          "Sam",
+          "Sofia",
+          "Mark",
+          "Lily"
         ],
-        "recycled_pool_used": [
-          "mum",
-          "dad",
-          "brother",
-          "sister",
-          "aunt",
-          "uncle",
-          "family",
-          "friend"
-        ],
-        "grammar_anticipation": "there is / there are — 2-3 passive exposures in passages (Unit 3 will teach explicitly)"
+        "grammar_anticipation_next_unit": "there is / there are (Unit 3 — passive exposure only)"
       },
       "lessons": [
         {
           "lesson_num": 1,
           "lesson_id": "stage_3_movers_unit_02_lesson_01",
           "number": 1,
-          "title": "Grandparents and cousins",
-          "topic": "Extended family — grandparents, sons, daughters, cousins, twins; possessive 's",
+          "title": "Meet the family",
+          "topic": "Family relations — mum, dad, brother, sister, baby, parents. Determiners (my, your).",
           "extra_links": [],
           "steps": [
             {
               "step": 1,
               "type": "warm_up",
               "video_url": "",
-              "instruction": "Linh shows Ray a family tree. Watch and answer.",
+              "instruction": "Look at Ruby's family photo. Answer.",
               "questions": [
                 {
-                  "question_text": "Who are Linh's grandparents?",
-                  "correct_answer": "her mum's parents and her dad's parents",
+                  "question_text": "Who is in Ruby's family?",
+                  "correct_answer": "her mum, her dad and her brother",
                   "options": [
-                    "her mum's parents and her dad's parents",
-                    "her best friend's parents",
-                    "her teachers",
-                    "the children in her class"
+                    "her mum, her dad and her brother",
+                    "her cousins",
+                    "her teacher",
+                    "her friends"
                   ],
-                  "image_emoji": "👴",
-                  "hint": "Your parents' parents."
+                  "image_emoji": "👨‍👩‍👦"
                 },
                 {
-                  "question_text": "What is the word for two children born on the same day to the same mum?",
-                  "correct_answer": "twins",
+                  "question_text": "How old is Ruby?",
+                  "correct_answer": "11",
                   "options": [
-                    "twins",
-                    "cousins",
-                    "friends",
-                    "neighbours"
+                    "11",
+                    "5",
+                    "15",
+                    "20"
                   ],
-                  "image_emoji": "👯",
-                  "hint": "They often look very similar."
+                  "image_emoji": "🎂"
                 }
               ]
             },
@@ -75,76 +74,52 @@
               "type": "vocabulary",
               "items": [
                 {
-                  "word": "grandparent",
-                  "ipa": "/ˈɡrænpeərənt/",
-                  "definition": "Your parent's mother or father.",
-                  "example": "My grandparents live near a river.",
-                  "image_emoji": "👴",
-                  "image_url": "/static/vocab_images/stage3/grandparent.png"
+                  "word": "mum",
+                  "definition": "Your female parent. Same as 'mother', friendly word.",
+                  "image_emoji": "👩",
+                  "image_url": "",
+                  "example_sentence": "My mum is from Brazil.",
+                  "asset_slug": "stage3_u02_mum"
                 },
                 {
-                  "word": "grandfather",
-                  "ipa": "/ˈɡrænfɑːðər/",
-                  "definition": "Your mum's or dad's father.",
-                  "example": "My grandfather is called Ông Hai.",
-                  "image_emoji": "👴",
-                  "image_url": "/static/vocab_images/stage3/grandfather.png"
+                  "word": "dad",
+                  "definition": "Your male parent. Same as 'father', friendly word.",
+                  "image_emoji": "👨",
+                  "image_url": "",
+                  "example_sentence": "My dad is a teacher.",
+                  "asset_slug": "stage3_u02_dad"
                 },
                 {
-                  "word": "grandmother",
-                  "ipa": "/ˈɡrænmʌðər/",
-                  "definition": "Your mum's or dad's mother.",
-                  "example": "My grandmother makes the best soup.",
-                  "image_emoji": "👵",
-                  "image_url": "/static/vocab_images/stage3/grandmother.png"
-                },
-                {
-                  "word": "son",
-                  "ipa": "/sʌn/",
-                  "definition": "A boy child of a mother and father.",
-                  "example": "Minh is my parents' son.",
+                  "word": "brother",
+                  "definition": "A boy with the same parents as you.",
                   "image_emoji": "👦",
-                  "image_url": "/static/vocab_images/stage3/son.png"
+                  "image_url": "",
+                  "example_sentence": "I have one brother, his name is Sam.",
+                  "asset_slug": "stage3_u02_brother"
                 },
                 {
-                  "word": "daughter",
-                  "ipa": "/ˈdɔːtər/",
-                  "definition": "A girl child of a mother and father.",
-                  "example": "I am my parents' daughter.",
+                  "word": "sister",
+                  "definition": "A girl with the same parents as you.",
                   "image_emoji": "👧",
-                  "image_url": "/static/vocab_images/stage3/daughter.png"
+                  "image_url": "",
+                  "example_sentence": "Inca's sister is Eva.",
+                  "asset_slug": "stage3_u02_sister"
                 },
                 {
-                  "word": "grandson",
-                  "ipa": "/ˈɡrænsʌn/",
-                  "definition": "Your son's or daughter's boy child.",
-                  "example": "Minh is my grandparents' grandson.",
-                  "image_emoji": "👦",
-                  "image_url": "/static/vocab_images/stage3/grandson.png"
+                  "word": "baby",
+                  "definition": "A very young child.",
+                  "image_emoji": "👶",
+                  "image_url": "",
+                  "example_sentence": "Helena's baby is six months old.",
+                  "asset_slug": "stage3_u02_baby"
                 },
                 {
-                  "word": "granddaughter",
-                  "ipa": "/ˈɡrændɔːtər/",
-                  "definition": "Your son's or daughter's girl child.",
-                  "example": "I am my grandmother's granddaughter.",
-                  "image_emoji": "👧",
-                  "image_url": "/static/vocab_images/stage3/granddaughter.png"
-                },
-                {
-                  "word": "cousin",
-                  "ipa": "/ˈkʌzn/",
-                  "definition": "Your uncle's or aunt's child.",
-                  "example": "My uncle has two sons — they are my cousins.",
-                  "image_emoji": "🧒",
-                  "image_url": "/static/vocab_images/stage3/cousin.png"
-                },
-                {
-                  "word": "twin",
-                  "ipa": "/twɪn/",
-                  "definition": "One of two children born on the same day to the same mother.",
-                  "example": "My cousins are twins.",
-                  "image_emoji": "👯",
-                  "image_url": "/static/vocab_images/stage3/twin.png"
+                  "word": "parents",
+                  "definition": "Your mother and father together.",
+                  "image_emoji": "👨‍👩‍👧",
+                  "image_url": "",
+                  "example_sentence": "Inca's parents are Helena and David.",
+                  "asset_slug": "stage3_u02_parents"
                 }
               ]
             },
@@ -157,134 +132,134 @@
                   "instruction": "Match each picture with the right word.",
                   "items": [
                     {
-                      "word": "grandparent",
-                      "emoji": "👴",
-                      "image_url": "/static/vocab_images/stage3/grandparent.png",
+                      "word": "mum",
+                      "emoji": "👩",
+                      "image_url": "",
                       "distractors": [
                         {
-                          "word": "grandfather",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandfather.png"
+                          "word": "dad",
+                          "emoji": "👨",
+                          "image_url": ""
                         },
                         {
-                          "word": "grandmother",
-                          "emoji": "👵",
-                          "image_url": "/static/vocab_images/stage3/grandmother.png"
-                        },
-                        {
-                          "word": "son",
+                          "word": "brother",
                           "emoji": "👦",
-                          "image_url": "/static/vocab_images/stage3/son.png"
+                          "image_url": ""
+                        },
+                        {
+                          "word": "sister",
+                          "emoji": "👧",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
-                      "word": "grandfather",
-                      "emoji": "👴",
-                      "image_url": "/static/vocab_images/stage3/grandfather.png",
+                      "word": "dad",
+                      "emoji": "👨",
+                      "image_url": "",
                       "distractors": [
                         {
-                          "word": "grandparent",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandparent.png"
+                          "word": "mum",
+                          "emoji": "👩",
+                          "image_url": ""
                         },
                         {
-                          "word": "grandmother",
-                          "emoji": "👵",
-                          "image_url": "/static/vocab_images/stage3/grandmother.png"
-                        },
-                        {
-                          "word": "son",
+                          "word": "brother",
                           "emoji": "👦",
-                          "image_url": "/static/vocab_images/stage3/son.png"
+                          "image_url": ""
+                        },
+                        {
+                          "word": "sister",
+                          "emoji": "👧",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
-                      "word": "grandmother",
-                      "emoji": "👵",
-                      "image_url": "/static/vocab_images/stage3/grandmother.png",
-                      "distractors": [
-                        {
-                          "word": "grandparent",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandparent.png"
-                        },
-                        {
-                          "word": "grandfather",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandfather.png"
-                        },
-                        {
-                          "word": "son",
-                          "emoji": "👦",
-                          "image_url": "/static/vocab_images/stage3/son.png"
-                        }
-                      ]
-                    },
-                    {
-                      "word": "son",
+                      "word": "brother",
                       "emoji": "👦",
-                      "image_url": "/static/vocab_images/stage3/son.png",
+                      "image_url": "",
                       "distractors": [
                         {
-                          "word": "grandparent",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandparent.png"
+                          "word": "mum",
+                          "emoji": "👩",
+                          "image_url": ""
                         },
                         {
-                          "word": "grandfather",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandfather.png"
+                          "word": "dad",
+                          "emoji": "👨",
+                          "image_url": ""
                         },
                         {
-                          "word": "grandmother",
-                          "emoji": "👵",
-                          "image_url": "/static/vocab_images/stage3/grandmother.png"
+                          "word": "sister",
+                          "emoji": "👧",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
-                      "word": "daughter",
+                      "word": "sister",
                       "emoji": "👧",
-                      "image_url": "/static/vocab_images/stage3/daughter.png",
+                      "image_url": "",
                       "distractors": [
                         {
-                          "word": "grandparent",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandparent.png"
+                          "word": "mum",
+                          "emoji": "👩",
+                          "image_url": ""
                         },
                         {
-                          "word": "grandfather",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandfather.png"
+                          "word": "dad",
+                          "emoji": "👨",
+                          "image_url": ""
                         },
                         {
-                          "word": "grandmother",
-                          "emoji": "👵",
-                          "image_url": "/static/vocab_images/stage3/grandmother.png"
+                          "word": "brother",
+                          "emoji": "👦",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
-                      "word": "grandson",
-                      "emoji": "👦",
-                      "image_url": "/static/vocab_images/stage3/grandson.png",
+                      "word": "baby",
+                      "emoji": "👶",
+                      "image_url": "",
                       "distractors": [
                         {
-                          "word": "grandparent",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandparent.png"
+                          "word": "mum",
+                          "emoji": "👩",
+                          "image_url": ""
                         },
                         {
-                          "word": "grandfather",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandfather.png"
+                          "word": "dad",
+                          "emoji": "👨",
+                          "image_url": ""
                         },
                         {
-                          "word": "grandmother",
-                          "emoji": "👵",
-                          "image_url": "/static/vocab_images/stage3/grandmother.png"
+                          "word": "brother",
+                          "emoji": "👦",
+                          "image_url": ""
+                        }
+                      ]
+                    },
+                    {
+                      "word": "parents",
+                      "emoji": "👨‍👩‍👧",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "mum",
+                          "emoji": "👩",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "dad",
+                          "emoji": "👨",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "brother",
+                          "emoji": "👦",
+                          "image_url": ""
                         }
                       ]
                     }
@@ -295,134 +270,134 @@
                   "instruction": "Listen to the word and tap the right picture.",
                   "items": [
                     {
-                      "word": "grandparent",
-                      "emoji": "👴",
-                      "image_url": "/static/vocab_images/stage3/grandparent.png",
+                      "word": "mum",
+                      "emoji": "👩",
+                      "image_url": "",
                       "distractors": [
                         {
-                          "word": "grandfather",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandfather.png"
+                          "word": "dad",
+                          "emoji": "👨",
+                          "image_url": ""
                         },
                         {
-                          "word": "grandmother",
-                          "emoji": "👵",
-                          "image_url": "/static/vocab_images/stage3/grandmother.png"
-                        },
-                        {
-                          "word": "son",
+                          "word": "brother",
                           "emoji": "👦",
-                          "image_url": "/static/vocab_images/stage3/son.png"
+                          "image_url": ""
+                        },
+                        {
+                          "word": "sister",
+                          "emoji": "👧",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
-                      "word": "grandfather",
-                      "emoji": "👴",
-                      "image_url": "/static/vocab_images/stage3/grandfather.png",
+                      "word": "dad",
+                      "emoji": "👨",
+                      "image_url": "",
                       "distractors": [
                         {
-                          "word": "grandparent",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandparent.png"
+                          "word": "mum",
+                          "emoji": "👩",
+                          "image_url": ""
                         },
                         {
-                          "word": "grandmother",
-                          "emoji": "👵",
-                          "image_url": "/static/vocab_images/stage3/grandmother.png"
-                        },
-                        {
-                          "word": "son",
+                          "word": "brother",
                           "emoji": "👦",
-                          "image_url": "/static/vocab_images/stage3/son.png"
+                          "image_url": ""
+                        },
+                        {
+                          "word": "sister",
+                          "emoji": "👧",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
-                      "word": "grandmother",
-                      "emoji": "👵",
-                      "image_url": "/static/vocab_images/stage3/grandmother.png",
-                      "distractors": [
-                        {
-                          "word": "grandparent",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandparent.png"
-                        },
-                        {
-                          "word": "grandfather",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandfather.png"
-                        },
-                        {
-                          "word": "son",
-                          "emoji": "👦",
-                          "image_url": "/static/vocab_images/stage3/son.png"
-                        }
-                      ]
-                    },
-                    {
-                      "word": "son",
+                      "word": "brother",
                       "emoji": "👦",
-                      "image_url": "/static/vocab_images/stage3/son.png",
+                      "image_url": "",
                       "distractors": [
                         {
-                          "word": "grandparent",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandparent.png"
+                          "word": "mum",
+                          "emoji": "👩",
+                          "image_url": ""
                         },
                         {
-                          "word": "grandfather",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandfather.png"
+                          "word": "dad",
+                          "emoji": "👨",
+                          "image_url": ""
                         },
                         {
-                          "word": "grandmother",
-                          "emoji": "👵",
-                          "image_url": "/static/vocab_images/stage3/grandmother.png"
+                          "word": "sister",
+                          "emoji": "👧",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
-                      "word": "daughter",
+                      "word": "sister",
                       "emoji": "👧",
-                      "image_url": "/static/vocab_images/stage3/daughter.png",
+                      "image_url": "",
                       "distractors": [
                         {
-                          "word": "grandparent",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandparent.png"
+                          "word": "mum",
+                          "emoji": "👩",
+                          "image_url": ""
                         },
                         {
-                          "word": "grandfather",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandfather.png"
+                          "word": "dad",
+                          "emoji": "👨",
+                          "image_url": ""
                         },
                         {
-                          "word": "grandmother",
-                          "emoji": "👵",
-                          "image_url": "/static/vocab_images/stage3/grandmother.png"
+                          "word": "brother",
+                          "emoji": "👦",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
-                      "word": "grandson",
-                      "emoji": "👦",
-                      "image_url": "/static/vocab_images/stage3/grandson.png",
+                      "word": "baby",
+                      "emoji": "👶",
+                      "image_url": "",
                       "distractors": [
                         {
-                          "word": "grandparent",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandparent.png"
+                          "word": "mum",
+                          "emoji": "👩",
+                          "image_url": ""
                         },
                         {
-                          "word": "grandfather",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/grandfather.png"
+                          "word": "dad",
+                          "emoji": "👨",
+                          "image_url": ""
                         },
                         {
-                          "word": "grandmother",
-                          "emoji": "👵",
-                          "image_url": "/static/vocab_images/stage3/grandmother.png"
+                          "word": "brother",
+                          "emoji": "👦",
+                          "image_url": ""
+                        }
+                      ]
+                    },
+                    {
+                      "word": "parents",
+                      "emoji": "👨‍👩‍👧",
+                      "image_url": "",
+                      "distractors": [
+                        {
+                          "word": "mum",
+                          "emoji": "👩",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "dad",
+                          "emoji": "👨",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "brother",
+                          "emoji": "👦",
+                          "image_url": ""
                         }
                       ]
                     }
@@ -433,34 +408,34 @@
                   "instruction": "Look at the picture and type the word.",
                   "items": [
                     {
-                      "word": "grandparent",
-                      "emoji": "👴",
-                      "image_url": "/static/vocab_images/stage3/grandparent.png"
+                      "word": "mum",
+                      "emoji": "👩",
+                      "image_url": ""
                     },
                     {
-                      "word": "grandfather",
-                      "emoji": "👴",
-                      "image_url": "/static/vocab_images/stage3/grandfather.png"
+                      "word": "dad",
+                      "emoji": "👨",
+                      "image_url": ""
                     },
                     {
-                      "word": "grandmother",
-                      "emoji": "👵",
-                      "image_url": "/static/vocab_images/stage3/grandmother.png"
-                    },
-                    {
-                      "word": "son",
+                      "word": "brother",
                       "emoji": "👦",
-                      "image_url": "/static/vocab_images/stage3/son.png"
+                      "image_url": ""
                     },
                     {
-                      "word": "daughter",
+                      "word": "sister",
                       "emoji": "👧",
-                      "image_url": "/static/vocab_images/stage3/daughter.png"
+                      "image_url": ""
                     },
                     {
-                      "word": "grandson",
-                      "emoji": "👦",
-                      "image_url": "/static/vocab_images/stage3/grandson.png"
+                      "word": "baby",
+                      "emoji": "👶",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "parents",
+                      "emoji": "👨‍👩‍👧",
+                      "image_url": ""
                     }
                   ]
                 }
@@ -469,57 +444,71 @@
             {
               "step": 4,
               "type": "micro_reading",
-              "title": "Linh's grandparents",
-              "text": "My grandparents live in a small town near a long river. My grandfather is called Ông Hai. He is my dad's father. My grandmother is called Bà Mai. She is my mum's mother. I am their granddaughter and my brother Minh is their grandson. We visit them in summer. My uncle Quan has two sons — they are my cousins. They are twins! Their bedroom has two beds, two desks and two big windows. The kitchen at my grandparents' house is small but it smells of soup all day.",
-              "scene_description": "A warm scene of Vietnamese grandparents — Ông Hai with kind eyes, Bà Mai in a simple ao bà ba — sitting on a wooden porch of a small house near a river, with two identical 8-year-old twin boys playing in the garden.",
+              "title": "My family",
+              "text": "Hi! I'm Ruby. I'm 11. This is my family. My mum is from Spain — her name is Sofia. My dad is from the UK — his name is Mark. I have one brother — his name is Sam. Sam is 9. We have a baby in our family too — her name is Lily. Lily is one. My parents are kind and my brother is funny. I love my family.",
+              "scene_description": "A family photo on a sofa: mother, father, an 11-year-old girl, a 9-year-old boy, and a baby.",
               "questions": [
                 {
-                  "question": "What is Linh's grandfather called?",
-                  "answer": "Ông Hai",
+                  "question": "How old is Ruby?",
                   "options": [
-                    "Ông Hai",
-                    "Bà Mai",
-                    "Quan",
-                    "Minh"
+                    "11",
+                    "9",
+                    "1",
+                    "20"
                   ],
-                  "correct_answer": "Ông Hai"
+                  "correct_answer": "11"
                 },
                 {
-                  "question": "How many cousins does Linh have?",
-                  "answer": "two (twins)",
+                  "question": "Where is Ruby's mum from?",
                   "options": [
-                    "one",
-                    "two (twins)",
-                    "three",
-                    "no cousins"
+                    "Spain",
+                    "the UK",
+                    "Brazil",
+                    "Italy"
                   ],
-                  "correct_answer": "two (twins)"
+                  "correct_answer": "Spain"
                 },
                 {
-                  "question": "Where do Linh's grandparents live?",
-                  "answer": "in a small town near a river",
+                  "question": "What is the name of Ruby's brother?",
                   "options": [
-                    "in Ho Chi Minh City",
-                    "in a big city",
-                    "in a small town near a river",
-                    "in a village near the sea"
+                    "Sam",
+                    "Mark",
+                    "Lily",
+                    "Sofia"
                   ],
-                  "correct_answer": "in a small town near a river"
+                  "correct_answer": "Sam"
+                },
+                {
+                  "question": "Who is the baby in the family?",
+                  "options": [
+                    "Lily",
+                    "Sam",
+                    "Ruby",
+                    "Sofia"
+                  ],
+                  "correct_answer": "Lily"
+                },
+                {
+                  "question": "Ruby's dad is from the UK. True or false?",
+                  "options": [
+                    "True",
+                    "False"
+                  ],
+                  "correct_answer": "True"
                 }
               ]
             },
             {
               "step": 5,
               "type": "grammar_focus",
-              "rule_pattern": "Possessive 's — 'who something belongs to'",
-              "explanation": "To say something belongs to a person, we add 's after their name or role. For two or more people, we add only the apostrophe ' after the plural: my parents' house. There is a sister bigger structure — there is/there are — that we will learn in Unit 3, but you will see it in our reading today, too.",
+              "rule_pattern": "Determiners — my, your",
+              "explanation": "We use my and your to say who something belongs to. 'My mum' = the mum of me. 'Your brother' = the brother of you. We say 'my mum is from Spain' — not 'I mum'.",
               "examples": [
-                "This is Minh's bag.",
-                "Linh's brother is called Minh.",
-                "My grandmother's soup is the best.",
-                "My uncle's two sons are twins.",
-                "My parents' house is in Ho Chi Minh City.",
-                "There is a small garden at my grandparents' house. (Unit 3 will explain 'there is' fully.)"
+                "My mum is from Spain.",
+                "Your brother is funny.",
+                "My dad is at home.",
+                "Your sister is clever.",
+                "My parents are kind."
               ]
             },
             {
@@ -531,58 +520,49 @@
                   "instruction": "Choose the correct word.",
                   "items": [
                     {
-                      "sentence": "This is ___ school bag.",
-                      "options": [
-                        "Minh's",
-                        "Minhs",
-                        "Minh"
-                      ],
-                      "correct": "Minh's"
-                    },
-                    {
-                      "sentence": "___ soup is delicious.",
-                      "options": [
-                        "Grandmother",
-                        "Grandmother's",
-                        "Grandmothers"
-                      ],
-                      "correct": "Grandmother's"
-                    },
-                    {
-                      "sentence": "My ___ two sons are twins.",
-                      "options": [
-                        "uncle's",
-                        "uncles",
-                        "uncle"
-                      ],
-                      "correct": "uncle's"
-                    },
-                    {
-                      "sentence": "My ___ house is in Ho Chi Minh City.",
-                      "options": [
-                        "parent's",
-                        "parents'",
-                        "parents"
-                      ],
-                      "correct": "parents'"
-                    },
-                    {
-                      "sentence": "___ bedroom is on the first floor.",
-                      "options": [
-                        "Cousins'",
-                        "Cousin",
-                        "Cousins"
-                      ],
-                      "correct": "Cousins'"
-                    },
-                    {
-                      "sentence": "This ___ Minh's bag.",
+                      "sentence": "My mum ___ from Spain.",
                       "options": [
                         "am",
                         "is",
                         "are"
                       ],
                       "correct": "is"
+                    },
+                    {
+                      "sentence": "Your brother ___ funny.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "My dad ___ at home.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "Your sister ___ clever.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "My parents ___ kind.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "are"
                     }
                   ]
                 },
@@ -591,53 +571,44 @@
                   "instruction": "Fill the gap.",
                   "items": [
                     {
-                      "sentence": "This is ___ school bag.",
-                      "answer": "Minh's",
-                      "options": [
-                        "Minh's",
-                        "Minhs",
-                        "Minh"
-                      ]
-                    },
-                    {
-                      "sentence": "___ soup is delicious.",
-                      "answer": "Grandmother's",
-                      "options": [
-                        "Grandmother",
-                        "Grandmother's",
-                        "Grandmothers"
-                      ]
-                    },
-                    {
-                      "sentence": "My ___ two sons are twins.",
-                      "answer": "uncle's",
-                      "options": [
-                        "uncle's",
-                        "uncles",
-                        "uncle"
-                      ]
-                    },
-                    {
-                      "sentence": "My ___ house is in Ho Chi Minh City.",
-                      "answer": "parents'",
-                      "options": [
-                        "parent's",
-                        "parents'",
-                        "parents"
-                      ]
-                    },
-                    {
-                      "sentence": "___ bedroom is on the first floor.",
-                      "answer": "Cousins'",
-                      "options": [
-                        "Cousins'",
-                        "Cousin",
-                        "Cousins"
-                      ]
-                    },
-                    {
-                      "sentence": "This ___ Minh's bag.",
+                      "sentence": "My mum ___ from Spain.",
                       "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "Your brother ___ funny.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "My dad ___ at home.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "Your sister ___ clever.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "My parents ___ kind.",
+                      "answer": "are",
                       "options": [
                         "am",
                         "is",
@@ -651,28 +622,24 @@
                   "instruction": "Is the grammar correct?",
                   "items": [
                     {
-                      "sentence": "This is Minh's bag.",
+                      "sentence": "My mum is from Spain.",
                       "correct": "true"
                     },
                     {
-                      "sentence": "Linh's brother am called Minh.",
+                      "sentence": "Your brother am funny.",
                       "correct": "false"
                     },
                     {
-                      "sentence": "My grandmother's soup is the best.",
+                      "sentence": "My dad is at home.",
                       "correct": "true"
                     },
                     {
-                      "sentence": "My uncle's two sons am twins.",
+                      "sentence": "Your sister am clever.",
                       "correct": "false"
                     },
                     {
-                      "sentence": "My parents' house is in Ho Chi Minh City.",
+                      "sentence": "My parents are kind.",
                       "correct": "true"
-                    },
-                    {
-                      "sentence": "There am a small garden at my grandparents' house. (Unit 3 will explain 'there is' fully.)",
-                      "correct": "false"
                     }
                   ]
                 }
@@ -681,34 +648,50 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Linh: Ray, look — this is a photo of my grandparents. Ray: Lovely! What are they called? Linh: My grandfather is called Ông Hai. My grandmother is called Bà Mai. Ray: And the two boys playing in the garden? Linh: They are my cousins. They are twins! My uncle Quan is their father. They live in the same town as my grandparents. Ray: So you are your grandparents' granddaughter, and Minh is their grandson, right? Linh: Yes, that's right!",
+              "audio_text": "Hi! I'm Mark. I'm Ruby's dad. This is my family. My wife is Sofia. We have two children — Ruby and Sam. Ruby is 11 and Sam is 9. We have a baby — her name is Lily. We are a happy family!",
               "audio_url": "/static/audio/stage3/unit02/lesson_01.mp3",
+              "scene_description": "A father introduces his family at home.",
               "questions": [
                 {
-                  "question": "Who is Ông Hai?",
-                  "answer": "Linh's grandfather",
+                  "question": "Who is talking?",
                   "options": [
-                    "Linh's grandfather",
-                    "Linh's uncle",
-                    "Linh's cousin",
-                    "Linh's friend"
+                    "Mark",
+                    "Sofia",
+                    "Ruby",
+                    "Lily"
                   ],
-                  "correct_answer": "Linh's grandfather"
+                  "correct_answer": "Mark"
                 },
                 {
-                  "question": "How many cousins does Linh have?",
-                  "answer": "two",
+                  "question": "How many children does Mark have?",
                   "options": [
-                    "one",
                     "two",
                     "three",
-                    "no cousins"
+                    "one",
+                    "four"
                   ],
                   "correct_answer": "two"
                 },
                 {
-                  "question": "Is Minh his grandparents' grandson?",
-                  "answer": "yes",
+                  "question": "Is Lily a baby?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
+                },
+                {
+                  "question": "How old is Sam?",
+                  "options": [
+                    "9",
+                    "11",
+                    "1",
+                    "5"
+                  ],
+                  "correct_answer": "9"
+                },
+                {
+                  "question": "Is the family happy?",
                   "options": [
                     "yes",
                     "no"
@@ -721,65 +704,63 @@
               "step": 8,
               "type": "production",
               "production_type": "speaking",
-              "prompt": "Tell Ray about your grandparents or cousins. Use 's where you can.",
-              "expected_text": "My grandfather/grandmother is called [name]. My grandparents live in [place]. I have [number] cousin(s). My cousin's name is [name].",
+              "prompt": "Tell us about your family. Say 2-3 sentences with 'My mum...', 'My dad...', 'My brother/sister/baby...'.",
+              "expected_text": "My mum is from [country]. My dad is [job/from]. My brother is [age/name].",
               "prompts": [
-                "Say your grandfather's or grandmother's name. ('My ___ is called ___.')",
-                "Say where your grandparents live. ('My grandparents live in ___.')",
-                "Say how many cousins you have. ('I have ___ cousins.')",
-                "Use possessive 's once. ('My cousin's ___ is ___.')"
-              ]
+                "Start: 'My mum is...' or 'My dad is...'",
+                "Add one more person: 'My brother is...' or 'My sister is...'",
+                "Say one feeling: 'My family is happy/funny/kind.'"
+              ],
+              "image_url": ""
             },
             {
               "step": 9,
               "type": "exit_ticket",
-              "title": "Quick check — Lesson 1",
+              "title": "What did you learn?",
               "questions": [
                 {
-                  "question": "Choose: My ___ live near a river.",
+                  "question": "Choose: ___ mum is from Spain.",
                   "options": [
-                    "grandparent",
-                    "grandparents",
-                    "grandfathers"
+                    "My",
+                    "I",
+                    "Me"
                   ],
-                  "correct_answer": "grandparents"
+                  "correct_answer": "My"
                 },
                 {
-                  "question": "Two kids born on the same day are ___.",
+                  "question": "Choose: ___ dad is funny.",
                   "options": [
-                    "cousins",
-                    "twins",
-                    "friends"
+                    "Your",
+                    "You",
+                    "I"
                   ],
-                  "correct_answer": "twins"
+                  "correct_answer": "Your"
                 },
                 {
-                  "question": "Your uncle's child is your ___.",
+                  "question": "A very young child is a ___.",
                   "options": [
-                    "cousin",
+                    "baby",
                     "brother",
-                    "sister"
+                    "parent"
                   ],
-                  "correct_answer": "cousin"
+                  "correct_answer": "baby"
                 },
                 {
-                  "question": "Choose: ___ soup is delicious.",
+                  "question": "Your mother and father together are your ___.",
                   "options": [
-                    "Grandmother's",
-                    "Grandmothers",
-                    "Grandmother"
+                    "parents",
+                    "children",
+                    "babies"
                   ],
-                  "correct_answer": "Grandmother's"
+                  "correct_answer": "parents"
                 },
                 {
-                  "question": "Build: cousins / twins / are / My",
+                  "question": "True or false: 'My brother' means the brother of me.",
                   "options": [
-                    "My cousins are twins.",
-                    "Cousins my twins are.",
-                    "Twins my are cousins.",
-                    "Are my cousins twins."
+                    "True",
+                    "False"
                   ],
-                  "correct_answer": "My cousins are twins."
+                  "correct_answer": "True"
                 }
               ]
             }
@@ -789,39 +770,37 @@
           "lesson_num": 2,
           "lesson_id": "stage_3_movers_unit_02_lesson_02",
           "number": 2,
-          "title": "What do they look like?",
-          "topic": "Describing people — tall, short, young, old, blonde, curly, fair, thin, fat; possessive pronouns intro",
+          "title": "More about families",
+          "topic": "Family relations — mother, father, husband, wife, son, daughter, children, family. Possessive 's.",
           "extra_links": [],
           "steps": [
             {
               "step": 1,
               "type": "warm_up",
               "video_url": "",
-              "instruction": "Ray shows you photos of the class. Watch and answer.",
+              "instruction": "Look at David's family photo. Answer.",
               "questions": [
                 {
-                  "question_text": "Which word means 'with light yellow hair'?",
-                  "correct_answer": "blonde",
+                  "question_text": "Who is David's wife?",
+                  "correct_answer": "Helena",
                   "options": [
-                    "blonde",
-                    "thin",
-                    "tall",
-                    "old"
+                    "Helena",
+                    "Isabel",
+                    "Ruby",
+                    "Inca"
                   ],
-                  "image_emoji": "👱",
-                  "hint": "Sophie has this kind of hair."
+                  "image_emoji": "👰"
                 },
                 {
-                  "question_text": "Which word means 'not tall'?",
-                  "correct_answer": "short",
+                  "question_text": "How many daughters do David and Helena have?",
+                  "correct_answer": "three",
                   "options": [
-                    "short",
-                    "fat",
-                    "young",
-                    "fair"
+                    "three",
+                    "two",
+                    "one",
+                    "four"
                   ],
-                  "image_emoji": "📏",
-                  "hint": "It's the opposite of tall."
+                  "image_emoji": "👨‍👩‍👧‍👧"
                 }
               ]
             },
@@ -830,76 +809,68 @@
               "type": "vocabulary",
               "items": [
                 {
-                  "word": "tall",
-                  "ipa": "/tɔːl/",
-                  "definition": "Higher than average from head to feet.",
-                  "example": "Tom is tall for nine.",
-                  "image_emoji": "🦒",
-                  "image_url": "/static/vocab_images/stage3/tall.png"
+                  "word": "mother",
+                  "definition": "Your female parent.",
+                  "image_emoji": "👩‍🦱",
+                  "image_url": "",
+                  "example_sentence": "Helena is the mother of three children.",
+                  "asset_slug": "stage3_u02_mother"
                 },
                 {
-                  "word": "short",
-                  "ipa": "/ʃɔːt/",
-                  "definition": "Not very high — the opposite of tall.",
-                  "example": "My cousins are short.",
-                  "image_emoji": "📏",
-                  "image_url": "/static/vocab_images/stage3/short.png"
+                  "word": "father",
+                  "definition": "Your male parent.",
+                  "image_emoji": "👨‍🦱",
+                  "image_url": "",
+                  "example_sentence": "David is Isabel's father.",
+                  "asset_slug": "stage3_u02_father"
                 },
                 {
-                  "word": "young",
-                  "ipa": "/jʌŋ/",
-                  "definition": "Not many years old.",
-                  "example": "Minh is young — he is only seven.",
-                  "image_emoji": "👶",
-                  "image_url": "/static/vocab_images/stage3/young.png"
+                  "word": "husband",
+                  "definition": "A woman's male partner in marriage.",
+                  "image_emoji": "🤵",
+                  "image_url": "",
+                  "example_sentence": "Helena's husband is David.",
+                  "asset_slug": "stage3_u02_husband"
                 },
                 {
-                  "word": "old",
-                  "ipa": "/əʊld/",
-                  "definition": "Many years old — the opposite of young.",
-                  "example": "My grandfather is old but very kind.",
-                  "image_emoji": "👴",
-                  "image_url": "/static/vocab_images/stage3/old.png"
+                  "word": "wife",
+                  "definition": "A man's female partner in marriage.",
+                  "image_emoji": "👰",
+                  "image_url": "",
+                  "example_sentence": "David's wife is Helena.",
+                  "asset_slug": "stage3_u02_wife"
                 },
                 {
-                  "word": "blonde",
-                  "ipa": "/blɒnd/",
-                  "definition": "With light yellow hair.",
-                  "example": "Sophie is blonde.",
-                  "image_emoji": "👱",
-                  "image_url": "/static/vocab_images/stage3/blonde.png"
+                  "word": "son",
+                  "definition": "A male child of a parent.",
+                  "image_emoji": "🧒",
+                  "image_url": "",
+                  "example_sentence": "They have one son.",
+                  "asset_slug": "stage3_u02_son"
                 },
                 {
-                  "word": "curly",
-                  "ipa": "/ˈkɜːli/",
-                  "definition": "Going round in small circles — used for hair.",
-                  "example": "Lucas has curly hair.",
-                  "image_emoji": "🦱",
-                  "image_url": "/static/vocab_images/stage3/curly.png"
+                  "word": "daughter",
+                  "definition": "A female child of a parent.",
+                  "image_emoji": "👧",
+                  "image_url": "",
+                  "example_sentence": "Inca is David's daughter.",
+                  "asset_slug": "stage3_u02_daughter"
                 },
                 {
-                  "word": "fair",
-                  "ipa": "/feər/",
-                  "definition": "Light in colour — for skin or hair.",
-                  "example": "Sophie has fair hair and fair skin.",
-                  "image_emoji": "🧑",
-                  "image_url": "/static/vocab_images/stage3/fair.png"
+                  "word": "children",
+                  "definition": "More than one boy or girl.",
+                  "image_emoji": "👨‍👩‍👧‍👦",
+                  "image_url": "",
+                  "example_sentence": "Helena has four children.",
+                  "asset_slug": "stage3_u02_children"
                 },
                 {
-                  "word": "thin",
-                  "ipa": "/θɪn/",
-                  "definition": "Not fat — with a small body.",
-                  "example": "My cousin is thin and quick.",
-                  "image_emoji": "🧍",
-                  "image_url": "/static/vocab_images/stage3/thin.png"
-                },
-                {
-                  "word": "fat",
-                  "ipa": "/fæt/",
-                  "definition": "With a big body — the opposite of thin.",
-                  "example": "Our cat is a little bit fat.",
-                  "image_emoji": "🐱",
-                  "image_url": "/static/vocab_images/stage3/fat.png"
+                  "word": "family",
+                  "definition": "A group of people related to you.",
+                  "image_emoji": "👪",
+                  "image_url": "",
+                  "example_sentence": "We are a big family — six of us.",
+                  "asset_slug": "stage3_u02_family"
                 }
               ]
             },
@@ -913,200 +884,200 @@
                   "time_limit_seconds": 60,
                   "items": [
                     {
-                      "prompt": "tall",
-                      "correct_emoji": "🦒",
-                      "correct_image_url": "/static/vocab_images/stage3/tall.png",
+                      "prompt": "mother",
+                      "correct_emoji": "👩‍🦱",
+                      "correct_image_url": "",
                       "options": [
-                        "🦒",
-                        "📏",
-                        "👶",
-                        "👴"
+                        "👩‍🦱",
+                        "👨‍🦱",
+                        "🤵",
+                        "👰"
                       ],
                       "options_full": [
                         {
-                          "emoji": "🦒",
-                          "image_url": "/static/vocab_images/stage3/tall.png",
-                          "word": "tall"
+                          "emoji": "👩‍🦱",
+                          "image_url": "",
+                          "word": "mother"
                         },
                         {
-                          "emoji": "📏",
-                          "image_url": "/static/vocab_images/stage3/short.png",
-                          "word": "short"
+                          "emoji": "👨‍🦱",
+                          "image_url": "",
+                          "word": "father"
                         },
                         {
-                          "emoji": "👶",
-                          "image_url": "/static/vocab_images/stage3/young.png",
-                          "word": "young"
+                          "emoji": "🤵",
+                          "image_url": "",
+                          "word": "husband"
                         },
                         {
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/old.png",
-                          "word": "old"
+                          "emoji": "👰",
+                          "image_url": "",
+                          "word": "wife"
                         }
                       ]
                     },
                     {
-                      "prompt": "short",
-                      "correct_emoji": "📏",
-                      "correct_image_url": "/static/vocab_images/stage3/short.png",
+                      "prompt": "father",
+                      "correct_emoji": "👨‍🦱",
+                      "correct_image_url": "",
                       "options": [
-                        "📏",
-                        "🦒",
-                        "👶",
-                        "👴"
+                        "👨‍🦱",
+                        "👩‍🦱",
+                        "🤵",
+                        "👰"
                       ],
                       "options_full": [
                         {
-                          "emoji": "📏",
-                          "image_url": "/static/vocab_images/stage3/short.png",
-                          "word": "short"
+                          "emoji": "👨‍🦱",
+                          "image_url": "",
+                          "word": "father"
                         },
                         {
-                          "emoji": "🦒",
-                          "image_url": "/static/vocab_images/stage3/tall.png",
-                          "word": "tall"
+                          "emoji": "👩‍🦱",
+                          "image_url": "",
+                          "word": "mother"
                         },
                         {
-                          "emoji": "👶",
-                          "image_url": "/static/vocab_images/stage3/young.png",
-                          "word": "young"
+                          "emoji": "🤵",
+                          "image_url": "",
+                          "word": "husband"
                         },
                         {
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/old.png",
-                          "word": "old"
+                          "emoji": "👰",
+                          "image_url": "",
+                          "word": "wife"
                         }
                       ]
                     },
                     {
-                      "prompt": "young",
-                      "correct_emoji": "👶",
-                      "correct_image_url": "/static/vocab_images/stage3/young.png",
+                      "prompt": "husband",
+                      "correct_emoji": "🤵",
+                      "correct_image_url": "",
                       "options": [
-                        "👶",
-                        "🦒",
-                        "📏",
-                        "👴"
+                        "🤵",
+                        "👩‍🦱",
+                        "👨‍🦱",
+                        "👰"
                       ],
                       "options_full": [
                         {
-                          "emoji": "👶",
-                          "image_url": "/static/vocab_images/stage3/young.png",
-                          "word": "young"
+                          "emoji": "🤵",
+                          "image_url": "",
+                          "word": "husband"
                         },
                         {
-                          "emoji": "🦒",
-                          "image_url": "/static/vocab_images/stage3/tall.png",
-                          "word": "tall"
+                          "emoji": "👩‍🦱",
+                          "image_url": "",
+                          "word": "mother"
                         },
                         {
-                          "emoji": "📏",
-                          "image_url": "/static/vocab_images/stage3/short.png",
-                          "word": "short"
+                          "emoji": "👨‍🦱",
+                          "image_url": "",
+                          "word": "father"
                         },
                         {
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/old.png",
-                          "word": "old"
+                          "emoji": "👰",
+                          "image_url": "",
+                          "word": "wife"
                         }
                       ]
                     },
                     {
-                      "prompt": "old",
-                      "correct_emoji": "👴",
-                      "correct_image_url": "/static/vocab_images/stage3/old.png",
+                      "prompt": "wife",
+                      "correct_emoji": "👰",
+                      "correct_image_url": "",
                       "options": [
-                        "👴",
-                        "🦒",
-                        "📏",
-                        "👶"
+                        "👰",
+                        "👩‍🦱",
+                        "👨‍🦱",
+                        "🤵"
                       ],
                       "options_full": [
                         {
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/old.png",
-                          "word": "old"
+                          "emoji": "👰",
+                          "image_url": "",
+                          "word": "wife"
                         },
                         {
-                          "emoji": "🦒",
-                          "image_url": "/static/vocab_images/stage3/tall.png",
-                          "word": "tall"
+                          "emoji": "👩‍🦱",
+                          "image_url": "",
+                          "word": "mother"
                         },
                         {
-                          "emoji": "📏",
-                          "image_url": "/static/vocab_images/stage3/short.png",
-                          "word": "short"
+                          "emoji": "👨‍🦱",
+                          "image_url": "",
+                          "word": "father"
                         },
                         {
-                          "emoji": "👶",
-                          "image_url": "/static/vocab_images/stage3/young.png",
-                          "word": "young"
+                          "emoji": "🤵",
+                          "image_url": "",
+                          "word": "husband"
                         }
                       ]
                     },
                     {
-                      "prompt": "blonde",
-                      "correct_emoji": "👱",
-                      "correct_image_url": "/static/vocab_images/stage3/blonde.png",
+                      "prompt": "son",
+                      "correct_emoji": "🧒",
+                      "correct_image_url": "",
                       "options": [
-                        "👱",
-                        "🦒",
-                        "📏",
-                        "👶"
+                        "🧒",
+                        "👩‍🦱",
+                        "👨‍🦱",
+                        "🤵"
                       ],
                       "options_full": [
                         {
-                          "emoji": "👱",
-                          "image_url": "/static/vocab_images/stage3/blonde.png",
-                          "word": "blonde"
+                          "emoji": "🧒",
+                          "image_url": "",
+                          "word": "son"
                         },
                         {
-                          "emoji": "🦒",
-                          "image_url": "/static/vocab_images/stage3/tall.png",
-                          "word": "tall"
+                          "emoji": "👩‍🦱",
+                          "image_url": "",
+                          "word": "mother"
                         },
                         {
-                          "emoji": "📏",
-                          "image_url": "/static/vocab_images/stage3/short.png",
-                          "word": "short"
+                          "emoji": "👨‍🦱",
+                          "image_url": "",
+                          "word": "father"
                         },
                         {
-                          "emoji": "👶",
-                          "image_url": "/static/vocab_images/stage3/young.png",
-                          "word": "young"
+                          "emoji": "🤵",
+                          "image_url": "",
+                          "word": "husband"
                         }
                       ]
                     },
                     {
-                      "prompt": "curly",
-                      "correct_emoji": "🦱",
-                      "correct_image_url": "/static/vocab_images/stage3/curly.png",
+                      "prompt": "daughter",
+                      "correct_emoji": "👧",
+                      "correct_image_url": "",
                       "options": [
-                        "🦱",
-                        "🦒",
-                        "📏",
-                        "👶"
+                        "👧",
+                        "👩‍🦱",
+                        "👨‍🦱",
+                        "🤵"
                       ],
                       "options_full": [
                         {
-                          "emoji": "🦱",
-                          "image_url": "/static/vocab_images/stage3/curly.png",
-                          "word": "curly"
+                          "emoji": "👧",
+                          "image_url": "",
+                          "word": "daughter"
                         },
                         {
-                          "emoji": "🦒",
-                          "image_url": "/static/vocab_images/stage3/tall.png",
-                          "word": "tall"
+                          "emoji": "👩‍🦱",
+                          "image_url": "",
+                          "word": "mother"
                         },
                         {
-                          "emoji": "📏",
-                          "image_url": "/static/vocab_images/stage3/short.png",
-                          "word": "short"
+                          "emoji": "👨‍🦱",
+                          "image_url": "",
+                          "word": "father"
                         },
                         {
-                          "emoji": "👶",
-                          "image_url": "/static/vocab_images/stage3/young.png",
-                          "word": "young"
+                          "emoji": "🤵",
+                          "image_url": "",
+                          "word": "husband"
                         }
                       ]
                     }
@@ -1117,134 +1088,134 @@
                   "instruction": "Read the word and tap the right picture.",
                   "items": [
                     {
-                      "word": "tall",
-                      "emoji": "🦒",
-                      "image_url": "/static/vocab_images/stage3/tall.png",
+                      "word": "mother",
+                      "emoji": "👩‍🦱",
+                      "image_url": "",
                       "distractors": [
                         {
-                          "word": "short",
-                          "emoji": "📏",
-                          "image_url": "/static/vocab_images/stage3/short.png"
+                          "word": "father",
+                          "emoji": "👨‍🦱",
+                          "image_url": ""
                         },
                         {
-                          "word": "young",
-                          "emoji": "👶",
-                          "image_url": "/static/vocab_images/stage3/young.png"
+                          "word": "husband",
+                          "emoji": "🤵",
+                          "image_url": ""
                         },
                         {
-                          "word": "old",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/old.png"
+                          "word": "wife",
+                          "emoji": "👰",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
-                      "word": "short",
-                      "emoji": "📏",
-                      "image_url": "/static/vocab_images/stage3/short.png",
+                      "word": "father",
+                      "emoji": "👨‍🦱",
+                      "image_url": "",
                       "distractors": [
                         {
-                          "word": "tall",
-                          "emoji": "🦒",
-                          "image_url": "/static/vocab_images/stage3/tall.png"
+                          "word": "mother",
+                          "emoji": "👩‍🦱",
+                          "image_url": ""
                         },
                         {
-                          "word": "young",
-                          "emoji": "👶",
-                          "image_url": "/static/vocab_images/stage3/young.png"
+                          "word": "husband",
+                          "emoji": "🤵",
+                          "image_url": ""
                         },
                         {
-                          "word": "old",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/old.png"
+                          "word": "wife",
+                          "emoji": "👰",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
-                      "word": "young",
-                      "emoji": "👶",
-                      "image_url": "/static/vocab_images/stage3/young.png",
+                      "word": "husband",
+                      "emoji": "🤵",
+                      "image_url": "",
                       "distractors": [
                         {
-                          "word": "tall",
-                          "emoji": "🦒",
-                          "image_url": "/static/vocab_images/stage3/tall.png"
+                          "word": "mother",
+                          "emoji": "👩‍🦱",
+                          "image_url": ""
                         },
                         {
-                          "word": "short",
-                          "emoji": "📏",
-                          "image_url": "/static/vocab_images/stage3/short.png"
+                          "word": "father",
+                          "emoji": "👨‍🦱",
+                          "image_url": ""
                         },
                         {
-                          "word": "old",
-                          "emoji": "👴",
-                          "image_url": "/static/vocab_images/stage3/old.png"
+                          "word": "wife",
+                          "emoji": "👰",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
-                      "word": "old",
-                      "emoji": "👴",
-                      "image_url": "/static/vocab_images/stage3/old.png",
+                      "word": "wife",
+                      "emoji": "👰",
+                      "image_url": "",
                       "distractors": [
                         {
-                          "word": "tall",
-                          "emoji": "🦒",
-                          "image_url": "/static/vocab_images/stage3/tall.png"
+                          "word": "mother",
+                          "emoji": "👩‍🦱",
+                          "image_url": ""
                         },
                         {
-                          "word": "short",
-                          "emoji": "📏",
-                          "image_url": "/static/vocab_images/stage3/short.png"
+                          "word": "father",
+                          "emoji": "👨‍🦱",
+                          "image_url": ""
                         },
                         {
-                          "word": "young",
-                          "emoji": "👶",
-                          "image_url": "/static/vocab_images/stage3/young.png"
+                          "word": "husband",
+                          "emoji": "🤵",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
-                      "word": "blonde",
-                      "emoji": "👱",
-                      "image_url": "/static/vocab_images/stage3/blonde.png",
+                      "word": "son",
+                      "emoji": "🧒",
+                      "image_url": "",
                       "distractors": [
                         {
-                          "word": "tall",
-                          "emoji": "🦒",
-                          "image_url": "/static/vocab_images/stage3/tall.png"
+                          "word": "mother",
+                          "emoji": "👩‍🦱",
+                          "image_url": ""
                         },
                         {
-                          "word": "short",
-                          "emoji": "📏",
-                          "image_url": "/static/vocab_images/stage3/short.png"
+                          "word": "father",
+                          "emoji": "👨‍🦱",
+                          "image_url": ""
                         },
                         {
-                          "word": "young",
-                          "emoji": "👶",
-                          "image_url": "/static/vocab_images/stage3/young.png"
+                          "word": "husband",
+                          "emoji": "🤵",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
-                      "word": "curly",
-                      "emoji": "🦱",
-                      "image_url": "/static/vocab_images/stage3/curly.png",
+                      "word": "daughter",
+                      "emoji": "👧",
+                      "image_url": "",
                       "distractors": [
                         {
-                          "word": "tall",
-                          "emoji": "🦒",
-                          "image_url": "/static/vocab_images/stage3/tall.png"
+                          "word": "mother",
+                          "emoji": "👩‍🦱",
+                          "image_url": ""
                         },
                         {
-                          "word": "short",
-                          "emoji": "📏",
-                          "image_url": "/static/vocab_images/stage3/short.png"
+                          "word": "father",
+                          "emoji": "👨‍🦱",
+                          "image_url": ""
                         },
                         {
-                          "word": "young",
-                          "emoji": "👶",
-                          "image_url": "/static/vocab_images/stage3/young.png"
+                          "word": "husband",
+                          "emoji": "🤵",
+                          "image_url": ""
                         }
                       ]
                     }
@@ -1255,34 +1226,34 @@
                   "instruction": "Flip the cards and find the pairs.",
                   "items": [
                     {
-                      "word": "tall",
-                      "emoji": "🦒",
-                      "image_url": "/static/vocab_images/stage3/tall.png"
+                      "word": "mother",
+                      "emoji": "👩‍🦱",
+                      "image_url": ""
                     },
                     {
-                      "word": "short",
-                      "emoji": "📏",
-                      "image_url": "/static/vocab_images/stage3/short.png"
+                      "word": "father",
+                      "emoji": "👨‍🦱",
+                      "image_url": ""
                     },
                     {
-                      "word": "young",
-                      "emoji": "👶",
-                      "image_url": "/static/vocab_images/stage3/young.png"
+                      "word": "husband",
+                      "emoji": "🤵",
+                      "image_url": ""
                     },
                     {
-                      "word": "old",
-                      "emoji": "👴",
-                      "image_url": "/static/vocab_images/stage3/old.png"
+                      "word": "wife",
+                      "emoji": "👰",
+                      "image_url": ""
                     },
                     {
-                      "word": "blonde",
-                      "emoji": "👱",
-                      "image_url": "/static/vocab_images/stage3/blonde.png"
+                      "word": "son",
+                      "emoji": "🧒",
+                      "image_url": ""
                     },
                     {
-                      "word": "curly",
-                      "emoji": "🦱",
-                      "image_url": "/static/vocab_images/stage3/curly.png"
+                      "word": "daughter",
+                      "emoji": "👧",
+                      "image_url": ""
                     }
                   ]
                 }
@@ -1291,57 +1262,71 @@
             {
               "step": 4,
               "type": "micro_reading",
-              "title": "My online class — what we look like",
-              "text": "I love my online class. We are all different. Tom is tall for nine. He is American and his hair is short and dark. Sophie is from London. She is fair and her hair is blonde and a bit curly. She is not very tall. Lucas is Brazilian. He has curly black hair and big brown eyes. He is thin and very quick when we play. My best friend Mai is short and young — like me. We are all nine, but we look very different. Our class is like a big family on the internet.",
-              "scene_description": "A photo-style grid of six 9-year-old kids' portraits, each showing different hair colour and texture: a Vietnamese girl with dark straight hair, a tall American boy, a British girl with blonde curly hair, a Brazilian boy with curly dark hair, and two more Vietnamese kids. Natural daylight.",
+              "title": "Helena's family",
+              "text": "My name is Helena. I'm a mother. My husband is David. We have three children — three daughters. Their names are Isabel, Inca and Eva. Isabel is 14. Inca and Eva are twins — they are 11. We are a big family. We're happy together.",
+              "scene_description": "A mother stands with her husband and three daughters in a garden.",
               "questions": [
                 {
-                  "question": "What is Sophie's hair like?",
-                  "answer": "blonde and a bit curly",
+                  "question": "Who is Helena's husband?",
                   "options": [
-                    "dark and straight",
-                    "blonde and a bit curly",
-                    "short and curly",
-                    "fair and very long"
+                    "David",
+                    "Sam",
+                    "Mark",
+                    "Ruby"
                   ],
-                  "correct_answer": "blonde and a bit curly"
+                  "correct_answer": "David"
                 },
                 {
-                  "question": "Lucas is ___.",
-                  "answer": "thin and quick",
+                  "question": "How many daughters does Helena have?",
                   "options": [
-                    "tall and slow",
-                    "thin and quick",
-                    "fat and old",
-                    "young and short"
+                    "three",
+                    "two",
+                    "four",
+                    "one"
                   ],
-                  "correct_answer": "thin and quick"
+                  "correct_answer": "three"
                 },
                 {
-                  "question": "How old are the kids in the class?",
-                  "answer": "nine",
+                  "question": "How old is Isabel?",
                   "options": [
-                    "seven",
-                    "eight",
-                    "nine",
-                    "ten"
+                    "14",
+                    "11",
+                    "1",
+                    "9"
                   ],
-                  "correct_answer": "nine"
+                  "correct_answer": "14"
+                },
+                {
+                  "question": "Who are the twins?",
+                  "options": [
+                    "Inca and Eva",
+                    "Isabel and Inca",
+                    "Helena and David",
+                    "Ruby and Sam"
+                  ],
+                  "correct_answer": "Inca and Eva"
+                },
+                {
+                  "question": "Helena and David have a son. True or false?",
+                  "options": [
+                    "True",
+                    "False"
+                  ],
+                  "correct_answer": "False"
                 }
               ]
             },
             {
               "step": 5,
               "type": "grammar_focus",
-              "rule_pattern": "Possessive pronouns — mine, yours, his, hers, ours, theirs",
-              "explanation": "Possessive pronouns replace 'my/your/his/her/our/their + noun'. We don't say 'this is my pen' twice; we say 'This pen is mine.' Hers, his and ours work the same way. We will use 'there is/there are' a little in our reading today — that's coming in Unit 3.",
+              "rule_pattern": "Possessive 's",
+              "explanation": "We add 's after a person's name (or after a noun like 'mum') to say something belongs to that person. 'David's wife' = the wife of David. 'Helena's daughter' = the daughter of Helena. For names ending in 's' we still add 's.",
               "examples": [
-                "This bag is mine. (= my bag)",
-                "That book is yours. (= your book)",
-                "The brown pencil is his.",
-                "The pink pencil case is hers.",
-                "These photos are ours.",
-                "There is a big difference: the twins' room is theirs, not ours."
+                "David's wife is Helena.",
+                "Helena's daughter is Isabel.",
+                "Inca's sister is Eva.",
+                "My mum's name is Sofia.",
+                "Ruby's brother is Sam."
               ]
             },
             {
@@ -1353,32 +1338,27 @@
                   "instruction": "Tap the wrong word.",
                   "items": [
                     {
-                      "sentence": "This bag is my.",
-                      "errorWord": "my",
+                      "sentence": "David's wife am Helena.",
+                      "errorWord": "am",
                       "alternateErrors": []
                     },
                     {
-                      "sentence": "That book is your.",
-                      "errorWord": "your",
+                      "sentence": "Helena's daughter am Isabel.",
+                      "errorWord": "am",
                       "alternateErrors": []
                     },
                     {
-                      "sentence": "The blonde girl's hair is her.",
-                      "errorWord": "her",
+                      "sentence": "Inca's sister am Eva.",
+                      "errorWord": "am",
                       "alternateErrors": []
                     },
                     {
-                      "sentence": "This brown pencil is he.",
-                      "errorWord": "he",
+                      "sentence": "My mum's name am Sofia.",
+                      "errorWord": "am",
                       "alternateErrors": []
                     },
                     {
-                      "sentence": "These photos are our.",
-                      "errorWord": "our",
-                      "alternateErrors": []
-                    },
-                    {
-                      "sentence": "This bag am mine. (= my bag)",
+                      "sentence": "Ruby's brother am Sam.",
                       "errorWord": "am",
                       "alternateErrors": []
                     }
@@ -1389,28 +1369,24 @@
                   "instruction": "Is the grammar correct?",
                   "items": [
                     {
-                      "sentence": "This bag is mine. (= my bag)",
+                      "sentence": "David's wife is Helena.",
                       "correct": "true"
                     },
                     {
-                      "sentence": "That book am yours. (= your book)",
+                      "sentence": "Helena's daughter am Isabel.",
                       "correct": "false"
                     },
                     {
-                      "sentence": "The brown pencil is his.",
+                      "sentence": "Inca's sister is Eva.",
                       "correct": "true"
                     },
                     {
-                      "sentence": "The pink pencil case am hers.",
+                      "sentence": "My mum's name am Sofia.",
                       "correct": "false"
                     },
                     {
-                      "sentence": "These photos are ours.",
+                      "sentence": "Ruby's brother is Sam.",
                       "correct": "true"
-                    },
-                    {
-                      "sentence": "There am a big difference: the twins' room is theirs, not ours.",
-                      "correct": "false"
                     }
                   ]
                 },
@@ -1419,7 +1395,7 @@
                   "instruction": "Choose the correct word.",
                   "items": [
                     {
-                      "sentence": "This bag ___ mine. (= my bag)",
+                      "sentence": "David's wife ___ Helena.",
                       "options": [
                         "am",
                         "is",
@@ -1428,7 +1404,7 @@
                       "correct": "is"
                     },
                     {
-                      "sentence": "That book ___ yours. (= your book)",
+                      "sentence": "Helena's daughter ___ Isabel.",
                       "options": [
                         "am",
                         "is",
@@ -1437,7 +1413,7 @@
                       "correct": "is"
                     },
                     {
-                      "sentence": "This bag ___ mine. (= my bag)",
+                      "sentence": "Inca's sister ___ Eva.",
                       "options": [
                         "am",
                         "is",
@@ -1446,7 +1422,7 @@
                       "correct": "is"
                     },
                     {
-                      "sentence": "That book ___ yours. (= your book)",
+                      "sentence": "My mum's name ___ Sofia.",
                       "options": [
                         "am",
                         "is",
@@ -1455,16 +1431,7 @@
                       "correct": "is"
                     },
                     {
-                      "sentence": "The brown pencil ___ his.",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "is"
-                    },
-                    {
-                      "sentence": "The pink pencil case ___ hers.",
+                      "sentence": "Ruby's brother ___ Sam.",
                       "options": [
                         "am",
                         "is",
@@ -1479,39 +1446,57 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Ray: Class, look at the photos on your screen. Tom: Ray, I am the tall boy with short dark hair. Ray: Yes — that one is yours. Tom: And this blonde girl — who is she? Sophie: That one is mine! I am the blonde girl with curly hair. Lucas: And the one with very curly black hair is mine. I am Lucas. I am thin and quick! Linh: My photo is the one with the short Vietnamese girl. That photo is mine. My brother Minh is young — only seven. Ray: Excellent class! All your photos are different and all of them are amazing.",
+              "audio_text": "Hello! I'm Isabel. I'm 14. I have two sisters — Inca and Eva. They are twins. They are 11. My mother's name is Helena. My father's name is David. I'm Helena's daughter and David's daughter. We have a big family — five of us!",
               "audio_url": "/static/audio/stage3/unit02/lesson_02.mp3",
+              "scene_description": "A teenage girl introduces her family.",
               "questions": [
                 {
-                  "question": "Which photo is Tom's?",
-                  "answer": "the tall boy with short dark hair",
+                  "question": "How old is Isabel?",
                   "options": [
-                    "the tall boy with short dark hair",
-                    "the blonde girl with curly hair",
-                    "the boy with very curly black hair",
-                    "the short Vietnamese girl"
+                    "14",
+                    "11",
+                    "9",
+                    "5"
                   ],
-                  "correct_answer": "the tall boy with short dark hair"
+                  "correct_answer": "14"
                 },
                 {
-                  "question": "Sophie's hair is ___.",
-                  "answer": "blonde and curly",
+                  "question": "How many sisters does Isabel have?",
                   "options": [
-                    "dark and straight",
-                    "blonde and curly",
-                    "fair but straight",
-                    "short and dark"
+                    "two",
+                    "three",
+                    "one",
+                    "four"
                   ],
-                  "correct_answer": "blonde and curly"
+                  "correct_answer": "two"
                 },
                 {
-                  "question": "Is Minh young or old?",
-                  "answer": "young",
+                  "question": "What is Isabel's mother's name?",
                   "options": [
-                    "young",
-                    "old"
+                    "Helena",
+                    "Ruby",
+                    "Sofia",
+                    "Eva"
                   ],
-                  "correct_answer": "young"
+                  "correct_answer": "Helena"
+                },
+                {
+                  "question": "Are Inca and Eva twins?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
+                },
+                {
+                  "question": "How many people are in the family?",
+                  "options": [
+                    "five",
+                    "four",
+                    "three",
+                    "six"
+                  ],
+                  "correct_answer": "five"
                 }
               ]
             },
@@ -1519,66 +1504,63 @@
               "step": 8,
               "type": "production",
               "production_type": "speaking",
-              "prompt": "Describe yourself or a friend with at least 3 adjectives from this lesson.",
-              "expected_text": "I am [tall/short/young/old]. My hair is [blonde/dark/curly/straight/fair]. I am [thin/fat]. My best friend is also [adjective].",
+              "prompt": "Talk about a family you know. Use 'X's wife', 'X's daughter', 'X's son' to describe two people.",
+              "expected_text": "David's wife is Helena. Helena's daughter is Isabel.",
               "prompts": [
-                "Say if you are tall or short.",
-                "Say about your hair (colour or curly/straight).",
-                "Say if you are young or old (you are young!).",
-                "End with one possessive pronoun. ('This [thing] is mine.')"
-              ]
+                "Start with one person's name + 's: 'David's wife is...'",
+                "Add another: 'Helena's daughter is...'",
+                "Say one more thing about them: 'She is 14.' or 'They are happy.'"
+              ],
+              "image_url": ""
             },
             {
               "step": 9,
               "type": "exit_ticket",
-              "title": "Quick check — Lesson 2",
+              "title": "What did you learn?",
               "questions": [
                 {
-                  "question": "Sophie has yellow hair. She is ___.",
+                  "question": "Choose: David ___ wife is Helena.",
                   "options": [
-                    "blonde",
-                    "tall",
-                    "fat",
-                    "old"
+                    "'s",
+                    "s'",
+                    "is"
                   ],
-                  "correct_answer": "blonde"
+                  "correct_answer": "'s"
                 },
                 {
-                  "question": "The opposite of tall is ___.",
+                  "question": "A man's female partner in marriage is his ___.",
                   "options": [
-                    "short",
-                    "fat",
-                    "old",
-                    "young"
+                    "wife",
+                    "husband",
+                    "daughter"
                   ],
-                  "correct_answer": "short"
+                  "correct_answer": "wife"
                 },
                 {
-                  "question": "Choose: This bag is ___.",
+                  "question": "More than one boy or girl are ___.",
                   "options": [
-                    "my",
-                    "mine",
-                    "me"
+                    "children",
+                    "babies",
+                    "parents"
                   ],
-                  "correct_answer": "mine"
+                  "correct_answer": "children"
                 },
                 {
-                  "question": "Lucas has curly black hair. His hair is ___.",
+                  "question": "Choose: Helena's ___ is Isabel.",
                   "options": [
-                    "curly",
-                    "straight",
-                    "blonde",
-                    "fair"
+                    "daughter",
+                    "son",
+                    "father"
                   ],
-                  "correct_answer": "curly"
+                  "correct_answer": "daughter"
                 },
                 {
-                  "question": "True or false: 'These photos are ours.' is correct.",
+                  "question": "True or false: 'Inca's sister' means the sister of Inca.",
                   "options": [
-                    "true",
-                    "false"
+                    "True",
+                    "False"
                   ],
-                  "correct_answer": "true"
+                  "correct_answer": "True"
                 }
               ]
             }
@@ -1588,39 +1570,37 @@
           "lesson_num": 3,
           "lesson_id": "stage_3_movers_unit_02_lesson_03",
           "number": 3,
-          "title": "My family photo",
-          "topic": "Faces — moustache, beard, hair, eyes; possessive pronouns in action",
+          "title": "How do you feel?",
+          "topic": "Feelings adjectives — happy, sad, tired, bored, hungry, thirsty, hot, clever, funny. be: short answers.",
           "extra_links": [],
           "steps": [
             {
               "step": 1,
               "type": "warm_up",
               "video_url": "",
-              "instruction": "Linh shows Ray her family photo. Watch and answer.",
+              "instruction": "Watch Inca and Eva. How do they feel today?",
               "questions": [
                 {
-                  "question_text": "Which word means 'short hair on a man's top lip'?",
-                  "correct_answer": "moustache",
+                  "question_text": "Inca is smiling. How does she feel?",
+                  "correct_answer": "happy",
                   "options": [
-                    "moustache",
-                    "beard",
-                    "hair",
-                    "smile"
+                    "happy",
+                    "sad",
+                    "tired",
+                    "hungry"
                   ],
-                  "image_emoji": "👨",
-                  "hint": "It goes under the nose."
+                  "image_emoji": "😊"
                 },
                 {
-                  "question_text": "Which word means 'hair on a man's face — chin and cheeks'?",
-                  "correct_answer": "beard",
+                  "question_text": "Eva wants water. She is...",
+                  "correct_answer": "thirsty",
                   "options": [
-                    "beard",
-                    "moustache",
-                    "fair",
-                    "young"
+                    "thirsty",
+                    "hungry",
+                    "hot",
+                    "bored"
                   ],
-                  "image_emoji": "🧔",
-                  "hint": "Some grandfathers have one."
+                  "image_emoji": "💧"
                 }
               ]
             },
@@ -1629,68 +1609,76 @@
               "type": "vocabulary",
               "items": [
                 {
-                  "word": "moustache",
-                  "ipa": "/məˈstɑːʃ/",
-                  "definition": "Short hair on a man's top lip.",
-                  "example": "My uncle has a thin moustache.",
-                  "image_emoji": "👨",
-                  "image_url": "/static/vocab_images/stage3/moustache.png"
+                  "word": "bored",
+                  "definition": "Not interested. Nothing fun to do.",
+                  "image_emoji": "😑",
+                  "image_url": "",
+                  "example_sentence": "I'm bored in this lesson.",
+                  "asset_slug": "stage3_u02_bored"
                 },
                 {
-                  "word": "beard",
-                  "ipa": "/bɪəd/",
-                  "definition": "Hair on a man's chin and cheeks.",
-                  "example": "My grandfather has a small white beard.",
-                  "image_emoji": "🧔",
-                  "image_url": "/static/vocab_images/stage3/beard.png"
+                  "word": "clever",
+                  "definition": "Quick at learning. Smart.",
+                  "image_emoji": "🧠",
+                  "image_url": "",
+                  "example_sentence": "She's a clever student.",
+                  "asset_slug": "stage3_u02_clever"
                 },
                 {
-                  "word": "hair",
-                  "ipa": "/heər/",
-                  "definition": "What grows on your head.",
-                  "example": "Sophie has blonde hair.",
-                  "image_emoji": "💇",
-                  "image_url": "/static/vocab_images/stage3/hair.png"
+                  "word": "funny",
+                  "definition": "Makes you laugh.",
+                  "image_emoji": "😂",
+                  "image_url": "",
+                  "example_sentence": "Dad is funny.",
+                  "asset_slug": "stage3_u02_funny"
                 },
                 {
-                  "word": "eyes",
-                  "ipa": "/aɪz/",
-                  "definition": "What you see with — you have two.",
-                  "example": "Lucas has big brown eyes.",
-                  "image_emoji": "👀",
-                  "image_url": "/static/vocab_images/stage3/eyes.png"
-                },
-                {
-                  "word": "smile",
-                  "ipa": "/smaɪl/",
-                  "definition": "A happy mouth shape — turned up at the corners.",
-                  "example": "My grandmother has a kind smile.",
+                  "word": "happy",
+                  "definition": "You feel good. You smile.",
                   "image_emoji": "😊",
-                  "image_url": "/static/vocab_images/stage3/smile.png"
+                  "image_url": "",
+                  "example_sentence": "The baby is happy today.",
+                  "asset_slug": "stage3_u02_happy"
                 },
                 {
-                  "word": "look like",
-                  "ipa": "/lʊk laɪk/",
-                  "definition": "Used to ask about appearance: 'What does she look like?'",
-                  "example": "Minh looks like our dad.",
-                  "image_emoji": "🔍",
-                  "image_url": "/static/vocab_images/stage3/look_like.png"
+                  "word": "hot",
+                  "definition": "Too warm — you feel uncomfortable.",
+                  "image_emoji": "🥵",
+                  "image_url": "",
+                  "example_sentence": "I'm hot — open the window!",
+                  "asset_slug": "stage3_u02_hot"
                 },
                 {
-                  "word": "photo",
-                  "ipa": "/ˈfəʊtəʊ/",
-                  "definition": "A picture you take with a phone or camera.",
-                  "example": "This photo is my favourite.",
-                  "image_emoji": "📷",
-                  "image_url": "/static/vocab_images/stage3/photo.png"
+                  "word": "hungry",
+                  "definition": "You want to eat food.",
+                  "image_emoji": "🍽️",
+                  "image_url": "",
+                  "example_sentence": "Are you hungry? Let's eat.",
+                  "asset_slug": "stage3_u02_hungry"
                 },
                 {
-                  "word": "kind",
-                  "ipa": "/kaɪnd/",
-                  "definition": "Friendly and nice to other people.",
-                  "example": "My grandmother is very kind.",
-                  "image_emoji": "💖",
-                  "image_url": "/static/vocab_images/stage3/kind.png"
+                  "word": "sad",
+                  "definition": "You don't feel good. You cry.",
+                  "image_emoji": "😢",
+                  "image_url": "",
+                  "example_sentence": "Inca is sad — her cat is sick.",
+                  "asset_slug": "stage3_u02_sad"
+                },
+                {
+                  "word": "thirsty",
+                  "definition": "You want to drink water.",
+                  "image_emoji": "💧",
+                  "image_url": "",
+                  "example_sentence": "I'm thirsty — water, please.",
+                  "asset_slug": "stage3_u02_thirsty"
+                },
+                {
+                  "word": "tired",
+                  "definition": "You want to sleep or rest.",
+                  "image_emoji": "😴",
+                  "image_url": "",
+                  "example_sentence": "It's late — I'm tired.",
+                  "asset_slug": "stage3_u02_tired"
                 }
               ]
             },
@@ -1703,28 +1691,28 @@
                   "instruction": "Listen to the word, then type it.",
                   "items": [
                     {
-                      "audio_text": "moustache",
-                      "answer": "moustache"
+                      "audio_text": "bored",
+                      "answer": "bored"
                     },
                     {
-                      "audio_text": "beard",
-                      "answer": "beard"
+                      "audio_text": "clever",
+                      "answer": "clever"
                     },
                     {
-                      "audio_text": "hair",
-                      "answer": "hair"
+                      "audio_text": "funny",
+                      "answer": "funny"
                     },
                     {
-                      "audio_text": "eyes",
-                      "answer": "eyes"
+                      "audio_text": "happy",
+                      "answer": "happy"
                     },
                     {
-                      "audio_text": "smile",
-                      "answer": "smile"
+                      "audio_text": "hot",
+                      "answer": "hot"
                     },
                     {
-                      "audio_text": "look like",
-                      "answer": "look like"
+                      "audio_text": "hungry",
+                      "answer": "hungry"
                     }
                   ]
                 },
@@ -1733,70 +1721,70 @@
                   "instruction": "Listen and tap the right word.",
                   "items": [
                     {
-                      "audio_text": "moustache",
-                      "word": "moustache",
+                      "audio_text": "bored",
+                      "word": "bored",
                       "options": [
-                        "moustache",
-                        "beard",
-                        "hair",
-                        "eyes"
+                        "bored",
+                        "clever",
+                        "funny",
+                        "happy"
                       ],
-                      "correct": "moustache"
+                      "correct": "bored"
                     },
                     {
-                      "audio_text": "beard",
-                      "word": "beard",
+                      "audio_text": "clever",
+                      "word": "clever",
                       "options": [
-                        "beard",
-                        "moustache",
-                        "hair",
-                        "eyes"
+                        "clever",
+                        "bored",
+                        "funny",
+                        "happy"
                       ],
-                      "correct": "beard"
+                      "correct": "clever"
                     },
                     {
-                      "audio_text": "hair",
-                      "word": "hair",
+                      "audio_text": "funny",
+                      "word": "funny",
                       "options": [
-                        "hair",
-                        "moustache",
-                        "beard",
-                        "eyes"
+                        "funny",
+                        "bored",
+                        "clever",
+                        "happy"
                       ],
-                      "correct": "hair"
+                      "correct": "funny"
                     },
                     {
-                      "audio_text": "eyes",
-                      "word": "eyes",
+                      "audio_text": "happy",
+                      "word": "happy",
                       "options": [
-                        "eyes",
-                        "moustache",
-                        "beard",
-                        "hair"
+                        "happy",
+                        "bored",
+                        "clever",
+                        "funny"
                       ],
-                      "correct": "eyes"
+                      "correct": "happy"
                     },
                     {
-                      "audio_text": "smile",
-                      "word": "smile",
+                      "audio_text": "hot",
+                      "word": "hot",
                       "options": [
-                        "smile",
-                        "moustache",
-                        "beard",
-                        "hair"
+                        "hot",
+                        "bored",
+                        "clever",
+                        "funny"
                       ],
-                      "correct": "smile"
+                      "correct": "hot"
                     },
                     {
-                      "audio_text": "look like",
-                      "word": "look like",
+                      "audio_text": "hungry",
+                      "word": "hungry",
                       "options": [
-                        "look like",
-                        "moustache",
-                        "beard",
-                        "hair"
+                        "hungry",
+                        "bored",
+                        "clever",
+                        "funny"
                       ],
-                      "correct": "look like"
+                      "correct": "hungry"
                     }
                   ]
                 },
@@ -1805,34 +1793,34 @@
                   "instruction": "Match pairs: word ↔ picture.",
                   "items": [
                     {
-                      "word": "moustache",
-                      "emoji": "👨",
-                      "image_url": "/static/vocab_images/stage3/moustache.png"
+                      "word": "bored",
+                      "emoji": "😑",
+                      "image_url": ""
                     },
                     {
-                      "word": "beard",
-                      "emoji": "🧔",
-                      "image_url": "/static/vocab_images/stage3/beard.png"
+                      "word": "clever",
+                      "emoji": "🧠",
+                      "image_url": ""
                     },
                     {
-                      "word": "hair",
-                      "emoji": "💇",
-                      "image_url": "/static/vocab_images/stage3/hair.png"
+                      "word": "funny",
+                      "emoji": "😂",
+                      "image_url": ""
                     },
                     {
-                      "word": "eyes",
-                      "emoji": "👀",
-                      "image_url": "/static/vocab_images/stage3/eyes.png"
-                    },
-                    {
-                      "word": "smile",
+                      "word": "happy",
                       "emoji": "😊",
-                      "image_url": "/static/vocab_images/stage3/smile.png"
+                      "image_url": ""
                     },
                     {
-                      "word": "look like",
-                      "emoji": "🔍",
-                      "image_url": "/static/vocab_images/stage3/look_like.png"
+                      "word": "hot",
+                      "emoji": "🥵",
+                      "image_url": ""
+                    },
+                    {
+                      "word": "hungry",
+                      "emoji": "🍽️",
+                      "image_url": ""
                     }
                   ]
                 }
@@ -1841,57 +1829,71 @@
             {
               "step": 4,
               "type": "micro_reading",
-              "title": "Our family photo on the wall",
-              "text": "On the wall in my bedroom there is a family photo. My grandfather has a small white beard and kind eyes. My grandmother has short fair hair and a beautiful smile. My dad has a thin moustache. He looks like my grandfather, but he is younger. My mum has long dark hair. People say I look like her. Minh looks like my dad — he has the same big eyes. My cousins, the twins, look like each other! It is hard to know whose photo is whose. This photo is ours, and we love it. In the kitchen we have one more family photo, with our aunt and uncle, too.",
-              "scene_description": "A photo-realistic close-up of a wooden picture frame on a soft pink bedroom wall. Inside the frame: a multi-generation Vietnamese family portrait — grandfather with white beard, grandmother with short fair hair and a warm smile, parents (mum with long dark hair, dad with thin moustache), 9-year-old daughter and 7-year-old son, plus two identical twin boys at the side.",
+              "title": "A long day",
+              "text": "It's Sunday afternoon. Helena and her three daughters are at home. Isabel is in her room. She is tired — it's a hot day. Inca is in the kitchen. She is hungry. She wants a sandwich. Eva is in the garden. She is bored — she wants to play. Helena is in the living room. She is happy — she has tea and a book. It's a long day, but a good day.",
+              "scene_description": "Helena and her daughters in different rooms of the house on a hot afternoon.",
               "questions": [
                 {
-                  "question": "Where is the family photo?",
-                  "answer": "on the wall in Linh's bedroom",
+                  "question": "How does Isabel feel?",
                   "options": [
-                    "on the wall in Linh's bedroom",
-                    "in the kitchen only",
+                    "tired",
+                    "happy",
+                    "hungry",
+                    "bored"
+                  ],
+                  "correct_answer": "tired"
+                },
+                {
+                  "question": "Where is Inca?",
+                  "options": [
+                    "in the kitchen",
+                    "in her room",
                     "in the garden",
-                    "at school"
+                    "in the living room"
                   ],
-                  "correct_answer": "on the wall in Linh's bedroom"
+                  "correct_answer": "in the kitchen"
                 },
                 {
-                  "question": "Who has a small white beard?",
-                  "answer": "Linh's grandfather",
+                  "question": "Why is Eva bored?",
                   "options": [
-                    "Linh's grandfather",
-                    "Linh's dad",
-                    "Linh's uncle",
-                    "Linh's cousin"
+                    "she wants to play",
+                    "she is hungry",
+                    "she is hot",
+                    "she is tired"
                   ],
-                  "correct_answer": "Linh's grandfather"
+                  "correct_answer": "she wants to play"
                 },
                 {
-                  "question": "Who does Linh look like?",
-                  "answer": "her mum",
+                  "question": "Is Helena happy?",
                   "options": [
-                    "her dad",
-                    "her mum",
-                    "her brother",
-                    "her cousin"
+                    "yes",
+                    "no"
                   ],
-                  "correct_answer": "her mum"
+                  "correct_answer": "yes"
+                },
+                {
+                  "question": "What does Inca want?",
+                  "options": [
+                    "a sandwich",
+                    "a book",
+                    "tea",
+                    "water"
+                  ],
+                  "correct_answer": "a sandwich"
                 }
               ]
             },
             {
               "step": 5,
               "type": "grammar_focus",
-              "rule_pattern": "Mixing possessive 's + possessive pronouns + 'look like'",
-              "explanation": "To talk about appearance: 'X looks like Y.' or 'X has Y's eyes/smile/nose.' Mix this with possessive pronouns: 'This photo is ours.' Notice that we will say 'there is a photo on the wall' fully in Unit 3 — for today, just use 'is' as in 'There is a family photo.'",
+              "rule_pattern": "be — short answers",
+              "explanation": "When someone asks a 'be' question (Are you...? Is he...?), we answer with a short answer. Yes + subject + be. No + subject + be + not. We don't say just 'yes' — we say 'Yes, I am.' or 'No, I'm not.'",
               "examples": [
-                "Minh looks like Dad.",
-                "I look like my mum.",
-                "My grandfather has a small white beard.",
-                "This photo is ours.",
-                "Whose photo is this? — It's mine.",
-                "There is a family photo on the wall. (Full 'there is/are' in Unit 3.)"
+                "Are you tired? — Yes, I am.",
+                "Is Inca hungry? — Yes, she is.",
+                "Is Eva sad? — No, she isn't. She's bored.",
+                "Are you happy? — No, I'm not.",
+                "Are Inca and Eva twins? — Yes, they are."
               ]
             },
             {
@@ -1903,34 +1905,49 @@
                   "instruction": "Fill the gap.",
                   "items": [
                     {
-                      "sentence": "Minh ___ like Dad.",
-                      "answer": "looks",
-                      "options": null
+                      "sentence": "___ you tired? — Yes, I am.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
                     },
                     {
-                      "sentence": "This photo is ___.",
-                      "answer": "ours",
-                      "options": null
+                      "sentence": "___ Inca hungry? — Yes, she is.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
                     },
                     {
-                      "sentence": "My grandfather has a small white ___.",
-                      "answer": "beard",
-                      "options": null
+                      "sentence": "___ Eva sad? — No, she isn't. She's bored.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
                     },
                     {
-                      "sentence": "Whose pencil is this? — It's ___.",
-                      "answer": "mine",
-                      "options": null
+                      "sentence": "___ you happy? — No, I'm not.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
                     },
                     {
-                      "sentence": "Sophie has blonde ___.",
-                      "answer": "hair",
-                      "options": null
-                    },
-                    {
-                      "sentence": "My grandmother has a kind ___.",
-                      "answer": "smile",
-                      "options": null
+                      "sentence": "___ Inca and Eva twins? — Yes, they are.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
                     }
                   ]
                 },
@@ -1939,7 +1956,16 @@
                   "instruction": "Choose the correct word.",
                   "items": [
                     {
-                      "sentence": "This photo ___ ours.",
+                      "sentence": "___ you tired? — Yes, I am.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "are"
+                    },
+                    {
+                      "sentence": "___ Inca hungry? — Yes, she is.",
                       "options": [
                         "am",
                         "is",
@@ -1948,7 +1974,7 @@
                       "correct": "is"
                     },
                     {
-                      "sentence": "Whose photo ___ this? — It's mine.",
+                      "sentence": "___ Eva sad? — No, she isn't. She's bored.",
                       "options": [
                         "am",
                         "is",
@@ -1957,40 +1983,22 @@
                       "correct": "is"
                     },
                     {
-                      "sentence": "There ___ a family photo on the wall. (Full 'there is/are' in Unit 3.)",
+                      "sentence": "___ you happy? — No, I'm not.",
                       "options": [
                         "am",
                         "is",
                         "are"
                       ],
-                      "correct": "is"
+                      "correct": "are"
                     },
                     {
-                      "sentence": "This photo ___ ours.",
+                      "sentence": "___ Inca and Eva twins? — Yes, they are.",
                       "options": [
                         "am",
                         "is",
                         "are"
                       ],
-                      "correct": "is"
-                    },
-                    {
-                      "sentence": "Whose photo ___ this? — It's mine.",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "is"
-                    },
-                    {
-                      "sentence": "There ___ a family photo on the wall. (Full 'there is/are' in Unit 3.)",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "is"
+                      "correct": "are"
                     }
                   ]
                 },
@@ -1999,32 +2007,27 @@
                   "instruction": "Tap the wrong word.",
                   "items": [
                     {
-                      "sentence": "This photo am ours.",
+                      "sentence": "am you tired? — Yes, I am.",
                       "errorWord": "am",
                       "alternateErrors": []
                     },
                     {
-                      "sentence": "Whose photo am this? — It's mine.",
+                      "sentence": "am Inca hungry? — Yes, she is.",
                       "errorWord": "am",
                       "alternateErrors": []
                     },
                     {
-                      "sentence": "There am a family photo on the wall. (Full 'there is/are' in Unit 3.)",
+                      "sentence": "am Eva sad? — No, she isn't. She's bored.",
                       "errorWord": "am",
                       "alternateErrors": []
                     },
                     {
-                      "sentence": "This photo am ours.",
+                      "sentence": "am you happy? — No, I'm not.",
                       "errorWord": "am",
                       "alternateErrors": []
                     },
                     {
-                      "sentence": "Whose photo am this? — It's mine.",
-                      "errorWord": "am",
-                      "alternateErrors": []
-                    },
-                    {
-                      "sentence": "There am a family photo on the wall. (Full 'there is/are' in Unit 3.)",
+                      "sentence": "am Inca and Eva twins? — Yes, they are.",
                       "errorWord": "am",
                       "alternateErrors": []
                     }
@@ -2035,39 +2038,55 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Ray: Linh, can you describe the people in your family photo? Linh: Of course. My grandfather has a small white beard and kind eyes. My grandmother has short fair hair and a beautiful smile. Ray: Does your dad have a beard, too? Linh: No, he has a thin moustache. He looks like my grandfather, but he is younger. Ray: And your mum? Linh: My mum has long dark hair. People say I look like her. Ray: What about Minh? Linh: Minh looks like my dad. He has big eyes, like my dad. Ray: Lovely photo! And this photo is yours, of course. Linh: Yes, this one is mine — well, it's ours.",
+              "audio_text": "MUM: Isabel! Are you OK? ISABEL: I'm tired, Mum. MUM: Are you hungry? ISABEL: No, I'm not hungry. I'm thirsty. MUM: OK. Here's some water. Is Inca in her room? ISABEL: No, she isn't. She's in the kitchen. She's hungry! MUM: Funny girl! ISABEL: Yes, she is.",
               "audio_url": "/static/audio/stage3/unit02/lesson_03.mp3",
+              "scene_description": "A mother and daughter conversation at home.",
               "questions": [
                 {
-                  "question": "Does Linh's dad have a beard?",
-                  "answer": "no",
+                  "question": "How does Isabel feel?",
                   "options": [
-                    "yes",
-                    "no"
+                    "tired",
+                    "happy",
+                    "bored",
+                    "hot"
+                  ],
+                  "correct_answer": "tired"
+                },
+                {
+                  "question": "Is Isabel hungry?",
+                  "options": [
+                    "no",
+                    "yes"
                   ],
                   "correct_answer": "no"
                 },
                 {
-                  "question": "What is Linh's grandmother's smile like?",
-                  "answer": "beautiful",
+                  "question": "What does Isabel want?",
                   "options": [
-                    "scary",
-                    "small",
-                    "beautiful",
-                    "tired"
+                    "water",
+                    "a sandwich",
+                    "a book",
+                    "to sleep"
                   ],
-                  "correct_answer": "beautiful"
+                  "correct_answer": "water"
                 },
                 {
-                  "question": "Who does Minh look like?",
-                  "answer": "his dad",
+                  "question": "Where is Inca?",
                   "options": [
-                    "his mum",
-                    "his dad",
-                    "his sister",
-                    "his uncle"
+                    "in the kitchen",
+                    "in her room",
+                    "outside",
+                    "at school"
                   ],
-                  "correct_answer": "his dad"
+                  "correct_answer": "in the kitchen"
+                },
+                {
+                  "question": "Is Inca hungry?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
                 }
               ]
             },
@@ -2075,64 +2094,65 @@
               "step": 8,
               "type": "production",
               "production_type": "speaking",
-              "prompt": "Describe one person in your family photo. Use 2-3 face words and one 'look like' sentence.",
-              "expected_text": "My [person] has [hair/eyes/beard/moustache/smile]. He/She is [tall/short/young/old]. I look like [person].",
+              "prompt": "How do you feel today? Say two sentences. 'I'm ___' and 'I'm not ___'.",
+              "expected_text": "I'm happy today. I'm not tired.",
               "prompts": [
-                "Say who the person is. ('My grandfather/dad/mum/aunt is in my photo.')",
-                "Say one face detail. ('He/She has a ___ / fair hair / big eyes.')",
-                "Use 'look like'. ('I look like my ___.')"
-              ]
+                "Pick one feeling: happy, tired, hungry, thirsty, sad, bored, hot.",
+                "Say it with 'I'm': 'I'm happy.'",
+                "Now say one feeling you don't have: 'I'm not...'"
+              ],
+              "image_url": ""
             },
             {
               "step": 9,
               "type": "exit_ticket",
-              "title": "Quick check — Lesson 3",
+              "title": "What did you learn?",
               "questions": [
                 {
-                  "question": "Hair under a man's nose is a ___.",
+                  "question": "You want to drink water. You are ___.",
                   "options": [
-                    "moustache",
-                    "beard",
-                    "smile",
-                    "eye"
+                    "thirsty",
+                    "hungry",
+                    "tired",
+                    "bored"
                   ],
-                  "correct_answer": "moustache"
+                  "correct_answer": "thirsty"
                 },
                 {
-                  "question": "Hair on a man's chin and cheeks is a ___.",
+                  "question": "You feel good and you smile. You are ___.",
                   "options": [
-                    "beard",
-                    "moustache",
-                    "hair",
-                    "face"
+                    "happy",
+                    "sad",
+                    "tired",
+                    "hot"
                   ],
-                  "correct_answer": "beard"
+                  "correct_answer": "happy"
                 },
                 {
-                  "question": "Choose: This photo is ___.",
+                  "question": "Are you tired? — Yes, I ___.",
                   "options": [
-                    "our",
-                    "ours",
-                    "us"
+                    "am",
+                    "is",
+                    "are"
                   ],
-                  "correct_answer": "ours"
+                  "correct_answer": "am"
                 },
                 {
-                  "question": "Choose: Minh ___ like Dad.",
+                  "question": "Is Inca hungry? — No, she ___.",
                   "options": [
-                    "look",
-                    "looks",
-                    "looking"
+                    "isn't",
+                    "aren't",
+                    "amn't"
                   ],
-                  "correct_answer": "looks"
+                  "correct_answer": "isn't"
                 },
                 {
-                  "question": "True or false: 'My grandmother has a kind smile.' is correct.",
+                  "question": "True or false: 'I'm not hot' means I don't feel hot.",
                   "options": [
-                    "true",
-                    "false"
+                    "True",
+                    "False"
                   ],
-                  "correct_answer": "true"
+                  "correct_answer": "True"
                 }
               ]
             }
@@ -2143,38 +2163,34 @@
           "lesson_id": "stage_3_movers_unit_02_lesson_04",
           "number": 4,
           "title": "My family — Review",
-          "topic": "Cumulative review: extended family, descriptions, possessive 's + possessive pronouns",
+          "topic": "Recycle Unit 2 family + feelings vocab + all three grammar points. Pronunciation /ə/.",
           "extra_links": [],
           "steps": [
             {
               "step": 1,
               "type": "warm_up",
               "video_url": "",
-              "instruction": "Review time! Ray asks you to remember the unit. Answer 2 quick questions.",
+              "instruction": "Look at three families. Match each person to a feeling.",
               "questions": [
                 {
-                  "question_text": "What was Unit 2 about?",
-                  "correct_answer": "my family — grandparents, cousins, descriptions",
+                  "question_text": "Helena's baby is one. The baby is happy. True or false?",
+                  "correct_answer": "True",
                   "options": [
-                    "my family — grandparents, cousins, descriptions",
-                    "the weather",
-                    "the rooms in my home",
-                    "wild animals"
+                    "True",
+                    "False"
                   ],
-                  "image_emoji": "👨‍👩‍👧‍👦",
-                  "hint": "Think about the unit title."
+                  "image_emoji": "👶"
                 },
                 {
-                  "question_text": "Which grammar did we practise the most?",
-                  "correct_answer": "possessive 's and possessive pronouns",
+                  "question_text": "Sam is hungry. Sam is Ruby's ___.",
+                  "correct_answer": "brother",
                   "options": [
-                    "possessive 's and possessive pronouns",
-                    "past simple",
-                    "can / can't",
-                    "going to future"
+                    "brother",
+                    "sister",
+                    "dad",
+                    "mum"
                   ],
-                  "image_emoji": "🔤",
-                  "hint": "Showing who something belongs to."
+                  "image_emoji": "👦"
                 }
               ]
             },
@@ -2182,32 +2198,29 @@
               "step": 2,
               "type": "vocabulary_review",
               "items": [
-                "grandparent",
-                "grandfather",
-                "grandmother",
-                "grandson",
-                "granddaughter",
+                "mum",
+                "dad",
+                "brother",
+                "sister",
+                "baby",
+                "parents",
+                "mother",
+                "father",
+                "husband",
+                "wife",
                 "son",
                 "daughter",
-                "cousin",
-                "twin",
-                "tall",
-                "short",
-                "young",
-                "old",
-                "blonde",
-                "curly",
-                "fair",
-                "thin",
-                "fat",
-                "moustache",
-                "beard",
-                "hair",
-                "eyes",
-                "smile",
-                "photo",
-                "look like",
-                "kind"
+                "children",
+                "family",
+                "bored",
+                "clever",
+                "funny",
+                "happy",
+                "hot",
+                "hungry",
+                "sad",
+                "thirsty",
+                "tired"
               ]
             },
             {
@@ -2221,47 +2234,47 @@
                     {
                       "prompt": "Which word matches: ",
                       "options": [
-                        "grandparent",
-                        "grandfather",
-                        "grandmother"
+                        "mum",
+                        "dad",
+                        "brother"
                       ],
-                      "correct": "grandparent"
+                      "correct": "mum"
                     },
                     {
                       "prompt": "Which word matches: ",
                       "options": [
-                        "grandfather",
-                        "grandparent",
-                        "grandmother"
+                        "dad",
+                        "mum",
+                        "brother"
                       ],
-                      "correct": "grandfather"
+                      "correct": "dad"
                     },
                     {
                       "prompt": "Which word matches: ",
                       "options": [
-                        "grandmother",
-                        "grandparent",
-                        "grandfather"
+                        "brother",
+                        "mum",
+                        "dad"
                       ],
-                      "correct": "grandmother"
+                      "correct": "brother"
                     },
                     {
                       "prompt": "Which word matches: ",
                       "options": [
-                        "grandson",
-                        "grandparent",
-                        "grandfather"
+                        "sister",
+                        "mum",
+                        "dad"
                       ],
-                      "correct": "grandson"
+                      "correct": "sister"
                     },
                     {
                       "prompt": "Which word matches: ",
                       "options": [
-                        "granddaughter",
-                        "grandparent",
-                        "grandfather"
+                        "baby",
+                        "mum",
+                        "dad"
                       ],
-                      "correct": "granddaughter"
+                      "correct": "baby"
                     }
                   ]
                 },
@@ -2271,7 +2284,7 @@
                   "time_limit_seconds": 90,
                   "items": [
                     {
-                      "prompt": "grandparent",
+                      "prompt": "mum",
                       "correct_emoji": "📦",
                       "correct_image_url": "",
                       "options": [
@@ -2284,27 +2297,27 @@
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandparent"
+                          "word": "mum"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandfather"
+                          "word": "dad"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandmother"
+                          "word": "brother"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandson"
+                          "word": "sister"
                         }
                       ]
                     },
                     {
-                      "prompt": "grandfather",
+                      "prompt": "dad",
                       "correct_emoji": "📦",
                       "correct_image_url": "",
                       "options": [
@@ -2317,27 +2330,27 @@
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandfather"
+                          "word": "dad"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandparent"
+                          "word": "mum"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandmother"
+                          "word": "brother"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandson"
+                          "word": "sister"
                         }
                       ]
                     },
                     {
-                      "prompt": "grandmother",
+                      "prompt": "brother",
                       "correct_emoji": "📦",
                       "correct_image_url": "",
                       "options": [
@@ -2350,27 +2363,27 @@
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandmother"
+                          "word": "brother"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandparent"
+                          "word": "mum"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandfather"
+                          "word": "dad"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandson"
+                          "word": "sister"
                         }
                       ]
                     },
                     {
-                      "prompt": "grandson",
+                      "prompt": "sister",
                       "correct_emoji": "📦",
                       "correct_image_url": "",
                       "options": [
@@ -2383,27 +2396,27 @@
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandson"
+                          "word": "sister"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandparent"
+                          "word": "mum"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandfather"
+                          "word": "dad"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandmother"
+                          "word": "brother"
                         }
                       ]
                     },
                     {
-                      "prompt": "granddaughter",
+                      "prompt": "baby",
                       "correct_emoji": "📦",
                       "correct_image_url": "",
                       "options": [
@@ -2416,27 +2429,27 @@
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "granddaughter"
+                          "word": "baby"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandparent"
+                          "word": "mum"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandfather"
+                          "word": "dad"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandmother"
+                          "word": "brother"
                         }
                       ]
                     },
                     {
-                      "prompt": "son",
+                      "prompt": "parents",
                       "correct_emoji": "📦",
                       "correct_image_url": "",
                       "options": [
@@ -2449,27 +2462,27 @@
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "son"
+                          "word": "parents"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandparent"
+                          "word": "mum"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandfather"
+                          "word": "dad"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandmother"
+                          "word": "brother"
                         }
                       ]
                     },
                     {
-                      "prompt": "daughter",
+                      "prompt": "mother",
                       "correct_emoji": "📦",
                       "correct_image_url": "",
                       "options": [
@@ -2482,27 +2495,27 @@
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "daughter"
+                          "word": "mother"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandparent"
+                          "word": "mum"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandfather"
+                          "word": "dad"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandmother"
+                          "word": "brother"
                         }
                       ]
                     },
                     {
-                      "prompt": "cousin",
+                      "prompt": "father",
                       "correct_emoji": "📦",
                       "correct_image_url": "",
                       "options": [
@@ -2515,27 +2528,27 @@
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "cousin"
+                          "word": "father"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandparent"
+                          "word": "mum"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandfather"
+                          "word": "dad"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandmother"
+                          "word": "brother"
                         }
                       ]
                     },
                     {
-                      "prompt": "twin",
+                      "prompt": "husband",
                       "correct_emoji": "📦",
                       "correct_image_url": "",
                       "options": [
@@ -2548,27 +2561,27 @@
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "twin"
+                          "word": "husband"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandparent"
+                          "word": "mum"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandfather"
+                          "word": "dad"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandmother"
+                          "word": "brother"
                         }
                       ]
                     },
                     {
-                      "prompt": "tall",
+                      "prompt": "wife",
                       "correct_emoji": "📦",
                       "correct_image_url": "",
                       "options": [
@@ -2581,22 +2594,22 @@
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "tall"
+                          "word": "wife"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandparent"
+                          "word": "mum"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandfather"
+                          "word": "dad"
                         },
                         {
                           "emoji": "📦",
                           "image_url": "",
-                          "word": "grandmother"
+                          "word": "brother"
                         }
                       ]
                     }
@@ -2607,32 +2620,32 @@
                   "instruction": "Match pairs: word ↔ picture.",
                   "items": [
                     {
-                      "word": "grandparent",
+                      "word": "mum",
                       "emoji": "📦",
                       "image_url": ""
                     },
                     {
-                      "word": "grandfather",
+                      "word": "dad",
                       "emoji": "📦",
                       "image_url": ""
                     },
                     {
-                      "word": "grandmother",
+                      "word": "brother",
                       "emoji": "📦",
                       "image_url": ""
                     },
                     {
-                      "word": "grandson",
+                      "word": "sister",
                       "emoji": "📦",
                       "image_url": ""
                     },
                     {
-                      "word": "granddaughter",
+                      "word": "baby",
                       "emoji": "📦",
                       "image_url": ""
                     },
                     {
-                      "word": "son",
+                      "word": "parents",
                       "emoji": "📦",
                       "image_url": ""
                     }
@@ -2643,64 +2656,57 @@
             {
               "step": 4,
               "type": "micro_reading",
-              "title": "Our big family photo",
-              "text": "This is my big family photo. There are eleven people in it. My grandparents are at the back. My grandfather has a small white beard and kind eyes. My grandmother has short fair hair and a beautiful smile. My dad has a thin moustache. He looks like my grandfather, but he is younger. My mum has long dark hair. I look like her. Minh, my brother, is seven and very young. He looks like Dad. Our uncle Quan is tall and a little bit fat. His sons are my cousins — they are twins! They are both thin and short. We also have one big family rule: when we eat in the kitchen, everyone helps. The photo is ours, and it lives near the door of my bedroom. We are not a big family by Vietnamese standards, but for me, this family is the best.",
-              "scene_description": "A wide photo-realistic family portrait: three generations of a Vietnamese family standing in front of a small traditional house. Grandparents in the centre (grandfather with white beard, grandmother with fair short hair), parents on the left (dad with moustache, mum with long dark hair), 9-year-old daughter and 7-year-old son, plus aunt + uncle + twin cousins. Natural daylight, warm tones.",
+              "title": "A photo on the wall",
+              "text": "On the wall in Ruby's room there is a photo. It's a family photo. Ruby is in the photo with her family. Her mum, Sofia, is happy. Her dad, Mark, is funny. Her brother, Sam, is clever — he's 9. Lily, the baby, is in Sofia's arms. Lily is happy too. Ruby loves the photo. It's her family.",
+              "scene_description": "A family photo on a bedroom wall.",
               "questions": [
                 {
-                  "question": "How many people are in the family photo?",
-                  "answer": "11",
+                  "question": "Where is the family photo?",
                   "options": [
-                    "9",
-                    "10",
-                    "11",
-                    "12"
-                  ],
-                  "correct_answer": "11"
-                },
-                {
-                  "question": "Linh's dad has a ___.",
-                  "answer": "thin moustache",
-                  "options": [
-                    "beard",
-                    "thin moustache",
-                    "fair hair",
-                    "smile only"
-                  ],
-                  "correct_answer": "thin moustache"
-                },
-                {
-                  "question": "Who does Linh look like?",
-                  "answer": "her mum",
-                  "options": [
-                    "her dad",
-                    "her mum",
-                    "her brother",
-                    "her cousin"
-                  ],
-                  "correct_answer": "her mum"
-                },
-                {
-                  "question": "The twins are ___.",
-                  "answer": "thin and short",
-                  "options": [
-                    "tall and fat",
-                    "thin and short",
-                    "old and blonde",
-                    "fair and curly"
-                  ],
-                  "correct_answer": "thin and short"
-                },
-                {
-                  "question": "Where does the photo live?",
-                  "answer": "near the door of Linh's bedroom",
-                  "options": [
+                    "on the wall in Ruby's room",
                     "in the kitchen",
-                    "near the door of Linh's bedroom",
                     "in the garden",
                     "at school"
                   ],
-                  "correct_answer": "near the door of Linh's bedroom"
+                  "correct_answer": "on the wall in Ruby's room"
+                },
+                {
+                  "question": "Who is Ruby's brother?",
+                  "options": [
+                    "Sam",
+                    "Mark",
+                    "Lily",
+                    "Sofia"
+                  ],
+                  "correct_answer": "Sam"
+                },
+                {
+                  "question": "How does Ruby's dad feel?",
+                  "options": [
+                    "funny",
+                    "tired",
+                    "sad",
+                    "bored"
+                  ],
+                  "correct_answer": "funny"
+                },
+                {
+                  "question": "Who is the baby?",
+                  "options": [
+                    "Lily",
+                    "Sam",
+                    "Ruby",
+                    "Sofia"
+                  ],
+                  "correct_answer": "Lily"
+                },
+                {
+                  "question": "Does Ruby love the photo?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
                 }
               ]
             },
@@ -2708,10 +2714,9 @@
               "step": 5,
               "type": "grammar_review",
               "patterns": [
-                "Possessive 's: Minh's bag, my parents' house, grandfather's beard",
-                "Possessive pronouns: mine, yours, his, hers, ours, theirs",
-                "look like: Minh looks like Dad. I look like my mum.",
-                "Descriptive be sentences: She is tall. Her hair is curly."
+                "Determiners: my / your / his / her",
+                "Possessive 's: David's wife, Helena's daughter",
+                "be: short answers — Yes, I am. / No, I'm not."
               ]
             },
             {
@@ -2723,27 +2728,27 @@
                   "instruction": "Is the grammar correct?",
                   "items": [
                     {
-                      "sentence": "Possessive 's: Minh's bag, my parents' house, grandfather's beard",
+                      "sentence": "Determiners: my / your / his / her",
                       "correct": "true"
                     },
                     {
-                      "sentence": "Possessive pronouns: mine, yours, his, hers, ours, theirs",
+                      "sentence": "Possessive 's: David's wife, Helena's daughter",
                       "correct": "true"
                     },
                     {
-                      "sentence": "look like: Minh looks like Dad. I look like my mum.",
+                      "sentence": "be: short answers — Yes, I am. / No, I'm not.",
                       "correct": "true"
                     },
                     {
-                      "sentence": "Descriptive be sentences: She am tall. Her hair is curly.",
+                      "sentence": "I is Vietnamese.",
                       "correct": "false"
                     },
                     {
-                      "sentence": "I am Vietnamese.",
+                      "sentence": "She is my friend.",
                       "correct": "true"
                     },
                     {
-                      "sentence": "She am my friend.",
+                      "sentence": "He am my brother.",
                       "correct": "false"
                     }
                   ]
@@ -2753,8 +2758,8 @@
                   "instruction": "Fill the gap.",
                   "items": [
                     {
-                      "sentence": "Descriptive be sentences: She ___ tall. Her hair is curly.",
-                      "answer": "is",
+                      "sentence": "be: short answers — Yes, I ___ / No, I'm not.",
+                      "answer": "am",
                       "options": [
                         "am",
                         "is",
@@ -2813,13 +2818,13 @@
                   "instruction": "Choose the correct word.",
                   "items": [
                     {
-                      "sentence": "Descriptive be sentences: She ___ tall. Her hair is curly.",
+                      "sentence": "be: short answers — Yes, I ___ / No, I'm not.",
                       "options": [
                         "am",
                         "is",
                         "are"
                       ],
-                      "correct": "is"
+                      "correct": "am"
                     },
                     {
                       "sentence": "I ___ Vietnamese.",
@@ -2873,52 +2878,55 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Ray: Class, today is family-photo day. Linh, start! Linh: Hi everyone. This is my big family photo. My grandfather has a white beard and a kind smile. My grandmother has short fair hair. My dad has a thin moustache and my mum has long dark hair. I look like my mum and Minh looks like Dad. My cousins are twins — they are thin and short. Ray: Tom, what about you? Tom: My family is small. I have one little sister. She is blonde and very young. I am tall and my hair is short. Ray: Sophie? Sophie: My family is small, too. My grandparents are in London. My grandmother has curly fair hair like mine. We look like each other. Ray: Lovely! Each photo is yours and it's special.",
+              "audio_text": "Hi! My name is Eva. I'm 11. My twin sister's name is Inca. We are Helena's daughters. Our father is David. Today I'm happy — it's my birthday! Inca is hungry, but I'm not. I'm thirsty — I want water. We are a funny family.",
               "audio_url": "/static/audio/stage3/unit02/lesson_04.mp3",
+              "scene_description": "Eva talks about her family on her birthday.",
               "questions": [
                 {
-                  "question": "Who has a thin moustache?",
-                  "answer": "Linh's dad",
+                  "question": "How old is Eva?",
                   "options": [
-                    "Linh's grandfather",
-                    "Linh's dad",
-                    "Linh's uncle",
-                    "Linh's brother"
+                    "11",
+                    "14",
+                    "9",
+                    "1"
                   ],
-                  "correct_answer": "Linh's dad"
+                  "correct_answer": "11"
                 },
                 {
-                  "question": "Who does Linh look like?",
-                  "answer": "her mum",
+                  "question": "Who is Eva's twin sister?",
                   "options": [
-                    "her dad",
-                    "her mum",
-                    "her grandmother",
-                    "her sister"
+                    "Inca",
+                    "Isabel",
+                    "Helena",
+                    "Ruby"
                   ],
-                  "correct_answer": "her mum"
+                  "correct_answer": "Inca"
                 },
                 {
-                  "question": "Tom is ___.",
-                  "answer": "tall with short hair",
+                  "question": "Is Eva happy?",
                   "options": [
-                    "short with curly hair",
-                    "tall with short hair",
-                    "old with a beard",
-                    "thin with long hair"
+                    "yes",
+                    "no"
                   ],
-                  "correct_answer": "tall with short hair"
+                  "correct_answer": "yes"
                 },
                 {
-                  "question": "Sophie's grandmother has hair like ___.",
-                  "answer": "Sophie's",
+                  "question": "Is Eva hungry?",
                   "options": [
-                    "Linh's",
-                    "Tom's",
-                    "Sophie's",
-                    "Lucas's"
+                    "no",
+                    "yes"
                   ],
-                  "correct_answer": "Sophie's"
+                  "correct_answer": "no"
+                },
+                {
+                  "question": "What does Eva want?",
+                  "options": [
+                    "water",
+                    "a sandwich",
+                    "a book",
+                    "a friend"
+                  ],
+                  "correct_answer": "water"
                 }
               ]
             },
@@ -2926,87 +2934,63 @@
               "step": 8,
               "type": "production",
               "production_type": "speaking",
-              "prompt": "Tell Ray about your whole family in 6-8 sentences. Use 's, possessive pronouns and 'look like' at least once each.",
-              "expected_text": "My family is [big/small]. My grandfather/grandmother has [feature]. My dad/mum is [adjective]. I have [number] brother/sister/cousin(s). I look like my [person]. This photo is mine/ours.",
+              "prompt": "Talk about your family for 30 seconds. Use family words, possessive 's, and one feeling.",
+              "expected_text": "My mum's name is Sofia. My dad is funny. I'm happy with my family.",
               "prompts": [
-                "Say if your family is big or small.",
-                "Describe one grandparent.",
-                "Describe one parent.",
-                "Say if you have cousins, brothers or sisters.",
-                "Use 'look like' once.",
-                "End with a possessive pronoun. ('This photo is ___.')"
-              ]
+                "Person 1: 'My mum/dad/brother/sister is...'",
+                "Possessive: 'My ___'s name is...'",
+                "Feeling: 'I'm happy / tired / hungry today.'"
+              ],
+              "image_url": ""
             },
             {
               "step": 9,
               "type": "exit_ticket",
-              "title": "Unit 2 — My family — Final check",
+              "title": "Unit 2 review",
               "questions": [
                 {
-                  "question": "Choose: My ___ live near a river.",
+                  "question": "Choose: Helena's ___ is David.",
                   "options": [
-                    "grandparent",
-                    "grandparents",
-                    "grandfathers"
+                    "husband",
+                    "wife",
+                    "son"
                   ],
-                  "correct_answer": "grandparents"
+                  "correct_answer": "husband"
                 },
                 {
-                  "question": "Two kids born on the same day are ___.",
+                  "question": "Helena and David have three ___.",
                   "options": [
-                    "cousins",
-                    "twins",
-                    "friends"
+                    "daughters",
+                    "sons",
+                    "brothers"
                   ],
-                  "correct_answer": "twins"
+                  "correct_answer": "daughters"
                 },
                 {
-                  "question": "Sophie has yellow hair. She is ___.",
+                  "question": "You feel good and you smile — you are ___.",
                   "options": [
-                    "blonde",
-                    "tall",
-                    "fat",
-                    "old"
+                    "happy",
+                    "tired",
+                    "hungry"
                   ],
-                  "correct_answer": "blonde"
+                  "correct_answer": "happy"
                 },
                 {
-                  "question": "The opposite of tall is ___.",
+                  "question": "Are you hungry? — No, I ___.",
                   "options": [
-                    "short",
-                    "fat",
-                    "old",
-                    "young"
+                    "'m not",
+                    "isn't",
+                    "am"
                   ],
-                  "correct_answer": "short"
+                  "correct_answer": "'m not"
                 },
                 {
-                  "question": "Hair under a man's nose is a ___.",
+                  "question": "True or false: 'My dad's brother' is your uncle.",
                   "options": [
-                    "moustache",
-                    "beard",
-                    "smile"
+                    "True",
+                    "False"
                   ],
-                  "correct_answer": "moustache"
-                },
-                {
-                  "question": "Choose: This photo is ___.",
-                  "options": [
-                    "our",
-                    "ours",
-                    "us"
-                  ],
-                  "correct_answer": "ours"
-                },
-                {
-                  "question": "Build: cousins / twins / are / My",
-                  "options": [
-                    "My cousins are twins.",
-                    "Cousins my twins are.",
-                    "Twins my are cousins.",
-                    "Are my cousins twins."
-                  ],
-                  "correct_answer": "My cousins are twins."
+                  "correct_answer": "True"
                 }
               ]
             }

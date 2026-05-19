@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "source": "Cambridge Prepare 2nd Edition Level 1 (A1) — Teacher's Book",
+  "isbn": "9781108433273",
+  "extracted_by": "Claude Opus 4.7 (vision OCR from local PDF, 2026-05-19)",
+  "purpose": "Hard wordlist + grammar constraint for Stage 3 content writer. Each unit's `target_vocab` and `target_grammar` define what the lesson MUST teach explicitly; anything outside these lists is curriculum scope creep. `passive_vocab` may appear in passages for context but is not explicitly taught here.",
+  "design_rule": "Stage 3 Unit N content must match Prepare Level 1 Unit N — same topic, same vocab scope, same grammar target. Passages/scripts are original (IP boundary); wordlist + grammar are not.",
+  "units": [
+    {
+      "unit_num": 0,
+      "title": "In the classroom",
+      "sb_page": 10,
+      "topic": "Classroom basics",
+      "vocab_sections": {
+        "alphabet": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
+        "numbers": ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty"],
+        "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "classroom_objects": ["board", "book", "chair", "computer", "desk", "door", "pen", "pencil", "rubber", "ruler", "table", "window"],
+        "colours": ["black", "blue", "brown", "green", "grey", "orange", "pink", "purple", "red", "white", "yellow"],
+        "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+      },
+      "target_grammar": [
+        "a / an (indefinite articles)",
+        "this / that / these / those (demonstratives, singular and plural)"
+      ],
+      "pronunciation": "Letter sounds + numbers",
+      "reading_topic": null,
+      "listening_topic": "Classroom instructions",
+      "speaking_topic": "Asking and answering questions about personal details",
+      "writing_topic": null,
+      "notes": "Pre-Unit. Establishes basic CYL toolkit. Used as warm-up before Unit 1 proper."
+    },
+    {
+      "unit_num": 1,
+      "title": "All about me",
+      "sb_page": 14,
+      "topic": "Me, my things and my nationality",
+      "vocab_sections": {
+        "objects_and_people": ["bag", "camera", "chair", "phone", "photo", "students", "friends", "table", "watch", "teacher", "classmates"],
+        "countries_and_nationalities": [
+          {"country": "Argentina", "nationality": "Argentinian"},
+          {"country": "Brazil", "nationality": "Brazilian"},
+          {"country": "China", "nationality": "Chinese"},
+          {"country": "Italy", "nationality": "Italian"},
+          {"country": "Japan", "nationality": "Japanese"},
+          {"country": "Mexico", "nationality": "Mexican"},
+          {"country": "Russia", "nationality": "Russian"},
+          {"country": "Spain", "nationality": "Spanish"},
+          {"country": "Turkey", "nationality": "Turkish"},
+          {"country": "the UK", "nationality": "British"},
+          {"country": "the USA", "nationality": "American"}
+        ]
+      },
+      "target_grammar": [
+        "Determiners — singular and plural (a/the, no article)",
+        "be — singular and plural (I am, you are, he/she/it is, we are, they are)"
+      ],
+      "pronunciation": "Word stress in long words (nationalities like Brazilian, Japanese)",
+      "reading_topic": "A web page introducing yourself + 'Tell us about you' student profiles",
+      "listening_topic": "A conversation about making introductions",
+      "speaking_topic": "Telling your friend about you",
+      "writing_topic": "A web page introducing yourself"
+    },
+    {
+      "unit_num": 2,
+      "title": "My family",
+      "sb_page": 18,
+      "topic": "Families and feelings",
+      "vocab_sections": {
+        "families": [
+          "baby",
+          "brother",
+          "children",
+          "dad",
+          "daughter",
+          "family",
+          "father",
+          "husband",
+          "mother",
+          "mum",
+          "parents",
+          "sister",
+          "son",
+          "wife"
+        ],
+        "adjectives_feelings": [
+          "bored",
+          "clever",
+          "funny",
+          "happy",
+          "hot",
+          "hungry",
+          "sad",
+          "thirsty",
+          "tired"
+        ]
+      },
+      "target_grammar": [
+        "Determiners — possessive (my, your, his, her, its, our, their)",
+        "Possessive 's (e.g., David's sister, Mum's name)",
+        "be — short answers (Yes, I am. / No, I'm not. / Yes, he is. / No, she isn't.)"
+      ],
+      "pronunciation": "/ə/ schwa (mum, brother, son, father, mother, parents)",
+      "reading_topic": "A web page describing members of a family (names, ages, relationships)",
+      "listening_topic": "A conversation about feelings (using the feelings adjectives in context)",
+      "speaking_topic": "Asking and answering personal questions ('Are you OK?' 'How old are you?')",
+      "writing_topic": "A web page to describe a person in your family",
+      "anchor_characters_in_prepare_passages": [
+        "David (father)",
+        "Helena (wife)",
+        "Isabel (daughter)",
+        "Inca (daughter, twin)",
+        "Eva (daughter, twin)",
+        "Ruby (friend, age 11)"
+      ],
+      "do_not_include_words_here_belong_to_later_units": [
+        "uncle",
+        "aunt",
+        "cousin",
+        "grandfather",
+        "grandmother",
+        "grandparent",
+        "grandson",
+        "granddaughter",
+        "beard",
+        "moustache",
+        "hair",
+        "eyes",
+        "blonde",
+        "curly",
+        "fair",
+        "tall",
+        "short",
+        "thin",
+        "fat",
+        "look like",
+        "twin (as taught vocab; appears as passive context only)",
+        "kind",
+        "smile",
+        "photo (as taught vocab; appears as passive context only, taught in Unit 1)"
+      ]
+    }
+  ],
+  "validation_rules": {
+    "vocab_coverage_minimum_pct": 85,
+    "scope_creep_check": "If unit_breakdown.do_not_include_words_here_belong_to_later_units lists a word, the generated content must NOT teach it as target vocab in this unit.",
+    "grammar_one_focus_rule": "Each lesson within a unit targets exactly one of the unit's target_grammar items. Lesson 4 (review) recycles all.",
+    "ip_boundary": "Passages and listening scripts must be ORIGINAL writing using the wordlist + grammar; never verbatim Prepare passage content.",
+    "anchor_characters_optional": "The 'anchor_characters_in_prepare_passages' field is informational only — content writer MAY use the same names so a student recognises them from class, but DOES NOT reproduce Prepare's specific dialogue or passage text."
+  }
+}
