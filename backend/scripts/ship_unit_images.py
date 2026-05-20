@@ -192,11 +192,11 @@ def make_r2_client():
     )
 
 
-def mflux_generate(prompt: str, out_path: Path, model: str, steps: int, seed: int, size: int):
+def mflux_generate(prompt: str, out_path: Path, model_arg: str, steps: int, seed: int, size: int):
     """Invoke mflux CLI. Raises on non-zero exit."""
     cmd = [
         "mflux-generate",
-        "--model", model,
+        "--model", model_arg,
         "--prompt", prompt,
         "--output", str(out_path),
         "--steps", str(steps),
@@ -249,15 +249,28 @@ def trigger_merge():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--unit", type=int, required=True, help="Stage 3 unit number (1-20)")
-    ap.add_argument("--model", default="dev", choices=["dev", "schnell"],
-                    help="FLUX variant. dev = higher quality (~30s/image), schnell = faster (~5s/image). Default dev.")
+    ap.add_argument("--model", default="klein-4b", choices=["klein-4b", "schnell", "dev"],
+                    help=(
+                        "FLUX variant. klein-4b = FLUX.2 [klein] 4B (Apache 2.0, commercial OK, ~10s/image on M-series, 48GB plenty); "
+                        "schnell = FLUX.1-schnell (Apache 2.0, distilled, ~5s/image, slightly older); "
+                        "dev = FLUX.1-dev or FLUX.2-dev (NON-COMMERCIAL license — do NOT use for testmaster.pro paid product). "
+                        "Default klein-4b."
+                    ))
     ap.add_argument("--steps", type=int, default=None, help="override inference steps")
     ap.add_argument("--size", type=int, default=512)
     ap.add_argument("--force", action="store_true", help="re-generate even if R2 already has it")
     ap.add_argument("--no-merge", action="store_true", help="skip the live merge trigger")
     args = ap.parse_args()
 
-    steps = args.steps if args.steps is not None else (4 if args.model == "schnell" else 20)
+    # Default steps per model. Klein 4B and FLUX.1-dev want ~20 inference
+    # steps; Schnell is distilled and 4 steps is enough.
+    default_steps = {"schnell": 4, "klein-4b": 20, "dev": 20}
+    steps = args.steps if args.steps is not None else default_steps[args.model]
+
+    # Map our friendly --model arg to the actual mflux-generate --model
+    # flag. mflux currently supports "schnell", "dev", and (since 0.10+)
+    # "klein-4b" for FLUX.2 [klein] 4B Apache-2.0 weights.
+    mflux_model_arg = {"schnell": "schnell", "dev": "dev", "klein-4b": "klein-4b"}[args.model]
 
     rows, json_path, data = collect_unit_words(args.unit)
     print(f"Unit {args.unit:02d}: {len(rows)} unique vocab words")
@@ -282,7 +295,7 @@ def main():
         seed = int(hashlib.md5(slug.encode()).hexdigest()[:8], 16) & 0x7FFFFFFF
         print(f"  → {slug}.png (generating, seed={seed})…", flush=True)
         try:
-            mflux_generate(prompt, out_path, args.model, steps, seed, args.size)
+            mflux_generate(prompt, out_path, mflux_model_arg, steps, seed, args.size)
         except Exception as e:
             print(f"  !! {slug} generation FAIL: {e}")
             continue
