@@ -18,30 +18,33 @@ const MultipleChoiceGrammar = ({
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [score, setScore] = useState(0);
-  const [shuffledOptions, setShuffledOptions] = useState([]);
   const [isComplete, setIsComplete] = useState(false);
 
   if (!items?.length) return null;
-  let currentItem = items[currentIdx];
+  const rawItem = items[currentIdx];
 
   // Stage 3 generator stuffs sentences like "I ___ from Argentina. → I'm from
   // Argentina." into the `sentence` field. The arrow suffix leaks the answer.
   // Also the field is sometimes called `sentence` not `question`. Normalize.
-  if (currentItem) {
-    const rawQ = currentItem.question || currentItem.question_text || currentItem.sentence || '';
+  // Also the backend may use `correct` (Stage 3) instead of `answer` (Stage 1/2).
+  const currentItem = React.useMemo(() => {
+    if (!rawItem) return null;
+    const rawQ = rawItem.question || rawItem.question_text || rawItem.sentence || '';
     const arrowIdx = String(rawQ).search(/→|->/);
     const cleanQ = arrowIdx >= 0 ? String(rawQ).substring(0, arrowIdx).trim() : rawQ;
-    // The backend item may carry the answer under `correct` (Stage 3) or
-    // `answer` (Stage 1/2 legacy). Normalize so the handler matches.
-    const answer = currentItem.answer || currentItem.correct || '';
-    currentItem = { ...currentItem, question: cleanQ, answer };
-  }
+    const answer = rawItem.answer || rawItem.correct || '';
+    return { ...rawItem, question: cleanQ, answer };
+  }, [rawItem]);
 
-  React.useEffect(() => {
-    if (currentItem?.options) {
-      setShuffledOptions(shuffleArray([...currentItem.options]));
-    }
-  }, [currentIdx, currentItem?.options]);
+  // Shuffle options once per question index — depending on currentItem.options
+  // re-shuffles every render (rawItem is the same reference, but the memo
+  // result is a new object each render), so the dep array stays `currentIdx`
+  // only. Aga's 2026-05-20 "blinking options" catch.
+  const shuffledOptions = React.useMemo(() => {
+    if (!currentItem?.options?.length) return [];
+    return shuffleArray([...currentItem.options]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentIdx]);
 
   const handleSelect = (option) => {
     if (showFeedback) return;

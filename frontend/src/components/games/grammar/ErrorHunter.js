@@ -38,14 +38,47 @@ const ErrorHunter = ({ items, onComplete, onSkip }) => {
       ? sentenceRaw.substring(arrowIdx + (sentenceRaw[arrowIdx] === '→' ? 1 : 2)).trim()
       : '';
 
+    // Contractions in good sentence break naive token-index matching.
+    // "I is from Argentina." → "I'm from Argentina." has 4 vs 3 tokens, so
+    // bad[1]='is' would map to good[1]='from' — completely wrong. Expand
+    // common subject-be contractions before diffing.
+    const CONTRACTIONS = {
+      "i'm": ['i', 'am'],
+      "you're": ['you', 'are'],
+      "we're": ['we', 'are'],
+      "they're": ['they', 'are'],
+      "he's": ['he', 'is'],
+      "she's": ['she', 'is'],
+      "it's": ['it', 'is'],
+      "isn't": ['is', 'not'],
+      "aren't": ['are', 'not'],
+      "wasn't": ['was', 'not'],
+      "weren't": ['were', 'not'],
+      "don't": ['do', 'not'],
+      "doesn't": ['does', 'not'],
+      "didn't": ['did', 'not'],
+      "can't": ['can', 'not'],
+      "won't": ['will', 'not'],
+    };
+    const expandContractions = (tokens) => {
+      const out = [];
+      for (const tok of tokens) {
+        const cleanTok = tok.toLowerCase().replace(/[.,!?;:'"]+$/, '').replace(/^[.,!?;:'"]+/, '');
+        const expansion = CONTRACTIONS[cleanTok];
+        if (expansion) {
+          out.push(...expansion);
+        } else {
+          out.push(tok);
+        }
+      }
+      return out;
+    };
+
     let correctWord = rawItem.correctWord;
     if (!correctWord && goodSentence) {
-      // Diff bad vs good word-by-word; the first mismatch word in good is the
-      // correction. Handles contractions like "is" → "I'm" (different index)
-      // by falling back to the word that replaced errorWord by position.
       const stripPunc = (s) => s.toLowerCase().replace(/[.,!?;:'"]/g, '');
       const badTokens = displaySentence.split(/\s+/);
-      const goodTokens = goodSentence.split(/\s+/);
+      const goodTokens = expandContractions(goodSentence.split(/\s+/));
       const err = stripPunc(rawItem.errorWord || '');
       const errIdx = badTokens.findIndex((w) => stripPunc(w) === err);
       if (errIdx >= 0 && errIdx < goodTokens.length) {

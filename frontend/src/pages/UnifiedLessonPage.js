@@ -1600,7 +1600,6 @@ function MicroReading({ activity, onComplete, onSkip }) {
   const [showFeedback, setShowFeedback] = useState(false);
   const [correct, setCorrect] = useState(0);
   const [locateSpan, setLocateSpan] = useState(null); // text of the locate-in-text hint
-  const [shuffledOptions, setShuffledOptions] = useState([]);
   const rawQuestions = activity?.comprehension_questions || activity?.questions || [];
   // Strip author meta-comments like "(Full 'there is/are' in Unit 3.)" before
   // rendering — those notes are for the curriculum writer, not the student.
@@ -1614,15 +1613,15 @@ function MicroReading({ activity, onComplete, onSkip }) {
   const sceneImage = activity?.scene_image_url || activity?.scene_image || activity?.image_url;
   const q = questions[currentQ];
 
-  // Shuffle options per question so the correct answer isn't always option A
-  // — the Stage 3 generator emits correct_answer = options[0] every time
-  // (Aga's 2026-05-20 catch). The original options array stays intact for
-  // answer matching; we only randomize display order.
-  React.useEffect(() => {
-    if (q?.options?.length) {
-      setShuffledOptions(shuffleArray([...q.options]));
-    }
-  }, [currentQ, q?.options]);
+  // Shuffle options once per question index — dep on currentQ ONLY. q.options
+  // is recomputed each render (stripMeta map above creates a new array every
+  // time), so depending on it triggers an infinite re-shuffle loop that
+  // visually flashed the buttons (Aga's 2026-05-20 catch).
+  const shuffledOptions = React.useMemo(() => {
+    if (!q?.options?.length) return [];
+    return shuffleArray([...q.options]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentQ]);
 
   // Locate-in-text: when learner gets a question wrong, highlight the
   // sentence in the passage that contains the answer so they can re-read.
