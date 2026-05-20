@@ -22,19 +22,33 @@ const MultipleChoiceGrammar = ({
   const [isComplete, setIsComplete] = useState(false);
 
   if (!items?.length) return null;
-  const currentItem = items[currentIdx];
+  let currentItem = items[currentIdx];
+
+  // Stage 3 generator stuffs sentences like "I ___ from Argentina. → I'm from
+  // Argentina." into the `sentence` field. The arrow suffix leaks the answer.
+  // Also the field is sometimes called `sentence` not `question`. Normalize.
+  if (currentItem) {
+    const rawQ = currentItem.question || currentItem.question_text || currentItem.sentence || '';
+    const arrowIdx = String(rawQ).search(/→|->/);
+    const cleanQ = arrowIdx >= 0 ? String(rawQ).substring(0, arrowIdx).trim() : rawQ;
+    // The backend item may carry the answer under `correct` (Stage 3) or
+    // `answer` (Stage 1/2 legacy). Normalize so the handler matches.
+    const answer = currentItem.answer || currentItem.correct || '';
+    currentItem = { ...currentItem, question: cleanQ, answer };
+  }
 
   React.useEffect(() => {
     if (currentItem?.options) {
       setShuffledOptions(shuffleArray([...currentItem.options]));
     }
-  }, [currentIdx, currentItem]);
+  }, [currentIdx, currentItem?.options]);
 
   const handleSelect = (option) => {
     if (showFeedback) return;
     setSelectedAnswer(option);
     setShowFeedback(true);
-    if (option.toLowerCase() === currentItem.answer.toLowerCase()) {
+    const correct = String(currentItem.answer || '').toLowerCase().trim();
+    if (option.toLowerCase().trim() === correct) {
       setScore(s => s + 1);
     }
   };

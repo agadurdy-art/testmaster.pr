@@ -124,7 +124,7 @@ const WordRace = ({ items, onComplete, onSkip, timeLimit }) => {
                   <img
                     src={resolveImg(opt.image_url)}
                     alt={opt.word || ''}
-                    className="w-full h-32 object-cover rounded-xl"
+                    className="w-full h-32 object-contain rounded-xl p-1"
                     onError={(e) => {
                       // Hide the broken image and reveal the emoji sibling so the
                       // card never renders as a blank white square (Pollinations

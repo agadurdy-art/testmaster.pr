@@ -23,12 +23,50 @@ const ErrorHunter = ({ items, onComplete, onSkip }) => {
   const [isComplete, setIsComplete] = useState(false);
 
   if (!items?.length) return null;
-  const currentItem = items[currentIdx] || {};
+  const rawItem = items[currentIdx] || {};
+
+  // Stage 3 build script emits sentence with the corrected version after a "→"
+  // arrow, e.g. "I is from Argentina. → I'm from Argentina." That leaks the
+  // answer to the kid and breaks our component's options array. Strip the
+  // arrow suffix for display, and derive correctWord from the good half when
+  // the backend didn't provide one explicitly. Aga 2026-05-20.
+  const currentItem = useMemo(() => {
+    const sentenceRaw = String(rawItem.sentence || '');
+    const arrowIdx = sentenceRaw.search(/→|->/);
+    const displaySentence = arrowIdx >= 0 ? sentenceRaw.substring(0, arrowIdx).trim() : sentenceRaw;
+    const goodSentence = arrowIdx >= 0
+      ? sentenceRaw.substring(arrowIdx + (sentenceRaw[arrowIdx] === '→' ? 1 : 2)).trim()
+      : '';
+
+    let correctWord = rawItem.correctWord;
+    if (!correctWord && goodSentence) {
+      // Diff bad vs good word-by-word; the first mismatch word in good is the
+      // correction. Handles contractions like "is" → "I'm" (different index)
+      // by falling back to the word that replaced errorWord by position.
+      const stripPunc = (s) => s.toLowerCase().replace(/[.,!?;:'"]/g, '');
+      const badTokens = displaySentence.split(/\s+/);
+      const goodTokens = goodSentence.split(/\s+/);
+      const err = stripPunc(rawItem.errorWord || '');
+      const errIdx = badTokens.findIndex((w) => stripPunc(w) === err);
+      if (errIdx >= 0 && errIdx < goodTokens.length) {
+        correctWord = goodTokens[errIdx];
+      } else {
+        // Fallback: first token in good that differs from bad
+        for (let i = 0; i < Math.min(badTokens.length, goodTokens.length); i++) {
+          if (stripPunc(badTokens[i]) !== stripPunc(goodTokens[i])) {
+            correctWord = goodTokens[i];
+            break;
+          }
+        }
+      }
+    }
+    return { ...rawItem, sentence: displaySentence, correctWord };
+  }, [rawItem]);
 
   // Build the two option buttons (correct + mistake), shuffled per item.
   const options = useMemo(() => {
-    const correct = String(currentItem.correctWord || '').trim();
-    const wrong = String(currentItem.errorWord || '').trim();
+    const correct = String(currentItem.correctWord || '').trim().replace(/[.,!?;:'"]+$/g, '');
+    const wrong = String(currentItem.errorWord || '').trim().replace(/[.,!?;:'"]+$/g, '');
     if (!correct || !wrong) return [];
     return shuffleArray([
       { word: correct, isCorrect: true },

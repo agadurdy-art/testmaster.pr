@@ -47,6 +47,7 @@ import {
   WordSearch,
   BoardGame
 } from '../components/games/review';
+import { shuffleArray } from '../components/games/shared';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -1051,7 +1052,7 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
                   <img
                     src={w.image_url.startsWith('/') ? `${API_URL}/api${w.image_url}` : w.image_url}
                     alt={w.word}
-                    className="w-full h-full object-cover absolute inset-0"
+                    className="w-full h-full object-contain absolute inset-0 p-2"
                     loading="lazy"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
@@ -1598,8 +1599,8 @@ function MicroReading({ activity, onComplete, onSkip }) {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [correct, setCorrect] = useState(0);
-  const [showPassage, setShowPassage] = useState(true);
   const [locateSpan, setLocateSpan] = useState(null); // text of the locate-in-text hint
+  const [shuffledOptions, setShuffledOptions] = useState([]);
   const rawQuestions = activity?.comprehension_questions || activity?.questions || [];
   // Strip author meta-comments like "(Full 'there is/are' in Unit 3.)" before
   // rendering — those notes are for the curriculum writer, not the student.
@@ -1612,6 +1613,16 @@ function MicroReading({ activity, onComplete, onSkip }) {
   const passageText = stripMeta(activity?.passage_text || activity?.passage || activity?.text || '');
   const sceneImage = activity?.scene_image_url || activity?.scene_image || activity?.image_url;
   const q = questions[currentQ];
+
+  // Shuffle options per question so the correct answer isn't always option A
+  // — the Stage 3 generator emits correct_answer = options[0] every time
+  // (Aga's 2026-05-20 catch). The original options array stays intact for
+  // answer matching; we only randomize display order.
+  React.useEffect(() => {
+    if (q?.options?.length) {
+      setShuffledOptions(shuffleArray([...q.options]));
+    }
+  }, [currentQ, q?.options]);
 
   // Locate-in-text: when learner gets a question wrong, highlight the
   // sentence in the passage that contains the answer so they can re-read.
@@ -1676,7 +1687,10 @@ function MicroReading({ activity, onComplete, onSkip }) {
     const sentence = findLocateSentence(q);
     if (sentence) {
       setLocateSpan(sentence);
-      setShowPassage(true);
+      // Passage is always visible now; just scroll it back into view.
+      setTimeout(() => {
+        document.querySelector('[data-testid="micro-reading"] mark')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 50);
     }
   };
 
@@ -1697,37 +1711,28 @@ function MicroReading({ activity, onComplete, onSkip }) {
         </div>
       </div>
 
-      {/* Passage */}
-      {showPassage && (
-        <Card className="p-6 mb-6 bg-amber-50/50 border-amber-200">
-          <h4 className="text-sm font-semibold text-amber-600 uppercase tracking-wider mb-3">Read the passage</h4>
-          {sceneImage && (
-            <img
-              src={sceneImage}
-              alt="Scene"
-              className="block w-full max-h-64 object-cover rounded-xl mb-4 border border-amber-100"
-              onError={(e) => { e.currentTarget.style.display = 'none'; }}
-            />
-          )}
-          <p className="text-xl text-gray-800 leading-relaxed" dangerouslySetInnerHTML={{ __html: highlightText(passageText) }} />
-          {questions.length > 0 && (
-            <Button variant="outline" size="sm" className="mt-4" onClick={() => setShowPassage(false)} data-testid="reading-answer-questions-btn">
-              Answer Questions <ChevronRight className="w-3 h-3 ml-1" />
-            </Button>
-          )}
-          {questions.length === 0 && <Button className="mt-4" onClick={() => onComplete(100)}>Continue</Button>}
-        </Card>
-      )}
+      {/* Passage stays visible while the learner answers — Aga 2026-05-20:
+          kids shouldn't have to bounce between two screens to find a word. */}
+      <Card className="p-6 mb-6 bg-amber-50/50 border-amber-200">
+        <h4 className="text-sm font-semibold text-amber-600 uppercase tracking-wider mb-3">Read the passage</h4>
+        {sceneImage && (
+          <img
+            src={sceneImage}
+            alt="Scene"
+            className="block w-full max-h-64 object-cover rounded-xl mb-4 border border-amber-100"
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+          />
+        )}
+        <p className="text-xl text-gray-800 leading-relaxed" dangerouslySetInnerHTML={{ __html: highlightText(passageText) }} />
+      </Card>
 
-      {/* Questions */}
-      {!showPassage && q && (
+      {/* Questions appear right under the passage so the kid can re-read
+          while choosing an answer. */}
+      {q ? (
         <Card className="p-6">
-          <button className="text-sm text-blue-600 mb-4 flex items-center gap-1" onClick={() => setShowPassage(true)}>
-            <ArrowLeft className="w-3 h-3" /> Show passage
-          </button>
           <h3 className="text-2xl font-bold text-gray-900 mb-5"><FormattedQuestion text={q.question || q.question_text} /></h3>
           <div className="space-y-3">
-            {(q.options || []).map(option => {
+            {(shuffledOptions.length ? shuffledOptions : (q.options || [])).map(option => {
               const isSelected = selectedAnswer === option;
               const optionIsCorrect = isCorrectOption(option);
               let cls = 'border-gray-200 hover:border-blue-300';
@@ -1755,6 +1760,8 @@ function MicroReading({ activity, onComplete, onSkip }) {
             </div>
           )}
         </Card>
+      ) : (
+        questions.length === 0 && <Button className="mt-4" onClick={() => onComplete(100)}>Continue</Button>
       )}
     </div>
   );

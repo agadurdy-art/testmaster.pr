@@ -599,7 +599,9 @@ export default function GEDashboard({ user, onLogout }) {
               <>
                 <div className="glib-row">
                   {topRow.map((stage, i) => {
-                    const isUnlocked = isAdmin || (stage.total_lessons || 0) > 0;
+                    // Foundation (Stage 1) doc lives in DB without total_lessons populated; fall
+// back to total_units so the kid sees the kart unlocked instead of greyed-out.
+const isUnlocked = isAdmin || (stage.total_lessons || stage.total_units || 0) > 0;
                     const isCurrent = stage.stage_id === resumeLesson?.stage_id;
                     return (
                       <BookCard
@@ -620,7 +622,9 @@ export default function GEDashboard({ user, onLogout }) {
                   <>
                     <div className="glib-row mt-6">
                       {bottomRow.map((stage, i) => {
-                        const isUnlocked = isAdmin || (stage.total_lessons || 0) > 0;
+                        // Foundation (Stage 1) doc lives in DB without total_lessons populated; fall
+// back to total_units so the kid sees the kart unlocked instead of greyed-out.
+const isUnlocked = isAdmin || (stage.total_lessons || stage.total_units || 0) > 0;
                         const isCurrent = stage.stage_id === resumeLesson?.stage_id;
                         return (
                           <BookCard

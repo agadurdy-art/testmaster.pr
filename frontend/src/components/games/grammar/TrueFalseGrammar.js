@@ -21,7 +21,16 @@ const TrueFalseGrammar = ({
   const [isComplete, setIsComplete] = useState(false);
 
   if (!items?.length) return null;
-  const rawItem = items[currentIdx];
+  let rawItem = items[currentIdx];
+  // Stage 3 generator emits sentence with "→ correct version" suffix that
+  // leaks the answer. Strip it for display so the kid only sees the sentence
+  // to judge. Same fix as ErrorHunter / MultipleChoiceGrammar.
+  if (rawItem && typeof rawItem.sentence === 'string') {
+    const arrowIdx = rawItem.sentence.search(/→|->/);
+    if (arrowIdx >= 0) {
+      rawItem = { ...rawItem, sentence: rawItem.sentence.substring(0, arrowIdx).trim() };
+    }
+  }
 
   // Defensive normalisation — pack_unit_games emits `correct: "true"|"false"`
   // (string), authored content sometimes uses `is_correct: boolean`. Accept

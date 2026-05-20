@@ -86,7 +86,7 @@ const ImageWordMatch = ({ items, onComplete, onSkip }) => {
               <img
                 src={resolveImg(item.image_url)}
                 alt={item.word}
-                className="w-40 h-40 object-cover rounded-2xl mx-auto mb-2 border border-emerald-100"
+                className="w-40 h-40 object-contain rounded-2xl mx-auto mb-2 border border-emerald-100 p-2"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                   const sib = e.currentTarget.nextElementSibling;
