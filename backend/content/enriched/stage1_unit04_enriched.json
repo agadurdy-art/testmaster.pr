@@ -79,7 +79,7 @@
                   "ipa": "/rɛd/",
                   "definition": "Color of fire trucks.",
                   "example": "The apple is red.",
-                  "image_emoji": "🍎",
+                  "image_emoji": "🟥",
                   "image_url": "/static/vocab_images/red.png"
                 },
                 {
@@ -87,7 +87,7 @@
                   "ipa": "/bluː/",
                   "definition": "Color of the sky.",
                   "example": "The sky is blue.",
-                  "image_emoji": "🌅",
+                  "image_emoji": "🟦",
                   "image_url": "/static/vocab_images/blue.png"
                 },
                 {
@@ -95,7 +95,7 @@
                   "ipa": "/pɪŋk/",
                   "definition": "Light red color.",
                   "example": "I like pink flowers.",
-                  "image_emoji": "🌸",
+                  "image_emoji": "🩷",
                   "image_url": "/static/vocab_images/pink.png"
                 },
                 {
@@ -125,37 +125,43 @@
                   "items": [
                     {
                       "word": "red",
-                      "emoji": "🔴",
+                      "emoji": "🟥",
                       "distractors": [
                         {
                           "word": "blue",
-                          "emoji": "🔵"
+                          "emoji": "🟦",
+                          "image_url": ""
                         },
                         {
                           "word": "pink",
-                          "emoji": "🩷"
+                          "emoji": "🩷",
+                          "image_url": ""
                         },
                         {
-                          "word": "pig",
-                          "emoji": "🐷"
+                          "word": "green",
+                          "emoji": "🟩",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
                       "word": "blue",
-                      "emoji": "🔵",
+                      "emoji": "🟦",
                       "distractors": [
                         {
                           "word": "red",
-                          "emoji": "🔴"
+                          "emoji": "🟥",
+                          "image_url": ""
                         },
                         {
                           "word": "pink",
-                          "emoji": "🩷"
+                          "emoji": "🩷",
+                          "image_url": ""
                         },
                         {
-                          "word": "queen",
-                          "emoji": "👸"
+                          "word": "green",
+                          "emoji": "🟩",
+                          "image_url": ""
                         }
                       ]
                     },
@@ -165,15 +171,18 @@
                       "distractors": [
                         {
                           "word": "red",
-                          "emoji": "🔴"
+                          "emoji": "🟥",
+                          "image_url": ""
                         },
                         {
                           "word": "blue",
-                          "emoji": "🔵"
+                          "emoji": "🟦",
+                          "image_url": ""
                         },
                         {
-                          "word": "pig",
-                          "emoji": "🐷"
+                          "word": "green",
+                          "emoji": "🟩",
+                          "image_url": ""
                         }
                       ]
                     }
@@ -220,19 +229,22 @@
                     },
                     {
                       "word": "blue",
-                      "emoji": "🔵",
+                      "emoji": "🟦",
                       "distractors": [
                         {
+                          "word": "red",
+                          "emoji": "🟥",
+                          "image_url": ""
+                        },
+                        {
                           "word": "pink",
-                          "emoji": "🩷"
+                          "emoji": "🩷",
+                          "image_url": ""
                         },
                         {
-                          "word": "pig",
-                          "emoji": "🐷"
-                        },
-                        {
-                          "word": "queen",
-                          "emoji": "👸"
+                          "word": "green",
+                          "emoji": "🟩",
+                          "image_url": ""
                         }
                       ]
                     }
@@ -243,11 +255,11 @@
                   "items": [
                     {
                       "word": "red",
-                      "emoji": "🔴"
+                      "emoji": "🟥"
                     },
                     {
                       "word": "blue",
-                      "emoji": "🔵"
+                      "emoji": "🟦"
                     },
                     {
                       "word": "pink",
@@ -556,7 +568,7 @@
                   "ipa": "/ɡriːn/",
                   "definition": "Color like leaves",
                   "example": "The leaf is green.",
-                  "image_emoji": "💚",
+                  "image_emoji": "🟩",
                   "image_url": "/static/vocab_images/green.png"
                 },
                 {
@@ -564,7 +576,7 @@
                   "ipa": "/ˈjɛloʊ/",
                   "definition": "Color like sunshine",
                   "example": "I like yellow flowers.",
-                  "image_emoji": "💛",
+                  "image_emoji": "🟨",
                   "image_url": "/static/vocab_images/yellow.png"
                 },
                 {
@@ -594,37 +606,43 @@
                   "items": [
                     {
                       "word": "green",
-                      "emoji": "🟢",
+                      "emoji": "🟩",
                       "distractors": [
                         {
                           "word": "yellow",
-                          "emoji": "🟡"
+                          "emoji": "🟨",
+                          "image_url": ""
                         },
                         {
-                          "word": "rabbit",
-                          "emoji": "🐇"
+                          "word": "red",
+                          "emoji": "🟥",
+                          "image_url": ""
                         },
                         {
-                          "word": "run",
-                          "emoji": "🏃‍♂️"
+                          "word": "blue",
+                          "emoji": "🟦",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
                       "word": "yellow",
-                      "emoji": "🟡",
+                      "emoji": "🟨",
                       "distractors": [
                         {
                           "word": "green",
-                          "emoji": "🟢"
+                          "emoji": "🟩",
+                          "image_url": ""
                         },
                         {
-                          "word": "rabbit",
-                          "emoji": "🐇"
+                          "word": "red",
+                          "emoji": "🟥",
+                          "image_url": ""
                         },
                         {
-                          "word": "run",
-                          "emoji": "🏃‍♂️"
+                          "word": "blue",
+                          "emoji": "🟦",
+                          "image_url": ""
                         }
                       ]
                     },
@@ -671,37 +689,43 @@
                   "items": [
                     {
                       "word": "green",
-                      "emoji": "🟢",
+                      "emoji": "🟩",
                       "distractors": [
                         {
                           "word": "yellow",
-                          "emoji": "🟡"
+                          "emoji": "🟨",
+                          "image_url": ""
                         },
                         {
-                          "word": "rabbit",
-                          "emoji": "🐇"
+                          "word": "red",
+                          "emoji": "🟥",
+                          "image_url": ""
                         },
                         {
-                          "word": "run",
-                          "emoji": "🏃‍♂️"
+                          "word": "blue",
+                          "emoji": "🟦",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
                       "word": "yellow",
-                      "emoji": "🟡",
+                      "emoji": "🟨",
                       "distractors": [
                         {
                           "word": "green",
-                          "emoji": "🟢"
+                          "emoji": "🟩",
+                          "image_url": ""
                         },
                         {
-                          "word": "rabbit",
-                          "emoji": "🐇"
+                          "word": "red",
+                          "emoji": "🟥",
+                          "image_url": ""
                         },
                         {
-                          "word": "run",
-                          "emoji": "🏃‍♂️"
+                          "word": "blue",
+                          "emoji": "🟦",
+                          "image_url": ""
                         }
                       ]
                     },
@@ -748,11 +772,11 @@
                   "items": [
                     {
                       "word": "green",
-                      "emoji": "🟢"
+                      "emoji": "🟩"
                     },
                     {
                       "word": "yellow",
-                      "emoji": "🟡"
+                      "emoji": "🟨"
                     },
                     {
                       "word": "rabbit",
@@ -1048,7 +1072,7 @@
                   "ipa": "/ˈɔːrɪndʒ/",
                   "definition": "Like a bright fruit.",
                   "example": "I like orange.",
-                  "image_emoji": "🍊",
+                  "image_emoji": "🟧",
                   "image_url": "/static/vocab_images/orange.png"
                 },
                 {
@@ -1086,37 +1110,43 @@
                   "items": [
                     {
                       "word": "black",
-                      "emoji": "⚫",
+                      "emoji": "⬛",
                       "distractors": [
                         {
                           "word": "orange",
-                          "emoji": "🟠"
+                          "emoji": "🟧",
+                          "image_url": ""
                         },
                         {
-                          "word": "sun",
-                          "emoji": "☀️"
+                          "word": "red",
+                          "emoji": "🟥",
+                          "image_url": ""
                         },
                         {
-                          "word": "tiger",
-                          "emoji": "🐅"
+                          "word": "blue",
+                          "emoji": "🟦",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
                       "word": "orange",
-                      "emoji": "🟠",
+                      "emoji": "🟧",
                       "distractors": [
                         {
                           "word": "black",
-                          "emoji": "⚫"
+                          "emoji": "⬛",
+                          "image_url": ""
                         },
                         {
-                          "word": "sun",
-                          "emoji": "☀️"
+                          "word": "red",
+                          "emoji": "🟥",
+                          "image_url": ""
                         },
                         {
-                          "word": "ten",
-                          "emoji": "🔟"
+                          "word": "blue",
+                          "emoji": "🟦",
+                          "image_url": ""
                         }
                       ]
                     },
@@ -1181,19 +1211,22 @@
                     },
                     {
                       "word": "black",
-                      "emoji": "⚫",
+                      "emoji": "⬛",
                       "distractors": [
                         {
-                          "word": "tiger",
-                          "emoji": "🐅"
-                        },
-                        {
                           "word": "orange",
-                          "emoji": "🟠"
+                          "emoji": "🟧",
+                          "image_url": ""
                         },
                         {
-                          "word": "ten",
-                          "emoji": "🔟"
+                          "word": "red",
+                          "emoji": "🟥",
+                          "image_url": ""
+                        },
+                        {
+                          "word": "blue",
+                          "emoji": "🟦",
+                          "image_url": ""
                         }
                       ]
                     }
@@ -1204,11 +1237,11 @@
                   "items": [
                     {
                       "word": "black",
-                      "emoji": "⚫"
+                      "emoji": "⬛"
                     },
                     {
                       "word": "orange",
-                      "emoji": "🟠"
+                      "emoji": "🟧"
                     },
                     {
                       "word": "sun",

@@ -1510,7 +1510,7 @@
                   "ipa": "",
                   "definition": "A color made from red and blue.",
                   "example": "Grapes are purple.",
-                  "image_emoji": "",
+                  "image_emoji": "🟪",
                   "image_url": "/static/vocab_images/purple.png"
                 },
                 {
@@ -1518,7 +1518,7 @@
                   "ipa": "",
                   "definition": "A color between black and white.",
                   "example": "The sky is grey.",
-                  "image_emoji": "",
+                  "image_emoji": "🩶",
                   "image_url": "/static/vocab_images/grey.png"
                 },
                 {
@@ -1526,7 +1526,7 @@
                   "ipa": "",
                   "definition": "A color like chocolate or wood.",
                   "example": "The dog is brown.",
-                  "image_emoji": "",
+                  "image_emoji": "🟫",
                   "image_url": "/static/vocab_images/brown.png"
                 },
                 {
@@ -1534,7 +1534,7 @@
                   "ipa": "",
                   "definition": "The color of snow.",
                   "example": "The paper is white.",
-                  "image_emoji": "",
+                  "image_emoji": "⬜",
                   "image_url": "/static/vocab_images/gpt_white.png"
                 },
                 {
@@ -1542,7 +1542,7 @@
                   "ipa": "",
                   "definition": "The darkest color.",
                   "example": "My cat is black.",
-                  "image_emoji": "",
+                  "image_emoji": "⬛",
                   "image_url": "/static/vocab_images/black.png"
                 },
                 {
@@ -1550,7 +1550,7 @@
                   "ipa": "",
                   "definition": "A band of many colors in the sky.",
                   "example": "Look, a rainbow in the sky!",
-                  "image_emoji": "",
+                  "image_emoji": "🌈",
                   "image_url": "/static/vocab_images/gpt_rainbow.png"
                 }
               ]
@@ -1563,7 +1563,7 @@
                   "items": [
                     {
                       "word": "purple",
-                      "emoji": "🟣"
+                      "emoji": "🟪"
                     },
                     {
                       "word": "grey",
@@ -1572,15 +1572,15 @@
                     },
                     {
                       "word": "brown",
-                      "emoji": "🟤"
+                      "emoji": "🟫"
                     },
                     {
                       "word": "white",
-                      "emoji": "⚪"
+                      "emoji": "⬜"
                     },
                     {
                       "word": "black",
-                      "emoji": "⚫"
+                      "emoji": "⬛"
                     },
                     {
                       "word": "rainbow",
@@ -1593,7 +1593,7 @@
                   "items": [
                     {
                       "word": "purple",
-                      "emoji": "🟣",
+                      "emoji": "🟪",
                       "distractors": [
                         "purpel",
                         "perpul",
@@ -1612,7 +1612,7 @@
                     },
                     {
                       "word": "brown",
-                      "emoji": "🟤",
+                      "emoji": "🟫",
                       "distractors": [
                         "broun",
                         "brow",
@@ -1621,7 +1621,7 @@
                     },
                     {
                       "word": "white",
-                      "emoji": "⚪",
+                      "emoji": "⬜",
                       "distractors": [
                         "wite",
                         "whit",
@@ -1630,7 +1630,7 @@
                     },
                     {
                       "word": "black",
-                      "emoji": "⚫",
+                      "emoji": "⬛",
                       "distractors": [
                         "blak",
                         "blac",
@@ -1653,19 +1653,22 @@
                   "items": [
                     {
                       "word": "purple",
-                      "emoji": "🟣",
+                      "emoji": "🟪",
                       "distractors": [
                         {
-                          "word": "orange",
-                          "emoji": "🟠"
+                          "word": "grey",
+                          "emoji": "🩶",
+                          "image_url": ""
                         },
                         {
-                          "word": "green",
-                          "emoji": "🟢"
+                          "word": "brown",
+                          "emoji": "🟫",
+                          "image_url": ""
                         },
                         {
-                          "word": "pink",
-                          "emoji": "🩷"
+                          "word": "white",
+                          "emoji": "⬜",
+                          "image_url": ""
                         }
                       ]
                     },
@@ -1674,72 +1677,83 @@
                       "emoji": "🩶",
                       "distractors": [
                         {
-                          "word": "silver",
-                          "emoji": "⚙️"
+                          "word": "purple",
+                          "emoji": "🟪",
+                          "image_url": ""
                         },
                         {
-                          "word": "cloud",
-                          "emoji": "☁️"
+                          "word": "brown",
+                          "emoji": "🟫",
+                          "image_url": ""
                         },
                         {
-                          "word": "rock",
-                          "emoji": "🪨"
+                          "word": "white",
+                          "emoji": "⬜",
+                          "image_url": ""
                         }
                       ],
                       "image_url": "/static/vocab_images/grey.png"
                     },
                     {
                       "word": "brown",
-                      "emoji": "🟤",
+                      "emoji": "🟫",
                       "distractors": [
                         {
-                          "word": "tree",
-                          "emoji": "🌳"
+                          "word": "purple",
+                          "emoji": "🟪",
+                          "image_url": ""
                         },
                         {
-                          "word": "bear",
-                          "emoji": "🐻"
+                          "word": "grey",
+                          "emoji": "🩶",
+                          "image_url": ""
                         },
                         {
-                          "word": "orange",
-                          "emoji": "🟠"
+                          "word": "white",
+                          "emoji": "⬜",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
                       "word": "white",
-                      "emoji": "⚪",
+                      "emoji": "⬜",
                       "distractors": [
                         {
-                          "word": "snow",
-                          "emoji": "❄️"
+                          "word": "purple",
+                          "emoji": "🟪",
+                          "image_url": ""
                         },
                         {
-                          "word": "milk",
-                          "emoji": "🥛"
+                          "word": "grey",
+                          "emoji": "🩶",
+                          "image_url": ""
                         },
                         {
-                          "word": "yellow",
-                          "emoji": "🟡"
+                          "word": "brown",
+                          "emoji": "🟫",
+                          "image_url": ""
                         }
                       ]
                     },
                     {
                       "word": "black",
-                      "emoji": "⚫",
+                      "emoji": "⬛",
                       "distractors": [
                         {
-                          "word": "night",
-                          "emoji": "🌙"
-                        },
-                        {
-                          "word": "cat",
-                          "emoji": "🐱"
+                          "word": "purple",
+                          "emoji": "🟪",
+                          "image_url": ""
                         },
                         {
                           "word": "grey",
                           "emoji": "🩶",
-                          "image_url": "/static/vocab_images/grey.png"
+                          "image_url": ""
+                        },
+                        {
+                          "word": "brown",
+                          "emoji": "🟫",
+                          "image_url": ""
                         }
                       ]
                     },
@@ -1748,16 +1762,19 @@
                       "emoji": "🌈",
                       "distractors": [
                         {
-                          "word": "sun",
-                          "emoji": "☀️"
+                          "word": "purple",
+                          "emoji": "🟪",
+                          "image_url": ""
                         },
                         {
-                          "word": "star",
-                          "emoji": "⭐"
+                          "word": "grey",
+                          "emoji": "🩶",
+                          "image_url": ""
                         },
                         {
-                          "word": "bridge",
-                          "emoji": "🌉"
+                          "word": "brown",
+                          "emoji": "🟫",
+                          "image_url": ""
                         }
                       ]
                     }
