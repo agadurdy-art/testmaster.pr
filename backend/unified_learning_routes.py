@@ -100,9 +100,26 @@ async def get_stage(stage_id: str):
 
 @router.get("/stages/{stage_id}/units")
 async def get_stage_units(stage_id: str):
-    """Get all units in a stage"""
+    """Get all units in a stage. Accepts both the new stage_id format
+    (stage_1_foundations) and the legacy one (stage_1) that older seed
+    runs persisted, since unified_units docs on prod still carry the
+    short stage_id and a strict filter returned 0 for Foundation (Aga
+    2026-05-20 'Coming Soon' bug)."""
+    LEGACY_STAGE_ID = {
+        "stage_1_foundations": "stage_1",
+        "stage_2_starters": "stage_2",
+        "stage_3_movers": "stage_3",
+        "stage_4_flyers": "stage_4",
+        "stage_5_b1": "stage_5",
+        "stage_6_b2": "stage_6",
+        "stage_7_ielts_foundation": "stage_7",
+        "stage_8_ielts_mastery": "stage_8",
+    }
+    candidates = [stage_id]
+    if stage_id in LEGACY_STAGE_ID:
+        candidates.append(LEGACY_STAGE_ID[stage_id])
     units = await db.unified_units.find(
-        {"stage_id": stage_id}, {"_id": 0}
+        {"stage_id": {"$in": candidates}}, {"_id": 0}
     ).sort("unit_number", 1).to_list(20)
     return {"units": units, "total": len(units)}
 
