@@ -2143,6 +2143,12 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
   // answers: keyed by question index, value = picked option
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  // Audio player state — full transport bar for listening surfaces
+  // (Aga 2026-05-21: gelişmiş audio player olsun).
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [duration, setDuration] = useState(0);
+  const [position, setPosition] = useState(0);
+  const [playbackRate, setPlaybackRate] = useState(1);
   const rawQuestions = activity?.questions || [];
   const questions = rawQuestions.map(q => q ? ({
     ...q,
@@ -2165,25 +2171,78 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     u.lang = 'en-US'; u.rate = 0.85;
+    u.onend = () => setIsPlaying(false);
     speechSynthesis.speak(u);
+    setIsPlaying(true);
+  };
+
+  const ensureAudio = () => {
+    if (audioRef.current) return audioRef.current;
+    const audioUrl = activity?.audio_url;
+    if (!audioUrl) return null;
+    const fullUrl = audioUrl.startsWith('/') ? `${process.env.REACT_APP_BACKEND_URL}/api${audioUrl}` : audioUrl;
+    const audio = new Audio(fullUrl);
+    audio.preload = 'metadata';
+    audio.playbackRate = playbackRate;
+    audio.addEventListener('loadedmetadata', () => setDuration(audio.duration || 0));
+    audio.addEventListener('timeupdate', () => setPosition(audio.currentTime || 0));
+    audio.addEventListener('ended', () => { setIsPlaying(false); setPosition(audio.duration || 0); });
+    audio.addEventListener('play', () => setIsPlaying(true));
+    audio.addEventListener('pause', () => setIsPlaying(false));
+    audioRef.current = audio;
+    return audio;
   };
 
   const playListeningAudio = () => {
-    // Stop any existing audio first
-    if (audioRef.current) { audioRef.current.pause(); audioRef.current = null; }
     speechSynthesis.cancel();
-
-    const audioUrl = activity?.audio_url;
-    if (audioUrl) {
-      const fullUrl = audioUrl.startsWith('/') ? `${process.env.REACT_APP_BACKEND_URL}/api${audioUrl}` : audioUrl;
-      const audio = new Audio(fullUrl);
-      audio.playbackRate = 0.9;
-      audioRef.current = audio;
+    const audio = ensureAudio();
+    if (audio) {
       audio.play().catch(() => speakText(transcript));
     } else {
       speakText(transcript);
     }
     setHasPlayed(true);
+  };
+
+  const togglePlayPause = () => {
+    const audio = audioRef.current;
+    if (!audio) { playListeningAudio(); return; }
+    if (audio.paused || audio.ended) {
+      if (audio.ended) audio.currentTime = 0;
+      audio.play();
+    } else {
+      audio.pause();
+    }
+  };
+
+  const handleSeek = (e) => {
+    const audio = audioRef.current;
+    if (!audio || !duration) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    audio.currentTime = pct * duration;
+    setPosition(audio.currentTime);
+  };
+
+  const skipBack = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.currentTime = Math.max(0, audio.currentTime - 5);
+  };
+
+  const cyclePlaybackRate = () => {
+    const rates = [1, 0.85, 0.75, 1.25];
+    const idx = rates.indexOf(playbackRate);
+    const next = rates[(idx + 1) % rates.length] || 1;
+    setPlaybackRate(next);
+    if (audioRef.current) audioRef.current.playbackRate = next;
+  };
+
+  const fmt = (s) => {
+    if (!s || !isFinite(s)) return '0:00';
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60).toString().padStart(2, '0');
+    return `${m}:${sec}`;
   };
 
   const matchesCorrect = (option, correctAns) => {
@@ -2226,18 +2285,62 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
 
   const allAnswered = questions.length > 0 && questions.every((_, i) => answers[i] != null);
 
-  // Compact audio bar — always visible so kids can replay while answering.
+  // Full audio player — transport controls + seek bar + rate + skip-back.
+  // Aga 2026-05-21: all listening surfaces should ship a real player, not
+  // a single "Play" button.
+  const progressPct = duration > 0 ? Math.min(100, (position / duration) * 100) : 0;
   const AudioBar = () => (
-    <div className="flex items-center gap-3 bg-cyan-50 border border-cyan-200 rounded-xl p-3">
-      <Button size="sm" className="bg-cyan-600 hover:bg-cyan-700 shrink-0" onClick={playListeningAudio} data-testid="listening-play-btn">
-        <Play className="w-4 h-4 mr-1" /> Play
-      </Button>
-      <div className="flex-1 text-xs text-cyan-800">
-        {hasPlayed ? 'Played — you can replay as many times as you like.' : 'Click Play to start.'}
+    <div className="bg-cyan-50 border border-cyan-200 rounded-2xl p-4 space-y-3">
+      <div className="flex items-center gap-3">
+        <button
+          onClick={togglePlayPause}
+          data-testid="listening-play-btn"
+          className="w-11 h-11 rounded-full bg-cyan-600 hover:bg-cyan-700 text-white flex items-center justify-center shadow shrink-0 transition"
+          aria-label={isPlaying ? 'Pause' : 'Play'}>
+          {isPlaying ? (
+            <span className="flex gap-0.5"><span className="w-1.5 h-4 bg-white rounded-sm" /><span className="w-1.5 h-4 bg-white rounded-sm" /></span>
+          ) : (
+            <Play className="w-5 h-5 ml-0.5" />
+          )}
+        </button>
+        <button
+          onClick={skipBack}
+          disabled={!audioRef.current}
+          className="w-9 h-9 rounded-full bg-white border border-cyan-200 text-cyan-700 hover:bg-cyan-100 flex items-center justify-center text-xs font-semibold shrink-0 disabled:opacity-40"
+          title="Skip back 5 seconds"
+          data-testid="listening-skip-back-btn">
+          ‹5s
+        </button>
+        <div className="flex-1 min-w-0">
+          <div
+            onClick={handleSeek}
+            className="relative w-full h-2 bg-cyan-100 rounded-full overflow-hidden cursor-pointer"
+            role="slider"
+            aria-valuenow={position}
+            aria-valuemin={0}
+            aria-valuemax={duration || 0}
+            data-testid="listening-seekbar">
+            <div className="absolute inset-y-0 left-0 bg-cyan-600 rounded-full transition-[width] duration-150" style={{ width: `${progressPct}%` }} />
+          </div>
+          <div className="flex items-center justify-between mt-1 text-[11px] tabular-nums text-cyan-800">
+            <span>{fmt(position)}</span>
+            <span>{fmt(duration)}</span>
+          </div>
+        </div>
+        <button
+          onClick={cyclePlaybackRate}
+          className="px-2.5 py-1.5 text-xs font-semibold rounded-full bg-white border border-cyan-200 text-cyan-700 hover:bg-cyan-100 shrink-0 tabular-nums"
+          title="Playback speed"
+          data-testid="listening-speed-btn">
+          {playbackRate}×
+        </button>
       </div>
-      <button className="text-xs text-cyan-700 underline shrink-0" onClick={() => setShowTranscript(!showTranscript)}>
-        {showTranscript ? 'Hide' : 'Show'} script
-      </button>
+      <div className="flex items-center justify-between text-xs text-cyan-800">
+        <span>{hasPlayed ? 'Replay as many times as you need.' : 'Press play to start.'}</span>
+        <button className="underline" onClick={() => setShowTranscript(!showTranscript)}>
+          {showTranscript ? 'Hide' : 'Show'} script
+        </button>
+      </div>
     </div>
   );
 
