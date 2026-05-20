@@ -18,6 +18,7 @@ just transform them into the shape each game_type expects.
 
 import argparse
 import json
+import random
 import re
 import sys
 from pathlib import Path
@@ -159,8 +160,12 @@ def build_memory_game(vocab):
 
 
 def _picture_options(w, vocab, n):
-    """Build a list of {emoji, image_url, word} option dicts (correct first)."""
+    """Build a list of {emoji, image_url, word} option dicts, position-shuffled
+    so the correct answer is NOT always slot 0 (Aga 2026-05-21 bug: "tüm
+    cevaplar A"). The renderer detects correctness by word/image match, so
+    shuffling here is safe."""
     pool = [w] + shuffle_distractors(w, vocab, n)
+    random.shuffle(pool)
     return [
         {
             "emoji": x.get("image_emoji", "📦"),
@@ -171,15 +176,23 @@ def _picture_options(w, vocab, n):
     ]
 
 
+def _find_opt(opts, target_word):
+    for o in opts:
+        if o.get("word") == target_word:
+            return o
+    return opts[0]
+
+
 def build_word_race(vocab):
     items = []
     for w in vocab[:6]:
         opts = _picture_options(w, vocab, 3)
-        correct = opts[0]["emoji"]
+        correct_opt = _find_opt(opts, w["word"])
         items.append({
             "prompt": w["word"],
-            "correct_emoji": correct,
+            "correct_emoji": correct_opt["emoji"],
             "correct_image_url": w.get("image_url", ""),
+            "correct_word": w["word"],
             "options": [o["emoji"] for o in opts],
             "options_full": opts,  # renderer can read image_url here
         })
@@ -203,10 +216,12 @@ def build_cumulative_race(vocab):
     g["items"] = []
     for w in vocab[:10]:
         opts = _picture_options(w, vocab, 3)
+        correct_opt = _find_opt(opts, w["word"])
         g["items"].append({
             "prompt": w["word"],
-            "correct_emoji": opts[0]["emoji"],
+            "correct_emoji": correct_opt["emoji"],
             "correct_image_url": w.get("image_url", ""),
+            "correct_word": w["word"],
             "options": [o["emoji"] for o in opts],
             "options_full": opts,
         })

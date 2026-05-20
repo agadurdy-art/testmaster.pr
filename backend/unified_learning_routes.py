@@ -8,6 +8,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from typing import List, Optional, Dict, Any
 from datetime import datetime, timezone, timedelta
 import os
+import re
 import logging
 
 from unified_learning_models import (
@@ -140,17 +141,30 @@ async def get_unit(unit_id: str):
     if not unit:
         raise HTTPException(status_code=404, detail="Unit not found")
     
-    # Get lessons for this unit
+    # Get lessons for this unit. Stage 3+ records store the order in
+    # `lesson_num` not `lesson_number`, so the Mongo sort on lesson_number
+    # silently returned insertion order (Aga 2026-05-21: L2 first, L1 last).
+    # Fetch all then sort in-Python with multi-field fallback.
     lessons = await db.unified_lessons.find(
         {"unit_id": unit_id}, {"_id": 0}
-    ).sort("lesson_number", 1).to_list(10)
-    
-    # Add 'number' field for frontend compatibility
+    ).to_list(20)
+
+    def _lesson_order(l):
+        for key in ("lesson_num", "lesson_number", "number"):
+            v = l.get(key)
+            if isinstance(v, int) and v > 0:
+                return v
+        m = re.search(r"_lesson_(\d+)", str(l.get("lesson_id", "")))
+        return int(m.group(1)) if m else 9999
+
+    lessons.sort(key=_lesson_order)
+
     for lesson in lessons:
-        lesson["number"] = lesson.get("lesson_number", 0)
+        lesson["number"] = _lesson_order(lesson)
+        lesson["lesson_number"] = lesson.get("lesson_number") or lesson["number"]
         lesson["estimated_duration_minutes"] = lesson.get("estimated_duration_minutes", 15)
         lesson["points_reward"] = lesson.get("points_reward", 100)
-    
+
     unit["lessons"] = lessons
     return unit
 

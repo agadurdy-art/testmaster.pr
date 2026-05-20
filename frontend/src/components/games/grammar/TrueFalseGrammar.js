@@ -7,9 +7,9 @@ import React, { useState } from 'react';
 import { Card } from '../../ui/card';
 import { Button } from '../../ui/button';
 import { CheckCircle, XCircle, ThumbsUp, ThumbsDown } from 'lucide-react';
-import { GameWrapper, GameComplete } from '../shared';
+import { GameWrapper, GameComplete, shuffleArray } from '../shared';
 
-const TrueFalseGrammar = ({ 
+const TrueFalseGrammar = ({
   items, // Array of { sentence: "She are happy.", is_correct: false, corrected: "She is happy.", explanation: "..." }
   onComplete,
   onSkip
@@ -20,8 +20,14 @@ const TrueFalseGrammar = ({
   const [score, setScore] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
 
-  if (!items?.length) return null;
-  let rawItem = items[currentIdx];
+  // Shuffle items per session so the kid doesn't always see the same "I am"
+  // example first (Aga 2026-05-21). useState initializer locks the order so
+  // parent re-renders (new items reference) don't re-shuffle and flash the
+  // card mid-game.
+  const [sessionItems] = useState(() => shuffleArray([...(items || [])]));
+
+  if (!sessionItems.length) return null;
+  let rawItem = sessionItems[currentIdx];
   // Stage 3 generator emits sentence with "→ correct version" suffix that
   // leaks the answer. Strip it for display so the kid only sees the sentence
   // to judge. Same fix as ErrorHunter / MultipleChoiceGrammar.
@@ -58,7 +64,7 @@ const TrueFalseGrammar = ({
   const handleNext = () => {
     setSelectedAnswer(null);
     setShowFeedback(false);
-    if (currentIdx < items.length - 1) {
+    if (currentIdx < sessionItems.length - 1) {
       setCurrentIdx(i => i + 1);
     } else {
       setIsComplete(true);
@@ -69,8 +75,8 @@ const TrueFalseGrammar = ({
     return (
       <GameComplete
         score={score}
-        totalQuestions={items.length}
-        onContinue={() => onComplete(Math.round((score / items.length) * 100))}
+        totalQuestions={sessionItems.length}
+        onContinue={() => onComplete(Math.round((score / sessionItems.length) * 100))}
         onRetry={() => { setCurrentIdx(0); setScore(0); setIsComplete(false); setSelectedAnswer(null); setShowFeedback(false); }}
         title="Grammar Detective!"
       />
@@ -88,7 +94,7 @@ const TrueFalseGrammar = ({
       icon={CheckCircle}
       iconColor="teal"
       currentQuestion={currentIdx + 1}
-      totalQuestions={items.length}
+      totalQuestions={sessionItems.length}
       onSkip={onSkip}
     >
       <Card className="p-8">
@@ -153,7 +159,7 @@ const TrueFalseGrammar = ({
         {showFeedback && (
           <div className="mt-6 text-center">
             <Button onClick={handleNext} data-testid="tf-next-btn">
-              {currentIdx < items.length - 1 ? 'Next' : 'See Results'}
+              {currentIdx < sessionItems.length - 1 ? 'Next' : 'See Results'}
             </Button>
           </div>
         )}

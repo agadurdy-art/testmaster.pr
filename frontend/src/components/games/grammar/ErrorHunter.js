@@ -22,8 +22,15 @@ const ErrorHunter = ({ items, onComplete, onSkip }) => {
   const [score, setScore] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
 
-  if (!items?.length) return null;
-  const rawItem = items[currentIdx] || {};
+  // Session-level item shuffle so different sentences appear first each
+  // time the kid plays (Aga 2026-05-21: "surekli I am gösteriyor"). Lock
+  // the shuffled order via useState initializer — parent passes a new
+  // `items` reference per render (normalizeItemsForGame), so a useMemo on
+  // `[items]` would re-shuffle each render and visually flash the cards.
+  const [sessionItems] = useState(() => shuffleArray([...(items || [])]));
+
+  if (!sessionItems.length) return null;
+  const rawItem = sessionItems[currentIdx] || {};
 
   // Stage 3 build script emits sentence with the corrected version after a "→"
   // arrow, e.g. "I is from Argentina. → I'm from Argentina." That leaks the
@@ -135,7 +142,7 @@ const ErrorHunter = ({ items, onComplete, onSkip }) => {
 
   const handleNext = () => {
     setPickedIdx(null);
-    if (currentIdx < items.length - 1) {
+    if (currentIdx < sessionItems.length - 1) {
       setCurrentIdx((i) => i + 1);
     } else {
       setIsComplete(true);
@@ -146,8 +153,8 @@ const ErrorHunter = ({ items, onComplete, onSkip }) => {
     return (
       <GameComplete
         score={score}
-        totalQuestions={items.length}
-        onContinue={() => onComplete(Math.round((score / items.length) * 100))}
+        totalQuestions={sessionItems.length}
+        onContinue={() => onComplete(Math.round((score / sessionItems.length) * 100))}
         onRetry={() => {
           setCurrentIdx(0);
           setScore(0);
@@ -169,7 +176,7 @@ const ErrorHunter = ({ items, onComplete, onSkip }) => {
       icon={Search}
       iconColor="orange"
       currentQuestion={currentIdx + 1}
-      totalQuestions={items.length}
+      totalQuestions={sessionItems.length}
       onSkip={onSkip}
     >
       <Card className="p-6 md:p-8 text-center">
@@ -254,7 +261,7 @@ const ErrorHunter = ({ items, onComplete, onSkip }) => {
         {showFeedback && (
           <div className="text-center">
             <Button onClick={handleNext} data-testid="error-next-btn">
-              {currentIdx < items.length - 1 ? 'Next' : 'See Results'}
+              {currentIdx < sessionItems.length - 1 ? 'Next' : 'See Results'}
             </Button>
           </div>
         )}

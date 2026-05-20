@@ -3,13 +3,13 @@
  * Choose the correct option to complete a grammar-focused question
  */
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Card } from '../../ui/card';
 import { Button } from '../../ui/button';
 import { ListChecks } from 'lucide-react';
 import { GameWrapper, GameComplete, shuffleArray } from '../shared';
 
-const MultipleChoiceGrammar = ({ 
+const MultipleChoiceGrammar = ({
   items, // Array of { question: "She ___ to school.", options: ["go", "goes", "going", "goed"], answer: "goes", explanation: "..." }
   onComplete,
   onSkip
@@ -20,8 +20,14 @@ const MultipleChoiceGrammar = ({
   const [score, setScore] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
 
-  if (!items?.length) return null;
-  const rawItem = items[currentIdx];
+  // Session-level item shuffle so a different sentence appears first each
+  // play (Aga 2026-05-21: "surekli I am"). useState initializer locks the
+  // order so parent re-renders (new items reference) don't re-shuffle and
+  // flash the card mid-game.
+  const [sessionItems] = useState(() => shuffleArray([...(items || [])]));
+
+  if (!sessionItems.length) return null;
+  const rawItem = sessionItems[currentIdx];
 
   // Stage 3 generator stuffs sentences like "I ___ from Argentina. → I'm from
   // Argentina." into the `sentence` field. The arrow suffix leaks the answer.
@@ -59,7 +65,7 @@ const MultipleChoiceGrammar = ({
   const handleNext = () => {
     setSelectedAnswer(null);
     setShowFeedback(false);
-    if (currentIdx < items.length - 1) {
+    if (currentIdx < sessionItems.length - 1) {
       setCurrentIdx(i => i + 1);
     } else {
       setIsComplete(true);
@@ -70,8 +76,8 @@ const MultipleChoiceGrammar = ({
     return (
       <GameComplete
         score={score}
-        totalQuestions={items.length}
-        onContinue={() => onComplete(Math.round((score / items.length) * 100))}
+        totalQuestions={sessionItems.length}
+        onContinue={() => onComplete(Math.round((score / sessionItems.length) * 100))}
         onRetry={() => { setCurrentIdx(0); setScore(0); setIsComplete(false); setSelectedAnswer(null); setShowFeedback(false); }}
         title="Grammar Champion!"
       />
@@ -111,7 +117,7 @@ const MultipleChoiceGrammar = ({
       icon={ListChecks}
       iconColor="indigo"
       currentQuestion={currentIdx + 1}
-      totalQuestions={items.length}
+      totalQuestions={sessionItems.length}
       onSkip={onSkip}
     >
       <Card className="p-8">
@@ -154,7 +160,7 @@ const MultipleChoiceGrammar = ({
         {showFeedback && (
           <div className="mt-4 text-center">
             <Button onClick={handleNext} data-testid="mc-next-btn">
-              {currentIdx < items.length - 1 ? 'Next' : 'See Results'}
+              {currentIdx < sessionItems.length - 1 ? 'Next' : 'See Results'}
             </Button>
           </div>
         )}

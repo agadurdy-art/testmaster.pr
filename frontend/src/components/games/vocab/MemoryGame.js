@@ -98,21 +98,19 @@ const MemoryGame = ({
     setCanFlip(true);
   };
 
-  const calculateScore = () => {
-    const gameItems = (items || []).slice(0, 6);
-    const minMoves = Math.max(gameItems.length, 1);
-    const efficiency = Math.max(0, 100 - ((moves - minMoves) * 8));
-    return Math.max(50, Math.min(100, efficiency));
-  };
-
+  // Memory game is completion-based, not accuracy-based. Finishing the game
+  // is the win — extra moves just mean longer, not failed. Aga 2026-05-21:
+  // "oyunu bitiren zaten basarilidir." Always 3 stars on complete; moves
+  // count is shown as a friendly efficiency stat, not a grade.
   if (isComplete) {
+    const gameItems = (items || []).slice(0, 6);
     return (
       <GameComplete
-        score={calculateScore()}
-        totalQuestions={100}
-        onContinue={() => onComplete(calculateScore())}
+        score={gameItems.length}
+        totalQuestions={gameItems.length}
+        onContinue={() => onComplete(100)}
         onRetry={handleRestart}
-        title="Memory Champion!"
+        title={`Memory Champion! ${moves} moves`}
       />
     );
   }

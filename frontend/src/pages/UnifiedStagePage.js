@@ -515,7 +515,17 @@ export default function UnifiedStagePage({ user }) {
             stageData.units.map(async (unit) => {
               const unitRes = await fetch(`${API_URL}/api/unified/units/${unit.unit_id}`);
               const unitData = await unitRes.json();
-              unit.lessons = unitData.lessons || [];
+              // Backend returns lessons in insertion order from Mongo, not
+              // lesson number — sort here so "1. Hello classroom" always
+              // appears before "2. Where are you from?" (Aga 2026-05-21).
+              const lessons = unitData.lessons || [];
+              const lessonKey = (l) => {
+                if (typeof l.lesson_num === 'number') return l.lesson_num;
+                if (typeof l.number === 'number' && l.number > 0) return l.number;
+                const m = String(l.lesson_id || '').match(/_lesson_(\d+)/);
+                return m ? parseInt(m[1], 10) : 9999;
+              };
+              unit.lessons = [...lessons].sort((a, b) => lessonKey(a) - lessonKey(b));
             }),
           );
         }

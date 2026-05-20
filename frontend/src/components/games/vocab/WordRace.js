@@ -4,11 +4,11 @@
  * Item shape: { prompt, correct_emoji, options: [emoji, ...] }
  */
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Card } from '../../ui/card';
 import { Button } from '../../ui/button';
 import { Timer, Zap, Trophy, X, CheckCircle } from 'lucide-react';
-import { GameWrapper, GameComplete } from '../shared';
+import { GameWrapper, GameComplete, shuffleArray } from '../shared';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL || '';
 const resolveImg = (u) => (u && u.startsWith('/') ? `${API_URL}/api${u}` : u || '');
@@ -42,19 +42,28 @@ const WordRace = ({ items, onComplete, onSkip, timeLimit }) => {
   const item = items[currentIdx % items.length];
   // Prefer options_full (objects with image_url) over options (legacy emoji
   // strings) so games reuse the same artwork as the vocabulary cards.
-  const optionObjs = (item.options_full && item.options_full.length)
+  const rawOptionObjs = (item.options_full && item.options_full.length)
     ? item.options_full
     : (item.options || []).map((emoji) => ({ emoji, image_url: '' }));
+  // Belt-and-suspenders: shuffle on render so legacy unshuffled data
+  // (correct always at slot 0) still renders varied positions. Re-shuffle
+  // each new item; freeze for the duration of one prompt. Dep is
+  // currentIdx ONLY — `item` is recomputed each render from a fresh
+  // normalizeItemsForGame array, so depending on it would re-shuffle each
+  // render and flash the cards (same bug class as the reading-options
+  // flicker Aga caught 2026-05-20).
+  const optionObjs = useMemo(
+    () => shuffleArray([...rawOptionObjs]),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentIdx]
+  );
   const correctImg = item.correct_image_url || '';
+  const correctWordKey = String(item.correct_word || item.prompt || '').trim().toLowerCase();
 
-  // Robust correctness: try image, then emoji, then word match against prompt.
-  // Pack scripts don't always populate `correct_image_url`, so the old
-  // image-only check silently marked every answer wrong (Aga 2026-05-19).
-  const promptWord = String(item.prompt || '').trim().toLowerCase();
   const isOptionCorrect = (opt) => {
     if (correctImg && opt.image_url && opt.image_url === correctImg) return true;
     if (item.correct_emoji && opt.emoji && opt.emoji === item.correct_emoji) return true;
-    if (promptWord && opt.word && opt.word.toLowerCase() === promptWord) return true;
+    if (correctWordKey && opt.word && opt.word.toLowerCase() === correctWordKey) return true;
     return false;
   };
 

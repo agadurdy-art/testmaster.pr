@@ -1624,18 +1624,45 @@ function MicroReading({ activity, onComplete, onSkip }) {
   }, [currentQ]);
 
   // Locate-in-text: when learner gets a question wrong, highlight the
-  // sentence in the passage that contains the answer so they can re-read.
-  // Source order: q.locate_text (explicit author hint) → q.evidence →
-  // sentence containing the correct answer string.
+  // sentence in the passage that proves the answer so they can re-read.
+  // Strategy stack (first hit wins):
+  //   1. explicit author hint (locate_text / evidence / passage_quote)
+  //   2. sentence containing the correct answer string (works for MCQ
+  //      "Lana is Russian." — answer="Russian" appears in passage)
+  //   3. sentence containing the most distinctive content word from the
+  //      question (works for T/F "Martha is from the USA. True or false?"
+  //      — passage has no "true"/"false", but does mention "Martha")
+  const STOP_WORDS = new Set(['a','an','the','is','are','am','was','were','be','been','being','do','does','did','have','has','had','to','of','in','on','at','for','from','by','with','and','or','but','not','no','this','that','these','those','my','your','his','her','its','our','their','i','you','he','she','it','we','they','what','where','when','who','how','why','which','true','false','or','old','years','really']);
+
   const findLocateSentence = (question) => {
     if (!question || !passageText) return null;
     const explicit = question.locate_text || question.evidence || question.passage_quote;
     if (explicit && typeof explicit === 'string') return explicit;
-    const ans = String(question.correct_answer || question.answer || '').trim();
-    if (!ans) return null;
     const sentences = passageText.match(/[^.!?]+[.!?]+/g) || [passageText];
-    const hit = sentences.find(s => s.toLowerCase().includes(ans.toLowerCase()));
-    return hit ? hit.trim() : null;
+    const ans = String(question.correct_answer || question.answer || '').trim();
+    if (ans) {
+      const hit = sentences.find(s => s.toLowerCase().includes(ans.toLowerCase()));
+      if (hit) return hit.trim();
+    }
+    // Fallback: scan the question for proper nouns / content words and find
+    // the sentence that mentions any of them. Prefer the longest match so
+    // "USA" wins over "is".
+    const qText = String(question.question || question.question_text || '');
+    const tokens = qText.split(/\s+/).map(t => t.replace(/[.,!?;:'"()]/g, ''))
+      .filter(t => t && !STOP_WORDS.has(t.toLowerCase()) && t.length >= 2);
+    // Sort by: capitalized first (proper nouns), then by length desc
+    tokens.sort((a, b) => {
+      const aCap = /^[A-Z]/.test(a) ? 1 : 0;
+      const bCap = /^[A-Z]/.test(b) ? 1 : 0;
+      if (aCap !== bCap) return bCap - aCap;
+      return b.length - a.length;
+    });
+    for (const tok of tokens) {
+      const re = new RegExp(`\\b${tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+      const hit = sentences.find(s => re.test(s));
+      if (hit) return hit.trim();
+    }
+    return null;
   };
 
   const highlightText = (text) => {
@@ -1671,9 +1698,15 @@ function MicroReading({ activity, onComplete, onSkip }) {
     if (showFeedback) return;
     setSelectedAnswer(answer);
     setShowFeedback(true);
-    // Support both 'correct_answer' and 'answer' field names
     const correctAns = q.correct_answer || q.answer;
-    if (checkAnswer(answer, correctAns)) setCorrect(c => c + 1);
+    if (checkAnswer(answer, correctAns)) {
+      setCorrect(c => c + 1);
+    } else {
+      // Auto-locate on wrong answer — kid shouldn't have to press a button
+      // to see where the proof is in the passage. Aga 2026-05-21.
+      const sentence = findLocateSentence(q);
+      if (sentence) setLocateSpan(sentence);
+    }
   };
 
   const handleNext = () => {
@@ -1750,10 +1783,10 @@ function MicroReading({ activity, onComplete, onSkip }) {
           </div>
           {showFeedback && (
             <div className="mt-5 flex items-center justify-between gap-3 flex-wrap">
-              {!isCorrectOption(selectedAnswer) && findLocateSentence(q) && (
-                <Button variant="outline" size="sm" onClick={handleLocateInText} data-testid="reading-locate-btn">
-                  <Map className="w-3.5 h-3.5 mr-1" /> Find it in the passage
-                </Button>
+              {!isCorrectOption(selectedAnswer) && locateSpan && (
+                <p className="text-sm text-amber-700 flex items-center gap-1.5" data-testid="reading-locate-hint">
+                  <Map className="w-3.5 h-3.5" /> Look at the highlighted line above.
+                </p>
               )}
               <Button className="ml-auto" onClick={handleNext}>{currentQ < questions.length - 1 ? 'Next' : 'Continue'} <ChevronRight className="w-4 h-4 ml-1" /></Button>
             </div>
@@ -2101,14 +2134,15 @@ function GrammarGame({ activity, onComplete, onSkip }) {
 }
 
 // ═══════ LISTENING ACTIVITY ═══════
+// Aga 2026-05-21: real IELTS-prep technique — student previews ALL questions
+// BEFORE listening so they know what to listen for. So we render every Q at
+// once with its own option buttons, instead of one-at-a-time.
 function ListeningActivity({ activity, onComplete, onSkip }) {
   const [showTranscript, setShowTranscript] = useState(false);
-  const [currentQ, setCurrentQ] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [showFeedback, setShowFeedback] = useState(false);
-  const [correct, setCorrect] = useState(0);
-  const [phase, setPhase] = useState('listen'); // listen -> questions
   const [hasPlayed, setHasPlayed] = useState(false);
+  // answers: keyed by question index, value = picked option
+  const [answers, setAnswers] = useState({});
+  const [submitted, setSubmitted] = useState(false);
   const rawQuestions = activity?.questions || [];
   const questions = rawQuestions.map(q => q ? ({
     ...q,
@@ -2117,7 +2151,6 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
     options: Array.isArray(q.options) ? q.options.map(stripMeta) : q.options,
   }) : q);
   const transcript = stripMeta(activity?.transcript || activity?.audio_script || activity?.audio_text || '');
-  const q = questions[currentQ];
   const audioRef = useRef(null);
 
   // Cleanup audio on unmount or activity change
@@ -2153,34 +2186,45 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
     setHasPlayed(true);
   };
 
-  const checkAnswer = (answer, correctAnswer) => {
-    const correctAns = correctAnswer || q?.answer;
-    if (!correctAns) return false;
-    const ans = String(answer).toLowerCase().trim();
-    if (Array.isArray(correctAns)) return correctAns.some(a => String(a).toLowerCase().trim() === ans);
-    return ans === String(correctAns).toLowerCase().trim();
-  };
-
-  const handleAnswer = (answer) => {
-    if (showFeedback) return;
-    setSelectedAnswer(answer);
-    setShowFeedback(true);
-    const correctAns = q.correct_answer || q.answer;
-    if (checkAnswer(answer, correctAns)) setCorrect(c => c + 1);
-  };
-
-  const handleNext = () => {
-    setSelectedAnswer(null); setShowFeedback(false);
-    if (currentQ < questions.length - 1) setCurrentQ(i => i + 1);
-    else onComplete(Math.round((correct / questions.length) * 100));
-  };
-
-  const isCorrectOption = (option) => {
-    const correctAns = q.correct_answer || q.answer;
+  const matchesCorrect = (option, correctAns) => {
+    if (correctAns == null || option == null) return false;
     const opt = String(option).toLowerCase().trim();
     if (Array.isArray(correctAns)) return correctAns.some(a => String(a).toLowerCase().trim() === opt);
-    return opt === String(correctAns || '').toLowerCase().trim();
+    return opt === String(correctAns).toLowerCase().trim();
   };
+
+  // Synthesise option set for Yes/No / numeric Qs that arrive without
+  // explicit options. Keeps preview fully interactive.
+  const optionsFor = (q) => {
+    if (q.options && q.options.length) return q.options;
+    const ans = String(q.answer || q.correct_answer || '').toLowerCase();
+    if (ans === 'yes' || ans === 'no') return ['Yes', 'No'];
+    const NUMS = ['one','two','three','four','five','six','seven','eight','nine','ten','1','2','3','4','5'];
+    if (NUMS.includes(ans)) {
+      return ['one','two','three','four','five'].filter(x => x !== ans).slice(0, 3).concat([ans]);
+    }
+    return [ans, 'yes', 'no'].filter((v, i, a) => v && a.indexOf(v) === i);
+  };
+
+  const handlePick = (qIdx, option) => {
+    if (submitted) return;
+    setAnswers(prev => ({ ...prev, [qIdx]: option }));
+  };
+
+  const handleSubmit = () => {
+    if (submitted) return;
+    setSubmitted(true);
+    let correct = 0;
+    questions.forEach((q, i) => {
+      const correctAns = q?.correct_answer || q?.answer;
+      if (matchesCorrect(answers[i], correctAns)) correct += 1;
+    });
+    const pct = questions.length ? Math.round((correct / questions.length) * 100) : 100;
+    // small reveal pause so kids see right/wrong colours before navigating on
+    setTimeout(() => onComplete(pct), 1800);
+  };
+
+  const allAnswered = questions.length > 0 && questions.every((_, i) => answers[i] != null);
 
   // Compact audio bar — always visible so kids can replay while answering.
   const AudioBar = () => (
@@ -2220,45 +2264,56 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
           <div className="bg-gray-50 rounded-xl p-3 text-sm text-gray-700">{transcript}</div>
         )}
 
-        {questions.length === 0 && (
+        {questions.length === 0 ? (
           <div className="text-center pt-2">
             <Button onClick={() => onComplete(100)}>Continue</Button>
           </div>
-        )}
-
-        {q && (
-          <div className="pt-2 border-t border-gray-100">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-cyan-700">Question {currentQ + 1} of {questions.length}</span>
-            </div>
-          <Progress value={((currentQ + 1) / questions.length) * 100} className="mb-5" />
-          <h3 className="text-2xl font-bold text-gray-900 mb-5"><FormattedQuestion text={q.question || q.question_text} /></h3>
-          <div className="space-y-3">
-            {((q.options && q.options.length > 0) ? q.options : (() => {
-              const ans = (q.answer || q.correct_answer || '').toLowerCase();
-              if (ans === 'yes' || ans === 'no') return ['Yes', 'No'];
-              if (['one','two','three','four','five','six','seven','eight','nine','ten','1','2','3','4','5'].includes(ans))
-                return ['one', 'two', 'three', 'four', 'five'].filter(x => x !== ans).slice(0, 3).concat([ans]).sort(() => Math.random() - 0.5);
-              return [ans, 'yes', 'no'].filter((v, i, a) => a.indexOf(v) === i);
-            })()).map(option => {
-              const isSelected = selectedAnswer === option;
-              const optionIsCorrect = isCorrectOption(option);
-              let cls = 'border-gray-200 hover:border-cyan-300';
-              if (showFeedback) {
-                if (optionIsCorrect) cls = 'border-green-500 bg-green-50';
-                else if (isSelected) cls = 'border-red-500 bg-red-50';
-                else cls = 'border-gray-200 opacity-50';
-              }
+        ) : (
+          <div className="pt-2 border-t border-gray-100 space-y-5">
+            <p className="text-xs text-cyan-700 font-semibold">
+              Read all {questions.length} questions first — then listen and answer.
+            </p>
+            {questions.map((q, qIdx) => {
+              if (!q) return null;
+              const correctAns = q.correct_answer || q.answer;
+              const picked = answers[qIdx];
+              const opts = optionsFor(q);
               return (
-                <button key={option} className={`w-full p-5 rounded-xl text-left border-2 transition-all text-lg font-medium capitalize ${cls}`}
-                  onClick={() => handleAnswer(option)} disabled={showFeedback}
-                  data-testid={`listening-option-${option}`}>
-                  {option}
-                </button>
+                <div key={qIdx} className="rounded-2xl border border-gray-100 p-4 bg-white">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-semibold text-cyan-700">Q{qIdx + 1}</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3"><FormattedQuestion text={q.question || q.question_text} /></h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {opts.map(option => {
+                      const isSelected = picked === option;
+                      const isCorrect = matchesCorrect(option, correctAns);
+                      let cls = 'border-gray-200 hover:border-cyan-300';
+                      if (submitted) {
+                        if (isCorrect) cls = 'border-green-500 bg-green-50 text-green-800';
+                        else if (isSelected) cls = 'border-red-500 bg-red-50 text-red-800';
+                        else cls = 'border-gray-200 opacity-50';
+                      } else if (isSelected) {
+                        cls = 'border-cyan-500 bg-cyan-50';
+                      }
+                      return (
+                        <button key={option}
+                          className={`p-3 rounded-xl text-left border-2 transition-all text-sm font-medium capitalize ${cls}`}
+                          onClick={() => handlePick(qIdx, option)} disabled={submitted}
+                          data-testid={`listening-q${qIdx}-option-${option}`}>
+                          {option}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
               );
             })}
-          </div>
-          {showFeedback && <div className="mt-5 flex justify-end"><Button onClick={handleNext}>{currentQ < questions.length - 1 ? 'Next' : 'Continue'}</Button></div>}
+            <div className="flex justify-end pt-2">
+              <Button onClick={handleSubmit} disabled={submitted || !allAnswered}>
+                {submitted ? 'Submitting…' : (allAnswered ? 'Submit answers' : `Answer all ${questions.length} questions`)}
+              </Button>
+            </div>
           </div>
         )}
       </Card>
@@ -2402,7 +2457,16 @@ function ProductionActivity({ activity, onComplete, onSkip, lessonContext }) {
         return;
       }
 
-      setTranscription(data.transcription || browserTranscript);
+      const transcriptText = data.transcription || browserTranscript;
+      // For open-introduction prompts, the backend's word-overlap score
+      // unfairly penalises the kid for not matching the model's identity
+      // (Aga 2026-05-21). Re-score locally using the structural heuristic.
+      if (isOpenIntroPrompt && transcriptText) {
+        evaluateLocally(transcriptText);
+        return;
+      }
+
+      setTranscription(transcriptText);
       setScore(data.score || 0);
       setMatchedWords(data.matched_words || []);
       setMissingWords(data.missing_words || []);
@@ -2417,10 +2481,60 @@ function ProductionActivity({ activity, onComplete, onSkip, lessonContext }) {
     }
   };
 
+  // Heuristic: decide if the prompt is an OPEN self-introduction/personal
+  // task ("Introduce yourself", "Tell us about you") vs an ECHO task
+  // ("Repeat after Ray:"). Open tasks must NOT be scored against the model
+  // answer's specific identity — the student's own info is correct. Aga
+  // 2026-05-21: "expected answer yalnis. burda herkes serbestce kendinden
+  // bahseder. odak pronunciation ve gramer dogrulugu olmali."
+  const isOpenIntroPrompt = (() => {
+    const p = String(promptText || '').toLowerCase();
+    const m = String(activity?.production_type || '').toLowerCase();
+    if (m === 'self_introduction' || m === 'open' || activity?.scoring_mode === 'structural') return true;
+    return /introduce yourself|tell us about you|tell me about you|your name|your age|where (are )?you from/i.test(p) || /\bi['']?m\b.*\bi['']?m\b/i.test(expectedText);
+  })();
+
   const evaluateLocally = (text) => {
     setTranscription(text);
-    // Strip punctuation before comparing words
     const clean = (s) => s.toLowerCase().trim().replace(/[^\w\s]/g, '').split(/\s+/).filter(Boolean);
+
+    if (isOpenIntroPrompt) {
+      // Structural scoring: did the student use the target patterns?
+      // Reward "I'm/I am + X" usage, age, and "from + place" — content-agnostic.
+      const lower = text.toLowerCase();
+      const intros = (lower.match(/\bi['']?m\b\s+\w+|\bi am\s+\w+/g) || []).length;
+      const hasAge = /\b(\d{1,2})\b/.test(lower) || /\b(ten|eleven|twelve|thirteen|fourteen|fifteen|nine|eight|seven|six|five|four|three)\b/.test(lower);
+      const hasFrom = /\bfrom\s+\w+/.test(lower);
+      const wordCount = clean(text).length;
+
+      let pts = 0;
+      const matched = [];
+      const missing = [];
+
+      if (intros >= 1) { pts += 30; matched.push("Used 'I'm' / 'I am'"); }
+      else missing.push("Try 'I'm ___' or 'I am ___'");
+      if (intros >= 2) pts += 15;
+      if (intros >= 3) pts += 10;
+
+      if (hasAge) { pts += 20; matched.push('Mentioned an age'); }
+      else missing.push('Add how old you are');
+
+      if (hasFrom) { pts += 20; matched.push('Said where you are from'); }
+      else missing.push("Say 'I'm from ___'");
+
+      // Length floor — a 3-word answer shouldn't ace this
+      if (wordCount >= 6) pts += 5;
+      if (wordCount >= 10) pts += 5;
+
+      const s = Math.min(100, pts);
+      setScore(s);
+      setMatchedWords(matched);
+      setMissingWords(missing);
+      setPhase('result');
+      return;
+    }
+
+    // Echo/repetition task: word-overlap against the model answer
     const tWords = new Set(clean(text));
     const eWords = new Set(clean(expectedText));
     const matched = [...tWords].filter(w => eWords.has(w));
@@ -2593,10 +2707,12 @@ function ProductionActivity({ activity, onComplete, onSkip, lessonContext }) {
               <p className="text-sm text-gray-800" data-testid="speech-transcription">"{transcription || '(no speech detected)'}"</p>
             </div>
 
-            {/* Expected */}
+            {/* Model answer (inspiration, not a grading target for open prompts) */}
             {expectedText && (
               <div className="bg-blue-50 rounded-xl p-4">
-                <h4 className="text-xs font-semibold text-blue-400 uppercase tracking-wider mb-1">Expected</h4>
+                <h4 className="text-xs font-semibold text-blue-500 uppercase tracking-wider mb-1">
+                  Model answer{isOpenIntroPrompt && ' · yours can be different'}
+                </h4>
                 <p className="text-sm text-blue-800">"{expectedText}"</p>
               </div>
             )}
