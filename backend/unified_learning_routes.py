@@ -82,44 +82,51 @@ async def get_all_stages():
     return {"stages": stages, "total": len(stages)}
 
 
+# Legacy stage_id mapping — unified_units docs from older seed passes carry
+# the short stage_id ("stage_1"), while the new long form ("stage_1_foundations")
+# is what frontend + new merge code uses. Until a backfill, both endpoints
+# accept either form via $in.
+_LEGACY_STAGE_ID = {
+    "stage_1_foundations": "stage_1",
+    "stage_2_starters": "stage_2",
+    "stage_3_movers": "stage_3",
+    "stage_4_flyers": "stage_4",
+    "stage_5_b1": "stage_5",
+    "stage_6_b2": "stage_6",
+    "stage_7_ielts_foundation": "stage_7",
+    "stage_8_ielts_mastery": "stage_8",
+}
+
+def _stage_id_candidates(stage_id: str):
+    out = [stage_id]
+    if stage_id in _LEGACY_STAGE_ID:
+        out.append(_LEGACY_STAGE_ID[stage_id])
+    return out
+
+
 @router.get("/stages/{stage_id}")
 async def get_stage(stage_id: str):
-    """Get a specific stage with its units"""
+    """Get a specific stage with its units. Frontend UnifiedStagePage hits
+    this route — without the legacy stage_id fallback Stage 1 'Foundations'
+    rendered as 'Coming Soon' even though 12 unit docs existed in DB under
+    the short stage_id (Aga 2026-05-20)."""
     stage = await db.unified_stages.find_one({"stage_id": stage_id}, {"_id": 0})
     if not stage:
         raise HTTPException(status_code=404, detail="Stage not found")
-    
-    # Get units for this stage
+
     units = await db.unified_units.find(
-        {"stage_id": stage_id}, {"_id": 0}
+        {"stage_id": {"$in": _stage_id_candidates(stage_id)}}, {"_id": 0}
     ).sort("unit_number", 1).to_list(20)
-    
+
     stage["units"] = units
     return stage
 
 
 @router.get("/stages/{stage_id}/units")
 async def get_stage_units(stage_id: str):
-    """Get all units in a stage. Accepts both the new stage_id format
-    (stage_1_foundations) and the legacy one (stage_1) that older seed
-    runs persisted, since unified_units docs on prod still carry the
-    short stage_id and a strict filter returned 0 for Foundation (Aga
-    2026-05-20 'Coming Soon' bug)."""
-    LEGACY_STAGE_ID = {
-        "stage_1_foundations": "stage_1",
-        "stage_2_starters": "stage_2",
-        "stage_3_movers": "stage_3",
-        "stage_4_flyers": "stage_4",
-        "stage_5_b1": "stage_5",
-        "stage_6_b2": "stage_6",
-        "stage_7_ielts_foundation": "stage_7",
-        "stage_8_ielts_mastery": "stage_8",
-    }
-    candidates = [stage_id]
-    if stage_id in LEGACY_STAGE_ID:
-        candidates.append(LEGACY_STAGE_ID[stage_id])
+    """Get all units in a stage (also accepts legacy short stage_id)."""
     units = await db.unified_units.find(
-        {"stage_id": {"$in": candidates}}, {"_id": 0}
+        {"stage_id": {"$in": _stage_id_candidates(stage_id)}}, {"_id": 0}
     ).sort("unit_number", 1).to_list(20)
     return {"units": units, "total": len(units)}
 
