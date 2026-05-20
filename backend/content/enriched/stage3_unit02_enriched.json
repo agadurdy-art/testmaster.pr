@@ -77,7 +77,7 @@
                   "word": "mum",
                   "definition": "Your female parent. Same as 'mother', friendly word.",
                   "image_emoji": "👩",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png",
                   "example_sentence": "My mum is from Brazil.",
                   "asset_slug": "stage3_u02_mum"
                 },
@@ -85,7 +85,7 @@
                   "word": "dad",
                   "definition": "Your male parent. Same as 'father', friendly word.",
                   "image_emoji": "👨",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png",
                   "example_sentence": "My dad is a teacher.",
                   "asset_slug": "stage3_u02_dad"
                 },
@@ -93,7 +93,7 @@
                   "word": "brother",
                   "definition": "A boy with the same parents as you.",
                   "image_emoji": "👦",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png",
                   "example_sentence": "I have one brother, his name is Sam.",
                   "asset_slug": "stage3_u02_brother"
                 },
@@ -101,7 +101,7 @@
                   "word": "sister",
                   "definition": "A girl with the same parents as you.",
                   "image_emoji": "👧",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/sister.png",
                   "example_sentence": "Inca's sister is Eva.",
                   "asset_slug": "stage3_u02_sister"
                 },
@@ -109,7 +109,7 @@
                   "word": "baby",
                   "definition": "A very young child.",
                   "image_emoji": "👶",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/baby.png",
                   "example_sentence": "Helena's baby is six months old.",
                   "asset_slug": "stage3_u02_baby"
                 },
@@ -134,110 +134,110 @@
                     {
                       "word": "mum",
                       "emoji": "👩",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png",
                       "distractors": [
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png"
                         },
                         {
                           "word": "sister",
                           "emoji": "👧",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/sister.png"
                         }
                       ]
                     },
                     {
                       "word": "dad",
                       "emoji": "👨",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png",
                       "distractors": [
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png"
                         },
                         {
                           "word": "sister",
                           "emoji": "👧",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/sister.png"
                         }
                       ]
                     },
                     {
                       "word": "brother",
                       "emoji": "👦",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png",
                       "distractors": [
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png"
                         },
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png"
                         },
                         {
                           "word": "sister",
                           "emoji": "👧",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/sister.png"
                         }
                       ]
                     },
                     {
                       "word": "sister",
                       "emoji": "👧",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/sister.png",
                       "distractors": [
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png"
                         },
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png"
                         }
                       ]
                     },
                     {
                       "word": "baby",
                       "emoji": "👶",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/baby.png",
                       "distractors": [
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png"
                         },
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png"
                         }
                       ]
                     },
@@ -249,17 +249,17 @@
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png"
                         },
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png"
                         }
                       ]
                     }
@@ -272,110 +272,110 @@
                     {
                       "word": "mum",
                       "emoji": "👩",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png",
                       "distractors": [
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png"
                         },
                         {
                           "word": "sister",
                           "emoji": "👧",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/sister.png"
                         }
                       ]
                     },
                     {
                       "word": "dad",
                       "emoji": "👨",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png",
                       "distractors": [
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png"
                         },
                         {
                           "word": "sister",
                           "emoji": "👧",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/sister.png"
                         }
                       ]
                     },
                     {
                       "word": "brother",
                       "emoji": "👦",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png",
                       "distractors": [
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png"
                         },
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png"
                         },
                         {
                           "word": "sister",
                           "emoji": "👧",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/sister.png"
                         }
                       ]
                     },
                     {
                       "word": "sister",
                       "emoji": "👧",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/sister.png",
                       "distractors": [
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png"
                         },
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png"
                         }
                       ]
                     },
                     {
                       "word": "baby",
                       "emoji": "👶",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/baby.png",
                       "distractors": [
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png"
                         },
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png"
                         }
                       ]
                     },
@@ -387,17 +387,17 @@
                         {
                           "word": "mum",
                           "emoji": "👩",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png"
                         },
                         {
                           "word": "dad",
                           "emoji": "👨",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png"
                         },
                         {
                           "word": "brother",
                           "emoji": "👦",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png"
                         }
                       ]
                     }
@@ -410,27 +410,27 @@
                     {
                       "word": "mum",
                       "emoji": "👩",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png"
                     },
                     {
                       "word": "dad",
                       "emoji": "👨",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png"
                     },
                     {
                       "word": "brother",
                       "emoji": "👦",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png"
                     },
                     {
                       "word": "sister",
                       "emoji": "👧",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/sister.png"
                     },
                     {
                       "word": "baby",
                       "emoji": "👶",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/baby.png"
                     },
                     {
                       "word": "parents",
@@ -859,7 +859,7 @@
                   "word": "daughter",
                   "definition": "A female child of a parent.",
                   "image_emoji": "👧",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/daughter.png",
                   "example_sentence": "Inca is David's daughter.",
                   "asset_slug": "stage3_u02_daughter"
                 },
@@ -867,7 +867,7 @@
                   "word": "children",
                   "definition": "More than one boy or girl.",
                   "image_emoji": "👨‍👩‍👧‍👦",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/children.png",
                   "example_sentence": "Helena has four children.",
                   "asset_slug": "stage3_u02_children"
                 },
@@ -875,7 +875,7 @@
                   "word": "family",
                   "definition": "A group of people related to you.",
                   "image_emoji": "👪",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/family.png",
                   "example_sentence": "We are a big family — six of us.",
                   "asset_slug": "stage3_u02_family"
                 }
@@ -1068,7 +1068,7 @@
                       "options_full": [
                         {
                           "emoji": "👧",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/daughter.png",
                           "word": "daughter"
                         },
                         {
@@ -1207,7 +1207,7 @@
                     {
                       "word": "daughter",
                       "emoji": "👧",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/daughter.png",
                       "distractors": [
                         {
                           "word": "mother",
@@ -1260,7 +1260,7 @@
                     {
                       "word": "daughter",
                       "emoji": "👧",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/daughter.png"
                     }
                   ]
                 }
@@ -1626,7 +1626,7 @@
                   "word": "bored",
                   "definition": "Not interested. Nothing fun to do.",
                   "image_emoji": "😑",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bored.png",
                   "example_sentence": "I'm bored in this lesson.",
                   "asset_slug": "stage3_u02_bored"
                 },
@@ -1634,7 +1634,7 @@
                   "word": "clever",
                   "definition": "Quick at learning. Smart.",
                   "image_emoji": "🧠",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/clever.png",
                   "example_sentence": "She's a clever student.",
                   "asset_slug": "stage3_u02_clever"
                 },
@@ -1642,7 +1642,7 @@
                   "word": "funny",
                   "definition": "Makes you laugh.",
                   "image_emoji": "😂",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/funny.png",
                   "example_sentence": "Dad is funny.",
                   "asset_slug": "stage3_u02_funny"
                 },
@@ -1650,7 +1650,7 @@
                   "word": "happy",
                   "definition": "You feel good. You smile.",
                   "image_emoji": "😊",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/happy.png",
                   "example_sentence": "The baby is happy today.",
                   "asset_slug": "stage3_u02_happy"
                 },
@@ -1658,7 +1658,7 @@
                   "word": "hot",
                   "definition": "Too warm — you feel uncomfortable.",
                   "image_emoji": "🥵",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/hot.png",
                   "example_sentence": "I'm hot — open the window!",
                   "asset_slug": "stage3_u02_hot"
                 },
@@ -1666,7 +1666,7 @@
                   "word": "hungry",
                   "definition": "You want to eat food.",
                   "image_emoji": "🍽️",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/hungry.png",
                   "example_sentence": "Are you hungry? Let's eat.",
                   "asset_slug": "stage3_u02_hungry"
                 },
@@ -1674,7 +1674,7 @@
                   "word": "sad",
                   "definition": "You don't feel good. You cry.",
                   "image_emoji": "😢",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/sad.png",
                   "example_sentence": "Inca is sad — her cat is sick.",
                   "asset_slug": "stage3_u02_sad"
                 },
@@ -1682,7 +1682,7 @@
                   "word": "thirsty",
                   "definition": "You want to drink water.",
                   "image_emoji": "💧",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/thirsty.png",
                   "example_sentence": "I'm thirsty — water, please.",
                   "asset_slug": "stage3_u02_thirsty"
                 },
@@ -1690,7 +1690,7 @@
                   "word": "tired",
                   "definition": "You want to sleep or rest.",
                   "image_emoji": "😴",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/tired.png",
                   "example_sentence": "It's late — I'm tired.",
                   "asset_slug": "stage3_u02_tired"
                 }
@@ -1744,7 +1744,7 @@
                         "happy"
                       ],
                       "correct": "bored",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bored.png"
                     },
                     {
                       "audio_text": "clever",
@@ -1756,7 +1756,7 @@
                         "happy"
                       ],
                       "correct": "clever",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/clever.png"
                     },
                     {
                       "audio_text": "funny",
@@ -1768,7 +1768,7 @@
                         "happy"
                       ],
                       "correct": "funny",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/funny.png"
                     },
                     {
                       "audio_text": "happy",
@@ -1780,7 +1780,7 @@
                         "funny"
                       ],
                       "correct": "happy",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/happy.png"
                     },
                     {
                       "audio_text": "hot",
@@ -1792,7 +1792,7 @@
                         "funny"
                       ],
                       "correct": "hot",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/hot.png"
                     },
                     {
                       "audio_text": "hungry",
@@ -1804,7 +1804,7 @@
                         "funny"
                       ],
                       "correct": "hungry",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/hungry.png"
                     }
                   ]
                 },
@@ -1815,32 +1815,32 @@
                     {
                       "word": "bored",
                       "emoji": "😑",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bored.png"
                     },
                     {
                       "word": "clever",
                       "emoji": "🧠",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/clever.png"
                     },
                     {
                       "word": "funny",
                       "emoji": "😂",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/funny.png"
                     },
                     {
                       "word": "happy",
                       "emoji": "😊",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/happy.png"
                     },
                     {
                       "word": "hot",
                       "emoji": "🥵",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/hot.png"
                     },
                     {
                       "word": "hungry",
                       "emoji": "🍽️",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/hungry.png"
                     }
                   ]
                 }
@@ -2316,22 +2316,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png",
                           "word": "brother"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/sister.png",
                           "word": "sister"
                         }
                       ]
@@ -2349,22 +2349,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png",
                           "word": "brother"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/sister.png",
                           "word": "sister"
                         }
                       ]
@@ -2382,22 +2382,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png",
                           "word": "brother"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/sister.png",
                           "word": "sister"
                         }
                       ]
@@ -2415,22 +2415,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/sister.png",
                           "word": "sister"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png",
                           "word": "brother"
                         }
                       ]
@@ -2448,22 +2448,22 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/baby.png",
                           "word": "baby"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png",
                           "word": "brother"
                         }
                       ]
@@ -2486,17 +2486,17 @@
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png",
                           "word": "brother"
                         }
                       ]
@@ -2519,17 +2519,17 @@
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png",
                           "word": "brother"
                         }
                       ]
@@ -2552,17 +2552,17 @@
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png",
                           "word": "brother"
                         }
                       ]
@@ -2585,17 +2585,17 @@
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png",
                           "word": "brother"
                         }
                       ]
@@ -2618,17 +2618,17 @@
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png",
                           "word": "mum"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png",
                           "word": "dad"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png",
                           "word": "brother"
                         }
                       ]
@@ -2642,27 +2642,27 @@
                     {
                       "word": "mum",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mum.png"
                     },
                     {
                       "word": "dad",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dad.png"
                     },
                     {
                       "word": "brother",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/brother.png"
                     },
                     {
                       "word": "sister",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/sister.png"
                     },
                     {
                       "word": "baby",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/baby.png"
                     },
                     {
                       "word": "parents",
