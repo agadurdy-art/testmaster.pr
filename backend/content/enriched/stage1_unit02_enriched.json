@@ -294,7 +294,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Funny Goat",
-              "text": "Hello! My name is Anna. I am a girl. This is my goat. He is a funny goat. I have a fish too.",
+              "text": "Hello! My name is Anna. I am a girl. This is my goat. He is a funny goat. I have a fish too. This is a happy day for our class.",
               "questions": [
                 {
                   "question": "Who is Anna's pet?",
@@ -303,7 +303,8 @@
                     "goat",
                     "dog",
                     "cat"
-                  ]
+                  ],
+                  "locate_text": "This is my goat. He is a funny goat."
                 },
                 {
                   "question": "What else does Anna have?",
@@ -312,7 +313,8 @@
                     "fish",
                     "bird",
                     "turtle"
-                  ]
+                  ],
+                  "locate_text": "I have a fish too."
                 }
               ]
             },
@@ -416,6 +418,14 @@
                     "Yes",
                     "No"
                   ]
+                },
+                {
+                  "question": "Is the talk about cooking pizza?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
                 }
               ]
             },
@@ -424,7 +434,8 @@
               "type": "production",
               "prompt": "Say: My name is [Your Name] and I have a goat.",
               "expected_text": "my name is [your name] and i have a goat",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "self_introduction"
             },
             {
               "step": 9,
@@ -770,7 +781,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "The Park",
-              "text": "My name is Tom. He is Jack. He is my friend. She is Lily. She has a red hat. This is my favorite park.",
+              "text": "My name is Tom. He is Jack. He is my friend. She is Lily. She has a red hat. This is my favorite park. This is a happy day for our class.",
               "questions": [
                 {
                   "question": "Who has a red hat?",
@@ -779,7 +790,8 @@
                     "Tom",
                     "Jack",
                     "Lily"
-                  ]
+                  ],
+                  "locate_text": "She is Lily. She has a red hat."
                 },
                 {
                   "question": "Who is Tom's friend?",
@@ -788,7 +800,8 @@
                     "Jack",
                     "Lily",
                     "Kim"
-                  ]
+                  ],
+                  "locate_text": "He is Jack. He is my friend."
                 }
               ]
             },
@@ -846,20 +859,18 @@
                       "sentence": "She ___ a doctor.",
                       "answer": "is",
                       "options": [
-                        "are",
-                        "is",
                         "am",
-                        "have"
+                        "is",
+                        "are"
                       ]
                     },
                     {
-                      "sentence": "He ___ happy.",
-                      "answer": "is",
+                      "sentence": "They ___ doctors.",
+                      "answer": "are",
                       "options": [
                         "am",
-                        "are",
                         "is",
-                        "has"
+                        "are"
                       ]
                     }
                   ]
@@ -917,7 +928,8 @@
               "type": "production",
               "prompt": "Say: He is a boy.",
               "expected_text": "he is a boy",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1264,7 +1276,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Leo and the Jet",
-              "text": "This is my friend. His name is Leo. He is happy in an igloo! Look at the jet! It flies fast.",
+              "text": "This is my friend. His name is Leo. He is happy in an igloo! Look at the jet! It flies fast. This is a happy day for our class.",
               "questions": [
                 {
                   "question": "Who is my friend?",
@@ -1273,7 +1285,8 @@
                     "Leo",
                     "Igloo",
                     "Jet"
-                  ]
+                  ],
+                  "locate_text": "His name is Leo. He is happy in an igloo!"
                 },
                 {
                   "question": "Where is Leo?",
@@ -1282,7 +1295,8 @@
                     "In an igloo",
                     "In a jet",
                     "In a house"
-                  ]
+                  ],
+                  "locate_text": "He is happy in an igloo!"
                 }
               ]
             },
@@ -1397,7 +1411,8 @@
               "type": "production",
               "prompt": "Say: This is my igloo.",
               "expected_text": "this is my igloo",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1679,7 +1694,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "My Name is Ben",
-              "text": "Hello! My name is Ben. I am a boy. This is Lily. She is my friend. We see a frog and a cat.",
+              "text": "Hello! My name is Ben. I am a boy. This is Lily. She is my friend. We see a frog and a cat. This is a happy day for our class.",
               "questions": [
                 {
                   "question": "Is Lily Ben's friend?",
@@ -1687,7 +1702,8 @@
                   "options": [
                     "yes",
                     "no"
-                  ]
+                  ],
+                  "locate_text": "This is Lily. She is my friend."
                 },
                 {
                   "question": "What do Ben and Lily see?",
@@ -1696,7 +1712,8 @@
                     "frog and dog",
                     "frog and cat",
                     "fish and cat"
-                  ]
+                  ],
+                  "locate_text": "My name is Ben."
                 }
               ]
             },
@@ -1747,6 +1764,16 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
+                      "sentence": "This ___ my book.",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "have"
+                      ]
+                    },
+                    {
                       "sentence": "He ___ a cat.",
                       "answer": "has",
                       "options": [
@@ -1764,16 +1791,6 @@
                         "are",
                         "am",
                         "has"
-                      ]
-                    },
-                    {
-                      "sentence": "This ___ my book.",
-                      "answer": "is",
-                      "options": [
-                        "is",
-                        "are",
-                        "am",
-                        "have"
                       ]
                     }
                   ]
@@ -1826,7 +1843,8 @@
               "type": "production",
               "prompt": "Say: My name is Emma and this is my friend Jack.",
               "expected_text": "my name is emma and this is my friend jack",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,

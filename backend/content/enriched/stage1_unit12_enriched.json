@@ -230,7 +230,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Anna's Picnic",
-              "text": "Hello! I am Anna. I like apples. I have ten red apples in my bag. The sun is big and bright.",
+              "text": "Hello! I am Anna. I like apples. I have ten red apples in my bag. The sun is big and bright. This is a happy day for our class.",
               "questions": [
                 {
                   "question": "What color are Anna's apples?",
@@ -239,7 +239,8 @@
                     "red",
                     "yellow",
                     "green"
-                  ]
+                  ],
+                  "locate_text": "I have ten red apples in my bag."
                 },
                 {
                   "question": "Where are the apples?",
@@ -248,7 +249,8 @@
                     "in the bag",
                     "on the table",
                     "under the tree"
-                  ]
+                  ],
+                  "locate_text": "I like apples."
                 }
               ]
             },
@@ -360,7 +362,8 @@
               "type": "production",
               "prompt": "Say: I have a red apple.",
               "expected_text": "i have a red apple",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -660,7 +663,8 @@
                     "play in the park",
                     "read books",
                     "watch TV"
-                  ]
+                  ],
+                  "locate_text": "He likes to play in the park with me."
                 },
                 {
                   "question": "Does Max have short hair?",
@@ -668,7 +672,8 @@
                   "options": [
                     "yes",
                     "no"
-                  ]
+                  ],
+                  "locate_text": "Max has a big smile and short hair. He likes to play in the park with me."
                 }
               ]
             },
@@ -798,7 +803,8 @@
               "type": "production",
               "prompt": "Say: 'I have a nose and two ears.'",
               "expected_text": "i have a nose and two ears",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1135,7 +1141,8 @@
                     "yellow",
                     "brown",
                     "red"
-                  ]
+                  ],
+                  "locate_text": "I see a brown horse and a yellow chicken."
                 },
                 {
                   "question": "What is in the school bag?",
@@ -1144,7 +1151,8 @@
                     "an orange",
                     "an apple",
                     "a banana"
-                  ]
+                  ],
+                  "locate_text": "There is an orange in my bag."
                 }
               ]
             },
@@ -1269,7 +1277,8 @@
               "type": "production",
               "prompt": "Say: What animal do you like? (Use 'I like ...')",
               "expected_text": "i like cats",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1562,7 +1571,8 @@
                     "yellow",
                     "red",
                     "blue"
-                  ]
+                  ],
+                  "locate_text": "I have a big yellow ball."
                 },
                 {
                   "question": "Where does Mia like to play?",
@@ -1571,7 +1581,8 @@
                     "in the park",
                     "at the beach",
                     "in the school"
-                  ]
+                  ],
+                  "locate_text": "I like to play in the park."
                 }
               ]
             },
@@ -1703,7 +1714,8 @@
               "type": "production",
               "prompt": "Say: Tell me your name, how you feel today, and what toy you like.",
               "expected_text": "hello my name is emma i am excited i like my teddy bear",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "self_introduction"
             },
             {
               "step": 9,

@@ -266,7 +266,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "The Kite and the Lions",
-              "text": "Look! One bright kite flies. Two lions play under it. It is one kite. It is two lions. They are happy!",
+              "text": "Look! One bright kite flies. Two lions play under it. It is one kite. It is two lions. They are happy! This is a happy day for our class.",
               "questions": [
                 {
                   "question": "How many lions are there?",
@@ -275,7 +275,8 @@
                     "one",
                     "two",
                     "three"
-                  ]
+                  ],
+                  "locate_text": "Two lions play under it. It is one kite."
                 },
                 {
                   "question": "What is flying?",
@@ -284,7 +285,8 @@
                     "lion",
                     "kite",
                     "ball"
-                  ]
+                  ],
+                  "locate_text": "One bright kite flies."
                 }
               ]
             },
@@ -398,7 +400,8 @@
               "type": "production",
               "prompt": "Say: It is one kite.",
               "expected_text": "it is one kite",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -751,7 +754,8 @@
                     "six",
                     "ten",
                     "five"
-                  ]
+                  ],
+                  "locate_text": "I see six monkeys swinging in the trees."
                 },
                 {
                   "question": "What is on the ground?",
@@ -760,7 +764,8 @@
                     "apples",
                     "monkeys",
                     "bananas"
-                  ]
+                  ],
+                  "locate_text": "There are ten bananas on the ground."
                 }
               ]
             },
@@ -883,7 +888,8 @@
               "type": "production",
               "prompt": "Say: I see a monkey.",
               "expected_text": "i see a monkey",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1239,7 +1245,8 @@
                     "one",
                     "eight",
                     "nine"
-                  ]
+                  ],
+                  "locate_text": "It is nine."
                 },
                 {
                   "question": "What color is the fish?",
@@ -1248,7 +1255,8 @@
                     "orange",
                     "blue",
                     "green"
-                  ]
+                  ],
+                  "locate_text": "I see a big orange fish!"
                 }
               ]
             },
@@ -1374,7 +1382,8 @@
               "type": "production",
               "prompt": "Say: How many oranges?",
               "expected_text": "how many oranges",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1656,7 +1665,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Sam's Playground",
-              "text": "Hi! I am Sam. I see two slides and five swings. It is fun! I have a red ball. How many swings? Five!",
+              "text": "Hi! I am Sam. I see two slides and five swings. It is fun! I have a red ball. How many swings? Five! This is a happy day for our class.",
               "questions": [
                 {
                   "question": "What color is the ball?",
@@ -1665,7 +1674,8 @@
                     "red",
                     "blue",
                     "green"
-                  ]
+                  ],
+                  "locate_text": "I have a red ball."
                 },
                 {
                   "question": "How many swings does Sam see?",
@@ -1674,7 +1684,8 @@
                     "five",
                     "two",
                     "ten"
-                  ]
+                  ],
+                  "locate_text": "I see two slides and five swings. It is fun!"
                 }
               ]
             },
@@ -1805,7 +1816,8 @@
               "type": "production",
               "prompt": "Say: How many cats do you see?",
               "expected_text": "i see three cats",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,

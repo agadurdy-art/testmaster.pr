@@ -337,7 +337,8 @@
                     "her friend",
                     "baby Tom"
                   ],
-                  "correct_answer": "Mum"
+                  "correct_answer": "Mum",
+                  "locate_text": "Emma looks at her family photo album with Mum. She sees her baby brother Tom."
                 },
                 {
                   "question": "Is Tom Emma's baby brother?",
@@ -346,7 +347,8 @@
                     "Yes",
                     "No"
                   ],
-                  "correct_answer": "Yes"
+                  "correct_answer": "Yes",
+                  "locate_text": "She sees her baby brother Tom."
                 },
                 {
                   "question": "How many children are in Emma's family?",
@@ -357,7 +359,8 @@
                     "three",
                     "four"
                   ],
-                  "correct_answer": "two"
+                  "correct_answer": "two",
+                  "locate_text": "There are two children in our family!"
                 }
               ]
             },
@@ -666,15 +669,18 @@
               "prompts": [
                 {
                   "prompt": "Say: This is [name]'s photo album.",
-                  "expected_text": "This is my mum's photo album"
+                  "expected_text": "This is my mum's photo album",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: I can see [number] people in the photo.",
-                  "expected_text": "I can see three people in the photo"
+                  "expected_text": "I can see three people in the photo",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: They are my [family members].",
-                  "expected_text": "They are my parents and my baby brother"
+                  "expected_text": "They are my parents and my baby brother",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -987,7 +993,8 @@
                     "teacher and friends",
                     "neighbors only"
                   ],
-                  "correct_answer": "aunt, uncle, and cousin"
+                  "correct_answer": "aunt, uncle, and cousin",
+                  "locate_text": "Today my aunt and uncle are coming for dinner."
                 },
                 {
                   "question": "What is Mom cooking?",
@@ -998,7 +1005,8 @@
                     "burgers and chips",
                     "soup and bread"
                   ],
-                  "correct_answer": "chicken and rice"
+                  "correct_answer": "chicken and rice",
+                  "locate_text": "Mom is cooking chicken and rice."
                 },
                 {
                   "question": "What will the child and Emma do after dinner?",
@@ -1009,7 +1017,8 @@
                     "clean the kitchen",
                     "watch the door"
                   ],
-                  "correct_answer": "play together"
+                  "correct_answer": "play together",
+                  "locate_text": "Emma and I will play together after dinner."
                 }
               ]
             },
@@ -1324,15 +1333,18 @@
               "prompts": [
                 {
                   "prompt": "Say: My aunt is coming for dinner.",
-                  "expected_text": "My aunt is coming for dinner"
+                  "expected_text": "My aunt is coming for dinner",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: This is Emma's uncle.",
-                  "expected_text": "This is Emma's uncle"
+                  "expected_text": "This is Emma's uncle",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: Who are they? They are my cousins.",
-                  "expected_text": "Who are they? They are my cousins"
+                  "expected_text": "Who are they? They are my cousins",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -1657,7 +1669,8 @@
                     "At home",
                     "At the shop"
                   ],
-                  "correct_answer": "At the park"
+                  "correct_answer": "At the park",
+                  "locate_text": "Emma is at the park. She sees a man and a woman on the bench."
                 },
                 {
                   "question": "Who is the woman on the bench?",
@@ -1668,7 +1681,8 @@
                     "Ben's sister",
                     "A doctor"
                   ],
-                  "correct_answer": "Ben's mother"
+                  "correct_answer": "Ben's mother",
+                  "locate_text": "The woman is Ben's mother."
                 },
                 {
                   "question": "How many children are playing?",
@@ -1679,7 +1693,8 @@
                     "Three",
                     "Four"
                   ],
-                  "correct_answer": "Three"
+                  "correct_answer": "Three",
+                  "locate_text": "Three children are playing."
                 }
               ]
             },
@@ -1999,15 +2014,18 @@
               "prompts": [
                 {
                   "prompt": "Point to someone and say: This is ___'s mother.",
-                  "expected_text": "This is Emma's mother."
+                  "expected_text": "This is Emma's mother.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Look at the people playing and say: I can see ___ children.",
-                  "expected_text": "I can see three children."
+                  "expected_text": "I can see three children.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Point to some people and ask: Who are they?",
-                  "expected_text": "Who are they? They are children."
+                  "expected_text": "Who are they? They are children.",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -2347,7 +2365,8 @@
                     "Next to the aunt",
                     "In the garden"
                   ],
-                  "correct_answer": "On the floor"
+                  "correct_answer": "On the floor",
+                  "locate_text": "Lucy's baby brother is sitting on the floor."
                 },
                 {
                   "question": "How many children are in the photo?",
@@ -2358,7 +2377,8 @@
                     "Two children",
                     "Four children"
                   ],
-                  "correct_answer": "Five children"
+                  "correct_answer": "Five children",
+                  "locate_text": "There are five children in the photo."
                 },
                 {
                   "question": "Who is standing behind Lucy's parents?",
@@ -2369,7 +2389,8 @@
                     "Lucy's baby brother",
                     "Lucy's friends"
                   ],
-                  "correct_answer": "Lucy's aunt and uncle"
+                  "correct_answer": "Lucy's aunt and uncle",
+                  "locate_text": "Lucy's aunt and uncle are standing behind them."
                 }
               ]
             },
@@ -2548,10 +2569,11 @@
                   "game_type": "true_false",
                   "items": [
                     {
-                      "sentence": "This is Ben's mother.",
+                      "sentence": "This are Ben's mother.",
                       "is_correct": true,
-                      "corrected": "",
-                      "explanation": "Correct! We use 's after the name"
+                      "corrected": "This is Ben's mother.",
+                      "explanation": "Check the verb form.",
+                      "correct": false
                     },
                     {
                       "sentence": "Who are they?",
@@ -2711,15 +2733,18 @@
               "prompts": [
                 {
                   "prompt": "Say: This is my mother.",
-                  "expected_text": "This is my mother."
+                  "expected_text": "This is my mother.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: That is Emma's father.",
-                  "expected_text": "That is Emma's father."
+                  "expected_text": "That is Emma's father.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: I have two cousins.",
-                  "expected_text": "I have two cousins."
+                  "expected_text": "I have two cousins.",
+                  "production_type": "echo"
                 }
               ]
             },

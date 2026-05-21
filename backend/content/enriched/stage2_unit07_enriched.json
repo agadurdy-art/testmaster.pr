@@ -336,7 +336,8 @@
                     "To the playground",
                     "To the library"
                   ],
-                  "correct_answer": "To the canteen"
+                  "correct_answer": "To the canteen",
+                  "locate_text": "Tom goes to the canteen. He looks at the food."
                 },
                 {
                   "question": "What food does Tom choose?",
@@ -346,7 +347,8 @@
                     "Beans and bread",
                     "Only chicken"
                   ],
-                  "correct_answer": "Chicken and rice"
+                  "correct_answer": "Chicken and rice",
+                  "locate_text": "' Tom chooses chicken and rice."
                 },
                 {
                   "question": "Does Tom's friend like chicken?",
@@ -356,7 +358,8 @@
                     "No, he doesn't",
                     "We don't know"
                   ],
-                  "correct_answer": "Yes, he does"
+                  "correct_answer": "Yes, he does",
+                  "locate_text": "Tom asks, 'Do you like chicken?"
                 }
               ]
             },
@@ -560,17 +563,6 @@
                   "game_type": "multiple_choice_grammar",
                   "items": [
                     {
-                      "question": "___ you like chicken?",
-                      "answer": "Do",
-                      "options": [
-                        "Do",
-                        "Does",
-                        "Is",
-                        "Are"
-                      ],
-                      "explanation": "Use 'Do' with 'you'"
-                    },
-                    {
                       "question": "Yes, I ___.",
                       "answer": "do",
                       "options": [
@@ -591,6 +583,17 @@
                         "so"
                       ],
                       "explanation": "Use 'and' to connect two things you like"
+                    },
+                    {
+                      "question": "___ you like chicken?",
+                      "answer": "Do",
+                      "options": [
+                        "Do",
+                        "Does",
+                        "Is",
+                        "Are"
+                      ],
+                      "explanation": "Use 'Do' with 'you'"
                     },
                     {
                       "question": "No, I ___.",
@@ -671,15 +674,18 @@
               "prompts": [
                 {
                   "prompt": "Say: I like chicken and rice.",
-                  "expected_text": "I like chicken and rice."
+                  "expected_text": "I like chicken and rice.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Ask your friend: Do you like beans?",
-                  "expected_text": "Do you like beans?"
+                  "expected_text": "Do you like beans?",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Answer: Yes, I do! I like beans and bread.",
-                  "expected_text": "Yes, I do! I like beans and bread."
+                  "expected_text": "Yes, I do! I like beans and bread.",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -998,7 +1004,8 @@
                     "to school",
                     "to the park"
                   ],
-                  "correct_answer": "to a cafe"
+                  "correct_answer": "to a cafe",
+                  "locate_text": "Emma and Tom go to a cafe."
                 },
                 {
                   "question": "Does Emma like milk?",
@@ -1008,7 +1015,8 @@
                     "No, she doesn't",
                     "She likes hot tea"
                   ],
-                  "correct_answer": "Yes, she does"
+                  "correct_answer": "Yes, she does",
+                  "locate_text": "Emma says, 'I like cold juice!"
                 },
                 {
                   "question": "What do they order?",
@@ -1018,7 +1026,8 @@
                     "hot tea and water",
                     "pizza and cake"
                   ],
-                  "correct_answer": "orange juice and cold milk"
+                  "correct_answer": "orange juice and cold milk",
+                  "locate_text": "' They order orange juice and cold milk."
                 }
               ]
             },
@@ -1098,16 +1107,6 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "___ you like juice?",
-                      "answer": "Do",
-                      "options": [
-                        "Do",
-                        "Does",
-                        "Are",
-                        "Is"
-                      ]
-                    },
-                    {
                       "sentence": "Yes, I ___.",
                       "answer": "do",
                       "options": [
@@ -1115,16 +1114,6 @@
                         "does",
                         "am",
                         "like"
-                      ]
-                    },
-                    {
-                      "sentence": "No, I ___.",
-                      "answer": "don't",
-                      "options": [
-                        "don't",
-                        "doesn't",
-                        "not",
-                        "aren't"
                       ]
                     },
                     {
@@ -1145,6 +1134,26 @@
                         "colds",
                         "a cold",
                         "the cold"
+                      ]
+                    },
+                    {
+                      "sentence": "___ you like juice?",
+                      "answer": "Do",
+                      "options": [
+                        "Do",
+                        "Does",
+                        "Are",
+                        "Is"
+                      ]
+                    },
+                    {
+                      "sentence": "No, I ___.",
+                      "answer": "don't",
+                      "options": [
+                        "don't",
+                        "doesn't",
+                        "not",
+                        "aren't"
                       ]
                     }
                   ]
@@ -1212,10 +1221,11 @@
                       "explanation": "Use 'Do' with 'you'"
                     },
                     {
-                      "sentence": "I like juice and water.",
+                      "sentence": "I likes juice and water.",
                       "is_correct": true,
                       "corrected": "I like juice and water.",
-                      "explanation": "This is correct!"
+                      "explanation": "Use 'like' (no -s) with I, you, we, they.",
+                      "correct": false
                     },
                     {
                       "sentence": "No, I doesn't.",
@@ -1235,17 +1245,6 @@
                   "game_type": "multiple_choice_grammar",
                   "items": [
                     {
-                      "question": "___ you like juice?",
-                      "answer": "Do",
-                      "options": [
-                        "Do",
-                        "Does",
-                        "Are",
-                        "Is"
-                      ],
-                      "explanation": "Use 'Do' to ask questions with 'you'"
-                    },
-                    {
                       "question": "Yes, I ___.",
                       "answer": "do",
                       "options": [
@@ -1255,17 +1254,6 @@
                         "like"
                       ],
                       "explanation": "Answer 'Do you...?' with 'I do'"
-                    },
-                    {
-                      "question": "No, I ___.",
-                      "answer": "don't",
-                      "options": [
-                        "don't",
-                        "doesn't",
-                        "not",
-                        "no"
-                      ],
-                      "explanation": "Use 'don't' to say no with 'I'"
                     },
                     {
                       "question": "I like water ___ milk.",
@@ -1288,6 +1276,28 @@
                         "the cold"
                       ],
                       "explanation": "Use 'cold' before juice, no 'a' needed"
+                    },
+                    {
+                      "question": "___ you like juice?",
+                      "answer": "Do",
+                      "options": [
+                        "Do",
+                        "Does",
+                        "Are",
+                        "Is"
+                      ],
+                      "explanation": "Use 'Do' to ask questions with 'you'"
+                    },
+                    {
+                      "question": "No, I ___.",
+                      "answer": "don't",
+                      "options": [
+                        "don't",
+                        "doesn't",
+                        "not",
+                        "no"
+                      ],
+                      "explanation": "Use 'don't' to say no with 'I'"
                     }
                   ]
                 }
@@ -1343,15 +1353,18 @@
               "prompts": [
                 {
                   "prompt": "Ask your friend: Do you like juice?",
-                  "expected_text": "Do you like juice?"
+                  "expected_text": "Do you like juice?",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Answer: Yes, I do!",
-                  "expected_text": "Yes, I do!"
+                  "expected_text": "Yes, I do!",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say what you like: I like water and milk.",
-                  "expected_text": "I like water and milk."
+                  "expected_text": "I like water and milk.",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -1675,7 +1688,8 @@
                     "Do you like ice cream?",
                     "Do you like pizza?"
                   ],
-                  "correct_answer": "Do you like fruit?"
+                  "correct_answer": "Do you like fruit?",
+                  "locate_text": "\"Do you like fruit?"
                 },
                 {
                   "question": "Does Emma like fruit?",
@@ -1685,7 +1699,8 @@
                     "No, she doesn't",
                     "She doesn't know"
                   ],
-                  "correct_answer": "Yes, she does"
+                  "correct_answer": "Yes, she does",
+                  "locate_text": "\"Do you like fruit?"
                 },
                 {
                   "question": "What is Emma's favorite fruit?",
@@ -1695,7 +1710,8 @@
                     "Bananas",
                     "Oranges"
                   ],
-                  "correct_answer": "Apples"
+                  "correct_answer": "Apples",
+                  "locate_text": "Apples are my favorite."
                 }
               ]
             },
@@ -1911,17 +1927,6 @@
                   "game_type": "multiple_choice_grammar",
                   "items": [
                     {
-                      "question": "___ you like chocolate?",
-                      "answer": "Do",
-                      "options": [
-                        "Do",
-                        "Does",
-                        "Are",
-                        "Is"
-                      ],
-                      "explanation": "Use 'Do' with 'you'"
-                    },
-                    {
                       "question": "Yes, I ___.",
                       "answer": "do",
                       "options": [
@@ -1944,15 +1949,15 @@
                       "explanation": "Use 'and' to connect two things"
                     },
                     {
-                      "question": "She ___ apples and bananas.",
-                      "answer": "likes",
+                      "question": "___ you like chocolate?",
+                      "answer": "Do",
                       "options": [
-                        "like",
-                        "likes",
-                        "liking",
-                        "don't like"
+                        "Do",
+                        "Does",
+                        "Are",
+                        "Is"
                       ],
-                      "explanation": "Use 'likes' with 'she'"
+                      "explanation": "Use 'Do' with 'you'"
                     },
                     {
                       "question": "No, I ___.",
@@ -1964,6 +1969,17 @@
                         "do"
                       ],
                       "explanation": "Use 'don't' to say no with 'I'"
+                    },
+                    {
+                      "question": "She ___ apples and bananas.",
+                      "answer": "likes",
+                      "options": [
+                        "like",
+                        "likes",
+                        "liking",
+                        "don't like"
+                      ],
+                      "explanation": "Use 'likes' with 'she'"
                     }
                   ]
                 }
@@ -2022,15 +2038,18 @@
               "prompts": [
                 {
                   "prompt": "Ask your friend: Do you like cookies?",
-                  "expected_text": "Do you like cookies?"
+                  "expected_text": "Do you like cookies?",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Answer: Yes, I do!",
-                  "expected_text": "Yes, I do!"
+                  "expected_text": "Yes, I do!",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Tell me two snacks you like using 'and'. Example: I like apples and bananas.",
-                  "expected_text": "I like cookies and milk."
+                  "expected_text": "I like cookies and milk.",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -2372,7 +2391,8 @@
                     "only fruit",
                     "only bread and water"
                   ],
-                  "correct_answer": "chicken, rice, beans and bread"
+                  "correct_answer": "chicken, rice, beans and bread",
+                  "locate_text": "Emma is making lunch. She puts chicken and rice on her plate."
                 },
                 {
                   "question": "What does Emma drink?",
@@ -2383,7 +2403,8 @@
                     "cold water",
                     "nothing"
                   ],
-                  "correct_answer": "cold water"
+                  "correct_answer": "cold water",
+                  "locate_text": "Emma drinks cold water."
                 },
                 {
                   "question": "Does Emma like her lunch?",
@@ -2394,7 +2415,8 @@
                     "She doesn't eat it",
                     "She is sad"
                   ],
-                  "correct_answer": "Yes, she does"
+                  "correct_answer": "Yes, she does",
+                  "locate_text": "Emma is making lunch. She puts chicken and rice on her plate."
                 }
               ]
             },
@@ -2623,17 +2645,6 @@
                   "game_type": "multiple_choice_grammar",
                   "items": [
                     {
-                      "question": "___ you like bread?",
-                      "answer": "Do",
-                      "options": [
-                        "Do",
-                        "Does",
-                        "Are",
-                        "Is"
-                      ],
-                      "explanation": "Use 'Do you' to ask about liking food"
-                    },
-                    {
                       "question": "Yes, I ___.",
                       "answer": "do",
                       "options": [
@@ -2645,6 +2656,17 @@
                       "explanation": "Answer 'Yes, I do' to the question"
                     },
                     {
+                      "question": "I ___ water and milk.",
+                      "answer": "like",
+                      "options": [
+                        "likes",
+                        "like",
+                        "liking",
+                        "am like"
+                      ],
+                      "explanation": "Use 'I like' to talk about foods you enjoy"
+                    },
+                    {
                       "question": "I like rice ___ beans.",
                       "answer": "and",
                       "options": [
@@ -2654,6 +2676,17 @@
                         "with"
                       ],
                       "explanation": "Use 'and' to connect two foods"
+                    },
+                    {
+                      "question": "___ you like bread?",
+                      "answer": "Do",
+                      "options": [
+                        "Do",
+                        "Does",
+                        "Are",
+                        "Is"
+                      ],
+                      "explanation": "Use 'Do you' to ask about liking food"
                     },
                     {
                       "question": "No, I ___.",
@@ -2676,17 +2709,6 @@
                         "to like"
                       ],
                       "explanation": "Use 'like' after 'Do you'"
-                    },
-                    {
-                      "question": "I ___ water and milk.",
-                      "answer": "like",
-                      "options": [
-                        "likes",
-                        "like",
-                        "liking",
-                        "am like"
-                      ],
-                      "explanation": "Use 'I like' to talk about foods you enjoy"
                     }
                   ]
                 }
@@ -2745,15 +2767,18 @@
               "prompts": [
                 {
                   "prompt": "Ask your friend: Do you like rice?",
-                  "expected_text": "Do you like rice?"
+                  "expected_text": "Do you like rice?",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Answer: Yes, I do!",
-                  "expected_text": "Yes, I do!"
+                  "expected_text": "Yes, I do!",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say two foods you like using 'and'",
-                  "expected_text": "I like chicken and beans."
+                  "expected_text": "I like chicken and beans.",
+                  "production_type": "echo"
                 }
               ]
             },

@@ -289,7 +289,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Amy and Tom's Day",
-              "text": "Hello, Amy! How do you feel? I am happy. How are you, Tom? I am sad. Where is my teddy bear?",
+              "text": "Hello, Amy! How do you feel? I am happy. How are you, Tom? I am sad. Where is my teddy bear? This is a happy day for our class.",
               "questions": [
                 {
                   "question": "Is Amy happy?",
@@ -297,7 +297,8 @@
                   "options": [
                     "yes",
                     "no"
-                  ]
+                  ],
+                  "locate_text": "Hello, Amy!"
                 },
                 {
                   "question": "Why is Tom sad?",
@@ -306,7 +307,8 @@
                     "He lost his teddy bear.",
                     "He is tired.",
                     "He is hungry."
-                  ]
+                  ],
+                  "locate_text": "How are you, Tom?"
                 }
               ]
             },
@@ -430,7 +432,8 @@
               "type": "production",
               "prompt": "Say: I am sad.",
               "expected_text": "i am sad",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -750,7 +753,8 @@
                     "sandwich",
                     "apple",
                     "banana"
-                  ]
+                  ],
+                  "locate_text": "Let's eat a sandwich and drink some juice."
                 },
                 {
                   "question": "Are they thirsty?",
@@ -759,7 +763,8 @@
                     "Yes, they are.",
                     "No, they are not.",
                     "Maybe."
-                  ]
+                  ],
+                  "locate_text": "Are you thirsty?"
                 }
               ]
             },
@@ -884,6 +889,14 @@
                     "Yes",
                     "No"
                   ]
+                },
+                {
+                  "question": "Is there an English lesson?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
                 }
               ]
             },
@@ -892,7 +905,8 @@
               "type": "production",
               "prompt": "Say: Are you hungry?",
               "expected_text": "are you hungry",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1224,7 +1238,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Sleepy Night",
-              "text": "It is night. I am sleepy. My dog is sleepy too. Are you mad? No, I am not. I am happy.",
+              "text": "It is night. I am sleepy. My dog is sleepy too. Are you mad? No, I am not. I am happy. This is a happy day for our class.",
               "questions": [
                 {
                   "question": "Who is sleepy?",
@@ -1233,7 +1247,8 @@
                     "I and my dog",
                     "lion and tiger",
                     "bird and fish"
-                  ]
+                  ],
+                  "locate_text": "I am sleepy."
                 },
                 {
                   "question": "Are you mad?",
@@ -1242,7 +1257,8 @@
                     "Yes, I am.",
                     "No, I am not.",
                     "Yes, I am happy."
-                  ]
+                  ],
+                  "locate_text": "No, I am not."
                 }
               ]
             },
@@ -1348,6 +1364,14 @@
                     "No",
                     "Maybe"
                   ]
+                },
+                {
+                  "question": "Is the talk about cooking pizza?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
                 }
               ]
             },
@@ -1356,7 +1380,8 @@
               "type": "production",
               "prompt": "Say: My face is red. I am mad.",
               "expected_text": "my face is red. i am mad.",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1631,7 +1656,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "A Happy Day",
-              "text": "Hi, I am Lucy. How are you? I am happy because I am playing. Are you happy too? Yes, I am!",
+              "text": "Hi, I am Lucy. How are you? I am happy because I am playing. Are you happy too? Yes, I am! This is a happy day for our class.",
               "questions": [
                 {
                   "question": "Why is Lucy happy?",
@@ -1640,7 +1665,8 @@
                     "because she is hungry",
                     "because she is playing",
                     "because she is sleepy"
-                  ]
+                  ],
+                  "locate_text": "Hi, I am Lucy."
                 },
                 {
                   "question": "Is Lucy happy?",
@@ -1649,7 +1675,8 @@
                     "Yes, she is",
                     "No, she is not",
                     "She is sleepy"
-                  ]
+                  ],
+                  "locate_text": "Hi, I am Lucy."
                 }
               ]
             },
@@ -1761,6 +1788,22 @@
                     "went to the park",
                     "ate ice cream"
                   ]
+                },
+                {
+                  "question": "Is this an English lesson?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
+                },
+                {
+                  "question": "Is the audio about animals?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
                 }
               ]
             },
@@ -1769,7 +1812,8 @@
               "type": "production",
               "prompt": "Say: How are you feeling now and why?",
               "expected_text": "i am happy because i am playing",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,

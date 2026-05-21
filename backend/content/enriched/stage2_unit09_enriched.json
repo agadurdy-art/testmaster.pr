@@ -341,7 +341,8 @@
                     "drinking juice",
                     "wearing a hat"
                   ],
-                  "correct_answer": "playing on the swings"
+                  "correct_answer": "playing on the swings",
+                  "locate_text": "Sam is playing on the swings."
                 },
                 {
                   "question": "Where is Emma eating her apple?",
@@ -352,7 +353,8 @@
                     "under a tree",
                     "in the classroom"
                   ],
-                  "correct_answer": "under a tree"
+                  "correct_answer": "under a tree",
+                  "locate_text": "Emma is eating an apple under a tree."
                 },
                 {
                   "question": "What color is Lily's hat?",
@@ -363,7 +365,8 @@
                     "red",
                     "green"
                   ],
-                  "correct_answer": "red"
+                  "correct_answer": "red",
+                  "locate_text": "Lily is wearing her new red hat."
                 }
               ]
             },
@@ -679,15 +682,18 @@
               "prompts": [
                 {
                   "prompt": "What is the boy doing on the swing?",
-                  "expected_text": "He is playing on the swing."
+                  "expected_text": "He is playing on the swing.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "What is the girl eating?",
-                  "expected_text": "She is eating a sandwich."
+                  "expected_text": "She is eating a sandwich.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Tell me about the children on the bench. What are they doing and what are they wearing?",
-                  "expected_text": "They are drinking water and wearing hats."
+                  "expected_text": "They are drinking water and wearing hats.",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -993,7 +999,8 @@
                     "She is watching TV",
                     "She is sleeping"
                   ],
-                  "correct_answer": "She is drawing a picture"
+                  "correct_answer": "She is drawing a picture",
+                  "locate_text": "Mom is drawing a picture."
                 },
                 {
                   "question": "Is Grandma listening to music?",
@@ -1002,7 +1009,8 @@
                     "Yes",
                     "No"
                   ],
-                  "correct_answer": "No"
+                  "correct_answer": "No",
+                  "locate_text": "Her brother Tom is listening to music."
                 },
                 {
                   "question": "Where is Dad watching TV?",
@@ -1012,7 +1020,8 @@
                     "In the bedroom",
                     "In the kitchen"
                   ],
-                  "correct_answer": "In the living room"
+                  "correct_answer": "In the living room",
+                  "locate_text": "Dad is watching TV in the living room."
                 }
               ]
             },
@@ -1320,15 +1329,18 @@
               "prompts": [
                 {
                   "prompt": "Say: I am drawing",
-                  "expected_text": "I am drawing"
+                  "expected_text": "I am drawing",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: Mom is watching TV",
-                  "expected_text": "Mom is watching TV"
+                  "expected_text": "Mom is watching TV",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Now tell me: What is Dad doing? (He is...)",
-                  "expected_text": "He is sleeping"
+                  "expected_text": "He is sleeping",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -1656,7 +1668,8 @@
                     "She is singing",
                     "She is dancing"
                   ],
-                  "correct_answer": "She is running"
+                  "correct_answer": "She is running",
+                  "locate_text": "Emma is running fast."
                 },
                 {
                   "question": "Is Ben reading a book?",
@@ -1665,7 +1678,8 @@
                     "Yes",
                     "No"
                   ],
-                  "correct_answer": "Yes"
+                  "correct_answer": "Yes",
+                  "locate_text": "Ben is reading a book quietly."
                 },
                 {
                   "question": "How many children are playing the mime game?",
@@ -1675,7 +1689,8 @@
                     "Three children",
                     "Four children"
                   ],
-                  "correct_answer": "Four children"
+                  "correct_answer": "Four children",
+                  "locate_text": "Today we are playing a mime game!"
                 }
               ]
             },
@@ -1982,15 +1997,18 @@
               "prompts": [
                 {
                   "prompt": "Say: I am running",
-                  "expected_text": "I am running"
+                  "expected_text": "I am running",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: She is dancing",
-                  "expected_text": "She is dancing"
+                  "expected_text": "She is dancing",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Tell me what you are doing right now using 'I am...'",
-                  "expected_text": "I am sitting/I am listening/I am learning"
+                  "expected_text": "I am sitting/I am listening/I am learning",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -2334,7 +2352,8 @@
                     "She is reading a book",
                     "She is playing with cars"
                   ],
-                  "correct_answer": "She is drinking coffee"
+                  "correct_answer": "She is drinking coffee",
+                  "locate_text": "Mum is drinking coffee in the kitchen."
                 },
                 {
                   "question": "Is Dad playing with toy cars?",
@@ -2343,7 +2362,8 @@
                     "Yes",
                     "No"
                   ],
-                  "correct_answer": "No"
+                  "correct_answer": "No",
+                  "locate_text": "Tom is playing with his toy cars."
                 },
                 {
                   "question": "Who is drawing a picture?",
@@ -2354,7 +2374,8 @@
                     "Dad",
                     "Mum"
                   ],
-                  "correct_answer": "Lucy"
+                  "correct_answer": "Lucy",
+                  "locate_text": "His sister Lucy is drawing a picture."
                 }
               ]
             },
@@ -2545,10 +2566,11 @@
                       "explanation": "Use 'is' with she"
                     },
                     {
-                      "sentence": "They are playing outside.",
+                      "sentence": "They is playing outside.",
                       "is_correct": true,
                       "corrected": "They are playing outside.",
-                      "explanation": "Correct! Use 'are' with they"
+                      "explanation": "Check the verb form.",
+                      "correct": false
                     },
                     {
                       "sentence": "He am reading a book.",
@@ -2696,15 +2718,18 @@
               "prompts": [
                 {
                   "prompt": "What are you doing right now?",
-                  "expected_text": "I am learning English"
+                  "expected_text": "I am learning English",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Look at this picture. What is the boy doing?",
-                  "expected_text": "He is playing football"
+                  "expected_text": "He is playing football",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Tell me about this family. What are they doing?",
-                  "expected_text": "The mum is cooking and the dad is reading"
+                  "expected_text": "The mum is cooking and the dad is reading",
+                  "production_type": "echo"
                 }
               ]
             },

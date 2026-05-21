@@ -289,7 +289,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "My Happy Face",
-              "text": "This is my face. I have two big eyes. I have a small nose. My mouth is smiling. I am happy!",
+              "text": "This is my face. I have two big eyes. I have a small nose. My mouth is smiling. I am happy! This is a happy day for our class.",
               "questions": [
                 {
                   "question": "What is big?",
@@ -298,7 +298,8 @@
                     "nose",
                     "eyes",
                     "mouth"
-                  ]
+                  ],
+                  "locate_text": "I have two big eyes."
                 },
                 {
                   "question": "Is the mouth smiling?",
@@ -307,7 +308,8 @@
                     "Yes",
                     "No",
                     "Maybe"
-                  ]
+                  ],
+                  "locate_text": "My mouth is smiling."
                 }
               ]
             },
@@ -441,7 +443,8 @@
               "type": "production",
               "prompt": "Say: I have one nose.",
               "expected_text": "i have one nose",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -797,7 +800,8 @@
                     "big",
                     "small",
                     "medium"
-                  ]
+                  ],
+                  "locate_text": "I have small ears and big blue hair."
                 },
                 {
                   "question": "What color is the hair?",
@@ -806,7 +810,8 @@
                     "black",
                     "red",
                     "blue"
-                  ]
+                  ],
+                  "locate_text": "I have small ears and big blue hair."
                 }
               ]
             },
@@ -919,7 +924,8 @@
               "type": "production",
               "prompt": "Say: My eyes are blue.",
               "expected_text": "my eyes are blue",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1208,7 +1214,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Big Smile, Small Nose",
-              "text": "I have a big smile. This is my nose. It is small. The elephant has big ears. They are very large!",
+              "text": "I have a big smile. This is my nose. It is small. The elephant has big ears. They are very large! This is a happy day for our class.",
               "questions": [
                 {
                   "question": "Who has big ears?",
@@ -1217,7 +1223,8 @@
                     "I",
                     "The mouse",
                     "The elephant"
-                  ]
+                  ],
+                  "locate_text": "The elephant has big ears. They are very large!"
                 },
                 {
                   "question": "Is my nose big or small?",
@@ -1226,7 +1233,8 @@
                     "big",
                     "tiny",
                     "small"
-                  ]
+                  ],
+                  "locate_text": "It is small."
                 }
               ]
             },
@@ -1342,7 +1350,8 @@
               "type": "production",
               "prompt": "Say: 'I have a big smile.'",
               "expected_text": "i have a big smile",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1632,7 +1641,8 @@
                     "green",
                     "blue",
                     "red"
-                  ]
+                  ],
+                  "locate_text": "I have two big blue eyes."
                 },
                 {
                   "question": "How many noses does it have?",
@@ -1641,7 +1651,8 @@
                     "two",
                     "three",
                     "one"
-                  ]
+                  ],
+                  "locate_text": "I have one small orange nose."
                 }
               ]
             },
@@ -1767,7 +1778,8 @@
               "type": "production",
               "prompt": "Say: I have a big head and two small ears.",
               "expected_text": "i have a big head and two small ears",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,

@@ -341,7 +341,8 @@
                     "a teacher",
                     "a parent"
                   ],
-                  "correct_answer": "a student"
+                  "correct_answer": "a student",
+                  "locate_text": "I am a student. This is my teacher, Miss Lee."
                 },
                 {
                   "question": "What does Emma have in her bag?",
@@ -351,7 +352,8 @@
                     "a book",
                     "a pencil"
                   ],
-                  "correct_answer": "an apple"
+                  "correct_answer": "an apple",
+                  "locate_text": "I have an apple in my bag."
                 },
                 {
                   "question": "Does Emma say hello to her teacher?",
@@ -360,7 +362,8 @@
                     "yes",
                     "no"
                   ],
-                  "correct_answer": "yes"
+                  "correct_answer": "yes",
+                  "locate_text": "Hello, teacher!"
                 }
               ]
             },
@@ -423,33 +426,12 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "I ___ a student.",
+                      "sentence": "I ___ seven years old.",
                       "answer": "am",
                       "options": [
                         "am",
                         "is",
-                        "are",
-                        "be"
-                      ]
-                    },
-                    {
-                      "sentence": "I ___ a teacher.",
-                      "answer": "am",
-                      "options": [
-                        "am",
-                        "is",
-                        "are",
-                        "be"
-                      ]
-                    },
-                    {
-                      "sentence": "She ___ a student.",
-                      "answer": "is",
-                      "options": [
-                        "am",
-                        "is",
-                        "are",
-                        "be"
+                        "are"
                       ]
                     },
                     {
@@ -458,18 +440,34 @@
                       "options": [
                         "am",
                         "is",
-                        "are",
-                        "be"
+                        "are"
                       ]
                     },
                     {
-                      "sentence": "I ___ seven years old.",
+                      "sentence": "We ___ students.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ a student.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ a student.",
                       "answer": "am",
                       "options": [
                         "am",
                         "is",
-                        "are",
-                        "be"
+                        "are"
                       ]
                     }
                   ]
@@ -548,28 +546,6 @@
                   "game_type": "multiple_choice_grammar",
                   "items": [
                     {
-                      "question": "I ___ a student.",
-                      "answer": "am",
-                      "options": [
-                        "am",
-                        "is",
-                        "are",
-                        "be"
-                      ],
-                      "explanation": "Use 'am' with I"
-                    },
-                    {
-                      "question": "She ___ a teacher.",
-                      "answer": "is",
-                      "options": [
-                        "am",
-                        "is",
-                        "are",
-                        "be"
-                      ],
-                      "explanation": "Use 'is' with she"
-                    },
-                    {
                       "question": "He ___ happy today.",
                       "answer": "is",
                       "options": [
@@ -579,6 +555,28 @@
                         "be"
                       ],
                       "explanation": "Use 'is' with he"
+                    },
+                    {
+                      "question": "I am ___ student.",
+                      "answer": "a",
+                      "options": [
+                        "a",
+                        "an",
+                        "the",
+                        "two"
+                      ],
+                      "explanation": "Use 'a' before student"
+                    },
+                    {
+                      "question": "I ___ a student.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'am' with I"
                     },
                     {
                       "question": "___ am a friend.",
@@ -592,15 +590,15 @@
                       "explanation": "Only 'I' goes with 'am'"
                     },
                     {
-                      "question": "I am ___ student.",
-                      "answer": "a",
+                      "question": "She ___ a teacher.",
+                      "answer": "is",
                       "options": [
-                        "a",
-                        "an",
-                        "the",
-                        "two"
+                        "am",
+                        "is",
+                        "are",
+                        "be"
                       ],
-                      "explanation": "Use 'a' before student"
+                      "explanation": "Use 'is' with she"
                     }
                   ]
                 }
@@ -664,15 +662,18 @@
               "prompts": [
                 {
                   "prompt": "Say: Hello!",
-                  "expected_text": "Hello"
+                  "expected_text": "Hello",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: I am a student.",
-                  "expected_text": "I am a student"
+                  "expected_text": "I am a student",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: Hello, I am a student.",
-                  "expected_text": "Hello, I am a student"
+                  "expected_text": "Hello, I am a student",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -989,7 +990,8 @@
                     "He is sad",
                     "He is tired"
                   ],
-                  "correct_answer": "He is fine"
+                  "correct_answer": "He is fine",
+                  "locate_text": "I am Ben."
                 },
                 {
                   "question": "What color is Ben's ball?",
@@ -999,7 +1001,8 @@
                     "blue",
                     "yellow"
                   ],
-                  "correct_answer": "red"
+                  "correct_answer": "red",
+                  "locate_text": "It is red."
                 },
                 {
                   "question": "What pet does Ben have?",
@@ -1009,7 +1012,8 @@
                     "a dog",
                     "a bird"
                   ],
-                  "correct_answer": "a cat"
+                  "correct_answer": "a cat",
+                  "locate_text": "I have a cat."
                 }
               ]
             },
@@ -1331,15 +1335,18 @@
               "prompts": [
                 {
                   "prompt": "Say: Good morning! I am fine.",
-                  "expected_text": "Good morning! I am fine."
+                  "expected_text": "Good morning! I am fine.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: I have a ball.",
-                  "expected_text": "I have a ball."
+                  "expected_text": "I have a ball.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: I have a cat. Hello, Cat!",
-                  "expected_text": "I have a cat. Hello, Cat!"
+                  "expected_text": "I have a cat. Hello, Cat!",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -1706,7 +1713,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "My Friend",
-              "text": "I am Emma. This is my friend Dan. Dan is a boy. I have a dog. Dan has an egg. We are friends!",
+              "text": "I am Emma. This is my friend Dan. Dan is a boy. I have a dog. Dan has an egg. We are friends! This is a happy day for our class.",
               "scene_description": "two young children smiling together with a friendly dog, outdoor playground or park setting",
               "questions": [
                 {
@@ -1717,7 +1724,8 @@
                     "Emma's dog",
                     "Emma's egg"
                   ],
-                  "correct_answer": "Emma's friend"
+                  "correct_answer": "Emma's friend",
+                  "locate_text": "This is my friend Dan."
                 },
                 {
                   "question": "Is Dan a girl?",
@@ -1726,7 +1734,8 @@
                     "Yes",
                     "No"
                   ],
-                  "correct_answer": "No"
+                  "correct_answer": "No",
+                  "locate_text": "This is my friend Dan."
                 },
                 {
                   "question": "What does Emma have?",
@@ -1736,7 +1745,8 @@
                     "an egg",
                     "a cat"
                   ],
-                  "correct_answer": "a dog"
+                  "correct_answer": "a dog",
+                  "locate_text": "I have a dog."
                 }
               ]
             },
@@ -2008,6 +2018,22 @@
                 {
                   "question": "What animal?",
                   "answer": "dog"
+                },
+                {
+                  "question": "Is this an English lesson?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
+                },
+                {
+                  "question": "Is the audio about animals?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
                 }
               ]
             },
@@ -2363,7 +2389,8 @@
                     "Max",
                     "Emma"
                   ],
-                  "correct_answer": "Miss Rose"
+                  "correct_answer": "Miss Rose",
+                  "locate_text": "This is my teacher, Miss Rose."
                 },
                 {
                   "question": "Is Max a boy or a girl?",
@@ -2373,7 +2400,8 @@
                     "A girl",
                     "A teacher"
                   ],
-                  "correct_answer": "A boy"
+                  "correct_answer": "A boy",
+                  "locate_text": "He is a boy."
                 },
                 {
                   "question": "What does Emma have?",
@@ -2383,7 +2411,8 @@
                     "A ball and a cat",
                     "A dog and a ball"
                   ],
-                  "correct_answer": "An apple and an egg"
+                  "correct_answer": "An apple and an egg",
+                  "locate_text": "I have an apple and an egg. This is my friend Max."
                 }
               ]
             },
@@ -2693,15 +2722,18 @@
               "prompts": [
                 {
                   "prompt": "Say: Hello! I am a student.",
-                  "expected_text": "Hello! I am a student."
+                  "expected_text": "Hello! I am a student.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: I have a ball and a dog.",
-                  "expected_text": "I have a ball and a dog."
+                  "expected_text": "I have a ball and a dog.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: This is my friend. We are fine!",
-                  "expected_text": "This is my friend. We are fine!"
+                  "expected_text": "This is my friend. We are fine!",
+                  "production_type": "echo"
                 }
               ]
             },

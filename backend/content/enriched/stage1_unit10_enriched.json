@@ -298,7 +298,8 @@
                     "green",
                     "yellow",
                     "red"
-                  ]
+                  ],
+                  "locate_text": "I have a green bag."
                 },
                 {
                   "question": "What is on the table?",
@@ -307,7 +308,8 @@
                     "book",
                     "bag",
                     "school"
-                  ]
+                  ],
+                  "locate_text": "It is a yellow book."
                 }
               ]
             },
@@ -438,7 +440,8 @@
               "type": "production",
               "prompt": "Say: I have a red book.",
               "expected_text": "i have a red book",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -794,7 +797,8 @@
                     "my name",
                     "a rainbow",
                     "a sun"
-                  ]
+                  ],
+                  "locate_text": "I can write my name. It is on the paper."
                 },
                 {
                   "question": "What can she draw?",
@@ -803,7 +807,8 @@
                     "a rainbow",
                     "a school",
                     "words"
-                  ]
+                  ],
+                  "locate_text": "I can draw a rainbow."
                 }
               ]
             },
@@ -920,7 +925,8 @@
               "type": "production",
               "prompt": "Say: What is in your bag?",
               "expected_text": "what is in your bag",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1223,7 +1229,8 @@
                     "eraser",
                     "pen",
                     "ruler"
-                  ]
+                  ],
+                  "locate_text": "The eraser is on the desk."
                 },
                 {
                   "question": "Is the ruler short?",
@@ -1231,7 +1238,8 @@
                   "options": [
                     "yes",
                     "no"
-                  ]
+                  ],
+                  "locate_text": "My ruler is long and blue."
                 }
               ]
             },
@@ -1348,7 +1356,8 @@
               "type": "production",
               "prompt": "Say: It is on the desk.",
               "expected_text": "it is on the desk",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1643,7 +1652,8 @@
                     "blue",
                     "red",
                     "green"
-                  ]
+                  ],
+                  "locate_text": "I have a blue book."
                 },
                 {
                   "question": "Where is the pencil?",
@@ -1652,7 +1662,8 @@
                     "on the desk",
                     "on the chair",
                     "in the bag"
-                  ]
+                  ],
+                  "locate_text": "My pencil is on the chair."
                 }
               ]
             },
@@ -1776,7 +1787,8 @@
               "type": "production",
               "prompt": "What is in your school bag? Say, 'I have a ___ and a ___.'",
               "expected_text": "i have a pencil and a book",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,

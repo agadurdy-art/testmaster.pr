@@ -336,7 +336,8 @@
                     "In trees",
                     "In the grass"
                   ],
-                  "correct_answer": "In water"
+                  "correct_answer": "In water",
+                  "locate_text": "The hippo lives in water. It has got a big mouth!"
                 },
                 {
                   "question": "What does the giraffe eat?",
@@ -346,7 +347,8 @@
                     "Grass",
                     "Fish"
                   ],
-                  "correct_answer": "Leaves from trees"
+                  "correct_answer": "Leaves from trees",
+                  "locate_text": "It eats leaves from trees."
                 },
                 {
                   "question": "Has the zebra got stripes?",
@@ -356,7 +358,8 @@
                     "No",
                     "Maybe"
                   ],
-                  "correct_answer": "Yes"
+                  "correct_answer": "Yes",
+                  "locate_text": "The zebra has black and white stripes."
                 }
               ]
             },
@@ -431,6 +434,16 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
+                      "sentence": "The snake ___ no legs.",
+                      "answer": "has",
+                      "options": [
+                        "have",
+                        "has",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
                       "sentence": "The giraffe ___ leaves.",
                       "answer": "eats",
                       "options": [
@@ -438,16 +451,6 @@
                         "eats",
                         "eating",
                         "to eat"
-                      ]
-                    },
-                    {
-                      "sentence": "The hippo ___ in water.",
-                      "answer": "lives",
-                      "options": [
-                        "live",
-                        "lives",
-                        "living",
-                        "to live"
                       ]
                     },
                     {
@@ -471,13 +474,13 @@
                       ]
                     },
                     {
-                      "sentence": "The snake ___ no legs.",
-                      "answer": "has",
+                      "sentence": "The hippo ___ in water.",
+                      "answer": "lives",
                       "options": [
-                        "have",
-                        "has",
-                        "is",
-                        "are"
+                        "live",
+                        "lives",
+                        "living",
+                        "to live"
                       ]
                     }
                   ]
@@ -667,15 +670,18 @@
               "prompts": [
                 {
                   "prompt": "Say: The giraffe eats leaves.",
-                  "expected_text": "The giraffe eats leaves."
+                  "expected_text": "The giraffe eats leaves.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: The hippo lives in water.",
-                  "expected_text": "The hippo lives in water."
+                  "expected_text": "The hippo lives in water.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Now you! What has the zebra got?",
-                  "expected_text": "It has got stripes."
+                  "expected_text": "It has got stripes.",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -955,7 +961,8 @@
                     "In the pond",
                     "On a rock"
                   ],
-                  "correct_answer": "Under a leaf"
+                  "correct_answer": "Under a leaf",
+                  "locate_text": "She looks under a leaf."
                 },
                 {
                   "question": "What colour is the frog?",
@@ -965,7 +972,8 @@
                     "Brown",
                     "Red"
                   ],
-                  "correct_answer": "Green"
+                  "correct_answer": "Green",
+                  "locate_text": "A green frog jumps in the water."
                 },
                 {
                   "question": "The lizard has got a long tail. Yes or No?",
@@ -974,7 +982,8 @@
                     "Yes",
                     "No"
                   ],
-                  "correct_answer": "Yes"
+                  "correct_answer": "Yes",
+                  "locate_text": "It has a long tail."
                 }
               ]
             },
@@ -1290,15 +1299,18 @@
               "prompts": [
                 {
                   "prompt": "Look at the spider. Say: The spider has got eight legs.",
-                  "expected_text": "The spider has got eight legs"
+                  "expected_text": "The spider has got eight legs",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Look at the frog. Say: The frog lives in the garden.",
-                  "expected_text": "The frog lives in the garden"
+                  "expected_text": "The frog lives in the garden",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Look at the lizard. Ask: Has it got a long tail?",
-                  "expected_text": "Has it got a long tail"
+                  "expected_text": "Has it got a long tail",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -1631,7 +1643,8 @@
                     "an elephant",
                     "a lion"
                   ],
-                  "correct_answer": "a giraffe"
+                  "correct_answer": "a giraffe",
+                  "locate_text": "She says, 'This animal has a long neck. It eats leaves from tall trees."
                 },
                 {
                   "question": "Does the animal eat leaves from tall trees?",
@@ -1640,7 +1653,8 @@
                     "Yes",
                     "No"
                   ],
-                  "correct_answer": "Yes"
+                  "correct_answer": "Yes",
+                  "locate_text": "It eats leaves from tall trees. It lives in Africa."
                 },
                 {
                   "question": "Is the animal scary?",
@@ -1649,7 +1663,8 @@
                     "Yes",
                     "No"
                   ],
-                  "correct_answer": "No"
+                  "correct_answer": "No",
+                  "locate_text": "She says, 'This animal has a long neck. It eats leaves from tall trees."
                 }
               ]
             },
@@ -1946,6 +1961,14 @@
                     "Yes",
                     "No"
                   ]
+                },
+                {
+                  "question": "Is there an English lesson?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
                 }
               ]
             },
@@ -1958,15 +1981,18 @@
               "prompts": [
                 {
                   "prompt": "Look at the giraffe. Say: It has a long neck.",
-                  "expected_text": "It has a long neck"
+                  "expected_text": "It has a long neck",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Look at the elephant. Say: It has got big ears.",
-                  "expected_text": "It has got big ears"
+                  "expected_text": "It has got big ears",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Think of a funny animal. Say: The monkey is funny.",
-                  "expected_text": "The monkey is funny"
+                  "expected_text": "The monkey is funny",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -2309,7 +2335,8 @@
                     "in the trees",
                     "in the grass"
                   ],
-                  "correct_answer": "in the water"
+                  "correct_answer": "in the water",
+                  "locate_text": "Then she sees a hippo in the water. It has got big ears and a big mouth."
                 },
                 {
                   "question": "Has the giraffe got a long neck?",
@@ -2318,7 +2345,8 @@
                     "Yes",
                     "No"
                   ],
-                  "correct_answer": "Yes"
+                  "correct_answer": "Yes",
+                  "locate_text": "She sees a tall giraffe with a long neck. It eats leaves from the trees."
                 },
                 {
                   "question": "What does the giraffe eat?",
@@ -2328,7 +2356,8 @@
                     "water",
                     "grass"
                   ],
-                  "correct_answer": "leaves"
+                  "correct_answer": "leaves",
+                  "locate_text": "It eats leaves from the trees."
                 }
               ]
             },
@@ -2405,7 +2434,17 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "The hippo ___ in the water.",
+                      "sentence": "The giraffe ___ got big ears.",
+                      "answer": "has",
+                      "options": [
+                        "have",
+                        "has",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "It ___ in the grass.",
                       "answer": "lives",
                       "options": [
                         "live",
@@ -2435,17 +2474,7 @@
                       ]
                     },
                     {
-                      "sentence": "The giraffe ___ got big ears.",
-                      "answer": "has",
-                      "options": [
-                        "have",
-                        "has",
-                        "is",
-                        "are"
-                      ]
-                    },
-                    {
-                      "sentence": "It ___ in the grass.",
+                      "sentence": "The hippo ___ in the water.",
                       "answer": "lives",
                       "options": [
                         "live",
@@ -2542,15 +2571,26 @@
                   "game_type": "multiple_choice_grammar",
                   "items": [
                     {
-                      "question": "The frog ___ in the water.",
-                      "answer": "lives",
+                      "question": "It ___ got a long neck.",
+                      "answer": "has",
                       "options": [
-                        "live",
-                        "lives",
-                        "living",
-                        "lived"
+                        "have",
+                        "has",
+                        "is",
+                        "are"
                       ],
-                      "explanation": "Use 'lives' with singular animal names"
+                      "explanation": "Use 'has' with 'it'"
+                    },
+                    {
+                      "question": "The lizard ___ insects.",
+                      "answer": "eats",
+                      "options": [
+                        "eat",
+                        "eats",
+                        "eating",
+                        "eaten"
+                      ],
+                      "explanation": "Use 'eats' with singular animal names"
                     },
                     {
                       "question": "___ the zebra got stripes?",
@@ -2564,17 +2604,6 @@
                       "explanation": "Use 'Has' to ask about body parts"
                     },
                     {
-                      "question": "It ___ got a long neck.",
-                      "answer": "has",
-                      "options": [
-                        "have",
-                        "has",
-                        "is",
-                        "are"
-                      ],
-                      "explanation": "Use 'has' with 'it'"
-                    },
-                    {
                       "question": "The spider ___ scary.",
                       "answer": "is",
                       "options": [
@@ -2586,15 +2615,15 @@
                       "explanation": "Use 'is' with singular nouns"
                     },
                     {
-                      "question": "The lizard ___ insects.",
-                      "answer": "eats",
+                      "question": "The frog ___ in the water.",
+                      "answer": "lives",
                       "options": [
-                        "eat",
-                        "eats",
-                        "eating",
-                        "eaten"
+                        "live",
+                        "lives",
+                        "living",
+                        "lived"
                       ],
-                      "explanation": "Use 'eats' with singular animal names"
+                      "explanation": "Use 'lives' with singular animal names"
                     }
                   ]
                 }
@@ -2653,23 +2682,28 @@
               "prompts": [
                 {
                   "prompt": "Say: It lives in the water.",
-                  "expected_text": "It lives in the water"
+                  "expected_text": "It lives in the water",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: The giraffe has got a long neck.",
-                  "expected_text": "The giraffe has got a long neck"
+                  "expected_text": "The giraffe has got a long neck",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Now you try! Where does the hippo live?",
-                  "expected_text": "It lives in the water"
+                  "expected_text": "It lives in the water",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Has the giraffe got big ears?",
-                  "expected_text": "Yes, it has"
+                  "expected_text": "Yes, it has",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Tell me about one animal. What does it look like?",
-                  "expected_text": "The snake is long and scary"
+                  "expected_text": "The snake is long and scary",
+                  "production_type": "echo"
                 }
               ]
             },

@@ -295,7 +295,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Family Day",
-              "text": "This is my mother. She has a yellow umbrella. My father drives a big van. At home, we laugh together.",
+              "text": "This is my mother. She has a yellow umbrella. My father drives a big van. At home, we laugh together. This is a happy day for our class.",
               "questions": [
                 {
                   "question": "What color is the mother's umbrella?",
@@ -304,7 +304,8 @@
                     "yellow",
                     "blue",
                     "red"
-                  ]
+                  ],
+                  "locate_text": "She has a yellow umbrella."
                 },
                 {
                   "question": "Who drives the van?",
@@ -313,7 +314,8 @@
                     "mother",
                     "father",
                     "sister"
-                  ]
+                  ],
+                  "locate_text": "My father drives a big van."
                 }
               ]
             },
@@ -437,7 +439,8 @@
               "type": "production",
               "prompt": "Say: This is my father.",
               "expected_text": "this is my father",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -758,7 +761,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Our Family Day",
-              "text": "This is my brother. My brother has a big box. My sister is here. She is looking at her watch. We are playing together!",
+              "text": "This is my brother. My brother has a big box. My sister is here. She is looking at her watch. We are playing together! This is a happy day for our class.",
               "questions": [
                 {
                   "question": "What does the brother have?",
@@ -767,7 +770,8 @@
                     "a big box",
                     "a watch",
                     "a small box"
-                  ]
+                  ],
+                  "locate_text": "My brother has a big box."
                 },
                 {
                   "question": "Who is looking at a watch?",
@@ -776,7 +780,8 @@
                     "brother",
                     "sister",
                     "mother"
-                  ]
+                  ],
+                  "locate_text": "My sister is here. She is looking at her watch."
                 }
               ]
             },
@@ -896,7 +901,8 @@
               "type": "production",
               "prompt": "Say: I have a sister.",
               "expected_text": "i have a sister",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1220,7 +1226,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Family Fun Day",
-              "text": "This is my grandpa. He plays with a yo-yo. My grandma gives me a zebra toy. The baby laughs. We all have fun!",
+              "text": "This is my grandpa. He plays with a yo-yo. My grandma gives me a zebra toy. The baby laughs. We all have fun! This is a happy day for our class.",
               "questions": [
                 {
                   "question": "What does grandpa play with?",
@@ -1229,7 +1235,8 @@
                     "yo-yo",
                     "zebra",
                     "ball"
-                  ]
+                  ],
+                  "locate_text": "He plays with a yo-yo."
                 },
                 {
                   "question": "Who gives the zebra toy?",
@@ -1238,7 +1245,8 @@
                     "grandma",
                     "grandpa",
                     "baby"
-                  ]
+                  ],
+                  "locate_text": "My grandma gives me a zebra toy."
                 }
               ]
             },
@@ -1353,7 +1361,8 @@
               "type": "production",
               "prompt": "Say: My grandpa is funny.",
               "expected_text": "my grandpa is funny",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1659,7 +1668,8 @@
                   "options": [
                     "yes",
                     "no"
-                  ]
+                  ],
+                  "locate_text": "I am Lily. This is my mother and father."
                 },
                 {
                   "question": "What color is their car?",
@@ -1668,7 +1678,8 @@
                     "red",
                     "blue",
                     "green"
-                  ]
+                  ],
+                  "locate_text": "We have a blue car."
                 }
               ]
             },
@@ -1798,7 +1809,8 @@
               "type": "production",
               "prompt": "Say: Introduce two family members.",
               "expected_text": "this is my mother and this is my father",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,

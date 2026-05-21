@@ -389,7 +389,8 @@
                     "thirteen",
                     "fourteen"
                   ],
-                  "correct_answer": "eleven"
+                  "correct_answer": "eleven",
+                  "locate_text": "There are eleven red balloons and twelve blue balloons."
                 },
                 {
                   "question": "Who brings the green balloons?",
@@ -400,7 +401,8 @@
                     "Mom",
                     "Dad"
                   ],
-                  "correct_answer": "Max"
+                  "correct_answer": "Max",
+                  "locate_text": "Her friend Max brings fourteen green balloons."
                 },
                 {
                   "question": "Are there fifteen pink balloons?",
@@ -409,7 +411,8 @@
                     "Yes",
                     "No"
                   ],
-                  "correct_answer": "Yes"
+                  "correct_answer": "Yes",
+                  "locate_text": "Now there are fifteen pink balloons on the wall."
                 }
               ]
             },
@@ -488,7 +491,7 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "How many balloons ___ there?",
+                      "sentence": "There ___ twelve blue balloons.",
                       "answer": "are",
                       "options": [
                         "is",
@@ -498,7 +501,17 @@
                       ]
                     },
                     {
-                      "sentence": "There ___ twelve blue balloons.",
+                      "sentence": "There are ___ green balloons.",
+                      "answer": "fourteen",
+                      "options": [
+                        "fourteen",
+                        "four",
+                        "forty",
+                        "fourth"
+                      ]
+                    },
+                    {
+                      "sentence": "How many balloons ___ there?",
                       "answer": "are",
                       "options": [
                         "is",
@@ -515,16 +528,6 @@
                         "How",
                         "Where",
                         "Who"
-                      ]
-                    },
-                    {
-                      "sentence": "There are ___ green balloons.",
-                      "answer": "fourteen",
-                      "options": [
-                        "fourteen",
-                        "four",
-                        "forty",
-                        "fourth"
                       ]
                     },
                     {
@@ -613,17 +616,6 @@
                   "game_type": "multiple_choice_grammar",
                   "items": [
                     {
-                      "question": "How many balloons ___ there?",
-                      "answer": "are",
-                      "options": [
-                        "is",
-                        "are",
-                        "am",
-                        "be"
-                      ],
-                      "explanation": "Use 'are' with plural balloons"
-                    },
-                    {
                       "question": "There ___ fourteen green balloons.",
                       "answer": "are",
                       "options": [
@@ -635,15 +627,26 @@
                       "explanation": "Use 'are' with plural balloons"
                     },
                     {
-                      "question": "___ many red balloons are there?",
-                      "answer": "How",
+                      "question": "How many ___ are there?",
+                      "answer": "balloons",
                       "options": [
-                        "What",
-                        "How",
-                        "Where",
-                        "Who"
+                        "balloon",
+                        "balloons",
+                        "a balloon",
+                        "the balloon"
                       ],
-                      "explanation": "Use 'How' to ask about quantity"
+                      "explanation": "Use 'balloons' (plural) after 'many'"
+                    },
+                    {
+                      "question": "How many balloons ___ there?",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with plural balloons"
                     },
                     {
                       "question": "There are fifteen pink ___.",
@@ -657,15 +660,15 @@
                       "explanation": "Use 'balloons' (plural) after number fifteen"
                     },
                     {
-                      "question": "How many ___ are there?",
-                      "answer": "balloons",
+                      "question": "___ many red balloons are there?",
+                      "answer": "How",
                       "options": [
-                        "balloon",
-                        "balloons",
-                        "a balloon",
-                        "the balloon"
+                        "What",
+                        "How",
+                        "Where",
+                        "Who"
                       ],
-                      "explanation": "Use 'balloons' (plural) after 'many'"
+                      "explanation": "Use 'How' to ask about quantity"
                     }
                   ]
                 }
@@ -724,15 +727,18 @@
               "prompts": [
                 {
                   "prompt": "Look at the picture. Say: There are eleven red balloons.",
-                  "expected_text": "There are eleven red balloons."
+                  "expected_text": "There are eleven red balloons.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Look at the picture. Say: There are thirteen yellow balloons.",
-                  "expected_text": "There are thirteen yellow balloons."
+                  "expected_text": "There are thirteen yellow balloons.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Look at the picture. Ask your friend: How many blue balloons are there?",
-                  "expected_text": "How many blue balloons are there?"
+                  "expected_text": "How many blue balloons are there?",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -1040,7 +1046,8 @@
                     "To the park",
                     "To school"
                   ],
-                  "correct_answer": "To the library"
+                  "correct_answer": "To the library",
+                  "locate_text": "Emma goes to the library. She sees many books on the shelf."
                 },
                 {
                   "question": "How many red books are there?",
@@ -1050,7 +1057,8 @@
                     "Seventeen",
                     "Eighteen"
                   ],
-                  "correct_answer": "Sixteen"
+                  "correct_answer": "Sixteen",
+                  "locate_text": "There are sixteen red books."
                 },
                 {
                   "question": "How many orange books does Emma see?",
@@ -1060,7 +1068,8 @@
                     "Nineteen",
                     "Twenty"
                   ],
-                  "correct_answer": "Twenty"
+                  "correct_answer": "Twenty",
+                  "locate_text": "There are eighteen green books, nineteen yellow books, and twenty orange books!"
                 }
               ]
             },
@@ -1138,16 +1147,6 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "How many books ___ there?",
-                      "answer": "are",
-                      "options": [
-                        "is",
-                        "are",
-                        "am",
-                        "be"
-                      ]
-                    },
-                    {
                       "sentence": "There ___ sixteen red books.",
                       "answer": "are",
                       "options": [
@@ -1168,13 +1167,13 @@
                       ]
                     },
                     {
-                      "sentence": "There are ___ orange books.",
-                      "answer": "twenty",
+                      "sentence": "How many books ___ there?",
+                      "answer": "are",
                       "options": [
-                        "sixteen",
-                        "seventeen",
-                        "nineteen",
-                        "twenty"
+                        "is",
+                        "are",
+                        "am",
+                        "be"
                       ]
                     },
                     {
@@ -1185,6 +1184,16 @@
                         "many",
                         "long",
                         "old"
+                      ]
+                    },
+                    {
+                      "sentence": "There are ___ orange books.",
+                      "answer": "twenty",
+                      "options": [
+                        "sixteen",
+                        "seventeen",
+                        "nineteen",
+                        "twenty"
                       ]
                     }
                   ]
@@ -1263,17 +1272,6 @@
                   "game_type": "multiple_choice_grammar",
                   "items": [
                     {
-                      "question": "How many books ___ there?",
-                      "answer": "are",
-                      "options": [
-                        "is",
-                        "are",
-                        "am",
-                        "be"
-                      ],
-                      "explanation": "Use 'are' with plural books"
-                    },
-                    {
                       "question": "There ___ sixteen red books.",
                       "answer": "are",
                       "options": [
@@ -1283,17 +1281,6 @@
                         "be"
                       ],
                       "explanation": "Use 'are' with plural books"
-                    },
-                    {
-                      "question": "How ___ apples are there?",
-                      "answer": "many",
-                      "options": [
-                        "much",
-                        "many",
-                        "old",
-                        "long"
-                      ],
-                      "explanation": "Use 'many' with countable things"
                     },
                     {
                       "question": "There are twenty orange ___.",
@@ -1307,6 +1294,17 @@
                       "explanation": "Use 'books' (plural) after twenty"
                     },
                     {
+                      "question": "How many books ___ there?",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with plural books"
+                    },
+                    {
                       "question": "___ many pencils are there?",
                       "answer": "How",
                       "options": [
@@ -1316,6 +1314,17 @@
                         "Where"
                       ],
                       "explanation": "Use 'How' to ask about numbers"
+                    },
+                    {
+                      "question": "How ___ apples are there?",
+                      "answer": "many",
+                      "options": [
+                        "much",
+                        "many",
+                        "old",
+                        "long"
+                      ],
+                      "explanation": "Use 'many' with countable things"
                     }
                   ]
                 }
@@ -1374,15 +1383,18 @@
               "prompts": [
                 {
                   "prompt": "Say: There are sixteen red books.",
-                  "expected_text": "There are sixteen red books."
+                  "expected_text": "There are sixteen red books.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: How many blue books are there?",
-                  "expected_text": "How many blue books are there?"
+                  "expected_text": "How many blue books are there?",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Now make your own sentence! Say: There are twenty [color] books.",
-                  "expected_text": "There are twenty [color] books."
+                  "expected_text": "There are twenty [color] books.",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -1806,7 +1818,8 @@
                     "Three colors",
                     "Ten colors"
                   ],
-                  "correct_answer": "Seven colors"
+                  "correct_answer": "Seven colors",
+                  "locate_text": "There are seven colors."
                 },
                 {
                   "question": "What color is the cloud?",
@@ -1817,7 +1830,8 @@
                     "Black",
                     "Brown"
                   ],
-                  "correct_answer": "Grey"
+                  "correct_answer": "Grey",
+                  "locate_text": "There is a grey cloud and a brown bird too."
                 },
                 {
                   "question": "Which bird does Emma like best?",
@@ -1828,7 +1842,8 @@
                     "The white bird",
                     "The purple bird"
                   ],
-                  "correct_answer": "The black bird"
+                  "correct_answer": "The black bird",
+                  "locate_text": "My friend Emma likes the black bird best."
                 }
               ]
             },
@@ -2038,17 +2053,6 @@
                   "game_type": "multiple_choice_grammar",
                   "items": [
                     {
-                      "question": "How many colors ___ there in a rainbow?",
-                      "answer": "are",
-                      "options": [
-                        "is",
-                        "are",
-                        "am",
-                        "be"
-                      ],
-                      "explanation": "Use 'are' for plural questions"
-                    },
-                    {
                       "question": "There ___ two black cats.",
                       "answer": "are",
                       "options": [
@@ -2060,17 +2064,6 @@
                       "explanation": "Use 'are' with numbers more than one"
                     },
                     {
-                      "question": "How many purple ___?",
-                      "answer": "crayons are there",
-                      "options": [
-                        "crayon is there",
-                        "crayons are there",
-                        "crayon are there",
-                        "crayons is there"
-                      ],
-                      "explanation": "Use plural 'crayons' and 'are' for counting"
-                    },
-                    {
                       "question": "There are eight ___ desks.",
                       "answer": "brown",
                       "options": [
@@ -2080,6 +2073,28 @@
                         "browning"
                       ],
                       "explanation": "Color words don't change for plural"
+                    },
+                    {
+                      "question": "How many colors ___ there in a rainbow?",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' for plural questions"
+                    },
+                    {
+                      "question": "How many purple ___?",
+                      "answer": "crayons are there",
+                      "options": [
+                        "crayon is there",
+                        "crayons are there",
+                        "crayon are there",
+                        "crayons is there"
+                      ],
+                      "explanation": "Use plural 'crayons' and 'are' for counting"
                     },
                     {
                       "question": "___ chairs are there?",
@@ -2149,15 +2164,18 @@
               "prompts": [
                 {
                   "prompt": "Say: How many colors are there?",
-                  "expected_text": "How many colors are there?"
+                  "expected_text": "How many colors are there?",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Answer: How many colors are in a rainbow?",
-                  "expected_text": "There are seven colors."
+                  "expected_text": "There are seven colors.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Tell me: What colors do you see? Use: There are...",
-                  "expected_text": "There are purple, grey, brown, white, and black."
+                  "expected_text": "There are purple, grey, brown, white, and black.",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -2503,7 +2521,8 @@
                     "fifteen",
                     "twenty"
                   ],
-                  "correct_answer": "twelve"
+                  "correct_answer": "twelve",
+                  "locate_text": "There are twelve red crayons and fifteen blue crayons."
                 },
                 {
                   "question": "What is Emma counting?",
@@ -2514,7 +2533,8 @@
                     "books",
                     "toys"
                   ],
-                  "correct_answer": "crayons"
+                  "correct_answer": "crayons",
+                  "locate_text": "Emma has a big box of crayons. She counts them."
                 },
                 {
                   "question": "How many crayons are in the box?",
@@ -2525,7 +2545,8 @@
                     "twenty",
                     "twenty-seven"
                   ],
-                  "correct_answer": "twenty-seven"
+                  "correct_answer": "twenty-seven",
+                  "locate_text": "There are twenty-seven crayons in the box!"
                 }
               ]
             },
@@ -2603,16 +2624,6 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "There ___ sixteen brown bears.",
-                      "answer": "are",
-                      "options": [
-                        "is",
-                        "are",
-                        "am",
-                        "be"
-                      ]
-                    },
-                    {
                       "sentence": "How many ___ there?",
                       "answer": "are",
                       "options": [
@@ -2620,16 +2631,6 @@
                         "are",
                         "am",
                         "do"
-                      ]
-                    },
-                    {
-                      "sentence": "There are ___ purple grapes.",
-                      "answer": "seventeen",
-                      "options": [
-                        "seventeen",
-                        "seventh",
-                        "seven",
-                        "seventieth"
                       ]
                     },
                     {
@@ -2643,6 +2644,16 @@
                       ]
                     },
                     {
+                      "sentence": "There ___ sixteen brown bears.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ]
+                    },
+                    {
                       "sentence": "___ many are there?",
                       "answer": "How",
                       "options": [
@@ -2650,6 +2661,16 @@
                         "What",
                         "Where",
                         "Who"
+                      ]
+                    },
+                    {
+                      "sentence": "There are ___ purple grapes.",
+                      "answer": "seventeen",
+                      "options": [
+                        "seventeen",
+                        "seventh",
+                        "seven",
+                        "seventieth"
                       ]
                     },
                     {
@@ -2872,15 +2893,18 @@
               "prompts": [
                 {
                   "prompt": "Say: There are fifteen purple balloons.",
-                  "expected_text": "There are fifteen purple balloons."
+                  "expected_text": "There are fifteen purple balloons.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: There are twenty grey elephants.",
-                  "expected_text": "There are twenty grey elephants."
+                  "expected_text": "There are twenty grey elephants.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Look around you. How many things can you see? Say: There are ___ [color] [objects].",
-                  "expected_text": "There are [number] [color] [objects]."
+                  "expected_text": "There are [number] [color] [objects].",
+                  "production_type": "echo"
                 }
               ]
             },

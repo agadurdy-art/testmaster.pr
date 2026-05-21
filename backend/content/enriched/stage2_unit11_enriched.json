@@ -339,7 +339,8 @@
                     "on Saturday",
                     "never"
                   ],
-                  "correct_answer": "on Saturday"
+                  "correct_answer": "on Saturday",
+                  "locate_text": "Tom always plays sports on Saturday. He loves football and basketball."
                 },
                 {
                   "question": "What sport does Emma play?",
@@ -349,7 +350,8 @@
                     "basketball",
                     "tennis"
                   ],
-                  "correct_answer": "tennis"
+                  "correct_answer": "tennis",
+                  "locate_text": "His sister Emma plays tennis every weekend."
                 },
                 {
                   "question": "Where does Tom want to play today?",
@@ -359,7 +361,8 @@
                     "at school",
                     "in the park"
                   ],
-                  "correct_answer": "in the park"
+                  "correct_answer": "in the park",
+                  "locate_text": "Today, Tom wants to play a new game with his friends in the park."
                 }
               ]
             },
@@ -669,15 +672,18 @@
               "prompts": [
                 {
                   "prompt": "Say: I play ___ on the weekend.",
-                  "expected_text": "I play football on the weekend."
+                  "expected_text": "I play football on the weekend.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: I always play ___ or I never play ___.",
-                  "expected_text": "I always play basketball."
+                  "expected_text": "I always play basketball.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Tell me: What sport do you want to play next weekend?",
-                  "expected_text": "I want to play tennis next weekend."
+                  "expected_text": "I want to play tennis next weekend.",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -959,7 +965,8 @@
                     "She plays the guitar",
                     "She paints pictures"
                   ],
-                  "correct_answer": "She plays the piano"
+                  "correct_answer": "She plays the piano",
+                  "locate_text": "She always plays the piano on Monday."
                 },
                 {
                   "question": "Do the children do homework at hobby club?",
@@ -969,7 +976,8 @@
                     "No",
                     "Sometimes"
                   ],
-                  "correct_answer": "No"
+                  "correct_answer": "No",
+                  "locate_text": "Emma goes to hobby club after school. She always plays the piano on Monday."
                 },
                 {
                   "question": "When do the children take a photo?",
@@ -979,7 +987,8 @@
                     "On Friday",
                     "Every day"
                   ],
-                  "correct_answer": "On Friday"
+                  "correct_answer": "On Friday",
+                  "locate_text": "On Friday, they take a photo together."
                 }
               ]
             },
@@ -1301,15 +1310,18 @@
               "prompts": [
                 {
                   "prompt": "Say: I always go to hobby club.",
-                  "expected_text": "I always go to hobby club."
+                  "expected_text": "I always go to hobby club.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: I play the guitar at music club.",
-                  "expected_text": "I play the guitar at music club."
+                  "expected_text": "I play the guitar at music club.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: We never paint on Monday.",
-                  "expected_text": "We never paint on Monday."
+                  "expected_text": "We never paint on Monday.",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -1639,7 +1651,8 @@
                     "at night",
                     "never"
                   ],
-                  "correct_answer": "in the morning"
+                  "correct_answer": "in the morning",
+                  "locate_text": "She always listens to the radio in the morning. She sometimes plays with her toys after school."
                 },
                 {
                   "question": "Does Emma always play with her toys after school?",
@@ -1649,7 +1662,8 @@
                     "No",
                     "Only on Mondays"
                   ],
-                  "correct_answer": "No"
+                  "correct_answer": "No",
+                  "locate_text": "She sometimes plays with her toys after school."
                 },
                 {
                   "question": "Why does Emma never go to bed late?",
@@ -1659,7 +1673,8 @@
                     "because she likes morning",
                     "because she plays outside"
                   ],
-                  "correct_answer": "because she feels tired"
+                  "correct_answer": "because she feels tired",
+                  "locate_text": "She never goes to bed late because she feels tired."
                 }
               ]
             },
@@ -1970,15 +1985,18 @@
               "prompts": [
                 {
                   "prompt": "Tell me something you always do after school. Say: I always...",
-                  "expected_text": "I always play with my toys."
+                  "expected_text": "I always play with my toys.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Tell me something you sometimes do on Saturday. Say: I sometimes...",
-                  "expected_text": "I sometimes go to the park."
+                  "expected_text": "I sometimes go to the park.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Tell me something you never do. Say: I never...",
-                  "expected_text": "I never go to bed late."
+                  "expected_text": "I never go to bed late.",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -2325,7 +2343,8 @@
                     "She paints",
                     "She plays the piano"
                   ],
-                  "correct_answer": "She plays basketball"
+                  "correct_answer": "She plays basketball",
+                  "locate_text": "Emma loves hobbies! She always plays basketball on Monday."
                 },
                 {
                   "question": "Does Emma go swimming on Wednesday?",
@@ -2335,7 +2354,8 @@
                     "No",
                     "Sometimes"
                   ],
-                  "correct_answer": "No"
+                  "correct_answer": "No",
+                  "locate_text": "On Wednesday, she never goes swimming, but she does play the piano."
                 },
                 {
                   "question": "Who does Emma play football with on Sunday?",
@@ -2346,7 +2366,8 @@
                     "Her teacher",
                     "Her brother"
                   ],
-                  "correct_answer": "Her dad"
+                  "correct_answer": "Her dad",
+                  "locate_text": "On Sunday, she always plays football with her dad."
                 }
               ]
             },
@@ -2527,10 +2548,11 @@
                   "game_type": "true_false",
                   "items": [
                     {
-                      "sentence": "I always play football.",
+                      "sentence": "I always plays football.",
                       "is_correct": true,
                       "corrected": "I always play football.",
-                      "explanation": "Correct! We use 'play' with sports"
+                      "explanation": "Check the verb form.",
+                      "correct": false
                     },
                     {
                       "sentence": "She go swimming on Tuesday.",
@@ -2690,15 +2712,18 @@
               "prompts": [
                 {
                   "prompt": "Say: I always play basketball on Monday.",
-                  "expected_text": "I always play basketball on Monday."
+                  "expected_text": "I always play basketball on Monday.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: I sometimes go swimming on Wednesday.",
-                  "expected_text": "I sometimes go swimming on Wednesday."
+                  "expected_text": "I sometimes go swimming on Wednesday.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Now tell me: What hobby do you always do? Say: I always...",
-                  "expected_text": "I always [hobby] on [day]."
+                  "expected_text": "I always [hobby] on [day].",
+                  "production_type": "echo"
                 }
               ]
             },

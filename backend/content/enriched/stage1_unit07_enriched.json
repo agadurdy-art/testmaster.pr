@@ -289,7 +289,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Ella's Fun Day",
-              "text": "Hi! I am Ella. I have two strong legs. I can stomp my feet. Clap your hands with me. Let's play!",
+              "text": "Hi! I am Ella. I have two strong legs. I can stomp my feet. Clap your hands with me. Let's play! This is a happy day for our class.",
               "questions": [
                 {
                   "question": "What does Ella clap?",
@@ -298,7 +298,8 @@
                     "feet",
                     "hands",
                     "head"
-                  ]
+                  ],
+                  "locate_text": "Clap your hands with me."
                 },
                 {
                   "question": "How many legs does Ella have?",
@@ -307,7 +308,8 @@
                     "one",
                     "two",
                     "three"
-                  ]
+                  ],
+                  "locate_text": "I have two strong legs."
                 }
               ]
             },
@@ -433,7 +435,8 @@
               "type": "production",
               "prompt": "Action: Can you say 'Touch your arm'?",
               "expected_text": "touch your arm",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -769,7 +772,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Wiggle and Clap!",
-              "text": "Wiggle your fingers! I have ten fingers. Clap your hands! I have ten toes. My toes are short. Touch your toes and smile.",
+              "text": "Wiggle your fingers! I have ten fingers. Clap your hands! I have ten toes. My toes are short. Touch your toes and smile. This is a happy day for our class.",
               "questions": [
                 {
                   "question": "How many fingers do they have?",
@@ -778,7 +781,8 @@
                     "ten",
                     "five",
                     "two"
-                  ]
+                  ],
+                  "locate_text": "I have ten fingers."
                 },
                 {
                   "question": "What should you do after touching your toes?",
@@ -787,7 +791,8 @@
                     "clap",
                     "smile",
                     "jump"
-                  ]
+                  ],
+                  "locate_text": "Touch your toes and smile."
                 }
               ]
             },
@@ -845,30 +850,27 @@
                       "sentence": "My fingers ___ tiny.",
                       "answer": "are",
                       "options": [
-                        "is",
-                        "are",
                         "am",
-                        "was"
+                        "is",
+                        "are"
                       ]
                     },
                     {
-                      "sentence": "Her legs ___ fast.",
-                      "answer": "are",
+                      "sentence": "Her face ___ small.",
+                      "answer": "is",
                       "options": [
-                        "is",
-                        "are",
                         "am",
-                        "was"
+                        "is",
+                        "are"
                       ]
                     },
                     {
                       "sentence": "The toes ___ pink.",
                       "answer": "are",
                       "options": [
-                        "is",
-                        "are",
                         "am",
-                        "was"
+                        "is",
+                        "are"
                       ]
                     }
                   ]
@@ -921,7 +923,8 @@
               "type": "production",
               "prompt": "Say: My toes are short.",
               "expected_text": "my toes are short",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1267,7 +1270,8 @@
                     "stomp",
                     "clap",
                     "touch"
-                  ]
+                  ],
+                  "locate_text": "' Stomp your feet and shout, 'I have two feet!"
                 },
                 {
                   "question": "How many hands do you have?",
@@ -1276,7 +1280,8 @@
                     "two",
                     "four",
                     "eight"
-                  ]
+                  ],
+                  "locate_text": "Clap your hands and say, 'I have two hands!"
                 }
               ]
             },
@@ -1397,7 +1402,8 @@
               "type": "production",
               "prompt": "Say: Touch your knees.",
               "expected_text": "touch your knees",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1677,7 +1683,8 @@
                     "ten",
                     "five",
                     "two"
-                  ]
+                  ],
+                  "locate_text": "I have ten toes."
                 },
                 {
                   "question": "What can the character do with hands?",
@@ -1686,7 +1693,8 @@
                     "clap",
                     "jump",
                     "nod"
-                  ]
+                  ],
+                  "locate_text": "My hands can clap."
                 }
               ]
             },
@@ -1798,7 +1806,8 @@
               "type": "production",
               "prompt": "Say: 'I have two feet and two legs.'",
               "expected_text": "i have two feet and two legs",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,

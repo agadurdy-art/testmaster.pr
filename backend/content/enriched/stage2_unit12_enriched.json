@@ -333,7 +333,8 @@
                     "Twelve",
                     "Twenty"
                   ],
-                  "correct_answer": "Twelve"
+                  "correct_answer": "Twelve",
+                  "locate_text": "There are twelve balloons in our classroom."
                 },
                 {
                   "question": "What color is the child's desk?",
@@ -343,7 +344,8 @@
                     "Blue",
                     "Red"
                   ],
-                  "correct_answer": "Purple"
+                  "correct_answer": "Purple",
+                  "locate_text": "I sit at my purple desk."
                 },
                 {
                   "question": "How do the children feel at the party?",
@@ -353,7 +355,8 @@
                     "Tired",
                     "Happy"
                   ],
-                  "correct_answer": "Happy"
+                  "correct_answer": "Happy",
+                  "locate_text": "We are so happy to be back at school!"
                 }
               ]
             },
@@ -664,15 +667,18 @@
               "prompts": [
                 {
                   "prompt": "Say: Hello, my name is [your name].",
-                  "expected_text": "Hello, my name is [student name]."
+                  "expected_text": "Hello, my name is [student name].",
+                  "production_type": "self_introduction"
                 },
                 {
                   "prompt": "Say: I have twelve balloons at the party.",
-                  "expected_text": "I have twelve balloons at the party."
+                  "expected_text": "I have twelve balloons at the party.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: My desk is purple and I am happy.",
-                  "expected_text": "My desk is purple and I am happy."
+                  "expected_text": "My desk is purple and I am happy.",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -953,7 +959,8 @@
                     "Mom",
                     "A teacher"
                   ],
-                  "correct_answer": "Emma"
+                  "correct_answer": "Emma",
+                  "locate_text": "My daughter Emma is playing in the park. She is wearing a yellow shirt."
                 },
                 {
                   "question": "What color is Emma's shirt?",
@@ -964,7 +971,8 @@
                     "Red",
                     "Green"
                   ],
-                  "correct_answer": "Yellow"
+                  "correct_answer": "Yellow",
+                  "locate_text": "She is wearing a yellow shirt."
                 },
                 {
                   "question": "What is Emma waving?",
@@ -975,7 +983,8 @@
                     "A ball",
                     "A book"
                   ],
-                  "correct_answer": "Her arm"
+                  "correct_answer": "Her arm",
+                  "locate_text": "She is waving her arm at a tall giraffe toy."
                 }
               ]
             },
@@ -1295,15 +1304,18 @@
               "prompts": [
                 {
                   "prompt": "Say: She has long hair.",
-                  "expected_text": "She has long hair."
+                  "expected_text": "She has long hair.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: He is wearing a blue shirt.",
-                  "expected_text": "He is wearing a blue shirt."
+                  "expected_text": "He is wearing a blue shirt.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Now describe someone you know! Say: My [mom/dad/friend] has [color] [hair/eyes].",
-                  "expected_text": "My mom has brown hair."
+                  "expected_text": "My mom has brown hair.",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -1627,7 +1639,8 @@
                     "to school",
                     "to the park"
                   ],
-                  "correct_answer": "to the beach"
+                  "correct_answer": "to the beach",
+                  "locate_text": "Emma and her family are going to the beach. They are eating sandwiches in the kitchen."
                 },
                 {
                   "question": "What can Emma do?",
@@ -1637,7 +1650,8 @@
                     "fly",
                     "cook"
                   ],
-                  "correct_answer": "swim"
+                  "correct_answer": "swim",
+                  "locate_text": "She can swim in the sea. They are very happy!"
                 },
                 {
                   "question": "Where are they eating sandwiches?",
@@ -1647,7 +1661,8 @@
                     "at the beach",
                     "in the car"
                   ],
-                  "correct_answer": "in the kitchen"
+                  "correct_answer": "in the kitchen",
+                  "locate_text": "They are eating sandwiches in the kitchen."
                 }
               ]
             },
@@ -1957,15 +1972,18 @@
               "prompts": [
                 {
                   "prompt": "Say: I like ___. (Choose something you like!)",
-                  "expected_text": "I like pizza."
+                  "expected_text": "I like pizza.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: I can ___. (Tell me something you can do!)",
-                  "expected_text": "I can swim."
+                  "expected_text": "I can swim.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: I am eating ___. (What are you eating now or what do you eat?)",
-                  "expected_text": "I am eating breakfast."
+                  "expected_text": "I am eating breakfast.",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -2302,7 +2320,8 @@
                     "To a big city",
                     "To their house"
                   ],
-                  "correct_answer": "To a small island"
+                  "correct_answer": "To a small island",
+                  "locate_text": "Sam and Lily go to a small island. They can see a map under a big tree."
                 },
                 {
                   "question": "What do they find under the big tree?",
@@ -2313,7 +2332,8 @@
                     "A toy",
                     "A book"
                   ],
-                  "correct_answer": "A map"
+                  "correct_answer": "A map",
+                  "locate_text": "They can see a map under a big tree."
                 },
                 {
                   "question": "Are Sam and Lily happy at the end?",
@@ -2324,7 +2344,8 @@
                     "Maybe",
                     "We don't know"
                   ],
-                  "correct_answer": "Yes"
+                  "correct_answer": "Yes",
+                  "locate_text": "Sam and Lily are very happy!"
                 }
               ]
             },
@@ -2396,23 +2417,13 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "I ___ jump high.",
+                      "sentence": "He ___ say hello.",
                       "answer": "can",
                       "options": [
                         "can",
                         "am",
                         "is",
                         "are"
-                      ]
-                    },
-                    {
-                      "sentence": "She ___ eating an apple.",
-                      "answer": "is",
-                      "options": [
-                        "am",
-                        "is",
-                        "are",
-                        "can"
                       ]
                     },
                     {
@@ -2426,6 +2437,26 @@
                       ]
                     },
                     {
+                      "sentence": "There ___ twelve pencils on the desk.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "can"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ jump high.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
                       "sentence": "I ___ two shirts.",
                       "answer": "have",
                       "options": [
@@ -2436,18 +2467,8 @@
                       ]
                     },
                     {
-                      "sentence": "He ___ say hello.",
-                      "answer": "can",
-                      "options": [
-                        "can",
-                        "am",
-                        "is",
-                        "are"
-                      ]
-                    },
-                    {
-                      "sentence": "There ___ twelve pencils on the desk.",
-                      "answer": "are",
+                      "sentence": "She ___ eating an apple.",
+                      "answer": "is",
                       "options": [
                         "am",
                         "is",
@@ -2665,15 +2686,18 @@
               "prompts": [
                 {
                   "prompt": "Say: I can find the treasure.",
-                  "expected_text": "I can find the treasure."
+                  "expected_text": "I can find the treasure.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: We are going to the island.",
-                  "expected_text": "We are going to the island."
+                  "expected_text": "We are going to the island.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Now tell me: What can you do on the island?",
-                  "expected_text": "I can swim. / I can play. / I can find treasure."
+                  "expected_text": "I can swim. / I can play. / I can find treasure.",
+                  "production_type": "echo"
                 }
               ]
             },

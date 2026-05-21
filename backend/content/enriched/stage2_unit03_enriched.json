@@ -335,7 +335,8 @@
                     "Under the chair",
                     "Behind the board"
                   ],
-                  "correct_answer": "On the desk"
+                  "correct_answer": "On the desk",
+                  "locate_text": "A black computer is on the desk."
                 },
                 {
                   "question": "What color is the board?",
@@ -345,7 +346,8 @@
                     "Black",
                     "Blue"
                   ],
-                  "correct_answer": "White"
+                  "correct_answer": "White",
+                  "locate_text": "The white board is behind me."
                 },
                 {
                   "question": "Where is the chair?",
@@ -355,7 +357,8 @@
                     "On the computer",
                     "Next to the window"
                   ],
-                  "correct_answer": "Under the desk"
+                  "correct_answer": "Under the desk",
+                  "locate_text": "My chair is under the desk."
                 }
               ]
             },
@@ -674,15 +677,18 @@
               "prompts": [
                 {
                   "prompt": "Say: The computer is on the desk.",
-                  "expected_text": "The computer is on the desk"
+                  "expected_text": "The computer is on the desk",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: The chair is next to the desk.",
-                  "expected_text": "The chair is next to the desk"
+                  "expected_text": "The chair is next to the desk",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Now tell me: Where is the board in your classroom?",
-                  "expected_text": "The board is behind the teacher"
+                  "expected_text": "The board is behind the teacher",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -1016,7 +1022,8 @@
                     "in her pencil case",
                     "under her chair"
                   ],
-                  "correct_answer": "on her desk"
+                  "correct_answer": "on her desk",
+                  "locate_text": "She looks on her desk. It's not there."
                 },
                 {
                   "question": "Where does Emma find her pencil?",
@@ -1026,7 +1033,8 @@
                     "on her desk",
                     "in her pencil case"
                   ],
-                  "correct_answer": "under her chair"
+                  "correct_answer": "under her chair",
+                  "locate_text": "Then she looks under her chair."
                 },
                 {
                   "question": "Is the pencil in the pencil case?",
@@ -1036,7 +1044,8 @@
                     "Yes",
                     "Maybe"
                   ],
-                  "correct_answer": "No"
+                  "correct_answer": "No",
+                  "locate_text": "She looks in her pencil case. It's not there."
                 }
               ]
             },
@@ -1349,6 +1358,14 @@
                     "Maybe",
                     "I don't know"
                   ]
+                },
+                {
+                  "question": "Is there an English lesson?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
                 }
               ]
             },
@@ -1361,15 +1378,18 @@
               "prompts": [
                 {
                   "prompt": "Say: The pencil is in the bag.",
-                  "expected_text": "The pencil is in the bag."
+                  "expected_text": "The pencil is in the bag.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: The book is on the desk.",
-                  "expected_text": "The book is on the desk."
+                  "expected_text": "The book is on the desk.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: The ruler is under the chair.",
-                  "expected_text": "The ruler is under the chair."
+                  "expected_text": "The ruler is under the chair.",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -1696,7 +1716,8 @@
                     "on the floor",
                     "behind the desk"
                   ],
-                  "correct_answer": "on the wall"
+                  "correct_answer": "on the wall",
+                  "locate_text": "There is a big picture on the wall. It is next to the window."
                 },
                 {
                   "question": "What is next to the window?",
@@ -1706,7 +1727,8 @@
                     "the teacher's desk",
                     "some books"
                   ],
-                  "correct_answer": "a big picture"
+                  "correct_answer": "a big picture",
+                  "locate_text": "There is a big picture on the wall. It is next to the window."
                 },
                 {
                   "question": "Where are the books?",
@@ -1716,7 +1738,8 @@
                     "on the wall",
                     "behind the window"
                   ],
-                  "correct_answer": "on the floor next to the bag"
+                  "correct_answer": "on the floor next to the bag",
+                  "locate_text": "There are some books on the floor next to my bag."
                 }
               ]
             },
@@ -2033,15 +2056,18 @@
               "prompts": [
                 {
                   "prompt": "Say: The picture is on the wall.",
-                  "expected_text": "The picture is on the wall."
+                  "expected_text": "The picture is on the wall.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: My picture is next to the window.",
-                  "expected_text": "My picture is next to the window."
+                  "expected_text": "My picture is next to the window.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Now tell me: Where is a picture in your room?",
-                  "expected_text": "The picture is on the wall next to my bed."
+                  "expected_text": "The picture is on the wall next to my bed.",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -2382,7 +2408,8 @@
                     "in her bag",
                     "under the chair"
                   ],
-                  "correct_answer": "on her desk"
+                  "correct_answer": "on her desk",
+                  "locate_text": "She looks on her desk. It's not there."
                 },
                 {
                   "question": "Where is Emma's pencil?",
@@ -2392,7 +2419,8 @@
                     "on her desk",
                     "under her chair"
                   ],
-                  "correct_answer": "in her bag"
+                  "correct_answer": "in her bag",
+                  "locate_text": "Then she looks in her bag."
                 },
                 {
                   "question": "What is next to the pencil?",
@@ -2402,7 +2430,8 @@
                     "a chair",
                     "a desk"
                   ],
-                  "correct_answer": "a book"
+                  "correct_answer": "a book",
+                  "locate_text": "Her pencil is in her bag next to her book."
                 }
               ]
             },
@@ -2745,15 +2774,18 @@
               "prompts": [
                 {
                   "prompt": "Look at your desk. Say: The book is on the desk.",
-                  "expected_text": "The book is on the desk."
+                  "expected_text": "The book is on the desk.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Look under your chair. Say: The bag is under the chair.",
-                  "expected_text": "The bag is under the chair."
+                  "expected_text": "The bag is under the chair.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Now tell me about something in your room. Say: The [something] is [in/on/under/next to/behind] the [something].",
-                  "expected_text": "The pencil is in the box."
+                  "expected_text": "The pencil is in the box.",
+                  "production_type": "echo"
                 }
               ]
             },

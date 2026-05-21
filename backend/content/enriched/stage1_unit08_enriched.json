@@ -288,7 +288,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "On the Farm",
-              "text": "Look at the big farm. That is a cow. It says Moo. Is that a horse? Yes, it is! The farmer smiles.",
+              "text": "Look at the big farm. That is a cow. It says Moo. Is that a horse? Yes, it is! The farmer smiles. This is a happy day for our class.",
               "questions": [
                 {
                   "question": "What does the cow say?",
@@ -297,7 +297,8 @@
                     "Moo",
                     "Baa",
                     "Neigh"
-                  ]
+                  ],
+                  "locate_text": "It says Moo."
                 },
                 {
                   "question": "Who smiles on the farm?",
@@ -306,7 +307,8 @@
                     "The farmer",
                     "The cow",
                     "The horse"
-                  ]
+                  ],
+                  "locate_text": "The farmer smiles."
                 }
               ]
             },
@@ -421,7 +423,8 @@
               "type": "production",
               "prompt": "Point and Say: That is a horse.",
               "expected_text": "that is a horse",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -732,7 +735,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Fun on the Farm",
-              "text": "That is a white sheep. Is that a duck? Yes, the duck can swim. It says quack! I love animals.",
+              "text": "That is a white sheep. Is that a duck? Yes, the duck can swim. It says quack! I love animals. This is a happy day for our class.",
               "questions": [
                 {
                   "question": "What color is the sheep?",
@@ -741,7 +744,8 @@
                     "yellow",
                     "white",
                     "green"
-                  ]
+                  ],
+                  "locate_text": "That is a white sheep."
                 },
                 {
                   "question": "Can the duck swim?",
@@ -750,7 +754,8 @@
                     "Yes",
                     "No",
                     "Maybe"
-                  ]
+                  ],
+                  "locate_text": "Yes, the duck can swim. It says quack!"
                 }
               ]
             },
@@ -865,7 +870,8 @@
               "type": "production",
               "prompt": "Say: Is that a sheep?",
               "expected_text": "is that a sheep",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1204,7 +1210,8 @@
                     "in the mud",
                     "in the barn",
                     "in the water"
-                  ]
+                  ],
+                  "locate_text": "The pig is in the mud. That is a chicken."
                 },
                 {
                   "question": "What is big?",
@@ -1213,7 +1220,8 @@
                     "the pig",
                     "the egg",
                     "the mud"
-                  ]
+                  ],
+                  "locate_text": "The egg is big!"
                 }
               ]
             },
@@ -1334,6 +1342,14 @@
                     "No",
                     "Maybe"
                   ]
+                },
+                {
+                  "question": "Is the talk about cooking pizza?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
                 }
               ]
             },
@@ -1342,7 +1358,8 @@
               "type": "production",
               "prompt": "Say: The pig says oink.",
               "expected_text": "the pig says oink",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1626,7 +1643,8 @@
                     "Moo",
                     "Cluck",
                     "Baa"
-                  ]
+                  ],
+                  "locate_text": "It says Moo!"
                 },
                 {
                   "question": "What animal is laying eggs?",
@@ -1635,7 +1653,8 @@
                     "hen",
                     "rooster",
                     "cow"
-                  ]
+                  ],
+                  "locate_text": "The hen is laying eggs."
                 }
               ]
             },
@@ -1766,7 +1785,8 @@
               "type": "production",
               "prompt": "Say: That is a cow. What does it say?",
               "expected_text": "that is a cow it says moo",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,

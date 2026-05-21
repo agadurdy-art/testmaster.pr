@@ -337,7 +337,8 @@
                     "yellow",
                     "red"
                   ],
-                  "correct_answer": "yellow"
+                  "correct_answer": "yellow",
+                  "locate_text": "There is a big kitchen with a yellow table."
                 },
                 {
                   "question": "Where is the bathroom?",
@@ -347,7 +348,8 @@
                     "next to Emma's bedroom",
                     "in the living room"
                   ],
-                  "correct_answer": "next to Emma's bedroom"
+                  "correct_answer": "next to Emma's bedroom",
+                  "locate_text": "There is a bathroom next to her bedroom."
                 },
                 {
                   "question": "How many bedrooms are there in Emma's house?",
@@ -357,7 +359,8 @@
                     "two",
                     "three"
                   ],
-                  "correct_answer": "two"
+                  "correct_answer": "two",
+                  "locate_text": "There are two bedrooms upstairs."
                 }
               ]
             },
@@ -436,8 +439,7 @@
                       "options": [
                         "is",
                         "are",
-                        "am",
-                        "be"
+                        "am"
                       ]
                     },
                     {
@@ -446,18 +448,16 @@
                       "options": [
                         "is",
                         "are",
-                        "am",
-                        "be"
+                        "am"
                       ]
                     },
                     {
-                      "sentence": "___ there a bathroom downstairs?",
-                      "answer": "Is",
+                      "sentence": "I ___ in the living room.",
+                      "answer": "am",
                       "options": [
-                        "Is",
-                        "Are",
-                        "Am",
-                        "Be"
+                        "is",
+                        "are",
+                        "am"
                       ]
                     },
                     {
@@ -466,8 +466,7 @@
                       "options": [
                         "Is",
                         "Are",
-                        "Am",
-                        "Be"
+                        "Am"
                       ]
                     },
                     {
@@ -476,8 +475,7 @@
                       "options": [
                         "is",
                         "are",
-                        "am",
-                        "be"
+                        "am"
                       ]
                     }
                   ]
@@ -664,15 +662,18 @@
               "prompts": [
                 {
                   "prompt": "Say: There is a kitchen in my house.",
-                  "expected_text": "There is a kitchen in my house."
+                  "expected_text": "There is a kitchen in my house.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: There are two bedrooms in my house.",
-                  "expected_text": "There are two bedrooms in my house."
+                  "expected_text": "There are two bedrooms in my house.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Ask: Is there a bathroom upstairs?",
-                  "expected_text": "Is there a bathroom upstairs?"
+                  "expected_text": "Is there a bathroom upstairs?",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -974,7 +975,8 @@
                     "on the stairs",
                     "in the mirror"
                   ],
-                  "correct_answer": "under the bed"
+                  "correct_answer": "under the bed",
+                  "locate_text": "She looks under the bed and finds her phone!"
                 },
                 {
                   "question": "Is there a mirror in Emma's room?",
@@ -983,7 +985,8 @@
                     "Yes",
                     "No"
                   ],
-                  "correct_answer": "Yes"
+                  "correct_answer": "Yes",
+                  "locate_text": "There is a mirror on the wall. She walks up the stairs with her toys."
                 },
                 {
                   "question": "What time does the clock show?",
@@ -993,7 +996,8 @@
                     "3 o'clock",
                     "5 o'clock"
                   ],
-                  "correct_answer": "4 o'clock"
+                  "correct_answer": "4 o'clock",
+                  "locate_text": "The clock says it's 4 o'clock."
                 }
               ]
             },
@@ -1071,13 +1075,13 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "___ there a mirror in the room?",
-                      "answer": "Is",
+                      "sentence": "There ___ stairs in my house.",
+                      "answer": "are",
                       "options": [
-                        "Is",
-                        "Are",
-                        "Am",
-                        "Be"
+                        "are",
+                        "is",
+                        "am",
+                        "be"
                       ]
                     },
                     {
@@ -1086,26 +1090,6 @@
                       "options": [
                         "is",
                         "are",
-                        "am",
-                        "be"
-                      ]
-                    },
-                    {
-                      "sentence": "___ there any phones here?",
-                      "answer": "Are",
-                      "options": [
-                        "Are",
-                        "Is",
-                        "Am",
-                        "Be"
-                      ]
-                    },
-                    {
-                      "sentence": "There ___ stairs in my house.",
-                      "answer": "are",
-                      "options": [
-                        "are",
-                        "is",
                         "am",
                         "be"
                       ]
@@ -1128,6 +1112,26 @@
                         "a",
                         "an",
                         "one"
+                      ]
+                    },
+                    {
+                      "sentence": "___ there any phones here?",
+                      "answer": "Are",
+                      "options": [
+                        "Are",
+                        "Is",
+                        "Am",
+                        "Be"
+                      ]
+                    },
+                    {
+                      "sentence": "___ there a mirror in the room?",
+                      "answer": "Is",
+                      "options": [
+                        "Is",
+                        "Are",
+                        "Am",
+                        "Be"
                       ]
                     }
                   ]
@@ -1218,15 +1222,15 @@
                   "game_type": "multiple_choice_grammar",
                   "items": [
                     {
-                      "question": "___ there a clock in your room?",
-                      "answer": "Is",
+                      "question": "There ___ two phones here.",
+                      "answer": "are",
                       "options": [
-                        "Is",
-                        "Are",
-                        "Am",
-                        "Be"
+                        "are",
+                        "is",
+                        "am",
+                        "be"
                       ],
-                      "explanation": "Use 'Is' for asking about one thing"
+                      "explanation": "Use 'are' with more than one thing"
                     },
                     {
                       "question": "There ___ a mirror on the wall.",
@@ -1238,28 +1242,6 @@
                         "be"
                       ],
                       "explanation": "Use 'is' with one thing"
-                    },
-                    {
-                      "question": "___ there any stairs?",
-                      "answer": "Are",
-                      "options": [
-                        "Are",
-                        "Is",
-                        "Am",
-                        "Be"
-                      ],
-                      "explanation": "Use 'Are' for asking about more than one thing"
-                    },
-                    {
-                      "question": "There ___ two phones here.",
-                      "answer": "are",
-                      "options": [
-                        "are",
-                        "is",
-                        "am",
-                        "be"
-                      ],
-                      "explanation": "Use 'are' with more than one thing"
                     },
                     {
                       "question": "Is there ___ mirror?",
@@ -1282,6 +1264,28 @@
                         "one"
                       ],
                       "explanation": "Use 'any' with plural nouns after 'Are there'"
+                    },
+                    {
+                      "question": "___ there any stairs?",
+                      "answer": "Are",
+                      "options": [
+                        "Are",
+                        "Is",
+                        "Am",
+                        "Be"
+                      ],
+                      "explanation": "Use 'Are' for asking about more than one thing"
+                    },
+                    {
+                      "question": "___ there a clock in your room?",
+                      "answer": "Is",
+                      "options": [
+                        "Is",
+                        "Are",
+                        "Am",
+                        "Be"
+                      ],
+                      "explanation": "Use 'Is' for asking about one thing"
                     }
                   ]
                 }
@@ -1326,6 +1330,14 @@
                     "Yes",
                     "No"
                   ]
+                },
+                {
+                  "question": "Is the talk about cooking pizza?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
                 }
               ]
             },
@@ -1338,15 +1350,18 @@
               "prompts": [
                 {
                   "prompt": "Is there a clock in your room? Say: Yes, there is a clock. OR No, there isn't a clock.",
-                  "expected_text": "Yes, there is a clock."
+                  "expected_text": "Yes, there is a clock.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Look around. Tell me: There is a ___ in my room. (Choose: mirror, phone, or clock)",
-                  "expected_text": "There is a mirror in my room."
+                  "expected_text": "There is a mirror in my room.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Ask me a question using 'Are there any...?' (Try: toys, stairs, or phones)",
-                  "expected_text": "Are there any toys in your room?"
+                  "expected_text": "Are there any toys in your room?",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -1670,7 +1685,8 @@
                     "red",
                     "green"
                   ],
-                  "correct_answer": "red"
+                  "correct_answer": "red",
+                  "locate_text": "There is a big kitchen with a red table."
                 },
                 {
                   "question": "Where are the many toys?",
@@ -1680,7 +1696,8 @@
                     "in the bedroom",
                     "in the garden"
                   ],
-                  "correct_answer": "in the bedroom"
+                  "correct_answer": "in the bedroom",
+                  "locate_text": "There are many toys in my bedroom."
                 },
                 {
                   "question": "Is there a garden in the dream house?",
@@ -1690,7 +1707,8 @@
                     "No",
                     "Maybe"
                   ],
-                  "correct_answer": "Yes"
+                  "correct_answer": "Yes",
+                  "locate_text": "I have a dream house!"
                 }
               ]
             },
@@ -1999,15 +2017,18 @@
               "prompts": [
                 {
                   "prompt": "Say: There is a kitchen in my dream house.",
-                  "expected_text": "There is a kitchen in my dream house."
+                  "expected_text": "There is a kitchen in my dream house.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: There are some toys in my bedroom.",
-                  "expected_text": "There are some toys in my bedroom."
+                  "expected_text": "There are some toys in my bedroom.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Ask your friend: Is there a garden in your dream house?",
-                  "expected_text": "Is there a garden in your dream house?"
+                  "expected_text": "Is there a garden in your dream house?",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -2348,7 +2369,8 @@
                     "in the bathroom",
                     "in the living room"
                   ],
-                  "correct_answer": "in the bedroom"
+                  "correct_answer": "in the bedroom",
+                  "locate_text": "There is a big bed in the bedroom."
                 },
                 {
                   "question": "Are there chairs in the kitchen?",
@@ -2357,7 +2379,8 @@
                     "Yes",
                     "No"
                   ],
-                  "correct_answer": "Yes"
+                  "correct_answer": "Yes",
+                  "locate_text": "There are two chairs in the kitchen."
                 },
                 {
                   "question": "What is in the living room?",
@@ -2368,7 +2391,8 @@
                     "a mirror",
                     "chairs"
                   ],
-                  "correct_answer": "toys"
+                  "correct_answer": "toys",
+                  "locate_text": "Are there any toys in the living room?"
                 }
               ]
             },
@@ -2445,23 +2469,12 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "There ___ a phone in the living room.",
-                      "answer": "is",
-                      "options": [
-                        "is",
-                        "are",
-                        "am",
-                        "be"
-                      ]
-                    },
-                    {
-                      "sentence": "There ___ some stairs in the house.",
+                      "sentence": "There ___ many rooms in my house.",
                       "answer": "are",
                       "options": [
                         "is",
                         "are",
-                        "am",
-                        "be"
+                        "am"
                       ]
                     },
                     {
@@ -2470,28 +2483,34 @@
                       "options": [
                         "Is",
                         "Are",
-                        "Am",
-                        "Be"
+                        "Am"
                       ]
                     },
                     {
-                      "sentence": "___ there any clocks in the bedroom?",
-                      "answer": "Are",
+                      "sentence": "I ___ in the bedroom.",
+                      "answer": "am",
                       "options": [
-                        "Is",
-                        "Are",
-                        "Am",
-                        "Be"
+                        "is",
+                        "are",
+                        "am"
                       ]
                     },
                     {
-                      "sentence": "There ___ many rooms in my house.",
+                      "sentence": "There ___ a phone in the living room.",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "are",
+                        "am"
+                      ]
+                    },
+                    {
+                      "sentence": "There ___ some stairs in the house.",
                       "answer": "are",
                       "options": [
                         "is",
                         "are",
-                        "am",
-                        "be"
+                        "am"
                       ]
                     }
                   ]
@@ -2667,6 +2686,14 @@
                     "Yes",
                     "No"
                   ]
+                },
+                {
+                  "question": "Is the talk about cooking pizza?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
                 }
               ]
             },
@@ -2679,15 +2706,18 @@
               "prompts": [
                 {
                   "prompt": "Say: There is a bed in my bedroom.",
-                  "expected_text": "There is a bed in my bedroom."
+                  "expected_text": "There is a bed in my bedroom.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: There are some chairs in the kitchen.",
-                  "expected_text": "There are some chairs in the kitchen."
+                  "expected_text": "There are some chairs in the kitchen.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: Is there a mirror in the bathroom? Yes, there is!",
-                  "expected_text": "Is there a mirror in the bathroom? Yes, there is!"
+                  "expected_text": "Is there a mirror in the bathroom? Yes, there is!",
+                  "production_type": "echo"
                 }
               ]
             },

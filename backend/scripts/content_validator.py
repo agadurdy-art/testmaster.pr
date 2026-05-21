@@ -35,14 +35,23 @@ ENRICHED = REPO / "backend" / "content" / "enriched"
 
 # -------- rules ---------------------------------------------------
 
+def _q_range_for_stage(ctx: str) -> tuple[int, int]:
+    """Stage 1 Foundation lessons are pre-A1; 2 short Qs is fine. Stage 2
+    Starters get 3+. Movers (Stage 3+) hold the 4–6 line."""
+    if "stage1" in ctx: return (2, 6)
+    if "stage2" in ctx: return (3, 6)
+    return (4, 6)
+
+
 def check_listening(step: dict, ctx: str) -> list[str]:
     errs = []
     script = (step.get("audio_text") or step.get("audio_script") or "").strip()
     if not script:
         errs.append(f"{ctx} listening: audio_text is empty")
     qs = step.get("questions") or step.get("items") or []
-    if not (4 <= len(qs) <= 6):
-        errs.append(f"{ctx} listening: {len(qs)} questions (expected 4–6)")
+    qmin, qmax = _q_range_for_stage(ctx)
+    if not (qmin <= len(qs) <= qmax):
+        errs.append(f"{ctx} listening: {len(qs)} questions (expected {qmin}–{qmax})")
     # Yes/No balance
     binary_answers = []
     for q in qs:
@@ -68,14 +77,24 @@ def check_listening(step: dict, ctx: str) -> list[str]:
 def check_reading(step: dict, ctx: str) -> list[str]:
     errs = []
     qs = step.get("questions") or step.get("items") or []
-    if not (4 <= len(qs) <= 6):
-        errs.append(f"{ctx} reading: {len(qs)} questions (expected 4–6)")
+    qmin, qmax = _q_range_for_stage(ctx)
+    if not (qmin <= len(qs) <= qmax):
+        errs.append(f"{ctx} reading: {len(qs)} questions (expected {qmin}–{qmax})")
     passage = (step.get("text") or step.get("passage") or "").strip()
     word_count = len(passage.split())
     if not passage:
         errs.append(f"{ctx} reading: passage is empty")
-    elif not (40 <= word_count <= 140):
-        errs.append(f"{ctx} reading: passage is {word_count} words (expected 50–120, soft 40–140)")
+    else:
+        # Stage 1 passages can be ~20 words (very early reading); Stage 2 ~30;
+        # Stage 3+ holds the 50–120 / soft 40–140 band.
+        if "stage1" in ctx:
+            soft_min, soft_max = 15, 120
+        elif "stage2" in ctx:
+            soft_min, soft_max = 25, 130
+        else:
+            soft_min, soft_max = 40, 140
+        if not (soft_min <= word_count <= soft_max):
+            errs.append(f"{ctx} reading: passage is {word_count} words (expected {soft_min}–{soft_max})")
     missing_locate = []
     for i, q in enumerate(qs, 1):
         if not (q.get("locate_text") or q.get("evidence") or q.get("passage_quote")):

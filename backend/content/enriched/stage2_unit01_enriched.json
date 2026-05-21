@@ -325,7 +325,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Meet and Greet",
-              "text": "Emma sees Tom at school. She says, 'Hello, Tom!' He says, 'Hi, Emma!' The teacher asks a question. They listen carefully. Tom answers first.",
+              "text": "Emma sees Tom at school. She says, 'Hello, Tom!' He says, 'Hi, Emma!' The teacher asks a question. They listen carefully. Tom answers first. This is a happy day for our class.",
               "scene_description": "two children greeting each other at school with teacher in background",
               "questions": [
                 {
@@ -336,7 +336,8 @@
                     "Tom",
                     "The teacher"
                   ],
-                  "correct_answer": "Emma"
+                  "correct_answer": "Emma",
+                  "locate_text": "Emma sees Tom at school. She says, 'Hello, Tom!"
                 },
                 {
                   "question": "What do the children do when the teacher asks a question?",
@@ -346,7 +347,8 @@
                     "They run",
                     "They sleep"
                   ],
-                  "correct_answer": "They listen"
+                  "correct_answer": "They listen",
+                  "locate_text": "They listen carefully."
                 },
                 {
                   "question": "Who answers the teacher first?",
@@ -356,7 +358,8 @@
                     "Emma",
                     "They both answer"
                   ],
-                  "correct_answer": "Tom"
+                  "correct_answer": "Tom",
+                  "locate_text": "Emma sees Tom at school. She says, 'Hello, Tom!"
                 }
               ]
             },
@@ -437,18 +440,16 @@
                       "options": [
                         "am",
                         "is",
-                        "are",
-                        "be"
+                        "are"
                       ]
                     },
                     {
-                      "sentence": "Who ___ your friend?",
-                      "answer": "is",
+                      "sentence": "___ they your friends?",
+                      "answer": "Are",
                       "options": [
-                        "am",
-                        "is",
-                        "are",
-                        "be"
+                        "Am",
+                        "Is",
+                        "Are"
                       ]
                     },
                     {
@@ -457,18 +458,16 @@
                       "options": [
                         "am",
                         "is",
-                        "are",
-                        "do"
+                        "are"
                       ]
                     },
                     {
-                      "sentence": "Who ___ that girl?",
-                      "answer": "is",
+                      "sentence": "___ I your teacher?",
+                      "answer": "Am",
                       "options": [
-                        "am",
-                        "is",
-                        "are",
-                        "does"
+                        "Am",
+                        "Is",
+                        "Are"
                       ]
                     },
                     {
@@ -477,8 +476,7 @@
                       "options": [
                         "am",
                         "is",
-                        "are",
-                        "can"
+                        "are"
                       ]
                     }
                   ]
@@ -557,39 +555,6 @@
                   "game_type": "multiple_choice_grammar",
                   "items": [
                     {
-                      "question": "Who ___ your friend?",
-                      "answer": "is",
-                      "options": [
-                        "am",
-                        "is",
-                        "are",
-                        "be"
-                      ],
-                      "explanation": "Use 'is' when asking about one person"
-                    },
-                    {
-                      "question": "___ is that girl?",
-                      "answer": "Who",
-                      "options": [
-                        "Who",
-                        "What",
-                        "Where",
-                        "When"
-                      ],
-                      "explanation": "Use 'Who' to ask about people"
-                    },
-                    {
-                      "question": "Who ___ she?",
-                      "answer": "is",
-                      "options": [
-                        "am",
-                        "is",
-                        "are",
-                        "do"
-                      ],
-                      "explanation": "Use 'is' with she"
-                    },
-                    {
                       "question": "Who ___ the teacher?",
                       "answer": "is",
                       "options": [
@@ -601,15 +566,48 @@
                       "explanation": "Use 'is' when asking about one person"
                     },
                     {
-                      "question": "___ is he?",
-                      "answer": "Who",
+                      "question": "___ they your classmates?",
+                      "answer": "Are",
                       "options": [
-                        "Who",
-                        "How",
-                        "What",
-                        "Which"
+                        "Am",
+                        "Is",
+                        "Are",
+                        "Do"
                       ],
-                      "explanation": "Use 'Who' to ask about a person's identity"
+                      "explanation": "Use 'Are' with they/we/you (plural)"
+                    },
+                    {
+                      "question": "Who ___ that girl?",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "does"
+                      ],
+                      "explanation": "One person → 'is'"
+                    },
+                    {
+                      "question": "___ I your friend?",
+                      "answer": "Am",
+                      "options": [
+                        "Am",
+                        "Is",
+                        "Are",
+                        "Do"
+                      ],
+                      "explanation": "Use 'Am' with I"
+                    },
+                    {
+                      "question": "Who ___ your best friend?",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "does"
+                      ],
+                      "explanation": "One person → 'is'"
                     }
                   ]
                 }
@@ -673,15 +671,18 @@
               "prompts": [
                 {
                   "prompt": "Say: Hello! My name is Emma.",
-                  "expected_text": "Hello! My name is Emma."
+                  "expected_text": "Hello! My name is Emma.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: I listen to my teacher.",
-                  "expected_text": "I listen to my teacher."
+                  "expected_text": "I listen to my teacher.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: Who is your friend?",
-                  "expected_text": "Who is your friend?"
+                  "expected_text": "Who is your friend?",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -989,7 +990,8 @@
                     "The old friends",
                     "The teacher"
                   ],
-                  "correct_answer": "Ben and Kim"
+                  "correct_answer": "Ben and Kim",
+                  "locate_text": "Ben and Kim are new in our class. They are friends."
                 },
                 {
                   "question": "Are Ben and Kim friends?",
@@ -998,7 +1000,8 @@
                     "Yes",
                     "No"
                   ],
-                  "correct_answer": "Yes"
+                  "correct_answer": "Yes",
+                  "locate_text": "Ben and Kim are new in our class. They are friends."
                 },
                 {
                   "question": "What do the old friends say?",
@@ -1008,7 +1011,8 @@
                     "Goodbye",
                     "My name is Ben"
                   ],
-                  "correct_answer": "Hello"
+                  "correct_answer": "Hello",
+                  "locate_text": "Our old friends say hello!"
                 }
               ]
             },
@@ -1321,15 +1325,18 @@
               "prompts": [
                 {
                   "prompt": "Say: My name is [your name].",
-                  "expected_text": "My name is Emma."
+                  "expected_text": "My name is Emma.",
+                  "production_type": "self_introduction"
                 },
                 {
                   "prompt": "Say: He is my new friend.",
-                  "expected_text": "He is my new friend."
+                  "expected_text": "He is my new friend.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: They are my friends.",
-                  "expected_text": "They are my friends."
+                  "expected_text": "They are my friends.",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -1657,7 +1664,8 @@
                     "at school",
                     "at the park"
                   ],
-                  "correct_answer": "at school"
+                  "correct_answer": "at school",
+                  "locate_text": "Emma learns the alphabet at school. She points to each letter."
                 },
                 {
                   "question": "What word does Emma write?",
@@ -1667,7 +1675,8 @@
                     "cat",
                     "bird"
                   ],
-                  "correct_answer": "cat"
+                  "correct_answer": "cat",
+                  "locate_text": "Emma writes the word 'cat' in her book. She is happy!"
                 },
                 {
                   "question": "Who helps Emma spell her name?",
@@ -1677,7 +1686,8 @@
                     "the teacher",
                     "her mother"
                   ],
-                  "correct_answer": "the teacher"
+                  "correct_answer": "the teacher",
+                  "locate_text": "The teacher helps her spell her name."
                 }
               ]
             },
@@ -1748,17 +1758,7 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "She ___ the alphabet.",
-                      "answer": "knows",
-                      "options": [
-                        "know",
-                        "knows",
-                        "knowing",
-                        "knew"
-                      ]
-                    },
-                    {
-                      "sentence": "He ___ learning letters.",
+                      "sentence": "The letter A ___ first.",
                       "answer": "is",
                       "options": [
                         "am",
@@ -1788,7 +1788,17 @@
                       ]
                     },
                     {
-                      "sentence": "The letter A ___ first.",
+                      "sentence": "She ___ the alphabet.",
+                      "answer": "knows",
+                      "options": [
+                        "know",
+                        "knows",
+                        "knowing",
+                        "knew"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ learning letters.",
                       "answer": "is",
                       "options": [
                         "am",
@@ -1990,15 +2000,18 @@
               "prompts": [
                 {
                   "prompt": "Say: She knows the alphabet.",
-                  "expected_text": "She knows the alphabet."
+                  "expected_text": "She knows the alphabet.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: He spells the word cat.",
-                  "expected_text": "He spells the word cat."
+                  "expected_text": "He spells the word cat.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: They are learning letters.",
-                  "expected_text": "They are learning letters."
+                  "expected_text": "They are learning letters.",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -2427,7 +2440,8 @@
                     "She is Sam's old friend.",
                     "She is Lily."
                   ],
-                  "correct_answer": "She is the new teacher."
+                  "correct_answer": "She is the new teacher.",
+                  "locate_text": "Her name is Ms."
                 },
                 {
                   "question": "Are Tom and Lily new friends?",
@@ -2437,7 +2451,8 @@
                     "No, they are old friends.",
                     "No, they are teachers."
                   ],
-                  "correct_answer": "No, they are old friends."
+                  "correct_answer": "No, they are old friends.",
+                  "locate_text": "They are my old friends, Tom and Lily."
                 },
                 {
                   "question": "What do the children do together?",
@@ -2447,7 +2462,8 @@
                     "They say hello to new people.",
                     "They listen and answer questions."
                   ],
-                  "correct_answer": "They listen and answer questions."
+                  "correct_answer": "They listen and answer questions.",
+                  "locate_text": "We listen and answer questions together."
                 }
               ]
             },
@@ -2755,15 +2771,18 @@
               "prompts": [
                 {
                   "prompt": "Say: He is my friend.",
-                  "expected_text": "He is my friend."
+                  "expected_text": "He is my friend.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: She can spell her name.",
-                  "expected_text": "She can spell her name."
+                  "expected_text": "She can spell her name.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: They are new students and they listen to the teacher.",
-                  "expected_text": "They are new students and they listen to the teacher."
+                  "expected_text": "They are new students and they listen to the teacher.",
+                  "production_type": "echo"
                 }
               ]
             },

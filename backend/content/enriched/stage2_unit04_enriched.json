@@ -394,7 +394,8 @@
                     "The ceiling",
                     "Her pillow"
                   ],
-                  "correct_answer": "Her toes"
+                  "correct_answer": "Her toes",
+                  "locate_text": "She can touch her toes with her hands. She can lift her arms up high."
                 },
                 {
                   "question": "When does Emma do exercise?",
@@ -405,7 +406,8 @@
                     "After lunch",
                     "At school"
                   ],
-                  "correct_answer": "In the morning"
+                  "correct_answer": "In the morning",
+                  "locate_text": "Every morning, Emma wakes up and does exercise. She can touch her toes with her hands."
                 },
                 {
                   "question": "How does exercise make Emma feel?",
@@ -416,7 +418,8 @@
                     "Hungry",
                     "Sad"
                   ],
-                  "correct_answer": "Strong"
+                  "correct_answer": "Strong",
+                  "locate_text": "Exercise makes her strong!"
                 }
               ]
             },
@@ -619,17 +622,6 @@
                   "game_type": "multiple_choice_grammar",
                   "items": [
                     {
-                      "question": "I ___ touch my toes every morning.",
-                      "answer": "can",
-                      "options": [
-                        "can",
-                        "cans",
-                        "canning",
-                        "could"
-                      ],
-                      "explanation": "Use 'can' to show ability"
-                    },
-                    {
                       "question": "___ you move your shoulders?",
                       "answer": "Can",
                       "options": [
@@ -650,6 +642,17 @@
                         "bent"
                       ],
                       "explanation": "Use base form 'bend' after 'can'"
+                    },
+                    {
+                      "question": "I ___ touch my toes every morning.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "cans",
+                        "canning",
+                        "could"
+                      ],
+                      "explanation": "Use 'can' to show ability"
                     },
                     {
                       "question": "He ___ lift his arm high.",
@@ -730,15 +733,18 @@
               "prompts": [
                 {
                   "prompt": "Say: I can touch my toes.",
-                  "expected_text": "I can touch my toes."
+                  "expected_text": "I can touch my toes.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: I can move my shoulders.",
-                  "expected_text": "I can move my shoulders."
+                  "expected_text": "I can move my shoulders.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: Can you bend your knees?",
-                  "expected_text": "Can you bend your knees?"
+                  "expected_text": "Can you bend your knees?",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -1040,7 +1046,8 @@
                     "She can jump",
                     "She can run"
                   ],
-                  "correct_answer": "She can sing"
+                  "correct_answer": "She can sing",
+                  "locate_text": "Emma can sing a beautiful song."
                 },
                 {
                   "question": "Can Tom dance?",
@@ -1050,7 +1057,8 @@
                     "No, he can't",
                     "He can jump"
                   ],
-                  "correct_answer": "Yes, he can"
+                  "correct_answer": "Yes, he can",
+                  "locate_text": "Tom can dance to the music."
                 },
                 {
                   "question": "Where are the children?",
@@ -1060,7 +1068,8 @@
                     "At the park",
                     "At home"
                   ],
-                  "correct_answer": "At the school talent show"
+                  "correct_answer": "At the school talent show",
+                  "locate_text": "All the children are happy!"
                 }
               ]
             },
@@ -1136,39 +1145,35 @@
                       "answer": "can",
                       "options": [
                         "can",
-                        "am",
-                        "is",
-                        "do"
-                      ]
-                    },
-                    {
-                      "sentence": "She ___ dance very well.",
-                      "answer": "can",
-                      "options": [
-                        "can",
-                        "cans",
-                        "is",
-                        "are"
+                        "can't",
+                        "wants"
                       ]
                     },
                     {
                       "sentence": "I ___ fly like a bird.",
                       "answer": "can't",
                       "options": [
-                        "can't",
                         "can",
-                        "am",
-                        "not"
+                        "can't",
+                        "wants"
                       ]
                     },
                     {
-                      "sentence": "___ you run fast?",
-                      "answer": "Can",
+                      "sentence": "She ___ to dance very well.",
+                      "answer": "wants",
                       "options": [
-                        "Can",
-                        "Do",
-                        "Are",
-                        "Is"
+                        "can",
+                        "can't",
+                        "wants"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ swim very fast.",
+                      "answer": "can't",
+                      "options": [
+                        "can",
+                        "can't",
+                        "wants"
                       ]
                     },
                     {
@@ -1176,9 +1181,8 @@
                       "answer": "can",
                       "options": [
                         "can",
-                        "cans",
-                        "do",
-                        "are"
+                        "can't",
+                        "wants"
                       ]
                     }
                   ]
@@ -1257,15 +1261,26 @@
                   "game_type": "multiple_choice_grammar",
                   "items": [
                     {
-                      "question": "I ___ jump very high.",
-                      "answer": "can",
+                      "question": "___ you sing?",
+                      "answer": "Can",
                       "options": [
-                        "can",
-                        "cans",
-                        "am",
-                        "do"
+                        "Can",
+                        "Do",
+                        "Are",
+                        "Is"
                       ],
-                      "explanation": "Use 'can' to show ability"
+                      "explanation": "Use 'Can' to ask about ability"
+                    },
+                    {
+                      "question": "They can ___ together.",
+                      "answer": "dance",
+                      "options": [
+                        "dance",
+                        "dances",
+                        "dancing",
+                        "to dance"
+                      ],
+                      "explanation": "After 'can', use the base form of the verb"
                     },
                     {
                       "question": "She ___ dance well.",
@@ -1279,17 +1294,6 @@
                       "explanation": "Use 'can' to show what she is able to do"
                     },
                     {
-                      "question": "___ you sing?",
-                      "answer": "Can",
-                      "options": [
-                        "Can",
-                        "Do",
-                        "Are",
-                        "Is"
-                      ],
-                      "explanation": "Use 'Can' to ask about ability"
-                    },
-                    {
                       "question": "He can't ___.",
                       "answer": "run",
                       "options": [
@@ -1301,15 +1305,15 @@
                       "explanation": "After 'can't', use the base form of the verb"
                     },
                     {
-                      "question": "They can ___ together.",
-                      "answer": "dance",
+                      "question": "I ___ jump very high.",
+                      "answer": "can",
                       "options": [
-                        "dance",
-                        "dances",
-                        "dancing",
-                        "to dance"
+                        "can",
+                        "cans",
+                        "am",
+                        "do"
                       ],
-                      "explanation": "After 'can', use the base form of the verb"
+                      "explanation": "Use 'can' to show ability"
                     }
                   ]
                 }
@@ -1368,15 +1372,18 @@
               "prompts": [
                 {
                   "prompt": "Say: I can jump",
-                  "expected_text": "I can jump"
+                  "expected_text": "I can jump",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: I can sing and dance",
-                  "expected_text": "I can sing and dance"
+                  "expected_text": "I can sing and dance",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: Can you run fast?",
-                  "expected_text": "Can you run fast?"
+                  "expected_text": "Can you run fast?",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -1703,7 +1710,8 @@
                     "Robo can swim in water",
                     "Robo can fly in the sky"
                   ],
-                  "correct_answer": "Robo can climb stairs"
+                  "correct_answer": "Robo can climb stairs",
+                  "locate_text": "Robo can climb stairs and open doors."
                 },
                 {
                   "question": "Can Robo swim?",
@@ -1713,7 +1721,8 @@
                     "No, Robo can't swim",
                     "Robo swims every day"
                   ],
-                  "correct_answer": "No, Robo can't swim"
+                  "correct_answer": "No, Robo can't swim",
+                  "locate_text": "But Robo can't swim in water."
                 },
                 {
                   "question": "What can't Robo do?",
@@ -1723,7 +1732,8 @@
                     "Robo can't climb stairs",
                     "Robo can't jump high"
                   ],
-                  "correct_answer": "Robo can't jump high"
+                  "correct_answer": "Robo can't jump high",
+                  "locate_text": "Robo can't jump high like you!"
                 }
               ]
             },
@@ -1794,13 +1804,13 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "I ___ swim in the pool.",
+                      "sentence": "Birds ___ fly high.",
                       "answer": "can",
                       "options": [
                         "can",
                         "cans",
-                        "canning",
-                        "could"
+                        "are",
+                        "is"
                       ]
                     },
                     {
@@ -1824,16 +1834,6 @@
                       ]
                     },
                     {
-                      "sentence": "Birds ___ fly high.",
-                      "answer": "can",
-                      "options": [
-                        "can",
-                        "cans",
-                        "are",
-                        "is"
-                      ]
-                    },
-                    {
                       "sentence": "Fish can ___ in water.",
                       "answer": "swim",
                       "options": [
@@ -1841,6 +1841,16 @@
                         "swims",
                         "swimming",
                         "swam"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ swim in the pool.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "cans",
+                        "canning",
+                        "could"
                       ]
                     }
                   ]
@@ -2030,15 +2040,18 @@
               "prompts": [
                 {
                   "prompt": "Say: I can jump",
-                  "expected_text": "I can jump"
+                  "expected_text": "I can jump",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: I can't fly",
-                  "expected_text": "I can't fly"
+                  "expected_text": "I can't fly",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Now tell me: Can you swim?",
-                  "expected_text": "Yes, I can swim"
+                  "expected_text": "Yes, I can swim",
+                  "production_type": "echo"
                 }
               ]
             },
@@ -2380,7 +2393,8 @@
                     "sing",
                     "clap"
                   ],
-                  "correct_answer": "run"
+                  "correct_answer": "run",
+                  "locate_text": "He can run with his legs. He can clap with his hands."
                 },
                 {
                   "question": "Can Tom fly?",
@@ -2390,7 +2404,8 @@
                     "No",
                     "Sometimes"
                   ],
-                  "correct_answer": "No"
+                  "correct_answer": "No",
+                  "locate_text": "Tom can do many things! He can run with his legs."
                 },
                 {
                   "question": "What does Tom touch when he jumps?",
@@ -2400,7 +2415,8 @@
                     "his nose",
                     "his knees"
                   ],
-                  "correct_answer": "his toes"
+                  "correct_answer": "his toes",
+                  "locate_text": "Tom can jump and touch his toes. He can't fly, but he can dance and sing."
                 }
               ]
             },
@@ -2602,17 +2618,6 @@
                   "game_type": "multiple_choice_grammar",
                   "items": [
                     {
-                      "question": "I ___ run with my legs.",
-                      "answer": "can",
-                      "options": [
-                        "can",
-                        "cans",
-                        "canning",
-                        "to can"
-                      ],
-                      "explanation": "Use 'can' with I/you/he/she/we/they"
-                    },
-                    {
                       "question": "___ you climb trees?",
                       "answer": "Can",
                       "options": [
@@ -2624,17 +2629,6 @@
                       "explanation": "Use 'Can' to ask about ability"
                     },
                     {
-                      "question": "She can ___ with her arms.",
-                      "answer": "swim",
-                      "options": [
-                        "swim",
-                        "swims",
-                        "swimming",
-                        "to swim"
-                      ],
-                      "explanation": "After 'can' use the base verb form"
-                    },
-                    {
                       "question": "He ___ sing well.",
                       "answer": "can't",
                       "options": [
@@ -2644,6 +2638,28 @@
                         "don't"
                       ],
                       "explanation": "Use 'can't' to say you are not able to do something"
+                    },
+                    {
+                      "question": "I ___ run with my legs.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "cans",
+                        "canning",
+                        "to can"
+                      ],
+                      "explanation": "Use 'can' with I/you/he/she/we/they"
+                    },
+                    {
+                      "question": "She can ___ with her arms.",
+                      "answer": "swim",
+                      "options": [
+                        "swim",
+                        "swims",
+                        "swimming",
+                        "to swim"
+                      ],
+                      "explanation": "After 'can' use the base verb form"
                     },
                     {
                       "question": "I can dance ___ my feet.",
@@ -2713,15 +2729,18 @@
               "prompts": [
                 {
                   "prompt": "Say: I can jump with my legs.",
-                  "expected_text": "I can jump with my legs."
+                  "expected_text": "I can jump with my legs.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Say: I can clap with my hands.",
-                  "expected_text": "I can clap with my hands."
+                  "expected_text": "I can clap with my hands.",
+                  "production_type": "echo"
                 },
                 {
                   "prompt": "Now tell me: What can YOU do with your legs?",
-                  "expected_text": "I can run with my legs."
+                  "expected_text": "I can run with my legs.",
+                  "production_type": "echo"
                 }
               ]
             },

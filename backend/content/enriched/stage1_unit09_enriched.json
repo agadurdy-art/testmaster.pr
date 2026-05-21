@@ -252,7 +252,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Tom's Pets",
-              "text": "Tom has a pet. It is a cat. Tom says, 'I like my cat.' The cat is with a bird. Do you like birds?",
+              "text": "Tom has a pet. It is a cat. Tom says, 'I like my cat.' The cat is with a bird. Do you like birds? This is a happy day for our class.",
               "questions": [
                 {
                   "question": "What animal does Tom have?",
@@ -261,7 +261,8 @@
                     "cat",
                     "dog",
                     "bird"
-                  ]
+                  ],
+                  "locate_text": "It is a cat."
                 },
                 {
                   "question": "What does Tom say about his cat?",
@@ -270,7 +271,8 @@
                     "I don't like cats.",
                     "I like my cat.",
                     "Do you like cats?"
-                  ]
+                  ],
+                  "locate_text": "Tom says, 'I like my cat."
                 }
               ]
             },
@@ -387,6 +389,14 @@
                     "Yes",
                     "No"
                   ]
+                },
+                {
+                  "question": "Is the talk about cooking pizza?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
                 }
               ]
             },
@@ -395,7 +405,8 @@
               "type": "production",
               "prompt": "Say: I like birds.",
               "expected_text": "i like birds",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -703,7 +714,8 @@
                   "options": [
                     "yes",
                     "no"
-                  ]
+                  ],
+                  "locate_text": "I like the rabbit."
                 },
                 {
                   "question": "Is the turtle fast?",
@@ -712,7 +724,8 @@
                     "yes",
                     "no",
                     "maybe"
-                  ]
+                  ],
+                  "locate_text": "A turtle is slow."
                 }
               ]
             },
@@ -818,6 +831,14 @@
                     "Yes",
                     "No"
                   ]
+                },
+                {
+                  "question": "Is the talk about cooking pizza?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
                 }
               ]
             },
@@ -826,7 +847,8 @@
               "type": "production",
               "prompt": "Say: I don't like turtles.",
               "expected_text": "i don't like turtles",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1156,7 +1178,7 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Splash the Fish",
-              "text": "Do you like water? Splash the fish does! Splash is in the pond. I like Splash because it is cute. Do you like Splash?",
+              "text": "Do you like water? Splash the fish does! Splash is in the pond. I like Splash because it is cute. Do you like Splash? This is a happy day for our class.",
               "questions": [
                 {
                   "question": "Where is Splash?",
@@ -1165,7 +1187,8 @@
                     "in the pond",
                     "in the box",
                     "on the grass"
-                  ]
+                  ],
+                  "locate_text": "Splash is in the pond."
                 },
                 {
                   "question": "Why do we like Splash?",
@@ -1174,7 +1197,8 @@
                     "because it is cute",
                     "because it is big",
                     "because it is fast"
-                  ]
+                  ],
+                  "locate_text": "I like Splash because it is cute."
                 }
               ]
             },
@@ -1280,6 +1304,14 @@
                     "Yes",
                     "No"
                   ]
+                },
+                {
+                  "question": "Is the talk about cooking pizza?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
                 }
               ]
             },
@@ -1288,7 +1320,8 @@
               "type": "production",
               "prompt": "Say: Do you like fish?",
               "expected_text": "do you like fish",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
@@ -1571,7 +1604,8 @@
                   "options": [
                     "yes",
                     "no"
-                  ]
+                  ],
+                  "locate_text": "I have one big dog."
                 },
                 {
                   "question": "Does Mia like snakes?",
@@ -1579,7 +1613,8 @@
                   "options": [
                     "yes",
                     "no"
-                  ]
+                  ],
+                  "locate_text": "I don't like snakes."
                 }
               ]
             },
@@ -1701,6 +1736,14 @@
                     "Yes",
                     "No"
                   ]
+                },
+                {
+                  "question": "Is the talk about cooking pizza?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
                 }
               ]
             },
@@ -1709,7 +1752,8 @@
               "type": "production",
               "prompt": "Tell me one pet you like and one pet you don't like. You can say: I like cats, I don't like frogs.",
               "expected_text": "i like cats i don't like frogs",
-              "mode": "speaking"
+              "mode": "speaking",
+              "production_type": "echo"
             },
             {
               "step": 9,
