@@ -1639,30 +1639,65 @@ function MicroReading({ activity, onComplete, onSkip }) {
     const explicit = question.locate_text || question.evidence || question.passage_quote;
     if (explicit && typeof explicit === 'string') return explicit;
     const sentences = passageText.match(/[^.!?]+[.!?]+/g) || [passageText];
+    const sentList = sentences.map(s => s.trim()).filter(Boolean);
+
+    // Tokenize the answer and the question once
     const ans = String(question.correct_answer || question.answer || '').trim();
-    if (ans) {
-      const hit = sentences.find(s => s.toLowerCase().includes(ans.toLowerCase()));
-      if (hit) return hit.trim();
-    }
-    // Fallback: scan the question for proper nouns / content words and find
-    // the sentence that mentions any of them. Prefer the longest match so
-    // "USA" wins over "is".
     const qText = String(question.question || question.question_text || '');
-    const tokens = qText.split(/\s+/).map(t => t.replace(/[.,!?;:'"()]/g, ''))
+    const qTokens = qText.split(/\s+/).map(t => t.replace(/[.,!?;:'"()]/g, ''))
       .filter(t => t && !STOP_WORDS.has(t.toLowerCase()) && t.length >= 2);
-    // Sort by: capitalized first (proper nouns), then by length desc
-    tokens.sort((a, b) => {
+    qTokens.sort((a, b) => {
       const aCap = /^[A-Z]/.test(a) ? 1 : 0;
       const bCap = /^[A-Z]/.test(b) ? 1 : 0;
       if (aCap !== bCap) return bCap - aCap;
       return b.length - a.length;
     });
-    for (const tok of tokens) {
-      const re = new RegExp(`\\b${tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
-      const hit = sentences.find(s => re.test(s));
-      if (hit) return hit.trim();
+    const ansTokens = ans.split(/\s+/).map(t => t.replace(/[.,!?;:'"()]/g, ''))
+      .filter(t => t && !STOP_WORDS.has(t.toLowerCase()) && t.length >= 2);
+
+    // Score each sentence: +2 per qToken hit, +3 per ansToken hit, +5 if
+    // the sentence contains the full answer string verbatim. Pronouns in
+    // the *next* sentence (he/she/it/they/this) inherit score from the
+    // sentence right before them so two-sentence proofs surface together
+    // (Aga 2026-05-21: 'gerekirse iki cumlyi ayni anda gostermesi lazim.
+    // bu durumda — Our teacher is Mr Brown. He is kind. — cumlelerini
+    // gostermesi gerekirdi.').
+    const scores = sentList.map((s) => {
+      const lower = s.toLowerCase();
+      let pts = 0;
+      if (ans && lower.includes(ans.toLowerCase())) pts += 5;
+      for (const tok of ansTokens) {
+        const re = new RegExp(`\\b${tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+        if (re.test(s)) pts += 3;
+      }
+      for (const tok of qTokens) {
+        const re = new RegExp(`\\b${tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+        if (re.test(s)) pts += 2;
+      }
+      return pts;
+    });
+
+    let bestIdx = -1;
+    let bestScore = 0;
+    scores.forEach((p, i) => { if (p > bestScore) { bestScore = p; bestIdx = i; } });
+    if (bestIdx < 0) return null;
+
+    const primary = sentList[bestIdx];
+
+    // Pronoun-followup heuristic: if the very next sentence starts with a
+    // pronoun (He/She/It/They/This/These/That), the answer probably spans
+    // both sentences. Return them joined.
+    const next = sentList[bestIdx + 1];
+    if (next && /^(he|she|it|they|this|that|these|those)\b/i.test(next)) {
+      return `${primary} ${next}`;
     }
-    return null;
+    // Prev sentence with pronoun + current sentence carrying the noun the
+    // pronoun refers to: rarer but symmetrical.
+    const prev = sentList[bestIdx - 1];
+    if (prev && /^(he|she|it|they|this|that)\b/i.test(primary) && scores[bestIdx - 1] === 0) {
+      return `${prev} ${primary}`;
+    }
+    return primary;
   };
 
   const highlightText = (text) => {
@@ -2181,14 +2216,26 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
     const audioUrl = activity?.audio_url;
     if (!audioUrl) return null;
     const fullUrl = audioUrl.startsWith('/') ? `${process.env.REACT_APP_BACKEND_URL}/api${audioUrl}` : audioUrl;
-    const audio = new Audio(fullUrl);
-    audio.preload = 'metadata';
+    const audio = new Audio();
+    // Backend serves /api/static/audio/... as a 307 redirect to a Cloudflare
+    // R2 URL. Safari + Chrome HTMLAudioElement can stall on a cross-origin
+    // redirect without an explicit CORS hint. Set crossOrigin BEFORE src,
+    // then assign src so the request is built with the right CORS mode
+    // (Aga 2026-05-21: 'player play/stop iyi calismiyor, start vermiyor').
+    audio.crossOrigin = 'anonymous';
+    audio.src = fullUrl;
+    audio.preload = 'auto';
     audio.playbackRate = playbackRate;
     audio.addEventListener('loadedmetadata', () => setDuration(audio.duration || 0));
     audio.addEventListener('timeupdate', () => setPosition(audio.currentTime || 0));
     audio.addEventListener('ended', () => { setIsPlaying(false); setPosition(audio.duration || 0); });
     audio.addEventListener('play', () => setIsPlaying(true));
     audio.addEventListener('pause', () => setIsPlaying(false));
+    audio.addEventListener('error', (e) => {
+      // Surface load errors to the console so we can debug; fall back to TTS
+      // on toggle if play() rejects.
+      console.warn('[listening] audio load error', fullUrl, audio.error?.code, e);
+    });
     audioRef.current = audio;
     return audio;
   };
@@ -2197,7 +2244,11 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
     speechSynthesis.cancel();
     const audio = ensureAudio();
     if (audio) {
-      audio.play().catch(() => speakText(transcript));
+      const p = audio.play();
+      if (p && p.catch) p.catch((err) => {
+        console.warn('[listening] play() rejected', err);
+        speakText(transcript);
+      });
     } else {
       speakText(transcript);
     }
@@ -2209,7 +2260,14 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
     if (!audio) { playListeningAudio(); return; }
     if (audio.paused || audio.ended) {
       if (audio.ended) audio.currentTime = 0;
-      audio.play();
+      // play() returns a Promise on modern browsers. If it rejects (autoplay
+      // policy, cross-origin redirect stall, decode error) fall back to TTS
+      // so the user is not stuck staring at a dead button.
+      const p = audio.play();
+      if (p && p.catch) p.catch((err) => {
+        console.warn('[listening] toggle play() rejected', err);
+        speakText(transcript);
+      });
     } else {
       audio.pause();
     }
@@ -2597,6 +2655,30 @@ function ProductionActivity({ activity, onComplete, onSkip, lessonContext }) {
     return /introduce yourself|tell us about you|tell me about you|your name|your age|where (are )?you from/i.test(p) || /\bi['']?m\b.*\bi['']?m\b/i.test(expectedText);
   })();
 
+  // "Say N things using 'X'" prompts: the student fills the X-pattern N times
+  // with whatever content makes sense — what is in their bag, their family
+  // members, their feelings. Identity of items is THEIR choice, so token
+  // overlap against the model answer is wrong (Aga 2026-05-21: 'I have a
+  // camera. I don't have a phone. I have a laptop.' scored 40% against a
+  // model answer about book/pen/phone even though the structure was correct).
+  // Pull the count + pattern from the prompt and score on pattern presence +
+  // distinct items mentioned.
+  const sayNStructure = (() => {
+    const p = String(promptText || '');
+    const numMap = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
+    const countMatch = p.match(/\bsay\s+(\d+|one|two|three|four|five|six)\s+(things?|items?|sentences?|words?)/i);
+    if (!countMatch) return null;
+    const n = parseInt(countMatch[1], 10) || numMap[countMatch[1].toLowerCase()] || 3;
+    // pattern is whatever the prompt quotes: 'I have a...', "I have an..."
+    const patMatch = p.match(/using\s+['"`]([^'"`]{2,40})['"`]/i) || p.match(/using\s+['"`]([^'"`]+?)\s*\.{2,3}['"`]?/i);
+    let stem = patMatch ? patMatch[1].trim().replace(/\.{2,}\s*$/, '').trim() : '';
+    // Extract the leading verb/noun phrase as the structural anchor
+    // (e.g. "I have a..." → require "i have a/an X")
+    const leadMatch = stem.match(/^(.+?)\s+(a|an)\b/i);
+    const anchorPhrase = leadMatch ? `${leadMatch[1]} ${leadMatch[2]}`.toLowerCase() : stem.toLowerCase();
+    return { count: n, anchor: anchorPhrase, raw: stem };
+  })();
+
   const evaluateLocally = (text) => {
     setTranscription(text);
     const clean = (s) => s.toLowerCase().trim().replace(/[^\w\s]/g, '').split(/\s+/).filter(Boolean);
@@ -2628,6 +2710,61 @@ function ProductionActivity({ activity, onComplete, onSkip, lessonContext }) {
       // Length floor — a 3-word answer shouldn't ace this
       if (wordCount >= 6) pts += 5;
       if (wordCount >= 10) pts += 5;
+
+      const s = Math.min(100, pts);
+      setScore(s);
+      setMatchedWords(matched);
+      setMissingWords(missing);
+      setPhase('result');
+      return;
+    }
+
+    if (sayNStructure) {
+      // "Say N things using 'I have a...'" — count pattern uses + distinct nouns
+      const lower = text.toLowerCase();
+      const { count: target, anchor, raw } = sayNStructure;
+      // Build a regex from the anchor phrase. Treat "i have a" / "i have an"
+      // / "i don't have a" / "i don't have an" all as the same pattern;
+      // negative forms still demonstrate the structure.
+      const anchorWords = anchor.replace(/[^a-z\s]/g, ' ').split(/\s+/).filter(Boolean);
+      // Build flexible regex that allows "don't" / "do not" between subject + verb
+      const subjVerbRe = anchorWords.length >= 3
+        ? new RegExp(`\\b${anchorWords[0]}\\s+(?:do\\s*n['']?t\\s+|don['']?t\\s+|do\\s+not\\s+)?${anchorWords[1]}\\s+(?:${anchorWords[2]}|an?)\\s+([a-z]+)`, 'gi')
+        : new RegExp(`\\b${anchor.replace(/\s+/g, '\\s+')}\\s+([a-z]+)`, 'gi');
+      const matches = [...lower.matchAll(subjVerbRe)];
+      const distinctItems = new Set(matches.map(m => m[1]).filter(Boolean));
+      const uses = matches.length;
+      const distinct = distinctItems.size;
+      const wordCount = clean(text).length;
+
+      let pts = 0;
+      const matched = [];
+      const missing = [];
+
+      // Pattern presence: 60 pts if uses >= target, scaled down
+      if (uses >= target) {
+        pts += 60;
+        matched.push(`Used '${raw}' pattern ${uses} times`);
+      } else if (uses > 0) {
+        pts += Math.round((uses / target) * 60);
+        matched.push(`Used '${raw}' pattern ${uses} time${uses === 1 ? '' : 's'}`);
+        missing.push(`Use '${raw}' ${target - uses} more time${target - uses === 1 ? '' : 's'}`);
+      } else {
+        missing.push(`Use the pattern '${raw}'`);
+      }
+
+      // Distinct items: 30 pts if distinct >= target
+      if (distinct >= target) {
+        pts += 30;
+        matched.push(`Mentioned ${distinct} different things: ${[...distinctItems].slice(0, 5).join(', ')}`);
+      } else if (distinct > 0) {
+        pts += Math.round((distinct / target) * 30);
+        matched.push(`Mentioned ${distinct} thing${distinct === 1 ? '' : 's'}: ${[...distinctItems].join(', ')}`);
+        if (uses > 0) missing.push(`Mention ${target - distinct} more different thing${target - distinct === 1 ? '' : 's'}`);
+      }
+
+      // Length floor
+      if (wordCount >= target * 3) pts += 10;
 
       const s = Math.min(100, pts);
       setScore(s);
@@ -2814,7 +2951,7 @@ function ProductionActivity({ activity, onComplete, onSkip, lessonContext }) {
             {expectedText && (
               <div className="bg-blue-50 rounded-xl p-4">
                 <h4 className="text-xs font-semibold text-blue-500 uppercase tracking-wider mb-1">
-                  Model answer{isOpenIntroPrompt && ' · yours can be different'}
+                  Model answer{(isOpenIntroPrompt || sayNStructure) && ' · yours can be different'}
                 </h4>
                 <p className="text-sm text-blue-800">"{expectedText}"</p>
               </div>

@@ -36,11 +36,28 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
 import urllib.request
 from pathlib import Path
+
+
+def _mflux_bin() -> str:
+    """Resolve mflux-generate CLI. When invoked via `backend/.venv/bin/python3
+    backend/scripts/ship_unit_images.py`, the venv's bin/ is NOT on PATH for
+    the subprocess. Look it up next to the running interpreter first."""
+    cand = Path(sys.executable).parent / "mflux-generate"
+    if cand.exists():
+        return str(cand)
+    found = shutil.which("mflux-generate")
+    if found:
+        return found
+    sys.exit(
+        "mflux-generate not found. Install with:\n"
+        f"  {sys.executable} -m pip install mflux"
+    )
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 ENRICHED = REPO_ROOT / "backend" / "content" / "enriched"
@@ -193,10 +210,15 @@ def make_r2_client():
 
 
 def mflux_generate(prompt: str, out_path: Path, model_arg: str, steps: int, seed: int, size: int):
-    """Invoke mflux CLI. Raises on non-zero exit."""
+    """Invoke mflux CLI. Raises on non-zero exit.
+
+    mflux 0.17+ exposes FLUX variants via --base-model (flux2-klein-4b,
+    schnell, dev, etc.). Earlier versions used --model; we pin to
+    --base-model so the script keeps working on the latest mflux.
+    """
     cmd = [
-        "mflux-generate",
-        "--model", model_arg,
+        _mflux_bin(),
+        "--base-model", model_arg,
         "--prompt", prompt,
         "--output", str(out_path),
         "--steps", str(steps),
@@ -260,6 +282,14 @@ def main():
     ap.add_argument("--size", type=int, default=512)
     ap.add_argument("--force", action="store_true", help="re-generate even if R2 already has it")
     ap.add_argument("--no-merge", action="store_true", help="skip the live merge trigger")
+    ap.add_argument(
+        "--dest", type=Path, default=None,
+        help=(
+            "If set, write PNGs to this folder and SKIP R2 upload + JSON rewrite. "
+            "Used for human review before shipping. After Aga signs off, run "
+            "upload_codex_unitNN.py to push the approved folder to R2."
+        ),
+    )
     args = ap.parse_args()
 
     # Default steps per model. Klein 4B and FLUX.1-dev want ~20 inference
@@ -267,13 +297,33 @@ def main():
     default_steps = {"schnell": 4, "klein-4b": 20, "dev": 20}
     steps = args.steps if args.steps is not None else default_steps[args.model]
 
-    # Map our friendly --model arg to the actual mflux-generate --model
-    # flag. mflux currently supports "schnell", "dev", and (since 0.10+)
-    # "klein-4b" for FLUX.2 [klein] 4B Apache-2.0 weights.
-    mflux_model_arg = {"schnell": "schnell", "dev": "dev", "klein-4b": "klein-4b"}[args.model]
+    # Map our friendly --model arg to the actual mflux-generate --base-model
+    # flag. mflux 0.17+ supports "schnell", "dev", and "flux2-klein-4b" for
+    # FLUX.2 [klein] 4B Apache-2.0 weights.
+    mflux_model_arg = {"schnell": "schnell", "dev": "dev", "klein-4b": "flux2-klein-4b"}[args.model]
 
     rows, json_path, data = collect_unit_words(args.unit)
     print(f"Unit {args.unit:02d}: {len(rows)} unique vocab words")
+
+    # --dest mode: write to a fixed folder Aga can review, no R2, no DB write.
+    if args.dest is not None:
+        args.dest.mkdir(parents=True, exist_ok=True)
+        print(f"DEST mode → {args.dest} (R2 + JSON rewrite skipped)")
+        for idx, (word, slug) in enumerate(rows, 1):
+            out_path = args.dest / f"{idx:02d}-{slug}.png"
+            if out_path.exists() and not args.force:
+                print(f"  = [{idx:02d}/{len(rows)}] {slug}.png exists, skip")
+                continue
+            prompt = prompt_for(word)
+            seed = int(hashlib.md5(slug.encode()).hexdigest()[:8], 16) & 0x7FFFFFFF
+            print(f"  → [{idx:02d}/{len(rows)}] {slug}.png (seed={seed})…", flush=True)
+            try:
+                mflux_generate(prompt, out_path, mflux_model_arg, steps, seed, args.size)
+                print(f"  ✓ [{idx:02d}/{len(rows)}] {slug}.png")
+            except Exception as e:
+                print(f"  !! {slug} FAIL: {e}")
+        print(f"\nDone. Review {args.dest}, then run upload_codex_unit{args.unit:02d}.py to push approved set to R2.")
+        return
 
     bucket = os.environ.get("R2_BUCKET", "testmaster-static")
     client = make_r2_client()
