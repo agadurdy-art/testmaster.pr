@@ -463,7 +463,8 @@
                     "black",
                     "green"
                   ],
-                  "correct_answer": "blue"
+                  "correct_answer": "blue",
+                  "locate_text": "It's blue and very big."
                 },
                 {
                   "question": "Is Ben's schoolbag big or small?",
@@ -473,7 +474,8 @@
                     "medium",
                     "tiny"
                   ],
-                  "correct_answer": "big"
+                  "correct_answer": "big",
+                  "locate_text": "It's blue and very big."
                 },
                 {
                   "question": "How many pencils has Ben got?",
@@ -483,7 +485,8 @@
                     "one",
                     "four"
                   ],
-                  "correct_answer": "three"
+                  "correct_answer": "three",
+                  "locate_text": "I've got two pens and three pencils in my pencil case."
                 },
                 {
                   "question": "What colour is the notebook?",
@@ -493,7 +496,8 @@
                     "green",
                     "white"
                   ],
-                  "correct_answer": "red"
+                  "correct_answer": "red",
+                  "locate_text": "It's small and red."
                 },
                 {
                   "question": "Has Ben got a rubber?",
@@ -501,7 +505,8 @@
                     "yes",
                     "no"
                   ],
-                  "correct_answer": "yes"
+                  "correct_answer": "yes",
+                  "locate_text": "I've got a rubber and a ruler too."
                 }
               ]
             },
@@ -1237,7 +1242,8 @@
                     "the same size",
                     "we don't know"
                   ],
-                  "correct_answer": "Emma's"
+                  "correct_answer": "Emma's",
+                  "locate_text": "My friend Ben has got a small schoolbag."
                 },
                 {
                   "question": "Emma's tablet is...",
@@ -1247,7 +1253,8 @@
                     "big",
                     "small"
                   ],
-                  "correct_answer": "new"
+                  "correct_answer": "new",
+                  "locate_text": "In my big bag, I've got a new tablet for English lessons."
                 },
                 {
                   "question": "Who gave Emma the dictionary?",
@@ -1257,7 +1264,8 @@
                     "her teacher",
                     "her brother"
                   ],
-                  "correct_answer": "her dad"
+                  "correct_answer": "her dad",
+                  "locate_text": "I'm Emma."
                 },
                 {
                   "question": "What colour is Emma's water bottle?",
@@ -1267,7 +1275,8 @@
                     "red",
                     "green"
                   ],
-                  "correct_answer": "pink"
+                  "correct_answer": "pink",
+                  "locate_text": "It's pink."
                 },
                 {
                   "question": "What is Emma's favourite thing?",
@@ -1277,7 +1286,8 @@
                     "her calculator",
                     "her water bottle"
                   ],
-                  "correct_answer": "her new tablet"
+                  "correct_answer": "her new tablet",
+                  "locate_text": "My favourite thing?"
                 }
               ]
             },
@@ -1777,7 +1787,8 @@
                     "Italy",
                     "Russia"
                   ],
-                  "correct_answer": "Spain"
+                  "correct_answer": "Spain",
+                  "locate_text": "I'm from Spain."
                 },
                 {
                   "question": "What is Pablo's pencil case like?",
@@ -1787,7 +1798,8 @@
                     "long and old",
                     "new but small"
                   ],
-                  "correct_answer": "small and beautiful"
+                  "correct_answer": "small and beautiful",
+                  "locate_text": "My favourite pencil case is small and beautiful. It's green with stars on it."
                 },
                 {
                   "question": "Has Pablo got an old pen?",
@@ -1795,7 +1807,8 @@
                     "no",
                     "yes"
                   ],
-                  "correct_answer": "no"
+                  "correct_answer": "no",
+                  "locate_text": "I haven't got an old pen — only this new one."
                 },
                 {
                   "question": "How long is Pablo's ruler?",
@@ -1805,7 +1818,8 @@
                     "10 cm",
                     "20 cm"
                   ],
-                  "correct_answer": "15 cm"
+                  "correct_answer": "15 cm",
+                  "locate_text": "My friend Ben has got a long ruler."
                 },
                 {
                   "question": "Has Pablo got a calculator?",
@@ -1813,7 +1827,8 @@
                     "no",
                     "yes"
                   ],
-                  "correct_answer": "no"
+                  "correct_answer": "no",
+                  "locate_text": "I've got a good dictionary, but I haven't got a calculator."
                 },
                 {
                   "question": "Who has got a long ruler?",
@@ -1823,7 +1838,8 @@
                     "Mum",
                     "Emma"
                   ],
-                  "correct_answer": "Ben"
+                  "correct_answer": "Ben",
+                  "locate_text": "My friend Ben has got a long ruler."
                 }
               ]
             },
@@ -1849,8 +1865,18 @@
                   "instruction": "Fill the gap.",
                   "items": [
                     {
-                      "sentence": "I ___ got a calculator.",
+                      "sentence": "We ___ got a pencil case.",
                       "answer": "haven't",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ got a long ruler.",
+                      "answer": "hasn't",
                       "options": [
                         "have",
                         "has",
@@ -1879,17 +1905,7 @@
                       ]
                     },
                     {
-                      "sentence": "He ___ got a long ruler.",
-                      "answer": "hasn't",
-                      "options": [
-                        "have",
-                        "has",
-                        "haven't",
-                        "hasn't"
-                      ]
-                    },
-                    {
-                      "sentence": "We ___ got a pencil case.",
+                      "sentence": "I ___ got a calculator.",
                       "answer": "haven't",
                       "options": [
                         "have",
@@ -1905,7 +1921,7 @@
                   "instruction": "Choose the correct word.",
                   "items": [
                     {
-                      "sentence": "I ___ got a calculator.",
+                      "sentence": "We ___ got a pencil case.",
                       "options": [
                         "have",
                         "has",
@@ -1913,6 +1929,16 @@
                         "hasn't"
                       ],
                       "correct": "haven't"
+                    },
+                    {
+                      "sentence": "He ___ got a long ruler.",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ],
+                      "correct": "hasn't"
                     },
                     {
                       "sentence": "You ___ got a tablet.",
@@ -1935,17 +1961,7 @@
                       "correct": "hasn't"
                     },
                     {
-                      "sentence": "He ___ got a long ruler.",
-                      "options": [
-                        "have",
-                        "has",
-                        "haven't",
-                        "hasn't"
-                      ],
-                      "correct": "hasn't"
-                    },
-                    {
-                      "sentence": "We ___ got a pencil case.",
+                      "sentence": "I ___ got a calculator.",
                       "options": [
                         "have",
                         "has",
@@ -2624,7 +2640,8 @@
                     "Pablo's",
                     "Dad's"
                   ],
-                  "correct_answer": "Ben's"
+                  "correct_answer": "Ben's",
+                  "locate_text": "Ben's bag is blue and big. He's got two pens, three pencils, a ruler and a rubber."
                 },
                 {
                   "question": "Who has got a new tablet?",
@@ -2634,7 +2651,8 @@
                     "Pablo",
                     "Mum"
                   ],
-                  "correct_answer": "Emma"
+                  "correct_answer": "Emma",
+                  "locate_text": "Emma's bag is big and red. She's got a new tablet, a small calculator and a pink water bottle."
                 },
                 {
                   "question": "Whose ruler is short?",
@@ -2644,7 +2662,8 @@
                     "Emma's",
                     "the teacher's"
                   ],
-                  "correct_answer": "Pablo's"
+                  "correct_answer": "Pablo's",
+                  "locate_text": "Pablo's bag is green and small. He's got a beautiful pencil case but he hasn't got a calculator."
                 },
                 {
                   "question": "Who hasn't got a calculator?",
@@ -2654,7 +2673,8 @@
                     "Emma",
                     "everyone"
                   ],
-                  "correct_answer": "Pablo"
+                  "correct_answer": "Pablo",
+                  "locate_text": "Pablo's bag is green and small. He's got a beautiful pencil case but he hasn't got a calculator."
                 },
                 {
                   "question": "Are the friends happy?",
@@ -2662,7 +2682,8 @@
                     "yes",
                     "no"
                   ],
-                  "correct_answer": "yes"
+                  "correct_answer": "yes",
+                  "locate_text": "All three friends are happy with their things!"
                 },
                 {
                   "question": "How many friends?",
@@ -2672,7 +2693,8 @@
                     "four",
                     "one"
                   ],
-                  "correct_answer": "three"
+                  "correct_answer": "three",
+                  "locate_text": "Three schoolbags, three friends."
                 }
               ]
             },
@@ -2733,16 +2755,6 @@
                   "instruction": "Fill the gap.",
                   "items": [
                     {
-                      "sentence": "___ got — positive (I/you/we/they 've got; he/she/it 's got)",
-                      "answer": "have",
-                      "options": [
-                        "have",
-                        "has",
-                        "haven't",
-                        "hasn't"
-                      ]
-                    },
-                    {
                       "sentence": "___ got — negative (haven't got / hasn't got)",
                       "answer": "have",
                       "options": [
@@ -2753,26 +2765,17 @@
                       ]
                     },
                     {
-                      "sentence": "I ___ Vietnamese.",
-                      "answer": "am",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ]
-                    },
-                    {
-                      "sentence": "She ___ my friend.",
-                      "answer": "is",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ]
-                    },
-                    {
                       "sentence": "He ___ my brother.",
                       "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ Vietnamese.",
+                      "answer": "am",
                       "options": [
                         "am",
                         "is",
@@ -2787,6 +2790,25 @@
                         "is",
                         "are"
                       ]
+                    },
+                    {
+                      "sentence": "___ got — positive (I/you/we/they 've got; he/she/it 's got)",
+                      "answer": "have",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ my friend.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
                     }
                   ]
                 },
@@ -2794,16 +2816,6 @@
                   "game_type": "multiple_choice_grammar",
                   "instruction": "Choose the correct word.",
                   "items": [
-                    {
-                      "sentence": "___ got — positive (I/you/we/they 've got; he/she/it 's got)",
-                      "options": [
-                        "have",
-                        "has",
-                        "haven't",
-                        "hasn't"
-                      ],
-                      "correct": "have"
-                    },
                     {
                       "sentence": "___ got — negative (haven't got / hasn't got)",
                       "options": [
@@ -2815,24 +2827,6 @@
                       "correct": "have"
                     },
                     {
-                      "sentence": "I ___ Vietnamese.",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "am"
-                    },
-                    {
-                      "sentence": "She ___ my friend.",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "is"
-                    },
-                    {
                       "sentence": "He ___ my brother.",
                       "options": [
                         "am",
@@ -2842,6 +2836,15 @@
                       "correct": "is"
                     },
                     {
+                      "sentence": "I ___ Vietnamese.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "am"
+                    },
+                    {
                       "sentence": "We ___ classmates.",
                       "options": [
                         "am",
@@ -2849,6 +2852,25 @@
                         "are"
                       ],
                       "correct": "are"
+                    },
+                    {
+                      "sentence": "___ got — positive (I/you/we/they 've got; he/she/it 's got)",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ],
+                      "correct": "have"
+                    },
+                    {
+                      "sentence": "She ___ my friend.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
                     }
                   ]
                 }

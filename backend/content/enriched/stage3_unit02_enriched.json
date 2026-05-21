@@ -456,7 +456,8 @@
                     "1",
                     "20"
                   ],
-                  "correct_answer": "11"
+                  "correct_answer": "11",
+                  "locate_text": "I'm 11. This is my family."
                 },
                 {
                   "question": "Where is Ruby's mum from?",
@@ -466,7 +467,8 @@
                     "Brazil",
                     "Italy"
                   ],
-                  "correct_answer": "Spain"
+                  "correct_answer": "Spain",
+                  "locate_text": "My mum is from Spain — her name is Sofia."
                 },
                 {
                   "question": "What is the name of Ruby's brother?",
@@ -476,7 +478,8 @@
                     "Lily",
                     "Sofia"
                   ],
-                  "correct_answer": "Sam"
+                  "correct_answer": "Sam",
+                  "locate_text": "I have one brother — his name is Sam."
                 },
                 {
                   "question": "Who is the baby in the family?",
@@ -486,7 +489,8 @@
                     "Ruby",
                     "Sofia"
                   ],
-                  "correct_answer": "Lily"
+                  "correct_answer": "Lily",
+                  "locate_text": "We have a baby in our family too — her name is Lily."
                 },
                 {
                   "question": "Ruby's dad is from the UK. True or false?",
@@ -494,7 +498,8 @@
                     "True",
                     "False"
                   ],
-                  "correct_answer": "True"
+                  "correct_answer": "True",
+                  "locate_text": "My dad is from the UK — his name is Mark."
                 }
               ]
             },
@@ -1281,7 +1286,8 @@
                     "Mark",
                     "Ruby"
                   ],
-                  "correct_answer": "David"
+                  "correct_answer": "David",
+                  "locate_text": "My husband is David."
                 },
                 {
                   "question": "How many daughters does Helena have?",
@@ -1291,7 +1297,8 @@
                     "four",
                     "one"
                   ],
-                  "correct_answer": "three"
+                  "correct_answer": "three",
+                  "locate_text": "We have three children — three daughters."
                 },
                 {
                   "question": "How old is Isabel?",
@@ -1301,7 +1308,8 @@
                     "1",
                     "9"
                   ],
-                  "correct_answer": "14"
+                  "correct_answer": "14",
+                  "locate_text": "She is 14."
                 },
                 {
                   "question": "Who are the twins?",
@@ -1311,7 +1319,8 @@
                     "Helena and David",
                     "Ruby and Sam"
                   ],
-                  "correct_answer": "Inca and Eva"
+                  "correct_answer": "Inca and Eva",
+                  "locate_text": "Their names are Isabel, Inca and Eva."
                 },
                 {
                   "question": "Helena and David have a son. True or false?",
@@ -1319,7 +1328,8 @@
                     "True",
                     "False"
                   ],
-                  "correct_answer": "False"
+                  "correct_answer": "False",
+                  "locate_text": "My name is Helena."
                 }
               ]
             },
@@ -1861,7 +1871,8 @@
                     "hungry",
                     "bored"
                   ],
-                  "correct_answer": "tired"
+                  "correct_answer": "tired",
+                  "locate_text": "She is tired — it's a hot day."
                 },
                 {
                   "question": "Where is Inca?",
@@ -1871,7 +1882,8 @@
                     "in the garden",
                     "in the living room"
                   ],
-                  "correct_answer": "in the kitchen"
+                  "correct_answer": "in the kitchen",
+                  "locate_text": "Inca is in the kitchen. She is hungry."
                 },
                 {
                   "question": "Why is Eva bored?",
@@ -1881,7 +1893,8 @@
                     "she is hot",
                     "she is tired"
                   ],
-                  "correct_answer": "she wants to play"
+                  "correct_answer": "she wants to play",
+                  "locate_text": "She is bored — she wants to play."
                 },
                 {
                   "question": "Is Helena happy?",
@@ -1889,7 +1902,8 @@
                     "yes",
                     "no"
                   ],
-                  "correct_answer": "yes"
+                  "correct_answer": "yes",
+                  "locate_text": "Helena and her three daughters are at home."
                 },
                 {
                   "question": "What does Inca want?",
@@ -1899,7 +1913,8 @@
                     "tea",
                     "water"
                   ],
-                  "correct_answer": "a sandwich"
+                  "correct_answer": "a sandwich",
+                  "locate_text": "She wants a sandwich."
                 }
               ]
             },
@@ -1925,17 +1940,8 @@
                   "instruction": "Fill the gap.",
                   "items": [
                     {
-                      "sentence": "___ you tired? — Yes, I am.",
+                      "sentence": "___ Inca and Eva twins? — Yes, they are.",
                       "answer": "are",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ]
-                    },
-                    {
-                      "sentence": "___ Inca hungry? — Yes, she is.",
-                      "answer": "is",
                       "options": [
                         "am",
                         "is",
@@ -1961,7 +1967,16 @@
                       ]
                     },
                     {
-                      "sentence": "___ Inca and Eva twins? — Yes, they are.",
+                      "sentence": "___ Inca hungry? — Yes, she is.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "___ you tired? — Yes, I am.",
                       "answer": "are",
                       "options": [
                         "am",
@@ -1976,22 +1991,13 @@
                   "instruction": "Choose the correct word.",
                   "items": [
                     {
-                      "sentence": "___ you tired? — Yes, I am.",
+                      "sentence": "___ Inca and Eva twins? — Yes, they are.",
                       "options": [
                         "am",
                         "is",
                         "are"
                       ],
                       "correct": "are"
-                    },
-                    {
-                      "sentence": "___ Inca hungry? — Yes, she is.",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "is"
                     },
                     {
                       "sentence": "___ Eva sad? — No, she isn't. She's bored.",
@@ -2012,7 +2018,16 @@
                       "correct": "are"
                     },
                     {
-                      "sentence": "___ Inca and Eva twins? — Yes, they are.",
+                      "sentence": "___ Inca hungry? — Yes, she is.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "___ you tired? — Yes, I am.",
                       "options": [
                         "am",
                         "is",
@@ -2688,7 +2703,8 @@
                     "in the garden",
                     "at school"
                   ],
-                  "correct_answer": "on the wall in Ruby's room"
+                  "correct_answer": "on the wall in Ruby's room",
+                  "locate_text": "On the wall in Ruby's room there is a photo. It's a family photo."
                 },
                 {
                   "question": "Who is Ruby's brother?",
@@ -2698,7 +2714,8 @@
                     "Lily",
                     "Sofia"
                   ],
-                  "correct_answer": "Sam"
+                  "correct_answer": "Sam",
+                  "locate_text": "Her brother, Sam, is clever — he's 9."
                 },
                 {
                   "question": "How does Ruby's dad feel?",
@@ -2708,7 +2725,8 @@
                     "sad",
                     "bored"
                   ],
-                  "correct_answer": "funny"
+                  "correct_answer": "funny",
+                  "locate_text": "Her dad, Mark, is funny."
                 },
                 {
                   "question": "Who is the baby?",
@@ -2718,7 +2736,8 @@
                     "Ruby",
                     "Sofia"
                   ],
-                  "correct_answer": "Lily"
+                  "correct_answer": "Lily",
+                  "locate_text": "Lily, the baby, is in Sofia's arms."
                 },
                 {
                   "question": "Does Ruby love the photo?",
@@ -2726,7 +2745,8 @@
                     "yes",
                     "no"
                   ],
-                  "correct_answer": "yes"
+                  "correct_answer": "yes",
+                  "locate_text": "On the wall in Ruby's room there is a photo. It's a family photo."
                 }
               ]
             },
@@ -2786,15 +2806,6 @@
                   "instruction": "Fill the gap.",
                   "items": [
                     {
-                      "sentence": "be: short answers — Yes, I ___ / No, I'm not.",
-                      "answer": "am",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ]
-                    },
-                    {
                       "sentence": "I ___ Vietnamese.",
                       "answer": "am",
                       "options": [
@@ -2804,8 +2815,8 @@
                       ]
                     },
                     {
-                      "sentence": "She ___ my friend.",
-                      "answer": "is",
+                      "sentence": "They ___ from different countries.",
+                      "answer": "are",
                       "options": [
                         "am",
                         "is",
@@ -2822,6 +2833,15 @@
                       ]
                     },
                     {
+                      "sentence": "be: short answers — Yes, I ___ / No, I'm not.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
                       "sentence": "We ___ classmates.",
                       "answer": "are",
                       "options": [
@@ -2831,8 +2851,8 @@
                       ]
                     },
                     {
-                      "sentence": "They ___ from different countries.",
-                      "answer": "are",
+                      "sentence": "She ___ my friend.",
+                      "answer": "is",
                       "options": [
                         "am",
                         "is",
@@ -2846,15 +2866,6 @@
                   "instruction": "Choose the correct word.",
                   "items": [
                     {
-                      "sentence": "be: short answers — Yes, I ___ / No, I'm not.",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "am"
-                    },
-                    {
                       "sentence": "I ___ Vietnamese.",
                       "options": [
                         "am",
@@ -2864,13 +2875,13 @@
                       "correct": "am"
                     },
                     {
-                      "sentence": "She ___ my friend.",
+                      "sentence": "They ___ from different countries.",
                       "options": [
                         "am",
                         "is",
                         "are"
                       ],
-                      "correct": "is"
+                      "correct": "are"
                     },
                     {
                       "sentence": "He ___ my brother.",
@@ -2882,6 +2893,15 @@
                       "correct": "is"
                     },
                     {
+                      "sentence": "be: short answers — Yes, I ___ / No, I'm not.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "am"
+                    },
+                    {
                       "sentence": "We ___ classmates.",
                       "options": [
                         "am",
@@ -2891,13 +2911,13 @@
                       "correct": "are"
                     },
                     {
-                      "sentence": "They ___ from different countries.",
+                      "sentence": "She ___ my friend.",
                       "options": [
                         "am",
                         "is",
                         "are"
                       ],
-                      "correct": "are"
+                      "correct": "is"
                     }
                   ]
                 }

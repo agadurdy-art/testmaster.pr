@@ -490,7 +490,8 @@
                     "Sofia",
                     "Mr Brown"
                   ],
-                  "correct_answer": "Cassie"
+                  "correct_answer": "Cassie",
+                  "locate_text": "I'm Cassie. This is my class."
                 },
                 {
                   "question": "What does Nico have?",
@@ -500,7 +501,8 @@
                     "a book and a pen",
                     "a chair and a table"
                   ],
-                  "correct_answer": "a phone and a camera"
+                  "correct_answer": "a phone and a camera",
+                  "locate_text": "He has a phone and a camera."
                 },
                 {
                   "question": "Who is the teacher?",
@@ -510,7 +512,8 @@
                     "Sofia",
                     "Cassie"
                   ],
-                  "correct_answer": "Mr Brown"
+                  "correct_answer": "Mr Brown",
+                  "locate_text": "Our teacher is Mr Brown. He is kind."
                 },
                 {
                   "question": "What does Cassie have on her table?",
@@ -520,7 +523,8 @@
                     "a bag and a watch",
                     "a photo and a chair"
                   ],
-                  "correct_answer": "a book, a pen and a pencil"
+                  "correct_answer": "a book, a pen and a pencil",
+                  "locate_text": "I have a book, a pen and a pencil on my table."
                 },
                 {
                   "question": "Is the teacher kind?",
@@ -528,7 +532,8 @@
                     "yes",
                     "no"
                   ],
-                  "correct_answer": "yes"
+                  "correct_answer": "yes",
+                  "locate_text": "Here are my friends and my teacher."
                 }
               ]
             },
@@ -1332,7 +1337,8 @@
                     "Russia",
                     "Turkey"
                   ],
-                  "correct_answer": "Argentina"
+                  "correct_answer": "Argentina",
+                  "locate_text": "I'm from Argentina."
                 },
                 {
                   "question": "How old is Sang?",
@@ -1342,7 +1348,8 @@
                     "13",
                     "14"
                   ],
-                  "correct_answer": "12"
+                  "correct_answer": "12",
+                  "locate_text": "I'm 12."
                 },
                 {
                   "question": "Lana is...",
@@ -1352,7 +1359,8 @@
                     "American",
                     "Turkish"
                   ],
-                  "correct_answer": "Russian"
+                  "correct_answer": "Russian",
+                  "locate_text": "I'm Russian and I'm 11."
                 },
                 {
                   "question": "Where is Tariq from?",
@@ -1362,7 +1370,8 @@
                     "Italy",
                     "Mexico"
                   ],
-                  "correct_answer": "Turkey"
+                  "correct_answer": "Turkey",
+                  "locate_text": "I'm from Turkey."
                 },
                 {
                   "question": "Martha is from the USA. True or false?",
@@ -1370,7 +1379,8 @@
                     "True",
                     "False"
                   ],
-                  "correct_answer": "True"
+                  "correct_answer": "True",
+                  "locate_text": "Hello, my name is Martha."
                 },
                 {
                   "question": "How many students are there?",
@@ -1470,6 +1480,15 @@
                   "instruction": "Choose the correct word.",
                   "items": [
                     {
+                      "sentence": "It ___ a phone. → It's a phone.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
                       "sentence": "I ___ from Argentina. → I'm from Argentina.",
                       "options": [
                         "am",
@@ -1477,6 +1496,15 @@
                         "are"
                       ],
                       "correct": "am"
+                    },
+                    {
+                      "sentence": "She ___ from Brazil. → She's from Brazil.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
                     },
                     {
                       "sentence": "You ___ 12. → You're 12.",
@@ -1489,24 +1517,6 @@
                     },
                     {
                       "sentence": "He ___ Chinese. → He's Chinese.",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "is"
-                    },
-                    {
-                      "sentence": "She ___ from Brazil. → She's from Brazil.",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "is"
-                    },
-                    {
-                      "sentence": "It ___ a phone. → It's a phone.",
                       "options": [
                         "am",
                         "is",
@@ -1955,7 +1965,8 @@
                     "Class 7C",
                     "Class 4D"
                   ],
-                  "correct_answer": "Class 6B"
+                  "correct_answer": "Class 6B",
+                  "locate_text": "We are Class 6B at City School."
                 },
                 {
                   "question": "How many students are there?",
@@ -1965,7 +1976,8 @@
                     "20",
                     "30"
                   ],
-                  "correct_answer": "24"
+                  "correct_answer": "24",
+                  "locate_text": "We are 24 students."
                 },
                 {
                   "question": "Who is the teacher?",
@@ -1975,7 +1987,8 @@
                     "Sara",
                     "Diego"
                   ],
-                  "correct_answer": "Ms Lee"
+                  "correct_answer": "Ms Lee",
+                  "locate_text": "Our teacher's name is Ms Lee. She is from China."
                 },
                 {
                   "question": "Where are Marco and Lin from?",
@@ -1985,7 +1998,8 @@
                     "Mexico",
                     "China"
                   ],
-                  "correct_answer": "Italy"
+                  "correct_answer": "Italy",
+                  "locate_text": "Marco and Lin are from Italy. They are Italian."
                 },
                 {
                   "question": "Sara is...",
@@ -1995,7 +2009,8 @@
                     "Italian",
                     "Chinese"
                   ],
-                  "correct_answer": "Brazilian"
+                  "correct_answer": "Brazilian",
+                  "locate_text": "Sara is Brazilian and Diego is Mexican."
                 },
                 {
                   "question": "Are they all classmates?",
@@ -2003,7 +2018,8 @@
                     "yes",
                     "no"
                   ],
-                  "correct_answer": "yes"
+                  "correct_answer": "yes",
+                  "locate_text": "We are all classmates."
                 }
               ]
             },
@@ -2804,7 +2820,8 @@
                     "Brazil",
                     "Italy"
                   ],
-                  "correct_answer": "China"
+                  "correct_answer": "China",
+                  "locate_text": "She's from China."
                 },
                 {
                   "question": "Marco and Lin are...",
@@ -2814,7 +2831,8 @@
                     "Chinese",
                     "American"
                   ],
-                  "correct_answer": "Italian"
+                  "correct_answer": "Italian",
+                  "locate_text": "Marco and Lin are Italian."
                 },
                 {
                   "question": "Where is Tariq from?",
@@ -2824,7 +2842,8 @@
                     "Mexico",
                     "Spain"
                   ],
-                  "correct_answer": "Turkey"
+                  "correct_answer": "Turkey",
+                  "locate_text": "Tariq is from Turkey."
                 },
                 {
                   "question": "Mark is...",
@@ -2834,7 +2853,8 @@
                     "Spanish",
                     "Turkish"
                   ],
-                  "correct_answer": "British"
+                  "correct_answer": "British",
+                  "locate_text": "Mark is British."
                 },
                 {
                   "question": "How many students are in Class 6B?",
@@ -2844,7 +2864,8 @@
                     "10",
                     "20"
                   ],
-                  "correct_answer": "24"
+                  "correct_answer": "24",
+                  "locate_text": "We have 24 students from many countries."
                 },
                 {
                   "question": "Are they all friends?",
@@ -2852,7 +2873,8 @@
                     "yes",
                     "no"
                   ],
-                  "correct_answer": "yes"
+                  "correct_answer": "yes",
+                  "locate_text": "We are all friends."
                 }
               ]
             },
@@ -2913,6 +2935,33 @@
                   "instruction": "Fill the gap.",
                   "items": [
                     {
+                      "sentence": "I ___ Vietnamese.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "We ___ classmates.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ my brother.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
                       "sentence": "be — singular: I ___ you are, he/she/it is",
                       "answer": "am",
                       "options": [
@@ -2931,35 +2980,8 @@
                       ]
                     },
                     {
-                      "sentence": "I ___ Vietnamese.",
-                      "answer": "am",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ]
-                    },
-                    {
                       "sentence": "She ___ my friend.",
                       "answer": "is",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ]
-                    },
-                    {
-                      "sentence": "He ___ my brother.",
-                      "answer": "is",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ]
-                    },
-                    {
-                      "sentence": "We ___ classmates.",
-                      "answer": "are",
                       "options": [
                         "am",
                         "is",
@@ -2973,6 +2995,33 @@
                   "instruction": "Choose the correct word.",
                   "items": [
                     {
+                      "sentence": "I ___ Vietnamese.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "am"
+                    },
+                    {
+                      "sentence": "We ___ classmates.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "are"
+                    },
+                    {
+                      "sentence": "He ___ my brother.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
                       "sentence": "be — singular: I ___ you are, he/she/it is",
                       "options": [
                         "am",
@@ -2991,15 +3040,6 @@
                       "correct": "are"
                     },
                     {
-                      "sentence": "I ___ Vietnamese.",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "am"
-                    },
-                    {
                       "sentence": "She ___ my friend.",
                       "options": [
                         "am",
@@ -3007,24 +3047,6 @@
                         "are"
                       ],
                       "correct": "is"
-                    },
-                    {
-                      "sentence": "He ___ my brother.",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "is"
-                    },
-                    {
-                      "sentence": "We ___ classmates.",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "are"
                     }
                   ]
                 }

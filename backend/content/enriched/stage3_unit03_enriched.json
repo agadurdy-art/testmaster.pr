@@ -455,7 +455,8 @@
                     "ten",
                     "three"
                   ],
-                  "correct_answer": "seven"
+                  "correct_answer": "seven",
+                  "locate_text": "We have seven rooms."
                 },
                 {
                   "question": "Where do they cook?",
@@ -465,7 +466,8 @@
                     "in the garden",
                     "in the hall"
                   ],
-                  "correct_answer": "in the kitchen"
+                  "correct_answer": "in the kitchen",
+                  "locate_text": "We cook in the kitchen."
                 },
                 {
                   "question": "How many bathrooms?",
@@ -475,7 +477,8 @@
                     "three",
                     "four"
                   ],
-                  "correct_answer": "two"
+                  "correct_answer": "two",
+                  "locate_text": "We have two bathrooms — one upstairs and one downstairs."
                 },
                 {
                   "question": "Is there a garden?",
@@ -483,7 +486,8 @@
                     "yes",
                     "no"
                   ],
-                  "correct_answer": "yes"
+                  "correct_answer": "yes",
+                  "locate_text": "There is a kitchen."
                 },
                 {
                   "question": "Whose house is this?",
@@ -493,7 +497,8 @@
                     "Alex's",
                     "Sara's"
                   ],
-                  "correct_answer": "Lucia's"
+                  "correct_answer": "Lucia's",
+                  "locate_text": "This is my house."
                 }
               ]
             },
@@ -1242,7 +1247,8 @@
                     "Alex's",
                     "Sam's"
                   ],
-                  "correct_answer": "Tom's"
+                  "correct_answer": "Tom's",
+                  "locate_text": "This is my bedroom."
                 },
                 {
                   "question": "What is on Tom's desk?",
@@ -1252,7 +1258,8 @@
                     "a sofa",
                     "a TV"
                   ],
-                  "correct_answer": "a computer"
+                  "correct_answer": "a computer",
+                  "locate_text": "There is a computer on my desk."
                 },
                 {
                   "question": "How many chairs are there?",
@@ -1262,7 +1269,8 @@
                     "three",
                     "four"
                   ],
-                  "correct_answer": "two"
+                  "correct_answer": "two",
+                  "locate_text": "There are two chairs — one at the desk and one near the window."
                 },
                 {
                   "question": "How many shelves are there?",
@@ -1272,7 +1280,8 @@
                     "one",
                     "five"
                   ],
-                  "correct_answer": "three"
+                  "correct_answer": "three",
+                  "locate_text": "There are three shelves with my books."
                 },
                 {
                   "question": "Where is the lamp?",
@@ -1282,7 +1291,8 @@
                     "on the shelf",
                     "on the chair"
                   ],
-                  "correct_answer": "on the desk"
+                  "correct_answer": "on the desk",
+                  "locate_text": "There is a small lamp on the desk."
                 },
                 {
                   "question": "Does Tom like his room?",
@@ -1290,7 +1300,8 @@
                     "yes",
                     "no"
                   ],
-                  "correct_answer": "yes"
+                  "correct_answer": "yes",
+                  "locate_text": "I'm Tom. This is my bedroom."
                 }
               ]
             },
@@ -1840,7 +1851,8 @@
                     "yes, medium",
                     "no, very big"
                   ],
-                  "correct_answer": "no, it's small"
+                  "correct_answer": "no, it's small",
+                  "locate_text": "My room is small but it has lots of things!"
                 },
                 {
                   "question": "Where is the wardrobe?",
@@ -1850,7 +1862,8 @@
                     "in the kitchen",
                     "behind the sofa"
                   ],
-                  "correct_answer": "next to the bed"
+                  "correct_answer": "next to the bed",
+                  "locate_text": "There is a wardrobe next to the bed."
                 },
                 {
                   "question": "Where is the sofa?",
@@ -1860,7 +1873,8 @@
                     "in the wardrobe",
                     "next to the TV"
                   ],
-                  "correct_answer": "under the window"
+                  "correct_answer": "under the window",
+                  "locate_text": "There is a sofa under the window."
                 },
                 {
                   "question": "What is on the wall?",
@@ -1870,7 +1884,8 @@
                     "a mirror",
                     "a shelf"
                   ],
-                  "correct_answer": "a football poster"
+                  "correct_answer": "a football poster",
+                  "locate_text": "My football poster is on the wall behind the bed."
                 },
                 {
                   "question": "Where is the cat?",
@@ -1880,7 +1895,8 @@
                     "in the wardrobe",
                     "on the desk"
                   ],
-                  "correct_answer": "on the sofa"
+                  "correct_answer": "on the sofa",
+                  "locate_text": "She is on the sofa! She loves my room too."
                 },
                 {
                   "question": "Where is the school bag?",
@@ -1890,7 +1906,8 @@
                     "behind the door",
                     "in the wardrobe"
                   ],
-                  "correct_answer": "under the desk"
+                  "correct_answer": "under the desk",
+                  "locate_text": "My school bag is under the desk."
                 }
               ]
             },
@@ -2683,7 +2700,8 @@
                     "Alex's",
                     "Mum's"
                   ],
-                  "correct_answer": "Lucia's"
+                  "correct_answer": "Lucia's",
+                  "locate_text": "Lucia's room is big."
                 },
                 {
                   "question": "Whose room has a computer?",
@@ -2693,7 +2711,8 @@
                     "Alex's",
                     "Mum's"
                   ],
-                  "correct_answer": "Tom's"
+                  "correct_answer": "Tom's",
+                  "locate_text": "Tom's room is busy."
                 },
                 {
                   "question": "Where is Alex's cat?",
@@ -2703,7 +2722,8 @@
                     "in the wardrobe",
                     "on the desk"
                   ],
-                  "correct_answer": "on the sofa"
+                  "correct_answer": "on the sofa",
+                  "locate_text": "The cat is on the sofa under the window."
                 },
                 {
                   "question": "How many friends?",
@@ -2713,7 +2733,8 @@
                     "four",
                     "five"
                   ],
-                  "correct_answer": "three"
+                  "correct_answer": "three",
+                  "locate_text": "Look at three friends' rooms."
                 },
                 {
                   "question": "Are they all happy?",
@@ -2721,7 +2742,8 @@
                     "yes",
                     "no"
                   ],
-                  "correct_answer": "yes"
+                  "correct_answer": "yes",
+                  "locate_text": "Three friends, three different rooms — but they are all happy with their rooms."
                 }
               ]
             },
@@ -2783,7 +2805,25 @@
                   "instruction": "Fill the gap.",
                   "items": [
                     {
-                      "sentence": "there ___ + singular (a kitchen, a bed)",
+                      "sentence": "He ___ my brother.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ Vietnamese.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ my friend.",
                       "answer": "is",
                       "options": [
                         "am",
@@ -2811,25 +2851,7 @@
                       ]
                     },
                     {
-                      "sentence": "I ___ Vietnamese.",
-                      "answer": "am",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ]
-                    },
-                    {
-                      "sentence": "She ___ my friend.",
-                      "answer": "is",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ]
-                    },
-                    {
-                      "sentence": "He ___ my brother.",
+                      "sentence": "there ___ + singular (a kitchen, a bed)",
                       "answer": "is",
                       "options": [
                         "am",
@@ -2844,7 +2866,25 @@
                   "instruction": "Choose the correct word.",
                   "items": [
                     {
-                      "sentence": "there ___ + singular (a kitchen, a bed)",
+                      "sentence": "He ___ my brother.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "is"
+                    },
+                    {
+                      "sentence": "I ___ Vietnamese.",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "correct": "am"
+                    },
+                    {
+                      "sentence": "She ___ my friend.",
                       "options": [
                         "am",
                         "is",
@@ -2872,25 +2912,7 @@
                       "correct": "have"
                     },
                     {
-                      "sentence": "I ___ Vietnamese.",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "am"
-                    },
-                    {
-                      "sentence": "She ___ my friend.",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "is"
-                    },
-                    {
-                      "sentence": "He ___ my brother.",
+                      "sentence": "there ___ + singular (a kitchen, a bed)",
                       "options": [
                         "am",
                         "is",
