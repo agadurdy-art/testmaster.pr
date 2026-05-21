@@ -669,7 +669,15 @@ export default function UnifiedStagePage({ user }) {
           >
             <BookOpen className="w-16 h-16 text-slate-300 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-slate-800 mb-2">Coming Soon</h3>
-            <p className="text-slate-600">Content for this stage is being prepared. Check back soon!</p>
+            <p className="text-slate-600 mb-6">Content for this stage is being prepared. Check back soon!</p>
+            <button
+              type="button"
+              onClick={() => navigate('/dashboard')}
+              data-testid="stage-empty-back-btn"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-teal-600 hover:bg-teal-700 text-white font-semibold shadow-md transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" /> Back to Dashboard
+            </button>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">

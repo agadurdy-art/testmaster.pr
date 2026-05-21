@@ -98,10 +98,19 @@ _LEGACY_STAGE_ID = {
     "stage_8_ielts_mastery": "stage_8",
 }
 
+# Reverse: short stage_id ("stage_1") → long form ("stage_1_foundations") used
+# by the new seed pass that wrote the unified_stages docs. Without the reverse
+# fallback, GE Dashboard links like /unified/stage/stage_1 404'd on the stage
+# lookup and the page rendered Coming Soon (Aga 2026-05-21).
+_REVERSE_STAGE_ID = {v: k for k, v in _LEGACY_STAGE_ID.items()}
+
+
 def _stage_id_candidates(stage_id: str):
     out = [stage_id]
     if stage_id in _LEGACY_STAGE_ID:
         out.append(_LEGACY_STAGE_ID[stage_id])
+    if stage_id in _REVERSE_STAGE_ID:
+        out.append(_REVERSE_STAGE_ID[stage_id])
     return out
 
 
@@ -111,7 +120,9 @@ async def get_stage(stage_id: str):
     this route — without the legacy stage_id fallback Stage 1 'Foundations'
     rendered as 'Coming Soon' even though 12 unit docs existed in DB under
     the short stage_id (Aga 2026-05-20)."""
-    stage = await db.unified_stages.find_one({"stage_id": stage_id}, {"_id": 0})
+    stage = await db.unified_stages.find_one(
+        {"stage_id": {"$in": _stage_id_candidates(stage_id)}}, {"_id": 0}
+    )
     if not stage:
         raise HTTPException(status_code=404, detail="Stage not found")
 
