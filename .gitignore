@@ -541,3 +541,4 @@ backend/static/strategies/**/_orig_backup/
 
 # Local design prototypes — not part of the app build
 prototypes/
+backend/email_campaigns/
