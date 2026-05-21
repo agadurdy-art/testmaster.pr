@@ -67,9 +67,33 @@ R2_PREFIX = "vocab"
 API_BASE = "https://api.testmaster.pro"
 
 STYLE_SUFFIX = (
-    "cartoon flat illustration, kid-friendly, bright friendly colors, "
-    "soft shading, white background, simple clear composition for a "
-    "vocabulary card, no text, no letters, no watermark, no logos"
+    # LOCKED 2026-05-21 — see memory/project_vocab_image_style.md
+    "modern Disney-Pixar 3D animation render style, polished educational "
+    "children's illustration, soft Pixar cinematic studio lighting, rounded "
+    "friendly forms, clean bold composition with ONE dominant subject, "
+    "bright clean color palette, gentle soft drop shadow, smooth professional "
+    "studio render, looks like a frame from a modern Pixar short film aimed "
+    "at preschoolers"
+)
+
+# Locked negative prompt baseline. dt_gen_unit_images.py imports this so
+# any update here propagates to every batch.
+NEGATIVE_SUFFIX = (
+    "hybrid creature, mixed animal, animal with wrong head, child-headed "
+    "duck, two-headed, three-headed, extra heads, extra characters, "
+    "background characters, faces in posters, faces in pictures, "
+    "decorative posters with figures, decorative artwork on walls, "
+    "extra animals, secondary subjects, wrong scale, oversized subject, "
+    "undersized subject, "
+    "AI generated, AI art look, generic AI illustration, synthetic, "
+    "plastic surface, over-rendered, glossy, oversaturated, uncanny valley, "
+    "stock illustration, sterile, lifeless, perfect symmetry, Midjourney "
+    "style, generic Pinterest art, "
+    "text, letters, words, watermark, logo, signature, signs, captions, "
+    "blurry, low quality, distorted, photorealistic, harsh shadows, scary, "
+    "dark mood, ugly faces, deformed anatomy, broken hands, extra fingers, "
+    "extra limbs, missing leg, three legs, wrong number of legs, "
+    "cluttered background, busy scene, jpeg artifacts"
 )
 
 # Per-word descriptive prompts. Anything not listed falls back to
@@ -104,29 +128,39 @@ WORD_PROMPTS = {
     "tired":    "a child yawning, eyes half closed, sleepy",
 
     # Stage 3 Unit 03 — Rooms + things + prepositions
-    "bathroom":    "a clean bathroom with a bath, sink and toilet, bright tiles",
-    "bedroom":     "a tidy children bedroom with a single bed and desk, sunny",
-    "dining room": "a small dining room with a table set for dinner, four chairs",
-    "garden":      "a small home garden with grass, flowers and a tree",
-    "hall":        "a small entrance hall with a coat hook and a front door",
-    "kitchen":     "a bright small kitchen with cooker, fridge and a countertop",
-    "living room": "a cozy living room with a sofa, TV and a small coffee table",
-    "bed":         "a single neatly-made child's bed with a pillow and a blanket",
-    "computer":    "a desktop computer with monitor, keyboard and mouse on a desk",
-    "cupboard":    "a tall wooden kitchen cupboard with two doors closed",
-    "desk":        "a child's study desk with a lamp, book and pencil",
-    "lamp":        "a small reading lamp turned on, single object on a desk",
-    "mirror":      "a round mirror hanging on a wall reflecting daylight",
-    "shelf":       "a wooden wall shelf with three books and a small plant",
-    "sofa":        "a comfortable grey sofa for three people in a living room",
-    "TV":          "a flat-screen television on a low cabinet, switched off",
-    "wardrobe":    "a tall wooden wardrobe with two doors closed, single object",
-    "poster":      "a colorful sport poster on a bedroom wall",
-    "in":          "a cat sitting INSIDE a cardboard box, only head visible",
-    "on":          "a book lying ON TOP of a wooden table",
-    "under":       "a soccer ball UNDER a wooden chair",
-    "behind":      "a small dog peeking out BEHIND a door",
-    "next to":     "a chair standing NEXT TO a desk, side by side",
+    # All revised 2026-05-21 after Aga reviewed initial set: rooms get
+    # scene composition, single objects get hero shots, prepositions use
+    # a consistent animate character (kitten/puppy) at correct scale so
+    # the spatial concept reads at a glance. Furniture prompts spell out
+    # leg/door counts so FLUX doesn't drift (3-legged chair = unusable).
+    "bathroom":    "a cozy children's bathroom interior with a clean white bathtub, a wooden stool, a small sink with a mirror, and a fluffy towel hanging on a hook, bright pastel tiles, warm morning light through a window",
+    "bedroom":     "a cozy children's bedroom interior, single neatly-made bed with a stuffed teddy bear on the pillow, small wooden desk with a glowing reading lamp, window with white curtains, warm morning sunlight, pastel walls",
+    "dining room": "a warm dining room with a wooden table set for dinner with plates and cups, four matching wooden chairs around the table, a window in the background, soft daylight, cozy family atmosphere",
+    "garden":      "a small home garden with green grass, colorful flowers in a bed, a single small tree, a wooden fence at the back, bright friendly daylight, no people",
+    "hall":        "a small entrance hall of a family home with a wooden coat rack holding a small jacket, a front door slightly open showing warm light from outside, a doormat, pastel wall",
+    "kitchen":     "a bright children's kitchen scene with a white cooker, a friendly fridge with a magnet, a wooden countertop with a fruit bowl, and a window with curtains, cozy daylight",
+    "living room": "a cozy living room interior with a soft grey sofa, a wooden coffee table, a switched-off TV on a low cabinet, a potted plant in the corner, warm afternoon light",
+    "bed":         "a single neatly-made child's bed with a soft pillow, a folded blanket and a small teddy bear, hero shot of the bed as the single subject, simple pastel bedroom background",
+    "chair":       "a single wooden children's chair with EXACTLY FOUR LEGS clearly visible on the floor, a flat seat and a simple backrest, hero shot of the chair as the single subject, plain pastel background, all four legs symmetrical",
+    "computer":    "a single desktop computer on a wooden desk — flat-screen monitor showing a friendly cartoon screensaver, a keyboard and a mouse in front, the computer is the single hero subject, plain pastel background",
+    "cupboard":    "a tall wooden kitchen cupboard with TWO closed doors and round wooden knobs, single subject hero shot, plain pastel wall behind, no other furniture",
+    "desk":        "a child's wooden study desk with a small reading lamp, an open notebook and a yellow pencil on top, the desk is the hero single subject, plain pastel background, four visible desk legs",
+    "lamp":        "a single beautiful reading lamp on a polished wooden desk, the lamp is ON and emitting a warm glowing yellow light, fabric lampshade with subtle texture, hero studio composition, soft cream background to make the glow pop",
+    "mirror":      "a single round wall mirror with a wooden frame, hanging on a pastel wall, the mirror reflects soft daylight from a window we can imply, hero single subject composition",
+    "shelf":       "a single wooden wall shelf mounted on a pastel blue wall, three colorful children's storybooks standing on it, a small potted green plant and a tiny toy car, soft side daylight, single hero subject",
+    "sofa":        "a single cozy three-seat sofa with two soft cushions, warm fabric upholstery, single hero subject on a plain pastel living-room background, no people",
+    "TV":          "a single modern flat-screen television, SWITCHED OFF showing a black screen, sitting on a low wooden cabinet, single hero subject, plain pastel wall behind",
+    "wardrobe":    "a tall wooden wardrobe with TWO closed doors and a small round handle on each, single subject hero shot, plain pastel wall behind, no other furniture",
+    "poster":      "a single colorful children's poster of a friendly cartoon animal pinned on a pastel bedroom wall, the poster has NO TEXT visible, just bright illustrated artwork, single hero subject",
+    # Prepositions — same kitten/puppy throughout for consistency and
+    # scale clarity. Side-view cameras. Each prompt repeats the key
+    # spatial word and adds "NOT on top / NOT inside / NOT behind"
+    # negation hints to keep FLUX from drifting.
+    "in":          "a small grey tabby kitten sitting INSIDE a brown cardboard box, the box is clearly larger than the kitten, only the kitten's head and front paws peek over the rim of the box, side view camera at eye level, plain pastel background, the kitten is NOT next to the box, NOT on top, NOT behind",
+    "on":          "a small grey tabby kitten sitting ON TOP of a small wooden table, the kitten is clearly centered on the table surface with all four paws on the table top, the table is the lower larger object, side view camera, plain pastel background, the kitten is NOT under the table, NOT next to the table",
+    "under":       "a SMALL grey tabby kitten — clearly much smaller than a large wooden coffee table — curled up in the shaded gap UNDERNEATH the table. The big table top fills the upper third of the frame and casts a soft shadow on the kitten. Side view at floor level. The kitten is NOT on top, NOT as tall as the table, NOT next to the table",
+    "behind":      "a small brown puppy peeking out from BEHIND a half-open wooden door, only the puppy's head and one front paw are visible past the edge of the door, the rest of the puppy is hidden behind the door, side view camera, plain pastel hallway background, the puppy is NOT in front of the door, NOT inside the door",
+    "next to":     "a small brown puppy standing on grass right NEXT TO a small red wooden doghouse, the puppy is on the LEFT and the doghouse is on the RIGHT at the SAME ground level with a small clear gap between them, both roughly the same height, side view, pastel blue sky background, the puppy is NOT inside the doghouse, NOT on top, NOT behind",
 
     # Stage 3 Unit 04 — School things + adjectives
     "schoolbag":   "a single school backpack, blue and red, standing upright",

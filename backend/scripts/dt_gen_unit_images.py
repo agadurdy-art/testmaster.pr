@@ -27,16 +27,21 @@ import time
 import urllib.request
 from pathlib import Path
 
-# Import shared word prompt dict from sibling script
+# Import shared word prompt dict + locked style/negative from sibling script
 REPO = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(REPO / "backend" / "scripts"))
-from ship_unit_images import WORD_PROMPTS, STYLE_SUFFIX, slugify, collect_unit_words  # noqa: E402
+from ship_unit_images import (  # noqa: E402
+    WORD_PROMPTS, STYLE_SUFFIX, NEGATIVE_SUFFIX, slugify, collect_unit_words,
+)
+
+DEFAULT_NEGATIVE = NEGATIVE_SUFFIX
 
 
-def dt_txt2img(prompt: str, seed: int, size: int, steps: int, host: str, secret: str | None) -> bytes:
+def dt_txt2img(prompt: str, seed: int, size: int, steps: int, host: str, secret: str | None, negative: str = "") -> bytes:
     """POST to DT's A1111-compatible /sdapi/v1/txt2img and return PNG bytes."""
     payload = {
         "prompt": prompt,
+        "negative_prompt": negative,
         "steps": steps,
         "width": size,
         "height": size,
@@ -68,8 +73,9 @@ def main() -> None:
     ap.add_argument("--dest", type=Path, required=True, help="output folder for PNGs")
     ap.add_argument("--host", default="http://localhost:7860")
     ap.add_argument("--secret", default=None, help="DT shared secret (only needed if enabled)")
-    ap.add_argument("--steps", type=int, default=4)
-    ap.add_argument("--size", type=int, default=512)
+    ap.add_argument("--steps", type=int, default=20, help="inference steps (default 20 for quality)")
+    ap.add_argument("--size", type=int, default=768, help="square image side (default 768)")
+    ap.add_argument("--negative", default=DEFAULT_NEGATIVE, help="negative prompt (default: full anti-AI-look + anti-anatomy set)")
     ap.add_argument("--force", action="store_true")
     args = ap.parse_args()
 
@@ -89,7 +95,7 @@ def main() -> None:
         seed = int(hashlib.md5(slug.encode()).hexdigest()[:8], 16) & 0x7FFFFFFF
         t0 = time.time()
         try:
-            png = dt_txt2img(prompt, seed, args.size, args.steps, args.host, args.secret)
+            png = dt_txt2img(prompt, seed, args.size, args.steps, args.host, args.secret, args.negative)
             out.write_bytes(png)
             print(f"  ✓ [{i:02d}/{len(rows)}] {slug}.png ({time.time()-t0:.1f}s)")
         except Exception as e:
