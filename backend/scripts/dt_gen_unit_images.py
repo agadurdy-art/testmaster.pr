@@ -59,7 +59,11 @@ def dt_txt2img(prompt: str, seed: int, size: int, steps: int, host: str, secret:
         headers=headers,
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=180) as r:
+    # Cold-start render at steps=30+1024px can crawl past 3 minutes. Give
+    # it 6 minutes so the first 3-4 images don't time out before DT's
+    # FLUX 2 weights warm up (Aga 2026-05-21: garden/hall/kitchen
+    # failed in the first batch at the default 180s timeout).
+    with urllib.request.urlopen(req, timeout=360) as r:
         resp = json.load(r)
     imgs = resp.get("images") or []
     if not imgs:

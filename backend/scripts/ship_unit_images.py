@@ -143,14 +143,18 @@ WORD_PROMPTS = {
     "bed":         "a single neatly-made child's bed with a soft pillow, a folded blanket and a small teddy bear, hero shot of the bed as the single subject, simple pastel bedroom background",
     "chair":       "a single wooden children's chair with EXACTLY FOUR LEGS clearly visible on the floor, a flat seat and a simple backrest, hero shot of the chair as the single subject, plain pastel background, all four legs symmetrical",
     "computer":    "a single desktop computer on a wooden desk — flat-screen monitor showing a friendly cartoon screensaver, a keyboard and a mouse in front, the computer is the single hero subject, plain pastel background",
-    "cupboard":    "a tall wooden kitchen cupboard with TWO closed doors and round wooden knobs, single subject hero shot, plain pastel wall behind, no other furniture",
+    "cupboard":    "a wall-mounted KITCHEN cupboard for FOOD storage, set inside a kitchen above a countertop, TWO closed wooden doors with small round knobs, you can see a small tiled kitchen wall and a tiny edge of countertop below to anchor the kitchen context, single hero subject, NOT a clothes wardrobe, NOT in a bedroom, NOT freestanding",
     "desk":        "a child's wooden study desk with a small reading lamp, an open notebook and a yellow pencil on top, the desk is the hero single subject, plain pastel background, four visible desk legs",
     "lamp":        "a single beautiful reading lamp on a polished wooden desk, the lamp is ON and emitting a warm glowing yellow light, fabric lampshade with subtle texture, hero studio composition, soft cream background to make the glow pop",
+    # 'table' deliberately overridden after Aga 2026-05-21 saw a plate
+    # under the original table render. EMPTY top, no objects, no place
+    # settings — the table itself is the lesson, not table-with-stuff.
+    "table":       "ONE single empty wooden coffee table, completely BARE, no plates, no dishes, no glasses, no cups, no books, no flowers, no objects of any kind on top, just polished wood surface, four visible legs, hero shot of the table as the single clear subject, plain pastel background, NOTHING on the table top",
     "mirror":      "a single round wall mirror with a wooden frame, hanging on a pastel wall, the mirror reflects soft daylight from a window we can imply, hero single subject composition",
     "shelf":       "a single wooden wall shelf mounted on a pastel blue wall, three colorful children's storybooks standing on it, a small potted green plant and a tiny toy car, soft side daylight, single hero subject",
     "sofa":        "a single cozy three-seat sofa with two soft cushions, warm fabric upholstery, single hero subject on a plain pastel living-room background, no people",
     "TV":          "a single modern flat-screen television, SWITCHED OFF showing a black screen, sitting on a low wooden cabinet, single hero subject, plain pastel wall behind",
-    "wardrobe":    "a tall wooden wardrobe with TWO closed doors and a small round handle on each, single subject hero shot, plain pastel wall behind, no other furniture",
+    "wardrobe":    "a tall full-height BEDROOM wardrobe for CLOTHES, freestanding on a bedroom floor, TWO closed doors and one door has a tall MIRROR panel, a long handle on each door, single hero subject, NOT a kitchen cupboard, NOT wall-mounted, NOT in a kitchen, a hint of pastel bedroom wallpaper behind",
     "poster":      "a single colorful children's poster of a friendly cartoon animal pinned on a pastel bedroom wall, the poster has NO TEXT visible, just bright illustrated artwork, single hero subject",
     # Prepositions — same kitten/puppy throughout for consistency and
     # scale clarity. Side-view cameras. Each prompt repeats the key
