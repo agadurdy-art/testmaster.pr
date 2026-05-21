@@ -20,7 +20,7 @@ export default function TrustBlock() {
       <div className="container trust-block-inner">
         <div className="eyebrow">
           <span className="dot" aria-hidden="true" />
-          Built by an English teacher preparing for IELTS
+          Calibrated against Cambridge band descriptors
         </div>
         <h2 className="section-title">Why the band scores you see here are honest.</h2>
         <p className="section-sub">
@@ -33,9 +33,10 @@ export default function TrustBlock() {
           <div className="trust-card">
             <div className="trust-card-title">Who built this</div>
             <div className="trust-card-body">
-              An <strong>English teacher with 10+ years experience</strong> who's actively
-              preparing for IELTS — so the rubrics were hand-tuned from both sides of the desk,
-              against past student essays and Cambridge anchor papers.
+              An <strong>English teacher with 10+ years experience</strong>. Every rubric Liz
+              uses is calibrated against Cambridge IELTS band descriptors and reviewed against
+              past examiner-marked essays — so the band you see matches what a real examiner
+              would write down.
             </div>
           </div>
 

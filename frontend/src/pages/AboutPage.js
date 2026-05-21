@@ -149,18 +149,19 @@ export default function AboutPage() {
           <div className="section-eyebrow">Why this exists</div>
           <h2 className="section-title">A teacher who was a student first.</h2>
           <p>
-            This platform was built by an English teacher with 10+ years experience
-            who is now preparing for the IELTS exam — sitting on both sides of the
-            desk at once. Same broken stack: books that won't grade you, tests that
-            won't teach you, classes most learners can't afford, tutors who can't
-            keep up.
+            This platform was built by an English teacher with 10+ years marking
+            student writing, running speaking practice, and watching the same
+            broken stack break the same students: books that won't grade you,
+            tests that won't teach you, classes most learners can't afford,
+            tutors who can't keep up.
           </p>
           <p>
-            Years of teaching English, then walking into IELTS prep as a learner,
-            made the answer obvious: the teaching is solved, the testing is solved —
-            what's not solved is the loop in between. The bit where someone looks at
-            <em>your</em> essay and says <em>this</em> is your weak edge, fix
-            <em> that</em>, write again.
+            After a decade of running the feedback loop by hand — read the essay,
+            mark it against the descriptors, write the rewrite, hand it back —
+            the answer became obvious: the teaching is solved, the testing is
+            solved. What's not solved is the loop in between. The bit where
+            someone looks at <em>your</em> essay and says <em>this</em> is your
+            weak edge, fix <em> that</em>, write again.
           </p>
           <p>
             IELTS Ace is that loop. Every essay graded. Every speaking turn timed and
@@ -228,8 +229,9 @@ export default function AboutPage() {
               </Link>
             </div>
             <p className="about-cta-foot">
-              Built by an English teacher preparing for IELTS. Every feature
-              mentored personally. A real person reads every email at{' '}
+              Built by an English teacher with 10+ years marking student
+              writing. Every feature mentored personally. A real person reads
+              every email at{' '}
               <a href="mailto:support@testmaster.pro">support@testmaster.pro</a>.
             </p>
           </div>
