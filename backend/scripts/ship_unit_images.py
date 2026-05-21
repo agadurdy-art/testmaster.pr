@@ -186,6 +186,12 @@ WORD_PROMPTS = {
     "long":        "a long winding road going into the distance",
     "short":       "a short pencil next to a long pencil, length comparison",
     "favourite":   "a child hugging their favourite teddy bear with a big smile",
+
+    # Stage 3 Unit 04 — school things additions
+    "dictionary":  "ONE single thick wooden-bound illustrated children's dictionary book lying open on a desk, pages visible with simple word entries (no real readable text), the book is the clear single hero subject, plain pastel desk background, NO other books, NO clutter",
+    "calculator":  "ONE single small bright-colored kid's pocket calculator with chunky number buttons (the buttons are blank or with simple shapes, NO real text or digits), hero shot of the calculator filling the center of the frame, plain pastel desk background, NO other school supplies",
+    "tablet":      "ONE single modern children's tablet computer, slim, with a colorful friendly home-screen showing simple shape icons (no readable text or logos), hero shot of the tablet, plain pastel background, NO stylus, NO keyboard, NO case",
+    "water bottle":"ONE single reusable kid's water bottle with a colorful body and a sport cap, standing upright as the clear single hero subject, plain pastel background, NO labels, NO text, NO other bottles",
 }
 
 

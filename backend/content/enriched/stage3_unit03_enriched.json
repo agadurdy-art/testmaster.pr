@@ -76,7 +76,7 @@
                   "word": "bedroom",
                   "definition": "The room where you sleep.",
                   "image_emoji": "🛏️",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png",
                   "example_sentence": "My bedroom is small.",
                   "asset_slug": "stage3_u03_bedroom"
                 },
@@ -84,7 +84,7 @@
                   "word": "dining room",
                   "definition": "The room where you eat at a table.",
                   "image_emoji": "🍽️",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png",
                   "example_sentence": "We eat dinner in the dining room.",
                   "asset_slug": "stage3_u03_dining_room"
                 },
@@ -92,7 +92,7 @@
                   "word": "garden",
                   "definition": "The space outside with plants and grass.",
                   "image_emoji": "🌳",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/garden.png",
                   "example_sentence": "The cat is in the garden.",
                   "asset_slug": "stage3_u03_garden"
                 },
@@ -100,7 +100,7 @@
                   "word": "hall",
                   "definition": "The room you enter from the front door.",
                   "image_emoji": "🚪",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/hall.png",
                   "example_sentence": "Hang your coat in the hall.",
                   "asset_slug": "stage3_u03_hall"
                 },
@@ -108,7 +108,7 @@
                   "word": "kitchen",
                   "definition": "The room where you cook food.",
                   "image_emoji": "🍳",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/kitchen.png",
                   "example_sentence": "Mum is in the kitchen.",
                   "asset_slug": "stage3_u03_kitchen"
                 },
@@ -116,7 +116,7 @@
                   "word": "living room",
                   "definition": "The room with a sofa where you watch TV.",
                   "image_emoji": "🛋️",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/living_room.png",
                   "example_sentence": "We watch TV in the living room.",
                   "asset_slug": "stage3_u03_living_room"
                 }
@@ -138,24 +138,24 @@
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png"
                         },
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png"
                         },
                         {
                           "word": "garden",
                           "emoji": "🌳",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/garden.png"
                         }
                       ]
                     },
                     {
                       "word": "bedroom",
                       "emoji": "🛏️",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png",
                       "distractors": [
                         {
                           "word": "bathroom",
@@ -165,19 +165,19 @@
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png"
                         },
                         {
                           "word": "garden",
                           "emoji": "🌳",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/garden.png"
                         }
                       ]
                     },
                     {
                       "word": "dining room",
                       "emoji": "🍽️",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png",
                       "distractors": [
                         {
                           "word": "bathroom",
@@ -187,19 +187,19 @@
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png"
                         },
                         {
                           "word": "garden",
                           "emoji": "🌳",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/garden.png"
                         }
                       ]
                     },
                     {
                       "word": "garden",
                       "emoji": "🌳",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/garden.png",
                       "distractors": [
                         {
                           "word": "bathroom",
@@ -209,19 +209,19 @@
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png"
                         },
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png"
                         }
                       ]
                     },
                     {
                       "word": "hall",
                       "emoji": "🚪",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/hall.png",
                       "distractors": [
                         {
                           "word": "bathroom",
@@ -231,19 +231,19 @@
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png"
                         },
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png"
                         }
                       ]
                     },
                     {
                       "word": "kitchen",
                       "emoji": "🍳",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/kitchen.png",
                       "distractors": [
                         {
                           "word": "bathroom",
@@ -253,12 +253,12 @@
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png"
                         },
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png"
                         }
                       ]
                     }
@@ -276,24 +276,24 @@
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png"
                         },
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png"
                         },
                         {
                           "word": "garden",
                           "emoji": "🌳",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/garden.png"
                         }
                       ]
                     },
                     {
                       "word": "bedroom",
                       "emoji": "🛏️",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png",
                       "distractors": [
                         {
                           "word": "bathroom",
@@ -303,19 +303,19 @@
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png"
                         },
                         {
                           "word": "garden",
                           "emoji": "🌳",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/garden.png"
                         }
                       ]
                     },
                     {
                       "word": "dining room",
                       "emoji": "🍽️",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png",
                       "distractors": [
                         {
                           "word": "bathroom",
@@ -325,19 +325,19 @@
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png"
                         },
                         {
                           "word": "garden",
                           "emoji": "🌳",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/garden.png"
                         }
                       ]
                     },
                     {
                       "word": "garden",
                       "emoji": "🌳",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/garden.png",
                       "distractors": [
                         {
                           "word": "bathroom",
@@ -347,19 +347,19 @@
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png"
                         },
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png"
                         }
                       ]
                     },
                     {
                       "word": "hall",
                       "emoji": "🚪",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/hall.png",
                       "distractors": [
                         {
                           "word": "bathroom",
@@ -369,19 +369,19 @@
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png"
                         },
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png"
                         }
                       ]
                     },
                     {
                       "word": "kitchen",
                       "emoji": "🍳",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/kitchen.png",
                       "distractors": [
                         {
                           "word": "bathroom",
@@ -391,12 +391,12 @@
                         {
                           "word": "bedroom",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png"
                         },
                         {
                           "word": "dining room",
                           "emoji": "🍽️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png"
                         }
                       ]
                     }
@@ -414,27 +414,27 @@
                     {
                       "word": "bedroom",
                       "emoji": "🛏️",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png"
                     },
                     {
                       "word": "dining room",
                       "emoji": "🍽️",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png"
                     },
                     {
                       "word": "garden",
                       "emoji": "🌳",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/garden.png"
                     },
                     {
                       "word": "hall",
                       "emoji": "🚪",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/hall.png"
                     },
                     {
                       "word": "kitchen",
                       "emoji": "🍳",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/kitchen.png"
                     }
                   ]
                 }
@@ -783,7 +783,7 @@
                   "word": "bed",
                   "definition": "A thing in your bedroom where you sleep.",
                   "image_emoji": "🛏️",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bed.png",
                   "example_sentence": "My bed is big and soft.",
                   "asset_slug": "stage3_u03_bed"
                 },
@@ -799,7 +799,7 @@
                   "word": "computer",
                   "definition": "An electronic thing you work and play on.",
                   "image_emoji": "💻",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/computer.png",
                   "example_sentence": "My computer is on the desk.",
                   "asset_slug": "stage3_u03_computer"
                 },
@@ -807,7 +807,7 @@
                   "word": "cupboard",
                   "definition": "A wooden box with doors for storing things.",
                   "image_emoji": "🗄️",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/cupboard.png",
                   "example_sentence": "The plates are in the cupboard.",
                   "asset_slug": "stage3_u03_cupboard"
                 },
@@ -815,7 +815,7 @@
                   "word": "desk",
                   "definition": "A table where you do homework.",
                   "image_emoji": "📋",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/desk.png",
                   "example_sentence": "My desk is near the window.",
                   "asset_slug": "stage3_u03_desk"
                 },
@@ -823,7 +823,7 @@
                   "word": "lamp",
                   "definition": "A small light on a table or wall.",
                   "image_emoji": "💡",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/lamp.png",
                   "example_sentence": "Turn on the lamp, please.",
                   "asset_slug": "stage3_u03_lamp"
                 },
@@ -831,7 +831,7 @@
                   "word": "mirror",
                   "definition": "A flat thing that shows your face.",
                   "image_emoji": "🪞",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/mirror.png",
                   "example_sentence": "I look in the mirror in the morning.",
                   "asset_slug": "stage3_u03_mirror"
                 },
@@ -839,7 +839,7 @@
                   "word": "shelf",
                   "definition": "A flat board on a wall for books or things.",
                   "image_emoji": "📚",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/shelf.png",
                   "example_sentence": "There are books on the shelf.",
                   "asset_slug": "stage3_u03_shelf"
                 }
@@ -867,7 +867,7 @@
                       "options_full": [
                         {
                           "emoji": "🛏️",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bed.png",
                           "word": "bed"
                         },
                         {
@@ -877,12 +877,12 @@
                         },
                         {
                           "emoji": "💻",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/computer.png",
                           "word": "computer"
                         },
                         {
                           "emoji": "🗄️",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/cupboard.png",
                           "word": "cupboard"
                         }
                       ]
@@ -905,17 +905,17 @@
                         },
                         {
                           "emoji": "🛏️",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bed.png",
                           "word": "bed"
                         },
                         {
                           "emoji": "💻",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/computer.png",
                           "word": "computer"
                         },
                         {
                           "emoji": "🗄️",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/cupboard.png",
                           "word": "cupboard"
                         }
                       ]
@@ -933,12 +933,12 @@
                       "options_full": [
                         {
                           "emoji": "💻",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/computer.png",
                           "word": "computer"
                         },
                         {
                           "emoji": "🛏️",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bed.png",
                           "word": "bed"
                         },
                         {
@@ -948,7 +948,7 @@
                         },
                         {
                           "emoji": "🗄️",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/cupboard.png",
                           "word": "cupboard"
                         }
                       ]
@@ -966,12 +966,12 @@
                       "options_full": [
                         {
                           "emoji": "🗄️",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/cupboard.png",
                           "word": "cupboard"
                         },
                         {
                           "emoji": "🛏️",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bed.png",
                           "word": "bed"
                         },
                         {
@@ -981,7 +981,7 @@
                         },
                         {
                           "emoji": "💻",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/computer.png",
                           "word": "computer"
                         }
                       ]
@@ -999,12 +999,12 @@
                       "options_full": [
                         {
                           "emoji": "📋",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/desk.png",
                           "word": "desk"
                         },
                         {
                           "emoji": "🛏️",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bed.png",
                           "word": "bed"
                         },
                         {
@@ -1014,7 +1014,7 @@
                         },
                         {
                           "emoji": "💻",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/computer.png",
                           "word": "computer"
                         }
                       ]
@@ -1032,12 +1032,12 @@
                       "options_full": [
                         {
                           "emoji": "💡",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/lamp.png",
                           "word": "lamp"
                         },
                         {
                           "emoji": "🛏️",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bed.png",
                           "word": "bed"
                         },
                         {
@@ -1047,7 +1047,7 @@
                         },
                         {
                           "emoji": "💻",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/computer.png",
                           "word": "computer"
                         }
                       ]
@@ -1061,7 +1061,7 @@
                     {
                       "word": "bed",
                       "emoji": "🛏️",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bed.png",
                       "distractors": [
                         {
                           "word": "chair",
@@ -1071,12 +1071,12 @@
                         {
                           "word": "computer",
                           "emoji": "💻",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/computer.png"
                         },
                         {
                           "word": "cupboard",
                           "emoji": "🗄️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/cupboard.png"
                         }
                       ]
                     },
@@ -1088,29 +1088,29 @@
                         {
                           "word": "bed",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bed.png"
                         },
                         {
                           "word": "computer",
                           "emoji": "💻",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/computer.png"
                         },
                         {
                           "word": "cupboard",
                           "emoji": "🗄️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/cupboard.png"
                         }
                       ]
                     },
                     {
                       "word": "computer",
                       "emoji": "💻",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/computer.png",
                       "distractors": [
                         {
                           "word": "bed",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bed.png"
                         },
                         {
                           "word": "chair",
@@ -1120,19 +1120,19 @@
                         {
                           "word": "cupboard",
                           "emoji": "🗄️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/cupboard.png"
                         }
                       ]
                     },
                     {
                       "word": "cupboard",
                       "emoji": "🗄️",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/cupboard.png",
                       "distractors": [
                         {
                           "word": "bed",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bed.png"
                         },
                         {
                           "word": "chair",
@@ -1142,19 +1142,19 @@
                         {
                           "word": "computer",
                           "emoji": "💻",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/computer.png"
                         }
                       ]
                     },
                     {
                       "word": "desk",
                       "emoji": "📋",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/desk.png",
                       "distractors": [
                         {
                           "word": "bed",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bed.png"
                         },
                         {
                           "word": "chair",
@@ -1164,19 +1164,19 @@
                         {
                           "word": "computer",
                           "emoji": "💻",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/computer.png"
                         }
                       ]
                     },
                     {
                       "word": "lamp",
                       "emoji": "💡",
-                      "image_url": "",
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/lamp.png",
                       "distractors": [
                         {
                           "word": "bed",
                           "emoji": "🛏️",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bed.png"
                         },
                         {
                           "word": "chair",
@@ -1186,7 +1186,7 @@
                         {
                           "word": "computer",
                           "emoji": "💻",
-                          "image_url": ""
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/computer.png"
                         }
                       ]
                     }
@@ -1199,7 +1199,7 @@
                     {
                       "word": "bed",
                       "emoji": "🛏️",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bed.png"
                     },
                     {
                       "word": "chair",
@@ -1209,22 +1209,22 @@
                     {
                       "word": "computer",
                       "emoji": "💻",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/computer.png"
                     },
                     {
                       "word": "cupboard",
                       "emoji": "🗄️",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/cupboard.png"
                     },
                     {
                       "word": "desk",
                       "emoji": "📋",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/desk.png"
                     },
                     {
                       "word": "lamp",
                       "emoji": "💡",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/lamp.png"
                     }
                   ]
                 }
@@ -1610,7 +1610,7 @@
                   "word": "sofa",
                   "definition": "A long soft seat for two or three people.",
                   "image_emoji": "🛋️",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/sofa.png",
                   "example_sentence": "The sofa is in the living room.",
                   "asset_slug": "stage3_u03_sofa"
                 },
@@ -1626,7 +1626,7 @@
                   "word": "TV",
                   "definition": "A screen for watching shows.",
                   "image_emoji": "📺",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/tv.png",
                   "example_sentence": "The TV is in the living room.",
                   "asset_slug": "stage3_u03_tv"
                 },
@@ -1634,7 +1634,7 @@
                   "word": "wardrobe",
                   "definition": "A big cupboard for your clothes.",
                   "image_emoji": "👕",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/wardrobe.png",
                   "example_sentence": "My clothes are in the wardrobe.",
                   "asset_slug": "stage3_u03_wardrobe"
                 },
@@ -1642,7 +1642,7 @@
                   "word": "poster",
                   "definition": "A big paper picture you put on the wall.",
                   "image_emoji": "🖼️",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/poster.png",
                   "example_sentence": "I have a poster of a footballer.",
                   "asset_slug": "stage3_u03_poster"
                 },
@@ -1650,7 +1650,7 @@
                   "word": "in",
                   "definition": "Inside something.",
                   "image_emoji": "📦",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/in.png",
                   "example_sentence": "The cat is in the box.",
                   "asset_slug": "stage3_u03_in"
                 },
@@ -1658,7 +1658,7 @@
                   "word": "on",
                   "definition": "On top of something.",
                   "image_emoji": "📍",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/on.png",
                   "example_sentence": "The book is on the table.",
                   "asset_slug": "stage3_u03_on"
                 },
@@ -1666,7 +1666,7 @@
                   "word": "under",
                   "definition": "Below something.",
                   "image_emoji": "⬇️",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/under.png",
                   "example_sentence": "My shoes are under the bed.",
                   "asset_slug": "stage3_u03_under"
                 },
@@ -1674,7 +1674,7 @@
                   "word": "behind",
                   "definition": "At the back of something.",
                   "image_emoji": "🚪",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/behind.png",
                   "example_sentence": "The ball is behind the door.",
                   "asset_slug": "stage3_u03_behind"
                 },
@@ -1682,7 +1682,7 @@
                   "word": "next to",
                   "definition": "Beside something.",
                   "image_emoji": "↔️",
-                  "image_url": "",
+                  "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/next_to.png",
                   "example_sentence": "My chair is next to the desk.",
                   "asset_slug": "stage3_u03_next_to"
                 }
@@ -1736,7 +1736,7 @@
                         "wardrobe"
                       ],
                       "correct": "sofa",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/sofa.png"
                     },
                     {
                       "audio_text": "table",
@@ -1760,7 +1760,7 @@
                         "wardrobe"
                       ],
                       "correct": "TV",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/tv.png"
                     },
                     {
                       "audio_text": "wardrobe",
@@ -1772,7 +1772,7 @@
                         "TV"
                       ],
                       "correct": "wardrobe",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/wardrobe.png"
                     },
                     {
                       "audio_text": "poster",
@@ -1784,7 +1784,7 @@
                         "TV"
                       ],
                       "correct": "poster",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/poster.png"
                     },
                     {
                       "audio_text": "in",
@@ -1796,7 +1796,7 @@
                         "TV"
                       ],
                       "correct": "in",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/in.png"
                     }
                   ]
                 },
@@ -1807,7 +1807,7 @@
                     {
                       "word": "sofa",
                       "emoji": "🛋️",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/sofa.png"
                     },
                     {
                       "word": "table",
@@ -1817,22 +1817,22 @@
                     {
                       "word": "TV",
                       "emoji": "📺",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/tv.png"
                     },
                     {
                       "word": "wardrobe",
                       "emoji": "👕",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/wardrobe.png"
                     },
                     {
                       "word": "poster",
                       "emoji": "🖼️",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/poster.png"
                     },
                     {
                       "word": "in",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/in.png"
                     }
                   ]
                 }
@@ -2343,17 +2343,17 @@
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png",
                           "word": "bedroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png",
                           "word": "dining room"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/garden.png",
                           "word": "garden"
                         }
                       ]
@@ -2371,7 +2371,7 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png",
                           "word": "bedroom"
                         },
                         {
@@ -2381,12 +2381,12 @@
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png",
                           "word": "dining room"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/garden.png",
                           "word": "garden"
                         }
                       ]
@@ -2404,7 +2404,7 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png",
                           "word": "dining room"
                         },
                         {
@@ -2414,12 +2414,12 @@
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png",
                           "word": "bedroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/garden.png",
                           "word": "garden"
                         }
                       ]
@@ -2437,7 +2437,7 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/garden.png",
                           "word": "garden"
                         },
                         {
@@ -2447,12 +2447,12 @@
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png",
                           "word": "bedroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png",
                           "word": "dining room"
                         }
                       ]
@@ -2470,7 +2470,7 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/hall.png",
                           "word": "hall"
                         },
                         {
@@ -2480,12 +2480,12 @@
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png",
                           "word": "bedroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png",
                           "word": "dining room"
                         }
                       ]
@@ -2503,7 +2503,7 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/kitchen.png",
                           "word": "kitchen"
                         },
                         {
@@ -2513,12 +2513,12 @@
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png",
                           "word": "bedroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png",
                           "word": "dining room"
                         }
                       ]
@@ -2536,7 +2536,7 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/living_room.png",
                           "word": "living room"
                         },
                         {
@@ -2546,12 +2546,12 @@
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png",
                           "word": "bedroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png",
                           "word": "dining room"
                         }
                       ]
@@ -2569,7 +2569,7 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bed.png",
                           "word": "bed"
                         },
                         {
@@ -2579,12 +2579,12 @@
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png",
                           "word": "bedroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png",
                           "word": "dining room"
                         }
                       ]
@@ -2612,12 +2612,12 @@
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png",
                           "word": "bedroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png",
                           "word": "dining room"
                         }
                       ]
@@ -2635,7 +2635,7 @@
                       "options_full": [
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/computer.png",
                           "word": "computer"
                         },
                         {
@@ -2645,12 +2645,12 @@
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png",
                           "word": "bedroom"
                         },
                         {
                           "emoji": "📦",
-                          "image_url": "",
+                          "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png",
                           "word": "dining room"
                         }
                       ]
@@ -2669,27 +2669,27 @@
                     {
                       "word": "bedroom",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/bedroom.png"
                     },
                     {
                       "word": "dining room",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/dining_room.png"
                     },
                     {
                       "word": "garden",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/garden.png"
                     },
                     {
                       "word": "hall",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/hall.png"
                     },
                     {
                       "word": "kitchen",
                       "emoji": "📦",
-                      "image_url": ""
+                      "image_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/vocab/kitchen.png"
                     }
                   ]
                 }
