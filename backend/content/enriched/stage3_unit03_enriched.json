@@ -525,30 +525,27 @@
                   "items": [
                     {
                       "sentence": "There ___ a sofa in the living room.",
+                      "answer": "is",
                       "options": [
-                        "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "is"
+                      ]
                     },
                     {
-                      "sentence": "There ___ a garden.",
+                      "sentence": "There ___ many books on the shelf.",
+                      "answer": "are",
                       "options": [
-                        "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "is"
+                      ]
                     },
                     {
                       "sentence": "There ___ a cat in the kitchen.",
+                      "answer": "is",
                       "options": [
-                        "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "is"
+                      ]
                     }
                   ]
                 },
@@ -560,16 +557,14 @@
                       "sentence": "There ___ a sofa in the living room.",
                       "answer": "is",
                       "options": [
-                        "am",
                         "is",
                         "are"
                       ]
                     },
                     {
-                      "sentence": "There ___ a garden.",
-                      "answer": "is",
+                      "sentence": "There ___ many books on the shelf.",
+                      "answer": "are",
                       "options": [
-                        "am",
                         "is",
                         "are"
                       ]
@@ -578,7 +573,6 @@
                       "sentence": "There ___ a cat in the kitchen.",
                       "answer": "is",
                       "options": [
-                        "am",
                         "is",
                         "are"
                       ]
@@ -600,9 +594,11 @@
                       "is_correct": true
                     },
                     {
-                      "sentence": "There is a garden.",
-                      "correct": "true",
-                      "is_correct": true
+                      "sentence": "There are a garden.",
+                      "correct": false,
+                      "is_correct": true,
+                      "corrected": "There is a garden.",
+                      "explanation": "Use 'is' with singular ('a garden')."
                     },
                     {
                       "sentence": "There's a mirror on the wall.",
@@ -610,9 +606,11 @@
                       "is_correct": true
                     },
                     {
-                      "sentence": "There is a cat in the kitchen.",
-                      "correct": "true",
-                      "is_correct": true
+                      "sentence": "There are a cat in the kitchen.",
+                      "correct": false,
+                      "is_correct": true,
+                      "corrected": "There is a cat in the kitchen.",
+                      "explanation": "Use 'is' with singular ('a cat')."
                     }
                   ]
                 }
@@ -664,12 +662,12 @@
                   "correct_answer": "in the kitchen"
                 },
                 {
-                  "question": "Is there a living room?",
+                  "question": "Is there a swimming pool?",
                   "options": [
                     "yes",
                     "no"
                   ],
-                  "correct_answer": "yes"
+                  "correct_answer": "no"
                 }
               ]
             },
@@ -1391,49 +1389,45 @@
                   "instruction": "Choose the correct word.",
                   "items": [
                     {
+                      "sentence": "There ___ a desk in the bedroom.",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
                       "sentence": "There ___ two chairs.",
+                      "answer": "are",
                       "options": [
-                        "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "are"
+                      ]
                     },
                     {
-                      "sentence": "There ___ three shelves.",
+                      "sentence": "I ___ in the bedroom.",
+                      "answer": "am",
                       "options": [
                         "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "are"
-                    },
-                    {
-                      "sentence": "There ___ five books on the desk.",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "are"
+                      ]
                     },
                     {
                       "sentence": "There ___ four students in the room.",
+                      "answer": "are",
                       "options": [
-                        "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "are"
+                      ]
                     },
                     {
-                      "sentence": "There ___ two mirrors on the wall.",
+                      "sentence": "There ___ a poster on the wall.",
+                      "answer": "is",
                       "options": [
-                        "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "are"
+                      ]
                     }
                   ]
                 }
@@ -1493,6 +1487,14 @@
                     "tomorrow"
                   ],
                   "correct_answer": "in ten minutes"
+                },
+                {
+                  "question": "Is Tom in the kitchen?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
                 }
               ]
             },
@@ -1951,8 +1953,8 @@
                       ]
                     },
                     {
-                      "sentence": "The ball ___ under the chair.",
-                      "answer": "is",
+                      "sentence": "I ___ in my bedroom.",
+                      "answer": "am",
                       "options": [
                         "am",
                         "is",
@@ -1960,8 +1962,8 @@
                       ]
                     },
                     {
-                      "sentence": "The poster ___ behind the bed.",
-                      "answer": "is",
+                      "sentence": "My pens ___ behind the bed.",
+                      "answer": "are",
                       "options": [
                         "am",
                         "is",
@@ -1985,48 +1987,48 @@
                   "items": [
                     {
                       "sentence": "The cat ___ on the sofa.",
+                      "answer": "is",
                       "options": [
                         "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "is"
+                      ]
                     },
                     {
                       "sentence": "My books ___ in the bag.",
+                      "answer": "are",
                       "options": [
                         "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "are"
+                      ]
                     },
                     {
-                      "sentence": "The ball ___ under the chair.",
+                      "sentence": "I ___ in my bedroom.",
+                      "answer": "am",
                       "options": [
                         "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "is"
+                      ]
                     },
                     {
-                      "sentence": "The poster ___ behind the bed.",
+                      "sentence": "My pens ___ behind the bed.",
+                      "answer": "are",
                       "options": [
                         "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "is"
+                      ]
                     },
                     {
                       "sentence": "The lamp ___ next to the bed.",
+                      "answer": "is",
                       "options": [
                         "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "is"
+                      ]
                     }
                   ]
                 },
@@ -2117,6 +2119,14 @@
                     "Tom"
                   ],
                   "correct_answer": "Mum"
+                },
+                {
+                  "question": "Is Alex's mum helping him?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
                 }
               ]
             },

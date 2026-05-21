@@ -533,23 +533,23 @@
                   "items": [
                     {
                       "sentence": "I ___ got two books.",
+                      "answer": "have",
                       "options": [
                         "have",
                         "has",
                         "haven't",
                         "hasn't"
-                      ],
-                      "correct": "have"
+                      ]
                     },
                     {
-                      "sentence": "They ___ got rulers.",
+                      "sentence": "She ___ got a ruler.",
+                      "answer": "has",
                       "options": [
                         "have",
                         "has",
                         "haven't",
                         "hasn't"
-                      ],
-                      "correct": "have"
+                      ]
                     }
                   ]
                 },
@@ -568,8 +568,8 @@
                       ]
                     },
                     {
-                      "sentence": "They ___ got rulers.",
-                      "answer": "have",
+                      "sentence": "She ___ got a ruler.",
+                      "answer": "has",
                       "options": [
                         "have",
                         "has",
@@ -605,9 +605,11 @@
                       "is_correct": true
                     },
                     {
-                      "sentence": "They have got rulers.",
-                      "correct": "true",
-                      "is_correct": true
+                      "sentence": "They has got rulers.",
+                      "correct": false,
+                      "is_correct": true,
+                      "corrected": "They have got rulers.",
+                      "explanation": "Use 'have got' with they/we/you/I."
                     }
                   ]
                 }
@@ -649,12 +651,12 @@
                   "correct_answer": "yes"
                 },
                 {
-                  "question": "Is Ben ready for the lesson?",
+                  "question": "Has Ben got a calculator?",
                   "options": [
                     "yes",
                     "no"
                   ],
-                  "correct_answer": "yes"
+                  "correct_answer": "no"
                 },
                 {
                   "question": "What does Ben have apart from pens and pencils?",
@@ -1355,9 +1357,11 @@
                       "corrected": "My dad has got an old dictionary."
                     },
                     {
-                      "sentence": "Emma's got a pink water bottle.",
-                      "correct": "true",
-                      "is_correct": true
+                      "sentence": "Emma have got a pink water bottle.",
+                      "correct": false,
+                      "is_correct": true,
+                      "corrected": "Emma's got a pink water bottle.",
+                      "explanation": "Use 'has got' (or 's got) with Emma/she/he/it."
                     }
                   ]
                 },
@@ -1367,33 +1371,33 @@
                   "items": [
                     {
                       "sentence": "He ___ got a small bag.",
+                      "answer": "has",
                       "options": [
                         "have",
                         "has",
                         "haven't",
                         "hasn't"
-                      ],
-                      "correct": "has"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ got a long ruler.",
+                      "answer": "have",
+                      "options": [
+                        "have",
+                        "has",
+                        "haven't",
+                        "hasn't"
+                      ]
                     },
                     {
                       "sentence": "It ___ got two pockets.",
+                      "answer": "has",
                       "options": [
                         "have",
                         "has",
                         "haven't",
                         "hasn't"
-                      ],
-                      "correct": "has"
-                    },
-                    {
-                      "sentence": "My dad ___ got an old dictionary.",
-                      "options": [
-                        "have",
-                        "has",
-                        "haven't",
-                        "hasn't"
-                      ],
-                      "correct": "has"
+                      ]
                     }
                   ]
                 }
@@ -1453,6 +1457,14 @@
                     "Pablo's sister"
                   ],
                   "correct_answer": "her dad"
+                },
+                {
+                  "question": "Has Emma got a tablet?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
                 }
               ]
             },
@@ -1875,8 +1887,8 @@
                       ]
                     },
                     {
-                      "sentence": "He ___ got a long ruler.",
-                      "answer": "hasn't",
+                      "sentence": "She ___ got a long ruler.",
+                      "answer": "has",
                       "options": [
                         "have",
                         "has",
@@ -1885,7 +1897,7 @@
                       ]
                     },
                     {
-                      "sentence": "You ___ got a tablet.",
+                      "sentence": "They ___ got tablets.",
                       "answer": "haven't",
                       "options": [
                         "have",
@@ -1895,8 +1907,8 @@
                       ]
                     },
                     {
-                      "sentence": "She ___ got an old dictionary.",
-                      "answer": "hasn't",
+                      "sentence": "I ___ got an old dictionary.",
+                      "answer": "have",
                       "options": [
                         "have",
                         "has",
@@ -1905,8 +1917,8 @@
                       ]
                     },
                     {
-                      "sentence": "I ___ got a calculator.",
-                      "answer": "haven't",
+                      "sentence": "He ___ got a calculator.",
+                      "answer": "hasn't",
                       "options": [
                         "have",
                         "has",
@@ -1922,53 +1934,53 @@
                   "items": [
                     {
                       "sentence": "We ___ got a pencil case.",
+                      "answer": "haven't",
                       "options": [
                         "have",
                         "has",
                         "haven't",
                         "hasn't"
-                      ],
-                      "correct": "haven't"
+                      ]
                     },
                     {
-                      "sentence": "He ___ got a long ruler.",
+                      "sentence": "She ___ got a long ruler.",
+                      "answer": "has",
                       "options": [
                         "have",
                         "has",
                         "haven't",
                         "hasn't"
-                      ],
-                      "correct": "hasn't"
+                      ]
                     },
                     {
-                      "sentence": "You ___ got a tablet.",
+                      "sentence": "They ___ got tablets.",
+                      "answer": "haven't",
                       "options": [
                         "have",
                         "has",
                         "haven't",
                         "hasn't"
-                      ],
-                      "correct": "haven't"
+                      ]
                     },
                     {
-                      "sentence": "She ___ got an old dictionary.",
+                      "sentence": "I ___ got an old dictionary.",
+                      "answer": "have",
                       "options": [
                         "have",
                         "has",
                         "haven't",
                         "hasn't"
-                      ],
-                      "correct": "hasn't"
+                      ]
                     },
                     {
-                      "sentence": "I ___ got a calculator.",
+                      "sentence": "He ___ got a calculator.",
+                      "answer": "hasn't",
                       "options": [
                         "have",
                         "has",
                         "haven't",
                         "hasn't"
-                      ],
-                      "correct": "haven't"
+                      ]
                     }
                   ]
                 },
@@ -2059,6 +2071,14 @@
                     "he doesn't have one"
                   ],
                   "correct_answer": "it's at home"
+                },
+                {
+                  "question": "Has Emma got a calculator?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
                 }
               ]
             },

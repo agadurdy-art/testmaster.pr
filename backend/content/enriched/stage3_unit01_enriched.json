@@ -1392,7 +1392,8 @@
                     "four",
                     "seven"
                   ],
-                  "correct_answer": "six"
+                  "correct_answer": "six",
+                  "locate_text": "Hi! My name is Alejandra."
                 }
               ]
             },
@@ -1578,7 +1579,15 @@
                   "correct_answer": "British"
                 },
                 {
-                  "question": "Are Mark and Alejandra friends?",
+                  "question": "Is Alejandra from France?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
+                },
+                {
+                  "question": "Is Alejandra a girl?",
                   "options": [
                     "yes",
                     "no"
@@ -2047,7 +2056,25 @@
                   "instruction": "Fill the gap.",
                   "items": [
                     {
-                      "sentence": "We ___ friends. → We're friends.",
+                      "sentence": "I ___ a student.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ from Brazil.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "We ___ friends.",
                       "answer": "are",
                       "options": [
                         "am",
@@ -2056,8 +2083,8 @@
                       ]
                     },
                     {
-                      "sentence": "You ___ students. → You're students.",
-                      "answer": "are",
+                      "sentence": "He ___ Italian.",
+                      "answer": "is",
                       "options": [
                         "am",
                         "is",
@@ -2065,25 +2092,7 @@
                       ]
                     },
                     {
-                      "sentence": "They ___ from Brazil. → They're from Brazil.",
-                      "answer": "are",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ]
-                    },
-                    {
-                      "sentence": "Marco and Lin ___ Italian.",
-                      "answer": "are",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ]
-                    },
-                    {
-                      "sentence": "Sara and Diego ___ friends.",
+                      "sentence": "They ___ from Mexico.",
                       "answer": "are",
                       "options": [
                         "am",
@@ -2098,49 +2107,49 @@
                   "instruction": "Choose the correct word.",
                   "items": [
                     {
-                      "sentence": "We ___ friends. → We're friends.",
+                      "sentence": "I ___ a student.",
+                      "answer": "am",
                       "options": [
                         "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "are"
+                      ]
                     },
                     {
-                      "sentence": "You ___ students. → You're students.",
+                      "sentence": "She ___ from Brazil.",
+                      "answer": "is",
                       "options": [
                         "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "are"
+                      ]
                     },
                     {
-                      "sentence": "They ___ from Brazil. → They're from Brazil.",
+                      "sentence": "We ___ friends.",
+                      "answer": "are",
                       "options": [
                         "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "are"
+                      ]
                     },
                     {
-                      "sentence": "Marco and Lin ___ Italian.",
+                      "sentence": "He ___ Italian.",
+                      "answer": "is",
                       "options": [
                         "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "are"
+                      ]
                     },
                     {
-                      "sentence": "Sara and Diego ___ friends.",
+                      "sentence": "They ___ from Mexico.",
+                      "answer": "are",
                       "options": [
                         "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "are"
+                      ]
                     }
                   ]
                 },
@@ -2231,6 +2240,14 @@
                     "Class"
                   ],
                   "correct_answer": "Cassie"
+                },
+                {
+                  "question": "Are Marco and Lin from the same country?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
                 }
               ]
             },

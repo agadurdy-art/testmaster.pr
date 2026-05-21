@@ -526,48 +526,48 @@
                   "items": [
                     {
                       "sentence": "My mum ___ from Spain.",
+                      "answer": "is",
                       "options": [
                         "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "is"
+                      ]
                     },
                     {
-                      "sentence": "Your brother ___ funny.",
+                      "sentence": "I ___ from Vietnam.",
+                      "answer": "am",
                       "options": [
                         "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "is"
-                    },
-                    {
-                      "sentence": "My dad ___ at home.",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "is"
-                    },
-                    {
-                      "sentence": "Your sister ___ clever.",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "is"
+                      ]
                     },
                     {
                       "sentence": "My parents ___ kind.",
+                      "answer": "are",
                       "options": [
                         "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "are"
+                      ]
+                    },
+                    {
+                      "sentence": "Your sister ___ clever.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "We ___ a happy family.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
                     }
                   ]
                 },
@@ -585,8 +585,8 @@
                       ]
                     },
                     {
-                      "sentence": "Your brother ___ funny.",
-                      "answer": "is",
+                      "sentence": "I ___ from Vietnam.",
+                      "answer": "am",
                       "options": [
                         "am",
                         "is",
@@ -594,8 +594,8 @@
                       ]
                     },
                     {
-                      "sentence": "My dad ___ at home.",
-                      "answer": "is",
+                      "sentence": "My parents ___ kind.",
+                      "answer": "are",
                       "options": [
                         "am",
                         "is",
@@ -612,7 +612,7 @@
                       ]
                     },
                     {
-                      "sentence": "My parents ___ kind.",
+                      "sentence": "We ___ a happy family.",
                       "answer": "are",
                       "options": [
                         "am",
@@ -703,12 +703,12 @@
                   "correct_answer": "9"
                 },
                 {
-                  "question": "Is the family happy?",
+                  "question": "Is the family sad?",
                   "options": [
                     "yes",
                     "no"
                   ],
-                  "correct_answer": "yes"
+                  "correct_answer": "no"
                 }
               ]
             },
@@ -1420,48 +1420,48 @@
                   "items": [
                     {
                       "sentence": "David's wife ___ Helena.",
+                      "answer": "is",
                       "options": [
                         "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "is"
+                      ]
                     },
                     {
-                      "sentence": "Helena's daughter ___ Isabel.",
+                      "sentence": "Helena's daughters ___ Isabel and Inca.",
+                      "answer": "are",
                       "options": [
                         "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "is"
+                      ]
                     },
                     {
-                      "sentence": "Inca's sister ___ Eva.",
+                      "sentence": "I ___ Isabel's friend.",
+                      "answer": "am",
                       "options": [
                         "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "is"
+                      ]
+                    },
+                    {
+                      "sentence": "Inca and Eva ___ twins.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are"
+                      ]
                     },
                     {
                       "sentence": "My mum's name ___ Sofia.",
+                      "answer": "is",
                       "options": [
                         "am",
                         "is",
                         "are"
-                      ],
-                      "correct": "is"
-                    },
-                    {
-                      "sentence": "Ruby's brother ___ Sam.",
-                      "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "is"
+                      ]
                     }
                   ]
                 }
@@ -1521,6 +1521,14 @@
                     "six"
                   ],
                   "correct_answer": "five"
+                },
+                {
+                  "question": "Is Isabel 10 years old?",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "no"
                 }
               ]
             },
@@ -1941,47 +1949,47 @@
                   "items": [
                     {
                       "sentence": "___ Inca and Eva twins? — Yes, they are.",
-                      "answer": "are",
+                      "answer": "Are",
                       "options": [
-                        "am",
-                        "is",
-                        "are"
+                        "Am",
+                        "Is",
+                        "Are"
                       ]
                     },
                     {
                       "sentence": "___ Eva sad? — No, she isn't. She's bored.",
-                      "answer": "is",
+                      "answer": "Is",
                       "options": [
-                        "am",
-                        "is",
-                        "are"
+                        "Am",
+                        "Is",
+                        "Are"
                       ]
                     },
                     {
-                      "sentence": "___ you happy? — No, I'm not.",
-                      "answer": "are",
+                      "sentence": "___ I happy? — Yes, I am.",
+                      "answer": "Am",
                       "options": [
-                        "am",
-                        "is",
-                        "are"
+                        "Am",
+                        "Is",
+                        "Are"
                       ]
                     },
                     {
                       "sentence": "___ Inca hungry? — Yes, she is.",
-                      "answer": "is",
+                      "answer": "Is",
                       "options": [
-                        "am",
-                        "is",
-                        "are"
+                        "Am",
+                        "Is",
+                        "Are"
                       ]
                     },
                     {
                       "sentence": "___ you tired? — Yes, I am.",
-                      "answer": "are",
+                      "answer": "Are",
                       "options": [
-                        "am",
-                        "is",
-                        "are"
+                        "Am",
+                        "Is",
+                        "Are"
                       ]
                     }
                   ]
@@ -1992,48 +2000,48 @@
                   "items": [
                     {
                       "sentence": "___ Inca and Eva twins? — Yes, they are.",
+                      "answer": "Are",
                       "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "are"
+                        "Am",
+                        "Is",
+                        "Are"
+                      ]
                     },
                     {
                       "sentence": "___ Eva sad? — No, she isn't. She's bored.",
+                      "answer": "Is",
                       "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "is"
+                        "Am",
+                        "Is",
+                        "Are"
+                      ]
                     },
                     {
-                      "sentence": "___ you happy? — No, I'm not.",
+                      "sentence": "___ I happy? — Yes, I am.",
+                      "answer": "Am",
                       "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "are"
+                        "Am",
+                        "Is",
+                        "Are"
+                      ]
                     },
                     {
                       "sentence": "___ Inca hungry? — Yes, she is.",
+                      "answer": "Is",
                       "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "is"
+                        "Am",
+                        "Is",
+                        "Are"
+                      ]
                     },
                     {
                       "sentence": "___ you tired? — Yes, I am.",
+                      "answer": "Are",
                       "options": [
-                        "am",
-                        "is",
-                        "are"
-                      ],
-                      "correct": "are"
+                        "Am",
+                        "Is",
+                        "Are"
+                      ]
                     }
                   ]
                 },
@@ -2789,9 +2797,11 @@
                       "corrected": "I am Vietnamese."
                     },
                     {
-                      "sentence": "She is my friend.",
-                      "correct": "true",
-                      "is_correct": true
+                      "sentence": "She are my friend.",
+                      "correct": false,
+                      "is_correct": true,
+                      "corrected": "She is my friend.",
+                      "explanation": "Use 'is' with she/he/it."
                     },
                     {
                       "sentence": "He am my brother.",
