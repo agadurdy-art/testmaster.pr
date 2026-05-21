@@ -21,19 +21,22 @@ Two kinds of checks per lesson:
     - distractor diversity sniff (does one word win every slot?)
     - vocabulary item completeness (image_emoji, image_url)
 
-  PEDAGOGY CHECK (LLM, Sonnet — only when --pedagogy flag given)
-    - Are listening Qs answerable from the audio script?
-    - Are reading Qs answerable from the passage text?
-    - Is the difficulty Cambridge Movers age-appropriate?
-    - Do the vocab game distractors share a category with the target?
+  PEDAGOGY CHECK (no API calls — Aga rule 2026-05-21)
+    Pedagogy review is performed by the Claude Code session itself,
+    NOT by an Anthropic/OpenAI API call from this script. The
+    `--dump-pedagogy` flag prints a compact JSON of audio_text /
+    passage / Qs / prompts that can be pasted into the conversation;
+    Claude in-session then plays the teacher role and writes findings.
+    Rationale: feedback_no_paid_api_calls — no script in this repo
+    spends API budget without an explicit human request.
 
 Usage:
   backend/.venv/bin/python3 backend/scripts/lesson_audit.py \\
-      --stage 3 --unit 1 --lesson 1               # one lesson
+      --stage 3 --unit 1 --lesson 1                   # one lesson
   backend/.venv/bin/python3 backend/scripts/lesson_audit.py \\
-      --stage 3 --unit 1                          # all lessons in unit
+      --stage 3 --unit 1                              # all lessons
   backend/.venv/bin/python3 backend/scripts/lesson_audit.py \\
-      --stage 3 --unit 1 --lesson 1 --pedagogy    # + Sonnet checks
+      --stage 3 --unit 1 --lesson 1 --dump-pedagogy   # + JSON dump
 """
 from __future__ import annotations
 import argparse
@@ -122,7 +125,11 @@ def audit_lesson(lesson: dict) -> dict:
         # Listening
         if t == "listening":
             has_listening = True
-            script = s.get("audio_script") or s.get("script") or s.get("transcript") or ""
+            # Field name varies across builders: stage3 build_* scripts use
+            # "audio_text", older content uses "audio_script" / "script" /
+            # "transcript". Check all.
+            script = (s.get("audio_text") or s.get("audio_script")
+                      or s.get("script") or s.get("transcript") or "")
             if not script.strip():
                 report["issues"].append(
                     "❌ listening: audio_script is empty — student can't preview / "
@@ -270,23 +277,21 @@ def render_markdown(unit_meta: dict, reports: list[dict]) -> str:
     return "\n".join(lines)
 
 
-# -------- pedagogy check (Sonnet) ---------------------------------
+# -------- pedagogy dump (no API calls) ----------------------------
+# Aga's rule 2026-05-21: no paid API calls from scripts. Pedagogy review
+# is done by the Claude conversation session itself, walking the JSON
+# Aga shares. This helper just bundles a lesson's pedagogy-relevant
+# fields into compact JSON the conversation can ingest in one shot.
 
-def pedagogy_check(lesson: dict, api_key: str) -> list[str]:
-    """Ask Sonnet to review pedagogy. Returns a list of finding strings."""
-    try:
-        import anthropic
-    except ImportError:
-        return ["⚠️  anthropic SDK not installed (skip --pedagogy)"]
-    client = anthropic.Anthropic(api_key=api_key)
-    # Strip to the essentials Sonnet needs
-    summary = {
+def pedagogy_dump(lesson: dict) -> dict:
+    """Return a compact slice of the lesson for human / in-session review."""
+    return {
         "lesson_id": lesson.get("lesson_id"),
         "title": lesson.get("title"),
         "steps": [
             {
                 "type": s.get("type"),
-                "audio_script": s.get("audio_script") or s.get("script", ""),
+                "audio_text": s.get("audio_text") or s.get("audio_script") or s.get("script", ""),
                 "passage": s.get("passage") or s.get("text", ""),
                 "items": (s.get("items") or s.get("questions") or [])[:6],
                 "prompts": s.get("prompts"),
@@ -297,26 +302,6 @@ def pedagogy_check(lesson: dict, api_key: str) -> list[str]:
             for s in lesson.get("steps", [])
         ],
     }
-    msg = client.messages.create(
-        model="claude-sonnet-4-6",
-        max_tokens=2000,
-        system=(
-            "You are an experienced Cambridge Young Learners ELT teacher reviewing a "
-            "child's lesson. Be terse. For each issue, write one bullet starting with "
-            "❌ (broken), ⚠️ (predictable / weak), or ℹ️ (suggestion). Limit to the "
-            "5 most important findings. Check specifically:\n"
-            "1. Are listening questions answerable from the audio_script verbatim?\n"
-            "2. Are reading questions answerable from the passage?\n"
-            "3. Do vocab game distractors share a category with the target word?\n"
-            "4. Is the language difficulty Cambridge Movers / A1 level?\n"
-            "5. Any obvious pedagogical red flags?"
-        ),
-        messages=[{"role": "user", "content": [
-            {"type": "text", "text": "Audit this lesson JSON:\n" + json.dumps(summary, indent=2)}
-        ]}],
-    )
-    text = msg.content[0].text if msg.content else ""
-    return [line.strip() for line in text.splitlines() if line.strip().startswith(("❌", "⚠️", "ℹ️", "-"))]
 
 
 # -------- entry ---------------------------------------------------
@@ -326,13 +311,17 @@ def main() -> None:
     ap.add_argument("--stage", type=int, required=True)
     ap.add_argument("--unit", type=int, required=True)
     ap.add_argument("--lesson", type=int, help="Single lesson number; omit to audit all")
-    ap.add_argument("--pedagogy", action="store_true", help="Run Sonnet pedagogy check (uses Anthropic key)")
+    ap.add_argument("--dump-pedagogy", action="store_true",
+                    help="Print the compact pedagogy JSON for in-session "
+                         "human/Claude review (no API calls). Paste the "
+                         "output into the Claude Code conversation.")
     ap.add_argument("--out", type=Path, help="Write markdown report to this path (otherwise stdout)")
     args = ap.parse_args()
 
     data = load_unit(args.stage, args.unit)
     units = data.get("units") or [data]
     reports = []
+    dumps = []
     for u in units:
         unit_meta = {"stage": args.stage, "unit": args.unit, "title": u.get("title", "")}
         for L in u.get("lessons", []):
@@ -340,19 +329,8 @@ def main() -> None:
             if args.lesson and ln != args.lesson:
                 continue
             r = audit_lesson(L)
-            if args.pedagogy:
-                key = os.environ.get("ANTHROPIC_API_KEY")
-                if not key:
-                    # try loading from backend/.env
-                    try:
-                        from dotenv import load_dotenv
-                        load_dotenv(REPO / "backend" / ".env")
-                        key = os.environ.get("ANTHROPIC_API_KEY")
-                    except ImportError:
-                        pass
-                if key:
-                    findings = pedagogy_check(L, key)
-                    r["issues"].extend(findings)
+            if args.dump_pedagogy:
+                dumps.append(pedagogy_dump(L))
             reports.append(r)
 
     md = render_markdown(unit_meta, reports)
@@ -361,6 +339,11 @@ def main() -> None:
         print(f"wrote {args.out}")
     else:
         print(md)
+    if args.dump_pedagogy:
+        print("\n\n## Pedagogy dump (paste into Claude Code for in-session review)\n")
+        print("```json")
+        print(json.dumps(dumps, indent=2, ensure_ascii=False))
+        print("```")
 
 
 if __name__ == "__main__":
