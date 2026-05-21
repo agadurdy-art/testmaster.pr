@@ -149,16 +149,17 @@ export default function AboutPage() {
           <div className="section-eyebrow">Why this exists</div>
           <h2 className="section-title">A teacher who was a student first.</h2>
           <p>
-            This platform was built by an IELTS teacher in Ho&nbsp;Chi&nbsp;Minh City who
-            once sat on the other side of the desk — preparing for the same exam, with
-            the same broken stack: books that wouldn't grade me, tests that wouldn't
-            teach me, classes I couldn't afford, tutors who couldn't keep up.
+            This platform was built by an English teacher with 10+ years experience
+            who is now preparing for the IELTS exam — sitting on both sides of the
+            desk at once. Same broken stack: books that won't grade you, tests that
+            won't teach you, classes most learners can't afford, tutors who can't
+            keep up.
           </p>
           <p>
-            Years later, watching students walk into class with the same problems I
-            had, the answer became obvious: the teaching is solved, the testing is
-            solved — what's not solved is the loop in between. The bit where someone
-            looks at <em>your</em> essay and says <em>this</em> is your weak edge, fix
+            Years of teaching English, then walking into IELTS prep as a learner,
+            made the answer obvious: the teaching is solved, the testing is solved —
+            what's not solved is the loop in between. The bit where someone looks at
+            <em>your</em> essay and says <em>this</em> is your weak edge, fix
             <em> that</em>, write again.
           </p>
           <p>
@@ -227,8 +228,8 @@ export default function AboutPage() {
               </Link>
             </div>
             <p className="about-cta-foot">
-              Built by an IELTS teacher in Ho&nbsp;Chi&nbsp;Minh City. Mentored every
-              feature personally. Real person reads every email at{' '}
+              Built by an English teacher preparing for IELTS. Every feature
+              mentored personally. A real person reads every email at{' '}
               <a href="mailto:support@testmaster.pro">support@testmaster.pro</a>.
             </p>
           </div>

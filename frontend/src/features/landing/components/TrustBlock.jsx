@@ -2,12 +2,17 @@ import React from 'react';
 
 /**
  * TrustBlock — surfaces the human + methodology behind the AI:
- *   • Who built it (Aga, IELTS teacher)
+ *   • Who built it (an English teacher actively preparing for IELTS)
  *   • How scoring works (calibrated to IELTS examiner standards)
  *   • Honest disclaimer (AI estimate, not an official band score)
  *
  * Placed between LandingHeroDemo and MeetLiz so it answers
  * "can I trust these scores?" right after the hero pitch.
+ *
+ * Founder profile note (memory/feedback_aga_profile_no_name 2026-05-21):
+ * the builder is an English teacher with 10+ years experience who is
+ * preparing for the IELTS exam — NOT an IELTS instructor. Copy here
+ * must not put the founder's first name on a public page.
  */
 export default function TrustBlock() {
   return (
@@ -15,7 +20,7 @@ export default function TrustBlock() {
       <div className="container trust-block-inner">
         <div className="eyebrow">
           <span className="dot" aria-hidden="true" />
-          Built by an IELTS teacher
+          Built by an English teacher preparing for IELTS
         </div>
         <h2 className="section-title">Why the band scores you see here are honest.</h2>
         <p className="section-sub">
@@ -28,9 +33,9 @@ export default function TrustBlock() {
           <div className="trust-card">
             <div className="trust-card-title">Who built this</div>
             <div className="trust-card-body">
-              <strong>Aga</strong> — IELTS teacher with 10+ years preparing students for Academic
-              and General Training. Every rubric Liz uses was hand-tuned against past student
-              essays and Cambridge anchor papers.
+              An <strong>English teacher with 10+ years experience</strong> who's actively
+              preparing for IELTS — so the rubrics were hand-tuned from both sides of the desk,
+              against past student essays and Cambridge anchor papers.
             </div>
           </div>
 
