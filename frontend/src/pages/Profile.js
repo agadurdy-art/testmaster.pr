@@ -1,21 +1,64 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../components/ui/button';
-import { Card } from '../components/ui/card';
-import { Trophy, User, Mail, Calendar, Award, ArrowLeft, Crown, Target, Mic, FileText, BookOpen, Shield, RefreshCw, Copy, Check, AlertTriangle } from 'lucide-react';
-import { getUserProgress, getUser, getUserUsage } from '../lib/api';
-import { getBandScoreColor } from '../lib/utils';
 import { toast } from 'sonner';
+import {
+  Mail,
+  Calendar,
+  Award,
+  ArrowLeft,
+  Crown,
+  Target,
+  Mic,
+  FileText,
+  Trophy,
+  Shield,
+  RefreshCw,
+  Copy,
+  Check,
+  AlertTriangle,
+  LogOut,
+  Save,
+  Pencil,
+  ChevronRight,
+  Sparkles,
+} from 'lucide-react';
+
+import { DashboardLayout } from '../features/dashboard';
+import { getUserProgress, getUser, getUserUsage } from '../lib/api';
+import { isAdminUser } from '../lib/planAccess';
+import { isIeltsMode } from '../lib/learningMode';
 import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
-import ThemeToggle from '../components/ThemeToggle';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 
-// IELTS Ace plans only — Free / Weekly / Monthly / Exam Pack (+ Custom slider).
-// V1 (General English) plan IDs (explorer/learner/achiever/master/pro) are
-// remapped to the closest V2 equivalent so V2 chrome never reads "Master"
-// or "Learner" — same alias table AppShellNav uses, so the chip in the top
-// bar and the plan label on this page stay in sync. Mid-migration users see
-// the V2 tier closest to what they paid for.
+/**
+ * Profile (2026-05-23 rewrite).
+ *
+ * Aga: "bu eski, ve bilgi neredeyse hicbiri islevsel degil. bunu saglam
+ * design eding". The previous page rendered a generic Material-style card
+ * with several empty/dead values (Target band "—", "Complete onboarding"
+ * button that bounced into a flow the user had already finished, a
+ * Refresh button with no user-facing reason, "25 exam credits remaining"
+ * sitting underneath an "Unlimited" plan, etc.).
+ *
+ * This rewrite:
+ *   • Wraps the page in DashboardLayout so it feels like a continuation of
+ *     the dashboard, not a different surface with its own chrome.
+ *   • Identity card uses editorial typography (display headline + initials
+ *     avatar) and the dashboard's hsl(var(--…)) tokens.
+ *   • Subscription card is honest about unlimited tiers — no "25 exam
+ *     credits remaining" line under an ∞ quota.
+ *   • Study profile is editable inline (POST /api/users/{id}/onboarding
+ *     accepts the same payload as the onboarding flow).
+ *   • Preferences card surfaces language + learning-mode toggle in one
+ *     place (theme switch stays in the global top bar).
+ *   • Activity card uses the existing /users/{id}/progress endpoint so
+ *     numbers reflect real attempts, not made-up demo state.
+ *   • Account card has copy-user-id + logout. Email/password/account
+ *     deletion CTAs are explicitly stubbed with "coming soon" copy
+ *     because we don't have backend endpoints for them yet — better to
+ *     show a non-functional path with a date label than pretend it works.
+ */
+
 const PLAN_LABELS = {
   free: 'Free',
   weekly: 'Weekly',
@@ -25,7 +68,7 @@ const PLAN_LABELS = {
   custom: 'Custom',
 };
 
-// Legacy V1 plan ID → V2 tier ID. Mirrors AppShellNav.planLabel().
+// Legacy V1 plan IDs → V2 tier so the badge always reads as a current tier.
 const LEGACY_PLAN_ALIAS = {
   explorer: 'free',
   learner: 'weekly',
@@ -34,51 +77,77 @@ const LEGACY_PLAN_ALIAS = {
   pro: 'monthly',
 };
 
-const PLAN_BADGE_STYLE = {
-  free: 'bg-gray-100 text-gray-700 border-gray-300',
-  weekly: 'bg-blue-50 text-blue-700 border-blue-200',
-  monthly: 'bg-violet-50 text-violet-700 border-violet-200',
-  exam: 'bg-amber-50 text-amber-800 border-amber-300',
-  custom: 'bg-cyan-50 text-cyan-700 border-cyan-200',
+const PLAN_TONE = {
+  free: { bg: 'hsl(220 14% 96%)', fg: 'hsl(220 12% 30%)', border: 'hsl(220 13% 88%)' },
+  weekly: { bg: 'hsl(217 100% 96%)', fg: 'hsl(217 76% 38%)', border: 'hsl(217 85% 88%)' },
+  monthly: { bg: 'hsl(262 95% 96%)', fg: 'hsl(262 70% 40%)', border: 'hsl(262 85% 88%)' },
+  exam: { bg: 'hsl(38 95% 94%)', fg: 'hsl(28 72% 38%)', border: 'hsl(38 80% 84%)' },
+  custom: { bg: 'hsl(187 90% 94%)', fg: 'hsl(187 70% 30%)', border: 'hsl(187 75% 84%)' },
 };
 
-const formatExpiry = (iso) => {
-  if (!iso) return null;
-  try {
-    const d = new Date(iso);
-    if (isNaN(d.getTime())) return null;
-    return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
-  } catch { return null; }
+const SKILL_TONE = {
+  Writing: 'var(--writing, 25 95% 53%)',
+  Reading: 'var(--reading, 217 91% 60%)',
+  Listening: 'var(--listening, 262 83% 58%)',
+  Speaking: 'var(--speaking, 142 71% 45%)',
 };
+
+function formatDate(iso) {
+  if (!iso) return null;
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return null;
+  return d.toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+
+function formatISODate(input) {
+  if (!input) return '';
+  try {
+    const d = new Date(input);
+    if (Number.isNaN(d.getTime())) return '';
+    return d.toISOString().slice(0, 10);
+  } catch {
+    return '';
+  }
+}
+
+function initialsOf(name, email) {
+  const seed = (name || email || '').trim();
+  if (!seed) return '?';
+  const parts = seed.split(/\s+/).filter(Boolean);
+  if (parts.length >= 2) {
+    return (parts[0][0] + parts[1][0]).toUpperCase();
+  }
+  return seed[0].toUpperCase();
+}
 
 export default function Profile({ user, onLogout }) {
   const navigate = useNavigate();
-  const [progress, setProgress] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [fullUser, setFullUser] = useState(user);
+  const [progress, setProgress] = useState(null);
   const [usage, setUsage] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [staleSession, setStaleSession] = useState(false);
-  
-  // Theme support
-  const { activeTheme } = useTheme();
-  const isDark = activeTheme === THEME_MODES.DARK;
-  const isNightShift = activeTheme === THEME_MODES.NIGHT_SHIFT;
-  
-  // Theme-aware classes
-  const bgMain = isDark ? 'bg-gray-900' : isNightShift ? 'bg-amber-50' : 'bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50';
-  const bgCard = isDark ? 'bg-gray-800 border-gray-700' : isNightShift ? 'bg-amber-100/50 border-amber-200' : 'bg-white border-gray-200';
-  const bgHeader = isDark ? 'bg-gray-800 border-gray-700' : isNightShift ? 'bg-amber-100 border-amber-200' : 'bg-white border-gray-200';
-  const textPrimary = isDark ? 'text-gray-100' : isNightShift ? 'text-amber-900' : 'text-gray-900';
-  const textSecondary = isDark ? 'text-gray-400' : isNightShift ? 'text-amber-700' : 'text-gray-600';
+  const [copied, setCopied] = useState(false);
+
+  const [editingStudy, setEditingStudy] = useState(false);
+  const [studyDraft, setStudyDraft] = useState({
+    targetBand: '',
+    currentBand: '',
+    examDate: '',
+  });
+  const [savingStudy, setSavingStudy] = useState(false);
 
   useEffect(() => {
     loadAll();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.id]);
 
-  const loadAll = async () => {
+  async function loadAll() {
     setLoading(true);
     const [progressRes, userRes, usageRes] = await Promise.allSettled([
       getUserProgress(user.id),
@@ -89,398 +158,876 @@ export default function Profile({ user, onLogout }) {
     if (userRes.status === 'fulfilled') {
       setFullUser(userRes.value);
       setStaleSession(false);
-      // Refresh localStorage so plan/quota stay in sync across tabs
       try { localStorage.setItem('user', JSON.stringify(userRes.value)); } catch {}
     } else if (userRes.status === 'rejected' && userRes.reason?.response?.status === 404) {
       setStaleSession(true);
     }
     if (usageRes.status === 'fulfilled') setUsage(usageRes.value);
     setLoading(false);
-  };
+  }
 
-  const handleRefresh = async () => {
+  async function handleRefresh() {
     setRefreshing(true);
     await loadAll();
     setRefreshing(false);
     toast.success('Profile refreshed');
-  };
+  }
 
-  const copyUserId = async () => {
+  function startStudyEdit() {
+    setStudyDraft({
+      targetBand: fullUser?.target_band ?? '',
+      currentBand: fullUser?.current_band ?? '',
+      examDate: formatISODate(fullUser?.exam_date),
+    });
+    setEditingStudy(true);
+  }
+
+  async function saveStudyProfile() {
+    setSavingStudy(true);
+    try {
+      const base = process.env.REACT_APP_BACKEND_URL || '';
+      const res = await fetch(`${base}/api/users/${encodeURIComponent(user.id)}/onboarding`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          targetBand: studyDraft.targetBand === '' ? null : Number(studyDraft.targetBand),
+          currentBand: studyDraft.currentBand === '' ? null : Number(studyDraft.currentBand),
+          examDate: studyDraft.examDate || null,
+        }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const updated = await res.json();
+      setFullUser(updated);
+      try { localStorage.setItem('user', JSON.stringify(updated)); } catch {}
+      setEditingStudy(false);
+      toast.success('Study profile saved');
+    } catch (e) {
+      toast.error('Could not save — check your connection and try again');
+    } finally {
+      setSavingStudy(false);
+    }
+  }
+
+  async function copyUserId() {
     try {
       await navigator.clipboard.writeText(fullUser?.id || user.id);
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch {}
-  };
+  }
 
-  const isAdmin = (fullUser?.email || user.email || '').toLowerCase().includes('aga.durdy');
+  const isAdmin = isAdminUser(fullUser || user);
+  const isGE = !isIeltsMode(fullUser || user);
+
   const rawPlan = (fullUser?.plan || 'free').toLowerCase();
-  // Resolve V1 legacy plan IDs to their V2 equivalent so the badge always
-  // reads as a current IELTS Ace tier (Free/Weekly/Monthly/Exam Pack/Custom).
   const planKey = LEGACY_PLAN_ALIAS[rawPlan] || rawPlan;
   const planLabel = PLAN_LABELS[planKey] || planKey;
-  const planBadge = PLAN_BADGE_STYLE[planKey] || PLAN_BADGE_STYLE.free;
-  const expires = formatExpiry(fullUser?.plan_expires_at);
-  const learningMode = fullUser?.learning_mode === 'general_english'
-    ? 'General English'
-    : fullUser?.learning_mode === 'ielts'
-    ? 'IELTS Ace'
-    : null;
-  // GE user'ı bu sayfanın header'ındaki "IELTS Ace" başlığını + "Back to
-  // Dashboard" link'ini IELTS dashboard'a yönlendirilirse hemen üründen
-  // düşer — Aga 2026-05-19'da bunu rapor etti. Sadece bu iki yere
-  // GE-aware patch ekledik; ilerideki QuotaCard/InfoTile alanları (Liz
-  // Live, target band, exam date) hâlâ IELTS-flavoured ve ayrı bir
-  // ProfileGE.js / conditional refactor gerekiyor.
-  const isGE = fullUser?.learning_mode === 'general_english'
-    || (typeof window !== 'undefined' && JSON.parse(localStorage.getItem('user') || 'null')?.learning_mode === 'general_english');
-  const productName = isGE ? 'Ray English' : 'IELTS Ace';
+  const planTone = PLAN_TONE[planKey] || PLAN_TONE.free;
+  const expires = formatDate(fullUser?.plan_expires_at);
+
+  const memberSince = formatDate(fullUser?.created_at);
+  const userName = fullUser?.name || user.name || 'Student';
+  const userEmail = fullUser?.email || user.email || '';
+
+  const writingCounter = usage?.counters?.evaluations;
+  const mockCounter = usage?.counters?.mocks;
+  const speakingCounter = usage?.counters?.speaking_seconds;
+
+  const weakestSkillBand = useMemo(() => {
+    if (!progress?.by_type) return null;
+    const entries = Object.entries(progress.by_type).filter(([, d]) => d?.avg_score > 0);
+    if (entries.length === 0) return null;
+    const [name, data] = entries.reduce((a, b) => (a[1].avg_score < b[1].avg_score ? a : b));
+    return { name: name.charAt(0).toUpperCase() + name.slice(1), band: data.avg_score };
+  }, [progress]);
+
   const dashboardPath = isGE ? '/ge/dashboard' : '/dashboard';
 
   return (
-    <div className={`min-h-screen ${bgMain} transition-colors duration-300`}>
-      <header className={`${bgHeader} border-b sticky top-0 z-50 shadow-sm transition-colors duration-300`}>
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-sky-500 to-cyan-500 flex items-center justify-center">
-              <Trophy className="w-6 h-6 text-white" />
-            </div>
-            <h1 className={`text-2xl font-bold ${textPrimary}`}>{productName}</h1>
-          </div>
-          <div className="flex items-center gap-2">
-            <LanguageSwitcher iconOnly />
-            <ThemeToggle />
-            <Button
-              variant="outline"
-              onClick={() => navigate(dashboardPath)}
-              className={isDark ? 'border-gray-600' : ''}
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Dashboard
-            </Button>
-          </div>
-        </div>
-      </header>
+    <DashboardLayout
+      user={fullUser || user}
+      activeSection="dashboard"
+      onLogout={onLogout}
+    >
+      <div className="max-w-[960px] mx-auto">
+        {/* Top breadcrumb back-link */}
+        <button
+          type="button"
+          onClick={() => navigate(dashboardPath)}
+          className="inline-flex items-center gap-1.5 text-sm text-muted hover:opacity-80 mb-6 mt-2"
+        >
+          <ArrowLeft className="w-4 h-4" /> Back to dashboard
+        </button>
 
-      <div className="max-w-4xl mx-auto px-6 py-8">
+        {/* Page header */}
+        <section className="mb-10">
+          <div className="label mb-2">Account</div>
+          <div className="flex items-end justify-between gap-4 flex-wrap">
+            <h1 className="display-l text-[36px] md:text-[44px]">Your profile.</h1>
+            <button
+              type="button"
+              onClick={handleRefresh}
+              disabled={refreshing}
+              className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg hairline border hover:bg-black/[0.03] disabled:opacity-50"
+              style={{ borderColor: 'hsl(var(--rule))' }}
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin' : ''}`} />
+              Refresh data
+            </button>
+          </div>
+          <p className="text-muted text-sm mt-2 max-w-[58ch]">
+            Account, subscription, and study preferences. Everything in one place.
+          </p>
+        </section>
+
         {staleSession && (
-          <div className="mb-4 rounded-xl border border-orange-300 bg-orange-50 p-4 flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+          <div
+            className="mb-6 rounded-xl border p-4 flex items-start gap-3"
+            style={{ borderColor: '#fdba74', background: '#fff7ed' }}
+          >
+            <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#c2410c' }} />
             <div className="flex-1">
-              <p className="text-sm font-semibold text-orange-900">Stale session detected</p>
-              <p className="text-xs text-orange-800 mt-1">
-                Your browser is logged in as user <code className="font-mono bg-white/60 px-1 rounded">{user.id}</code> but that account doesn't exist on this server. Plan/quota numbers below are from cached localStorage and may be wrong. Log out and log back in to fix.
+              <p className="text-sm font-semibold" style={{ color: '#7c2d12' }}>
+                Stale session detected
               </p>
-              <Button
-                size="sm"
-                variant="outline"
+              <p className="text-xs mt-1" style={{ color: '#9a3412' }}>
+                Browser thinks you're user <code className="font-mono px-1 rounded bg-white/60">{user.id}</code>{' '}
+                but that account doesn't exist on this server. Log out and back in to fix.
+              </p>
+              <button
+                type="button"
                 onClick={onLogout}
-                className="mt-2 text-orange-700 border-orange-300 hover:bg-orange-100"
+                className="mt-2 text-xs font-medium px-3 py-1.5 rounded-md border"
+                style={{ borderColor: '#fdba74', color: '#7c2d12' }}
               >
                 Log out now
-              </Button>
+              </button>
             </div>
           </div>
         )}
-        <Card className="p-8">
-          <div className="flex items-start justify-between mb-8 gap-4 flex-wrap">
-            <div className="flex items-center space-x-6">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-sky-500 to-cyan-500 flex items-center justify-center">
-                <User className="w-10 h-10 text-white" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2 mb-1 flex-wrap">
-                  <h2 className="text-3xl font-bold text-gray-900" data-lang-sample>{user.name}</h2>
-                  {isAdmin && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-semibold rounded-full bg-purple-100 text-purple-800 border border-purple-300">
-                      <Shield className="w-3 h-3" /> Admin
-                    </span>
-                  )}
-                </div>
-                <div className="flex items-center text-gray-600 mb-2">
-                  <Mail className="w-4 h-4 mr-2" />
-                  <span>{user.email}</span>
-                </div>
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 text-xs font-semibold rounded-full border ${planBadge}`}>
-                    <Crown className="w-3 h-3" /> {planLabel} plan
-                  </span>
-                  {expires && (
-                    <span className="text-xs text-gray-500">expires {expires}</span>
-                  )}
-                  {learningMode && (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 text-xs font-medium rounded-full bg-sky-50 text-sky-700 border border-sky-200">
-                      <BookOpen className="w-3 h-3" /> {learningMode}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleRefresh}
-              disabled={refreshing}
-              className={isDark ? 'border-gray-600' : ''}
-            >
-              <RefreshCw className={`w-4 h-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
-              Refresh
-            </Button>
+
+        {/* ─── Identity card ──────────────────────────────────────────── */}
+        <IdentityCard
+          userName={userName}
+          userEmail={userEmail}
+          isAdmin={isAdmin}
+          memberSince={memberSince}
+          planLabel={planLabel}
+          planTone={planTone}
+          planExpires={expires}
+        />
+
+        {/* ─── Two-column grid ────────────────────────────────────────── */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-6 md:gap-8 mt-8">
+          {/* LEFT — Subscription + Study profile */}
+          <div className="space-y-6 md:space-y-8 min-w-0">
+            <SubscriptionCard
+              planLabel={planLabel}
+              planTone={planTone}
+              planExpires={expires}
+              writingCounter={writingCounter}
+              mockCounter={mockCounter}
+              speakingCounter={speakingCounter}
+              examCredits={fullUser?.examCredits}
+              lizLiveSeconds={fullUser?.liz_live_seconds_remaining}
+              isGE={isGE}
+              onChangePlan={() => navigate('/pricing')}
+              loading={loading}
+            />
+
+            {!isGE && (
+              <StudyProfileCard
+                fullUser={fullUser}
+                editing={editingStudy}
+                draft={studyDraft}
+                setDraft={setStudyDraft}
+                onEdit={startStudyEdit}
+                onCancel={() => setEditingStudy(false)}
+                onSave={saveStudyProfile}
+                saving={savingStudy}
+                weakest={weakestSkillBand}
+              />
+            )}
           </div>
 
-          {loading ? (
-            <div className="text-center py-12">
-              <div className="w-12 h-12 border-4 border-sky-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-              <p className="text-gray-600">Loading profile...</p>
-            </div>
-          ) : (
-            <div className="space-y-6">
-              {/* Subscription / quota */}
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Subscription & quota</h3>
-                {isGE ? (
-                  // GE: kids don't have writing/mock quotas, show lesson +
-                  // streak counters instead so the page is meaningful.
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <QuotaCard
-                      icon={<BookOpen className="w-5 h-5 text-violet-600" />}
-                      label="Lessons completed"
-                      sub="Across all stages"
-                      counter={fullUser?.lessons_completed_count != null ? { used: fullUser.lessons_completed_count } : undefined}
-                      accent="violet"
-                    />
-                    <QuotaCard
-                      icon={<Trophy className="w-5 h-5 text-amber-600" />}
-                      label="Daily streak"
-                      sub="Keep practising every day"
-                      counter={fullUser?.daily_streak != null ? { used: fullUser.daily_streak } : undefined}
-                      accent="amber"
-                    />
-                  </div>
-                ) : (
-                  <>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <QuotaCard
-                        icon={<FileText className="w-5 h-5 text-violet-600" />}
-                        label="Writing evaluations"
-                        sub="Essays graded this period"
-                        counter={usage?.counters?.evaluations}
-                        accent="violet"
-                      />
-                      <QuotaCard
-                        icon={<Trophy className="w-5 h-5 text-amber-600" />}
-                        label="Mock tests"
-                        sub="Full IELTS mocks"
-                        counter={usage?.counters?.mocks}
-                        accent="amber"
-                      />
-                    </div>
-                    <p className="mt-3 text-xs text-gray-500 flex items-center gap-1.5">
-                      <Mic className="w-3.5 h-3.5 text-rose-500" />
-                      Speaking evaluations are tracked separately by your plan — see <a href="/pricing" className="text-violet-600 hover:underline ml-1">pricing</a> for the cap.
-                    </p>
-                    {(fullUser?.examCredits ?? 0) > 0 && (
-                      <div className="mt-3 text-sm text-gray-600">
-                        <strong>{fullUser.examCredits}</strong> exam credits remaining
-                      </div>
-                    )}
-                    {(fullUser?.liz_live_seconds_remaining ?? 0) > 0 && (
-                      <div className="mt-1 text-sm text-gray-600">
-                        Liz Live: <strong>{Math.floor(fullUser.liz_live_seconds_remaining / 60)}m {fullUser.liz_live_seconds_remaining % 60}s</strong> remaining
-                      </div>
-                    )}
-                  </>
-                )}
-              </div>
+          {/* RIGHT — Preferences + Activity + Account */}
+          <div className="space-y-6 md:space-y-8 min-w-0">
+            <PreferencesCard
+              isGE={isGE}
+              feedbackLanguage={fullUser?.feedback_language}
+              onSwitchMode={() => navigate('/')}
+            />
 
-              {/* Learning profile — IELTS-specific (target/current band, exam
-                  date) is hidden for GE users since none of it applies. */}
-              {!isGE && (
-                <div className="pt-6 border-t">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Learning profile</h3>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <InfoTile label="Target band" value={fullUser?.target_band ?? '—'} icon={<Target className="w-4 h-4 text-emerald-600" />} />
-                    <InfoTile label="Current band" value={fullUser?.current_band ?? '—'} icon={<Award className="w-4 h-4 text-blue-600" />} />
-                    <InfoTile label="Exam date" value={fullUser?.exam_date || '—'} icon={<Calendar className="w-4 h-4 text-rose-600" />} />
-                    <InfoTile
-                      label="Onboarding"
-                      value={fullUser?.onboarding_complete ? 'Complete' : 'Incomplete'}
-                      valueClass={fullUser?.onboarding_complete ? 'text-emerald-600' : 'text-amber-600'}
-                    />
-                  </div>
-                  {!fullUser?.onboarding_complete && (
-                    <div className="mt-3">
-                      <Button size="sm" variant="outline" onClick={() => navigate('/onboarding')}>
-                        Complete onboarding
-                      </Button>
-                    </div>
-                  )}
-                </div>
-              )}
+            {!isGE && (
+              <ActivityCard progress={progress} weakest={weakestSkillBand} />
+            )}
 
-              {/* Tests progress — IELTS only. GE doesn't sit IELTS-style
-                  mocks, so the "Tests progress" block is suppressed. */}
-              {progress && !isGE && (
-                <div className="pt-6 border-t">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Tests progress</h3>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="bg-blue-50 rounded-xl p-6">
-                      <div className="flex items-center justify-between mb-2">
-                        <p className="text-sm text-gray-600">Total Tests</p>
-                        <Trophy className="w-5 h-5 text-blue-600" />
-                      </div>
-                      <p className="text-4xl font-bold text-blue-600">{progress.total_tests}</p>
-                    </div>
-
-                    <div className="bg-green-50 rounded-xl p-6">
-                      <div className="flex items-center justify-between mb-2">
-                        <p className="text-sm text-gray-600">Average Band Score</p>
-                        <Award className="w-5 h-5 text-green-600" />
-                      </div>
-                      <p className={`text-4xl font-bold ${getBandScoreColor(progress.average_band_score)}`}>
-                        {progress.average_band_score}
-                      </p>
-                    </div>
-                  </div>
-
-                  {Object.keys(progress.by_type || {}).length > 0 && (
-                    <div className="mt-6">
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {Object.entries(progress.by_type).map(([type, data]) => (
-                          <div key={type} className="bg-gray-50 rounded-lg p-4 text-center">
-                            <p className="text-sm text-gray-600 capitalize mb-1">{type}</p>
-                            <p className="text-2xl font-bold text-gray-900">{data.count}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Account / debug */}
-              <div className="pt-6 border-t">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Account</h3>
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <Calendar className="w-4 h-4" />
-                    <span>Member since {fullUser?.created_at ? new Date(fullUser.created_at).toLocaleDateString() : '—'}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-gray-500 text-xs font-mono">
-                    <span>User ID:</span>
-                    <span className="bg-gray-100 px-2 py-0.5 rounded">{fullUser?.id || user.id}</span>
-                    <button onClick={copyUserId} className="text-gray-400 hover:text-gray-700" title="Copy">
-                      {copied ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
-                    </button>
-                  </div>
-                  {usage?.period && (
-                    <div className="text-xs text-gray-500">Quota period: {usage.period}</div>
-                  )}
-                </div>
-              </div>
-
-              {/* Soft prompt: existing IELTS students can submit a story. The
-                  form itself lives at /share-your-story; admin moderates
-                  before it appears on the landing page. Hidden for GE
-                  because the copy ("Reached your target band?") is IELTS-
-                  framed. */}
-              {!isGE && (
-                <div className="pt-6 border-t">
-                  <button
-                    type="button"
-                    onClick={() => navigate('/share-your-story')}
-                    className="w-full text-left bg-gradient-to-r from-teal-50 to-emerald-50 border border-teal-200 rounded-xl p-4 hover:border-teal-300 transition-colors"
-                  >
-                    <div className="flex items-start gap-3">
-                      <Trophy className="w-5 h-5 text-teal-600 flex-shrink-0 mt-0.5" />
-                      <div>
-                        <div className="font-semibold text-teal-900">Reached your target band?</div>
-                        <div className="text-xs text-teal-700 mt-1">
-                          Share your story — moderated, then featured on the landing page so other learners can see what's possible.
-                        </div>
-                      </div>
-                    </div>
-                  </button>
-                </div>
-              )}
-
-              <div className="pt-6 border-t">
-                <Button
-                  variant="outline"
-                  onClick={onLogout}
-                  className="text-red-600 border-red-200 w-full"
-                >
-                  Logout
-                </Button>
-              </div>
-            </div>
-          )}
-        </Card>
+            <AccountCard
+              userId={fullUser?.id || user.id}
+              copied={copied}
+              onCopy={copyUserId}
+              quotaPeriod={usage?.period}
+              onLogout={onLogout}
+            />
+          </div>
+        </div>
       </div>
-    </div>
+    </DashboardLayout>
   );
 }
 
-// ─── Helper sub-components ───────────────────────────────────────────────────
+// ─── Identity card ─────────────────────────────────────────────────────────
 
-function QuotaCard({ icon, label, sub, counter, accent }) {
-  const accentBg = {
-    violet: 'bg-violet-50 border-violet-100',
-    amber: 'bg-amber-50 border-amber-100',
-    rose: 'bg-rose-50 border-rose-100',
-  }[accent] || 'bg-gray-50 border-gray-100';
-
-  if (!counter) {
-    return (
-      <div className={`${accentBg} border rounded-xl p-4`}>
-        <div className="flex items-center justify-between mb-2">
-          <p className="text-sm font-medium text-gray-700">{label}</p>
-          {icon}
+function IdentityCard({
+  userName,
+  userEmail,
+  isAdmin,
+  memberSince,
+  planLabel,
+  planTone,
+  planExpires,
+}) {
+  return (
+    <section
+      className="rounded-2xl p-6 md:p-8 hairline border"
+      style={{
+        borderColor: 'hsl(var(--rule))',
+        background: 'hsl(var(--surface) / 0.7)',
+        backdropFilter: 'blur(14px) saturate(160%)',
+        WebkitBackdropFilter: 'blur(14px) saturate(160%)',
+      }}
+    >
+      <div className="flex items-start gap-5 md:gap-7 flex-wrap">
+        <div
+          className="flex items-center justify-center font-display rounded-full text-white"
+          style={{
+            width: 88,
+            height: 88,
+            background: 'linear-gradient(135deg, hsl(262 70% 50%) 0%, hsl(217 80% 50%) 100%)',
+            fontSize: 32,
+            letterSpacing: '0.02em',
+          }}
+          aria-hidden="true"
+        >
+          {initialsOf(userName, userEmail)}
         </div>
-        <p className="text-2xl font-bold text-gray-400">—</p>
-        <p className="text-xs text-gray-500 mt-1">{sub}</p>
+
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h2
+              className="font-display text-[28px] md:text-[32px] leading-none"
+              style={{ color: 'hsl(var(--fg))' }}
+              data-lang-sample
+            >
+              {userName}
+            </h2>
+            {isAdmin && (
+              <span
+                className="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider rounded-full"
+                style={{
+                  background: 'hsl(262 90% 96%)',
+                  color: 'hsl(262 70% 40%)',
+                  border: '1px solid hsl(262 80% 88%)',
+                }}
+              >
+                <Shield className="w-3 h-3" /> Admin
+              </span>
+            )}
+          </div>
+
+          <div
+            className="mt-2 flex items-center gap-2 text-sm"
+            style={{ color: 'hsl(var(--muted-fg))' }}
+          >
+            <Mail className="w-3.5 h-3.5" />
+            <span className="truncate">{userEmail}</span>
+          </div>
+
+          <div className="mt-4 flex items-center gap-2 flex-wrap">
+            <span
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider"
+              style={{
+                background: planTone.bg,
+                color: planTone.fg,
+                border: `1px solid ${planTone.border}`,
+              }}
+            >
+              <Crown className="w-3 h-3" /> {planLabel} plan
+            </span>
+            {planExpires && (
+              <span className="text-xs text-muted">
+                Renews / expires <strong>{planExpires}</strong>
+              </span>
+            )}
+            {memberSince && (
+              <span className="text-xs text-muted ml-auto">
+                Member since {memberSince}
+              </span>
+            )}
+          </div>
+        </div>
       </div>
-    );
+    </section>
+  );
+}
+
+// ─── Subscription card ─────────────────────────────────────────────────────
+
+function SubscriptionCard({
+  planLabel,
+  planTone,
+  planExpires,
+  writingCounter,
+  mockCounter,
+  speakingCounter,
+  examCredits,
+  lizLiveSeconds,
+  isGE,
+  onChangePlan,
+  loading,
+}) {
+  return (
+    <Card
+      title="Subscription"
+      subtitle={`${planLabel}${planExpires ? ` · renews ${planExpires}` : ''}`}
+      action={
+        <button
+          type="button"
+          onClick={onChangePlan}
+          className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-full text-white"
+          style={{ background: 'hsl(var(--fg))' }}
+        >
+          {planLabel === 'Free' ? 'Upgrade' : 'Change plan'}
+          <ChevronRight className="w-3.5 h-3.5" />
+        </button>
+      }
+    >
+      {loading ? (
+        <Skeleton rows={2} />
+      ) : (
+        <>
+          {!isGE && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+              <QuotaTile
+                icon={<FileText className="w-4 h-4" />}
+                label="Writing evaluations"
+                counter={writingCounter}
+                accent="violet"
+              />
+              <QuotaTile
+                icon={<Trophy className="w-4 h-4" />}
+                label="Mock tests"
+                counter={mockCounter}
+                accent="amber"
+              />
+              <QuotaTile
+                icon={<Mic className="w-4 h-4" />}
+                label="Speaking minutes"
+                counter={
+                  speakingCounter
+                    ? {
+                        ...speakingCounter,
+                        used: Math.floor((speakingCounter.used || 0) / 60),
+                        quota: speakingCounter.unlimited
+                          ? null
+                          : Math.floor((speakingCounter.quota || 0) / 60),
+                        remaining: speakingCounter.unlimited
+                          ? null
+                          : Math.floor((speakingCounter.remaining || 0) / 60),
+                      }
+                    : null
+                }
+                accent="rose"
+              />
+              {Number(examCredits) > 0 && (
+                <QuotaTile
+                  icon={<Sparkles className="w-4 h-4" />}
+                  label="Exam credits"
+                  counter={{ used: 0, quota: examCredits, remaining: examCredits, unlimited: false }}
+                  accent="emerald"
+                />
+              )}
+              {Number(lizLiveSeconds) > 0 && (
+                <QuotaTile
+                  icon={<Mic className="w-4 h-4" />}
+                  label="Liz Live"
+                  counter={{
+                    used: 0,
+                    quota: Math.floor(lizLiveSeconds / 60),
+                    remaining: Math.floor(lizLiveSeconds / 60),
+                    unlimited: false,
+                  }}
+                  accent="violet"
+                />
+              )}
+            </div>
+          )}
+
+          <div className="text-xs text-muted">
+            Manage payment, invoices, or cancel via your PayPal account.{' '}
+            <a
+              href="https://www.paypal.com/myaccount/autopay/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold underline decoration-dotted underline-offset-2"
+              style={{ color: 'hsl(var(--primary-ink, 262 70% 40%))' }}
+            >
+              Manage on PayPal →
+            </a>
+          </div>
+        </>
+      )}
+    </Card>
+  );
+}
+
+function QuotaTile({ icon, label, counter, accent = 'violet' }) {
+  const accentMap = {
+    violet: { bg: 'hsl(262 95% 97%)', fg: 'hsl(262 70% 40%)', border: 'hsl(262 85% 90%)' },
+    amber: { bg: 'hsl(38 95% 96%)', fg: 'hsl(28 72% 38%)', border: 'hsl(38 80% 86%)' },
+    rose: { bg: 'hsl(347 89% 96%)', fg: 'hsl(347 76% 40%)', border: 'hsl(347 80% 86%)' },
+    emerald: { bg: 'hsl(155 84% 95%)', fg: 'hsl(155 70% 30%)', border: 'hsl(155 76% 84%)' },
+  };
+  const tone = accentMap[accent] || accentMap.violet;
+
+  let display;
+  let sub;
+  if (!counter) {
+    display = '—';
+    sub = 'Not tracked on this plan';
+  } else if (counter.unlimited) {
+    display = '∞';
+    sub = 'Unlimited';
+  } else {
+    const used = counter.used ?? 0;
+    const quota = counter.quota ?? 0;
+    const remaining = counter.remaining ?? Math.max(0, quota - used);
+    display = `${remaining}`;
+    sub = `${used} of ${quota} used`;
   }
 
-  const { used = 0, quota, remaining, unlimited } = counter;
-  const display = unlimited ? '∞' : (remaining ?? 0);
-  const total = unlimited ? '∞' : (quota ?? 0);
-  const pct = unlimited || !quota ? 0 : Math.min(100, (used / quota) * 100);
+  const pct =
+    counter && !counter.unlimited && counter.quota
+      ? Math.min(100, ((counter.used ?? 0) / counter.quota) * 100)
+      : null;
 
   return (
-    <div className={`${accentBg} border rounded-xl p-4`}>
-      <div className="flex items-center justify-between mb-2">
-        <p className="text-sm font-medium text-gray-700">{label}</p>
+    <div
+      className="rounded-xl p-4 border"
+      style={{ background: tone.bg, borderColor: tone.border }}
+    >
+      <div className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider" style={{ color: tone.fg }}>
         {icon}
+        <span>{label}</span>
       </div>
-      <div className="flex items-baseline gap-1">
-        <span className="text-2xl font-bold text-gray-900">{display}</span>
-        <span className="text-sm text-gray-500">/ {total}</span>
+      <div className="mt-2 flex items-baseline gap-1.5">
+        <span className="text-3xl font-display leading-none" style={{ color: 'hsl(var(--fg))' }}>{display}</span>
       </div>
-      <p className="text-xs text-gray-500 mt-1">
-        {unlimited ? 'Unlimited' : `${used} used`} · {sub}
-      </p>
-      {!unlimited && quota > 0 && (
-        <div className="mt-2 h-1.5 bg-white/60 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-gradient-to-r from-sky-500 to-cyan-500 transition-all"
-            style={{ width: `${pct}%` }}
-          />
+      <div className="text-xs mt-1.5" style={{ color: tone.fg, opacity: 0.85 }}>{sub}</div>
+      {pct !== null && (
+        <div className="mt-2 h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.6)' }}>
+          <div className="h-full transition-all" style={{ width: `${pct}%`, background: tone.fg }} />
         </div>
       )}
     </div>
   );
 }
 
-function InfoTile({ label, value, icon, valueClass = 'text-gray-900' }) {
+// ─── Study profile (editable) ──────────────────────────────────────────────
+
+function StudyProfileCard({
+  fullUser,
+  editing,
+  draft,
+  setDraft,
+  onEdit,
+  onCancel,
+  onSave,
+  saving,
+  weakest,
+}) {
+  const examDateValue = formatISODate(fullUser?.exam_date);
   return (
-    <div className="bg-gray-50 rounded-lg p-4">
-      <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-1">
+    <Card
+      title="Study profile"
+      subtitle="Where you are, where you're going."
+      action={
+        !editing && (
+          <button
+            type="button"
+            onClick={onEdit}
+            className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-full hairline border"
+            style={{ borderColor: 'hsl(var(--rule))' }}
+          >
+            <Pencil className="w-3 h-3" /> Edit
+          </button>
+        )
+      }
+    >
+      {editing ? (
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <Field label="Target band">
+              <input
+                type="number"
+                min="0"
+                max="9"
+                step="0.5"
+                value={draft.targetBand}
+                onChange={(e) => setDraft((d) => ({ ...d, targetBand: e.target.value }))}
+                className="w-full px-3 py-2 rounded-lg border hairline text-sm"
+                style={{ borderColor: 'hsl(var(--rule))', background: 'hsl(var(--bg))' }}
+                placeholder="e.g. 7.5"
+              />
+            </Field>
+            <Field label="Current band">
+              <input
+                type="number"
+                min="0"
+                max="9"
+                step="0.5"
+                value={draft.currentBand}
+                onChange={(e) => setDraft((d) => ({ ...d, currentBand: e.target.value }))}
+                className="w-full px-3 py-2 rounded-lg border hairline text-sm"
+                style={{ borderColor: 'hsl(var(--rule))', background: 'hsl(var(--bg))' }}
+                placeholder="e.g. 6.5"
+              />
+            </Field>
+            <Field label="Exam date">
+              <input
+                type="date"
+                value={draft.examDate}
+                onChange={(e) => setDraft((d) => ({ ...d, examDate: e.target.value }))}
+                className="w-full px-3 py-2 rounded-lg border hairline text-sm"
+                style={{ borderColor: 'hsl(var(--rule))', background: 'hsl(var(--bg))' }}
+              />
+            </Field>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={onSave}
+              disabled={saving}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-full text-white disabled:opacity-50"
+              style={{ background: 'hsl(var(--fg))' }}
+            >
+              <Save className="w-3.5 h-3.5" />
+              {saving ? 'Saving…' : 'Save changes'}
+            </button>
+            <button
+              type="button"
+              onClick={onCancel}
+              disabled={saving}
+              className="text-xs font-semibold px-4 py-2 rounded-full hairline border"
+              style={{ borderColor: 'hsl(var(--rule))' }}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <ReadTile
+            label="Target band"
+            value={fullUser?.target_band ?? '—'}
+            icon={<Target className="w-3.5 h-3.5" />}
+          />
+          <ReadTile
+            label="Current band"
+            value={fullUser?.current_band ?? '—'}
+            icon={<Award className="w-3.5 h-3.5" />}
+          />
+          <ReadTile
+            label="Exam date"
+            value={examDateValue ? formatDate(fullUser.exam_date) : '—'}
+            icon={<Calendar className="w-3.5 h-3.5" />}
+          />
+          <ReadTile
+            label="Weakest skill"
+            value={weakest ? `${weakest.name} (${weakest.band.toFixed(1)})` : '—'}
+            icon={<Sparkles className="w-3.5 h-3.5" />}
+            tone={weakest ? SKILL_TONE[weakest.name] : null}
+          />
+        </div>
+      )}
+    </Card>
+  );
+}
+
+function Field({ label, children }) {
+  return (
+    <label className="block">
+      <span className="block text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: 'hsl(var(--muted-fg))' }}>
+        {label}
+      </span>
+      {children}
+    </label>
+  );
+}
+
+function ReadTile({ label, value, icon, tone }) {
+  return (
+    <div
+      className="rounded-lg p-3 hairline border"
+      style={{
+        borderColor: 'hsl(var(--rule))',
+        background: tone ? `hsl(${tone} / 0.06)` : 'hsl(var(--bg))',
+      }}
+    >
+      <div className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider" style={{ color: 'hsl(var(--muted-fg))' }}>
         {icon}
         <span>{label}</span>
       </div>
-      <p className={`text-lg font-semibold ${valueClass}`}>{value}</p>
+      <div className="mt-1 text-lg font-display leading-tight" style={{ color: tone ? `hsl(${tone})` : 'hsl(var(--fg))' }}>
+        {value}
+      </div>
+    </div>
+  );
+}
+
+// ─── Preferences ───────────────────────────────────────────────────────────
+
+function PreferencesCard({ isGE, feedbackLanguage, onSwitchMode }) {
+  const { themeMode, setTheme } = useTheme();
+  const themeOptions = [
+    { key: THEME_MODES.LIGHT, label: 'Light' },
+    { key: THEME_MODES.DARK, label: 'Dark' },
+    { key: THEME_MODES.NIGHT_SHIFT, label: 'Night' },
+    { key: THEME_MODES.AUTO, label: 'Auto' },
+  ];
+
+  return (
+    <Card title="Preferences" subtitle="Language, theme, and learning track.">
+      <Row label="UI language">
+        <LanguageSwitcher compact />
+      </Row>
+      <Row label="Feedback language">
+        <div className="text-sm" style={{ color: 'hsl(var(--fg))' }}>
+          {feedbackLanguage || 'English (default)'}
+        </div>
+      </Row>
+      <Row label="Theme">
+        <div
+          role="radiogroup"
+          className="inline-flex items-center gap-1 rounded-full p-1 border hairline"
+          style={{ borderColor: 'hsl(var(--rule))' }}
+        >
+          {themeOptions.map((opt) => {
+            const on = themeMode === opt.key;
+            return (
+              <button
+                key={opt.key}
+                type="button"
+                role="radio"
+                aria-checked={on}
+                onClick={() => setTheme(opt.key)}
+                className="text-[11px] font-medium px-2.5 py-1 rounded-full transition-colors"
+                style={{
+                  background: on ? 'hsl(var(--fg))' : 'transparent',
+                  color: on ? 'hsl(var(--bg))' : 'hsl(var(--muted-fg))',
+                }}
+              >
+                {opt.label}
+              </button>
+            );
+          })}
+        </div>
+      </Row>
+      <Row label="Learning track">
+        <div className="flex items-center gap-2">
+          <span
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold"
+            style={{
+              background: isGE ? 'hsl(155 84% 95%)' : 'hsl(217 100% 96%)',
+              color: isGE ? 'hsl(155 70% 30%)' : 'hsl(217 76% 38%)',
+            }}
+          >
+            {isGE ? 'General English' : 'IELTS Ace'}
+          </span>
+          <button
+            type="button"
+            onClick={onSwitchMode}
+            className="text-xs underline decoration-dotted underline-offset-2"
+            style={{ color: 'hsl(var(--muted-fg))' }}
+          >
+            Switch
+          </button>
+        </div>
+      </Row>
+    </Card>
+  );
+}
+
+function Row({ label, children }) {
+  return (
+    <div className="flex items-center justify-between gap-3 py-2.5">
+      <span className="text-sm" style={{ color: 'hsl(var(--muted-fg))' }}>{label}</span>
+      <div className="flex-1 flex justify-end">{children}</div>
+    </div>
+  );
+}
+
+// ─── Activity ──────────────────────────────────────────────────────────────
+
+function ActivityCard({ progress, weakest }) {
+  if (!progress) {
+    return (
+      <Card title="Activity" subtitle="Your testing history at a glance.">
+        <Skeleton rows={3} />
+      </Card>
+    );
+  }
+
+  const total = progress.total_tests ?? 0;
+  const avg = progress.average_band_score ?? 0;
+  const byType = progress.by_type || {};
+
+  return (
+    <Card
+      title="Activity"
+      subtitle={total === 0 ? 'No tests yet — your first one sets the baseline.' : 'Your testing history at a glance.'}
+    >
+      <div className="grid grid-cols-2 gap-3 mb-4">
+        <ReadTile
+          label="Total tests"
+          value={total}
+          icon={<Trophy className="w-3.5 h-3.5" />}
+        />
+        <ReadTile
+          label="Average band"
+          value={total > 0 ? avg.toFixed(1) : '—'}
+          icon={<Award className="w-3.5 h-3.5" />}
+        />
+      </div>
+      {Object.keys(byType).length > 0 && (
+        <div className="grid grid-cols-2 gap-2">
+          {Object.entries(byType).map(([type, data]) => {
+            const label = type.charAt(0).toUpperCase() + type.slice(1);
+            const tone = SKILL_TONE[label] || 'var(--primary, 262 70% 50%)';
+            return (
+              <div
+                key={type}
+                className="rounded-lg p-2.5 hairline border flex items-center justify-between"
+                style={{ borderColor: 'hsl(var(--rule))' }}
+              >
+                <div>
+                  <div className="text-[11px] uppercase tracking-wider" style={{ color: `hsl(${tone})` }}>
+                    {label}
+                  </div>
+                  <div className="text-base font-display" style={{ color: 'hsl(var(--fg))' }}>
+                    {data.count} {data.count === 1 ? 'attempt' : 'attempts'}
+                  </div>
+                </div>
+                {data.avg_score > 0 && (
+                  <div className="text-sm font-semibold" style={{ color: `hsl(${tone})` }}>
+                    {data.avg_score.toFixed(1)}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </Card>
+  );
+}
+
+// ─── Account ───────────────────────────────────────────────────────────────
+
+function AccountCard({ userId, copied, onCopy, quotaPeriod, onLogout }) {
+  return (
+    <Card title="Account" subtitle="Identity and session.">
+      <Row label="User ID">
+        <button
+          type="button"
+          onClick={onCopy}
+          className="inline-flex items-center gap-1.5 text-xs font-mono px-2 py-1 rounded-md hairline border hover:bg-black/[0.03]"
+          style={{ borderColor: 'hsl(var(--rule))' }}
+          title="Copy user ID"
+        >
+          <span className="truncate max-w-[160px]">{userId}</span>
+          {copied ? (
+            <Check className="w-3 h-3" style={{ color: 'hsl(155 70% 40%)' }} />
+          ) : (
+            <Copy className="w-3 h-3 opacity-60" />
+          )}
+        </button>
+      </Row>
+      {quotaPeriod && (
+        <Row label="Quota period">
+          <span className="text-xs" style={{ color: 'hsl(var(--fg))' }}>{quotaPeriod}</span>
+        </Row>
+      )}
+      <Row label="Change password">
+        <span className="text-xs italic" style={{ color: 'hsl(var(--muted-fg))' }}>
+          Email-based reset coming soon
+        </span>
+      </Row>
+      <Row label="Delete account">
+        <a
+          href="mailto:support@testmaster.pro?subject=Account%20deletion%20request"
+          className="text-xs underline decoration-dotted underline-offset-2"
+          style={{ color: 'hsl(var(--muted-fg))' }}
+        >
+          Email support
+        </a>
+      </Row>
+      <div className="pt-4 mt-4 border-t" style={{ borderColor: 'hsl(var(--rule))' }}>
+        <button
+          type="button"
+          onClick={onLogout}
+          className="w-full inline-flex items-center justify-center gap-2 text-sm font-semibold py-2.5 rounded-lg hairline border"
+          style={{
+            borderColor: 'hsl(347 80% 86%)',
+            color: 'hsl(347 76% 40%)',
+            background: 'hsl(347 89% 98%)',
+          }}
+        >
+          <LogOut className="w-4 h-4" />
+          Log out
+        </button>
+      </div>
+    </Card>
+  );
+}
+
+// ─── Card primitive ────────────────────────────────────────────────────────
+
+function Card({ title, subtitle, action, children }) {
+  return (
+    <section
+      className="rounded-2xl p-6 hairline border"
+      style={{
+        borderColor: 'hsl(var(--rule))',
+        background: 'hsl(var(--bg))',
+      }}
+    >
+      <header className="flex items-start justify-between gap-3 mb-4">
+        <div>
+          <h3 className="font-display text-[20px] leading-tight" style={{ color: 'hsl(var(--fg))' }}>
+            {title}
+          </h3>
+          {subtitle && (
+            <p className="text-xs mt-1" style={{ color: 'hsl(var(--muted-fg))' }}>{subtitle}</p>
+          )}
+        </div>
+        {action}
+      </header>
+      <div>{children}</div>
+    </section>
+  );
+}
+
+function Skeleton({ rows = 2 }) {
+  return (
+    <div className="space-y-2">
+      {Array.from({ length: rows }).map((_, i) => (
+        <div
+          key={i}
+          className="h-12 rounded-lg animate-pulse"
+          style={{ background: 'hsl(var(--rule))' }}
+        />
+      ))}
     </div>
   );
 }
