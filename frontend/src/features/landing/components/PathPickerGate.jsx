@@ -33,7 +33,9 @@ const PATHS = [
   },
 ];
 
-export default function PathPickerGate({ children }) {
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+
+export default function PathPickerGate({ children, user, setUser }) {
   const [resolved, setResolved] = useState(false);
   const [choice, setChoice] = useState(null);
   // GE redirects to /signup, which on mobile can take 100–500ms to start.
@@ -53,7 +55,7 @@ export default function PathPickerGate({ children }) {
     setResolved(true);
   }, []);
 
-  function pick(key) {
+  async function pick(key) {
     if (loadingPath) return; // ignore double-taps while redirecting
     try {
       sessionStorage.setItem(STORAGE_KEY, key);
@@ -65,15 +67,55 @@ export default function PathPickerGate({ children }) {
     } catch (_) {
       // ignore write failures — user can still proceed this session
     }
+
+    // Path picker = authoritative preference (Aga 2026-05-23: "biri Ge
+    // secince ordan devam etsin ve logout yapip tekrar ielts e gidince
+    // yine sorunsuz ielts devam edebilsin"). For logged-in users we
+    // push the choice to the backend so `user.learning_mode` matches the
+    // selection on the very next render — without this step the DB still
+    // holds the OLD mode and isIeltsMode() may bounce them back to the
+    // previous dashboard.
+    const wireMode = key === 'general' ? 'general_english' : 'ielts';
+    if (user?.id && user.learning_mode !== wireMode) {
+      try {
+        const res = await fetch(`${API_URL}/api/users/${encodeURIComponent(user.id)}/onboarding`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ path: wireMode }),
+        });
+        if (res.ok) {
+          const updated = await res.json();
+          const nextUser = { ...user, ...updated, learning_mode: wireMode };
+          localStorage.setItem('user', JSON.stringify(nextUser));
+          if (typeof setUser === 'function') setUser(nextUser);
+        }
+      } catch (_) {
+        // Non-fatal — the localStorage hint above still steers the next
+        // render via isIeltsMode()'s fallback chain.
+      }
+    }
+
     if (key === 'general' && typeof window !== 'undefined') {
       // Show "Loading General English…" inside the modal so the tap has
-      // visible feedback before the browser navigates away. GE goes to
-      // its own landing (/landing/ge — Ray-centric, GE-flavoured), not
-      // the IELTS landing or straight to signup.
+      // visible feedback before the browser navigates away.
       setLoadingPath(key);
-      window.location.assign('/landing/ge');
+      // Authenticated users with a GE pick go straight to their dashboard
+      // so they don't re-land on a marketing page they've already seen.
+      // Unauthenticated visitors still see the GE landing first.
+      window.location.assign(user?.id ? '/ge/dashboard' : '/landing/ge');
       return;
     }
+
+    if (key === 'ielts' && user?.id && typeof window !== 'undefined') {
+      // Mirror the GE branch: a logged-in user picking IELTS jumps straight
+      // to the IELTS dashboard so the same selection works after logout +
+      // re-pick. Without this the gate dismisses but the user stays on the
+      // demo landing, which looks broken when the dashboard already exists.
+      setLoadingPath(key);
+      window.location.assign('/dashboard');
+      return;
+    }
+
     setChoice(key);
   }
 

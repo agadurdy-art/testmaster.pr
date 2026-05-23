@@ -276,7 +276,7 @@ function SignupBridge({ user }) {
     // Treat users with an explicit learning_mode as already-onboarded so
     // legacy accounts (mode set, onboarding_complete=false) don't loop.
     const mode = (user.learning_mode || '').toLowerCase();
-    const hasMode = mode === 'ielts' || mode === 'general_english';
+    const hasMode = mode === 'ielts' || mode === 'general_english' || mode === 'both';
     if (!user.onboarding_complete && !hasMode) {
       return <Navigate to="/onboarding" replace />;
     }
@@ -344,8 +344,8 @@ function AppWithSessionHandler() {
         // Google accounts (onboarding_complete=false but learning_mode set)
         // don't get bounced into the picker on every login.
         const mode = (userData.learning_mode || '').toLowerCase();
-        const hasMode = mode === 'ielts' || mode === 'general_english';
-        if (hasMode) {
+        const hasMode = mode === 'ielts' || mode === 'general_english' || mode === 'both';
+        if (mode === 'ielts' || mode === 'general_english') {
           try {
             localStorage.setItem('testmaster_onboarding_path', mode === 'ielts' ? 'ielts' : 'general');
           } catch (_) { /* non-fatal */ }
@@ -379,12 +379,16 @@ function AppWithSessionHandler() {
     localStorage.setItem('user', JSON.stringify(userData));
     // Sync learning_mode → localStorage path hint so isIeltsMode() doesn't
     // fall back to a stale picker hint, and onboarding (if it does trigger)
-    // skips Step 1. Returning users with an explicit mode are treated as
+    // skips Step 1. Returning users with any explicit mode are treated as
     // already-onboarded even if the DB flag is false (legacy accounts where
-    // onboarding_complete was never written).
+    // onboarding_complete was never written). "both" counts as onboarded
+    // too — it only gets set after a user has been through onboarding for
+    // each path at least once.
     const mode = (userData?.learning_mode || '').toLowerCase();
-    const hasMode = mode === 'ielts' || mode === 'general_english';
-    if (hasMode) {
+    const hasMode = mode === 'ielts' || mode === 'general_english' || mode === 'both';
+    // localStorage hint only takes a concrete path — "both" is intentionally
+    // skipped so the most recent path picker selection wins the next render.
+    if (mode === 'ielts' || mode === 'general_english') {
       try {
         localStorage.setItem('testmaster_onboarding_path', mode === 'ielts' ? 'ielts' : 'general');
       } catch (_) { /* non-fatal */ }
@@ -442,7 +446,7 @@ function AppWithSessionHandler() {
     <>
       <Suspense fallback={<PageLoader />}>
       <Routes>
-        <Route path="/" element={<LandingPageDemo />} />
+        <Route path="/" element={<LandingPageDemo user={user} setUser={setUser} />} />
         <Route path="/landing/v1" element={<LandingPage onLogin={handleLogin} user={user} />} />
         <Route path="/login" element={<LoginPage user={user} onLogin={handleLogin} />} />
         <Route path="/signup" element={<SignupBridge user={user} />} />
@@ -609,7 +613,7 @@ function AppWithSessionHandler() {
         />
         <Route path="/landing/v2" element={<LandingPageV2 />} />
         <Route path="/landing/ge" element={<LandingPageGE />} />
-        <Route path="/landing/demo" element={<LandingPageDemo />} />
+        <Route path="/landing/demo" element={<LandingPageDemo user={user} setUser={setUser} />} />
         <Route path="/pricing/v2" element={<PricingPageV2 user={user} />} />
         <Route path="/onboarding/v2" element={<OnboardingPageV2 user={user} onUserUpdate={setUser} />} />
         <Route path="/speaking/v2" element={<SpeakingPracticeV2 />} />

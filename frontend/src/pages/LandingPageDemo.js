@@ -31,12 +31,12 @@ import '../features/landing/landing-demo.css';
  * The .landing-demo class opt-in layer activates styles in landing-demo.css
  * without touching the live landing.
  */
-export default function LandingPageDemo() {
+export default function LandingPageDemo({ user, setUser }) {
   const rootRef = useRef(null);
   useLiquidGlass(rootRef);
 
   return (
-    <PathPickerGate>
+    <PathPickerGate user={user} setUser={setUser}>
       <div ref={rootRef} className="landing-scope landing-demo has-mobile-cta">
         <LandingNav />
         <LandingHeroDemo />

@@ -6,7 +6,7 @@ IELTS-Quality Audio Generation with ElevenLabs + Caching
 """
 
 from fastapi import APIRouter, Query, HTTPException, Body
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from typing import Optional, List, Dict, Any
 import os
 import base64
@@ -281,11 +281,28 @@ def save_audio_to_cache(set_id: str, audio_data: bytes) -> str:
     return f"/api/listening/audio/{set_id}"
 
 
+# R2 fallback for audio that survived in the local Emergent cache but was
+# never copied across to Railway's pod during the 2026-05-08 migration. The
+# upload script (backend/scripts/upload_listening_audio_r2.py) pushed every
+# generated MP3 to this bucket once; from now on if a set_id isn't on the
+# local pod disk we serve it from R2 instead of returning a 404.
+R2_LISTENING_AUDIO_BASE = (
+    "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/listening/audio"
+)
+
+
+def _r2_audio_url(set_id: str) -> str:
+    return f"{R2_LISTENING_AUDIO_BASE}/{set_id}.mp3"
+
+
 def get_cached_audio_url(set_id: str) -> Optional[str]:
-    """Get URL for cached audio if it exists."""
+    """Get URL for cached audio (local cache or R2 fallback)."""
     if is_audio_cached(set_id):
         return f"/api/listening/audio/{set_id}"
-    return None
+    # R2 fallback — every QB audio file was uploaded once; the public URL is
+    # deterministic so we return it without an existence check. The serving
+    # endpoint also redirects to the same URL when local cache is empty.
+    return _r2_audio_url(set_id)
 
 
 async def generate_ielts_audio(
@@ -382,16 +399,19 @@ async def generate_audio_for_transcript(set_id: str, transcript: str, speakers: 
 
 @router.get("/audio/{set_id}")
 async def serve_cached_audio(set_id: str):
-    """Serve cached audio file."""
+    """Serve cached audio file. Falls back to R2 if the pod cache is empty."""
     cache_path = get_cached_audio_path(set_id)
-    
-    if not cache_path.exists():
-        raise HTTPException(status_code=404, detail=f"Audio for set '{set_id}' not found")
-    
-    return FileResponse(
-        path=cache_path,
-        media_type="audio/mpeg",
-    )
+
+    if cache_path.exists():
+        return FileResponse(
+            path=cache_path,
+            media_type="audio/mpeg",
+        )
+
+    # Local pod cache miss — every QB audio was pushed to R2 once during the
+    # post-migration restore (upload_listening_audio_r2.py 2026-05-23). Send
+    # the client straight to the R2 public URL instead of 404'ing.
+    return RedirectResponse(url=_r2_audio_url(set_id), status_code=302)
 
 
 # ============ STATIC ENDPOINTS ============
