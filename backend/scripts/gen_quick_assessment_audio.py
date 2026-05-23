@@ -107,9 +107,15 @@ def _upload_to_r2(r2, local_path: Path, key: str) -> str:
 
 
 def main():
-    # Initialise Kokoro once. Will download weights on first run (~80MB).
+    # Initialise Kokoro once. Weights downloaded to ~/.kokoro_weights/
+    # (one-time, ~340MB) from
+    # https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/
     print("Loading Kokoro-82M…")
-    kokoro = Kokoro("kokoro-v1.0.onnx", "voices-v1.0.bin")
+    weights_dir = Path.home() / ".kokoro_weights"
+    kokoro = Kokoro(
+        str(weights_dir / "kokoro-v1.0.onnx"),
+        str(weights_dir / "voices-v1.0.bin"),
+    )
 
     r2 = _make_r2()
     results = []

@@ -18,8 +18,12 @@ LISTENING_CLIPS = [
         "level": "B1",
         "section": "section1",
         "voices": [
-            ("HELEN", "bf_emma"),   # British female, B- quality
-            ("MARCO", "bm_fable"),  # British male (Italian-accent learner), C quality
+            # Mixed accents = realistic IELTS Section 1. Quality-first picks:
+            #   bf_emma  (B-) is the highest-grade British female in Kokoro v1.
+            #   am_fenrir (C+) is the highest-grade American male — replaces
+            #     bm_fable (C) which sounded robotic on the first render.
+            ("HELEN", "bf_emma"),
+            ("MARCO", "am_fenrir"),
         ],
         "transcript_for_tts": (
             # Each line is one TTS render; speaker is mapped to voice via `voices`.
@@ -39,7 +43,7 @@ LISTENING_CLIPS = [
                 ("MARCO", "Topic interest, please. I'd rather chat about something I care about."),
             ]
         ),
-        "audio_url": None,  # filled by Kokoro render → R2 upload
+        "audio_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/quick_assessment/L_S1_LANG_EXCHANGE.mp3",
         "duration_estimate_sec": 75,
         "questions": [
             {
@@ -108,7 +112,9 @@ LISTENING_CLIPS = [
         "level": "B2",
         "section": "section4",
         "voices": [
-            ("LECTURER", "bm_george"),  # British male, C quality, academic register
+            # Academic lecture register — bm_george (C) holds the British
+            # academic feel best out of the available BM voices.
+            ("LECTURER", "bm_george"),
         ],
         "transcript_for_tts": [
             ("LECTURER",
@@ -131,7 +137,7 @@ LISTENING_CLIPS = [
              "sixty-five per cent of the words. The awake group remembered only "
              "thirty-two."),
         ],
-        "audio_url": None,
+        "audio_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/quick_assessment/L_S4_SLEEP_MEMORY.mp3",
         "duration_estimate_sec": 70,
         "questions": [
             {
@@ -163,12 +169,15 @@ LISTENING_CLIPS = [
     },
 ]
 
-# Stage 2 difficulty buckets — by Stage 1 anchor outcome
+# Stage 2 difficulty buckets — by Stage 1 anchor outcome.
+# We only have 2 clips in v1 (Section 1 conv + Section 4 lecture), so:
+#   C1 + B2 → academic lecture (harder)
+#   B1 + A2 → booking conversation (easier)
 LISTENING_BUCKETS = {
-    "C1": [],  # Stage 1 4/4 → C1 register (future content)
+    "C1": ["L_S4_SLEEP_MEMORY"],
     "B2": ["L_S4_SLEEP_MEMORY"],
     "B1": ["L_S1_LANG_EXCHANGE"],
-    "A2": [],  # Stage 1 0-1/4 → easier (future content)
+    "A2": ["L_S1_LANG_EXCHANGE"],
 }
 
 
