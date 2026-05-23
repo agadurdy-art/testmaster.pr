@@ -2,12 +2,19 @@ import React from "react";
 import { ArrowRight } from "lucide-react";
 import { cn } from "../../../lib/utils";
 import BrandLogo from "../../../components/BrandLogo";
+import { readAuthUser, dashboardPathFor, initialsFor } from "../../../lib/authNav";
 
 /**
- * Public top nav shown above unauthenticated sample pages.
+ * Public top nav shown above sample pages + the public essay evaluator.
  * Sticky with a translucent backdrop-blur so the content below reads through.
+ *
+ * Auth-aware: logged-in users land here too (sample reports are reachable
+ * from the dashboard's "See sample" links), so the right-side CTA swaps to
+ * a "Dashboard" link instead of Log in / Try free.
  */
 export default function PublicNav({ className, ctaHref = "/signup" }) {
+  const authUser = readAuthUser();
+  const dashHref = dashboardPathFor(authUser);
   return (
     <header
       className={cn(
@@ -18,7 +25,7 @@ export default function PublicNav({ className, ctaHref = "/signup" }) {
       )}
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-8 h-16 flex items-center justify-between">
-        <BrandLogo size="sm" href="/" />
+        <BrandLogo size="sm" href={authUser ? dashHref : "/"} />
 
         {/* All four skill links point at their canonical "full report"
             sample page. This way, when a visitor is already inside one
@@ -53,25 +60,48 @@ export default function PublicNav({ className, ctaHref = "/signup" }) {
         </nav>
 
         <div className="flex items-center gap-2.5">
-          <a
-            href="/login"
-            className="hidden sm:inline-flex items-center text-[14px] text-slate-700 hover:text-slate-900 px-3 py-2 rounded-lg"
-          >
-            Log in
-          </a>
-          <a
-            href={ctaHref}
-            className={cn(
-              "inline-flex items-center gap-1.5",
-              "bg-emerald-600 hover:bg-emerald-700 text-white",
-              "font-medium text-[14px] px-4 py-2 rounded-xl",
-              "shadow-[0_6px_22px_-8px_hsl(160_84%_39%/_0.55)]",
-              "transition-colors"
-            )}
-          >
-            Try free
-            <ArrowRight className="w-3.5 h-3.5" />
-          </a>
+          {authUser ? (
+            <a
+              href={dashHref}
+              className={cn(
+                "inline-flex items-center gap-2",
+                "bg-slate-900 hover:bg-slate-800 text-white",
+                "font-medium text-[14px] px-4 py-2 rounded-xl",
+                "transition-colors"
+              )}
+              aria-label="Back to dashboard"
+            >
+              <span
+                aria-hidden="true"
+                className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-white/15 text-[11px] font-semibold"
+              >
+                {initialsFor(authUser)}
+              </span>
+              Dashboard
+            </a>
+          ) : (
+            <>
+              <a
+                href="/login"
+                className="hidden sm:inline-flex items-center text-[14px] text-slate-700 hover:text-slate-900 px-3 py-2 rounded-lg"
+              >
+                Log in
+              </a>
+              <a
+                href={ctaHref}
+                className={cn(
+                  "inline-flex items-center gap-1.5",
+                  "bg-emerald-600 hover:bg-emerald-700 text-white",
+                  "font-medium text-[14px] px-4 py-2 rounded-xl",
+                  "shadow-[0_6px_22px_-8px_hsl(160_84%_39%/_0.55)]",
+                  "transition-colors"
+                )}
+              >
+                Try free
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>
+            </>
+          )}
         </div>
       </div>
     </header>

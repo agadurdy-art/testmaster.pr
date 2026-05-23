@@ -1,6 +1,13 @@
 import React from 'react';
+import { readAuthUser } from '../../../lib/authNav';
+import { isAdminUser } from '../../../lib/planAccess';
 
 export default function LandingFooter() {
+  // Status page is admin-only — Aga 2026-05-23: "Status button var, onu
+  // sadece admin gorsun baska kimse gormesin". Non-admin visitors have no
+  // need for the infra status board and a public link to it just creates
+  // noise + leaks the route.
+  const showStatus = isAdminUser(readAuthUser());
   return (
     <footer>
       <div className="container">
@@ -13,7 +20,7 @@ export default function LandingFooter() {
             <li><a href="/privacy">Privacy</a></li>
             <li><a href="/terms">Terms</a></li>
             <li><a href="/contact">Contact</a></li>
-            <li><a href="/status">Status</a></li>
+            {showStatus && <li><a href="/status">Status</a></li>}
           </ul>
         </div>
         <div className="foot-copy">

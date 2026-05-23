@@ -2,10 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useI18n } from '../../../lib/i18n';
 import LanguageSwitcher from '../../../components/LanguageSwitcher';
 import BrandLogo from '../../../components/BrandLogo';
+import { readAuthUser, dashboardPathFor, initialsFor, firstNameFor } from '../../../lib/authNav';
 
 export default function LandingNav() {
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
+  // Auth-aware: /about + the landing pages are reachable from the dashboard
+  // chrome too, so logged-in visitors should see a "Dashboard" pivot instead
+  // of Log in / Start free CTAs that imply they're somehow signed out.
+  const authUser = readAuthUser();
+  const dashHref = dashboardPathFor(authUser);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -25,7 +31,7 @@ export default function LandingNav() {
     <>
       <header className="nav">
         <div className="container nav-inner">
-          <BrandLogo size="sm" href="/" className="logo" />
+          <BrandLogo size="sm" href={authUser ? dashHref : '/'} className="logo" />
           <nav aria-label="Primary">
             <ul className="nav-links">
               {/* Absolute hashes (/#samples, /#pricing) so the same nav works
@@ -44,8 +50,37 @@ export default function LandingNav() {
             <span className="desktop-only">
               <LanguageSwitcher compact />
             </span>
-            <a href="/login" className="btn btn-ghost desktop-only">{t('landingV2NavLogin')}</a>
-            <a href="/signup" className="btn btn-primary">{t('landingV2NavStart')}</a>
+            {authUser ? (
+              <a
+                href={dashHref}
+                className="btn btn-ghost desktop-only inline-flex items-center gap-2"
+                aria-label={`Back to dashboard (${firstNameFor(authUser) || 'profile'})`}
+              >
+                <span
+                  aria-hidden="true"
+                  style={{
+                    width: 24,
+                    height: 24,
+                    borderRadius: 999,
+                    background: 'rgba(124, 58, 237, 0.15)',
+                    color: '#5b21b6',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: 11,
+                    fontWeight: 700,
+                  }}
+                >
+                  {initialsFor(authUser)}
+                </span>
+                Dashboard
+              </a>
+            ) : (
+              <>
+                <a href="/login" className="btn btn-ghost desktop-only">{t('landingV2NavLogin')}</a>
+                <a href="/signup" className="btn btn-primary">{t('landingV2NavStart')}</a>
+              </>
+            )}
             <button
               type="button"
               className="menu-btn"
@@ -97,8 +132,16 @@ export default function LandingNav() {
               <LanguageSwitcher />
             </div>
             <div className="mobile-drawer-cta">
-              <a href="/login" className="btn btn-ghost" onClick={close}>{t('landingV2NavLogin')}</a>
-              <a href="/signup" className="btn btn-primary" onClick={close}>{t('landingV2NavStart')}</a>
+              {authUser ? (
+                <a href={dashHref} className="btn btn-primary" onClick={close}>
+                  Dashboard →
+                </a>
+              ) : (
+                <>
+                  <a href="/login" className="btn btn-ghost" onClick={close}>{t('landingV2NavLogin')}</a>
+                  <a href="/signup" className="btn btn-primary" onClick={close}>{t('landingV2NavStart')}</a>
+                </>
+              )}
             </div>
           </div>
         </div>

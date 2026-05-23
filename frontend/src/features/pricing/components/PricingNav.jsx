@@ -2,10 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useI18n } from '../../../lib/i18n';
 import LanguageSwitcher from '../../../components/LanguageSwitcher';
 import BrandLogo from '../../../components/BrandLogo';
+import { readAuthUser, dashboardPathFor, initialsFor, firstNameFor } from '../../../lib/authNav';
 
 export default function PricingNav() {
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
+  // Read auth state once per mount. /pricing is reachable both from the
+  // dashboard TopBar (logged-in funnel) and from the marketing landing
+  // (logged-out funnel); a single shell with a Log in / Start free pair
+  // makes the logged-in visitor feel kicked back to the landing page.
+  // Aga 2026-05-23: "biri login olduktan sonra landpage degil icerde
+  // islerini halledebilmeli".
+  const authUser = readAuthUser();
+  const dashHref = dashboardPathFor(authUser);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -24,7 +33,10 @@ export default function PricingNav() {
   return (
     <header className="nav">
       <div className="container nav-inner">
-        <BrandLogo size="sm" href="/" className="logo" />
+        {/* Logo points back to the user's dashboard once they're signed in
+            so the brand mark behaves like the dashboard TopBar logo, not a
+            "leave to landing" trap. */}
+        <BrandLogo size="sm" href={authUser ? dashHref : '/'} className="logo" />
         <nav aria-label="Primary">
           <ul className="nav-links">
             <li><a href="/#samples">{t('pricingV2NavSamples')}</a></li>
@@ -34,8 +46,37 @@ export default function PricingNav() {
         </nav>
         <div className="nav-right">
           <LanguageSwitcher compact />
-          <a href="/login" className="btn btn-ghost desktop-only">{t('pricingV2NavLogin')}</a>
-          <a href="/signup" className="btn btn-primary">{t('pricingV2NavStart')}</a>
+          {authUser ? (
+            <a
+              href={dashHref}
+              className="btn btn-ghost desktop-only inline-flex items-center gap-2"
+              aria-label={`Back to dashboard (${firstNameFor(authUser) || 'profile'})`}
+            >
+              <span
+                aria-hidden="true"
+                style={{
+                  width: 24,
+                  height: 24,
+                  borderRadius: 999,
+                  background: 'rgba(124, 58, 237, 0.15)',
+                  color: '#5b21b6',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: 11,
+                  fontWeight: 700,
+                }}
+              >
+                {initialsFor(authUser)}
+              </span>
+              Dashboard
+            </a>
+          ) : (
+            <>
+              <a href="/login" className="btn btn-ghost desktop-only">{t('pricingV2NavLogin')}</a>
+              <a href="/signup" className="btn btn-primary">{t('pricingV2NavStart')}</a>
+            </>
+          )}
           <button
             type="button"
             className="menu-btn"
@@ -79,8 +120,16 @@ export default function PricingNav() {
               <li><a href="/about" onClick={close}>{t('pricingV2NavAbout')}</a></li>
             </ul>
             <div className="mobile-drawer-cta">
-              <a href="/login" className="btn btn-ghost" onClick={close}>{t('pricingV2NavLogin')}</a>
-              <a href="/signup" className="btn btn-primary" onClick={close}>{t('pricingV2NavStart')}</a>
+              {authUser ? (
+                <a href={dashHref} className="btn btn-primary" onClick={close}>
+                  Dashboard →
+                </a>
+              ) : (
+                <>
+                  <a href="/login" className="btn btn-ghost" onClick={close}>{t('pricingV2NavLogin')}</a>
+                  <a href="/signup" className="btn btn-primary" onClick={close}>{t('pricingV2NavStart')}</a>
+                </>
+              )}
             </div>
           </div>
         </div>
