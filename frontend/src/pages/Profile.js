@@ -141,6 +141,7 @@ export default function Profile({ user, onLogout }) {
     examDate: '',
   });
   const [savingStudy, setSavingStudy] = useState(false);
+  const [sendingReset, setSendingReset] = useState(false);
 
   useEffect(() => {
     loadAll();
@@ -214,6 +215,42 @@ export default function Profile({ user, onLogout }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch {}
+  }
+
+  async function sendPasswordReset() {
+    const email = fullUser?.email || user.email;
+    if (!email) {
+      toast.error('No email on file for this account.');
+      return;
+    }
+    setSendingReset(true);
+    try {
+      const base = process.env.REACT_APP_BACKEND_URL || '';
+      const res = await fetch(`${base}/api/auth/forgot-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      toast.success(`Reset link sent to ${email}. Check your inbox.`);
+    } catch (e) {
+      toast.error('Could not send reset link — try again in a moment.');
+    } finally {
+      setSendingReset(false);
+    }
+  }
+
+  async function confirmDeleteAccount() {
+    // No backend endpoint yet — open a prefilled support email with the
+    // user's ID so deletion goes through the manual queue. Real delete
+    // endpoint is a separate task.
+    const email = fullUser?.email || user.email || '';
+    const id = fullUser?.id || user.id || '';
+    const subject = encodeURIComponent('Account deletion request');
+    const body = encodeURIComponent(
+      `Hi support team,\n\nPlease delete the account associated with ${email} (user id: ${id}).\n\nThanks.`
+    );
+    window.location.href = `mailto:support@testmaster.pro?subject=${subject}&body=${body}`;
   }
 
   const isAdmin = isAdminUser(fullUser || user);
@@ -368,6 +405,9 @@ export default function Profile({ user, onLogout }) {
               onCopy={copyUserId}
               quotaPeriod={usage?.period}
               onLogout={onLogout}
+              onSendPasswordReset={sendPasswordReset}
+              sendingReset={sendingReset}
+              onRequestDelete={confirmDeleteAccount}
             />
           </div>
         </div>
@@ -934,7 +974,16 @@ function ActivityCard({ progress, weakest }) {
 
 // ─── Account ───────────────────────────────────────────────────────────────
 
-function AccountCard({ userId, copied, onCopy, quotaPeriod, onLogout }) {
+function AccountCard({
+  userId,
+  copied,
+  onCopy,
+  quotaPeriod,
+  onLogout,
+  onSendPasswordReset,
+  sendingReset,
+  onRequestDelete,
+}) {
   return (
     <Card title="Account" subtitle="Identity and session.">
       <Row label="User ID">
@@ -959,18 +1008,25 @@ function AccountCard({ userId, copied, onCopy, quotaPeriod, onLogout }) {
         </Row>
       )}
       <Row label="Change password">
-        <span className="text-xs italic" style={{ color: 'hsl(var(--muted-fg))' }}>
-          Email-based reset coming soon
-        </span>
+        <button
+          type="button"
+          onClick={onSendPasswordReset}
+          disabled={sendingReset}
+          className="text-xs font-semibold px-3 py-1.5 rounded-full hairline border hover:bg-black/[0.03] disabled:opacity-50"
+          style={{ borderColor: 'hsl(var(--rule))' }}
+        >
+          {sendingReset ? 'Sending…' : 'Email me a reset link'}
+        </button>
       </Row>
       <Row label="Delete account">
-        <a
-          href="mailto:support@testmaster.pro?subject=Account%20deletion%20request"
+        <button
+          type="button"
+          onClick={onRequestDelete}
           className="text-xs underline decoration-dotted underline-offset-2"
           style={{ color: 'hsl(var(--muted-fg))' }}
         >
           Email support
-        </a>
+        </button>
       </Row>
       <div className="pt-4 mt-4 border-t" style={{ borderColor: 'hsl(var(--rule))' }}>
         <button

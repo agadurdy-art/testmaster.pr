@@ -95,7 +95,7 @@ export default function Step2TargetDate({
                 I don't have a date yet
               </button>
               <a
-                href="https://ielts.idp.com/vietnam/book"
+                href="https://www.ielts.org/test-centres"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="chip"
