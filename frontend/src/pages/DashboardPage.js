@@ -291,14 +291,38 @@ export default function DashboardPage({ user, onLogout }) {
       {/* 4. Daily Drill + Smart Practice (side-by-side) */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-12 md:mb-16">
         <TodaysTask
-          eyebrow={
-            <>
-              {t("dashboardV2TodayEyebrow")} <span className="divider-dot" />{" "}
-              {t("dashboardV2MinutesLabel", {
-                n: todayTask?.duration_minutes ?? 10,
-              })}
-            </>
-          }
+          eyebrow={(() => {
+            // Personalised pill: "Your weakest skill · Listening" so the user
+            // immediately sees that Today's Task is tailored to them, not a
+            // generic recommendation. Aga 2026-05-23: "burdaki Bugun yazisi
+            // dikkat cekmedigi icin bunun ne oldugunu user anlamiyor."
+            const skill = todayTask?.skill;
+            const skillKey = skill
+              ? skill.charAt(0).toUpperCase() + skill.slice(1)
+              : null;
+            const tone = SKILL_TONE[skillKey] || "var(--primary)";
+            return (
+              <span className="inline-flex items-center gap-2 flex-wrap">
+                <span
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider"
+                  style={{
+                    background: `hsl(${tone} / 0.12)`,
+                    color: `hsl(${tone})`,
+                  }}
+                >
+                  <span aria-hidden="true">●</span>
+                  {skill
+                    ? `${t("dashboardV2TodaysPersonalisedFor")} ${skillKey}`
+                    : t("dashboardV2TodayEyebrow")}
+                </span>
+                <span className="text-xs text-muted">
+                  {t("dashboardV2MinutesLabel", {
+                    n: todayTask?.duration_minutes ?? 10,
+                  })}
+                </span>
+              </span>
+            );
+          })()}
           title={todayTask?.title || t("dashboardV2TodaysTaskTitle")}
           description={
             todayTask?.description || t("dashboardV2TodaysTaskDesc")

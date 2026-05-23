@@ -70,10 +70,11 @@ export default function PricingPageV2({ user }) {
       <DaySlider slider={slider} user={user} />
       <PlanCards user={user} />
       <CompareTable />
-      {/* Social proof — wrapped in .landing-scope so the landing CSS tokens apply. */}
-      <div className="landing-scope">
-        <Testimonials />
-      </div>
+      {/* Testimonials hidden 2026-05-23 until we have real student quotes —
+          Aga: "gercek testimonials yok kaldir simdilik". The Testimonials
+          component + .landing-scope wrapper stay imported so we can restore
+          this block once we collect real social proof. */}
+      {/* <div className="landing-scope"><Testimonials /></div> */}
       <PaymentRow />
       <PricingFAQ />
       <PricingFinalBanner />

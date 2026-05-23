@@ -12,10 +12,16 @@ function RootProviders({ children }) {
     return <I18nProvider>{children}</I18nProvider>;
   }
 
+  // Mixed-mode SDK: the pricing surface mixes one-time orders (Exam pack +
+  // Custom slider via createOrder) with recurring subscriptions (Weekly +
+  // Monthly via createSubscription). intent=subscription locks the SDK to
+  // subscription-only flow and silently no-ops createOrder clicks — Aga
+  // 2026-05-23: "tikliyorum ama bir yere gitmiyor" on /pricing/v2 Custom.
+  // intent=capture + vault=true supports both call shapes.
   const options = {
     "client-id": paypalClientId,
     currency: "USD",
-    intent: "subscription",
+    intent: "capture",
     vault: true,
     components: "buttons",
   };
