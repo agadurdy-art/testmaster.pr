@@ -94,9 +94,27 @@ const speakingPrompts = [
   }
 ];
 
-export default function ComprehensiveLevelTest({ user }) {
+// Band → CEFR mapping for the GE-flavoured surface. The underlying
+// question pool maxes out around CEFR A2-B1, so we round generously.
+function bandToCEFR(band) {
+  if (band == null) return '—';
+  if (band >= 8.0) return 'C2 · Proficient';
+  if (band >= 7.0) return 'C1 · Advanced';
+  if (band >= 6.0) return 'B2 · Upper-Intermediate';
+  if (band >= 5.0) return 'B1 · Intermediate';
+  if (band >= 4.0) return 'A2 · Elementary';
+  if (band >= 2.5) return 'A1 · Beginner';
+  return 'Pre-A1 · Starter';
+}
+
+export default function ComprehensiveLevelTest({ user, mode = 'ielts' }) {
   const navigate = useNavigate();
   const { t, language } = useI18n();  // Get language from i18n context
+  // GE placement reuses the same component (questions are CEFR-shaped, not
+  // IELTS-grade). isGE swaps headings + band → CEFR labels so a GE student
+  // doesn't see "IELTS Band 3.9" framing on what is effectively a general
+  // English placement.
+  const isGE = mode === 'ge';
   
   // Reading questions loaded from server
   const [readingQuestions, setReadingQuestions] = useState([]);
@@ -1978,6 +1996,10 @@ export default function ComprehensiveLevelTest({ user }) {
                 language === 'vi' ? `Kết Quả Kiểm Tra ${getSkillName()}` :
                 language === 'tr' ? `${getSkillName()} Testi Sonuçlarınız` :
                 `Your ${getSkillName()} Test Results`
+              ) : isGE ? (
+                language === 'vi' ? 'Kết quả trình độ tiếng Anh' :
+                language === 'tr' ? 'İngilizce seviye sonucun' :
+                'Your English Level Results'
               ) : (
                 language === 'vi' ? 'Kết Quả Đánh Giá Toàn Diện' :
                 language === 'tr' ? 'Kapsamlı Değerlendirme Sonuçlarınız' :
@@ -2055,15 +2077,21 @@ export default function ComprehensiveLevelTest({ user }) {
             <Card className={`p-8 bg-gradient-to-br ${getBandColor(results.overall_band)} text-white shadow-2xl mb-8`}>
               <div className="text-center">
                 <p className="text-white/90 text-lg mb-2">
-                  {language === 'vi' ? 'Band IELTS Tổng Quát' :
-                   language === 'tr' ? 'Genel IELTS Bandınız' :
-                   'Your Overall IELTS Band'}
+                  {isGE
+                    ? (language === 'vi' ? 'Trình độ tiếng Anh của bạn' :
+                       language === 'tr' ? 'İngilizce seviyen' :
+                       'Your English Level')
+                    : (language === 'vi' ? 'Band IELTS Tổng Quát' :
+                       language === 'tr' ? 'Genel IELTS Bandınız' :
+                       'Your Overall IELTS Band')}
                 </p>
                 <div className="text-7xl font-bold mb-2">
-                  {results.overall_band.toFixed(1)}
+                  {isGE ? bandToCEFR(results.overall_band).split(' · ')[0] : results.overall_band.toFixed(1)}
                 </div>
                 <p className="text-2xl font-semibold text-white/95 mb-4">
-                  {getBandLabel(results.overall_band)} - {results.speaking?.cefr_level || 'B1'}
+                  {isGE
+                    ? bandToCEFR(results.overall_band).split(' · ')[1] || ''
+                    : `${getBandLabel(results.overall_band)} - ${results.speaking?.cefr_level || 'B1'}`}
                 </p>
                 <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto mt-6">
                   <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
@@ -2791,7 +2819,8 @@ export default function ComprehensiveLevelTest({ user }) {
             <Button
               onClick={() => {
                 if (user) {
-                  navigate('/dashboard');
+                  // GE placement → GE dashboard; everyone else → IELTS dashboard.
+                  navigate(isGE ? '/ge/dashboard' : '/dashboard');
                 } else {
                   // Navigate to landing page with signup modal trigger
                   window.location.href = '/?action=signup';

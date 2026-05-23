@@ -563,6 +563,32 @@ export default function GEDashboard({ user, onLogout }) {
           </div>
         </div>
 
+        {/* English Level Test CTA — recycled the old IELTS comprehensive
+            test content (which is CEFR A1-A2, not IELTS-grade) into the GE
+            placement here (Aga 2026-05-23). Helpful for new users who don't
+            know where to start in the 8-stage path. */}
+        <button
+          onClick={() => navigate('/ge/placement-test')}
+          className="mt-4 w-full text-left rounded-2xl border border-slate-200 bg-white/80 backdrop-blur p-4 hover:border-violet-300 transition-colors flex items-center gap-4"
+          data-testid="ge-placement-test"
+        >
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center flex-shrink-0">
+            <span className="text-white text-xl">🎯</span>
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="text-xs font-bold uppercase tracking-wider text-violet-600 mb-0.5">
+              Not sure where to start?
+            </div>
+            <div className="display text-base font-bold text-slate-800">
+              Take a 10-minute English level test
+            </div>
+            <div className="text-xs text-slate-600 mt-0.5">
+              Ray will read your CEFR level and point you to the right stage.
+            </div>
+          </div>
+          <ArrowRight className="w-5 h-5 text-slate-400 flex-shrink-0" />
+        </button>
+
         {/* Learning Path bookshelf */}
         <section className="pt-2">
           <div className="flex items-end justify-between mb-3">

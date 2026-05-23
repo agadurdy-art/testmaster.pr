@@ -562,9 +562,18 @@ function AppWithSessionHandler() {
           path="/level-test" 
           element={<LevelTest user={user} />} 
         />
-        <Route 
-          path="/comprehensive-level-test" 
-          element={<ComprehensiveLevelTest user={user} />} 
+        <Route
+          path="/comprehensive-level-test"
+          element={<ComprehensiveLevelTest user={user} />}
+        />
+        {/* GE placement test: same component, GE-flavoured framing. The
+            current question pool is CEFR A1-A2 (Aga 2026-05-23: "mevcut
+            sorular ielts ile alakali degil, GE icine koyulabilir"), so we
+            rewire it as the GE English-level assessment until the real
+            IELTS test content lands ([[project_level_test_redesign_backlog]]). */}
+        <Route
+          path="/ge/placement-test"
+          element={<ComprehensiveLevelTest user={user} mode="ge" />}
         />
         <Route 
           path="/adaptive-level-test" 
