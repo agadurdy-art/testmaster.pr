@@ -129,11 +129,13 @@ export default function LandingHeroDemo() {
               {current.cta}
               <ArrowRightIcon size={16} />
             </a>
-            <a href="#liz" className="btn btn-outline btn-xl">
-              Meet Liz
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M7 17L17 7M9 7h8v8" />
-              </svg>
+            {/* Quick assessment funnel — 15-min adaptive band estimate that
+                lets a visitor experience the product before signup. Sits
+                as a secondary outline CTA so the primary signup remains
+                obvious. */}
+            <a href="/quick-assessment" className="btn btn-outline btn-xl">
+              15-min band check
+              <ArrowRightIcon size={16} />
             </a>
           </div>
           <div className="micro">

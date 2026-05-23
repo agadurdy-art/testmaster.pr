@@ -355,6 +355,47 @@ export default function DashboardPage({ user, onLogout }) {
         />
       </section>
 
+      {/* 5b. Quick Assessment CTA — 15-min adaptive band check.
+              Zero-cost backend, lighter commitment than the full mock,
+              positioned between Smart Practice and Mock Test Center
+              (Aga 2026-05-23 v2 onboarding spec). */}
+      <section className="mb-8 md:mb-12">
+        <button
+          type="button"
+          onClick={() => navigate('/quick-assessment')}
+          className="w-full text-left rounded-2xl p-5 md:p-6 transition-colors flex items-center gap-4 md:gap-6"
+          style={{
+            background: 'linear-gradient(135deg, hsl(262 95% 97%) 0%, hsl(217 100% 97%) 100%)',
+            border: '1px solid hsl(262 85% 90%)',
+          }}
+          data-testid="dashboard-quick-assessment-cta"
+        >
+          <div
+            className="w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center flex-shrink-0"
+            style={{ background: 'hsl(262 70% 50%)' }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 6v6l4 2" />
+            </svg>
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="text-xs font-bold uppercase tracking-wider" style={{ color: 'hsl(262 70% 40%)' }}>
+              15-minute check · adaptive
+            </div>
+            <div className="font-display text-lg md:text-xl mt-0.5" style={{ color: 'hsl(var(--fg))' }}>
+              Estimate your IELTS band — fast.
+            </div>
+            <div className="text-xs md:text-sm mt-1" style={{ color: 'hsl(var(--muted-fg))' }}>
+              Reading + Listening + Writing + Speaking. Cambridge-calibrated scoring. Re-take any time to track progress.
+            </div>
+          </div>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--muted-fg))" strokeWidth="2" strokeLinecap="round" className="flex-shrink-0">
+            <path d="M5 12h14M13 5l7 7-7 7" />
+          </svg>
+        </button>
+      </section>
+
       {/* 6. Mock Test Center — gold frame + 4-grid inside, Cambridge & AI cards below */}
       <section className="mb-12 md:mb-16">
         <MockTestFrameWith4Grid

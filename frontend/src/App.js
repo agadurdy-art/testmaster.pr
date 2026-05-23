@@ -340,6 +340,20 @@ function AppWithSessionHandler() {
           navigate('/');
           return;
         }
+        // Mirror handleLogin's quick-assessment attach
+        try {
+          const qaSession = localStorage.getItem('quick_assessment_session_id');
+          if (qaSession && userData?.id) {
+            const base = process.env.REACT_APP_BACKEND_URL || '';
+            fetch(`${base}/api/quick-assessment/attach`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ session_id: qaSession, user_id: userData.id }),
+            }).finally(() => {
+              try { localStorage.removeItem('quick_assessment_session_id'); } catch (_) {}
+            });
+          }
+        } catch (_) { /* non-fatal */ }
         // Mirror handleLogin: sync learning_mode → localStorage hint, and
         // treat users with a path on file as already-onboarded so legacy
         // Google accounts (onboarding_complete=false but learning_mode set)
@@ -378,6 +392,24 @@ function AppWithSessionHandler() {
   const handleLogin = (userData) => {
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
+
+    // Quick assessment funnel attach: if the user took the 15-min level
+    // test as a guest and just signed up, link their anonymous result to
+    // the new account. Fire-and-forget — non-fatal if backend rejects.
+    try {
+      const qaSession = localStorage.getItem('quick_assessment_session_id');
+      if (qaSession && userData?.id) {
+        const base = process.env.REACT_APP_BACKEND_URL || '';
+        fetch(`${base}/api/quick-assessment/attach`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ session_id: qaSession, user_id: userData.id }),
+        }).finally(() => {
+          try { localStorage.removeItem('quick_assessment_session_id'); } catch (_) {}
+        });
+      }
+    } catch (_) { /* non-fatal */ }
+
     // Sync learning_mode → localStorage path hint so isIeltsMode() doesn't
     // fall back to a stale picker hint, and onboarding (if it does trigger)
     // skips Step 1. Returning users with any explicit mode are treated as

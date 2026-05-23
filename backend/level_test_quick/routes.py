@@ -460,5 +460,30 @@ async def finalise(payload: FinalisePayload):
 async def get_session(session_id: str):
     session = _SESSIONS.get(session_id)
     if not session:
-        raise HTTPException(status_code=404, detail="Session not found")
+        if _COLLECTION is None:
+            raise HTTPException(status_code=404, detail="Session not found")
+        # Fall back to Mongo for guests who refreshed
+        doc = await _COLLECTION.find_one({"session_id": session_id})
+        if not doc:
+            raise HTTPException(status_code=404, detail="Session not found")
+        return doc
     return session
+
+
+class AttachPayload(BaseModel):
+    session_id: str
+    user_id: str
+
+
+@router.post("/attach")
+async def attach_session(payload: AttachPayload):
+    """Called from the signup flow once a fresh user is created — links
+    the most recent anonymous test run to their account so the new user's
+    first dashboard load can show 'Your quick assessment is saved on your
+    profile.'"""
+    result = await attach_to_user(payload.session_id, payload.user_id)
+    if not result:
+        # Mongo unavailable or session not found — still acknowledge so the
+        # signup flow doesn't error.
+        return {"attached": False}
+    return {"attached": True, "session_id": payload.session_id}
