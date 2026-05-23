@@ -175,21 +175,30 @@ WORD_PROMPTS = {
     "rubber":      "a single pink ERASER for pencil marks, school stationery, NOT a tire, on a white surface",
     "ruler":       "a single straight school ruler with cm markings",
     "pencil case": "a small zipped pencil case bag holding pens and pencils, NOT a backpack",
-    "big":         "a big elephant next to a tiny mouse, size comparison",
-    "small":       "a small mouse next to a big elephant, size comparison",
-    "new":         "a brand new shiny school backpack with price tag",
-    "old":         "a faded worn-out backpack with patches",
-    "beautiful":   "a beautiful colorful flower garden in sunlight",
-    "good":        "a happy child holding a thumbs-up sign, GOOD gesture",
-    "nice":        "a smiling child holding a small gift box",
-    "ugly":        "a cartoon monster with a funny grumpy face, kid-friendly",
-    "long":        "a long winding road going into the distance",
-    "short":       "a short pencil next to a long pencil, length comparison",
-    "favourite":   "a child hugging their favourite teddy bear with a big smile",
+    # Unit 4 adjective set — single-subject only after Aga 2026-05-21
+    # rejected the comparison-based renders (elephant+mouse, two pencils):
+    # FLUX 2 [klein] 4B drops a leg or misses an obvious feature when it
+    # has to render two animals in one frame. One subject + filling the
+    # frame + tight anatomy hints is much more reliable.
+    "big":         "ONE single huge healthy adult elephant filling most of the frame, full body in side view, with a clearly visible LONG curly trunk hanging in front, two big floppy ears, a small tail, FOUR legs (no extras), small tusks, plain pastel savannah background, the elephant looks GIGANTIC dominating the whole image, NO mouse, NO other animals, NO comparison",
+    "small":       "ONE single tiny grey mouse standing on a green leaf, full body in side view, FOUR legs only (count carefully — NO extra legs, NO five legs), small pointy nose, two round ears, long thin tail, the mouse is the clear single hero filling the centre of the frame, plain pastel background, NO elephant, NO other animals, NO comparison",
+    "new":         "ONE single brand-new shiny shiny school backpack, fresh bright colors, NO scratches, NO patches, NO worn marks, hero shot on a clean pastel background, NO comparison",
+    "old":         "ONE single visibly old worn school backpack with faded color, a small patch sewn on one side, the strap slightly frayed, hero shot on a clean pastel background, NO comparison",
+    "beautiful":   "ONE single beautiful red rose flower in full bloom with bright red petals, a green stem and two green leaves, plain pastel garden background with soft natural light, the rose is the clear single hero subject filling the centre of the frame, NO birds, NO insects, NO other flowers, NO multiple roses",
+    "good":        "ONE single smiling friendly child giving a big confident THUMBS-UP gesture with one hand raised, the hand is in clear view, plain pastel background, hero shot, NO other people, NO other gestures",
+    "nice":        "ONE single smiling friendly child gently holding a small wrapped GIFT BOX with a ribbon, both hands on the box, plain pastel background, hero shot, NO other people",
+    "ugly":        "ONE single kid-friendly cartoon green monster with a funny grumpy face — bumpy skin, crooked teeth, one tooth missing, wobbly antennae — clearly UGLY but still safe and cute for a 5-year-old, plain pastel background, hero shot, NO other monsters",
+    "long":        "ONE single long red rectangular ribbon stretched flat across the entire width of the frame, both ends touching the left and right edges, demonstrating exaggerated LENGTH, the ribbon is the clear single subject, plain pastel background, NO other objects, NO short objects, NO comparison",
+    "short":       "ONE single very short stubby yellow pencil — only a few centimetres long — lying horizontally on a plain pastel desk, the pencil looks chunky and unusually SHORT, the pencil is the clear single subject filling the centre of the frame, NO other pencils, NO long objects, NO comparison",
+    "favourite":   "ONE single beloved fluffy teddy bear with a small red heart on its chest, sitting upright as the clear single hero subject filling the centre of the frame, plain pastel background, NO child, NO multiple bears, NO other toys",
+
+    # Tighter calculator prompt to defeat FLUX number-hallucination
+    # (Aga 2026-05-21: 'calculator sayilar dogru degil'). Force the
+    # buttons to read as flat colored shapes with NO digit shapes.
+    "calculator":  "ONE single small modern kid's pocket calculator, the keypad has clean ROUNDED COLORED BUTTONS with NO printed digits, NO numbers, NO operators, NO symbols, NO text — the buttons are deliberately blank colored circles in a 4×4 grid; the display screen at the top is also COMPLETELY BLANK and shows nothing, hero shot of the calculator centered in the frame, plain pastel background, NO other school supplies",
 
     # Stage 3 Unit 04 — school things additions
     "dictionary":  "ONE single thick wooden-bound illustrated children's dictionary book lying open on a desk, pages visible with simple word entries (no real readable text), the book is the clear single hero subject, plain pastel desk background, NO other books, NO clutter",
-    "calculator":  "ONE single small bright-colored kid's pocket calculator with chunky number buttons (the buttons are blank or with simple shapes, NO real text or digits), hero shot of the calculator filling the center of the frame, plain pastel desk background, NO other school supplies",
     "tablet":      "ONE single modern children's tablet computer, slim, with a colorful friendly home-screen showing simple shape icons (no readable text or logos), hero shot of the tablet, plain pastel background, NO stylus, NO keyboard, NO case",
     "water bottle":"ONE single reusable kid's water bottle with a colorful body and a sport cap, standing upright as the clear single hero subject, plain pastel background, NO labels, NO text, NO other bottles",
 }

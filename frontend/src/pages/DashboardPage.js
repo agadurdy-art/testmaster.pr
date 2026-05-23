@@ -986,7 +986,11 @@ function DaysSquare({
 }
 
 function SmartPracticeList({ skills, user, onPick, onSpeakingPremium }) {
-  const order = ["Writing", "Reading", "Speaking", "Listening"];
+  // Canonical IELTS test-day order. Matches the TopBar Practice dropdown
+  // (Listening → Reading → Writing → Speaking) so the dashboard and the
+  // global nav don't show two different orderings of the same skills —
+  // user feedback 2026-05-23 ("confusing, ayni siralama degil").
+  const order = ["Listening", "Reading", "Writing", "Speaking"];
   const isPremium = isSpeakingPremiumUser(user);
   return (
     <div>
@@ -1033,12 +1037,14 @@ function SmartPracticeList({ skills, user, onPick, onSpeakingPremium }) {
             </button>
           );
 
-          // Liz Examiner card is injected directly under the Listening row
-          // (was under Speaking). Aga 2026-05-10: "premium ismini examiner
-          // olarak degistir ve listening'in altinda konumlansin." Premium
-          // tiers (monthly + exam) get the live entry; free / weekly see a
-          // locked appearance with a short conversion blurb.
-          if (key !== "Listening") return row;
+          // Liz Examiner card is injected at the end of the list, under
+          // Speaking — Liz Examiner is a live speaking tool so it sits next
+          // to its sibling skill. Earlier it sat under Listening when the
+          // list ran W-R-S-L; after the 2026-05-23 reorder to canonical
+          // L-R-W-S we keep Liz Examiner as the final row. Premium tiers
+          // (monthly + exam) get the live entry; free / weekly see a locked
+          // appearance with a short conversion blurb.
+          if (key !== "Speaking") return row;
 
           return (
             <React.Fragment key={key}>

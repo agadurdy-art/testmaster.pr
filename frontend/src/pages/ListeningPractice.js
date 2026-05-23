@@ -217,7 +217,8 @@ export default function ListeningPractice({ user }) {
 
   // Filter modules
   const filteredModules = modules.filter(m => {
-    if (filterBand && m.band_range !== filterBand) return false;
+    // Band filter intentionally bypassed 2026-05-23 — UI hidden until
+    // band-differentiated content is ready. State remains for URL deep-link compat.
     if (filterTopic && m.topic !== filterTopic) return false;
     if (filterQType) {
       // Each module carries the question types it covers; keep it if the
@@ -279,16 +280,10 @@ export default function ListeningPractice({ user }) {
             <Target className="w-4 h-4 text-gray-500" />
             <span className="text-sm text-gray-600">Filter:</span>
           </div>
-          <select 
-            className="px-3 py-2 border rounded-lg text-sm"
-            value={filterBand}
-            onChange={(e) => setFilterBand(e.target.value)}
-          >
-            <option value="">All Bands</option>
-            {bandLevels.map(band => (
-              <option key={band.id} value={band.id}>{band.name}</option>
-            ))}
-          </select>
+          {/* Band-level filter hidden 2026-05-23. Aga: "simdiki band secimini
+              kaldir. sonra band ayrimi yapacagiz." The state + URL-param
+              plumbing is kept dormant so we can re-enable cleanly once band-
+              differentiated content is ready. */}
           <select
             className="px-3 py-2 border rounded-lg text-sm"
             value={filterTopic}
@@ -314,10 +309,10 @@ export default function ListeningPractice({ user }) {
               </option>
             ))}
           </select>
-          {(filterBand || filterTopic || filterQType) && (
+          {(filterTopic || filterQType) && (
             <button
               type="button"
-              onClick={() => { setFilterBand(''); setFilterTopic(''); setFilterQType(''); }}
+              onClick={() => { setFilterTopic(''); setFilterQType(''); }}
               className="text-xs text-gray-500 underline hover:text-gray-700"
             >
               Clear filters

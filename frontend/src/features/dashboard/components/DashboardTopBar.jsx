@@ -84,6 +84,9 @@ export default function DashboardTopBar({
             <NavLink href="/progress" active={activeSection === "progress"}>
               Progress
             </NavLink>
+            <NavLink href="/pricing" active={activeSection === "pricing"}>
+              Pricing
+            </NavLink>
           </nav>
         </div>
         <div className="flex items-center gap-4">

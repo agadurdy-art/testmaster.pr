@@ -273,7 +273,11 @@ function SignupBridge({ user }) {
   }
   if (user) {
     // Already logged in — honor the pending plan / intent immediately.
-    if (!user.onboarding_complete) {
+    // Treat users with an explicit learning_mode as already-onboarded so
+    // legacy accounts (mode set, onboarding_complete=false) don't loop.
+    const mode = (user.learning_mode || '').toLowerCase();
+    const hasMode = mode === 'ielts' || mode === 'general_english';
+    if (!user.onboarding_complete && !hasMode) {
       return <Navigate to="/onboarding" replace />;
     }
     const pendingPlan = consumePendingPlan();
@@ -335,7 +339,18 @@ function AppWithSessionHandler() {
           navigate('/');
           return;
         }
-        if (userData.onboarding_complete === false) {
+        // Mirror handleLogin: sync learning_mode → localStorage hint, and
+        // treat users with a path on file as already-onboarded so legacy
+        // Google accounts (onboarding_complete=false but learning_mode set)
+        // don't get bounced into the picker on every login.
+        const mode = (userData.learning_mode || '').toLowerCase();
+        const hasMode = mode === 'ielts' || mode === 'general_english';
+        if (hasMode) {
+          try {
+            localStorage.setItem('testmaster_onboarding_path', mode === 'ielts' ? 'ielts' : 'general');
+          } catch (_) { /* non-fatal */ }
+        }
+        if (userData.onboarding_complete === false && !hasMode) {
           navigate('/onboarding');
           return;
         }
@@ -362,10 +377,22 @@ function AppWithSessionHandler() {
   const handleLogin = (userData) => {
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
-    // If the user hasn't finished onboarding yet, route them there so the
-    // landing-page path selection isn't silently dropped. Onboarding will
-    // consume the pending plan (if any) on finish.
-    if (userData && userData.onboarding_complete === false) {
+    // Sync learning_mode → localStorage path hint so isIeltsMode() doesn't
+    // fall back to a stale picker hint, and onboarding (if it does trigger)
+    // skips Step 1. Returning users with an explicit mode are treated as
+    // already-onboarded even if the DB flag is false (legacy accounts where
+    // onboarding_complete was never written).
+    const mode = (userData?.learning_mode || '').toLowerCase();
+    const hasMode = mode === 'ielts' || mode === 'general_english';
+    if (hasMode) {
+      try {
+        localStorage.setItem('testmaster_onboarding_path', mode === 'ielts' ? 'ielts' : 'general');
+      } catch (_) { /* non-fatal */ }
+    }
+    // If the user hasn't finished onboarding yet AND has no path on file,
+    // route them there so the landing-page path selection isn't silently
+    // dropped. Onboarding will consume the pending plan (if any) on finish.
+    if (userData && userData.onboarding_complete === false && !hasMode) {
       navigate('/onboarding');
       return;
     }
@@ -719,9 +746,15 @@ function AppWithSessionHandler() {
           path="/demo/general-task2" 
           element={<GeneralTask2Practice user={{id: 'demo', name: 'Demo User', email: 'demo@test.com'}} />} 
         />
-        <Route 
-          path="/question-bank/writing/task1" 
-          element={user ? <WritingTask1Practice user={user} /> : <RedirectToLogin />} 
+        {/* Bare-skill redirects so /question-bank/reading + /question-bank/writing
+            (linked from the dashboard TopBar Practice dropdown and the legacy
+            /dashboard-header-practice-* redirects) land on a real page instead
+            of 404. Reading → Academic (most demanded), Writing → Task 2. */}
+        <Route path="/question-bank/reading" element={<Navigate to="/question-bank/reading/academic" replace />} />
+        <Route path="/question-bank/writing" element={<Navigate to="/question-bank/writing/task2" replace />} />
+        <Route
+          path="/question-bank/writing/task1"
+          element={user ? <WritingTask1Practice user={user} /> : <RedirectToLogin />}
         />
         <Route 
           path="/question-bank/writing/task2" 
