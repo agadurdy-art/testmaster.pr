@@ -497,6 +497,16 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load reading QB routes: {e}")
 
+# Quick onboarding assessment — 15-18 min adaptive level test for guests.
+# Zero LLM calls (see project_quick_assessment_spec.md). Reading/listening
+# scored via Cambridge raw→band tables; writing/speaking heuristically.
+try:
+    from level_test_quick.routes import router as quick_assessment_router
+    app.include_router(quick_assessment_router)
+    print("✅ Quick assessment routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load quick assessment routes: {e}")
+
 # Import unified speaking evaluation route FIRST so its /evaluate, /topics,
 # and other endpoints take precedence over the legacy ones in
 # routes/speaking_qb.py (FastAPI resolves the first-registered match). Both

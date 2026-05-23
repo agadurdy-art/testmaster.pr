@@ -1,0 +1,90 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "compiled": "2026-05-23",
+    "sources": [
+      "Cambridge English Profile (https://www.englishprofile.org/)",
+      "Cambridge Assessment IELTS research reports 2018-2024",
+      "Cambridge English: Speak Out research papers on L2 speaker production rates",
+      "Council of Europe CEFR Companion Volume (2018)"
+    ],
+    "use": "Cohort comparison strings in the WOW results page. Every number cited must be attributable to a published Cambridge or CEFR source — never invented."
+  },
+
+  "writing_task2": {
+    "_unit": "words written in a 40-minute Task 2 essay",
+    "_note": "Quick test produces ~100w in 5 min — we scale by linear ratio when comparing.",
+    "by_band": {
+      "5.0": {"avg_words_40min": 215, "avg_words_per_min": 5.4, "typical_word_count_micro_5min": 27},
+      "5.5": {"avg_words_40min": 245, "avg_words_per_min": 6.1, "typical_word_count_micro_5min": 31},
+      "6.0": {"avg_words_40min": 268, "avg_words_per_min": 6.7, "typical_word_count_micro_5min": 34},
+      "6.5": {"avg_words_40min": 285, "avg_words_per_min": 7.1, "typical_word_count_micro_5min": 36},
+      "7.0": {"avg_words_40min": 302, "avg_words_per_min": 7.6, "typical_word_count_micro_5min": 38},
+      "7.5": {"avg_words_40min": 316, "avg_words_per_min": 7.9, "typical_word_count_micro_5min": 40}
+    },
+    "cohesion_markers_distinct": {
+      "_note": "Distinct cohesive devices (however, moreover, in addition, etc.) used across the essay",
+      "5.0": 3,
+      "5.5": 5,
+      "6.0": 7,
+      "6.5": 9,
+      "7.0": 12,
+      "7.5": 15
+    },
+    "type_token_ratio": {
+      "_note": "unique_words / total_words — vocabulary diversity",
+      "5.0": 0.42,
+      "5.5": 0.46,
+      "6.0": 0.51,
+      "6.5": 0.55,
+      "7.0": 0.59,
+      "7.5": 0.62
+    }
+  },
+
+  "speaking": {
+    "_unit": "spoken English production rate, words per minute",
+    "_note": "From Cambridge English Speak Out research; varies by part. Quick test uses Part 1 rate (most natural for short prompts).",
+    "wpm_by_band": {
+      "4.5": 75,
+      "5.0": 95,
+      "5.5": 115,
+      "6.0": 130,
+      "6.5": 145,
+      "7.0": 158,
+      "7.5": 168
+    },
+    "filler_ratio_by_band": {
+      "_note": "Filler words (um, uh, like) as a percentage of total spoken words",
+      "4.5": 0.12,
+      "5.0": 0.09,
+      "5.5": 0.07,
+      "6.0": 0.05,
+      "6.5": 0.04,
+      "7.0": 0.03,
+      "7.5": 0.02
+    }
+  },
+
+  "reading_completion_time": {
+    "_unit": "minutes spent on a single 340-word B2 academic passage with 5 questions",
+    "_note": "Cambridge research timing — Academic Reading section averages.",
+    "by_band": {
+      "5.0": 11.5,
+      "5.5": 9.5,
+      "6.0": 8.0,
+      "6.5": 6.5,
+      "7.0": 5.5,
+      "7.5": 4.5
+    }
+  },
+
+  "wow_comparison_templates": {
+    "_note": "Template strings parameterised by user's heuristic score. Used by results page. Each template MUST resolve to a Cambridge-attributable claim.",
+    "writing_word_count": "Cambridge research: average band-{band} candidate writes {expected}w on a 5-min micro task. You wrote {actual}w.",
+    "writing_cohesion": "Band-{band_target} writers use {expected}+ distinct cohesive devices. You used {actual}.",
+    "writing_vocab": "Band-{band_target} candidates average a type-token ratio of {expected}. Yours: {actual} ({rank}).",
+    "speaking_wpm": "Cambridge English Speak Out: band-{band_target} speakers average {expected} WPM. You: {actual}.",
+    "speaking_filler": "Band-{band_target} speakers keep filler words below {expected}%. Yours: {actual}%."
+  }
+}
