@@ -55,6 +55,7 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 const VocabularyImageManager = lazy(() => import('./pages/VocabularyImageManager'));
 const LevelTest = lazy(() => import('./pages/LevelTest'));
 const ComprehensiveLevelTest = lazy(() => import('./pages/ComprehensiveLevelTest'));
+const QuickAssessment = lazy(() => import('./pages/QuickAssessment'));
 const AdaptiveLevelTest = lazy(() => import('./pages/AdaptiveLevelTest'));
 const WritingPractice = lazy(() => import('./pages/WritingPractice'));
 const EvaluatorResultPreview = lazy(() => import('./pages/EvaluatorResultPreview'));
@@ -565,6 +566,14 @@ function AppWithSessionHandler() {
         <Route
           path="/comprehensive-level-test"
           element={<ComprehensiveLevelTest user={user} />}
+        />
+        {/* New 15-18 min adaptive onboarding test for IELTS guests.
+            Zero-cost backend at /api/quick-assessment/*. Replaces the
+            comprehensive level test as the primary onboarding funnel —
+            see project_quick_assessment_spec. */}
+        <Route
+          path="/quick-assessment"
+          element={<QuickAssessment user={user} />}
         />
         {/* GE placement test: same component, GE-flavoured framing. The
             current question pool is CEFR A1-A2 (Aga 2026-05-23: "mevcut

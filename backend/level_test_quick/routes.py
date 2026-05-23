@@ -38,6 +38,18 @@ from .scoring import (
 )
 from .benchmarks import compare_to_cambridge, exam_date_milestones
 
+# Optional Mongo persistence — falls back to in-memory if motor isn't
+# importable (e.g. running scoring tests offline).
+try:
+    from motor.motor_asyncio import AsyncIOMotorClient
+    import os
+    _MONGO_URL = os.environ.get("MONGO_URL") or os.environ.get("DATABASE_URL")
+    _MONGO_DB = os.environ.get("MONGO_DB_NAME", "testmaster")
+    _client = AsyncIOMotorClient(_MONGO_URL) if _MONGO_URL else None
+    _COLLECTION = _client[_MONGO_DB]["quickAssessmentRuns"] if _client else None
+except Exception:
+    _COLLECTION = None
+
 
 router = APIRouter(prefix="/api/quick-assessment", tags=["quick-assessment"])
 
@@ -80,6 +92,37 @@ class FinalisePayload(BaseModel):
 # Mongo for guest-→signup attachment.
 
 _SESSIONS: dict[str, dict] = {}
+
+
+async def _persist(session: dict) -> None:
+    """Mirror in-memory session to Mongo for guest→signup attach."""
+    if _COLLECTION is None:
+        return
+    try:
+        await _COLLECTION.update_one(
+            {"session_id": session["session_id"]},
+            {"$set": session},
+            upsert=True,
+        )
+    except Exception:
+        # Non-fatal — in-memory copy still serves the active request
+        pass
+
+
+async def attach_to_user(session_id: str, user_id: str) -> Optional[dict]:
+    """Called from the signup flow once the user is created — links the
+    anonymous test run to their account."""
+    if _COLLECTION is None:
+        return _SESSIONS.get(session_id)
+    try:
+        doc = await _COLLECTION.find_one_and_update(
+            {"session_id": session_id, "user_id": {"$exists": False}},
+            {"$set": {"user_id": user_id, "attached_at": datetime.now(timezone.utc).isoformat()}},
+            return_document=True,
+        )
+        return doc
+    except Exception:
+        return None
 
 
 def _new_session(exam_date: Optional[str], target_band: Optional[float]) -> dict:
@@ -200,6 +243,7 @@ def _grade_questions(questions: list[dict], answers: dict) -> tuple[int, list[di
 @router.post("/start")
 async def start_assessment(payload: StartPayload):
     session = _new_session(payload.exam_date, payload.target_band)
+    await _persist(session)
     return {
         "session_id": session["session_id"],
         "exam_date": session["exam_date"],
@@ -243,6 +287,7 @@ async def submit_stage1(payload: StageAnswers):
         "clip_id": s2_pick["clip_id"],
         "score": None,
     }
+    await _persist(session)
 
     # Partial reveal: rough band from Stage 1 alone
     partial_reading = score_reading_raw(min(r_correct, 2), 2)
@@ -298,6 +343,7 @@ async def submit_stage2(payload: StageAnswers):
 
     session["reading_band"] = reading_band
     session["listening_band"] = listening_band
+    await _persist(session)
 
     writing_prompt = pick_writing_prompt(total_correct, 8)
     speaking_ids = pick_speaking_prompts(total_correct, 8)
@@ -329,6 +375,7 @@ async def submit_writing(payload: WritingSubmit):
         "elapsed_sec": payload.elapsed_sec,
         **result,
     }
+    await _persist(session)
     return {"session_id": payload.session_id, "band": result["band"]}
 
 
@@ -344,6 +391,7 @@ async def submit_speaking(payload: SpeakingSubmit):
         "duration_sec": payload.duration_sec,
         **result,
     })
+    await _persist(session)
     return {"session_id": payload.session_id, "band": result["band"]}
 
 
@@ -403,6 +451,7 @@ async def finalise(payload: FinalisePayload):
         "milestones": milestones,
         "target_band": target_band,
     }
+    await _persist(session)
 
     return session["final"]
 
