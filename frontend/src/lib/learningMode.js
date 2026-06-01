@@ -18,6 +18,16 @@
 //   3. Default to IELTS (primary brand) for logged-out visitors and
 //      legacy users with no path hint at all.
 
+// Canonical product slug from any path-ish input. 'ielts' | 'general' | null.
+// Used to keep product intent deterministic as it flows through the URL
+// (?path=) across the signup → login → onboarding hops.
+export function normalizeProduct(raw) {
+  const v = (raw || '').toString().trim().toLowerCase();
+  if (v === 'ielts' || v === 'ielts_ace' || v === 'ielts-ace') return 'ielts';
+  if (v === 'general' || v === 'general_english' || v === 'general-english' || v === 'ge') return 'general';
+  return null;
+}
+
 function readPathHint() {
   if (typeof window === 'undefined') return null;
   try {
@@ -48,4 +58,14 @@ export function isIeltsMode(user) {
 
 export function isGeneralEnglishMode(user) {
   return !isIeltsMode(user);
+}
+
+// Strict URL separation (2026-06-01): the two products own distinct home URLs.
+//   /dashboard      → IELTS Ace (Liz)  — always
+//   /ge/dashboard   → General English (Ray) — always
+// homePath() returns the correct home for a given user so shared "Back to
+// Dashboard" buttons and post-login redirects land on the right surface
+// instead of leaking a GE user into IELTS (or vice-versa).
+export function homePath(user) {
+  return isGeneralEnglishMode(user) ? '/ge/dashboard' : '/dashboard';
 }

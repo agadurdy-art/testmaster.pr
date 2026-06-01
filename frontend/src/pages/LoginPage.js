@@ -3,6 +3,7 @@ import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { AlertTriangle, ArrowLeft, CheckCircle, Eye, EyeOff } from 'lucide-react';
 import { registerUser, loginUser } from '../lib/api';
+import { homePath } from '../lib/learningMode';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 
@@ -31,7 +32,39 @@ export default function LoginPage({ user, onLogin }) {
     if (!raw.startsWith('/') || raw.startsWith('//')) return null;
     return raw;
   })();
-  const postLoginTarget = safeNext || '/dashboard';
+  // Explicit per-visit product intent from the URL (?path=ielts|general),
+  // e.g. set by a product-specific "Log in to IELTS Ace" / GE CTA. Unlike
+  // `pathPick` below, this deliberately ignores the localStorage hint so a
+  // stale hint from a previous session can't override fresh DB truth.
+  const urlPath = (() => {
+    const raw = (new URLSearchParams(location.search).get('path') || '').toLowerCase();
+    if (raw === 'general' || raw === 'general_english' || raw === 'ge') return 'general';
+    if (raw === 'ielts' || raw === 'ielts_ace') return 'ielts';
+    return null;
+  })();
+
+  // Strict product routing. Priority:
+  //   1. ?next=        — explicit deep-link return (RedirectToLogin)
+  //   2. DB learning_mode — a RETURNING user always lands on THEIR product;
+  //      a GE-branded login link can never drag an existing IELTS user into GE.
+  //   3. brand-new account (no mode yet) → onboarding, carrying the product
+  //      intent so the right IELTS/GE steps run and the right home is reached.
+  // /dashboard = IELTS Ace, /ge/dashboard = General English.
+  const landingFor = (u) => {
+    if (safeNext) return safeNext;
+    const mode = (u?.learning_mode || '').toLowerCase();
+    if (mode === 'ielts') return '/dashboard';
+    if (mode === 'general_english' || mode === 'general' || mode === 'ge') return '/ge/dashboard';
+    if (mode === 'both') {
+      if (urlPath === 'general') return '/ge/dashboard';
+      if (urlPath === 'ielts') return '/dashboard';
+      return homePath(u);
+    }
+    // No product on file → onboarding with the captured product intent.
+    if (urlPath === 'general') return '/onboarding?path=general';
+    if (urlPath === 'ielts') return '/onboarding?path=ielts';
+    return '/onboarding';
+  };
 
   // Branding: if the visitor came from PathPickerGate ?path=general OR
   // /signup?path=general we render the Ray English / General English brand
@@ -69,7 +102,7 @@ export default function LoginPage({ user, onLogin }) {
   }, [location.search]);
 
   if (user) {
-    return <Navigate to={postLoginTarget} replace />;
+    return <Navigate to={landingFor(user)} replace />;
   }
 
   const handleGoogle = () => {
@@ -98,13 +131,13 @@ export default function LoginPage({ user, onLogin }) {
         const userData = await registerUser({ name, email, password });
         onLogin(userData);
         toast.success('Welcome! Check your email to verify your account.', { duration: 5000 });
-        navigate(postLoginTarget);
+        navigate(landingFor(userData));
       } else {
         const { email, password } = formData;
         const userData = await loginUser({ email, password });
         onLogin(userData);
         toast.success('Welcome back!');
-        navigate(postLoginTarget);
+        navigate(landingFor(userData));
       }
     } catch (err) {
       const msg = err?.response?.data?.detail || 'Authentication failed. Please try again.';

@@ -12,7 +12,7 @@ import LizAvatar from './LizAvatar';
  */
 
 const QUICK_ACTIONS = [
-  { label: 'Estimate my writing band', href: '/signup?intent=writing' },
+  { label: 'Estimate my writing band', href: '/signup?intent=writing&path=ielts' },
   { label: 'Try a speaking drill',     href: '/speaking/v2' },
   { label: 'Show me a sample report',  href: '#samples' },
 ];
@@ -63,7 +63,7 @@ export default function LizLauncher() {
               </a>
             ))}
           </div>
-          <a href="/signup?intent=liz" className="btn btn-primary liz-launcher-fullscreen">
+          <a href="/signup?intent=liz&path=ielts" className="btn btn-primary liz-launcher-fullscreen">
             Open Liz full screen
           </a>
         </div>

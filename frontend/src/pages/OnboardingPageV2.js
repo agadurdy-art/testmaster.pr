@@ -5,6 +5,7 @@ import {
   consumePendingPlan, pendingPlanRedirect,
   consumePendingIntent, pendingIntentRedirect,
 } from '../lib/pendingPlan';
+import { homePath } from '../lib/learningMode';
 import '../features/onboarding/onboarding.css';
 
 /**
@@ -84,7 +85,10 @@ export default function OnboardingPageV2({ user, onUserUpdate }) {
     }
     const planTarget = pendingPlanRedirect(consumePendingPlan());
     const intentTarget = pendingIntentRedirect(consumePendingIntent());
-    const target = planTarget || intentTarget || '/dashboard';
+    // Land on the product's own home (IELTS → /dashboard, GE → /ge/dashboard)
+    // based on the mode just written, so a GE user never finishes onboarding
+    // on the IELTS dashboard.
+    const target = planTarget || intentTarget || homePath(mergedUser);
     // Hard navigation (not react-router navigate) so the new route picks up
     // the freshly-written localStorage user. Avoids any race where the
     // /dashboard route renders before App state has committed the

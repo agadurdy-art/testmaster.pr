@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import ThemeToggle from "../../../components/ThemeToggle";
 import LanguageSwitcher from "../../../components/LanguageSwitcher";
 import BrandLogo from "../../../components/BrandLogo";
+import ProductSwitcher from "../../../components/ProductSwitcher";
+import { isAdminUser } from "../../../lib/planAccess";
 
 /**
  * Sticky top bar for the authenticated dashboard.
@@ -90,6 +92,15 @@ export default function DashboardTopBar({
           </nav>
         </div>
         <div className="flex items-center gap-4">
+          {isAdminUser(user) && (
+            <ProductSwitcher
+              user={user}
+              to="general"
+              className="hidden md:inline-flex items-center px-3 py-1.5 rounded-full text-[13px] font-medium text-violet-700 bg-violet-50 hover:bg-violet-100 border border-violet-200 transition-colors"
+            >
+              ⇄ General English
+            </ProductSwitcher>
+          )}
           <LanguageSwitcher iconOnly />
           <ThemeToggle className="hidden md:inline-flex" />
           {/* Notifications bell removed — the feature doesn't exist yet and a

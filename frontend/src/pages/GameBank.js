@@ -750,7 +750,7 @@ export default function GameBank() {
       {/* Header */}
       <div className="p-4">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <Button variant="ghost" onClick={() => navigate('/dashboard')} className="text-white">
+          <Button variant="ghost" onClick={() => navigate('/ge/dashboard')} className="text-white">
             <ArrowLeft className="w-5 h-5 mr-2" /> {getText('backToDashboard')}
           </Button>
           <h1 className="text-xl font-bold text-white flex items-center gap-2">

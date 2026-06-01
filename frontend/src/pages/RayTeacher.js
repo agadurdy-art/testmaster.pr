@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Play, BookOpen, Sparkles, Mic, Repeat, ChevronRight, Map, Volume2 } from 'lucide-react';
 import { RAY_AVATAR_URL } from '../lib/brand';
 import { useLizVoice } from '../hooks/useLizVoice';
+import { homePath } from '../lib/learningMode';
 
 /**
  * Ray Hub — kid-friendly coach landing for GE (General English) learners.
@@ -323,7 +324,7 @@ export default function RayTeacher({ user }) {
         <button
           type="button"
           className="ray-library-link"
-          onClick={() => navigate('/dashboard')}
+          onClick={() => navigate(homePath(user))}
           data-testid="ray-library-link"
         >
           <span className="text-2xl">📚</span>

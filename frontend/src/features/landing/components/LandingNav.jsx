@@ -77,8 +77,8 @@ export default function LandingNav() {
               </a>
             ) : (
               <>
-                <a href="/login" className="btn btn-ghost desktop-only">{t('landingV2NavLogin')}</a>
-                <a href="/signup" className="btn btn-primary">{t('landingV2NavStart')}</a>
+                <a href="/login?path=ielts" className="btn btn-ghost desktop-only">{t('landingV2NavLogin')}</a>
+                <a href="/signup?path=ielts" className="btn btn-primary">{t('landingV2NavStart')}</a>
               </>
             )}
             <button
@@ -138,8 +138,8 @@ export default function LandingNav() {
                 </a>
               ) : (
                 <>
-                  <a href="/login" className="btn btn-ghost" onClick={close}>{t('landingV2NavLogin')}</a>
-                  <a href="/signup" className="btn btn-primary" onClick={close}>{t('landingV2NavStart')}</a>
+                  <a href="/login?path=ielts" className="btn btn-ghost" onClick={close}>{t('landingV2NavLogin')}</a>
+                  <a href="/signup?path=ielts" className="btn btn-primary" onClick={close}>{t('landingV2NavStart')}</a>
                 </>
               )}
             </div>

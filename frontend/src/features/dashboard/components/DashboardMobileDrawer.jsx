@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import ProductSwitcher from "../../../components/ProductSwitcher";
+import { isAdminUser } from "../../../lib/planAccess";
 
 /**
  * Slide-in mobile drawer opened from the hamburger in DashboardTopBar.
@@ -119,6 +121,17 @@ export default function DashboardMobileDrawer({
             </button>
           ))}
         </nav>
+        {isAdminUser(user) && (
+          <div className="border-t hairline px-4 pt-3">
+            <ProductSwitcher
+              user={user}
+              to="general"
+              className="w-full py-2.5 rounded-lg text-[14px] font-medium text-violet-700 bg-violet-50 border border-violet-200"
+            >
+              ⇄ Switch to General English
+            </ProductSwitcher>
+          </div>
+        )}
         {onLogout && (
           <div className="border-t hairline p-4">
             <button

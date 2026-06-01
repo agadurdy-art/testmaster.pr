@@ -57,7 +57,7 @@ export default function MeetLiz() {
           </div>
 
           <div className="cta-row">
-            <a href="/signup?intent=liz" className="btn btn-primary btn-xl">
+            <a href="/signup?intent=liz&path=ielts" className="btn btn-primary btn-xl">
               Start with Liz
               <ArrowRightIcon size={16} />
             </a>

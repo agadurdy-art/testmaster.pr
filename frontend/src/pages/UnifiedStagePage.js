@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { toast } from 'sonner';
+import { homePath } from '../lib/learningMode';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const ADMIN_EMAILS = ['aga.durdy@gmail.com', 'stemhousebenluc@gmail.com'];
@@ -605,7 +606,7 @@ export default function UnifiedStagePage({ user }) {
           <span className="gstg-cover-emblem" aria-hidden="true">{cover.emblem}</span>
           <button
             type="button"
-            onClick={() => navigate('/dashboard')}
+            onClick={() => navigate(homePath(user))}
             className="gstg-back-pill"
             data-testid="stage-back-btn"
           >
@@ -672,7 +673,7 @@ export default function UnifiedStagePage({ user }) {
             <p className="text-slate-600 mb-6">Content for this stage is being prepared. Check back soon!</p>
             <button
               type="button"
-              onClick={() => navigate('/dashboard')}
+              onClick={() => navigate(homePath(user))}
               data-testid="stage-empty-back-btn"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-teal-600 hover:bg-teal-700 text-white font-semibold shadow-md transition-colors"
             >

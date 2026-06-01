@@ -9,6 +9,8 @@ import { toast } from 'sonner';
 import { useI18n } from '../lib/i18n';
 import { isAdminUser } from '../lib/planAccess';
 import FeedbackModal from '../components/FeedbackModal';
+import ProductSwitcher from '../components/ProductSwitcher';
+// isAdminUser already imported above — used to gate the cross-product switcher.
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const SUPPORT_EMAIL = 'support@testmaster.pro';
@@ -347,6 +349,15 @@ function LibraryHeader({ user, userProgress, onLogout, navigate }) {
         </div>
 
         <div className="hidden md:flex items-center gap-3 pl-3 border-l border-slate-300/50">
+          {isAdminUser(user) && (
+            <ProductSwitcher
+              user={user}
+              to="ielts"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold text-sky-700 bg-sky-50 hover:bg-sky-100 border border-sky-200 transition-colors"
+            >
+              ⇄ IELTS Ace
+            </ProductSwitcher>
+          )}
           <button
             onClick={() => navigate('/pricing/ge')}
             className="text-sm text-slate-600 hover:text-violet-600 font-medium"
@@ -371,6 +382,15 @@ function LibraryHeader({ user, userProgress, onLogout, navigate }) {
             <LogOut className="w-4 h-4" /> Logout
           </button>
         </div>
+        {isAdminUser(user) && (
+          <ProductSwitcher
+            user={user}
+            to="ielts"
+            className="md:hidden inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold text-sky-700 bg-sky-50 border border-sky-200"
+          >
+            ⇄ IELTS
+          </ProductSwitcher>
+        )}
         <button
           onClick={onLogout}
           className="md:hidden text-rose-600 p-1.5 ml-1"

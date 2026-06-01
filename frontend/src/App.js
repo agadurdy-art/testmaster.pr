@@ -20,7 +20,7 @@ import {
   stashPendingIntent, consumePendingIntent, pendingIntentRedirect,
   stashPendingCustomMeta,
 } from './lib/pendingPlan';
-import { isIeltsMode } from './lib/learningMode';
+import { isIeltsMode, homePath, normalizeProduct } from './lib/learningMode';
 
 // Critical pages - loaded immediately
 import Dashboard from './pages/Dashboard';
@@ -256,9 +256,12 @@ function SignupBridge({ user }) {
   const path = (params.get('path') || '').trim().toLowerCase();
   const plan = (params.get('plan') || '').trim().toLowerCase();
   const intent = (params.get('intent') || '').trim().toLowerCase();
-  if (path === 'ielts' || path === 'general' || path === 'general_english' || path === 'general-english' || path === 'ge') {
+  // Canonicalize product intent so every downstream reader (login brand,
+  // onboarding start step) agrees. Store the normalized slug, not the raw param.
+  const product = normalizeProduct(path);
+  if (product) {
     try {
-      window.localStorage.setItem('testmaster_onboarding_path', path);
+      window.localStorage.setItem('testmaster_onboarding_path', product);
     } catch (_) {
       // non-fatal — user will re-select on step 1
     }
@@ -285,9 +288,13 @@ function SignupBridge({ user }) {
     const planTarget = pendingPlanRedirect(pendingPlan);
     if (planTarget) return <Navigate to={planTarget} replace />;
     const intentTarget = pendingIntentRedirect(consumePendingIntent());
-    return <Navigate to={intentTarget || '/dashboard'} replace />;
+    return <Navigate to={intentTarget || homePath(user)} replace />;
   }
-  return <Navigate to="/login?action=signup" replace />;
+  // Logged-out: bounce to the auth page but PRESERVE the product intent in the
+  // URL so login branding + post-signup onboarding pick the right product even
+  // if the localStorage hint is stale/cleared.
+  const loginQuery = product ? `/login?action=signup&path=${product}` : '/login?action=signup';
+  return <Navigate to={loginQuery} replace />;
 }
 
 function AppWithSessionHandler() {
@@ -384,7 +391,7 @@ function AppWithSessionHandler() {
             nextTarget = raw;
           }
         } catch (_) { /* non-fatal */ }
-        navigate(intentTarget || nextTarget || '/dashboard');
+        navigate(intentTarget || nextTarget || homePath(userData));
       })();
     }
   }, [location, navigate]);
@@ -500,13 +507,16 @@ function AppWithSessionHandler() {
         <Route path="/admin/learning-mode" element={<AdminLearningMode user={user} /> } />
         <Route path="/admin/testimonials" element={<AdminTestimonials user={user} />} />
         <Route path="/share-your-story" element={<ShareYourStoryPage user={user} />} />
+        {/* Strict URL separation (2026-06-01): /dashboard is ALWAYS the IELTS
+            Ace (Liz) home, regardless of learning_mode. General English lives
+            at /ge/dashboard. Post-login + GE "Back to Dashboard" links route
+            GE users to /ge/dashboard (see lib/learningMode.homePath), so a GE
+            student never lands here, and an IELTS login never leaks into GE. */}
         <Route
           path="/dashboard"
           element={
             user
-              ? (isIeltsMode(user)
-                  ? <DashboardPage user={user} onLogout={handleLogout} />
-                  : <GEDashboard user={user} onLogout={handleLogout} />)
+              ? <DashboardPage user={user} onLogout={handleLogout} />
               : <RedirectToLogin />
           }
         />

@@ -18,7 +18,7 @@ export default function FinalCTA() {
             {t('landingV2FinalCta')}
             <ArrowRightIcon size={16} />
           </a>
-          <a href="/signup" className="btn btn-outline btn-xl">
+          <a href="/signup?path=ielts" className="btn btn-outline btn-xl">
             {t('landingV2FinalCtaFree')}
           </a>
         </div>

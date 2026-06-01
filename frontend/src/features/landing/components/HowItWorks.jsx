@@ -51,7 +51,7 @@ export default function HowItWorks() {
           </div>
         </div>
         <div className="how-cta-row">
-          <a href="/signup" className="btn btn-primary btn-xl">
+          <a href="/signup?path=ielts" className="btn btn-primary btn-xl">
             {t('landingV2HowCta')}
             <ArrowRightIcon size={16} />
           </a>
