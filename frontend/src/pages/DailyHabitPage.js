@@ -5,6 +5,7 @@ import {
   Volume2, ChevronRight, RefreshCw, ThumbsUp, ThumbsDown, X
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
+import { homePath } from '../lib/learningMode';
 import { Card } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { Progress } from '../components/ui/progress';
@@ -201,7 +202,7 @@ export default function DailyHabitPage({ user }) {
       <div className="bg-white border-b sticky top-0 z-40">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Button variant="ghost" size="sm" onClick={() => navigate('/dashboard')} data-testid="daily-habit-back-btn">
+            <Button variant="ghost" size="sm" onClick={() => navigate(homePath(user))} data-testid="daily-habit-back-btn">
               <ArrowLeft className="w-5 h-5" />
             </Button>
             <div>
@@ -227,7 +228,7 @@ export default function DailyHabitPage({ user }) {
             </div>
             <h3 className="text-2xl font-bold text-gray-900 mb-2">All Done for Today!</h3>
             <p className="text-gray-600 mb-6 text-sm">Great job! You've completed your daily practice. Come back tomorrow to keep your streak alive.</p>
-            <Button onClick={() => navigate('/dashboard')} data-testid="daily-habit-back-course-btn">
+            <Button onClick={() => navigate(homePath(user))} data-testid="daily-habit-back-course-btn">
               Back to Course <ChevronRight className="w-4 h-4 ml-1" />
             </Button>
           </Card>
@@ -269,7 +270,7 @@ export default function DailyHabitPage({ user }) {
             <p className="text-gray-600 mb-2 text-sm">You reviewed {reviewed + 1} items today.</p>
             <p className="text-gray-500 mb-6 text-xs">Keep coming back daily to strengthen your memory.</p>
             <div className="flex justify-center gap-3">
-              <Button onClick={() => navigate('/dashboard')} data-testid="daily-habit-finish-btn">
+              <Button onClick={() => navigate(homePath(user))} data-testid="daily-habit-finish-btn">
                 Back to Course
               </Button>
             </div>

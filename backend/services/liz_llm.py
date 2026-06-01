@@ -51,16 +51,15 @@ DEEP_KEYWORDS = (
 
 
 def _active_provider() -> str:
-    explicit = (os.environ.get("LIZ_LLM_PROVIDER") or "").strip().lower()
-    if explicit in {"anthropic", "gemini"}:
-        return explicit
+    # HARD RULE: Anthropic only. Gemini is intentionally NOT selectable in any
+    # live path — the gemini client/branches below are kept as dead code only.
+    # We never honor LIZ_LLM_PROVIDER=gemini and never auto-fall-back to Gemini
+    # even if GEMINI_API_KEY is present, so a blank ANTHROPIC_API_KEY fails
+    # closed instead of silently routing evaluations to Gemini.
     if os.environ.get("ANTHROPIC_API_KEY"):
         return "anthropic"
-    if os.environ.get("GEMINI_API_KEY"):
-        return "gemini"
     raise RuntimeError(
-        "No Liz LLM provider configured: set ANTHROPIC_API_KEY or GEMINI_API_KEY "
-        "(or LIZ_LLM_PROVIDER explicitly)."
+        "No Liz LLM provider configured: set ANTHROPIC_API_KEY."
     )
 
 

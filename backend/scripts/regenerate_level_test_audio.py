@@ -13,8 +13,15 @@ import io
 from pydub import AudioSegment
 from elevenlabs import ElevenLabs, VoiceSettings
 
-ELEVENLABS_API_KEY = "sk_6d53acc086b064e9d104119ba83ff0dd4d85a7e5141420e7"
-OUTPUT_DIR = "/app/frontend/public/audio/listening"
+# SECURITY (audit F07): never hardcode credentials. Read from env. The
+# previously committed key MUST be rotated in the ElevenLabs dashboard.
+ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY")
+if not ELEVENLABS_API_KEY:
+    raise SystemExit("Set ELEVENLABS_API_KEY in the environment before running this script.")
+OUTPUT_DIR = os.environ.get(
+    "LISTENING_AUDIO_DIR",
+    str(__import__("pathlib").Path(__file__).resolve().parent.parent.parent / "frontend" / "public" / "audio" / "listening"),
+)
 
 # Optimized voice assignments - more natural sounding
 VOICE_IDS = {

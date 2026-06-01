@@ -304,9 +304,14 @@ async def claim_usage_atomic(
     period = current_period_key()
     path = _usage_path(counter, period)
 
-    # Conditional $inc: only modifies the doc when used < quota.
+    # Conditional $inc: modifies the doc when the counter is below quota OR
+    # not yet present. A MISSING nested field does NOT match {$lt: quota} in
+    # MongoDB, so without the $exists branch the very first claim of a period
+    # never increments — the counter stays missing and the user gets unlimited
+    # uncounted evals (a real cost leak). The $exists branch lets $inc create
+    # the field on first use.
     result = await db.users.update_one(
-        {"id": user["id"], path: {"$lt": quota}},
+        {"id": user["id"], "$or": [{path: {"$exists": False}}, {path: {"$lt": quota}}]},
         {"$inc": {path: amount}},
         upsert=False,
     )

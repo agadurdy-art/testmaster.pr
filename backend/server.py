@@ -3775,6 +3775,14 @@ async def evaluate_writing_practice_v2(request: WritingPracticeV2Request):
     if cached is not None:
         return cached
 
+    # Quota (audit PAY-1): enforce the locked writing caps SERVER-SIDE for
+    # authenticated users — previously this hot path ran Sonnet with no quota
+    # check, so Free users could run unlimited paid evaluations. Claim AFTER the
+    # idempotency short-circuit so a cached retry never double-charges. Anonymous
+    # practice (no user_id) is metered by the separate one-per-email anon route.
+    if request.user_id:
+        await _claim_evaluation_quota(request.user_id, "evaluations")
+
     hint = _map_task_type_hint(request.task_type)
     try:
         task_hint_enum = TaskType(hint)
@@ -3794,6 +3802,9 @@ async def evaluate_writing_practice_v2(request: WritingPracticeV2Request):
     try:
         result = await evaluate_writing(eval_req)
     except EvaluatorFailure as exc:
+        # Roll back the quota claim so a failed evaluator doesn't burn the user's cap.
+        if request.user_id:
+            await _rollback_evaluation_claim(request.user_id, "evaluations")
         logging.getLogger(__name__).error(
             "Writing evaluator v2 failed after %d attempts: %s",
             exc.attempts, exc.last_error,

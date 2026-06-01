@@ -34,7 +34,12 @@ export default function OnboardingPageV2({ user, onUserUpdate }) {
       })();
       const userId = user?.id || localUser?.id;
       if (userId) {
-        const base = process.env.REACT_APP_API_URL || '';
+        // Audit P1-2: the rest of the app uses REACT_APP_BACKEND_URL. Using
+        // REACT_APP_API_URL here (unset in prod) made `base` empty → a relative
+        // /api/users/{id}/onboarding that hits the SPA on the split Vercel+Railway
+        // deploy, so learning_mode was NEVER written to the DB (users re-landed
+        // on IELTS default on a fresh device). Use the canonical var.
+        const base = process.env.REACT_APP_BACKEND_URL || '';
         const examDateIso =
           state.examDate instanceof Date
             ? state.examDate.toISOString().slice(0, 10)

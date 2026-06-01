@@ -778,11 +778,27 @@ async def start_speaking_session(request: Request):
 @router.post("/payments/paypal/ipn")
 async def paypal_ipn(request: Request):
     payload = await request.json()
+    # SECURITY (audit F02): verify the PayPal webhook signature before trusting
+    # anything. Without this, anyone could POST a fake PAYMENT.CAPTURE.COMPLETED
+    # with a victim's email + an amount to grant a paid plan for free. Fail
+    # closed, mirroring /payments/paypal/subscription-webhook.
+    verified = await verify_paypal_webhook_signature(dict(request.headers), payload)
+    if not verified:
+        logger.warning(f"PayPal IPN signature verification FAILED: id={payload.get('id')}")
+        raise HTTPException(status_code=401, detail="Webhook signature verification failed")
     event_type = payload.get("event_type")
     logger.info(f"PayPal webhook event_type={event_type}")
     if event_type != "PAYMENT.CAPTURE.COMPLETED":
         return {"detail": "Event ignored"}
     resource = payload.get("resource", {})
+    # Idempotency (audit F02): never grant twice for the same capture/event.
+    capture_id = (resource.get("id") or payload.get("id") or "").strip() or None
+    if capture_id:
+        already = await db.kofi_events.find_one(
+            {"provider": "paypal", "capture_id": capture_id, "processed": True}
+        )
+        if already:
+            return {"detail": "Already processed"}
     amount_info = resource.get("amount") or resource.get("gross_amount") or {}
     value_str = amount_info.get("value") or "0"
     # Pre-launch audit 2026-05-16: parse PayPal's string amount as Decimal so
@@ -851,7 +867,13 @@ async def paypal_ipn(request: Request):
     update_fields["lastPayment"] = datetime.now(timezone.utc).isoformat()
     await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
     await db.kofi_events.insert_one(
-        {"provider": "paypal", "received_at": datetime.now(timezone.utc).isoformat(), "payload": payload}
+        {
+            "provider": "paypal",
+            "capture_id": capture_id,
+            "processed": True,
+            "received_at": datetime.now(timezone.utc).isoformat(),
+            "payload": payload,
+        }
     )
     return {"detail": "OK"}
 

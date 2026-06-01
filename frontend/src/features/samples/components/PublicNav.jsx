@@ -12,7 +12,7 @@ import { readAuthUser, dashboardPathFor, initialsFor } from "../../../lib/authNa
  * from the dashboard's "See sample" links), so the right-side CTA swaps to
  * a "Dashboard" link instead of Log in / Try free.
  */
-export default function PublicNav({ className, ctaHref = "/signup" }) {
+export default function PublicNav({ className, ctaHref = "/signup?path=ielts" }) {
   const authUser = readAuthUser();
   const dashHref = dashboardPathFor(authUser);
   return (
@@ -82,7 +82,7 @@ export default function PublicNav({ className, ctaHref = "/signup" }) {
           ) : (
             <>
               <a
-                href="/login"
+                href="/login?path=ielts"
                 className="hidden sm:inline-flex items-center text-[14px] text-slate-700 hover:text-slate-900 px-3 py-2 rounded-lg"
               >
                 Log in

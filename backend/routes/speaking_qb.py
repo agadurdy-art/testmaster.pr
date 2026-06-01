@@ -1200,25 +1200,42 @@ async def submit_speaking_test(
         IELTS_ACE_PREMIUM_PLANS = {"monthly", "exam"}
         remaining_credits = None
 
-        if user_id:
+        # Fail closed (audit F04): premium pronunciation eval burns paid Azure +
+        # LLM resources, so it MUST resolve to a valid, entitled/credited user.
+        # A missing user_id, unknown user, or DB error now REJECTS instead of
+        # silently running a free premium evaluation.
+        if not user_id:
+            return {
+                "success": False,
+                "error": "Login required for premium evaluation",
+                "tier": "premium",
+                "message": "Sign in with a Monthly or Exam Pack plan (or exam credits) to use premium pronunciation eval.",
+            }
+        try:
+            mongo_url = os.environ.get("MONGO_URL", "mongodb://localhost:27017")
+            db_name = os.environ.get("DB_NAME", "ielts_database")
+            client = AsyncIOMotorClient(mongo_url)
+            db = client[db_name]
             try:
-                mongo_url = os.environ.get("MONGO_URL", "mongodb://localhost:27017")
-                db_name = os.environ.get("DB_NAME", "ielts_database")
-                client = AsyncIOMotorClient(mongo_url)
-                db = client[db_name]
-
                 user_doc = await db.users.find_one(
                     {"id": user_id},
                     {"_id": 0, "examCredits": 1, "plan": 1, "email": 1}
                 )
-                user_plan = normalize_plan_name(user_doc.get("plan") if user_doc else None)
-                user_email = (user_doc or {}).get("email", "")
+                if not user_doc:
+                    return {
+                        "success": False,
+                        "error": "User not found",
+                        "tier": "premium",
+                        "message": "Account not found. Please sign in again.",
+                    }
+                user_plan = normalize_plan_name(user_doc.get("plan"))
+                user_email = user_doc.get("email", "")
                 plan_entitled = user_plan in IELTS_ACE_PREMIUM_PLANS or is_admin_user(user_email)
 
                 if plan_entitled:
                     # Plan-based access — no credit deduction. Surface remaining
                     # examCredits if any so the UI badge stays consistent.
-                    remaining_credits = (user_doc or {}).get("examCredits", 0)
+                    remaining_credits = user_doc.get("examCredits", 0)
                     print(f"Premium evaluation: User {user_id} entitled via plan '{user_plan}'.")
                 else:
                     # Fall back to examCredits deduction (legacy GE flow + any
@@ -1229,11 +1246,7 @@ async def submit_speaking_test(
                         return_document=True,
                         projection={"_id": 0, "examCredits": 1}
                     )
-
-                    if result:
-                        remaining_credits = result.get("examCredits", 0)
-                        print(f"Premium evaluation: User {user_id} charged 1 credit. Remaining: {remaining_credits}")
-                    elif user_doc:
+                    if not result:
                         return {
                             "success": False,
                             "error": "Insufficient credits for premium evaluation",
@@ -1242,13 +1255,19 @@ async def submit_speaking_test(
                             "current_credits": user_doc.get("examCredits", 0),
                             "message": "Upgrade to Monthly or Exam Pack for premium pronunciation eval, or use the free evaluation option."
                         }
-                    else:
-                        print(f"User {user_id} not found, allowing premium evaluation anyway")
-
+                    remaining_credits = result.get("examCredits", 0)
+                    print(f"Premium evaluation: User {user_id} charged 1 credit. Remaining: {remaining_credits}")
+            finally:
                 client.close()
-            except Exception as e:
-                print(f"Token check error: {e}")
-                # Continue without token check on error
+        except Exception as e:
+            print(f"Premium entitlement check error: {e}")
+            # Fail closed on any error — do NOT run a free premium eval.
+            return {
+                "success": False,
+                "error": "Could not verify premium entitlement",
+                "tier": "premium",
+                "message": "Temporary error verifying your plan. Please try again.",
+            }
         
         # Process each answer with Azure Pronunciation Assessment
         azure_results = []

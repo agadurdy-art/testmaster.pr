@@ -41,7 +41,7 @@ export default function PublicFooter({ className }) {
             <li><a className="hover:text-slate-900" href="/score-my-essay">Try writing</a></li>
             <li><a className="hover:text-slate-900" href="/score-my-speaking">Try speaking</a></li>
             <li><a className="hover:text-slate-900" href="/signup?intent=writing&path=ielts">Try your own essay</a></li>
-            <li><a className="hover:text-slate-900" href="/signup">Start free</a></li>
+            <li><a className="hover:text-slate-900" href="/signup?path=ielts">Start free</a></li>
           </ul>
         </div>
         <div>

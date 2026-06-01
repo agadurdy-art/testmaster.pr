@@ -10,8 +10,9 @@ import os
 
 router = APIRouter(prefix="/api/audio", tags=["audio"])
 
-# Audio directory
-AUDIO_DIR = Path("/app/backend/static/audio")
+# Audio directory — resolve relative to this file so it works in local, Railway,
+# and any container layout (not just /app/backend). Env override supported.
+AUDIO_DIR = Path(os.getenv("AUDIO_DIR") or (Path(__file__).resolve().parent.parent / "static" / "audio"))
 
 @router.get("/cambridge/{book}/{filename}")
 async def get_cambridge_audio(book: str, filename: str):

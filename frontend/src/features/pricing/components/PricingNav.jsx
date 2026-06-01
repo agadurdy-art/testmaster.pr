@@ -73,8 +73,8 @@ export default function PricingNav() {
             </a>
           ) : (
             <>
-              <a href="/login" className="btn btn-ghost desktop-only">{t('pricingV2NavLogin')}</a>
-              <a href="/signup" className="btn btn-primary">{t('pricingV2NavStart')}</a>
+              <a href="/login?path=ielts" className="btn btn-ghost desktop-only">{t('pricingV2NavLogin')}</a>
+              <a href="/signup?path=ielts" className="btn btn-primary">{t('pricingV2NavStart')}</a>
             </>
           )}
           <button
@@ -126,8 +126,8 @@ export default function PricingNav() {
                 </a>
               ) : (
                 <>
-                  <a href="/login" className="btn btn-ghost" onClick={close}>{t('pricingV2NavLogin')}</a>
-                  <a href="/signup" className="btn btn-primary" onClick={close}>{t('pricingV2NavStart')}</a>
+                  <a href="/login?path=ielts" className="btn btn-ghost" onClick={close}>{t('pricingV2NavLogin')}</a>
+                  <a href="/signup?path=ielts" className="btn btn-primary" onClick={close}>{t('pricingV2NavStart')}</a>
                 </>
               )}
             </div>

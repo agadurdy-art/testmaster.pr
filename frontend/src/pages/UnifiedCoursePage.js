@@ -6,6 +6,7 @@ import {
   Home, ArrowLeft
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
+import { homePath } from '../lib/learningMode';
 import { Card } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 
@@ -267,7 +268,7 @@ export default function UnifiedCoursePage({ user }) {
         <Button
           variant="ghost"
           className="mb-6 rounded-full"
-          onClick={() => navigate('/dashboard')}
+          onClick={() => navigate(homePath(user))}
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Dashboard
