@@ -255,7 +255,7 @@ export default function LandingPageGE() {
         </a>
         <div className="flex items-center gap-2">
           <a
-            href="/login"
+            href="/login?path=general"
             className="hidden sm:inline-flex text-sm text-slate-700 hover:text-slate-900 px-3 py-2"
           >
             Log in
@@ -311,7 +311,7 @@ export default function LandingPageGE() {
                 <ArrowRight className="w-4 h-4" />
               </a>
               <a
-                href="/login"
+                href="/login?path=general"
                 className="inline-flex items-center px-5 py-3.5 rounded-xl border border-slate-200 hover:border-slate-300 text-slate-700 font-medium text-[15px] transition-all hover:bg-white"
               >
                 Log in
