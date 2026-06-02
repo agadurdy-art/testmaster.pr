@@ -29,6 +29,11 @@ export default function OnboardingPageV2({ user, onUserUpdate }) {
     const localLearningMode = state.path === 'general' ? 'general_english' : 'ielts';
 
     let updatedUser = null;
+    // Hoisted to function scope: it's referenced below (homePath(mergedUser))
+    // OUTSIDE this try block. Declaring it with `const` inside the try caused a
+    // ReferenceError on every onboarding completion, so the post-onboarding
+    // redirect never fired (new users got stuck on the onboarding screen).
+    let mergedUser = null;
     try {
       const localUser = (() => {
         try { return JSON.parse(localStorage.getItem('user') || '{}'); } catch (_) { return {}; }
@@ -73,7 +78,7 @@ export default function OnboardingPageV2({ user, onUserUpdate }) {
       // onboarding_complete=true so isIeltsMode() on the next render sees
       // the correct mode.
       const baseUser = updatedUser && updatedUser.id ? updatedUser : (localUser || user || {});
-      const mergedUser = {
+      mergedUser = {
         ...baseUser,
         learning_mode: (updatedUser && updatedUser.learning_mode) || localLearningMode,
         onboarding_complete: true,

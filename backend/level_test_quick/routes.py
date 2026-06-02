@@ -44,7 +44,10 @@ try:
     from motor.motor_asyncio import AsyncIOMotorClient
     import os
     _MONGO_URL = os.environ.get("MONGO_URL") or os.environ.get("DATABASE_URL")
-    _MONGO_DB = os.environ.get("MONGO_DB_NAME", "testmaster")
+    # Audit NEW-6: the rest of the app uses DB_NAME. Using MONGO_DB_NAME (unset
+    # in prod) wrote quick-assessment runs to a SEPARATE "testmaster" DB, invisible
+    # to the app/admin. Prefer the canonical DB_NAME.
+    _MONGO_DB = os.environ.get("DB_NAME") or os.environ.get("MONGO_DB_NAME", "testmaster")
     _client = AsyncIOMotorClient(_MONGO_URL) if _MONGO_URL else None
     _COLLECTION = _client[_MONGO_DB]["quickAssessmentRuns"] if _client else None
 except Exception:
