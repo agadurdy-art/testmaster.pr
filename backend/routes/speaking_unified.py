@@ -24,7 +24,8 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 from email_validator import EmailNotValidError, validate_email
-from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
+from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile, Depends
+import auth_session  # audit: speaking eval is user-owned (cost + IDOR)
 from fastapi.responses import JSONResponse
 
 from schemas.speaking_evaluator import (
@@ -236,9 +237,11 @@ async def evaluate(
     question_id: Optional[str] = Form(None),
     book_id: Optional[str] = Form(None),
     test_id: Optional[str] = Form(None),
+    caller: dict = Depends(auth_session.current_user),
 ):
     """Authenticated speaking evaluation. Multipart payload. See module
     docstring for the response contract."""
+    auth_session.require_self_or_admin(user_id, caller)
     if db is None:
         raise HTTPException(
             status_code=503,
@@ -675,7 +678,9 @@ async def evaluate_fulltest(
     part3_cue_card_prompt: str = Form(...),
     part3_cue_card_bullets: str = Form(""),
     part3_duration_seconds: float = Form(0.0),
+    caller: dict = Depends(auth_session.current_user),
 ):
+    auth_session.require_self_or_admin(user_id, caller)
     """Holistic Full Test evaluation. 3 audio uploads, single Sonnet pass.
 
     IELTS examiner methodology: one band per criterion across the whole

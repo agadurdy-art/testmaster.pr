@@ -34,7 +34,8 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 import httpx
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+import auth_session  # audit F-03: gate ElevenLabs token/finalize by session
 from pydantic import BaseModel, Field
 
 from services.liz_eleven_quota import (
@@ -315,8 +316,9 @@ def _flatten_transcript(payload: Dict[str, Any]) -> tuple[str, List[Dict[str, An
 
 
 @router.post("/token", response_model=TokenResponse)
-async def mint_token(req: TokenRequest):
+async def mint_token(req: TokenRequest, caller: dict = Depends(auth_session.current_user)):
     """Server-side mint of a signed agent URL after quota validation."""
+    auth_session.require_self_or_admin(req.user_id, caller)
     if db is None:
         raise HTTPException(
             status_code=503,
@@ -373,9 +375,10 @@ async def mint_token(req: TokenRequest):
 
 
 @router.post("/finalize", response_model=FinalizeResponse)
-async def finalize_conversation(req: FinalizeRequest):
+async def finalize_conversation(req: FinalizeRequest, caller: dict = Depends(auth_session.current_user)):
     """Post-fetch the transcript and deduct quota. Idempotent on
     conversation_id — repeated calls don't double-deduct."""
+    auth_session.require_self_or_admin(req.user_id, caller)
     if db is None:
         raise HTTPException(
             status_code=503,

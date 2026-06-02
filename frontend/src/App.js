@@ -4,6 +4,11 @@ import './App.css';
 import './styles/rtl.css';
 import LandingPage from './pages/LandingPage';
 import { loginWithGoogleSession } from './lib/api';
+import { installFetchAuth } from './lib/authToken';
+
+// Attach the session token to all raw fetch() calls to /api/* (audit Faz 2).
+// Runs once at module load, before any component fetches.
+installFetchAuth();
 import { toast } from 'sonner';
 import { Toaster } from './components/ui/sonner';
 import MobileBottomNav from './components/MobileBottomNav';

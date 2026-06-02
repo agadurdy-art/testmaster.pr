@@ -21,7 +21,8 @@ import uuid
 from datetime import datetime, timezone
 from typing import Optional
 
-from fastapi import APIRouter, Header, HTTPException
+from fastapi import APIRouter, Header, HTTPException, Depends
+import auth_session  # audit AUTHBE-3: real admin-session gate on admin testimonials routes
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field, EmailStr, field_validator
 
@@ -136,6 +137,7 @@ async def list_public_testimonials(limit: int = 20):
 async def list_admin_testimonials(
     status: Optional[str] = None,
     x_admin_email: Optional[str] = Header(default=None),
+    _admin: dict = Depends(auth_session.require_admin),
 ):
     """Admin — all testimonials, optionally filtered by status."""
     _require_admin(x_admin_email)
@@ -170,6 +172,7 @@ async def list_admin_testimonials(
 async def approve_testimonial(
     testimonial_id: str,
     x_admin_email: Optional[str] = Header(default=None),
+    _admin: dict = Depends(auth_session.require_admin),
 ):
     _require_admin(x_admin_email)
     if db is None:
@@ -190,6 +193,7 @@ async def approve_testimonial(
 async def reject_testimonial(
     testimonial_id: str,
     x_admin_email: Optional[str] = Header(default=None),
+    _admin: dict = Depends(auth_session.require_admin),
 ):
     _require_admin(x_admin_email)
     if db is None:
@@ -207,6 +211,7 @@ async def reject_testimonial(
 async def delete_testimonial(
     testimonial_id: str,
     x_admin_email: Optional[str] = Header(default=None),
+    _admin: dict = Depends(auth_session.require_admin),
 ):
     _require_admin(x_admin_email)
     if db is None:

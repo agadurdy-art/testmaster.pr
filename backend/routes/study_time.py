@@ -10,7 +10,7 @@ has been active in the last 60s. Backend caps writes at 8 hours/day per user
 to bound runaway writers (sleeping tab, dev console open, etc.).
 """
 
-from fastapi import APIRouter, HTTPException, Header
+from fastapi import APIRouter, HTTPException, Header, Depends
 import auth_session  # audit P2: heartbeat must be authenticated (no spoofing other users)
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict
@@ -132,7 +132,8 @@ def _week_start(now: datetime) -> datetime:
 
 
 @router.get("/summary")
-async def summary(user_id: str, scope: str = "week"):
+async def summary(user_id: str, scope: str = "week", caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(user_id, caller)
     """Return total study time + category + top-pages breakdown.
 
     scope: "week" (default, Monday→now) or "today".

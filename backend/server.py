@@ -2545,7 +2545,8 @@ async def _rollback_evaluation_claim(user_id: str, counter: str) -> None:
 
 
 @api_router.post("/evaluate/writing")
-async def evaluate_writing(data: EvaluateWriting):
+async def evaluate_writing(data: EvaluateWriting, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(data.user_id, caller)
     await _claim_evaluation_quota(data.user_id, "evaluations")
     try:
         evaluation = await evaluate_with_ai(
@@ -2560,7 +2561,8 @@ async def evaluate_writing(data: EvaluateWriting):
     return evaluation
 
 @api_router.post("/evaluate/speaking")
-async def evaluate_speaking(data: SpeakingTest):
+async def evaluate_speaking(data: SpeakingTest, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(data.user_id, caller)
     await _claim_evaluation_quota(data.user_id, "evaluations")
     try:
         evaluation = await evaluate_with_ai(
@@ -2649,7 +2651,8 @@ async def get_speaking_questions(part: int):
 
 # Progress tracking
 @api_router.get("/progress/{user_id}")
-async def get_user_progress(user_id: str):
+async def get_user_progress(user_id: str, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(user_id, caller)
     attempts = await db.test_attempts.find(
         {"user_id": user_id},
         {"_id": 0}
@@ -2898,7 +2901,8 @@ def _session_title(attempt: dict) -> str:
 
 
 @api_router.get("/dashboard/summary")
-async def get_dashboard_summary(user_id: str):
+async def get_dashboard_summary(user_id: str, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(user_id, caller)
     """Everything the authenticated dashboard renders. Derived from the user
     doc + recent test_attempts; no fixtures."""
     user = await db.users.find_one({"id": user_id}, {"_id": 0})
@@ -3117,7 +3121,9 @@ async def track_test_completion(
     test_id: str = Body(...),
     category: str = Body(...),
     band_score: float = Body(default=0.0),
+    caller: dict = Depends(auth_session.current_user),
 ):
+    auth_session.require_self_or_admin(user_id, caller)
     """Track a test completion (full test or cambridge)."""
     valid_categories = ["cambridge", "ai_academic", "ai_general"]
     if category not in valid_categories:
@@ -3145,7 +3151,8 @@ async def track_test_completion(
 
 
 @api_router.get("/user/{user_id}/completion-stats")
-async def get_user_completion_stats(user_id: str):
+async def get_user_completion_stats(user_id: str, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(user_id, caller)
     """Get user's test completion stats with breakdown."""
     # Full test / Cambridge completions
     completions = await db.user_completions.find(
@@ -3755,7 +3762,7 @@ class WritingPracticeV2Request(BaseModel):
 
 
 @api_router.post("/writing-practice/evaluate/v2")
-async def evaluate_writing_practice_v2(request: WritingPracticeV2Request):
+async def evaluate_writing_practice_v2(request: WritingPracticeV2Request, caller: dict = Depends(auth_session.current_user)):
     """Claude Sonnet evaluator — returns full WritingEvaluationResult schema.
 
     New route is additive; /writing-practice/evaluate (below) stays live so old
@@ -3791,8 +3798,14 @@ async def evaluate_writing_practice_v2(request: WritingPracticeV2Request):
     # check, so Free users could run unlimited paid evaluations. Claim AFTER the
     # idempotency short-circuit so a cached retry never double-charges. Anonymous
     # practice (no user_id) is metered by the separate one-per-email anon route.
+    # Audit NEW-2: login now required (caller from session). Enforce ownership if
+    # a user_id was supplied, otherwise bind it to the authenticated user — closes
+    # the "user_id: null → free unlimited Sonnet" bypass.
     if request.user_id:
-        await _claim_evaluation_quota(request.user_id, "evaluations")
+        auth_session.require_self_or_admin(request.user_id, caller)
+    else:
+        request.user_id = caller["id"]
+    await _claim_evaluation_quota(request.user_id, "evaluations")
 
     hint = _map_task_type_hint(request.task_type)
     try:
@@ -3814,8 +3827,7 @@ async def evaluate_writing_practice_v2(request: WritingPracticeV2Request):
         result = await evaluate_writing(eval_req)
     except EvaluatorFailure as exc:
         # Roll back the quota claim so a failed evaluator doesn't burn the user's cap.
-        if request.user_id:
-            await _rollback_evaluation_claim(request.user_id, "evaluations")
+        await _rollback_evaluation_claim(request.user_id, "evaluations")
         logging.getLogger(__name__).error(
             "Writing evaluator v2 failed after %d attempts: %s",
             exc.attempts, exc.last_error,
@@ -6070,7 +6082,8 @@ class VocabProgressUpdate(BaseModel):
     completed: bool = True
 
 @api_router.post("/vocabulary-engine/progress")
-async def save_vocabulary_progress(progress: VocabProgressUpdate):
+async def save_vocabulary_progress(progress: VocabProgressUpdate, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(progress.user_id, caller)
     """Save vocabulary engine progress"""
     await db.vocabulary_progress.update_one(
         {"user_id": progress.user_id, "module_id": progress.module_id},
@@ -6084,7 +6097,8 @@ async def save_vocabulary_progress(progress: VocabProgressUpdate):
 
 
 @api_router.get("/vocabulary-engine/progress/{user_id}")
-async def get_vocabulary_progress(user_id: str):
+async def get_vocabulary_progress(user_id: str, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(user_id, caller)
     """Get all vocabulary engine progress for a user"""
     progress = await db.vocabulary_progress.find(
         {"user_id": user_id}, {"_id": 0}
@@ -6164,7 +6178,8 @@ class ReviewBankAdd(BaseModel):
     source: str = "quiz"  # quiz, practice, manual
 
 @api_router.post("/vocabulary-engine/review-bank/add")
-async def add_to_review_bank(item: ReviewBankAdd):
+async def add_to_review_bank(item: ReviewBankAdd, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(item.user_id, caller)
     """Add a word to user's review bank"""
     existing = await db.review_bank.find_one(
         {"user_id": item.user_id, "word": item.word, "module_id": item.module_id}, {"_id": 0}
@@ -6193,7 +6208,8 @@ async def add_to_review_bank(item: ReviewBankAdd):
 
 
 @api_router.get("/vocabulary-engine/review-bank/{user_id}")
-async def get_review_bank(user_id: str):
+async def get_review_bank(user_id: str, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(user_id, caller)
     """Get user's review bank words sorted by next review date"""
     words = await db.review_bank.find(
         {"user_id": user_id, "mastery_status": {"$ne": "mastered"}},
@@ -6213,7 +6229,8 @@ class ReviewBankUpdate(BaseModel):
     knew_it: bool
 
 @api_router.post("/vocabulary-engine/review-bank/review")
-async def review_bank_word(item: ReviewBankUpdate):
+async def review_bank_word(item: ReviewBankUpdate, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(item.user_id, caller)
     """Mark a word as reviewed. Implements spaced repetition intervals."""
     doc = await db.review_bank.find_one(
         {"user_id": item.user_id, "word": item.word, "module_id": item.module_id}
@@ -6845,7 +6862,8 @@ class NoteCreate(BaseModel):
     timestamp: str
 
 @api_router.post("/notes")
-async def create_note(note: NoteCreate):
+async def create_note(note: NoteCreate, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(note.user_id, caller)
     """Create a new note for a test/module"""
     note_doc = {
         "id": str(uuid.uuid4()),
@@ -6859,7 +6877,8 @@ async def create_note(note: NoteCreate):
     return {k: v for k, v in note_doc.items() if k != '_id'}
 
 @api_router.get("/notes/{user_id}/{test_id}")
-async def get_notes(user_id: str, test_id: str):
+async def get_notes(user_id: str, test_id: str, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(user_id, caller)
     """Get all notes for a user and test"""
     notes = await db.user_notes.find(
         {"user_id": user_id, "test_id": test_id},
@@ -6889,7 +6908,8 @@ class HighlightCreate(BaseModel):
     timestamp: str
 
 @api_router.post("/highlights")
-async def create_highlight(highlight: HighlightCreate):
+async def create_highlight(highlight: HighlightCreate, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(highlight.user_id, caller)
     """Create a new text highlight"""
     highlight_doc = {
         "id": str(uuid.uuid4()),
@@ -6906,7 +6926,8 @@ async def create_highlight(highlight: HighlightCreate):
     return {k: v for k, v in highlight_doc.items() if k != '_id'}
 
 @api_router.get("/highlights/{user_id}/{test_id}")
-async def get_highlights(user_id: str, test_id: str):
+async def get_highlights(user_id: str, test_id: str, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(user_id, caller)
     """Get all highlights for a user and test"""
     highlights = await db.user_highlights.find(
         {"user_id": user_id, "test_id": test_id},
@@ -6926,7 +6947,8 @@ async def delete_highlight(highlight_id: str):
 # ============ Skill Analytics API (Phase 4) ============
 
 @api_router.get("/skill-analytics/{user_id}")
-async def get_skill_analytics(user_id: str):
+async def get_skill_analytics(user_id: str, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(user_id, caller)
     """Get cumulative skill analytics for a user across all tests"""
     try:
         # Get all test attempts for this user

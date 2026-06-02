@@ -19,14 +19,19 @@ import os
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
-from fastapi import APIRouter, Header, HTTPException
+from fastapi import APIRouter, Header, HTTPException, Depends
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from plan_access import is_admin_user
+import auth_session  # audit AUTHBE-3: real admin-session gate (not just x-admin-email)
 
 logger = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/api/admin", tags=["admin-analytics"])
+router = APIRouter(
+    prefix="/api/admin",
+    tags=["admin-analytics"],
+    dependencies=[Depends(auth_session.require_admin)],
+)
 
 _MONGO_URL = os.getenv("MONGO_URL", "")
 _DB_NAME = os.getenv("DB_NAME", "testmaster")

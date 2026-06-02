@@ -26,7 +26,8 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request, Depends
+import auth_session  # audit: structured speaking eval is user-owned (cost + IDOR)
 from fastapi.responses import JSONResponse
 from starlette.datastructures import UploadFile as StarletteUploadFile
 
@@ -182,7 +183,7 @@ async def _parse_questions_from_form(form) -> List[Dict[str, Any]]:
 
 
 @router.post("/evaluate-structured")
-async def evaluate_structured(request: Request):
+async def evaluate_structured(request: Request, caller: dict = Depends(auth_session.current_user)):
     """Per-question Smart Practice evaluation. See module docstring."""
     if db is None:
         raise HTTPException(
@@ -193,6 +194,7 @@ async def evaluate_structured(request: Request):
     form = await request.form()
 
     user_id = (form.get("user_id") or "").strip()
+    auth_session.require_self_or_admin(user_id, caller)
     if not user_id:
         raise HTTPException(
             status_code=400,

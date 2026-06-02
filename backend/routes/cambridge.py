@@ -3,8 +3,9 @@ Cambridge IELTS Tests Router
 Serves authentic Cambridge IELTS test content with full evaluation
 """
 
-from fastapi import APIRouter, HTTPException, Body
+from fastapi import APIRouter, HTTPException, Body, Depends
 from fastapi.responses import FileResponse
+import auth_session  # audit NEW-2: require auth on the Sonnet writing evaluator
 from typing import Optional, Dict, Any
 from pathlib import Path
 import os
@@ -347,7 +348,14 @@ async def evaluate_cambridge_writing(
     task_number: int = Body(...),  # 1 or 2
     response: str = Body(...),
     user_id: Optional[str] = Body(None),
+    caller: dict = Depends(auth_session.current_user),
 ):
+    # Audit NEW-2: require login; bind to the authenticated user so anon can't
+    # bypass the quota by omitting user_id, and no cross-user billing.
+    if user_id:
+        auth_session.require_self_or_admin(user_id, caller)
+    else:
+        user_id = caller["id"]
     """
     Evaluate Cambridge Writing Task using the unified Sonnet-based v2 evaluator.
 

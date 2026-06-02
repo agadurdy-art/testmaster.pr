@@ -4,9 +4,10 @@ Save and manage user voice recordings for Speaking tests
 """
 
 import re
-from fastapi import APIRouter, HTTPException, UploadFile, File, Form
+from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Depends
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
+import auth_session  # audit AUTHBE-7: recordings are user-owned (incl. delete)
 from typing import Optional
 import os
 from pathlib import Path
@@ -68,8 +69,10 @@ async def save_recording(
     test_id: str = Form(...),
     section: str = Form(...),
     part: int = Form(...),
-    question_index: Optional[int] = Form(None)
+    question_index: Optional[int] = Form(None),
+    caller: dict = Depends(auth_session.current_user),
 ):
+    auth_session.require_self_or_admin(user_id, caller)
     """Save a user's voice recording"""
     _safe_user_test(user_id, test_id)
     try:
@@ -113,7 +116,8 @@ async def save_recording(
         raise HTTPException(status_code=500, detail=f"Error saving recording: {str(e)}")
 
 @router.get("/list/{user_id}/{test_id}")
-async def list_recordings(user_id: str, test_id: str):
+async def list_recordings(user_id: str, test_id: str, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(user_id, caller)
     """List all recordings for a user's test session"""
     _safe_user_test(user_id, test_id)
     try:
@@ -146,7 +150,8 @@ async def list_recordings(user_id: str, test_id: str):
         raise HTTPException(status_code=500, detail=f"Error listing recordings: {str(e)}")
 
 @router.delete("/{user_id}/{test_id}/{filename}")
-async def delete_recording(user_id: str, test_id: str, filename: str):
+async def delete_recording(user_id: str, test_id: str, filename: str, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(user_id, caller)
     """Delete a specific recording"""
     _safe_user_test(user_id, test_id)
     if not _SAFE_FILENAME_RE.match(filename):

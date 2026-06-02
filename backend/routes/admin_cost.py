@@ -14,12 +14,17 @@ from __future__ import annotations
 
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Depends
 
 from security_utils import is_admin_email
+import auth_session  # audit AUTHBE-3: real admin-session gate (not just admin_email)
 from services import cost_telemetry
 
-router = APIRouter(prefix="/api/admin/cost", tags=["admin-cost"])
+router = APIRouter(
+    prefix="/api/admin/cost",
+    tags=["admin-cost"],
+    dependencies=[Depends(auth_session.require_admin)],
+)
 
 
 def _require_admin(admin_email: Optional[str]) -> None:

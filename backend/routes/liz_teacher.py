@@ -14,8 +14,9 @@ import logging
 import base64
 from datetime import datetime, timezone, timedelta
 from typing import Optional, List, Dict, Any
-from fastapi import APIRouter, HTTPException, UploadFile, File, Form
+from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Depends
 from fastapi.responses import StreamingResponse
+import auth_session  # audit F-02: session ownership on Liz user-scoped routes
 from pydantic import BaseModel
 
 from plan_access import (
@@ -1126,7 +1127,8 @@ async def _prepare_chat_context(req: ChatRequest):
 
 
 @router.post("/chat")
-async def chat_with_liz(req: ChatRequest):
+async def chat_with_liz(req: ChatRequest, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(req.user_id, caller)
     """Send a message to Liz and get a response (non-streaming)."""
     ctx = await _prepare_chat_context(req)
     session_id = ctx["session_id"]
@@ -1175,7 +1177,8 @@ async def chat_with_liz(req: ChatRequest):
 
 
 @router.post("/chat/stream")
-async def chat_with_liz_stream(req: ChatRequest):
+async def chat_with_liz_stream(req: ChatRequest, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(req.user_id, caller)
     """SSE streaming variant. Emits token deltas, then a final JSON payload
     carrying homework + navigation links + usage. Frontend parses:
 
@@ -1252,7 +1255,8 @@ async def create_new_session(req: NewSessionRequest):
 
 
 @router.get("/status/{user_id}")
-async def get_liz_status(user_id: str):
+async def get_liz_status(user_id: str, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(user_id, caller)
     """Return Liz availability, plan info, and monthly usage."""
     access = await get_liz_user_access(user_id)
     max_messages = int(access["quota"].get("total") or 0)
@@ -1370,7 +1374,8 @@ Student Profile:
 
 
 @router.get("/history/{session_id}")
-async def get_chat_history(session_id: str, user_id: str):
+async def get_chat_history(session_id: str, user_id: str, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(user_id, caller)
     """Get chat history for a session."""
     session = await db.liz_sessions.find_one(
         {"session_id": session_id, "user_id": user_id},
@@ -1386,7 +1391,8 @@ async def get_chat_history(session_id: str, user_id: str):
 
 
 @router.get("/sessions/{user_id}")
-async def get_user_sessions(user_id: str):
+async def get_user_sessions(user_id: str, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(user_id, caller)
     """Get all chat sessions for a user."""
     sessions = await db.liz_sessions.find(
         {"user_id": user_id},
@@ -1469,7 +1475,8 @@ async def speech_to_text(
 # ── Homework Endpoints ──
 
 @router.get("/homework/{user_id}")
-async def get_homework(user_id: str, status: Optional[str] = None):
+async def get_homework(user_id: str, status: Optional[str] = None, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(user_id, caller)
     """Get student's homework list."""
     query = {"user_id": user_id}
     if status:
@@ -1499,7 +1506,8 @@ async def assign_homework(req: HomeworkAssignRequest):
 
 
 @router.post("/homework/{homework_id}/submit")
-async def submit_homework(homework_id: str, req: HomeworkSubmitRequest):
+async def submit_homework(homework_id: str, req: HomeworkSubmitRequest, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(req.user_id, caller)
     """Student submits their homework answer."""
     hw = await db.liz_homework.find_one(
         {"homework_id": homework_id, "user_id": req.user_id}, {"_id": 0}
@@ -1563,7 +1571,8 @@ Keep feedback concise but specific."""
 
 
 @router.delete("/homework/{homework_id}")
-async def delete_homework(homework_id: str, user_id: str):
+async def delete_homework(homework_id: str, user_id: str, caller: dict = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(user_id, caller)
     """Remove a homework assignment."""
     result = await db.liz_homework.delete_one(
         {"homework_id": homework_id, "user_id": user_id}

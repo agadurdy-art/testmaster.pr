@@ -14,7 +14,8 @@ from datetime import datetime, timezone, timedelta
 from typing import Optional, Dict, Any
 
 import httpx
-from fastapi import APIRouter, HTTPException, Request, UploadFile, File, Form
+from fastapi import APIRouter, HTTPException, Request, UploadFile, File, Form, Depends
+import auth_session  # audit F-01/F-05/IDOR: session-based ownership/admin gates
 from pydantic import BaseModel
 
 from plan_access import (
@@ -543,7 +544,10 @@ async def activate_subscription(req: ActivateSubscriptionRequest):
 
 
 @router.post("/payments/paypal/cancel-subscription")
-async def cancel_subscription(req: CancelSubscriptionRequest):
+async def cancel_subscription(req: CancelSubscriptionRequest, caller: dict = Depends(auth_session.current_user)):
+    # Audit F-01: was an IDOR — anyone could cancel a victim's PayPal sub by email.
+    if (caller.get("email") or "").lower() != req.email.strip().lower() and not auth_session.is_admin(caller):
+        raise HTTPException(status_code=403, detail="Forbidden")
     """Cancel the user's active PayPal subscription.
 
     Calls PayPal /v1/billing/subscriptions/{id}/cancel. We do NOT immediately
@@ -681,7 +685,10 @@ async def paypal_subscription_webhook(request: Request):
 # ============ Plan Info ============
 
 @router.get("/user/plan-info/{user_email}")
-async def get_user_plan_info(user_email: str):
+async def get_user_plan_info(user_email: str, caller: dict = Depends(auth_session.current_user)):
+    # Audit: plan/subscription disclosure by email enumeration — now self/admin only.
+    if (caller.get("email") or "").lower() != user_email.strip().lower() and not auth_session.is_admin(caller):
+        raise HTTPException(status_code=403, detail="Forbidden")
     user = await _get_user_by_email(user_email)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -731,13 +738,11 @@ async def get_pricing_plans(currency: str = "USD"):
 # ============ Speaking Session Credits ============
 
 @router.post("/speaking/session/start")
-async def start_speaking_session(request: Request):
-    user_email = request.headers.get("x-user-email")
-    if not user_email:
-        raise HTTPException(status_code=401, detail="Missing user context")
-    user = await _get_user_by_email(user_email)
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+async def start_speaking_session(request: Request, caller: dict = Depends(auth_session.current_user)):
+    # Audit NEW-4: was trusting a spoofable x-user-email header (credit-grief IDOR).
+    # Identity now comes from the session token.
+    user = caller
+    user_email = caller.get("email")
     FREE_TRIAL_SECONDS = 180
     free_used = int(user.get("ai_interview_free_seconds_used", 0) or 0)
     if free_used < FREE_TRIAL_SECONDS:
@@ -881,14 +886,14 @@ async def paypal_ipn(request: Request):
 # ============ Manual Credit ============
 
 @router.post("/payments/manual-credit-simple")
-async def manual_credit_simple(req: ManualCreditRequest):
+async def manual_credit_simple(req: ManualCreditRequest, _admin: dict = Depends(auth_session.require_admin)):
     """Admin-only top-up. Pre-launch audit (2026-05-16) flagged that this
     endpoint had no auth at all — any caller could grant master / exam credits
     to any email. Now requires admin_email in body and validates against the
     server-side allowlist (security_utils.require_admin_email).
     """
-    from security_utils import require_admin_email
-    require_admin_email(req.admin_email)
+    # Audit F-05: was gated only by a spoofable body admin_email; now requires a
+    # valid admin SESSION (Depends above). admin_email body field is ignored.
     user = await _get_user_by_email(req.email)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")

@@ -82,13 +82,17 @@ async def _resolve_user(token: str) -> Optional[Dict[str, Any]]:
     if not sess:
         return None
     exp = sess.get("expires_at")
+    # Fail CLOSED (audit F-09): a missing or unparseable expires_at is treated as
+    # expired, not as "never expires". Only a valid, future timestamp passes.
+    expired = True
     if exp:
         try:
-            if datetime.fromisoformat(exp) < datetime.now(timezone.utc):
-                await db[_COLLECTION].delete_one({"token_hash": _hash(token)})
-                return None
+            expired = datetime.fromisoformat(exp) < datetime.now(timezone.utc)
         except Exception:
-            pass
+            expired = True
+    if expired:
+        await db[_COLLECTION].delete_one({"token_hash": _hash(token)})
+        return None
     user = await db.users.find_one({"id": sess["user_id"]}, {"_id": 0})
     return user
 
