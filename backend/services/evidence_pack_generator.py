@@ -27,7 +27,7 @@ class EvidencePackGenerator:
     Evidence packs enable PDF vs UI comparison.
     """
     
-    def __init__(self, base_path: str = "/app/backend/static"):
+    def __init__(self, base_path: str = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "static")):
         self.base_path = base_path
     
     def generate(self, test_data: Dict[str, Any], book_id: str, test_num: str) -> EvidencePack:

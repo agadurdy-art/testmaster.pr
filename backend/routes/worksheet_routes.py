@@ -12,7 +12,7 @@ load_dotenv()
 
 router = APIRouter(prefix="/api/worksheet", tags=["worksheet"])
 
-CACHE_DIR = "/app/backend/content/worksheets"
+CACHE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "content", "worksheets")
 os.makedirs(CACHE_DIR, exist_ok=True)
 
 mongo_url = os.environ.get("MONGO_URL")

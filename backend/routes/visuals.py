@@ -14,8 +14,8 @@ from datetime import datetime
 router = APIRouter(prefix="/api/visuals", tags=["visuals"])
 
 # Directory for storing visuals
-VISUALS_DIR = "/app/backend/static/visuals"
-VISUALS_JSON_DIR = "/app/backend/content/visuals"
+VISUALS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "static", "visuals")
+VISUALS_JSON_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "content", "visuals")
 
 # Ensure directories exist
 os.makedirs(VISUALS_DIR, exist_ok=True)

@@ -26,7 +26,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from security_utils import require_admin_email, validate_upload_filename
 
-VOCAB_DIR = "/app/backend/static/vocab_images"
+VOCAB_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "static", "vocab_images")
 
 def check_admin(email: str):
     require_admin_email(email)

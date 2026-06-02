@@ -15,7 +15,7 @@ import asyncio
 from elevenlabs import ElevenLabs
 from elevenlabs import VoiceSettings
 
-ELEVENLABS_API_KEY = "sk_6d53acc086b064e9d104119ba83ff0dd4d85a7e5141420e7"
+ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY")
 OUTPUT_DIR = "/app/frontend/public/audio/mastery_course"
 
 # Younger voices from ElevenLabs

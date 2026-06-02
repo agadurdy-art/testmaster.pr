@@ -243,7 +243,7 @@ class VisualAttachmentService:
     Enforces user_upload or pdf_crop sources only.
     """
     
-    UPLOAD_DIR = "/app/backend/static/images/cambridge"
+    UPLOAD_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "static", "images", "cambridge")
     
     def attach_visual(self, request: VisualAttachmentRequest) -> VisualAttachmentResponse:
         """

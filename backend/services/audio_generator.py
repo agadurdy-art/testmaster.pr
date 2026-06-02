@@ -132,7 +132,7 @@ class AudioGeneratorService:
         if not self.api_key:
             logger.warning("ELEVENLABS_API_KEY not found in environment")
         self.client = ElevenLabs(api_key=self.api_key) if self.api_key else None
-        self.audio_dir = Path("/app/backend/static/audio/full_tests")
+        self.audio_dir = Path(__file__).resolve().parent.parent / "static" / "audio" / "full_tests"
         self.audio_dir.mkdir(parents=True, exist_ok=True)
         
     def _get_cache_path(self, test_id: str, section: str, part: int, filename: str) -> Path:
