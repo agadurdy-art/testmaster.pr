@@ -46,14 +46,27 @@ LOCAL_OUT_DIR.mkdir(parents=True, exist_ok=True)
 # Speaker-code → ElevenLabs voice mapping for the quick assessment.
 # Speaker codes match what listening_clips.py uses in voices=[...].
 # These IDs are pulled from IELTS_VOICE_PROFILES in listening_qb.py.
+# 2026-06-02 (Aga): "AI olduğu anlaşılıyor" — the flat stability=0.85 / style=0.0
+# settings made it robotic. Realistic Cambridge-mix personas + lower stability for
+# natural variation. Each speaker = a consistent persona with an accent that fits
+# the script (Marco IS a "native Spanish speaker" → Spanish-accented voice).
+#   (voice_id, stability, similarity, style)
 ELEVENLABS_VOICES = {
-    "HELEN":    ("21m00Tcm4TlvDq8ikWAM", 0.85, 0.75, 0.0),  # Rachel  — British F, calm
-    "MARCO":    ("ErXwobaYiN019PkySvjV", 0.80, 0.75, 0.0),  # Antoni  — British M, calm caller
-    "LECTURER": ("VR6AewLTigWG4xSOukaG", 0.85, 0.70, 0.0),  # Arnold  — British M, deeper/lecturer
+    # HELEN — British female receptionist (native, clear/professional)
+    "HELEN":    ("Xb7hH8MSUJpSbSDYk0k2", 0.45, 0.80, 0.12),  # Alice — British F educator
+    # MARCO — native Spanish speaker learning English → authentic L2 accent
+    "MARCO":    ("yHD4CsKkghm19ToGLJEC", 0.45, 0.85, 0.10),  # Hernando — Colombian/Spanish M
+    # LECTURER — British academic, steady authoritative delivery
+    "LECTURER": ("onwK4e9ZLuTAKqWW03F9", 0.50, 0.80, 0.10),  # Daniel — British M broadcaster
 }
 
-# ElevenLabs model — multilingual_v2 has the most natural English voices.
+# ElevenLabs model — multilingual_v2 has the most natural English voices and
+# renders non-English-native accents (Hernando) cleanly.
 MODEL_ID = "eleven_multilingual_v2"
+
+# Bump when re-rendering: live audio is cached `immutable` on R2/CDN, so a new
+# key is required for the new audio to actually reach users.
+AUDIO_VERSION = "el2"
 
 
 def _make_r2():
@@ -131,11 +144,13 @@ def main():
         duration = _render_clip(client, clip, local)
         size_kb = local.stat().st_size / 1024
         print(f"  ✓ {clip_id} → {local} ({duration:.1f}s, {size_kb:.0f}KB)")
-        url = _upload_to_r2(r2, local, f"{R2_PREFIX}/{clip_id}.mp3")
+        key = f"{R2_PREFIX}/{clip_id}_{AUDIO_VERSION}.mp3"
+        url = _upload_to_r2(r2, local, key)
         print(f"  ✓ uploaded → {url}")
+        print(f"  >>> SET audio_url for {clip_id}: {url}")
 
-    print("\nDone. Audio URLs in LISTENING_CLIPS are already pointing here "
-          "(deterministic R2 keys), so no listening_clips.py edits needed.")
+    print("\nDone. Versioned keys — UPDATE the audio_url in listening_clips.py to "
+          "the >>> URLs above, then commit + deploy so users get the new audio.")
 
 
 if __name__ == "__main__":

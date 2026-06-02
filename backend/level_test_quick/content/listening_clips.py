@@ -43,7 +43,7 @@ LISTENING_CLIPS = [
                 ("MARCO", "Topic interest, please. I'd rather chat about something I care about."),
             ]
         ),
-        "audio_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/quick_assessment/L_S1_LANG_EXCHANGE.mp3",
+        "audio_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/quick_assessment/L_S1_LANG_EXCHANGE_el2.mp3",
         "duration_estimate_sec": 75,
         "questions": [
             {
@@ -137,7 +137,7 @@ LISTENING_CLIPS = [
              "sixty-five per cent of the words. The awake group remembered only "
              "thirty-two."),
         ],
-        "audio_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/quick_assessment/L_S4_SLEEP_MEMORY.mp3",
+        "audio_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/quick_assessment/L_S4_SLEEP_MEMORY_el2.mp3",
         "duration_estimate_sec": 70,
         "questions": [
             {
