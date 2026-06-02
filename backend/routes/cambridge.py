@@ -405,9 +405,55 @@ async def evaluate_cambridge_writing(
         user_language="en",
     )
 
+    # Quota (audit PAY-2): enforce the locked writing caps SERVER-SIDE for
+    # authenticated users — this route ran Sonnet with no quota check. Cambridge
+    # has no shared db handle, so use a scoped client (same pattern as
+    # speaking_qb). Claim BEFORE the eval; roll back if the evaluator fails.
+    _quota_claimed = False
+    if user_id:
+        from motor.motor_asyncio import AsyncIOMotorClient
+        from services.usage_tracking import claim_usage_atomic
+        _qc = AsyncIOMotorClient(os.environ.get("MONGO_URL", "mongodb://localhost:27017"))
+        try:
+            _qdb = _qc[os.environ.get("DB_NAME", "ielts_database")]
+            _u = await _qdb.users.find_one({"id": user_id}, {"_id": 0})
+            if _u:
+                _usage = await claim_usage_atomic(_qdb, _u, "evaluations")
+                if not _usage["allowed"]:
+                    raise HTTPException(
+                        status_code=402,
+                        detail={
+                            "code": "quota_exceeded",
+                            "message": "Monthly evaluation quota reached. Upgrade to keep going.",
+                            "counter": "evaluations",
+                            "used": _usage.get("used"),
+                            "quota": _usage.get("quota"),
+                            "upgrade_url": "/pricing",
+                        },
+                    )
+                _quota_claimed = True
+        finally:
+            _qc.close()
+
+    async def _rollback_quota():
+        if not _quota_claimed:
+            return
+        from motor.motor_asyncio import AsyncIOMotorClient
+        from services.usage_tracking import current_period_key
+        _rc = AsyncIOMotorClient(os.environ.get("MONGO_URL", "mongodb://localhost:27017"))
+        try:
+            _rdb = _rc[os.environ.get("DB_NAME", "ielts_database")]
+            period = current_period_key()
+            await _rdb.users.update_one({"id": user_id}, {"$inc": {f"usage.{period}.evaluations": -1}})
+        except Exception:
+            pass
+        finally:
+            _rc.close()
+
     try:
         result = await writing_evaluator_v2.evaluate_writing(eval_req)
     except writing_evaluator_v2.EvaluatorFailure as exc:
+        await _rollback_quota()
         # Surface a structured 502 so the UI can show a retry-friendly message.
         raise HTTPException(
             status_code=502,

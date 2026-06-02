@@ -3307,11 +3307,18 @@ async def evaluate_comprehensive_reading(payload: Dict[str, Any] = Body(...)):
             "explanation": q.get("explanation", ""),
             "skillTip": q.get("skillTip", ""),
         })
-    band = total_points / len(COMPREHENSIVE_READING_QUESTIONS) if COMPREHENSIVE_READING_QUESTIONS else 0
+    # Audit BE-1: the old math summed each correct question's *difficulty band*
+    # and divided by the question count — not a band score (10/10 → 5.5). Use the
+    # official Cambridge Academic Reading raw→band table, projecting the N-question
+    # score onto the standard 40-question scale. (`total_points` kept for callers
+    # that still read it, but the band now comes from the real table.)
+    from services.ielts_band_tables import band_for_reading
+    n = len(COMPREHENSIVE_READING_QUESTIONS)
+    band = band_for_reading(correct_count, total=n, track="academic") if n else 0
     return {
         "correct_count": correct_count,
-        "total": len(COMPREHENSIVE_READING_QUESTIONS),
-        "band": round(band * 2) / 2,
+        "total": n,
+        "band": band,
         "skill_breakdown": skill_breakdown,
         "questions": results,
     }

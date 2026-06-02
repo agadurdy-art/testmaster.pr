@@ -8,6 +8,7 @@ from fastapi.responses import Response
 from pydantic import BaseModel
 from typing import List, Optional
 import os
+import asyncio
 import hashlib
 import base64
 from pathlib import Path
@@ -108,28 +109,27 @@ async def generate_tts(request: TTSRequest):
         if not ELEVENLABS_API_KEY:
             raise HTTPException(status_code=500, detail="ElevenLabs API key not configured")
 
-        # Generate new audio
-        client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
-        
-        voice_settings = VoiceSettings(
-            stability=EXAMINER_VOICE_SETTINGS["stability"],
-            similarity_boost=EXAMINER_VOICE_SETTINGS["similarity_boost"],
-            style=EXAMINER_VOICE_SETTINGS["style"],
-            use_speaker_boost=EXAMINER_VOICE_SETTINGS["use_speaker_boost"]
-        )
-        
-        audio_generator = client.text_to_speech.convert(
-            text=request.text,
-            voice_id=request.voice_id,
-            model_id="eleven_multilingual_v2",
-            voice_settings=voice_settings
-        )
-        
-        # Collect audio data
-        audio_data = b""
-        for chunk in audio_generator:
-            audio_data += chunk
-        
+        # Generate new audio. The ElevenLabs SDK call + chunk iteration are
+        # BLOCKING; running them directly on the event loop stalls every other
+        # request on the single worker (audit P3). Offload to a thread.
+        def _synthesize() -> bytes:
+            client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
+            voice_settings = VoiceSettings(
+                stability=EXAMINER_VOICE_SETTINGS["stability"],
+                similarity_boost=EXAMINER_VOICE_SETTINGS["similarity_boost"],
+                style=EXAMINER_VOICE_SETTINGS["style"],
+                use_speaker_boost=EXAMINER_VOICE_SETTINGS["use_speaker_boost"]
+            )
+            gen = client.text_to_speech.convert(
+                text=request.text,
+                voice_id=request.voice_id,
+                model_id="eleven_multilingual_v2",
+                voice_settings=voice_settings
+            )
+            return b"".join(gen)
+
+        audio_data = await asyncio.wait_for(asyncio.to_thread(_synthesize), timeout=60)
+
         # Save to cache
         with open(cache_path, 'wb') as f:
             f.write(audio_data)
