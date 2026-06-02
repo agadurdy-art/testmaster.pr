@@ -6,7 +6,7 @@ Generate listening content and audio for Advanced Mastery Modules 6-20
 import os
 from elevenlabs import ElevenLabs, VoiceSettings
 
-ELEVENLABS_API_KEY = "sk_6d53acc086b064e9d104119ba83ff0dd4d85a7e5141420e7"
+ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY")
 OUTPUT_DIR = "/app/frontend/public/audio/advanced_mastery"
 VOICE_ID = "JBFqnCBsd6RMkjVDRZzb"  # George - British male
 

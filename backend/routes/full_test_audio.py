@@ -95,7 +95,7 @@ try:
 except ImportError:
     ACADEMIC_SET_H = None
 
-AUDIO_BASE_PATH = Path("/app/backend/static/audio/full_tests")
+AUDIO_BASE_PATH = Path(__file__).resolve().parent.parent / "static" / "audio" / "full_tests"
 
 
 @router.get("/stream/{test_id}/listening/{part_number}")
@@ -159,7 +159,7 @@ async def get_audio_status(test_id: str):
     
     Returns which audio files exist and which need to be generated.
     """
-    base_path = f"/app/backend/static/audio/full_tests/{test_id}"
+    base_path = str(AUDIO_BASE_PATH / test_id)
     
     listening_path = os.path.join(base_path, "listening")
     speaking_path = os.path.join(base_path, "speaking")
@@ -313,7 +313,7 @@ async def get_listening_part_info(test_id: str, part_number: int):
     """
     Get information about a specific listening part's audio.
     """
-    base_path = f"/app/backend/static/audio/full_tests/{test_id}/listening"
+    base_path = str(AUDIO_BASE_PATH / test_id / "listening")
     
     if not os.path.exists(base_path):
         return {
