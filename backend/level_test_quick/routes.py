@@ -336,12 +336,20 @@ async def submit_stage2(payload: StageAnswers):
     s1 = session["stage1"]["score"]
     total_correct = s1["total"] + s2_correct
 
-    # Skill-level bands using 4 items each (Stage 1 + 2)
+    # Skill-level bands scored on the ACTUAL number of questions the candidate
+    # answered across both stages (not the old min-2-per-stage cap, which made the
+    # band jump 2 steps per wrong answer — e.g. 3/4 listening dropped to band 7).
+    # All questions in each passage/clip are shown to the candidate, so we count
+    # them all and project onto Cambridge's 40-question table for fine granularity.
+    s1_passage = get_reading_passage(session["stage1"]["passage_id"])
+    s1_clip = get_listening_clip(session["stage1"]["clip_id"])
+    total_reading_q = len(s1_passage["questions"]) + len(passage["questions"])
+    total_listening_q = len(s1_clip["questions"]) + len(clip["questions"])
     reading_band = score_reading_raw(
-        min(s1["reading_correct"], 2) + min(r_correct, 2), 4
+        s1["reading_correct"] + r_correct, max(total_reading_q, 1)
     )
     listening_band = score_listening_raw(
-        min(s1["listening_correct"], 2) + min(l_correct, 2), 4
+        s1["listening_correct"] + l_correct, max(total_listening_q, 1)
     )
 
     session["reading_band"] = reading_band

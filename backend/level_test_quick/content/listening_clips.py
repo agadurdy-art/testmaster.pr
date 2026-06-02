@@ -155,14 +155,15 @@ LISTENING_CLIPS = [
                 "skill_tag": "detail",
                 "stem": "According to the lecture, slow-wave sleep typically begins:",
                 "options": [
-                    {"key": "A", "text": "immediately after falling asleep"},
+                    {"key": "A", "text": "within minutes of first falling asleep"},
                     {"key": "B", "text": "two to three hours after falling asleep", "correct": True},
-                    {"key": "C", "text": "eight hours after falling asleep"},
-                    {"key": "D", "text": "only in younger people"},
+                    {"key": "C", "text": "around eight hours after falling asleep"},
+                    {"key": "D", "text": "mainly in children and young adults"},
                 ],
                 "rationale": (
-                    "C is a number trap (8 hours = sleep duration in the study, not "
-                    "slow-wave onset). D is never mentioned. A contradicts the lecture."
+                    "Distractors length-matched to the key. C is a number trap (8h = study "
+                    "sleep duration, not slow-wave onset); D never stated; A contradicts the "
+                    "'two to three hours' detail."
                 ),
             },
             {
@@ -173,6 +174,40 @@ LISTENING_CLIPS = [
                 "answer_text": "32",
                 "answer_variants": ["32", "thirty-two", "thirty two", "32%"],
                 "rationale": "Tests selective listening for one of two numbers (65 vs 32).",
+            },
+            {
+                "qid": "L_S4_SLEEP_MEMORY_Q3",
+                "type": "tfng",
+                "skill_tag": "detail",
+                "stem": "The lecturer says the brain shuts down and rests completely during sleep.",
+                "answer": "FALSE",
+                "rationale": "Opening: the brain 'will not switch off ... it'll work harder' — direct contradiction → FALSE (not NOT GIVEN; it is explicitly addressed).",
+            },
+            {
+                "qid": "L_S4_SLEEP_MEMORY_Q4",
+                "type": "mcq",
+                "skill_tag": "detail",
+                "stem": "What does slow-wave sleep mainly do for memory?",
+                "options": [
+                    {"key": "A", "text": "It erases unimportant details learned that day."},
+                    {"key": "B", "text": "It keeps memories only in short-term storage."},
+                    {"key": "C", "text": "It moves memories into longer-term storage.", "correct": True},
+                    {"key": "D", "text": "It speeds up how quickly new facts are learned."},
+                ],
+                "rationale": (
+                    "Key = C (short, not the longest option). Lecture: slow-wave 'moves "
+                    "memories from short-term storage into long-term storage'. B = opposite; "
+                    "A/D never claimed."
+                ),
+            },
+            {
+                "qid": "L_S4_SLEEP_MEMORY_Q5",
+                "type": "fill",
+                "skill_tag": "detail",
+                "stem": "Researchers first linked learning to brain activity in sleep in the ______ (decade).",
+                "answer_text": "1960s",
+                "answer_variants": ["1960s", "the 1960s", "nineteen sixties", "60s", "1960's", "sixties"],
+                "rationale": "Lecture: 'known since the nineteen-sixties'. Tests decade transcription.",
             },
         ],
     },

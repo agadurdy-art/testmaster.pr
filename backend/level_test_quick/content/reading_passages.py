@@ -64,12 +64,12 @@ READING_PASSAGES = [
                 "skill_tag": "main_idea",
                 "stem": "What is the main idea of this passage?",
                 "options": [
-                    {"key": "A", "text": "Students who study all night get higher scores."},
-                    {"key": "B", "text": "Sleep helps the brain store what you have learned.", "correct": True},
-                    {"key": "C", "text": "Short-term memory is the same as long-term memory."},
-                    {"key": "D", "text": "Harvard University is the best university in the world."},
+                    {"key": "A", "text": "Sleep helps the brain hold on to what you learn.", "correct": True},
+                    {"key": "B", "text": "Students who study all night remember far more."},
+                    {"key": "C", "text": "Short-term memory lasts longer than long-term memory."},
+                    {"key": "D", "text": "Harvard is the leading university for brain research."},
                 ],
-                "rationale": "B captures both topic + thesis. A is opposite of conclusion. C contradicts para 2. D irrelevant.",
+                "rationale": "A captures topic+thesis (concise, NOT the longest option). B is the opposite of the conclusion; C contradicts para 2; D is irrelevant. Distractors matched in length to A.",
             },
             {
                 "qid": "R_B1_SLEEP_MEMORY_Q2",
@@ -94,12 +94,12 @@ READING_PASSAGES = [
                 "skill_tag": "vocab",
                 "stem": "In the passage, 'temporary' (paragraph 2) most nearly means:",
                 "options": [
-                    {"key": "A", "text": "permanent and long-lasting"},
-                    {"key": "B", "text": "lasting only for a short time", "correct": True},
-                    {"key": "C", "text": "very large and important"},
-                    {"key": "D", "text": "secret or hidden"},
+                    {"key": "A", "text": "fixed and permanent"},
+                    {"key": "B", "text": "large and very important"},
+                    {"key": "C", "text": "lasting a short time", "correct": True},
+                    {"key": "D", "text": "secret and hidden"},
                 ],
-                "rationale": "A = opposite. C/D unrelated. Context: 'holds information for a short time'.",
+                "rationale": "Correct = C (key moved off B; length parity with distractors). A = opposite; B/D unrelated. Context: 'holds information for a short time'.",
             },
         ],
     },
@@ -151,16 +151,15 @@ READING_PASSAGES = [
                 "skill_tag": "main_idea",
                 "stem": "What is the writer's main purpose in this passage?",
                 "options": [
-                    {"key": "A", "text": "To warn aquarium staff about escape risks."},
-                    {"key": "B", "text": "To explain how octopus arms function independently."},
-                    {"key": "C", "text": "To present octopus intelligence as a separate, independent evolution of cognition.", "correct": True},
-                    {"key": "D", "text": "To compare octopus intelligence to dolphin intelligence."},
+                    {"key": "A", "text": "To warn aquarium staff about how octopuses keep escaping."},
+                    {"key": "B", "text": "To explain how each octopus arm can act independently."},
+                    {"key": "C", "text": "To argue that octopus intelligence evolved on its own.", "correct": True},
+                    {"key": "D", "text": "To compare octopus intelligence with that of dolphins."},
                 ],
                 "rationale": (
-                    "A = the Inky anecdote is a hook in para 1, not the thesis. "
-                    "B = independent arm action is one supporting detail in para 2. "
-                    "D = dolphins are never mentioned. C correctly captures the "
-                    "para 4 evolutionary-independence argument."
+                    "C captures the para-4 independent-evolution thesis, kept SHORT so it "
+                    "isn't the length tell (A is the longest distractor). A = the Inky hook "
+                    "(para 1), B = one supporting detail (para 2), D = dolphins never mentioned."
                 ),
             },
             {
@@ -190,14 +189,14 @@ READING_PASSAGES = [
                 "stem": "Why does the writer mention 'the garden snail'?",
                 "options": [
                     {"key": "A", "text": "To explain how octopuses developed their suction cups."},
-                    {"key": "B", "text": "To emphasise how surprising octopus intelligence is, given the family it belongs to.", "correct": True},
-                    {"key": "C", "text": "To compare the lifespan of octopuses and snails."},
-                    {"key": "D", "text": "To suggest that snails might also be intelligent."},
+                    {"key": "B", "text": "To stress how unexpected the octopus's intelligence is.", "correct": True},
+                    {"key": "C", "text": "To compare the lifespans of octopuses and garden snails."},
+                    {"key": "D", "text": "To suggest that garden snails may also be intelligent."},
                 ],
                 "rationale": (
-                    "Synthesises 'nearest cousin is the garden snail' (low expectations "
-                    "set) with the surrounding 'remarkable feat' (surprise inferred). "
-                    "A/C are irrelevant; D is an over-reach inference not supported."
+                    "B (correct) synthesises 'nearest cousin is the garden snail' (low "
+                    "expectations) + 'remarkable feat' (surprise) — and is NOT the longest "
+                    "option (C is). A/C irrelevant; D is an unsupported over-reach."
                 ),
             },
             {
@@ -206,15 +205,16 @@ READING_PASSAGES = [
                 "skill_tag": "vocab",
                 "stem": "In paragraph 3, 'forward-looking decision-making' most nearly means:",
                 "options": [
-                    {"key": "A", "text": "Choosing what is immediately rewarding."},
-                    {"key": "B", "text": "Selecting an action based on a future, larger reward.", "correct": True},
-                    {"key": "C", "text": "Looking forward in the maze before choosing."},
-                    {"key": "D", "text": "Reacting quickly to bright colours."},
+                    {"key": "A", "text": "Choosing whatever gives the quickest reward."},
+                    {"key": "B", "text": "Looking ahead through the maze before moving."},
+                    {"key": "C", "text": "Reacting fast to bright, colourful visual cues."},
+                    {"key": "D", "text": "Choosing an action for a bigger later reward.", "correct": True},
                 ],
                 "rationale": (
-                    "Surrounding sentence: 'chose the longer route when it offered a "
-                    "larger meal — rather than simple stimulus response'. A = opposite "
-                    "(immediate vs future). C = literal interpretation. D = unrelated."
+                    "Correct = D (key moved off B; C is the longest option, not D). "
+                    "Context: 'chose the longer route when it offered a larger meal — "
+                    "rather than simple stimulus response'. A = opposite (immediate vs "
+                    "future); B = literal; C = unrelated."
                 ),
             },
         ],
@@ -273,16 +273,16 @@ READING_PASSAGES = [
                 "skill_tag": "main_idea",
                 "stem": "What is the writer's overall position on why strangers cooperate?",
                 "options": [
-                    {"key": "A", "text": "It is fully explained by indirect reciprocity through reputation."},
-                    {"key": "B", "text": "It is best understood as a combination of reputation incentives and internalised dispositions inherited from small-group living.", "correct": True},
-                    {"key": "C", "text": "It cannot be explained by current science."},
-                    {"key": "D", "text": "It is mostly the result of legal and institutional enforcement."},
+                    {"key": "A", "text": "It is fully explained by reputation under indirect reciprocity theory."},
+                    {"key": "B", "text": "It blends reputation incentives with inherited moral instincts.", "correct": True},
+                    {"key": "C", "text": "It currently lies beyond what behavioural science can explain."},
+                    {"key": "D", "text": "It stems mainly from legal rules and institutional enforcement."},
                 ],
                 "rationale": (
-                    "Paragraph 4 explicitly frames a 'layered motivation' synthesis. "
-                    "A is the position critiqued in para 3 (insufficient alone). C is too "
-                    "strong — the article does not say science has failed. D introduces "
-                    "law/institutions which the passage never discusses."
+                    "B captures the para-4 'layered motivation' synthesis, trimmed so the "
+                    "longest option is now the A distractor, not the key. A = position "
+                    "critiqued in para 3; C = too strong (science hasn't 'failed'); "
+                    "D = law/institutions never discussed."
                 ),
             },
             {
@@ -310,15 +310,16 @@ READING_PASSAGES = [
                 "skill_tag": "vocab",
                 "stem": "In paragraph 3, 'a moral disposition shaped by the long evolutionary tail of repeated, small-group interaction' suggests that the disposition:",
                 "options": [
-                    {"key": "A", "text": "is learned individually in childhood through repetition"},
-                    {"key": "B", "text": "evolved over very long timescales as a residue of how our ancestors lived", "correct": True},
-                    {"key": "C", "text": "appears only in people who have lived in small communities themselves"},
-                    {"key": "D", "text": "is unique to humans among primates"},
+                    {"key": "A", "text": "is learned by each person in childhood through repetition"},
+                    {"key": "B", "text": "appears only in people raised in small communities today"},
+                    {"key": "C", "text": "evolved slowly as a trace of our ancestors' way of life", "correct": True},
+                    {"key": "D", "text": "is unique to humans and found in no other primate species"},
                 ],
                 "rationale": (
-                    "Requires synthesising 'evolutionary tail' (long time) + 'small-group "
-                    "interaction' (ancestral context). A confuses individual learning with "
-                    "evolution. C contradicts the universalist claim. D is not addressed."
+                    "Correct = C (key moved off B; D is now the longest option). Synthesises "
+                    "'evolutionary tail' (long time) + 'small-group interaction' (ancestral). "
+                    "A confuses individual learning with evolution; B contradicts the "
+                    "universalist claim; D is not addressed."
                 ),
             },
         ],
