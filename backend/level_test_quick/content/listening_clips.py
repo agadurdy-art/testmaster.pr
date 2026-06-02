@@ -211,18 +211,162 @@ LISTENING_CLIPS = [
             },
         ],
     },
+
+    # ── Section 1 #2 (pool variety) — sports-centre booking @ B1 ───────
+    {
+        "id": "L_S1B_SPORTS",
+        "level": "B1",
+        "section": "section1",
+        "voices": [("ALEX", "alice"), ("SAM", "charlie")],
+        "transcript_for_tts": [
+            ("ALEX", "Good morning, Riverside Sports Centre — Alex speaking. How can I help?"),
+            ("SAM", "Hi there. I'd like to enrol in the adult swimming course, if there are still places."),
+            ("ALEX", "There are, yes. Can I take your name?"),
+            ("SAM", "Sure, it's Sam Price."),
+            # Spelling on the NATIVE staff voice, high stability → crisp letters.
+            ("ALEX", "Let me just confirm the surname — is that P - R - I - C - E?",
+             {"stability": 0.9, "style": 0.0, "model": "eleven_multilingual_v2"}),
+            ("SAM", "Yes, that's right."),
+            ("ALEX", "Great. The course runs on Tuesday evenings, seven to eight, for eight weeks."),
+            ("SAM", "Tuesday's perfect. And how much is it?"),
+            ("ALEX", "It's forty-five pounds for the full course. There's also a ten-pound deposit for the locker key, which you get back at the end."),
+            ("SAM", "Okay. Is there anything I need to bring?"),
+            ("ALEX", "Just a swimming cap — they're compulsory in our pool. Goggles are optional."),
+            ("SAM", "Got it. Thanks very much."),
+        ],
+        "audio_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/quick_assessment/L_S1B_SPORTS_el5.mp3",  # set by gen_quick_assessment_audio_elevenlabs.py
+        "duration_estimate_sec": 70,
+        "questions": [
+            {
+                "qid": "L_S1B_SPORTS_Q1",
+                "type": "fill",
+                "skill_tag": "detail",
+                "stem": "Caller's surname: ______",
+                "answer_text": "Price",
+                "answer_variants": ["price", "p-r-i-c-e", "price."],
+                "rationale": "Spelling-from-speech; staff confirms P-R-I-C-E.",
+            },
+            {
+                "qid": "L_S1B_SPORTS_Q2",
+                "type": "mcq",
+                "skill_tag": "detail",
+                "stem": "Which evening does the swimming course run?",
+                "options": [
+                    {"key": "A", "text": "Tuesday evenings, for eight weeks", "correct": True},
+                    {"key": "B", "text": "Monday evenings, for eight weeks"},
+                    {"key": "C", "text": "Thursday evenings, for six weeks"},
+                    {"key": "D", "text": "Saturday mornings, for eight weeks"},
+                ],
+                "rationale": "Audio: 'Tuesday evenings ... for eight weeks'. Length-matched distractors; day-trap.",
+            },
+            {
+                "qid": "L_S1B_SPORTS_Q3",
+                "type": "fill",
+                "skill_tag": "detail",
+                "stem": "Cost of the full course: £______",
+                "answer_text": "45",
+                "answer_variants": ["45", "£45", "forty-five", "forty five", "45 pounds"],
+                "rationale": "Number trap: 10 (deposit), 8 (weeks) are distractor numbers.",
+            },
+            {
+                "qid": "L_S1B_SPORTS_Q4",
+                "type": "mcq",
+                "skill_tag": "detail",
+                "stem": "What must the caller bring to the pool?",
+                "options": [
+                    {"key": "A", "text": "A pair of swimming goggles"},
+                    {"key": "B", "text": "Their own locker padlock"},
+                    {"key": "C", "text": "A compulsory swimming cap", "correct": True},
+                    {"key": "D", "text": "A signed medical certificate"},
+                ],
+                "rationale": "Audio: 'Just a swimming cap — compulsory ... Goggles are optional.' A = optional trap; B/D never said.",
+            },
+        ],
+    },
+
+    # ── Section 3 (pool variety) — student discussion @ B2/C1 ─────────
+    {
+        "id": "L_S3_PROJECT",
+        "level": "C1",
+        "section": "section3",
+        "voices": [("TUTOR", "daniel"), ("MAYA", "sarah"), ("LUCAS", "hernando")],
+        "transcript_for_tts": [
+            ("TUTOR", "So, Maya, Lucas — how's the presentation on urban heat islands coming along?"),
+            ("MAYA", "Pretty well, I think. We've finished the introduction and the causes section."),
+            ("LUCAS", "Yeah, but we're a bit stuck on the data. The city council figures only go back five years."),
+            ("TUTOR", "That's a common problem. Have you tried the national weather service archive?"),
+            ("MAYA", "Oh — no, we hadn't thought of that. That would give us thirty years, wouldn't it?"),
+            ("TUTOR", "At least. I'd strongly recommend leading with that long-term data — it makes the trend far more convincing."),
+            ("LUCAS", "Good idea. Should we cut the section on building materials, then? We're running over time."),
+            ("TUTOR", "Keep it, but make it shorter — say two minutes instead of five. And remember the deadline is the fourteenth, not the twenty-first."),
+            ("MAYA", "Right, the fourteenth. We'll get the slides to you by Friday."),
+        ],
+        "audio_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/quick_assessment/L_S3_PROJECT_el5.mp3",
+        "duration_estimate_sec": 75,
+        "questions": [
+            {
+                "qid": "L_S3_PROJECT_Q1",
+                "type": "mcq",
+                "skill_tag": "detail",
+                "stem": "What problem are the students having with their presentation?",
+                "options": [
+                    {"key": "A", "text": "Their introduction is still unfinished."},
+                    {"key": "B", "text": "The council's data covers too few years.", "correct": True},
+                    {"key": "C", "text": "They cannot agree on the main topic."},
+                    {"key": "D", "text": "Their slides keep crashing the software."},
+                ],
+                "rationale": "Audio: 'stuck on the data ... only go back five years'. A is false (intro done); C/D never said.",
+            },
+            {
+                "qid": "L_S3_PROJECT_Q2",
+                "type": "mcq",
+                "skill_tag": "detail",
+                "stem": "What does the tutor recommend?",
+                "options": [
+                    {"key": "A", "text": "Removing the data section altogether"},
+                    {"key": "B", "text": "Using only the council's recent figures"},
+                    {"key": "C", "text": "Leading with long-term archive data", "correct": True},
+                    {"key": "D", "text": "Delaying the whole presentation a week"},
+                ],
+                "rationale": "Audio: 'recommend leading with that long-term data'. A/B/D contradict the advice.",
+            },
+            {
+                "qid": "L_S3_PROJECT_Q3",
+                "type": "fill",
+                "skill_tag": "detail",
+                "stem": "The presentation deadline is the ______ (date).",
+                "answer_text": "14th",
+                "answer_variants": ["14th", "14", "fourteenth", "the fourteenth", "14th."],
+                "rationale": "Date trap: the twenty-first is the wrong date the tutor corrects.",
+            },
+            {
+                "qid": "L_S3_PROJECT_Q4",
+                "type": "mcq",
+                "skill_tag": "detail",
+                "stem": "What does the tutor say to do with the building-materials section?",
+                "options": [
+                    {"key": "A", "text": "Cut it from the talk completely"},
+                    {"key": "B", "text": "Move it to the very beginning"},
+                    {"key": "C", "text": "Expand it to five full minutes"},
+                    {"key": "D", "text": "Shorten it to about two minutes", "correct": True},
+                ],
+                "rationale": "Audio: 'Keep it, but make it shorter — two minutes instead of five.' A = student's suggestion the tutor rejects; B/D contradict.",
+            },
+        ],
+    },
 ]
 
-# Stage 2 difficulty buckets — by Stage 1 anchor outcome.
-# We only have 2 clips in v1 (Section 1 conv + Section 4 lecture), so:
-#   C1 + B2 → academic lecture (harder)
-#   B1 + A2 → booking conversation (easier)
+# Stage 2 difficulty buckets — lists per level (≥2 where possible) so Stage 2
+# RANDOMLY picks one — repeat-takers don't memorise a single clip.
 LISTENING_BUCKETS = {
-    "C1": ["L_S4_SLEEP_MEMORY"],
-    "B2": ["L_S4_SLEEP_MEMORY"],
-    "B1": ["L_S1_LANG_EXCHANGE"],
-    "A2": ["L_S1_LANG_EXCHANGE"],
+    "C1": ["L_S4_SLEEP_MEMORY", "L_S3_PROJECT"],
+    "B2": ["L_S4_SLEEP_MEMORY", "L_S3_PROJECT"],
+    "B1": ["L_S1_LANG_EXCHANGE", "L_S1B_SPORTS"],
+    "A2": ["L_S1_LANG_EXCHANGE", "L_S1B_SPORTS"],
 }
+
+# Section-1 clips usable as the Stage 1 anchor (random per session).
+ANCHOR_CLIPS = ["L_S1_LANG_EXCHANGE", "L_S1B_SPORTS"]
 
 
 def get_clip(clip_id):
@@ -233,7 +377,15 @@ def get_clip(clip_id):
 
 
 def clip_for_difficulty(level):
+    """Pick a RANDOM clip matching the requested CEFR level (pool variety)."""
+    import random
     bucket = LISTENING_BUCKETS.get(level, [])
     if not bucket:
-        return get_clip("L_S1_LANG_EXCHANGE")
-    return get_clip(bucket[0])
+        bucket = LISTENING_BUCKETS["B1"]
+    return get_clip(random.choice(bucket))
+
+
+def anchor_clip():
+    """Random Section-1 clip for the Stage 1 anchor (different per session)."""
+    import random
+    return get_clip(random.choice(ANCHOR_CLIPS))

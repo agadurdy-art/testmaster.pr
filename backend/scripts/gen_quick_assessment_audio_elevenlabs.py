@@ -58,6 +58,13 @@ ELEVENLABS_VOICES = {
     "MARCO":    ("yHD4CsKkghm19ToGLJEC", 0.40, 0.85, 0.25),  # Hernando — Colombian/Spanish M
     # LECTURER — British academic, steady authoritative delivery
     "LECTURER": ("onwK4e9ZLuTAKqWW03F9", 0.45, 0.80, 0.20),  # Daniel — British M broadcaster
+    # L_S1B_SPORTS personas
+    "ALEX":     ("Xb7hH8MSUJpSbSDYk0k2", 0.40, 0.80, 0.30),  # Alice — British F receptionist
+    "SAM":      ("IKne3meq5aSn9XLyUdCD", 0.42, 0.80, 0.25),  # Charlie — Australian M caller
+    # L_S3_PROJECT personas (accent variety: British tutor + US + Spanish students)
+    "TUTOR":    ("onwK4e9ZLuTAKqWW03F9", 0.45, 0.80, 0.20),  # Daniel — British M tutor
+    "MAYA":     ("EXAVITQu4vr4xnSDxMaL", 0.42, 0.80, 0.25),  # Sarah — American F student
+    "LUCAS":    ("yHD4CsKkghm19ToGLJEC", 0.42, 0.85, 0.20),  # Hernando — Spanish M student
 }
 
 # ElevenLabs model — v3 is the most HUMAN model + interprets inline audio/emotion
@@ -150,6 +157,11 @@ def main():
     print("Rendering with ElevenLabs (model: %s)…" % MODEL_ID)
     for clip in LISTENING_CLIPS:
         clip_id = clip["id"]
+        # Skip clips that already have audio (don't re-render/re-bill the
+        # existing _el5 clips). Only the new audio_url=None clips render.
+        if clip.get("audio_url"):
+            print(f"  – {clip_id}: already has audio, skipping")
+            continue
         local = LOCAL_OUT_DIR / f"{clip_id}.mp3"
         duration = _render_clip(client, clip, local)
         size_kb = local.stat().st_size / 1024

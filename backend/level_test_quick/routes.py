@@ -24,8 +24,8 @@ from typing import Optional
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
-from .content.reading_passages import READING_PASSAGES, get_passage as get_reading_passage
-from .content.listening_clips import LISTENING_CLIPS, get_clip as get_listening_clip
+from .content.reading_passages import READING_PASSAGES, get_passage as get_reading_passage, anchor_passage
+from .content.listening_clips import LISTENING_CLIPS, get_clip as get_listening_clip, anchor_clip
 from .content.writing_prompts import get_prompt as get_writing_prompt
 from .content.speaking_prompts import get_prompt as get_speaking_prompt
 from .adaptive import pick_stage2_difficulty, pick_writing_prompt, pick_speaking_prompts
@@ -136,8 +136,10 @@ def _new_session(exam_date: Optional[str], target_band: Optional[float]) -> dict
         "exam_date": exam_date,
         "target_band": target_band,
         "stage1": {
-            "passage_id": "R_B2_OCTOPUS",   # B2 anchor
-            "clip_id": "L_S1_LANG_EXCHANGE",  # B1 anchor
+            # Random mid-level anchor per session so repeat-takers don't get the
+            # same passage/clip every time.
+            "passage_id": anchor_passage()["id"],
+            "clip_id": anchor_clip()["id"],
             "score": None,
         },
         "stage2": None,

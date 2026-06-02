@@ -189,9 +189,9 @@ READING_PASSAGES = [
                 "stem": "Why does the writer mention 'the garden snail'?",
                 "options": [
                     {"key": "A", "text": "To explain how octopuses developed their suction cups."},
-                    {"key": "B", "text": "To stress how unexpected the octopus's intelligence is.", "correct": True},
-                    {"key": "C", "text": "To compare the lifespans of octopuses and garden snails."},
-                    {"key": "D", "text": "To suggest that garden snails may also be intelligent."},
+                    {"key": "B", "text": "To compare the lifespans of octopuses and garden snails."},
+                    {"key": "C", "text": "To suggest that garden snails may also be intelligent."},
+                    {"key": "D", "text": "To stress how unexpected the octopus's intelligence is.", "correct": True},
                 ],
                 "rationale": (
                     "B (correct) synthesises 'nearest cousin is the garden snail' (low "
@@ -324,14 +324,270 @@ READING_PASSAGES = [
             },
         ],
     },
+    # ── B1 #2 (pool variety) ──────────────────────────────────────────
+    {
+        "id": "R_B1_JAY_OAK",
+        "level": "B1",
+        "title": "The Bird That Plants a Forest",
+        "body": (
+            "Every autumn, a small, colourful bird called the jay does "
+            "something that quietly shapes the forests of Europe. Jays love "
+            "to eat acorns, the seeds of oak trees. But they collect far "
+            "more than they can eat in a day, so they hide the extra acorns "
+            "to use later in winter.\n\n"
+            "A single jay can bury several thousand acorns in one season. It "
+            "pushes each acorn into the soil with its beak, often far from "
+            "the parent tree. The bird has a good memory and digs up most of "
+            "its hidden food when other food becomes hard to find.\n\n"
+            "However, no memory is perfect. Some acorns are never found "
+            "again. These forgotten seeds are exactly the ones that matter. "
+            "Buried in soft soil at the right depth, and carried far from the "
+            "shade of the parent oak, they are in an ideal place to grow. In "
+            "this way, the jay plants new oak trees without meaning to.\n\n"
+            "Scientists believe that after the last ice age, jays helped oak "
+            "forests spread north across Europe far faster than the trees "
+            "could have spread alone. A bird looking after itself, it turns "
+            "out, was also planting the forests of the future."
+        ),
+        "word_count": 230,
+        "questions": [
+            {
+                "qid": "R_B1_JAY_OAK_Q1",
+                "type": "mcq",
+                "skill_tag": "main_idea",
+                "stem": "What is the main idea of this passage?",
+                "options": [
+                    {"key": "A", "text": "A bird helps oak forests grow by hiding acorns.", "correct": True},
+                    {"key": "B", "text": "Jays have the sharpest memory of all forest birds."},
+                    {"key": "C", "text": "Oak trees cannot spread at all without bird help."},
+                    {"key": "D", "text": "Acorns are the main source of winter food in forests."},
+                ],
+                "rationale": "A (concise, not longest) = the unintentional-planting thesis. B overstates memory; C too absolute; D a detail, not the point.",
+            },
+            {
+                "qid": "R_B1_JAY_OAK_Q2",
+                "type": "tfng",
+                "skill_tag": "detail",
+                "stem": "A single jay buries only a small number of acorns each season.",
+                "answer": "FALSE",
+                "rationale": "Para 2: 'several thousand acorns in one season' → FALSE.",
+            },
+            {
+                "qid": "R_B1_JAY_OAK_Q3",
+                "type": "fill",
+                "skill_tag": "detail",
+                "stem": "In one season a single jay can bury several ______ acorns.",
+                "answer_text": "thousand",
+                "answer_variants": ["thousand", "thousands"],
+                "rationale": "Number-word retrieval from para 2.",
+            },
+            {
+                "qid": "R_B1_JAY_OAK_Q4",
+                "type": "mcq",
+                "skill_tag": "inference",
+                "stem": "Why does the writer say the forgotten acorns 'are the ones that matter'?",
+                "options": [
+                    {"key": "A", "text": "Because jays bury them especially to feed their chicks later."},
+                    {"key": "B", "text": "Because only forgotten acorns are left to grow into trees.", "correct": True},
+                    {"key": "C", "text": "Because oak trees grow best in their parent's shade."},
+                    {"key": "D", "text": "Because the jay returns to eat them first in winter."},
+                ],
+                "rationale": "B synthesises 'never found again' + 'ideal place to grow'. A/C/D contradict the text (eaten ones don't grow; shade is bad; returned ones are eaten).",
+            },
+        ],
+    },
+
+    # ── B2 #2 (pool variety) ──────────────────────────────────────────
+    {
+        "id": "R_B2_WOOD_WIDE_WEB",
+        "level": "B2",
+        "title": "The Hidden Network Beneath the Forest",
+        "body": (
+            "Walk through any old forest and you are standing on top of a "
+            "communication network older than the internet. Beneath the soil, "
+            "the roots of trees are connected by vast webs of fungal threads "
+            "called mycorrhizae. These threads, far thinner than a human "
+            "hair, link tree to tree across an entire woodland.\n\n"
+            "The relationship benefits both sides. The fungi cannot make "
+            "their own food, so they draw sugars from the trees. In return, "
+            "they extend the trees' reach for water and nutrients, acting "
+            "like an enormous extra root system. But the network does more "
+            "than feed individual trees. Through it, trees appear to share "
+            "resources with one another.\n\n"
+            "In a celebrated set of experiments, the ecologist Suzanne "
+            "Simard showed that older, taller 'mother trees' send carbon "
+            "through the fungal network to shaded seedlings that cannot yet "
+            "photosynthesise enough on their own. When a tree is dying, it "
+            "may even release its stored carbon into the network, where "
+            "neighbours absorb it. Trees under attack by insects have also "
+            "been found to send chemical warning signals to their neighbours "
+            "along these threads.\n\n"
+            "Not everyone agrees on how to interpret these findings. Some "
+            "scientists warn that words like 'mother' and 'sharing' risk "
+            "describing the forest as if it were a single, caring "
+            "organism, when the underlying process may be closer to a "
+            "marketplace in which fungi move resources to wherever they gain "
+            "the most. What is not disputed is that no tree, it seems, truly "
+            "stands alone."
+        ),
+        "word_count": 300,
+        "questions": [
+            {
+                "qid": "R_B2_WOOD_WIDE_WEB_Q1",
+                "type": "mcq",
+                "skill_tag": "main_idea",
+                "stem": "What is the writer's main purpose in this passage?",
+                "options": [
+                    {"key": "A", "text": "To advise foresters on how to protect old woodlands."},
+                    {"key": "B", "text": "To show how trees connect and share resources underground.", "correct": True},
+                    {"key": "C", "text": "To prove that forests act as a single caring organism."},
+                    {"key": "D", "text": "To explain how the internet was modelled on forest networks."},
+                ],
+                "rationale": "B = the network + resource-sharing focus. C is the view the passage QUESTIONS (para 4); A/D never argued. (B not the longest option — A and C are comparable.)",
+            },
+            {
+                "qid": "R_B2_WOOD_WIDE_WEB_Q2",
+                "type": "tfng",
+                "skill_tag": "detail",
+                "stem": "The fungi are able to produce their own food independently of the trees.",
+                "answer": "FALSE",
+                "rationale": "Para 2: 'The fungi cannot make their own food' → FALSE.",
+            },
+            {
+                "qid": "R_B2_WOOD_WIDE_WEB_Q3",
+                "type": "tfng",
+                "skill_tag": "tfng",
+                "stem": "Suzanne Simard's experiments were carried out over a period of thirty years.",
+                "answer": "NOT GIVEN",
+                "rationale": "Para 3 reports her findings but states nothing about how long the experiments lasted.",
+            },
+            {
+                "qid": "R_B2_WOOD_WIDE_WEB_Q4",
+                "type": "mcq",
+                "skill_tag": "inference",
+                "stem": "Why do some scientists object to the word 'mother tree'?",
+                "options": [
+                    {"key": "A", "text": "They believe seedlings receive no carbon at all from older trees."},
+                    {"key": "B", "text": "They think it makes the forest sound like one caring being.", "correct": True},
+                    {"key": "C", "text": "They have shown that the fungal threads do not really exist."},
+                    {"key": "D", "text": "They argue that mother trees harm the seedlings around them."},
+                ],
+                "rationale": "B paraphrases para 4 ('single, caring organism'). A/C/D contradict the passage (carbon IS sent; threads exist; no harm claimed).",
+            },
+            {
+                "qid": "R_B2_WOOD_WIDE_WEB_Q5",
+                "type": "mcq",
+                "skill_tag": "vocab",
+                "stem": "In paragraph 4, the comparison to 'a marketplace' suggests the fungi:",
+                "options": [
+                    {"key": "A", "text": "move resources to where they benefit most.", "correct": True},
+                    {"key": "B", "text": "sell their sugars to the trees in exchange for money."},
+                    {"key": "C", "text": "share their resources equally among all the trees."},
+                    {"key": "D", "text": "compete with the trees for the same sunlight."},
+                ],
+                "rationale": "A = self-interested allocation (the 'marketplace' point). B literalises 'money'; C is the opposite (a market isn't equal sharing); D unrelated.",
+            },
+        ],
+    },
+
+    # ── C1 #2 (pool variety) ──────────────────────────────────────────
+    {
+        "id": "R_C1_ATTENTION",
+        "level": "C1",
+        "title": "The Economics of Attention",
+        "body": (
+            "When a service is offered without charge, the familiar warning "
+            "runs, you are not the customer; you are the product. The slogan "
+            "is neat, but it is not quite right. What is actually being sold "
+            "is not the user but a far more specific commodity: the user's "
+            "attention, sliced into ever-smaller units and auctioned to "
+            "advertisers in the milliseconds before a page loads.\n\n"
+            "This reframing matters because attention, unlike most goods, is "
+            "strictly finite. A factory can raise output; a person cannot "
+            "manufacture more hours in the day. An economy built on "
+            "harvesting attention is therefore, by its nature, a zero-sum "
+            "contest: every design choice that captures another minute of "
+            "your focus must take that minute from something else — a "
+            "conversation, a task, a moment of rest.\n\n"
+            "Critics often frame the resulting products as merely "
+            "distracting. Yet the more troubling claim is subtler. Because "
+            "the systems are optimised relentlessly for engagement, they "
+            "tend to amplify whatever holds attention most reliably — and "
+            "what reliably holds attention is not necessarily what is true, "
+            "useful, or good for us. Outrage travels faster than nuance; "
+            "novelty outperforms depth. The machinery is indifferent to "
+            "content; it rewards only stickiness.\n\n"
+            "Some argue the remedy lies with individuals exercising more "
+            "self-control. But this places the entire burden on the single "
+            "human mind against systems engineered by thousands of people "
+            "and refined by experiments on millions. To treat the contest "
+            "as a fair one, in which willpower is simply lacking, is to "
+            "misunderstand the asymmetry at its heart."
+        ),
+        "word_count": 305,
+        "questions": [
+            {
+                "qid": "R_C1_ATTENTION_Q1",
+                "type": "mcq",
+                "skill_tag": "main_idea",
+                "stem": "What is the writer's central argument?",
+                "options": [
+                    {"key": "A", "text": "Free online services secretly sell users' personal data to other firms."},
+                    {"key": "B", "text": "Attention is a finite resource that these systems contest unfairly.", "correct": True},
+                    {"key": "C", "text": "Online products are simply distracting and waste people's time."},
+                    {"key": "D", "text": "Users could easily fix the problem with a little more willpower."},
+                ],
+                "rationale": "B = the finite-attention + asymmetry thesis (paras 2 & 4). A is the slogan the writer CORRECTS; C is the shallow framing rejected in para 3; D is the view criticised in para 4.",
+            },
+            {
+                "qid": "R_C1_ATTENTION_Q2",
+                "type": "tfng",
+                "skill_tag": "inference",
+                "stem": "The writer accepts the saying 'you are not the customer, you are the product' as accurate.",
+                "answer": "FALSE",
+                "rationale": "Para 1: 'it is not quite right' — the writer corrects the slogan → FALSE.",
+            },
+            {
+                "qid": "R_C1_ATTENTION_Q3",
+                "type": "mcq",
+                "skill_tag": "inference",
+                "stem": "Why does the writer call the attention economy 'zero-sum'?",
+                "options": [
+                    {"key": "A", "text": "Because advertisers and users alike always end up losing money."},
+                    {"key": "B", "text": "Because companies can never increase their total profits."},
+                    {"key": "C", "text": "Because attention given to one thing is taken from another.", "correct": True},
+                    {"key": "D", "text": "Because every user receives an equal share of content."},
+                ],
+                "rationale": "C paraphrases para 2 ('must take that minute from something else'). A/B/D misread 'zero-sum' (it's about the user's finite time, not profit or equality).",
+            },
+            {
+                "qid": "R_C1_ATTENTION_Q4",
+                "type": "mcq",
+                "skill_tag": "vocab",
+                "stem": "In paragraph 3, 'it rewards only stickiness' most nearly means the systems favour content that:",
+                "options": [
+                    {"key": "A", "text": "keeps users engaged regardless of its quality.", "correct": True},
+                    {"key": "B", "text": "is carefully verified as accurate before being shown."},
+                    {"key": "C", "text": "is produced by the most expert writers."},
+                    {"key": "D", "text": "loads onto the page as quickly as possible."},
+                ],
+                "rationale": "A captures 'indifferent to content; rewards only stickiness' (engagement over merit). B/C are the opposite (truth/quality); D literalises 'stickiness' as load speed.",
+            },
+        ],
+    },
 ]
 
 # Stage 2 difficulty buckets — Stage 1 anchor score (0-4) routes here.
+# Lists per level (≥2 each) so Stage 2 RANDOMLY picks one — repeat-takers don't
+# memorise a single passage. See passage_for_difficulty() (random.choice).
 PASSAGE_BUCKETS = {
-    "C1": ["R_C1_COOPERATION"],       # 4/4 anchor → C1
-    "B2": ["R_B2_OCTOPUS"],           # 2-3/4 → B2 (also Stage 1 default)
-    "B1": ["R_B1_SLEEP_MEMORY"],      # 0-1/4 → B1
+    "C1": ["R_C1_COOPERATION", "R_C1_ATTENTION"],          # 4/4 anchor → C1
+    "B2": ["R_B2_OCTOPUS", "R_B2_WOOD_WIDE_WEB"],          # 2-3/4 → B2
+    "B1": ["R_B1_SLEEP_MEMORY", "R_B1_JAY_OAK"],           # 0-1/4 → B1
 }
+
+# Mid-level passages usable as the Stage 1 anchor (random per session).
+ANCHOR_PASSAGES = ["R_B2_OCTOPUS", "R_B2_WOOD_WIDE_WEB"]
 
 
 def get_passage(passage_id):
@@ -343,9 +599,15 @@ def get_passage(passage_id):
 
 
 def passage_for_difficulty(level):
-    """Pick a passage matching the requested CEFR level."""
+    """Pick a RANDOM passage matching the requested CEFR level (pool variety)."""
+    import random
     bucket = PASSAGE_BUCKETS.get(level, [])
     if not bucket:
-        # Fallback to B2 — single available passage in v1
-        return get_passage("R_B2_OCTOPUS")
-    return get_passage(bucket[0])
+        bucket = PASSAGE_BUCKETS["B2"]
+    return get_passage(random.choice(bucket))
+
+
+def anchor_passage():
+    """Random mid-level passage for the Stage 1 anchor (different per session)."""
+    import random
+    return get_passage(random.choice(ANCHOR_PASSAGES))
