@@ -68,7 +68,7 @@ MODEL_ID = "eleven_v3"
 
 # Bump when re-rendering: live audio is cached `immutable` on R2/CDN, so a new
 # key is required for the new audio to actually reach users.
-AUDIO_VERSION = "el3"
+AUDIO_VERSION = "el5"
 
 
 def _make_r2():
@@ -81,16 +81,22 @@ def _make_r2():
     )
 
 
-def _render_turn(client: ElevenLabs, speaker: str, text: str) -> AudioSegment:
+def _render_turn(client: ElevenLabs, speaker: str, text: str, overrides: dict | None = None) -> AudioSegment:
     voice_id, stability, similarity, style = ELEVENLABS_VOICES[speaker]
+    overrides = overrides or {}
+    # Per-turn overrides: spelling turns need HIGH stability + style 0 so letters
+    # are crisp and unambiguous (low stability slurred "A" → "O", turning
+    # Lambardi into the wrong-answer "Lombardi"). multilingual_v2 spells letters
+    # more precisely than v3, so allow a per-turn model override too.
+    model_id = overrides.get("model", MODEL_ID)
     audio_gen = client.text_to_speech.convert(
         text=text,
         voice_id=voice_id,
-        model_id=MODEL_ID,
+        model_id=model_id,
         voice_settings={
-            "stability": stability,
-            "similarity_boost": similarity,
-            "style": style,
+            "stability": overrides.get("stability", stability),
+            "similarity_boost": overrides.get("similarity", similarity),
+            "style": overrides.get("style", style),
             "use_speaker_boost": True,
         },
         output_format="mp3_44100_128",
@@ -108,8 +114,10 @@ def _render_clip(client: ElevenLabs, clip: dict, out_path: Path) -> float:
     print(f"  {clip['id']}: {len(turns)} turns")
     segments: list[AudioSegment] = []
     gap = AudioSegment.silent(duration=450)  # 0.45s between turns — natural conversational pace
-    for i, (speaker, text) in enumerate(turns):
-        seg = _render_turn(client, speaker, text)
+    for i, turn in enumerate(turns):
+        speaker, text = turn[0], turn[1]
+        overrides = turn[2] if len(turn) > 2 else None
+        seg = _render_turn(client, speaker, text, overrides)
         segments.append(seg)
         if i < len(turns) - 1:
             segments.append(gap)

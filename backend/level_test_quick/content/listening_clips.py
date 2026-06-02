@@ -33,7 +33,13 @@ LISTENING_CLIPS = [
             ("HELEN", "Good afternoon, Cambridge Language Exchange — Helen speaking. How can I help you?"),
             ("MARCO", "Oh, hi. Um, yes — I'd like to sign up as a Spanish–English exchange partner, please."),
             ("HELEN", "Of course. Let me just take a few details. Could I get your full name first?"),
-            ("MARCO", "Sure. It's Marco Lambardi. Let me spell that for you... L... A... M... B... A... R... D... I."),
+            ("MARCO", "Sure. It's Marco Lambardi."),
+            # Spelling rendered with HIGH stability + multilingual_v2 (per-turn
+            # override) so the letters are crisp — at low stability the "A" slurred
+            # to "O" and the answer came out "Lombardi" (a wrong-answer distractor).
+            ("HELEN", "Let me just confirm the surname, letter by letter — is it L - A - M - B - A - R - D - I?",
+             {"stability": 0.9, "style": 0.0, "model": "eleven_multilingual_v2"}),
+            ("MARCO", "Yes, that's exactly right."),
             ("HELEN", "Lovely — got it. And your date of birth?"),
             ("MARCO", "The fifteenth of August, nineteen ninety-seven."),
             ("HELEN", "Perfect. And which language are you offering, and which would you like to learn?"),
@@ -43,7 +49,7 @@ LISTENING_CLIPS = [
             ("HELEN", "Good choice. And how would you like to be matched — by accent preference, or by topic interest?"),
             ("MARCO", "By topic interest, please. I'd much rather chat about something I actually care about."),
         ],
-        "audio_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/quick_assessment/L_S1_LANG_EXCHANGE_el3.mp3",
+        "audio_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/quick_assessment/L_S1_LANG_EXCHANGE_el5.mp3",
         "duration_estimate_sec": 75,
         "questions": [
             {
@@ -140,7 +146,7 @@ LISTENING_CLIPS = [
              "sixty-five per cent of the words. The awake group? Only "
              "thirty-two."),
         ],
-        "audio_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/quick_assessment/L_S4_SLEEP_MEMORY_el3.mp3",
+        "audio_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/quick_assessment/L_S4_SLEEP_MEMORY_el5.mp3",
         "duration_estimate_sec": 70,
         "questions": [
             {
