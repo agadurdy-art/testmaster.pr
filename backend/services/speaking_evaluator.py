@@ -571,6 +571,7 @@ async def _run_evaluator_llm(
                 max_tokens=MAX_TOKENS,
                 task="eval",
                 scope=f"speaking_eval_part{req.part.value}",
+                cache_system=True,  # audit NEW-7: rubric is identical every call
             ),
             timeout=CALL_TIMEOUT_SECONDS,
         )
@@ -892,6 +893,7 @@ async def _run_fulltest_llm(
                 max_tokens=6500,
                 task="eval",
                 scope="speaking_eval_fulltest",
+                cache_system=True,  # audit NEW-7: rubric is identical every call
             ),
             timeout=CALL_TIMEOUT_SECONDS,
         )
