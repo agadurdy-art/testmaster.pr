@@ -4332,7 +4332,7 @@ async def public_evaluator_rating(request: EvaluatorRatingRequest, http_request:
 
 
 @api_router.post("/writing-practice/evaluate")
-async def evaluate_writing_practice(request: WritingPracticeRequest):
+async def evaluate_writing_practice(request: WritingPracticeRequest, _caller: dict = Depends(auth_session.current_user)):
     """Evaluate IELTS writing practice submission with detailed teacher-style feedback"""
     try:
         chat = LlmChat(
@@ -5252,7 +5252,7 @@ class SpeakingPracticeRequest(BaseModel):
     responses: List[Dict[str, Any]]  # List of {question, answer} pairs
 
 @api_router.post("/speaking-practice/evaluate")
-async def evaluate_speaking_practice(request: SpeakingPracticeRequest):
+async def evaluate_speaking_practice(request: SpeakingPracticeRequest, _caller: dict = Depends(auth_session.current_user)):
     """Evaluate IELTS speaking practice with detailed feedback"""
     try:
         chat = LlmChat(
@@ -5367,7 +5367,7 @@ class MasterySpeakingRequest(BaseModel):
     module_title: str
 
 @api_router.post("/mastery-course/evaluate-speaking")
-async def evaluate_mastery_speaking(request: MasterySpeakingRequest):
+async def evaluate_mastery_speaking(request: MasterySpeakingRequest, _caller: dict = Depends(auth_session.current_user)):
     """Evaluate speaking response for mastery course (Band 4.5-6.5) with comprehensive feedback"""
     try:
         chat = LlmChat(
@@ -5426,7 +5426,7 @@ class MasteryWritingRequest(BaseModel):
     module_title: str
 
 @api_router.post("/mastery-course/evaluate-writing")
-async def evaluate_mastery_writing(request: MasteryWritingRequest):
+async def evaluate_mastery_writing(request: MasteryWritingRequest, _caller: dict = Depends(auth_session.current_user)):
     """Evaluate writing response for mastery course (Band 4.5-6.5) with comprehensive feedback"""
     try:
         chat = LlmChat(
@@ -6114,7 +6114,7 @@ class ProductionModeRequest(BaseModel):
     module_title: str = ""
 
 @api_router.post("/vocabulary-engine/evaluate-sentence")
-async def evaluate_production_sentence(request: ProductionModeRequest):
+async def evaluate_production_sentence(request: ProductionModeRequest, _caller: dict = Depends(auth_session.current_user)):
     """AI evaluates a user-written sentence using a target vocabulary word"""
     try:
         chat = LlmChat(
@@ -6295,7 +6295,7 @@ class AdvancedSpeakingRequest(BaseModel):
     part: str = "part3"  # part2 or part3
 
 @api_router.post("/advanced-mastery/evaluate-speaking")
-async def evaluate_advanced_speaking(request: AdvancedSpeakingRequest):
+async def evaluate_advanced_speaking(request: AdvancedSpeakingRequest, _caller: dict = Depends(auth_session.current_user)):
     """Evaluate speaking response for Advanced IELTS Mastery course with IELTS Core Mindset"""
     try:
         # Use IELTS Core Mindset with Evaluation Mode
@@ -6384,7 +6384,7 @@ class AdvancedWritingRequest(BaseModel):
     examiner_analysis: dict = None
 
 @api_router.post("/advanced-mastery/evaluate-writing")
-async def evaluate_advanced_writing(request: AdvancedWritingRequest):
+async def evaluate_advanced_writing(request: AdvancedWritingRequest, _caller: dict = Depends(auth_session.current_user)):
     """Evaluate writing response for Advanced IELTS Mastery course with IELTS Core Mindset"""
     try:
         # Use IELTS Core Mindset with Evaluation Mode
@@ -6490,7 +6490,7 @@ class AdvancedQuizRequest(BaseModel):
     answers: dict  # {question_index: answer}
 
 @api_router.post("/advanced-mastery/evaluate-quiz")
-async def evaluate_advanced_quiz(request: AdvancedQuizRequest):
+async def evaluate_advanced_quiz(request: AdvancedQuizRequest, _caller: dict = Depends(auth_session.current_user)):
     """Evaluate quiz answers for Advanced IELTS Mastery module"""
     try:
         module = await db.advanced_mastery_modules.find_one({"id": request.module_id}, {"_id": 0})
@@ -6683,7 +6683,7 @@ class BeginnerSpeakingRequest(BaseModel):
     user_response: str
 
 @api_router.post("/beginner-english/evaluate-speaking")
-async def evaluate_beginner_speaking(request: BeginnerSpeakingRequest):
+async def evaluate_beginner_speaking(request: BeginnerSpeakingRequest, _caller: dict = Depends(auth_session.current_user)):
     """Evaluate beginner speaking response with simple feedback"""
     try:
         chat = LlmChat(
@@ -6732,7 +6732,7 @@ class BeginnerWritingRequest(BaseModel):
     user_response: str
 
 @api_router.post("/beginner-english/evaluate-writing")
-async def evaluate_beginner_writing(request: BeginnerWritingRequest):
+async def evaluate_beginner_writing(request: BeginnerWritingRequest, _caller: dict = Depends(auth_session.current_user)):
     """Evaluate beginner writing response with simple feedback"""
     try:
         chat = LlmChat(
