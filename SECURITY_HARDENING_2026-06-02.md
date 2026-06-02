@@ -20,7 +20,20 @@ instance). Fail-open (limiter errors never block requests).
   Retry-After header present) for both auth and anonymous-eval buckets.
 - ⚠️ If the backend is ever scaled to multiple instances, move the store to Redis.
 
-## C) Dependency vulnerabilities — ✅ scanned, remediation pending (tested batch)
+## C) Dependency vulnerabilities — ✅ DONE (scanned + bumped + tested)
+**Shipped:** backend bumped pymongo 4.6.3, pillow 12.2.0, python-multipart 0.0.27,
+Werkzeug 3.1.6, lxml 6.1.0, PyJWT 2.13.0, idna 3.15, python-dotenv 1.2.2, pyasn1 0.6.3,
+Pygments 2.20.0 (all import-tested clean in a fresh venv). Frontend axios → 1.16.1 (fixes
+the SSRF + prototype-pollution highs + transitive follow-redirects/form-data).
+**Left intentionally:** `litellm` stays 1.79.3 — bumping to 1.83.7 forces aiohttp 3.13.5,
+and litellm is NOT used by the live service (only offline content scripts via
+`emergentintegrations`, which isn't even in requirements.txt). Bump litellm+aiohttp
+together only when those scripts are next touched — or better, remove
+emergentintegrations+litellm as dead weight (see dead-code cleanup task).
+Note: local full `pip install -r` fails on grpcio-status under Python 3.14 (no cp314
+wheel) — that's a LOCAL env quirk; Railway's Python has wheels.
+
+### (original scan detail below)
 `pip-audit` (backend) + `npm audit --registry=npmjs.org` (frontend). Bumping these
 touches production, so do it as ONE tested batch (boot backend + smoke-test evals/DB),
 NOT a blind push.
