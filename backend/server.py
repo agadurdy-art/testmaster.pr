@@ -290,6 +290,16 @@ Your task:
 app = FastAPI()
 api_router = APIRouter(prefix="/api")
 
+# ─── Security backlog A: in-memory IP rate limiting ───────────────────────────
+# Brute-force / email-bomb / costly-eval / heartbeat-flood protection on the
+# abuse-prone endpoints. Fail-open, no new deps. See backend/ratelimit.py.
+try:
+    from ratelimit import rate_limit_middleware as _rate_limit_mw
+    app.middleware("http")(_rate_limit_mw)
+    print("✅ IP rate-limit middleware installed")
+except Exception as _e:  # noqa: BLE001
+    print(f"⚠️  Could not install rate-limit middleware: {_e}")
+
 # ─── Static asset CDN swap (Cloudflare R2) ────────────────────────────────────
 # When STATIC_BASE_URL is set (production: Railway behind R2), incoming requests
 # for /api/static/* and /static/* are 307-redirected to the CDN. The exclusion
