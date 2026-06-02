@@ -25,25 +25,25 @@ LISTENING_CLIPS = [
             ("HELEN", "bf_emma"),
             ("MARCO", "am_fenrir"),
         ],
-        "transcript_for_tts": (
-            # Each line is one TTS render; speaker is mapped to voice via `voices`.
-            # Format: list of (speaker_code, text). Concatenated with ~0.5s gap.
-            [
-                ("HELEN", "Good afternoon, Cambridge Language Exchange. How can I help you?"),
-                ("MARCO", "Oh, hi. I'd like to sign up as a Spanish-English exchange partner, please."),
-                ("HELEN", "Perfect. Let me take a few details. Could I get your full name first?"),
-                ("MARCO", "It's Marco Lambardi. That's L-A-M-B-A-R-D-I."),
-                ("HELEN", "Got it. And your date of birth?"),
-                ("MARCO", "The fifteenth of August, 1997."),
-                ("HELEN", "Lovely. And which language are you offering, and which are you looking to learn?"),
-                ("MARCO", "I'm a native Spanish speaker, and I'd like to improve my English. Particularly for work — I do a lot of presentations."),
-                ("HELEN", "Got it. We have three options. Weekly one-hour sessions for fifteen pounds a month, twice-weekly for twenty-five, or unlimited messaging for eight pounds."),
-                ("MARCO", "Hmm. I think twice-weekly. The messaging one is cheaper but I really need speaking practice."),
-                ("HELEN", "Good choice. And how would you like to be matched — by accent preference, or by topic interest?"),
-                ("MARCO", "Topic interest, please. I'd rather chat about something I care about."),
-            ]
-        ),
-        "audio_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/quick_assessment/L_S1_LANG_EXCHANGE_el2.mp3",
+        # eleven_v3 + ellipsis pacing + natural fillers for human delivery (no bracket
+        # tags — kept text-only so nothing is ever vocalised by mistake).
+        # Fillers (um/uh/so/right/honestly) added for naturalness — they do NOT
+        # change any testable fact (spelling, DOB, prices, reason, matching).
+        "transcript_for_tts": [
+            ("HELEN", "Good afternoon, Cambridge Language Exchange — Helen speaking. How can I help you?"),
+            ("MARCO", "Oh, hi. Um, yes — I'd like to sign up as a Spanish–English exchange partner, please."),
+            ("HELEN", "Of course. Let me just take a few details. Could I get your full name first?"),
+            ("MARCO", "Sure. It's Marco Lambardi. Let me spell that for you... L... A... M... B... A... R... D... I."),
+            ("HELEN", "Lovely — got it. And your date of birth?"),
+            ("MARCO", "The fifteenth of August, nineteen ninety-seven."),
+            ("HELEN", "Perfect. And which language are you offering, and which would you like to learn?"),
+            ("MARCO", "So, I'm a native Spanish speaker, and I'd like to improve my English. Especially for work — I, uh, give a lot of presentations."),
+            ("HELEN", "Right, I see. Well, we've got three options. Weekly one-hour sessions for fifteen pounds a month; twice-weekly for twenty-five; or unlimited messaging for just eight."),
+            ("MARCO", "Hmm... I think twice-weekly. The messaging one's cheaper, but honestly, I really need the speaking practice."),
+            ("HELEN", "Good choice. And how would you like to be matched — by accent preference, or by topic interest?"),
+            ("MARCO", "By topic interest, please. I'd much rather chat about something I actually care about."),
+        ],
+        "audio_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/quick_assessment/L_S1_LANG_EXCHANGE_el3.mp3",
         "duration_estimate_sec": 75,
         "questions": [
             {
@@ -116,28 +116,31 @@ LISTENING_CLIPS = [
             # academic feel best out of the available BM voices.
             ("LECTURER", "bm_george"),
         ],
+        # eleven_v3 academic-but-human delivery: spoken-form numbers so the model
+        # says them naturally; light rhetoric. All facts (1960s, 2-3 hours, 2019
+        # Harvard, 8 hours, 65% vs 32%) preserved.
         "transcript_for_tts": [
             ("LECTURER",
-             "Tonight, when you sleep, your brain will not switch off. It will, "
-             "in fact, work harder than during much of the day — but on a different "
-             "task. While you are awake, your brain takes in information; while you "
-             "sleep, your brain organises it."),
+             "Right, so... tonight, when you sleep, your brain will not "
+             "switch off. In fact, it'll work harder than during much of the day — but "
+             "on a different task. While you're awake, your brain takes in information; "
+             "while you sleep, it organises it."),
             ("LECTURER",
-             "Researchers have known since the 1960s that learning is followed by a "
-             "particular pattern of brain activity during sleep, specifically during "
-             "what is called the slow-wave stage. This is the deepest part of sleep, "
-             "typically reached two to three hours after falling asleep, and it "
-             "appears to play a critical role in moving memories from short-term "
+             "Now, researchers have known since the nineteen-sixties that learning is "
+             "followed by a particular pattern of brain activity during sleep — "
+             "specifically during what we call the slow-wave stage. This is the deepest "
+             "part of sleep, typically reached two to three hours after falling asleep, "
+             "and it appears to play a critical role in moving memories from short-term "
              "storage into long-term storage."),
             ("LECTURER",
-             "A 2019 study at Harvard demonstrated this clearly. Two groups of "
-             "students were taught the same vocabulary list. One group slept for a "
-             "full eight hours afterwards; the other was kept awake for the same "
-             "period. Two days later, the sleeping group remembered, on average, "
-             "sixty-five per cent of the words. The awake group remembered only "
+             "A two-thousand-nineteen study at Harvard demonstrated this rather clearly. "
+             "Two groups of students were taught the same vocabulary list. One group "
+             "slept for a full eight hours afterwards; the other was kept awake for the "
+             "same period. Two days later, the sleeping group remembered, on average, "
+             "sixty-five per cent of the words. The awake group? Only "
              "thirty-two."),
         ],
-        "audio_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/quick_assessment/L_S4_SLEEP_MEMORY_el2.mp3",
+        "audio_url": "https://pub-fcd31e7869f94c4896d039253b8f1646.r2.dev/quick_assessment/L_S4_SLEEP_MEMORY_el3.mp3",
         "duration_estimate_sec": 70,
         "questions": [
             {

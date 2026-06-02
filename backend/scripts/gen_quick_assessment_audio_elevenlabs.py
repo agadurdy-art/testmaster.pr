@@ -52,21 +52,23 @@ LOCAL_OUT_DIR.mkdir(parents=True, exist_ok=True)
 # the script (Marco IS a "native Spanish speaker" → Spanish-accented voice).
 #   (voice_id, stability, similarity, style)
 ELEVENLABS_VOICES = {
-    # HELEN — British female receptionist (native, clear/professional)
-    "HELEN":    ("Xb7hH8MSUJpSbSDYk0k2", 0.45, 0.80, 0.12),  # Alice — British F educator
+    # HELEN — British female receptionist (native, warm/professional)
+    "HELEN":    ("Xb7hH8MSUJpSbSDYk0k2", 0.40, 0.80, 0.30),  # Alice — British F educator
     # MARCO — native Spanish speaker learning English → authentic L2 accent
-    "MARCO":    ("yHD4CsKkghm19ToGLJEC", 0.45, 0.85, 0.10),  # Hernando — Colombian/Spanish M
+    "MARCO":    ("yHD4CsKkghm19ToGLJEC", 0.40, 0.85, 0.25),  # Hernando — Colombian/Spanish M
     # LECTURER — British academic, steady authoritative delivery
-    "LECTURER": ("onwK4e9ZLuTAKqWW03F9", 0.50, 0.80, 0.10),  # Daniel — British M broadcaster
+    "LECTURER": ("onwK4e9ZLuTAKqWW03F9", 0.45, 0.80, 0.20),  # Daniel — British M broadcaster
 }
 
-# ElevenLabs model — multilingual_v2 has the most natural English voices and
-# renders non-English-native accents (Hernando) cleanly.
-MODEL_ID = "eleven_multilingual_v2"
+# ElevenLabs model — v3 is the most HUMAN model + interprets inline audio/emotion
+# tags ([warm], [thoughtful], [hesitant]) and ellipsis/dash pacing, so discourse
+# markers ("got it", "right…") and letter-by-letter spelling sound natural rather
+# than robotic. (multilingual_v2 was the flat-sounding previous render.)
+MODEL_ID = "eleven_v3"
 
 # Bump when re-rendering: live audio is cached `immutable` on R2/CDN, so a new
 # key is required for the new audio to actually reach users.
-AUDIO_VERSION = "el2"
+AUDIO_VERSION = "el3"
 
 
 def _make_r2():
