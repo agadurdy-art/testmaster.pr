@@ -52,6 +52,13 @@ __pycache__/
 venv/
 .venv/
 
+# JARVIS control room — local-only artifacts
+jarvis/.venv/
+jarvis/**/__pycache__/
+
+# Quick-assessment audio renders are served from R2 (local copies are redundant)
+backend/static/audio/quick_assessment/
+
 # Development tools
 chainlit.md
 .chainlit

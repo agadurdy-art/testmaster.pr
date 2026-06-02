@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JARVIS · testmaster.pro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background:#0a0e14; color:#cdd6f4; font-family:ui-sans-serif,system-ui,-apple-system,sans-serif; }
+    .glass { background:rgba(20,27,40,.7); backdrop-filter:blur(12px); border:1px solid rgba(120,160,255,.12); }
+    .glow { box-shadow:0 0 18px rgba(80,160,255,.18); }
+    .log::-webkit-scrollbar{width:8px} .log::-webkit-scrollbar-thumb{background:#1e2a44;border-radius:8px}
+    @keyframes pulse2{0%,100%{opacity:.4}50%{opacity:1}}
+    .live{animation:pulse2 1.2s ease-in-out infinite}
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module">
+    import { h, render } from "https://esm.sh/preact@10.23.2";
+    import { useState, useEffect, useRef, useCallback } from "https://esm.sh/preact@10.23.2/hooks";
+    import htm from "https://esm.sh/htm@3.1.1";
+    const html = htm.bind(h);
+
+    const TOKEN = localStorage.getItem("jarvis_token") || "";
+    const authHeaders = TOKEN ? { Authorization: "Bearer " + TOKEN } : {};
+
+    const ROLE_COLOR = {
+      orchestrator:"text-amber-300", gate:"text-rose-300", build:"text-sky-300",
+      audit:"text-emerald-300", localization:"text-fuchsia-300", specialist:"text-slate-300",
+    };
+    const EV_STYLE = {
+      agent:"text-amber-300", tool:"text-slate-400", tool_result:"text-slate-500",
+      text:"text-slate-200", result:"text-emerald-300", error:"text-rose-400",
+      system:"text-sky-400", started:"text-sky-300", done:"text-slate-500",
+    };
+
+    function useTTS() {
+      const queue = useRef([]); const playing = useRef(false);
+      const speak = useCallback(async (text) => {
+        queue.current.push(text);
+        if (playing.current) return;
+        playing.current = true;
+        while (queue.current.length) {
+          const t = queue.current.shift();
+          try {
+            const r = await fetch("/api/tts", { method:"POST",
+              headers:{ "Content-Type":"application/json", ...authHeaders },
+              body: JSON.stringify({ text:t }) });
+            if (!r.ok) continue;
+            const blob = await r.blob();
+            await new Promise(res => { const a=new Audio(URL.createObjectURL(blob)); a.onended=res; a.onerror=res; a.play().catch(res); });
+          } catch { /* ignore */ }
+        }
+        playing.current = false;
+      }, []);
+      return speak;
+    }
+
+    function App() {
+      const [roster, setRoster] = useState([]);
+      const [agent, setAgent] = useState("");           // "" = Auto (JARVIS routes)
+      const [command, setCommand] = useState("");
+      const [events, setEvents] = useState([]);
+      const [running, setRunning] = useState(false);
+      const [sessionId, setSessionId] = useState(null);
+      const [voiceOut, setVoiceOut] = useState(true);
+      const [listening, setListening] = useState(false);
+      const [cost, setCost] = useState(0);
+      const wsRef = useRef(null); const logRef = useRef(null); const recRef = useRef(null);
+      const speak = useTTS();
+      const textBuf = useRef("");
+
+      useEffect(() => {
+        fetch("/api/agents", { headers: authHeaders })
+          .then(r => r.json()).then(d => setRoster(d.agents || [])).catch(()=>{});
+      }, []);
+      useEffect(() => { if (logRef.current) logRef.current.scrollTop = logRef.current.scrollHeight; }, [events]);
+
+      const push = (e) => setEvents(prev => [...prev, e]);
+
+      const run = useCallback(() => {
+        if (!command.trim() || running) return;
+        const cmd = command.trim();
+        push({ type:"started", text:"› " + cmd });
+        setRunning(true); textBuf.current = "";
+        const proto = location.protocol === "https:" ? "wss" : "ws";
+        const ws = new WebSocket(`${proto}://${location.host}/ws/run`);
+        wsRef.current = ws;
+        ws.onopen = () => ws.send(JSON.stringify({
+          command: cmd, agent: agent || null, session_id: sessionId, token: TOKEN, speak: voiceOut,
+        }));
+        ws.onmessage = (m) => {
+          const ev = JSON.parse(m.data);
+          if (ev.session_id) setSessionId(ev.session_id);
+          if (ev.type === "say") { if (voiceOut) speak(ev.text); return; }
+          if (ev.type === "text") {
+            textBuf.current += ev.text;
+            setEvents(prev => {
+              const last = prev[prev.length-1];
+              if (last && last.type === "text" && last._stream) {
+                const cp=[...prev]; cp[cp.length-1]={...last,text:textBuf.current}; return cp;
+              }
+              return [...prev, { type:"text", text:textBuf.current, _stream:true }];
+            });
+            return;
+          }
+          if (ev.type !== "text") textBuf.current = "";
+          if (ev.type === "result" && ev.total_cost_usd) setCost(c => c + ev.total_cost_usd);
+          if (ev.type === "done") setRunning(false);
+          push(ev);
+        };
+        ws.onclose = () => setRunning(false);
+        ws.onerror = () => { push({ type:"error", message:"connection error" }); setRunning(false); };
+        setCommand("");
+      }, [command, agent, sessionId, running, voiceOut, speak]);
+
+      const mic = useCallback(() => {
+        const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SR) { alert("Bu tarayıcı ses tanımayı desteklemiyor (Chrome dene)."); return; }
+        if (listening) { recRef.current?.stop(); return; }
+        const rec = new SR(); recRef.current = rec;
+        rec.lang = "en-US"; rec.interimResults = true; rec.continuous = false;
+        rec.onresult = (e) => { setCommand(Array.from(e.results).map(r=>r[0].transcript).join("")); };
+        rec.onend = () => setListening(false);
+        rec.onerror = () => setListening(false);
+        rec.start(); setListening(true);
+      }, [listening]);
+
+      const newSession = () => { setSessionId(null); setEvents([]); textBuf.current=""; };
+
+      const squads = { product: roster.filter(a=>a.squad==="product"),
+                       marketing: roster.filter(a=>a.squad==="marketing") };
+
+      return html`
+        <div class="h-screen flex flex-col">
+          <header class="glass flex items-center gap-3 px-5 py-3 border-b border-sky-900/40">
+            <div class="text-xl font-bold tracking-widest text-sky-300">J.A.R.V.I.S</div>
+            <div class="text-xs text-slate-500">testmaster.pro control room</div>
+            <div class="ml-auto flex items-center gap-4 text-xs">
+              <span class="text-slate-500" title="Aboneliğinden (plan kotandan) düşer — ayrı bir API faturası DEĞİL. Bu sadece tüketilen token'ın dolar karşılığı tahmini.">≈ kullanım: <b class="text-emerald-300">$${cost.toFixed(3)}</b> <span class="text-slate-600">(tahmini · abonelik)</span></span>
+              <span class="text-slate-500">${sessionId ? "session "+sessionId.slice(0,8) : "new session"}</span>
+              <button onClick=${newSession} class="px-2 py-1 rounded bg-slate-800/60 hover:bg-slate-700">↺ reset</button>
+              <label class="flex items-center gap-1 cursor-pointer">
+                <input type="checkbox" checked=${voiceOut} onChange=${e=>setVoiceOut(e.target.checked)} /> voice
+              </label>
+            </div>
+          </header>
+
+          <div class="flex-1 flex min-h-0">
+            <!-- roster -->
+            <aside class="w-64 glass overflow-y-auto p-3 space-y-3 border-r border-sky-900/40">
+              ${["product","marketing"].map(sq => html`
+                <div>
+                  <div class="text-[10px] uppercase tracking-widest text-slate-500 mb-1">${sq}</div>
+                  ${squads[sq].map(a => html`
+                    <button onClick=${()=>setAgent(agent===a.name?"":a.name)}
+                      class="w-full text-left px-2 py-1.5 rounded mb-1 text-xs ${agent===a.name?'bg-sky-900/50 glow':'hover:bg-slate-800/50'}">
+                      <div class="font-medium ${ROLE_COLOR[a.role]||'text-slate-300'}">${a.name}</div>
+                      <div class="text-[10px] text-slate-500">${a.role} · ${a.model}</div>
+                    </button>`)}
+                </div>`)}
+            </aside>
+
+            <!-- log -->
+            <main class="flex-1 flex flex-col min-w-0">
+              <div ref=${logRef} class="log flex-1 overflow-y-auto p-4 space-y-1 text-sm font-mono">
+                ${events.length===0 && html`<div class="text-slate-600 text-center mt-20">
+                  Bir komut yaz ya da 🎤 ile söyle. Sol panelden bir agent seç (yoksa JARVIS yönlendirir).</div>`}
+                ${events.map((e,i) => html`<div key=${i} class="${EV_STYLE[e.type]||'text-slate-300'} whitespace-pre-wrap break-words">
+                  ${e.type==="agent" ? `▸ ${e.agent}${e.label?": "+e.label:""}`
+                    : e.type==="tool" ? `  · ${e.tool} ${e.summary||""}`
+                    : e.type==="tool_result" ? `    ↳ ${(e.text||"").slice(0,180)}`
+                    : e.type==="result" ? `■ tamam${e.total_cost_usd?` · $${e.total_cost_usd.toFixed(3)}`:""}${e.num_turns?` · ${e.num_turns} turn`:""}${e.is_error?" · HATA":""}`
+                    : e.type==="error" ? `✖ ${e.message||"error"}`
+                    : e.type==="started" ? e.text
+                    : e.type==="system" ? `[${e.subtype||"system"} ${e.model||""}]`
+                    : e.text||""}
+                </div>`)}
+                ${running && html`<div class="text-sky-400 live">▍ working…</div>`}
+              </div>
+
+              <!-- command bar -->
+              <div class="glass p-3 border-t border-sky-900/40">
+                <div class="flex items-center gap-2">
+                  <button onClick=${mic} title="konuş"
+                    class="w-10 h-10 rounded-full flex items-center justify-center ${listening?'bg-rose-600 live':'bg-slate-800 hover:bg-slate-700'}">🎤</button>
+                  <input value=${command} onInput=${e=>setCommand(e.target.value)}
+                    onKeyDown=${e=>{if(e.key==="Enter")run();}}
+                    placeholder=${agent ? `${agent}'a komut…` : "JARVIS'e komut… (örn: quick-assessment için launch planla)"}
+                    class="flex-1 bg-slate-900/70 rounded-lg px-4 py-2.5 outline-none focus:ring-1 ring-sky-600 text-sm" />
+                  <button onClick=${run} disabled=${running||!command.trim()}
+                    class="px-5 py-2.5 rounded-lg bg-sky-600 hover:bg-sky-500 disabled:opacity-40 text-sm font-medium">
+                    ${running?"…":"Gönder"}</button>
+                </div>
+                ${agent && html`<div class="text-[11px] text-amber-300 mt-1.5 ml-12">→ doğrudan <b>${agent}</b> agent'ına gidecek (kaldırmak için tekrar tıkla)</div>`}
+              </div>
+            </main>
+          </div>
+        </div>`;
+    }
+    render(html`<${App} />`, document.getElementById("app"));
+  </script>
+</body>
+</html>
