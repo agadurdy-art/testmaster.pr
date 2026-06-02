@@ -17,7 +17,11 @@ fi
 PY="./.venv/bin/python3"
 
 export PYTHONPATH="$PWD/backend"
-# JARVIS_TOKEN can be set to require a shared secret (do this before exposing).
-# JARVIS_PERMISSION_MODE defaults to bypassPermissions (full local autonomy).
+# JARVIS_TOKEN gates /api + /ws. If not set in env, read jarvis/.token (gitignored).
+# REQUIRED before exposing publicly. JARVIS_PERMISSION_MODE defaults to bypassPermissions.
+if [ -z "${JARVIS_TOKEN:-}" ] && [ -f ".token" ]; then
+  export JARVIS_TOKEN="$(tr -d '[:space:]' < .token)"
+fi
+if [ -n "${JARVIS_TOKEN:-}" ]; then echo "🔒 auth ON (token gerekli)"; else echo "⚠️  auth OFF (lokal)"; fi
 echo "JARVIS → http://localhost:${PORT}   (repo: ${REPO_ROOT})"
 exec "$PY" -m uvicorn main:app --app-dir backend --host 0.0.0.0 --port "$PORT"

@@ -25,6 +25,22 @@
     const TOKEN = localStorage.getItem("jarvis_token") || "";
     const authHeaders = TOKEN ? { Authorization: "Bearer " + TOKEN } : {};
 
+    function Login({ onSaved }) {
+      const [val, setVal] = useState("");
+      const save = () => { if (!val.trim()) return; localStorage.setItem("jarvis_token", val.trim()); location.reload(); };
+      return html`
+        <div class="h-screen flex items-center justify-center">
+          <div class="glass glow rounded-2xl p-8 w-96 text-center">
+            <div class="text-2xl font-bold tracking-widest text-sky-300 mb-1">J.A.R.V.I.S</div>
+            <div class="text-xs text-slate-500 mb-6">erişim anahtarı gerekli</div>
+            <input type="password" value=${val} onInput=${e=>setVal(e.target.value)}
+              onKeyDown=${e=>{if(e.key==="Enter")save();}} placeholder="JARVIS_TOKEN"
+              class="w-full bg-slate-900/70 rounded-lg px-4 py-2.5 outline-none focus:ring-1 ring-sky-600 text-sm mb-3" />
+            <button onClick=${save} class="w-full py-2.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-sm font-medium">Gir</button>
+          </div>
+        </div>`;
+    }
+
     const ROLE_COLOR = {
       orchestrator:"text-amber-300", gate:"text-rose-300", build:"text-sky-300",
       audit:"text-emerald-300", localization:"text-fuchsia-300", specialist:"text-slate-300",
@@ -59,6 +75,7 @@
 
     function App() {
       const [roster, setRoster] = useState([]);
+      const [authed, setAuthed] = useState(null);       // null=checking, false=need token, true=ok
       const [agent, setAgent] = useState("");           // "" = Auto (JARVIS routes)
       const [command, setCommand] = useState("");
       const [events, setEvents] = useState([]);
@@ -73,7 +90,9 @@
 
       useEffect(() => {
         fetch("/api/agents", { headers: authHeaders })
-          .then(r => r.json()).then(d => setRoster(d.agents || [])).catch(()=>{});
+          .then(r => { if (r.status === 401) { setAuthed(false); return null; } return r.json(); })
+          .then(d => { if (d) { setRoster(d.agents || []); setAuthed(true); } })
+          .catch(()=> setAuthed(true));   // network error ≠ auth error
       }, []);
       useEffect(() => { if (logRef.current) logRef.current.scrollTop = logRef.current.scrollHeight; }, [events]);
 
@@ -128,6 +147,8 @@
       }, [listening]);
 
       const newSession = () => { setSessionId(null); setEvents([]); textBuf.current=""; };
+
+      if (authed === false) return html`<${Login} />`;
 
       const squads = { product: roster.filter(a=>a.squad==="product"),
                        marketing: roster.filter(a=>a.squad==="marketing") };
