@@ -4,12 +4,20 @@ Admin Vocabulary Image Management API
 import os
 import uuid
 import hashlib
-from fastapi import APIRouter, UploadFile, File, Query, HTTPException
+from fastapi import APIRouter, UploadFile, File, Query, HTTPException, Depends
 from pymongo import MongoClient
 from PIL import Image
 import io
 
-router = APIRouter(prefix="/api/admin/vocab-images", tags=["admin-vocab-images"])
+import sys as _sys
+_sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import auth_session  # audit F01: real admin-session gate (not just spoofable admin_email)
+
+router = APIRouter(
+    prefix="/api/admin/vocab-images",
+    tags=["admin-vocab-images"],
+    dependencies=[Depends(auth_session.require_admin)],
+)
 
 client = MongoClient(os.environ.get("MONGO_URL"))
 db = client[os.environ.get("DB_NAME", "ielts_database")]

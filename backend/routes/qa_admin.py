@@ -13,6 +13,7 @@ import base64
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from security_utils import require_admin_email
+import auth_session  # audit F01: real admin-session gate (not just spoofable admin_email)
 
 
 def _admin_gate(admin_email: str = Query(..., description="Admin email for gating")):
@@ -27,7 +28,7 @@ def _admin_gate(admin_email: str = Query(..., description="Admin email for gatin
 router = APIRouter(
     prefix="/api/admin/qa",
     tags=["QA Workflow"],
-    dependencies=[Depends(_admin_gate)],
+    dependencies=[Depends(_admin_gate), Depends(auth_session.require_admin)],
 )
 
 # Import services and schemas

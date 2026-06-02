@@ -11,6 +11,7 @@ import {
   Users,
   XCircle,
 } from "lucide-react";
+import { authHeader } from "../lib/authToken";
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const REFRESH_INTERVAL_MS = 30_000;
@@ -53,6 +54,7 @@ export default function AdminOpsPage() {
       try {
         const res = await fetch(
           `${API_URL}/api/admin/ops/overview?admin_email=${encodeURIComponent(adminEmail)}`,
+          { headers: { ...authHeader() } },
         );
         if (res.status === 403) {
           setError("not-admin");

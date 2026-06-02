@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getToken } from '../lib/authToken';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
@@ -35,9 +36,9 @@ export default function AdminFeedback({ user }) {
   const loadFeedbacks = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}/api/admin/feedbacks`, {
+      const response = await fetch(`${API_URL}/api/admin/feedbacks?admin_email=${encodeURIComponent(user?.email || '')}`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${getToken()}`,
         },
       });
       if (!response.ok) throw new Error('Failed to load');
@@ -52,10 +53,10 @@ export default function AdminFeedback({ user }) {
 
   const markAsResolved = async (feedbackId) => {
     try {
-      const response = await fetch(`${API_URL}/api/admin/feedbacks/${feedbackId}/resolve`, {
+      const response = await fetch(`${API_URL}/api/admin/feedbacks/${feedbackId}/resolve?admin_email=${encodeURIComponent(user?.email || '')}`, {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${getToken()}`,
         },
       });
       if (!response.ok) throw new Error('Failed to update');
@@ -69,10 +70,10 @@ export default function AdminFeedback({ user }) {
   const deleteFeedback = async (feedbackId) => {
     if (!window.confirm('Are you sure you want to delete this feedback?')) return;
     try {
-      const response = await fetch(`${API_URL}/api/admin/feedbacks/${feedbackId}`, {
+      const response = await fetch(`${API_URL}/api/admin/feedbacks/${feedbackId}?admin_email=${encodeURIComponent(user?.email || '')}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${getToken()}`,
         },
       });
       if (!response.ok) throw new Error('Failed to delete');

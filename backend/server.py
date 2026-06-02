@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException, UploadFile, File, Request, Form, Body, Query, BackgroundTasks
+from fastapi import FastAPI, APIRouter, HTTPException, UploadFile, File, Request, Form, Body, Query, BackgroundTasks, Depends
 from fastapi.responses import StreamingResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
@@ -23,6 +23,8 @@ import resend
 import re
 import io
 import httpx
+
+import auth_session  # audit F01/F03: admin-session gate for @app admin routes
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -7417,7 +7419,7 @@ async def submit_feedback(feedback: FeedbackCreate):
 
 
 @app.get("/api/admin/feedbacks")
-async def get_all_feedbacks(admin_email: str = Query(...)):
+async def get_all_feedbacks(admin_email: Optional[str] = Query(None), _admin: dict = Depends(auth_session.require_admin)):
     """Get all feedbacks (admin only)"""
     from security_utils import require_admin_email
     require_admin_email(admin_email)
@@ -7430,7 +7432,7 @@ async def get_all_feedbacks(admin_email: str = Query(...)):
 
 
 @app.put("/api/admin/feedbacks/{feedback_id}/resolve")
-async def resolve_feedback(feedback_id: str, admin_email: str = Query(...)):
+async def resolve_feedback(feedback_id: str, admin_email: Optional[str] = Query(None), _admin: dict = Depends(auth_session.require_admin)):
     """Mark feedback as resolved (admin only)"""
     from security_utils import require_admin_email
     require_admin_email(admin_email)
@@ -7450,7 +7452,7 @@ async def resolve_feedback(feedback_id: str, admin_email: str = Query(...)):
 
 
 @app.delete("/api/admin/feedbacks/{feedback_id}")
-async def delete_feedback(feedback_id: str, admin_email: str = Query(...)):
+async def delete_feedback(feedback_id: str, admin_email: Optional[str] = Query(None), _admin: dict = Depends(auth_session.require_admin)):
     """Delete feedback (admin only)"""
     from security_utils import require_admin_email
     require_admin_email(admin_email)
@@ -7478,7 +7480,7 @@ async def delete_feedback(feedback_id: str, admin_email: str = Query(...)):
 
 
 @app.get("/api/admin/ops/overview")
-async def admin_ops_overview(admin_email: str = Query(...)):
+async def admin_ops_overview(admin_email: str = Query(...), _admin: dict = Depends(auth_session.require_admin)):
     """Single-call dashboard data. See /admin/ops in the frontend."""
     from security_utils import require_admin_email
     from services import cost_telemetry
@@ -7796,6 +7798,7 @@ async def admin_users_import(
     admin_email: str = Query(...),
     learning_mode: str = Query("ielts", regex="^(ielts|general_english)$"),
     dry_run: bool = Query(False),
+    _admin: dict = Depends(auth_session.require_admin),
 ):
     """Bulk-import legacy users. Body shape: {"users": [<legacy user doc>, ...]}.
 
@@ -7913,6 +7916,7 @@ async def admin_users_import(
 async def admin_migrate_enriched(
     admin_email: str = Query(...),
     dry_run: bool = Query(False),
+    _admin: dict = Depends(auth_session.require_admin),
 ):
     """One-shot migration of backend/content/enriched/*.json into the
     unified_units + unified_lessons collections. Use ?dry_run=true to
@@ -7935,7 +7939,7 @@ async def admin_migrate_enriched(
 # ============ ADMIN: RESEED DATABASE ============
 
 @app.post("/api/admin/reseed-tests")
-async def reseed_tests(admin_email: str = Query(...)):
+async def reseed_tests(admin_email: str = Query(...), _admin: dict = Depends(auth_session.require_admin)):
     """Reseed tests collection with latest format (admin only).
 
     Pre-launch audit (2026-05-16) replaced the hardcoded "emergent2025reseed"

@@ -16,6 +16,7 @@
  */
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
+import { getToken } from '../lib/authToken';
 
 const HEARTBEAT_MS = 30_000;       // send every 30s
 const IDLE_TIMEOUT_MS = 60_000;    // pause after 60s of no input
@@ -124,18 +125,20 @@ export default function useStudyTimeTracking(userId) {
 
 function sendHeartbeat(userId, route, seconds, useBeacon = false) {
   if (!userId || !seconds || seconds < 1) return;
-  const body = JSON.stringify({ user_id: userId, route, seconds });
+  const token = getToken();
   const url = `${API_URL}/api/study-time/heartbeat`;
   if (useBeacon && navigator.sendBeacon) {
-    // sendBeacon fires reliably during pagehide/unload.
-    navigator.sendBeacon(url, new Blob([body], { type: 'application/json' }));
+    // sendBeacon can't set headers, so the token rides in the body (the
+    // backend accepts either). sendBeacon fires reliably during pagehide.
+    const beaconBody = JSON.stringify({ user_id: userId, route, seconds, token });
+    navigator.sendBeacon(url, new Blob([beaconBody], { type: 'application/json' }));
     return;
   }
   // Fire-and-forget — failures are not surfaced to the user.
   fetch(url, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body,
+    headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+    body: JSON.stringify({ user_id: userId, route, seconds }),
     keepalive: true,
   }).catch(() => {});
 }

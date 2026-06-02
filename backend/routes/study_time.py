@@ -10,7 +10,8 @@ has been active in the last 60s. Backend caps writes at 8 hours/day per user
 to bound runaway writers (sleeping tab, dev console open, etc.).
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Header
+import auth_session  # audit P2: heartbeat must be authenticated (no spoofing other users)
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict
 from datetime import datetime, timezone, timedelta, time
@@ -66,12 +67,28 @@ class HeartbeatBody(BaseModel):
     user_id: str
     route: str
     seconds: int = Field(..., ge=1)
+    # Token carried IN THE BODY for the navigator.sendBeacon() path on pagehide
+    # (Beacon can't set an Authorization header). Normal fetch ticks use the
+    # Authorization header instead. Either one identifies the caller.
+    token: Optional[str] = None
 
 
 @router.post("/heartbeat")
-async def heartbeat(body: HeartbeatBody):
-    """Record a chunk of active time for a user on a given route."""
+async def heartbeat(body: HeartbeatBody, authorization: Optional[str] = Header(default=None)):
+    """Record a chunk of active time for the AUTHENTICATED user on a route.
+
+    Audit P2: previously trusted body.user_id with no auth, so anyone could
+    inflate any user's study time. Now the user is derived from the session
+    token (header for fetch, body.token for sendBeacon); body.user_id is ignored.
+    """
     from server import db  # local import keeps router import-cheap
+
+    caller = await auth_session.current_user_optional(authorization)
+    if not caller and body.token:
+        caller = await auth_session._resolve_user(body.token)
+    if not caller:
+        raise HTTPException(status_code=401, detail="Authentication required")
+    uid = caller["id"]
 
     secs = min(int(body.seconds), PER_HEARTBEAT_CAP_SECONDS)
     if secs <= 0:
@@ -83,7 +100,7 @@ async def heartbeat(body: HeartbeatBody):
 
     # Enforce daily cap by checking how much we've already accepted today.
     pipeline = [
-        {"$match": {"user_id": body.user_id, "ts": {"$gte": day_start, "$lt": day_end}}},
+        {"$match": {"user_id": uid, "ts": {"$gte": day_start, "$lt": day_end}}},
         {"$group": {"_id": None, "total": {"$sum": "$seconds"}}},
     ]
     cursor = db.study_time_intervals.aggregate(pipeline)
@@ -97,7 +114,7 @@ async def heartbeat(body: HeartbeatBody):
 
     await db.study_time_intervals.insert_one(
         {
-            "user_id": body.user_id,
+            "user_id": uid,
             "route": body.route or "/",
             "category": _categorize(body.route or "/"),
             "seconds": accepted,
