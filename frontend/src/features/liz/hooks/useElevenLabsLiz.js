@@ -28,6 +28,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useConversation } from '@elevenlabs/react';
 
 import { extractUserAudio, userTranscriptFromTurns } from '../lib/extractUserAudio';
+import { authHeader } from '../../../lib/authToken';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -439,7 +440,7 @@ export default function useElevenLabsLiz({ userId } = {}) {
   const refreshQuota = useCallback(async () => {
     if (!userId) return null;
     try {
-      const res = await fetch(`${API_URL}/api/users/${userId}`);
+      const res = await fetch(`${API_URL}/api/users/${userId}`, { headers: { ...authHeader() } });
       const u = await res.json().catch(() => null);
       if (u && typeof u.liz_live_seconds_remaining === 'number') {
         setQuota((prev) => ({

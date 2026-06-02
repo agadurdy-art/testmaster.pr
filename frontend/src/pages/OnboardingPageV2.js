@@ -6,6 +6,7 @@ import {
   consumePendingIntent, pendingIntentRedirect,
 } from '../lib/pendingPlan';
 import { homePath } from '../lib/learningMode';
+import { authHeader } from '../lib/authToken';
 import '../features/onboarding/onboarding.css';
 
 /**
@@ -46,7 +47,7 @@ export default function OnboardingPageV2({ user, onUserUpdate }) {
             : state.examDate || null;
         const res = await fetch(`${base}/api/users/${encodeURIComponent(userId)}/onboarding`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', ...authHeader() },
           body: JSON.stringify({
             path: state.path,
             targetBand: state.targetBand,

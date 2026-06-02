@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import LizAvatar from './LizAvatar';
+import { authHeader } from '../../../lib/authToken';
 
 /**
  * PathPickerGate — pre-signup overlay asking the visitor which exam track they
@@ -80,7 +81,7 @@ export default function PathPickerGate({ children, user, setUser }) {
       try {
         const res = await fetch(`${API_URL}/api/users/${encodeURIComponent(user.id)}/onboarding`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', ...authHeader() },
           body: JSON.stringify({ path: wireMode }),
         });
         if (res.ok) {

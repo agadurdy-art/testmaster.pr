@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { authHeader } from '../lib/authToken';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -32,7 +33,7 @@ export default function VocabularyImageManager({ user }) {
   const loadGroups = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${API_URL}/api/admin/vocabulary-groups?admin_email=${encodeURIComponent(user.email)}`);
+      const res = await fetch(`${API_URL}/api/admin/vocabulary-groups?admin_email=${encodeURIComponent(user.email)}`, { headers: { ...authHeader() } });
       const data = await res.json();
       setGroups(data.groups || []);
       if (data.groups?.length > 0 && !expandedStage) {
@@ -76,6 +77,7 @@ export default function VocabularyImageManager({ user }) {
 
       const res = await fetch(`${API_URL}/api/admin/vocabulary/update-image`, {
         method: 'POST',
+        headers: { ...authHeader() },
         body: formData,
       });
       const data = await res.json();
@@ -104,6 +106,7 @@ export default function VocabularyImageManager({ user }) {
 
       const res = await fetch(`${API_URL}/api/admin/vocabulary/update-image`, {
         method: 'POST',
+        headers: { ...authHeader() },
         body: formData,
       });
       const data = await res.json();

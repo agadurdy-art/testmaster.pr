@@ -7,10 +7,15 @@ Handles: user management, course seeding, DB status, vocabulary image management
 import hashlib
 from datetime import datetime, timezone
 from pathlib import Path
-from fastapi import APIRouter, HTTPException, UploadFile, File, Form
+from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Depends
 from security_utils import is_admin_email
+import auth_session  # audit F01: real admin-session gate (not just admin_email)
 
-router = APIRouter(prefix="/api", tags=["admin"])
+# Router-level dependency: every /admin/* route now REQUIRES a valid admin
+# session token (Authorization: Bearer). The old per-handler admin_email check
+# is kept as defense-in-depth but is no longer the sole gate — a spoofed
+# admin_email alone can no longer reach these endpoints.
+router = APIRouter(prefix="/api", tags=["admin"], dependencies=[Depends(auth_session.require_admin)])
 
 db = None
 ROOT_DIR = Path(__file__).parent.parent

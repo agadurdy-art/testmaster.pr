@@ -19,11 +19,12 @@ from urllib.parse import urlencode
 import bcrypt
 import httpx
 import resend
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel, Field, ConfigDict
 
 from services.usage_tracking import get_all_counters
+import auth_session  # opaque session tokens (audit F01/F03)
 
 router = APIRouter(prefix="/api", tags=["auth"])
 
@@ -106,6 +107,9 @@ class User(BaseModel):
     current_band: Optional[float] = None
     exam_date: Optional[str] = None
     feedback_language: Optional[str] = None
+    # Opaque session token minted on login/register/OAuth (audit F01/F03).
+    # Not persisted on the user doc — only returned in the auth response.
+    token: Optional[str] = None
 
 
 class UserCreate(BaseModel):
@@ -348,6 +352,7 @@ async def register_user(input: UserCreate):
     except Exception as e:
         logger.error(f"Failed to send verification email: {e}")
     user_response = {k: v for k, v in user.items() if k not in ["password_hash", "verification_token"]}
+    user_response["token"] = await auth_session.create_session(user_id)
     return user_response
 
 
@@ -515,7 +520,9 @@ async def google_session_exchange(payload: GoogleSessionRequest):
             user["created_at"] = datetime.fromisoformat(user["created_at"])
         except Exception:
             pass
-    return User(**user)
+    u = User(**user)
+    u.token = await auth_session.create_session(user["id"])
+    return u
 
 
 @router.post("/auth/facebook-login")
@@ -550,7 +557,9 @@ async def facebook_login(payload: FacebookLoginRequest):
             user["created_at"] = datetime.fromisoformat(user["created_at"])
         except Exception:
             pass
-    return User(**user)
+    u = User(**user)
+    u.token = await auth_session.create_session(user["id"])
+    return u
 
 
 @router.post("/auth/login", response_model=User)
@@ -574,7 +583,9 @@ async def login_user(input: UserLogin):
     user.pop("verification_token", None)
     if isinstance(user.get('created_at'), str):
         user['created_at'] = datetime.fromisoformat(user['created_at'])
-    return User(**user)
+    u = User(**user)
+    u.token = await auth_session.create_session(user["id"])
+    return u
 
 
 @router.post("/auth/resend-verification")
@@ -616,7 +627,8 @@ async def resend_verification_email(input: ResendVerificationRequest):
 
 
 @router.get("/users/{user_id}/usage")
-async def get_user_usage(user_id: str):
+async def get_user_usage(user_id: str, caller: Dict[str, Any] = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(user_id, caller)
     """Return the current-period quota + used counts for every tracked counter.
 
     Response shape:
@@ -638,7 +650,8 @@ async def get_user_usage(user_id: str):
 
 
 @router.get("/users/{user_id}", response_model=User)
-async def get_user(user_id: str):
+async def get_user(user_id: str, caller: Dict[str, Any] = Depends(auth_session.current_user)):
+    auth_session.require_self_or_admin(user_id, caller)
     user = await db.users.find_one({"id": user_id}, {"_id": 0})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -753,11 +766,16 @@ def _normalize_exam_date(value: Any) -> Optional[str]:
 
 
 @router.post("/users/{user_id}/onboarding", response_model=User)
-async def save_onboarding(user_id: str, payload: OnboardingPayload):
+async def save_onboarding(
+    user_id: str,
+    payload: OnboardingPayload,
+    caller: Dict[str, Any] = Depends(auth_session.current_user),
+):
     """Persist OnboardingQuiz completion and mark the user onboarded.
 
     Idempotent: posting again simply overwrites with the latest values.
     """
+    auth_session.require_self_or_admin(user_id, caller)
     user = await db.users.find_one({"id": user_id}, {"_id": 0})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { authHeader } from '../lib/authToken';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import {
@@ -189,7 +190,7 @@ export default function Profile({ user, onLogout }) {
       const base = process.env.REACT_APP_BACKEND_URL || '';
       const res = await fetch(`${base}/api/users/${encodeURIComponent(user.id)}/onboarding`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeader() },
         body: JSON.stringify({
           targetBand: studyDraft.targetBand === '' ? null : Number(studyDraft.targetBand),
           currentBand: studyDraft.currentBand === '' ? null : Number(studyDraft.currentBand),

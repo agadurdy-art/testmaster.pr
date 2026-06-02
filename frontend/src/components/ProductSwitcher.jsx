@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { authHeader } from '../lib/authToken';
 
 /**
  * ProductSwitcher — flips the user between the two strictly-separated product
@@ -45,7 +46,7 @@ export default function ProductSwitcher({ user, to, className = '', children }) 
           `${API_URL}/api/users/${encodeURIComponent(user.id)}/onboarding`,
           {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', ...authHeader() },
             body: JSON.stringify({ path: wireMode }),
           }
         );

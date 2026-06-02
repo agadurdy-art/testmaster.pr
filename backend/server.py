@@ -786,6 +786,8 @@ except Exception as e:
 try:
     from routes.auth import router as auth_router, set_db as set_auth_db
     set_auth_db(db)
+    import auth_session
+    auth_session.set_db(db)
     app.include_router(auth_router)
     print("✅ Auth routes loaded (modular)")
 except Exception as e:
@@ -8039,6 +8041,12 @@ async def startup_event():
         await db.anonymous_evaluations.create_index("email", unique=True)
     except Exception as e:
         logger.warning(f"anonymous_evaluations index create failed: {e}")
+    # Session tokens (audit F01/F03): fast unique lookup by hash + auto-expiry.
+    try:
+        await db.sessions.create_index("token_hash", unique=True)
+        await db.sessions.create_index("expires_at")
+    except Exception as e:
+        logger.warning(f"sessions index create failed: {e}")
     # Writing evaluator idempotency cache — TTL + (scope, client_request_id)
     # unique. See services/writing_idempotency.py for rationale.
     try:
