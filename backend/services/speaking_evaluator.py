@@ -827,6 +827,12 @@ under fluency pressure; Part 3 = abstract discussion + lexical/grammatical
 flexibility). Per-part indicative_band fields are informational ONLY — do
 NOT average them; the holistic band reflects the whole observation.
 
+If a part's transcript reads exactly "[No response was recorded for this part.]",
+that part was NOT attempted: base the holistic band ONLY on the parts that were
+recorded, set that part's indicative_band to 0, and note in liz_note that the
+score reflects the recorded parts and the missing part should be re-recorded for
+a complete result. Never penalise the recorded parts for the missing one.
+
 ## Part 1 transcript
 - Duration: {part1_duration:.1f}s · WPM: {part1_wpm} · Words: {part1_words}
 - Cue/topic: {part1_cue}
@@ -1014,11 +1020,29 @@ async def _process_one_part_for_fulltest(
     transcribe_audio: Optional[Any] = None,
 ) -> Dict[str, Any]:
     """Transcribe + (optionally) Azure-score one part. Returns a dict the
-    fulltest user prompt can consume."""
+    fulltest user prompt can consume.
+
+    A part whose audio is empty or yields no transcript is NOT fatal: it's
+    returned with `captured=False` and a placeholder transcript so the holistic
+    pass can still score the parts that DID record (the candidate gets a result
+    instead of a dead-end). evaluate_speaking_fulltest only fails if ALL three
+    parts are uncaptured."""
+    _NO_AUDIO = "[No response was recorded for this part.]"
+
+    def _uncaptured() -> Dict[str, Any]:
+        return {
+            "part": part_input.part,
+            "transcript": _NO_AUDIO,
+            "duration": 0.0,
+            "fluency": compute_fluency("", 0.0),
+            "azure_block": _BASIC_AZURE_BLOCK,
+            "cue": part_input.cue_card_prompt,
+            "bullets": part_input.cue_card_bullets,
+            "captured": False,
+        }
+
     if not audio_bytes:
-        raise SpeakingEvaluatorFailure(
-            f"empty audio for {part_input.part.value}", attempts=0
-        )
+        return _uncaptured()
 
     azure_block: str = _BASIC_AZURE_BLOCK
     transcript: str = ""
@@ -1043,11 +1067,15 @@ async def _process_one_part_for_fulltest(
     if not transcript:
         if transcribe_audio is None:
             transcribe_audio = _default_whisper_transcribe
-        transcript = await transcribe_audio(audio_bytes)
-        if not transcript or not transcript.strip():
-            raise SpeakingEvaluatorFailure(
-                f"empty transcript for {part_input.part.value}", attempts=0
+        try:
+            transcript = await transcribe_audio(audio_bytes)
+        except Exception as exc:
+            logger.warning(
+                "fulltest %s whisper failed: %s", part_input.part.value, exc,
             )
+            transcript = ""
+        if not transcript or not transcript.strip():
+            return _uncaptured()
 
     duration = float(part_input.duration_seconds or 0.0)
     fluency = compute_fluency(transcript, duration)
@@ -1060,6 +1088,7 @@ async def _process_one_part_for_fulltest(
         "azure_block": azure_block,
         "cue": part_input.cue_card_prompt,
         "bullets": part_input.cue_card_bullets,
+        "captured": True,
     }
 
 
@@ -1095,6 +1124,14 @@ async def evaluate_speaking_fulltest(
     ]
     processed = await asyncio.gather(*coros)
     part_data = {pd["part"]: pd for pd in processed}
+
+    # Only a totally silent test is fatal. If at least one part recorded, score
+    # the captured parts holistically (uncaptured parts carry a placeholder
+    # transcript) so the candidate always gets a result.
+    if not any(pd.get("captured") for pd in processed):
+        raise SpeakingEvaluatorFailure(
+            "no audio captured for any part", attempts=0
+        )
 
     return await _run_fulltest_llm(
         target_band=float(req.target_band or 7.0),

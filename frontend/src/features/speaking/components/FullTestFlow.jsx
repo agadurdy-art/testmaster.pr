@@ -209,8 +209,13 @@ async function submitFullTest({
   // short-circuit duplicate POSTs without re-running Azure×3 + Sonnet.
   if (clientRequestId) form.append('client_request_id', clientRequestId);
 
+  // A part that failed to capture still uploads as an empty blob — the backend
+  // treats an empty part as "not recorded", scores the parts that DID record,
+  // and flags the missing one, so the candidate always gets a result.
+  const safe = (b) => (b instanceof Blob && b.size > 0 ? b : new Blob([], { type: 'audio/webm' }));
+
   // Part 1 — Liz Live, user-only WAV
-  form.append('part1_audio', part1.audioBlob, `liz-part1-${Date.now()}.wav`);
+  form.append('part1_audio', safe(part1?.audioBlob), `liz-part1-${Date.now()}.wav`);
   form.append(
     'part1_cue_card_prompt',
     `IELTS Part 1 — familiar topics on the theme of ${theme.label}.`,
@@ -222,13 +227,13 @@ async function submitFullTest({
   form.append('part1_duration_seconds', String(part1.durationSecs || 0));
 
   // Part 2 — monologue, original cue card
-  form.append('part2_audio', part2.audioBlob, `part2-${Date.now()}.webm`);
+  form.append('part2_audio', safe(part2?.audioBlob), `part2-${Date.now()}.webm`);
   form.append('part2_cue_card_prompt', cueCard.prompt);
   form.append('part2_cue_card_bullets', (cueCard.bullets || []).join('\n'));
   form.append('part2_duration_seconds', String(part2.durationSecs || 0));
 
   // Part 3 — Liz Live, user-only WAV, discussion grounded on the cue card
-  form.append('part3_audio', part3.audioBlob, `liz-part3-${Date.now()}.wav`);
+  form.append('part3_audio', safe(part3?.audioBlob), `liz-part3-${Date.now()}.wav`);
   form.append(
     'part3_cue_card_prompt',
     `IELTS Part 3 — abstract discussion connected to the Part 2 cue card "${cueCard.prompt}".`,
@@ -317,12 +322,13 @@ export default function FullTestFlow({ user, onExit }) {
   // instead of dead-ending and losing the captured parts.
   const doSubmit = (p1, p2, p3) => {
     resubmitRef.current = false;
-    if (!captured(p1) || !captured(p2) || !captured(p3)) {
-      const missing = !captured(p1) ? 'part1' : !captured(p2) ? 'part2' : 'part3';
-      setFailedPart(missing);
+    // Only a totally silent test blocks. If ANY part recorded, submit and show
+    // results — the backend scores the captured parts and flags the missing
+    // one (so a flaky Part 2 no longer hides the Part 1 & 3 results).
+    if (!captured(p1) && !captured(p2) && !captured(p3)) {
+      setFailedPart(null);
       setScoreError(
-        `Part ${missing.replace('part', '')} didn't record clearly, so we couldn't score the test. ` +
-        `Re-record just Part ${missing.replace('part', '')} — your other parts are kept.`,
+        "We couldn't hear you on any part. Check your microphone is selected and not muted, then start the test again.",
       );
       setPhase('error');
       return;

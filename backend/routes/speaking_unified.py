@@ -794,11 +794,29 @@ async def evaluate_fulltest(
     }
     audios_by_part: Dict[SpeakingPart, bytes] = {}
     audio_meta_by_part: Dict[str, Dict[str, Any]] = {}
+    valid_part_count = 0
     for part, (upload, duration) in audio_files.items():
         audio_bytes = await upload.read()
-        validate_audio(audio_bytes, duration)
+        # Per-part validation is tolerant for the Full Test: a single empty/too
+        # short part must NOT reject the whole submission. The evaluator scores
+        # the parts that recorded and flags the missing one. We only require
+        # that at least ONE part is valid (checked after the loop).
+        try:
+            validate_audio(audio_bytes, duration)
+            valid_part_count += 1
+        except HTTPException:
+            audio_bytes = b""  # treat as uncaptured downstream
         audios_by_part[part] = audio_bytes
-        audio_meta_by_part[part.value] = persist_audio(audio_bytes)
+        if audio_bytes:
+            audio_meta_by_part[part.value] = persist_audio(audio_bytes)
+    if valid_part_count == 0:
+        raise HTTPException(
+            status_code=422,
+            detail={
+                "code": "audio_too_short",
+                "message": "We couldn't hear you on any part. Check your microphone is selected and not muted, then record again.",
+            },
+        )
 
     started = time.monotonic()
     try:
