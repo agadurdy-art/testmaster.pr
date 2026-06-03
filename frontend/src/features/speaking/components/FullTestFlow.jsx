@@ -252,6 +252,7 @@ async function submitFullTest({
       : (detail?.detail?.message || detail?.detail || `HTTP ${resp.status}`);
     const err = new Error(msg);
     err.code = code;
+    err.last_error = (typeof detail === 'object' && detail?.detail?.last_error) || '';
     throw err;
   }
   return resp.json();
@@ -271,6 +272,9 @@ export default function FullTestFlow({ user, onExit }) {
 
   const [part1, setPart1] = useState(null);
   const [part2, setPart2] = useState(null);
+  const [part3, setPart3] = useState(null);
+  // Which part failed to capture audio (for the recoverable error screen).
+  const [failedPart, setFailedPart] = useState(null);
 
   const [scoreResult, setScoreResult] = useState(null);
   const [scoreError, setScoreError] = useState(null);
@@ -278,6 +282,9 @@ export default function FullTestFlow({ user, onExit }) {
   const part1CapturedRef = useRef(false);
   const part2CapturedRef = useRef(false);
   const part3CapturedRef = useRef(false);
+  // When true we are re-recording a single failed part; after that part is
+  // captured we resubmit the whole test instead of walking to the next stage.
+  const resubmitRef = useRef(false);
   // Stable across retries of a single Full Test submission.
   const clientRequestIdRef = useRef(null);
 
@@ -289,12 +296,95 @@ export default function FullTestFlow({ user, onExit }) {
     part2CapturedRef.current = false;
     part3CapturedRef.current = false;
     clientRequestIdRef.current = null;
+    setFailedPart(null);
+    resubmitRef.current = false;
     setPhase('part1-live');
     liz.start({
       part: 'part1',
       cueCardTopic: topicLabelForTheme(chosenTheme),
       cueCardBullets: part1BulletsForTheme(chosenTheme),
     });
+  };
+
+  // A part "captured" only if it produced real audio — an empty/near-empty
+  // blob (mic didn't catch the voice) must NOT pass as a valid recording.
+  const MIN_AUDIO_BYTES = 4000;
+  const captured = (p) => !!(p?.audioBlob && p.audioBlob.size > MIN_AUDIO_BYTES);
+
+  // Single submit path, reused by the normal end-of-Part-3 flow and by the
+  // per-part re-record recovery. Validates all three parts first; if one is
+  // missing/empty it routes to a RECOVERABLE error (re-record just that part)
+  // instead of dead-ending and losing the captured parts.
+  const doSubmit = (p1, p2, p3) => {
+    resubmitRef.current = false;
+    if (!captured(p1) || !captured(p2) || !captured(p3)) {
+      const missing = !captured(p1) ? 'part1' : !captured(p2) ? 'part2' : 'part3';
+      setFailedPart(missing);
+      setScoreError(
+        `Part ${missing.replace('part', '')} didn't record clearly, so we couldn't score the test. ` +
+        `Re-record just Part ${missing.replace('part', '')} — your other parts are kept.`,
+      );
+      setPhase('error');
+      return;
+    }
+    setFailedPart(null);
+    setPhase('submitting');
+    if (!clientRequestIdRef.current) {
+      clientRequestIdRef.current = mintClientRequestId();
+    }
+    submitFullTest({ user, theme, cueCard, part1: p1, part2: p2, part3: p3, clientRequestId: clientRequestIdRef.current })
+      .then((data) => {
+        setScoreResult(data);
+        clientRequestIdRef.current = null;
+        setPhase('results');
+      })
+      .catch((err) => {
+        if (err?.code === 'fulltest_locked' || err?.code === 'liz_live_locked') {
+          setPhase('upgrade');
+        } else {
+          // If the backend names a failing part (e.g. "empty transcript for
+          // part2", Azure NoMatch), surface it so the user can re-record just
+          // that part instead of re-submitting the same broken audio.
+          const blob = `${err?.message || ''} ${err?.last_error || ''}`;
+          const pm = /part\s*([123])/i.exec(blob);
+          setFailedPart(pm ? `part${pm[1]}` : null);
+          setScoreError(err?.message || String(err));
+          setPhase('error');
+        }
+      });
+  };
+
+  // Re-record only the failed part, keeping the others, then resubmit.
+  const retryFailedPart = () => {
+    const target = failedPart || 'part2';
+    resubmitRef.current = true;
+    setScoreError(null);
+    if (target === 'part2') {
+      part2CapturedRef.current = false;
+      setPart2(null);
+      setPhase('part2-prep');
+      flow.startPrep();
+    } else if (target === 'part1') {
+      part1CapturedRef.current = false;
+      setPart1(null);
+      setPhase('part1-live');
+      liz.start({
+        part: 'part1',
+        cueCardTopic: topicLabelForTheme(theme),
+        cueCardBullets: part1BulletsForTheme(theme),
+      });
+    } else {
+      part3CapturedRef.current = false;
+      setPart3(null);
+      setPhase('part3-live');
+      liz.start({
+        part: 'part3',
+        cueCardTopic: topicLabelForTheme(theme),
+        cueCardBullets: part1BulletsForTheme(theme),
+        part2Theme: cueCard?.prompt || theme?.label || '',
+        part2Transcript: cueCard?.prompt || '',
+      });
+    }
   };
 
   // Token mint surfaced fulltest_locked / liz_live_locked → upgrade screen.
@@ -309,16 +399,22 @@ export default function FullTestFlow({ user, onExit }) {
     }
   }, [phase, liz.isError, liz.errorCode, liz.error]);
 
-  // Part 1 Liz session ended → save audio + transcript, advance to Part 2 prep.
+  // Part 1 Liz session ended → save audio + transcript, advance to Part 2 prep
+  // (or resubmit if we were just re-recording Part 1).
   useEffect(() => {
     if (phase !== 'part1-live' || !liz.isEnded || part1CapturedRef.current) return;
     part1CapturedRef.current = true;
-    setPart1({
+    const p1 = {
       audioBlob: liz.userAudioBlob,
       transcript: liz.userTranscript,
       durationSecs: liz.elapsedSeconds,
-    });
+    };
+    setPart1(p1);
     liz.reset();
+    if (resubmitRef.current) {
+      doSubmit(p1, part2, part3);
+      return;
+    }
     setPhase('part2-prep');
     flow.startPrep();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -341,11 +437,18 @@ export default function FullTestFlow({ user, onExit }) {
     part2CapturedRef.current = true;
 
     const recordedSecs = PART2_RECORD_SECS - (flow.recordRemaining ?? 0);
-    setPart2({
+    const p2 = {
       audioBlob: flow.audioBlob,
       durationSecs: Math.max(0, recordedSecs),
-    });
+    };
+    setPart2(p2);
     flow.reset();
+
+    if (resubmitRef.current) {
+      // Re-recording Part 2 only — Parts 1 and 3 are already captured.
+      doSubmit(part1, p2, part3);
+      return;
+    }
 
     setPhase('part3-live');
     liz.start({
@@ -366,48 +469,17 @@ export default function FullTestFlow({ user, onExit }) {
     if (phase !== 'part3-live' || !liz.isEnded || part3CapturedRef.current) return;
     part3CapturedRef.current = true;
 
-    const part3 = {
+    const p3 = {
       audioBlob: liz.userAudioBlob,
       transcript: liz.userTranscript,
       durationSecs: liz.elapsedSeconds,
     };
+    setPart3(p3);
     liz.reset();
 
-    if (!part1?.audioBlob || !part2?.audioBlob || !part3.audioBlob) {
-      setScoreError(
-        'One of the three recordings did not capture audio. Please retry.',
-      );
-      setPhase('error');
-      return;
-    }
-
-    setPhase('submitting');
-    if (!clientRequestIdRef.current) {
-      clientRequestIdRef.current = mintClientRequestId();
-    }
-    submitFullTest({
-      user,
-      theme,
-      cueCard,
-      part1,
-      part2,
-      part3,
-      clientRequestId: clientRequestIdRef.current,
-    })
-      .then((data) => {
-        setScoreResult(data);
-        // Rotate so a retake under the same component instance mints a fresh id.
-        clientRequestIdRef.current = null;
-        setPhase('results');
-      })
-      .catch((err) => {
-        if (err?.code === 'fulltest_locked' || err?.code === 'liz_live_locked') {
-          setPhase('upgrade');
-        } else {
-          setScoreError(err?.message || String(err));
-          setPhase('error');
-        }
-      });
+    // doSubmit validates all three parts; a missing/empty one routes to the
+    // recoverable error (re-record just that part) instead of losing the test.
+    doSubmit(part1, part2, p3);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, liz.isEnded]);
 
@@ -470,12 +542,23 @@ export default function FullTestFlow({ user, onExit }) {
   }
 
   if (phase === 'error') {
+    const onErrorRetry = () => {
+      if (failedPart) { retryFailedPart(); return; }
+      // Transient (e.g. network) error but all parts captured → just resubmit
+      // under the same idempotency id.
+      if (captured(part1) && captured(part2) && captured(part3)) {
+        doSubmit(part1, part2, part3);
+        return;
+      }
+      handleClose();
+    };
     return (
       <>
         <SpeakingHeader user={user} />
         <ErrorState
           errorMessage={scoreError}
-          onRetry={handleClose}
+          retryLabel={failedPart ? `Re-record Part ${failedPart.replace('part', '')}` : 'Try again'}
+          onRetry={onErrorRetry}
           onBack={handleClose}
         />
       </>

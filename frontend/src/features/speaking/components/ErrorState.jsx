@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function ErrorState({ onRetry, onBack, errorMessage }) {
+export default function ErrorState({ onRetry, onBack, errorMessage, retryLabel }) {
   return (
     <section style={{ maxWidth: 1320, margin: '0 auto', padding: '56px 32px 80px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
@@ -93,7 +93,7 @@ export default function ErrorState({ onRetry, onBack, errorMessage }) {
                 <path d="M21 12a9 9 0 1 1-3-6.7" />
                 <polyline points="21 3 21 9 15 9" />
               </svg>
-              Try again
+              {retryLabel || 'Try again'}
             </button>
             <a
               href="/score-my-speaking"
