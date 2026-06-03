@@ -26,6 +26,7 @@ import re
 import shutil
 import subprocess
 import tempfile
+import threading
 import time
 import uuid
 from collections import Counter
@@ -290,59 +291,117 @@ async def run_azure_pronunciation(
             pron_config.enable_prosody_assessment()
             pron_config.apply_to(recognizer)
 
-            result = recognizer.recognize_once()
+            # Continuous recognition (NOT recognize_once): recognize_once
+            # returns after a single utterance — it stops at the first ~0.5s
+            # end-silence, so any recording with pauses between answers (IELTS
+            # Part 1/3 sub-questions, a Full Test part take, even a long single
+            # answer) was truncated to its first segment. Continuous recognition
+            # accumulates every recognized segment across the whole file; we
+            # merge the per-segment transcripts, words and pronunciation scores.
+            segments: List[Dict[str, Any]] = []
+            done = threading.Event()
+            cancel_details: Dict[str, str] = {}
 
-            if result.reason != speechsdk.ResultReason.RecognizedSpeech:
+            def _on_recognized(evt):
+                jr = evt.result.properties.get(
+                    speechsdk.PropertyId.SpeechServiceResponse_JsonResult
+                )
+                if jr:
+                    try:
+                        segments.append(json.loads(jr))
+                    except (ValueError, TypeError):
+                        pass
+
+            def _on_canceled(evt):
+                cd = getattr(evt, "cancellation_details", None) or getattr(
+                    evt.result, "cancellation_details", None
+                )
+                if cd is not None:
+                    cancel_details["reason"] = str(getattr(cd, "reason", ""))
+                    cancel_details["details"] = str(getattr(cd, "error_details", ""))
+                done.set()
+
+            def _on_stopped(evt):
+                done.set()
+
+            recognizer.recognized.connect(_on_recognized)
+            recognizer.session_stopped.connect(_on_stopped)
+            recognizer.canceled.connect(_on_canceled)
+
+            recognizer.start_continuous_recognition()
+            # Bound the wait so a stuck session can't hang the worker thread.
+            done.wait(timeout=180)
+            try:
+                recognizer.stop_continuous_recognition()
+            except Exception:  # pragma: no cover - defensive
+                pass
+
+            if not segments:
                 return {
-                    "error": f"recognition: {result.reason}",
-                    "details": getattr(
-                        getattr(result, "cancellation_details", None),
-                        "error_details",
-                        "",
-                    ),
+                    "error": "recognition: NoMatch",
+                    "details": cancel_details.get("details", ""),
                 }
 
-            json_result = result.properties.get(
-                speechsdk.PropertyId.SpeechServiceResponse_JsonResult
-            )
-            if not json_result:
-                return {
-                    "recognized_text": result.text,
-                    "note": "no detailed assessment available",
-                }
-
-            data = json.loads(json_result)
-            nbest = data.get("NBest") or [{}]
-            top = nbest[0]
-            pron = top.get("PronunciationAssessment", {})
+            # Merge every segment's NBest[0] into one transcript + word list, and
+            # compute word-count-weighted aggregate scores across all segments.
+            text_parts: List[str] = []
             words: List[Dict[str, Any]] = []
-            for w in top.get("Words", []):
-                wp = w.get("PronunciationAssessment", {})
-                phonemes = []
-                for ph in w.get("Phonemes", []):
-                    pa = ph.get("PronunciationAssessment", {})
-                    phonemes.append(
-                        {
+            agg = {k: 0.0 for k in (
+                "PronScore", "AccuracyScore", "FluencyScore",
+                "ProsodyScore", "CompletenessScore",
+            )}
+            weight_total = 0
+
+            for data in segments:
+                nbest = data.get("NBest") or [{}]
+                top = nbest[0]
+                disp = top.get("Display") or data.get("DisplayText") or ""
+                if disp:
+                    text_parts.append(disp)
+                seg_words = top.get("Words", []) or []
+                for w in seg_words:
+                    wp = w.get("PronunciationAssessment", {})
+                    phonemes = []
+                    for ph in w.get("Phonemes", []):
+                        pa = ph.get("PronunciationAssessment", {})
+                        phonemes.append({
                             "phoneme": ph.get("Phoneme", ""),
                             "score": pa.get("AccuracyScore", 0),
-                        }
-                    )
-                words.append(
-                    {
+                        })
+                    words.append({
                         "word": w.get("Word", ""),
                         "accuracy": wp.get("AccuracyScore", 0),
                         "error_type": wp.get("ErrorType", "None"),
                         "phonemes": phonemes,
-                    }
-                )
+                    })
+                pron = top.get("PronunciationAssessment", {})
+                # Weight by spoken-word count so a 2-word segment doesn't drag the
+                # overall score as hard as a 30-word one. Fall back to weight 1.
+                w_count = max(len([x for x in seg_words if x.get("Word")]), 1)
+                if pron:
+                    for k in agg:
+                        agg[k] += float(pron.get(k, 0) or 0) * w_count
+                    weight_total += w_count
+
+            recognized_text = " ".join(p for p in text_parts if p).strip()
+            if weight_total > 0:
+                scores = {k: round(v / weight_total, 1) for k, v in agg.items()}
+            else:
+                scores = {k: 0 for k in agg}
+
+            if not recognized_text:
+                return {
+                    "recognized_text": "",
+                    "note": "no detailed assessment available",
+                }
 
             return {
-                "recognized_text": top.get("Display") or result.text,
-                "pron_score": pron.get("PronScore", 0),
-                "accuracy_score": pron.get("AccuracyScore", 0),
-                "fluency_score": pron.get("FluencyScore", 0),
-                "prosody_score": pron.get("ProsodyScore", 0),
-                "completeness_score": pron.get("CompletenessScore", 0),
+                "recognized_text": recognized_text,
+                "pron_score": scores["PronScore"],
+                "accuracy_score": scores["AccuracyScore"],
+                "fluency_score": scores["FluencyScore"],
+                "prosody_score": scores["ProsodyScore"],
+                "completeness_score": scores["CompletenessScore"],
                 "word_results": words,
             }
         except Exception as exc:  # pragma: no cover - defensive
