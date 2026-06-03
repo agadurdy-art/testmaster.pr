@@ -330,7 +330,35 @@ export default function useElevenLabsLiz({ userId } = {}) {
         sessionArgs.connectionType = 'websocket';
         sessionArgs.signedUrl = tokenPayload.signed_url;
       }
-      await conversation.startSession(sessionArgs);
+
+      // Part 3 is a CONTINUATION — the candidate has already been greeted in
+      // Part 1, so Liz must not re-greet or re-ask their name. Override the
+      // agent's opening line to go straight into the discussion. (Part 1 keeps
+      // the default greeting; Part 2 isn't a Liz conversation.) Guarded: if the
+      // agent doesn't allow first-message overrides, retry without so the
+      // session still connects.
+      const firstMessageOverride =
+        part === 'part3'
+          ? "Thank you. Now I'd like to ask you some broader, more general questions related to that topic. Let's begin."
+          : null;
+      if (firstMessageOverride) {
+        sessionArgs.overrides = { agent: { firstMessage: firstMessageOverride } };
+      }
+
+      try {
+        await conversation.startSession(sessionArgs);
+      } catch (overrideErr) {
+        if (sessionArgs.overrides) {
+          // Most likely the agent's first-message override isn't enabled in its
+          // ElevenLabs security settings — fall back to the default opening.
+          // eslint-disable-next-line no-console
+          console.warn('[useElevenLabsLiz] first-message override rejected, retrying without:', overrideErr);
+          delete sessionArgs.overrides;
+          await conversation.startSession(sessionArgs);
+        } else {
+          throw overrideErr;
+        }
+      }
       // status='connected' effect will flip phase to LIVE, capture id, AND
       // start the parallel recorder so its clock matches the ElevenLabs call.
       return true;
