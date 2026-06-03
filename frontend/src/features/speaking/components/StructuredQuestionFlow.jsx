@@ -37,6 +37,25 @@ const MAX_QUESTIONS_PER_PART = 4;
 // room to expand without losing the recording.
 const MAX_RECORD_SECONDS = 60;
 
+// Speaking sets store Part 1/3 questions in a few shapes depending on vintage:
+// a flat `questions` array, `sample_questions`, or grouped under `topics` /
+// `discussion_topics`. Pull from whichever is present so a set isn't reported
+// as empty just because of its shape.
+function extractQuestions(block) {
+  if (!block || typeof block !== 'object') return [];
+  if (Array.isArray(block.questions) && block.questions.length) return block.questions;
+  if (Array.isArray(block.sample_questions) && block.sample_questions.length) return block.sample_questions;
+  if (Array.isArray(block.topics)) {
+    const qs = block.topics.flatMap((t) => (t && Array.isArray(t.questions) ? t.questions : []));
+    if (qs.length) return qs;
+  }
+  if (Array.isArray(block.discussion_topics)) {
+    const qs = block.discussion_topics.flatMap((dt) => (dt && Array.isArray(dt.questions) ? dt.questions : []));
+    if (qs.length) return qs;
+  }
+  return [];
+}
+
 async function fetchRandomSet(part) {
   const modulesRes = await fetch(`${API_BASE}/api/speaking/modules`);
   if (!modulesRes.ok) {
@@ -45,32 +64,45 @@ async function fetchRandomSet(part) {
   const modulesBody = await modulesRes.json();
   const sets = modulesBody.modules || modulesBody.sets || [];
   if (!sets.length) throw new Error('No speaking sets available');
-  const pick = sets[Math.floor(Math.random() * sets.length)];
-  const setId = pick.set_id || pick.id;
 
-  const setRes = await fetch(
-    `${API_BASE}/api/speaking/set/${encodeURIComponent(setId)}?include_audio=true&mode=practice`,
-  );
-  if (!setRes.ok) throw new Error(`Set fetch failed: ${setRes.status}`);
-  const setBody = await setRes.json();
-  const block = setBody[PART_KEY[part]] || {};
-  const raw = Array.isArray(block.questions) ? block.questions : [];
-  const trimmed = raw.slice(0, MAX_QUESTIONS_PER_PART).map((q, idx) => ({
-    index: idx + 1,
-    id: q.id,
-    text: q.text || `Question ${idx + 1}`,
-    audioUrl: q.audio_url || null,
-    targetTime: q.target_time || 15,
-    maxTime: q.max_time || 25,
-  }));
-
-  return {
-    setId,
-    title: setBody.title || pick.title || 'Speaking practice',
-    topic: setBody.topic || null,
-    questions: trimmed,
-    intro: block.intro || null,
-  };
+  // Shuffle and try sets until one actually has questions for this part — a
+  // single malformed/empty set no longer dead-ends the whole flow.
+  const order = sets.map((_, i) => i).sort(() => Math.random() - 0.5);
+  let lastErr = null;
+  for (const idx of order) {
+    const pick = sets[idx];
+    const setId = pick.set_id || pick.id;
+    if (!setId) continue;
+    try {
+      const setRes = await fetch(
+        `${API_BASE}/api/speaking/set/${encodeURIComponent(setId)}?include_audio=true&mode=practice`,
+      );
+      if (!setRes.ok) { lastErr = new Error(`Set fetch failed: ${setRes.status}`); continue; }
+      const setBody = await setRes.json();
+      const block = setBody[PART_KEY[part]] || {};
+      const raw = extractQuestions(block);
+      if (!raw.length) continue; // try the next set
+      const trimmed = raw.slice(0, MAX_QUESTIONS_PER_PART).map((q, i) => ({
+        index: i + 1,
+        id: q.id || `${setId}_${part}_q${i + 1}`,
+        text: (typeof q === 'string' ? q : (q.text || q.question)) || `Question ${i + 1}`,
+        audioUrl: (typeof q === 'object' && q.audio_url) || null,
+        targetTime: (typeof q === 'object' && q.target_time) || 15,
+        maxTime: (typeof q === 'object' && q.max_time) || 25,
+      }));
+      return {
+        setId,
+        title: setBody.title || pick.title || 'Speaking practice',
+        topic: setBody.topic || null,
+        questions: trimmed,
+        intro: block.intro || null,
+      };
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  if (lastErr) throw lastErr;
+  throw new Error('No speaking set has questions for this part yet.');
 }
 
 function pickRecordingMime() {

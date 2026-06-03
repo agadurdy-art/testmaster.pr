@@ -329,8 +329,12 @@ async def run_azure_pronunciation(
             recognizer.canceled.connect(_on_canceled)
 
             recognizer.start_continuous_recognition()
-            # Bound the wait so a stuck session can't hang the worker thread.
-            done.wait(timeout=180)
+            # Bound the wait well under the 110s route budget so a stuck/slow
+            # session can't starve the Sonnet pass (and so the caller can fall
+            # back to Whisper). Any segments collected before the cap are still
+            # used. Tunable via AZURE_RECOGNITION_WAIT_S.
+            wait_s = float(os.environ.get("AZURE_RECOGNITION_WAIT_S", "70"))
+            done.wait(timeout=wait_s)
             try:
                 recognizer.stop_continuous_recognition()
             except Exception:  # pragma: no cover - defensive
@@ -699,15 +703,40 @@ async def evaluate_speaking(
             f"audio transcode failed: {exc!r}", attempts=0
         ) from exc
 
-    azure = await run_azure_pronunciation(wav_bytes, reference_text="")
-    if "error" in azure or not azure.get("recognized_text"):
-        raise SpeakingEvaluatorFailure(
-            f"azure failed: {azure.get('error', 'no transcript')}",
-            attempts=0,
-            last_error=str(azure.get("details") or azure.get("error") or ""),
-        )
+    try:
+        azure = await run_azure_pronunciation(wav_bytes, reference_text="")
+    except Exception as exc:  # defensive — never let Azure crash the eval
+        logger.warning("azure pronunciation crashed, falling back to whisper: %s", exc)
+        azure = {"error": f"exception: {exc!r}"}
 
-    transcript = azure["recognized_text"]
+    azure_ok = "error" not in azure and bool(azure.get("recognized_text"))
+
+    if azure_ok:
+        transcript = azure["recognized_text"]
+        azure_block = _build_azure_block(azure)
+    else:
+        # Azure failed (timeout / NoMatch / not configured). Don't 502 the whole
+        # attempt — fall back to Whisper so the candidate still gets a band
+        # (just without the phoneme-level pronunciation report). Results > no
+        # results: this was a recurring "evaluator didn't return scores" cause.
+        logger.warning(
+            "azure unavailable (%s) — grading from whisper transcript instead",
+            azure.get("error", "no transcript"),
+        )
+        try:
+            transcript = await _default_whisper_transcribe(audio_bytes)
+        except Exception as exc:
+            raise SpeakingEvaluatorFailure(
+                f"azure + whisper both failed: {exc!r}", attempts=0,
+                last_error=str(azure.get("details") or azure.get("error") or ""),
+            ) from exc
+        if not transcript or not transcript.strip():
+            raise SpeakingEvaluatorFailure(
+                "no transcript from azure or whisper", attempts=0,
+                last_error=str(azure.get("details") or azure.get("error") or ""),
+            )
+        azure_block = _BASIC_AZURE_BLOCK
+
     duration = float(req.duration_seconds or 0.0)
     fluency = compute_fluency(transcript, duration)
 
@@ -715,22 +744,21 @@ async def evaluate_speaking(
         req=req,
         transcript=transcript,
         fluency=fluency,
-        azure_block=_build_azure_block(azure),
+        azure_block=azure_block,
         mode_instruction="",
     )
 
-    # Attach the Azure deep-feedback bundle so the frontend's
-    # PremiumPronunciationDrawer can render the per-word + phoneme detail.
-    # Sonnet's transcript_tokens already carry the highlighted summary;
-    # this is the deluxe complement (5-score grid + drillable problem words).
-    pron_analysis, word_results = _build_deep_feedback_bundle(azure)
-    if pron_analysis is not None or word_results is not None:
-        result = result.model_copy(
-            update={
-                "pronunciation_analysis": pron_analysis,
-                "word_level_results": word_results,
-            }
-        )
+    # Attach the Azure deep-feedback bundle (per-word + phoneme detail) ONLY
+    # when Azure succeeded; the Whisper fallback has no phoneme data.
+    if azure_ok:
+        pron_analysis, word_results = _build_deep_feedback_bundle(azure)
+        if pron_analysis is not None or word_results is not None:
+            result = result.model_copy(
+                update={
+                    "pronunciation_analysis": pron_analysis,
+                    "word_level_results": word_results,
+                }
+            )
     return result
 
 
