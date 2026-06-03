@@ -177,7 +177,15 @@ export function useSpeakingFlow({ prepSeconds = 60, recordSeconds = 120 } = {}) 
         if (typeof window === 'undefined' || !('MediaRecorder' in window)) {
           throw new Error('MediaRecorder unavailable');
         }
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        // Voice preset: AGC lifts quiet/distant speakers so Azure doesn't
+        // return NoMatch ("couldn't catch your voice") on a soft monologue.
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            echoCancellation: true,
+            noiseSuppression: true,
+            autoGainControl: true,
+          },
+        });
         if (cancelled) {
           stream.getTracks().forEach(t => t.stop());
           return;
@@ -197,12 +205,20 @@ export function useSpeakingFlow({ prepSeconds = 60, recordSeconds = 120 } = {}) 
         rec.onstop = () => {
           const blob = new Blob(chunksRef.current, { type: rec.mimeType || 'audio/webm' });
           chunksRef.current = [];
-          if (blob.size > 0) setAudioBlob(blob);
+          // Treat a tiny blob as "no real audio" — a webm container with no
+          // voiced frames is a few hundred bytes and would NoMatch server-side.
+          if (blob.size > 1200) {
+            setAudioBlob(blob);
+          } else {
+            setAudioError('We couldn\'t hear your voice. Check your microphone is selected and not muted, then record again.');
+          }
           // Always mark "audio finalised" — even if empty — so the submission
           // useEffect downstream knows it can stop waiting.
           setAudioReady(true);
         };
-        rec.start();
+        // Timeslice so chunks flush every second instead of only at stop(): if
+        // the final flush is ever dropped, we still have the earlier audio.
+        rec.start(1000);
       } catch (err) {
         if (!cancelled) {
           const msg = err?.name === 'NotAllowedError'
