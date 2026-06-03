@@ -16,6 +16,7 @@ import { toast } from 'sonner';
 import { useGoBack } from '../hooks/useGoBack';
 import { mintClientRequestId } from '../lib/clientRequestId';
 import { ResultsState as SpeakingResultsState, adaptSpeakingResult } from '../features/speaking';
+import StructuredResultsLayout from '../features/speaking/components/StructuredResultsLayout';
 import '../features/speaking/speaking.css';
 import SpeakingHelperPanel from '../features/speakingHelper/SpeakingHelperPanel';
 
@@ -572,29 +573,87 @@ export default function SpeakingPracticeQB({ user }) {
         return;
       }
 
-      // Concatenate per-question webm fragments into a single blob. Backend
-      // ffmpeg transcoder (speaking_evaluator.py) is robust enough to handle
-      // chained webm payloads; if it ever isn't, the fallback is to record
-      // each part as one continuous MediaRecorder session.
+      // Mint once and reuse on transient retry so the backend idempotency
+      // cache short-circuits without re-running Azure + Sonnet.
+      if (!clientRequestIdRef.current) {
+        clientRequestIdRef.current = mintClientRequestId();
+      }
+
+      // Multi-question parts (Part 1 interview, Part 3 discussion) route to the
+      // structured per-question pipeline so EACH answer is transcribed +
+      // evaluated independently (Azure×N premium / Whisper×N basic + Sonnet×1),
+      // counted as ONE eval. The legacy single-blob path concatenated every
+      // answer into one webm and ran Azure recognize_once(), which stopped at
+      // the first pause — so only the first question was ever evaluated.
+      if (currentPart === 1 || currentPart === 3) {
+        const form = new FormData();
+        form.append('user_id', user?.id || '');
+        form.append('part', `part${currentPart}`);
+        form.append('topic', moduleContent?.title || (currentPart === 1 ? 'Part 1 — Introduction' : 'Part 3 — Discussion'));
+        form.append('user_language', user?.feedback_language || user?.preferred_language || 'en');
+        form.append('target_band', String(user?.target_band ?? 7.0));
+        form.append('client_request_id', clientRequestIdRef.current);
+        if (selectedModule) form.append('set_id', selectedModule);
+
+        // One contiguous question_q{i}/audio_q{i}/duration_q{i} triple per answer.
+        let idx = 0;
+        partAnswers.forEach((a) => {
+          const blob = audioBlobsRef.current[a.question_id];
+          if (!blob) return; // skip any answer without captured audio
+          idx += 1;
+          form.append(`question_q${idx}`, a.question || '');
+          form.append(`audio_q${idx}`, blob, `qb-part${currentPart}-q${idx}-${Date.now()}.webm`);
+          form.append(`duration_q${idx}`, String(a.duration || 0));
+        });
+
+        const res = await fetch(`${API_URL}/api/speaking-practice/evaluate-structured`, {
+          method: 'POST',
+          body: form,
+        });
+        setSubmitStep('evaluating');
+
+        if (!res.ok) {
+          let detail;
+          try { detail = await res.json(); } catch (_) { detail = await res.text(); }
+          const code = (typeof detail === 'object' && detail?.detail?.code) || '';
+          const rawError = (typeof detail === 'object' && (detail?.detail?.message || detail?.detail)) || (typeof detail === 'string' ? detail : `HTTP ${res.status}`);
+          const combined = `${code} ${rawError}`;
+          const isNoMatch = /NoMatch|no\s*match|no_speech|no\s*speech/i.test(combined);
+          const isTooShort = /audio_too_short|audio_too_small|too\s*short|too_short|min_seconds|min_bytes/i.test(combined);
+          let message;
+          if (code === 'quota_exhausted') {
+            message = rawError || 'You\'ve used all evaluations for this period.';
+          } else if (isTooShort) {
+            message = "One of your recordings was shorter than the minimum. Re-record speaking in full sentences for at least 10–15 seconds, then submit again.";
+          } else if (isNoMatch) {
+            message = "We couldn't pick up clear speech from your microphone. Check the lock icon in the URL bar → Microphone = Allow, then re-record speaking in full sentences for 10–15 seconds.";
+          } else {
+            message = rawError;
+          }
+          setSubmitError(message);
+          setSubmitStep('error');
+          return;
+        }
+
+        const data = await res.json();
+        // Structured response carries a `questions` array → rendered by
+        // StructuredResultsLayout (per-question tabs). Keep the same setResults
+        // sink; the render block branches on the shape.
+        setResults(data);
+        audioBlobsRef.current = {};
+        clientRequestIdRef.current = null;
+        setSubmittingTier(null);
+        setSubmitStep('idle');
+        return;
+      }
+
+      // ── Part 2 (cue card, single long-turn answer) — unchanged single-blob path ──
       const combinedBlob = partBlobs.length === 1
         ? partBlobs[0]
         : new Blob(partBlobs, { type: 'audio/webm' });
 
-      // Build cue card payload appropriate for the part. For Parts 1/3 there's
-      // no real cue card — pass the topic + all questions so the evaluator has
-      // task context. For Part 2 use the actual cue card.
-      let cueCardPrompt = '';
-      let cueCardBullets = '';
-      if (currentPart === 2) {
-        cueCardPrompt = moduleContent?.part2?.cue_card?.topic || 'Cue card monologue';
-        cueCardBullets = (moduleContent?.part2?.cue_card?.bullets || []).join('\n');
-      } else {
-        const partKey = currentPart === 1 ? 'part1' : 'part3';
-        const qs = moduleContent?.[partKey]?.questions || [];
-        const partLabel = currentPart === 1 ? 'Part 1 — Introduction' : 'Part 3 — Discussion';
-        cueCardPrompt = `${partLabel} (${moduleContent?.title || 'Speaking'})`;
-        cueCardBullets = qs.map(q => q.text).filter(Boolean).join('\n');
-      }
+      const cueCardPrompt = moduleContent?.part2?.cue_card?.topic || 'Cue card monologue';
+      const cueCardBullets = (moduleContent?.part2?.cue_card?.bullets || []).join('\n');
 
       const totalDuration = partAnswers.reduce((s, a) => s + (a.duration || 0), 0);
 
@@ -609,11 +668,6 @@ export default function SpeakingPracticeQB({ user }) {
       form.append('duration_seconds', String(totalDuration || 0));
       form.append('context', 'qb');
       if (selectedModule) form.append('set_id', selectedModule);
-      // Mint once and reuse on transient retry so the backend idempotency
-      // cache short-circuits without re-running Azure + Sonnet.
-      if (!clientRequestIdRef.current) {
-        clientRequestIdRef.current = mintClientRequestId();
-      }
       form.append('client_request_id', clientRequestIdRef.current);
 
       const res = await fetch(`${API_URL}/api/speaking/evaluate`, {
@@ -1243,7 +1297,21 @@ export default function SpeakingPracticeQB({ user }) {
           </div>
         )}
 
-        {results && (() => {
+        {results && Array.isArray(results.questions) && results.questions.length > 0 && (
+          <div className="speaking-scope">
+            <StructuredResultsLayout
+              feedback={results}
+              onPracticeAnother={() => { setResults(null); backToParts(); }}
+              onTryAgain={() => {
+                const part = selectedPart || currentPart;
+                setResults(null);
+                choosePart(part);
+              }}
+            />
+          </div>
+        )}
+
+        {results && !(Array.isArray(results.questions) && results.questions.length > 0) && (() => {
           const adapted = adaptSpeakingResult(results, {
             targetBand: user?.target_band,
             durationSeconds: results.metrics?.total_duration,
