@@ -1,43 +1,18 @@
 import React from 'react';
+import AppShellNav from '../../../components/appshell/AppShellNav';
 
-export default function SpeakingHeader() {
-  return (
-    <header className="sp-header">
-      <div className="sp-header-inner">
-        <a href="#" className="sp-logo">
-          IELTS Ace<span className="sp-logo-tld">.pro</span>
-        </a>
-        <nav className="sp-nav">
-          <a className="sp-nav-link" href="#">Writing</a>
-          <a className="sp-nav-link active" href="#">Speaking</a>
-          <a className="sp-nav-link" href="#">Reading</a>
-          <a className="sp-nav-link" href="#">Listening</a>
-        </nav>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <span
-            className="sp-font-mono"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              fontSize: 13,
-              color: 'var(--sp-muted-fg)',
-            }}
-          >
-            <span
-              style={{
-                display: 'inline-block',
-                width: 8,
-                height: 8,
-                borderRadius: 9999,
-                background: 'var(--sp-primary)',
-              }}
-            />
-            7‑day streak
-          </span>
-          <div className="sp-avatar">MT</div>
-        </div>
-      </div>
-    </header>
-  );
+/**
+ * SpeakingHeader
+ * --------------
+ * Thin wrapper around the app-wide AppShellNav so the Speaking surfaces
+ * (Smart Practice, Full Test, Premium) share the SAME sticky header as
+ * Dashboard / Question Bank / Progress / Courses — real brand logo that
+ * routes to /dashboard, working nav links, plan chip and a profile avatar.
+ *
+ * Previously this rendered a standalone prototype header with dead `href="#"`
+ * links and a hardcoded "7-day streak / MT" badge, which made the page feel
+ * like a disconnected landing page.
+ */
+export default function SpeakingHeader({ user }) {
+  return <AppShellNav currentPage="practice" user={user} />;
 }

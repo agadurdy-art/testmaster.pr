@@ -138,7 +138,7 @@ function LiveConversation({ part, user, onExit }) {
   if (phase === 'submitting') {
     return (
       <>
-        <SpeakingHeader />
+        <SpeakingHeader user={user} />
         <ProcessingState audioBlob={liz.userAudioBlob} />
       </>
     );
@@ -156,7 +156,7 @@ function LiveConversation({ part, user, onExit }) {
     }) || scoreResult;
     return (
       <>
-        <SpeakingHeader />
+        <SpeakingHeader user={user} />
         <ResultsState
           data={adapted}
           onRetryCard={handleClose}
@@ -169,7 +169,7 @@ function LiveConversation({ part, user, onExit }) {
   if (phase === 'error') {
     return (
       <>
-        <SpeakingHeader />
+        <SpeakingHeader user={user} />
         <ErrorState
           errorMessage={scoreError}
           onRetry={handleClose}
@@ -183,7 +183,7 @@ function LiveConversation({ part, user, onExit }) {
 
   return (
     <>
-      <SpeakingHeader />
+      <SpeakingHeader user={user} />
       <section style={{ maxWidth: 1320, margin: '0 auto', padding: '32px 32px 80px' }}>
         {showUpgrade ? (
           <div
@@ -352,7 +352,7 @@ function SpeakingPracticeInner({ onExit, user }) {
 
   return (
     <>
-      <SpeakingHeader />
+      <SpeakingHeader user={user} />
 
       {flow.state === 'select' && (
         <PartSelector

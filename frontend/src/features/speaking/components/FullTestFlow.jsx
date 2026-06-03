@@ -54,8 +54,6 @@ const PART2_RECORD_SECS = 120;
 // from the 6 buckets explicitly. Tema değiştirilince Part 2 cue card yeniden
 // çekilir.
 function ThemePicker({ onConfirm, onExit }) {
-  const [picked, setPicked] = useState(null);
-
   const start = (theme) => {
     onConfirm(theme);
   };
@@ -104,33 +102,36 @@ function ThemePicker({ onConfirm, onExit }) {
             marginTop: 28,
           }}
         >
-          {SPEAKING_THEMES.map((theme) => {
-            const selected = picked?.id === theme.id;
-            return (
-              <button
-                key={theme.id}
-                type="button"
-                onClick={() => setPicked(theme)}
-                className={'sp-part-card' + (selected ? ' sp-part-card-selected' : '')}
-                style={{ textAlign: 'left', cursor: 'pointer' }}
+          {SPEAKING_THEMES.map((theme) => (
+            <button
+              key={theme.id}
+              type="button"
+              onClick={() => start(theme)}
+              className="sp-part-card"
+              style={{ textAlign: 'left', cursor: 'pointer' }}
+            >
+              <div className="sp-mono-label" style={{ marginBottom: 6 }}>{theme.label}</div>
+              <p style={{ fontSize: 14, color: 'var(--sp-muted-fg)', lineHeight: 1.45 }}>
+                {theme.description}
+              </p>
+              <span
+                className="sp-font-mono"
+                style={{ display: 'inline-block', marginTop: 12, fontSize: 12, fontWeight: 700, color: 'var(--sp-primary)' }}
               >
-                <div className="sp-mono-label" style={{ marginBottom: 6 }}>{theme.label}</div>
-                <p style={{ fontSize: 14, color: 'var(--sp-muted-fg)', lineHeight: 1.45 }}>
-                  {theme.description}
-                </p>
-              </button>
-            );
-          })}
+                Start with this theme →
+              </span>
+            </button>
+          ))}
         </div>
 
         <div style={{ display: 'flex', gap: 12, marginTop: 32, flexWrap: 'wrap' }}>
           <button
             type="button"
             className="sp-btn-primary"
-            onClick={() => start(picked || pickRandomTheme())}
+            onClick={() => start(pickRandomTheme())}
             style={{ height: 48, padding: '0 24px' }}
           >
-            {picked ? `Start Full Test · ${picked.label}` : 'Random theme & start'}
+            Let Liz pick a theme &amp; start
           </button>
           <button
             type="button"
@@ -431,7 +432,7 @@ export default function FullTestFlow({ user, onExit }) {
   if (phase === 'theme') {
     return (
       <>
-        <SpeakingHeader />
+        <SpeakingHeader user={user} />
         <ThemePicker onConfirm={handleThemeConfirm} onExit={handleClose} />
       </>
     );
@@ -440,7 +441,7 @@ export default function FullTestFlow({ user, onExit }) {
   if (phase === 'upgrade') {
     return (
       <>
-        <SpeakingHeader />
+        <SpeakingHeader user={user} />
         <UpgradePanel message={liz.error || scoreError} onExit={handleClose} />
       </>
     );
@@ -449,7 +450,7 @@ export default function FullTestFlow({ user, onExit }) {
   if (phase === 'submitting') {
     return (
       <>
-        <SpeakingHeader />
+        <SpeakingHeader user={user} />
         <ProcessingState audioBlob={part2?.audioBlob} />
       </>
     );
@@ -458,7 +459,7 @@ export default function FullTestFlow({ user, onExit }) {
   if (phase === 'results') {
     return (
       <>
-        <SpeakingHeader />
+        <SpeakingHeader user={user} />
         <ResultsState
           data={scoreResult}
           onRetryCard={handleClose}
@@ -471,7 +472,7 @@ export default function FullTestFlow({ user, onExit }) {
   if (phase === 'error') {
     return (
       <>
-        <SpeakingHeader />
+        <SpeakingHeader user={user} />
         <ErrorState
           errorMessage={scoreError}
           onRetry={handleClose}
@@ -484,7 +485,7 @@ export default function FullTestFlow({ user, onExit }) {
   if (phase === 'part1-live' || phase === 'part3-live') {
     return (
       <>
-        <SpeakingHeader />
+        <SpeakingHeader user={user} />
         <section style={{ maxWidth: 1320, margin: '0 auto', padding: '24px 32px 0' }}>
           <span className="sp-mono-label">{stageLabel}</span>
         </section>
@@ -500,7 +501,7 @@ export default function FullTestFlow({ user, onExit }) {
   if (phase === 'part2-prep') {
     return (
       <>
-        <SpeakingHeader />
+        <SpeakingHeader user={user} />
         <section style={{ maxWidth: 1320, margin: '0 auto', padding: '24px 32px 0' }}>
           <span className="sp-mono-label">{stageLabel}</span>
         </section>
@@ -527,7 +528,7 @@ export default function FullTestFlow({ user, onExit }) {
   if (phase === 'part2-rec') {
     return (
       <>
-        <SpeakingHeader />
+        <SpeakingHeader user={user} />
         <section style={{ maxWidth: 1320, margin: '0 auto', padding: '24px 32px 0' }}>
           <span className="sp-mono-label">{stageLabel}</span>
         </section>
