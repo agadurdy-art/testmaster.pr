@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
@@ -77,6 +77,24 @@ export default function CambridgeTestResults() {
   
   // Get data from navigation state
   const { answers = {}, testData = {}, mode = 'full', skill = null, speakingEvaluations = {}, sectionDurations = {} } = location.state || {};
+
+  // True IELTS overall = mean of the AVAILABLE section bands, rounded to 0.5.
+  // The backend /evaluate/full-test only scores Listening + Reading; Writing and
+  // Speaking are evaluated separately on this page, so trusting `results.overall`
+  // (L+R only) understated the band. Recompute reactively as W/S come in.
+  const computedOverall = useMemo(() => {
+    const bands = [];
+    if (results?.listening?.band) bands.push(results.listening.band);
+    if (results?.reading?.band) bands.push(results.reading.band);
+    if (results?.writing?.evaluated && results?.writing?.score) bands.push(results.writing.score);
+    const spk = Object.values(speakingEvaluations || {});
+    if (spk.length) {
+      const avg = spk.reduce((s, e) => s + (e?.overall_band || 0), 0) / spk.length;
+      if (avg > 0) bands.push(avg);
+    }
+    if (!bands.length) return results?.overall ?? null;
+    return Math.round((bands.reduce((a, b) => a + b, 0) / bands.length) * 2) / 2;
+  }, [results, speakingEvaluations]);
 
   useEffect(() => {
     if (!location.state) {
@@ -440,7 +458,7 @@ export default function CambridgeTestResults() {
       focus_area: weakSkill.charAt(0).toUpperCase() + weakSkill.slice(1),
       skill: weakSkill,
       reason: `Your ${weakSkill} score (${weakBand}) is your lowest skill. Improving it has the highest impact on your overall band.`,
-      data_points: [`${weakSkill} band: ${weakBand}`, `Overall: ${results?.overall}`],
+      data_points: [`${weakSkill} band: ${weakBand}`, `Overall: ${computedOverall}`],
       steps: [
         { title: 'Review your results', detail: `Look at the questions you got wrong in ${weakSkill}`, duration: '3 min' },
         { title: 'Practice weak areas', detail: 'Focus on the question types where you lost the most marks', duration: '10 min' },
@@ -905,16 +923,16 @@ export default function CambridgeTestResults() {
                 <div
                   className="w-32 h-32 rounded-full flex items-center justify-center"
                   style={{
-                    background: results?.overall >= 7 ? 'linear-gradient(135deg, #10b981, #059669)' :
-                               results?.overall >= 6 ? 'linear-gradient(135deg, #3b82f6, #1d4ed8)' :
-                               results?.overall >= 5 ? 'linear-gradient(135deg, #f59e0b, #d97706)' :
+                    background: computedOverall >= 7 ? 'linear-gradient(135deg, #10b981, #059669)' :
+                               computedOverall >= 6 ? 'linear-gradient(135deg, #3b82f6, #1d4ed8)' :
+                               computedOverall >= 5 ? 'linear-gradient(135deg, #f59e0b, #d97706)' :
                                'linear-gradient(135deg, #ef4444, #dc2626)',
                     boxShadow: '0 0 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2)',
                     animation: 'glow 3s ease-in-out infinite alternate'
                   }}
                 >
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-white">{results?.overall || '-'}</div>
+                    <div className="text-4xl font-bold text-white">{computedOverall ?? '-'}</div>
                     <div className="text-sm text-white/90 font-medium">BAND SCORE</div>
                   </div>
                 </div>
@@ -1049,10 +1067,20 @@ export default function CambridgeTestResults() {
                   <span className="font-bold text-purple-300">Band {results.writing.score}</span>
                 </div>
               )}
+              {Object.keys(speakingEvaluations).length > 0 && (
+                <div className="flex justify-between items-center p-3 bg-white/10 rounded-xl">
+                  <span className="text-white flex items-center gap-2">
+                    <Mic className="w-4 h-4 text-orange-300" /> Speaking
+                  </span>
+                  <span className="font-bold text-orange-300">
+                    Band {Math.round((Object.values(speakingEvaluations).reduce((s, e) => s + (e?.overall_band || 0), 0) / Object.keys(speakingEvaluations).length) * 2) / 2}
+                  </span>
+                </div>
+              )}
               <div className="pt-3 mt-3 border-t border-white/20">
                 <div className="flex justify-between items-center text-white font-medium">
                   <span>Overall Score (averaged)</span>
-                  <span className="text-xl font-bold">Band {results?.overall}</span>
+                  <span className="text-xl font-bold">Band {computedOverall ?? '-'}</span>
                 </div>
               </div>
             </div>
@@ -1631,7 +1659,7 @@ export default function CambridgeTestResults() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-violet-900">Study Roadmap</h3>
-                <p className="text-sm text-violet-600">A concrete path from Band {results?.overall?.toFixed?.(1) || results?.overall || '-'} toward Band {studyPlan.target_band}</p>
+                <p className="text-sm text-violet-600">A concrete path from Band {computedOverall?.toFixed?.(1) || computedOverall || '-'} toward Band {studyPlan.target_band}</p>
               </div>
             </div>
             <div className="grid md:grid-cols-3 gap-3 mb-4">

@@ -4343,8 +4343,20 @@ async def public_evaluator_rating(request: EvaluatorRatingRequest, http_request:
 
 @api_router.post("/writing-practice/evaluate")
 async def evaluate_writing_practice(request: WritingPracticeRequest, _caller: dict = Depends(auth_session.current_user)):
-    """Evaluate IELTS writing practice submission with detailed teacher-style feedback"""
-    try:
+    """Retired — superseded by /api/writing-practice/evaluate/v2 (Sonnet)."""
+    # Audit cleanup: this legacy path ran GPT-4o via EMERGENT_LLM_KEY (wrong
+    # model for IELTS calibration, no idempotency/quota guard) and has no
+    # frontend caller. Retire it so a stray client can't bill OpenAI or receive
+    # miscalibrated scores. The live writing evaluator is the Sonnet-backed v2.
+    raise HTTPException(
+        status_code=410,
+        detail={
+            "code": "endpoint_retired",
+            "message": "Use /api/writing-practice/evaluate/v2 instead.",
+            "replacement": "/api/writing-practice/evaluate/v2",
+        },
+    )
+    try:  # noqa: unreachable — retained below the 410 until the dead body is pruned
         chat = LlmChat(
             api_key=os.getenv("EMERGENT_LLM_KEY"),
             session_id=str(uuid.uuid4()),
@@ -4935,21 +4947,22 @@ async def evaluate_listening(request: ListeningEvaluationRequest):
                     "explanation": explanation
                 })
         
-        # Calculate listening band score
+        # Calculate listening band score.
+        # Audit BE-2: the old math summed each correct question's *difficulty
+        # band* and divided by the TOTAL question count, then nudged by
+        # percentage — not a band score (it systematically understated). Use the
+        # official Cambridge Listening raw→band table, projecting the N-question
+        # score onto the standard 40-question scale — same fix as comprehensive
+        # reading and Quick Assessment. (`total_band_points` kept above for any
+        # caller that still reads it, but the band now comes from the table.)
         if total_count > 0:
             percentage = (correct_count / total_count) * 100
-            listening_band = (total_band_points / total_count) if correct_count > 0 else 2.0
-            # Adjust band based on performance
-            if percentage >= 90:
-                listening_band = min(9.0, listening_band + 1.0)
-            elif percentage >= 70:
-                listening_band = min(8.0, listening_band + 0.5)
-            elif percentage < 40:
-                listening_band = max(2.0, listening_band - 1.0)
+            from services.ielts_band_tables import band_for_listening
+            listening_band = band_for_listening(correct_count, total=total_count)
         else:
             percentage = 0
-            listening_band = 2.0
-        
+            listening_band = 0.0
+
         # Round to nearest 0.5
         listening_band = round(listening_band * 2) / 2
         
