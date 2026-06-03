@@ -123,7 +123,6 @@ export async function extractUserAudio({ rawBlob, transcriptTurns, durationSecs 
   const sourceRate = audioBuffer.sampleRate;
   const totalDur = durationSecs || audioBuffer.duration;
   const spans = buildUserSpans(transcriptTurns, totalDur);
-  if (!spans.length) return null;
 
   // Mixdown to mono and concat user spans at source sample rate.
   const mono = mixdownToMono(audioBuffer);
@@ -137,13 +136,24 @@ export async function extractUserAudio({ rawBlob, transcriptTurns, durationSecs 
       totalSamples += (e - s);
     }
   }
-  if (!totalSamples) return null;
 
-  const concat = new Float32Array(totalSamples);
-  let off = 0;
-  for (const slice of slices) {
-    concat.set(slice, off);
-    off += slice.length;
+  // Fallback: if turn timing gave no usable user spans (missing/misaligned
+  // time_in_call_secs is common), DON'T drop the recording — re-encode the
+  // whole conversation. It includes Liz's voice (a slightly noisier transcript)
+  // but that is far better than losing Part 1/3 entirely. The clean
+  // user_transcript still comes from the turns separately.
+  let concat;
+  if (totalSamples > 0) {
+    concat = new Float32Array(totalSamples);
+    let off = 0;
+    for (const slice of slices) {
+      concat.set(slice, off);
+      off += slice.length;
+    }
+  } else if (mono.length > 0) {
+    concat = mono.slice();
+  } else {
+    return null;
   }
 
   // Resample to 16 kHz via OfflineAudioContext (rendered through native sample

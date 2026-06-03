@@ -421,6 +421,15 @@ export default function useElevenLabsLiz({ userId } = {}) {
         userBlob = null;
       }
     }
+    // Safety net: if user-only extraction produced nothing (no turns, missing
+    // timing, decode failure) but we DID record the conversation, ship the raw
+    // recording so Part 1/3 are never silently lost. Better a noisier transcript
+    // than no result. Only truly empty recordings stay null.
+    if (!userBlob && rawAudioBlob && rawAudioBlob.size > 1200) {
+      // eslint-disable-next-line no-console
+      console.warn('[useElevenLabsLiz] using raw conversation audio (user-only extraction unavailable)');
+      userBlob = rawAudioBlob;
+    }
     setUserAudioBlob(userBlob);
     const userText = userTranscriptFromTurns(finalizeData?.transcript_turns || []);
     setUserTranscript(userText);
