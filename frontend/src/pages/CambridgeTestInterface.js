@@ -8,7 +8,7 @@ import {
   Clock, Play, Pause, Volume2, Settings, HelpCircle, EyeOff,
   ChevronRight, Timer, AlertTriangle, Target, CheckCircle, RefreshCw,
   Highlighter, StickyNote, X, Edit3, Trash2, ChevronLeft, Send,
-  ListChecks, Eye, FileText, MessageSquare
+  ListChecks, Eye, FileText, MessageSquare, Loader2
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { mintClientRequestId } from '../lib/clientRequestId';
@@ -135,7 +135,15 @@ export default function CambridgeTestInterface() {
   // retries so the backend idempotency cache de-dupes the (user, request_id)
   // pair. Rotated on successful eval.
   const speakingRequestIdsRef = useRef({});
-  
+  // Retain each answer's actual audio blob + spoken duration so the speaking
+  // section can be evaluated per-question at submit time. questionRecordings
+  // only stores object URLs (for playback); these are what we POST.
+  // Key = same `part${currentPart}_q${questionIndex}` recording key.
+  const speakingBlobsRef = useRef({}); // recordingKey -> { blob, duration, mimeType }
+  // Live mirror of recordingTime so the MediaRecorder onstop closure (which
+  // captured recordingTime=0 at setup) can read the final duration.
+  const recordingSecondsRef = useRef(0);
+
   // Evaluation state
   const [isEvaluating, setIsEvaluating] = useState(false);
   const [questionEvaluations, setQuestionEvaluations] = useState({});
@@ -236,8 +244,26 @@ export default function CambridgeTestInterface() {
     setSectionTimeLeft(SECTION_TIMES[currentSection]);
   };
 
-  const handleSubmitSection = () => {
+  const handleSubmitSection = async () => {
     setCompletedSections(prev => [...prev, currentSection]);
+
+    // Speaking is evaluated at submit: one structured (per-question) call per
+    // part. Done before navigation so the results page receives real data
+    // instead of the empty map it used to get. `speakingEvals` is passed
+    // directly (setState is async and wouldn't be visible to navigate()).
+    let speakingEvals = questionEvaluations;
+    if (currentSection === 'speaking') {
+      setIsEvaluating(true);
+      try {
+        speakingEvals = await evaluateAllSpeakingParts();
+        setQuestionEvaluations(speakingEvals);
+      } catch (e) {
+        console.error('Speaking evaluation failed:', e);
+        speakingEvals = questionEvaluations;
+      } finally {
+        setIsEvaluating(false);
+      }
+    }
 
     // Capture elapsed minutes for THIS section before we move on. The
     // timer counts down from SECTION_TIMES[section]; elapsed = budget − left.
@@ -254,7 +280,7 @@ export default function CambridgeTestInterface() {
           testData,
           mode: 'skill',
           skill: skillParam,
-          speakingEvaluations: questionEvaluations,
+          speakingEvaluations: speakingEvals,
           sectionDurations: updatedDurations,
         }
       });
@@ -295,7 +321,7 @@ export default function CambridgeTestInterface() {
           answers,
           testData,
           mode: 'full',
-          speakingEvaluations: questionEvaluations,
+          speakingEvaluations: speakingEvals,
           sectionDurations: updatedDurations,
         }
       });
@@ -741,6 +767,14 @@ export default function CambridgeTestInterface() {
             ...prev,
             [recordingKey]: url
           }));
+          // Retain the blob + spoken duration for per-question evaluation at
+          // submit time (recordingSecondsRef is the live timer value; the
+          // recordingTime state would be stale inside this closure).
+          speakingBlobsRef.current[recordingKey] = {
+            blob,
+            duration: recordingSecondsRef.current || 0,
+            mimeType,
+          };
           // Save to server
           saveRecordingToServer(blob, questionIndex);
         }
@@ -764,9 +798,11 @@ export default function CambridgeTestInterface() {
       setIsRecording(true);
       setSpeakingState(SPEAKING_STATES.RECORDING);
       setRecordingTime(0);
-      
+      recordingSecondsRef.current = 0;
+
       // Start recording timer
       recordingTimerRef.current = setInterval(() => {
+        recordingSecondsRef.current += 1;
         setRecordingTime(prev => prev + 1);
       }, 1000);
       
@@ -941,6 +977,124 @@ export default function CambridgeTestInterface() {
     } finally {
       setIsEvaluating(false);
     }
+  };
+
+  // Evaluate the whole Speaking section per-question, ONE structured call per
+  // part (not per question), so each part counts as a single eval against the
+  // user's quota — same economy + pipeline as Question Bank / Smart Practice.
+  // Returns a flat { questionIndex: legacyEvalShape } map (the shape
+  // CambridgeTestResults already consumes) and never throws.
+  const evaluateAllSpeakingParts = async () => {
+    const parts = testData?.sections?.speaking?.parts || [];
+    if (parts.length === 0) return {};
+
+    const partQuestions = (part) => {
+      if (Array.isArray(part.questions) && part.questions.length) return part.questions;
+      if (Array.isArray(part.sample_questions) && part.sample_questions.length) return part.sample_questions;
+      if (Array.isArray(part.topics)) return part.topics.flatMap(t => t.questions || []);
+      if (Array.isArray(part.discussion_topics)) return part.discussion_topics.flatMap(dt => dt.questions || []);
+      return [];
+    };
+    const qText = (q) => (typeof q === 'string' ? q : (q?.question || q?.text || ''));
+
+    // Build one structured request per part that has at least one recording.
+    const partJobs = parts.map((part, pIndex) => {
+      const isPart2 = part.part_number === 2;
+      const items = [];
+      if (isPart2) {
+        const rec = speakingBlobsRef.current[`part${pIndex}_qpart2`];
+        if (rec?.blob) {
+          items.push({ question: part.cue_card?.topic || part.title || 'Part 2 long turn', rec });
+        }
+      } else {
+        const questions = partQuestions(part);
+        questions.forEach((q, qIdx) => {
+          const rec = speakingBlobsRef.current[`part${pIndex}_q${qIdx}`];
+          if (rec?.blob) items.push({ question: qText(q), rec });
+        });
+      }
+      return { part, pIndex, items };
+    }).filter(job => job.items.length > 0);
+
+    if (partJobs.length === 0) return {};
+
+    const runPart = async ({ part, items }) => {
+      try {
+        const form = new FormData();
+        form.append('user_id', user?.id || '');
+        form.append('part', `part${part.part_number || 1}`);
+        form.append('topic', part.title || part.topic || '');
+        form.append('user_language', user?.feedback_language || user?.preferred_language || 'en');
+        form.append('target_band', String(user?.target_band ?? 7.0));
+        form.append('client_request_id', mintClientRequestId());
+        form.append('book_id', bookId);
+        form.append('test_id', testId);
+        items.forEach((it, i) => {
+          const idx = i + 1;
+          form.append(`question_q${idx}`, it.question || '');
+          form.append(`audio_q${idx}`, it.rec.blob, `cambridge-p${part.part_number}-q${idx}.webm`);
+          form.append(`duration_q${idx}`, String(it.rec.duration || 0));
+        });
+        const res = await fetch(`${API_URL}/api/speaking-practice/evaluate-structured`, {
+          method: 'POST',
+          body: form,
+        });
+        if (!res.ok) {
+          console.error('Cambridge speaking eval failed for part', part.part_number, res.status);
+          return null;
+        }
+        return { part, payload: await res.json() };
+      } catch (err) {
+        console.error('Cambridge speaking eval error (part ' + part.part_number + '):', err);
+        return null;
+      }
+    };
+
+    const settled = await Promise.all(partJobs.map(runPart));
+
+    // Flatten structured per-part payloads into the legacy per-question map.
+    // IELTS criteria are holistic per part, so every question in a part shares
+    // that part's 4 criterion bands; the per-question band is the structured
+    // `indicative_band`.
+    const flat = {};
+    let k = 0;
+    settled.filter(Boolean).forEach(({ part, payload }) => {
+      const crit = {
+        fluency_coherence: payload?.criteria?.fc?.band ?? payload?.scores?.fc ?? 5,
+        lexical_resource: payload?.criteria?.lr?.band ?? payload?.scores?.lr ?? 5,
+        grammatical_range: payload?.criteria?.gra?.band ?? payload?.scores?.gra ?? 5,
+        pronunciation: payload?.criteria?.pr?.band ?? payload?.scores?.pr ?? 5,
+      };
+      const strengths = [
+        ...(payload?.criteria?.fc?.strengths || []),
+        ...(payload?.criteria?.lr?.strengths || []),
+      ].slice(0, 4);
+      const weaknesses = [
+        ...(payload?.criteria?.fc?.weaknesses || []),
+        ...(payload?.criteria?.gra?.weaknesses || []),
+      ].slice(0, 4);
+      const questionsOut = Array.isArray(payload?.questions) ? payload.questions : [];
+      questionsOut.forEach((q) => {
+        const transcript = q?.transcript || '';
+        flat[k] = {
+          success: true,
+          overall_band: q?.indicative_band ?? payload?.scores?.overall ?? 5,
+          criteria: crit,
+          question: q?.question || '',
+          part: part.part_number,
+          feedback: q?.observation || payload?.liz_note || '',
+          strengths,
+          weaknesses,
+          tip: payload?.liz_note || '',
+          transcript,
+          word_count: transcript ? transcript.split(/\s+/).filter(Boolean).length : 0,
+          audio_url: q?.audio_url || null,
+          unified: payload,
+        };
+        k += 1;
+      });
+    });
+    return flat;
   };
 
   const sections = [
@@ -3129,28 +3283,40 @@ export default function CambridgeTestInterface() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <Card className="max-w-md w-full p-6">
             <div className="text-center">
-              <AlertTriangle className="w-16 h-16 mx-auto text-amber-500 mb-4" />
-              <h3 className="text-xl font-bold mb-2">Submit {currentSection}?</h3>
-              <p className="text-gray-500 mb-6">
-                You cannot return to this section after submitting. Make sure you have answered all questions.
-              </p>
-              <div className="flex gap-3">
-                <Button 
-                  variant="outline" 
-                  className="flex-1"
-                  onClick={() => setShowSubmitModal(false)}
-                  data-testid="cancel-submit"
-                >
-                  Cancel
-                </Button>
-                <Button 
-                  className="flex-1 bg-red-600 hover:bg-red-700"
-                  onClick={handleSubmitSection}
-                  data-testid="confirm-submit"
-                >
-                  Submit
-                </Button>
-              </div>
+              {isEvaluating ? (
+                <>
+                  <Loader2 className="w-16 h-16 mx-auto text-orange-500 mb-4 animate-spin" />
+                  <h3 className="text-xl font-bold mb-2">Evaluating your speaking…</h3>
+                  <p className="text-gray-500 mb-6">
+                    We're scoring each answer per question. This can take up to a minute — please don't close the page.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <AlertTriangle className="w-16 h-16 mx-auto text-amber-500 mb-4" />
+                  <h3 className="text-xl font-bold mb-2">Submit {currentSection}?</h3>
+                  <p className="text-gray-500 mb-6">
+                    You cannot return to this section after submitting. Make sure you have answered all questions.
+                  </p>
+                  <div className="flex gap-3">
+                    <Button
+                      variant="outline"
+                      className="flex-1"
+                      onClick={() => setShowSubmitModal(false)}
+                      data-testid="cancel-submit"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      className="flex-1 bg-red-600 hover:bg-red-700"
+                      onClick={handleSubmitSection}
+                      data-testid="confirm-submit"
+                    >
+                      Submit
+                    </Button>
+                  </div>
+                </>
+              )}
             </div>
           </Card>
         </div>
