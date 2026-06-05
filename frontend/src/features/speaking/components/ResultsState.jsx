@@ -475,6 +475,10 @@ export default function ResultsState({ data, onRetryCard, onNewCard }) {
   // Empty array when transcript missing rather than the FIXTURE Vietnamese
   // demo tokens (constants.js:77) that previously leaked in as "real" data.
   const TRANSCRIPT_TOKENS = Array.isArray(data?.transcript_tokens) ? data.transcript_tokens : [];
+  // Full back-and-forth from a Liz Live conversation (Part 1/3): [{role,message}].
+  // Display-only — grading uses the user-only transcript.
+  const CONVERSATION_TURNS = (Array.isArray(data?.conversation_turns) ? data.conversation_turns : [])
+    .filter((t) => t && (t.message || '').trim());
   const lizNote = data?.liz_note;
   const audioSrc = resolveAudioSrc(data?.audio_url);
   const meta = buildContextLine(data, FLUENCY);
@@ -566,6 +570,52 @@ export default function ResultsState({ data, onRetryCard, onNewCard }) {
             </button>
           </div>
         </div>
+
+        {/* Full conversation with Liz (Part 1/3 live) — examiner questions +
+            the candidate's answers, so the whole exchange can be reviewed. */}
+        {CONVERSATION_TURNS.length > 0 && (
+          <div
+            style={{
+              background: 'var(--sp-card)',
+              borderRadius: 'var(--sp-radius)',
+              border: '1px solid var(--sp-border)',
+              boxShadow: 'var(--sp-shadow-card)',
+              padding: 32,
+              marginBottom: 32,
+            }}
+          >
+            <div className="sp-mono-label" style={{ marginBottom: 4 }}>Conversation with Liz</div>
+            <h3 className="sp-font-display" style={{ fontSize: 22, fontWeight: 600, marginBottom: 18 }}>
+              Full exchange
+            </h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              {CONVERSATION_TURNS.map((t, i) => {
+                const isLiz = t.role === 'agent';
+                return (
+                  <div
+                    key={i}
+                    style={{
+                      alignSelf: isLiz ? 'flex-start' : 'flex-end',
+                      maxWidth: '80%',
+                      background: isLiz ? 'var(--sp-muted)' : 'var(--sp-primary-50)',
+                      border: '1px solid var(--sp-border)',
+                      borderRadius: 14,
+                      padding: '10px 14px',
+                    }}
+                  >
+                    <div
+                      className="sp-mono-label"
+                      style={{ fontSize: 10, marginBottom: 4, color: isLiz ? 'var(--sp-muted-fg)' : 'var(--sp-primary)' }}
+                    >
+                      {isLiz ? 'Liz' : 'You'}
+                    </div>
+                    <div style={{ fontSize: 15, lineHeight: 1.5, color: 'var(--sp-foreground)' }}>{t.message}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Two-panel layout */}
         <div

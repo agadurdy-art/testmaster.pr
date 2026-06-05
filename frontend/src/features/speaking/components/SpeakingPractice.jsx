@@ -185,11 +185,16 @@ function LiveConversation({ part, user, onExit }) {
       targetBand: user?.target_band,
       durationSeconds: liz.elapsedSeconds,
     }) || scoreResult;
+    // Surface the FULL back-and-forth (Liz's questions + the candidate's
+    // answers) on the results screen — the candidate wants to review the whole
+    // conversation, not just their own answers run together. Grading still uses
+    // the user-only transcript; this is display-only.
+    const withConversation = { ...adapted, conversation_turns: liz.transcriptTurns || [] };
     return (
       <>
         <SpeakingHeader user={user} />
         <ResultsState
-          data={adapted}
+          data={withConversation}
           onRetryCard={handleClose}
           onNewCard={handleClose}
         />
