@@ -238,6 +238,46 @@ function Transcript({ tokens }) {
   );
 }
 
+// Split the flat user-only transcript tokens (in order) across the candidate's
+// conversation turns, so each answer can be rendered with its own word-level
+// pronunciation colouring. Greedy: consume tokens for a turn until their
+// concatenated text covers the turn's text (compared on letters/digits only,
+// so spacing/punctuation differences don't break alignment).
+function splitTokensByTurns(tokens, userMessages) {
+  const norm = (s) => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+  const slices = [];
+  let ti = 0;
+  for (let m = 0; m < userMessages.length; m++) {
+    const targetLen = norm(userMessages[m]).length;
+    const slice = [];
+    let accLen = 0;
+    const isLast = m === userMessages.length - 1;
+    while (ti < tokens.length && (accLen < targetLen || isLast)) {
+      slice.push(tokens[ti]);
+      accLen += norm(tokens[ti].t).length;
+      ti += 1;
+      if (!isLast && accLen >= targetLen) break;
+    }
+    slices.push(slice);
+  }
+  return slices;
+}
+
+// Render a token slice with the same pronunciation colouring as <Transcript>.
+function ColoredTokens({ tokens }) {
+  return (
+    <>
+      {tokens.map((tok, i) =>
+        tok.pron ? (
+          <span key={i} className={`sp-pron sp-pron-${tok.pron}`} title={tok.note || tok.ipa}>{tok.t}</span>
+        ) : (
+          <React.Fragment key={i}>{tok.t}</React.Fragment>
+        ),
+      )}
+    </>
+  );
+}
+
 function CriterionBar({ name, abbr, value, orange }) {
   const pct = Math.round((value / 9) * 100);
   return (
@@ -488,8 +528,18 @@ export default function ResultsState({ data, onRetryCard, onNewCard }) {
   // redundant text and let the conversation BE the transcript (keep the
   // delivery stats + vocabulary, which aren't shown anywhere else).
   const hasPron = TRANSCRIPT_TOKENS.some((t) => t && t.pron);
-  const showWordLevel = hasPron || Boolean(audioSrc);
-  const redundantTranscript = CONVERSATION_TURNS.length > 0 && !showWordLevel;
+  // When there's a conversation, it BECOMES the transcript — the candidate's
+  // answers are shown there (with word-level pronunciation colouring mapped
+  // onto each turn), so the separate transcript block collapses to delivery
+  // stats only. Without a conversation (Part 2 cue card), keep the classic
+  // word-level transcript panel.
+  const redundantTranscript = CONVERSATION_TURNS.length > 0;
+  const USER_TURN_SLICES = (hasPron && CONVERSATION_TURNS.length > 0)
+    ? splitTokensByTurns(
+        TRANSCRIPT_TOKENS,
+        CONVERSATION_TURNS.filter((t) => t.role === 'user').map((t) => t.message),
+      )
+    : [];
   const meta = buildContextLine(data, FLUENCY);
   // Premium QB submit returns Azure pronunciation detail + Liz's practice
   // plan. When present we surface them in a dedicated drawer and hide the
@@ -627,9 +677,25 @@ export default function ResultsState({ data, onRetryCard, onNewCard }) {
                 {CONVERSATION_TURNS.filter((t) => t.role === 'user').length} answers · tap to expand
               </span>
             </summary>
+            {USER_TURN_SLICES.length > 0 && (
+              <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 14, marginTop: 14, fontSize: 12, color: 'var(--sp-muted-fg)' }}>
+                <span className="sp-mono-label">Pronunciation</span>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ display: 'inline-block', width: 20, height: 3, borderRadius: 2, background: 'var(--sp-primary)' }} /> Clear
+                </span>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ display: 'inline-block', width: 20, height: 3, borderRadius: 2, background: 'var(--sp-warn)' }} /> Minor
+                </span>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ display: 'inline-block', width: 20, height: 3, borderRadius: 2, background: 'repeating-linear-gradient(135deg, hsl(0 78% 55%) 0 2px, transparent 2px 4px)' }} /> Needs work
+                </span>
+              </div>
+            )}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 18 }}>
               {CONVERSATION_TURNS.map((t, i) => {
                 const isLiz = t.role === 'agent';
+                const userIdx = isLiz ? -1 : CONVERSATION_TURNS.slice(0, i).filter((x) => x.role === 'user').length;
+                const slice = (!isLiz && USER_TURN_SLICES[userIdx]) || null;
                 return (
                   <div
                     key={i}
@@ -648,7 +714,9 @@ export default function ResultsState({ data, onRetryCard, onNewCard }) {
                     >
                       {isLiz ? 'Liz' : 'You'}
                     </div>
-                    <div style={{ fontSize: 15, lineHeight: 1.5, color: 'var(--sp-foreground)' }}>{t.message}</div>
+                    <div style={{ fontSize: 15, lineHeight: 1.5, color: 'var(--sp-foreground)' }}>
+                      {slice && slice.length ? <ColoredTokens tokens={slice} /> : t.message}
+                    </div>
                   </div>
                 );
               })}
