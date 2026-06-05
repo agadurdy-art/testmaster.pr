@@ -84,7 +84,17 @@ async function submitLizConversationEval({ user, part, conversationId, transcrip
   form.append('target_band', String(user.target_band || 7.0));
   form.append('context', 'practice');
   if (clientRequestId) form.append('client_request_id', clientRequestId);
-  const resp = await fetch(`${base}/api/speaking/evaluate-liz`, { method: 'POST', body: form });
+  // Fetching the call recording + running Azure can take a while; abort at 50s
+  // (before edge proxies drop the connection) so we can fall back to fast
+  // transcript grading instead of dead-ending on "Failed to fetch".
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 50000);
+  let resp;
+  try {
+    resp = await fetch(`${base}/api/speaking/evaluate-liz`, { method: 'POST', body: form, signal: ctrl.signal });
+  } finally {
+    clearTimeout(timer);
+  }
   if (!resp.ok) {
     let detail;
     try { detail = await resp.json(); } catch (_e) { detail = await resp.text(); }
@@ -194,11 +204,27 @@ function LiveConversation({ part, user, onExit }) {
     // Primary path: hand the backend the conversation_id so it pulls the
     // ElevenLabs call recording and runs real Azure pronunciation. Fall back to
     // the local blob, then the transcript, so a result always appears.
-    const submitPromise = conversationId
-      ? submitLizConversationEval({ user, part, conversationId, transcript, clientRequestId: clientRequestIdRef.current })
-      : blob
-        ? submitLizSpeakingEval({ user, part, audioBlob: blob, transcript, durationSecs, clientRequestId: clientRequestIdRef.current })
-        : submitLizTranscriptEval({ user, part, transcript, durationSecs, clientRequestId: clientRequestIdRef.current });
+    const transcriptFallback = () =>
+      (transcript && transcript.trim())
+        ? submitLizTranscriptEval({ user, part, transcript, durationSecs, clientRequestId: clientRequestIdRef.current })
+        : Promise.reject(new Error('No transcript to grade.'));
+
+    let submitPromise;
+    if (conversationId) {
+      // Real-pronunciation path; if it times out/fails, grade from the
+      // transcript so a result still appears (same client_request_id → the
+      // backend de-dupes if the conversation eval actually completed).
+      submitPromise = submitLizConversationEval({ user, part, conversationId, transcript, clientRequestId: clientRequestIdRef.current })
+        .catch((err) => {
+          console.warn('[LiveConversation] /evaluate-liz failed, falling back to transcript:', err);
+          return transcriptFallback();
+        });
+    } else if (blob) {
+      submitPromise = submitLizSpeakingEval({ user, part, audioBlob: blob, transcript, durationSecs, clientRequestId: clientRequestIdRef.current })
+        .catch(() => transcriptFallback());
+    } else {
+      submitPromise = transcriptFallback();
+    }
     submitPromise
       .then((data) => {
         setScoreResult(data);
