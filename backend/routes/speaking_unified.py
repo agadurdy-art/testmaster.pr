@@ -38,6 +38,7 @@ from services import speaking_idempotency
 from services.audio_processor import persist_audio, validate_audio
 from services.speaking_evaluator import (
     SpeakingEvaluatorFailure,
+    build_user_audio_from_turns,
     evaluate_speaking,
     evaluate_speaking_basic,
     evaluate_speaking_from_transcript,
@@ -519,6 +520,151 @@ async def evaluate_transcript(
         "user_id": user_id, "plan": decision.plan, "mode": "transcript", "context": context,
         "success": True, "latency_ms": latency_ms, "quota_remaining": max(decision.remaining - 1, 0),
         "period_key": decision.period_key,
+    })
+    return JSONResponse(content=result_dump, headers=_quota_headers(decision))
+
+
+@router.post("/evaluate-liz")
+async def evaluate_liz(
+    request: Request,
+    user_id: str = Form(...),
+    conversation_id: str = Form(...),
+    part: str = Form("part1"),
+    cue_card_prompt: str = Form(""),
+    cue_card_bullets: str = Form(""),
+    user_language: str = Form("en"),
+    target_band: float = Form(7.0),
+    context: str = Form("practice"),
+    client_request_id: str = Form(..., min_length=1, max_length=128),
+    set_id: Optional[str] = Form(None),
+    question_id: Optional[str] = Form(None),
+    caller: dict = Depends(auth_session.current_user),
+):
+    """Grade a Liz Live (Part 1/3) conversation using the call recording that
+    ElevenLabs already stored server-side — reliable, unlike the browser's
+    parallel mic recorder. We fetch the recording + transcript, cut the
+    candidate's spans into a user-only WAV, and run the full Azure pipeline so
+    Part 1/3 get REAL word-level pronunciation. Falls back to transcript-only
+    grading if the audio can't be fetched/sliced."""
+    auth_session.require_self_or_admin(user_id, caller)
+    if db is None:
+        raise HTTPException(status_code=503, detail={"code": "db_unavailable", "message": "DB not initialised"})
+    if context not in _VALID_CONTEXTS:
+        context = "practice"
+
+    user = await db.users.find_one({"id": user_id}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=404, detail={"code": "user_not_found", "message": "User not found"})
+
+    cached = await speaking_idempotency.lookup(db, user_id=user_id, anon_key=None, client_request_id=client_request_id)
+    if cached is not None:
+        return JSONResponse(content=cached, headers={"X-Speaking-Cached": "1"})
+
+    # Fetch the call recording + transcript from ElevenLabs.
+    from routes.liz_eleven import fetch_liz_conversation
+    try:
+        convo = await fetch_liz_conversation(conversation_id)
+    except Exception as exc:
+        logger.warning("fetch_liz_conversation failed: %s", exc)
+        convo = {"turns": [], "user_transcript": "", "audio_bytes": None, "total_secs": 0.0}
+
+    turns = convo.get("turns") or []
+    user_transcript = (convo.get("user_transcript") or "").strip()
+    user_audio = build_user_audio_from_turns(
+        convo.get("audio_bytes"), turns, convo.get("total_secs") or 0.0,
+    ) if convo.get("audio_bytes") else None
+
+    # Candidate speaking seconds for WPM (audio path gives it exactly; else sum
+    # user spans from the turns).
+    if user_audio:
+        user_secs = float(user_audio.get("user_secs") or 0.0)
+    else:
+        st = sorted([t for t in turns if isinstance(t.get("time_in_call_secs"), (int, float))], key=lambda t: t["time_in_call_secs"])
+        user_secs = 0.0
+        for i, t in enumerate(st):
+            if t.get("role") != "user":
+                continue
+            start = float(t["time_in_call_secs"])
+            end = float(st[i + 1]["time_in_call_secs"]) if i + 1 < len(st) else (convo.get("total_secs") or start)
+            if end > start:
+                user_secs += end - start
+
+    if not user_audio and not user_transcript:
+        raise HTTPException(status_code=422, detail={"code": "empty_conversation", "message": "We couldn't capture your speech from the conversation. Please try again."})
+
+    decision = await resolve_speaking_eval(db, user)
+    if not decision.allowed:
+        raise HTTPException(
+            status_code=402,
+            detail={
+                "code": "quota_exhausted",
+                "message": decision.message or "You've used all evaluations for this period.",
+                "quota": decision.quota, "used": decision.used, "period": decision.period_key,
+                "resets_at": decision.resets_at, "upgrade_to": decision.upgrade_to, "current_plan": decision.plan,
+            },
+        )
+
+    req = _build_eval_request(
+        part=part,
+        cue_card_prompt=cue_card_prompt or f"IELTS Speaking — {part}",
+        cue_card_bullets=cue_card_bullets or user_transcript,
+        user_language=user_language,
+        target_band=target_band,
+        duration_seconds=user_secs,
+    )
+
+    audio_meta = {"relative_url": None, "filename": None, "bytes": 0}
+    started = time.monotonic()
+    try:
+        if user_audio and user_audio.get("wav_bytes"):
+            # Real audio → full Azure pipeline (word-level pronunciation).
+            result = await evaluate_speaking(req, user_audio["wav_bytes"])
+            audio_meta = persist_audio(user_audio["wav_bytes"])
+        else:
+            # No usable audio → grade from the ElevenLabs transcript.
+            result = await evaluate_speaking_from_transcript(req, user_transcript)
+    except SpeakingEvaluatorFailure as exc:
+        # Last-ditch: if the audio path failed but we have a transcript, grade it.
+        if user_transcript:
+            try:
+                result = await evaluate_speaking_from_transcript(req, user_transcript)
+                audio_meta = {"relative_url": None, "filename": None, "bytes": 0}
+            except SpeakingEvaluatorFailure as exc2:
+                raise HTTPException(status_code=502, detail={"code": "speaking_evaluator_failed", "message": str(exc2)})
+        else:
+            raise HTTPException(status_code=502, detail={"code": "speaking_evaluator_failed", "message": str(exc)})
+    latency_ms = int((time.monotonic() - started) * 1000)
+
+    result_dump = result.model_dump()
+    result_dump["part"] = req.part.value
+    result_dump["cue_card_prompt"] = req.cue_card_prompt
+    if audio_meta.get("relative_url"):
+        result_dump["audio_url"] = audio_meta["relative_url"]
+    if question_id:
+        result_dump["question_id"] = question_id
+
+    await _persist_attempt(
+        user_id=user_id, client_request_id=client_request_id, audio_meta=audio_meta,
+        req=req, result_dump=result_dump, decision=decision, context=context,
+        set_id=set_id, question_id=question_id, book_id=None, test_id=None,
+    )
+    try:
+        from server import persist_attempt as _persist_test_attempt
+        _scores = (result_dump or {}).get("scores") or {}
+        await _persist_test_attempt(
+            user_id=user_id, test_id=f"speaking_{req.part.value}_{set_id or 'liz'}",
+            test_type="speaking", band_score=float(_scores.get("overall") or 0.0),
+            feedback={"source": "speaking_unified_liz", "context": context, "part": req.part.value, "scores": _scores},
+        )
+    except Exception as _e:
+        logger.warning("persist_attempt mirror skipped (evaluate-liz): %s", _e)
+    await record_speaking_eval(db, user, decision)
+    await speaking_idempotency.store(db, user_id=user_id, anon_key=None, client_request_id=client_request_id, result=result_dump)
+    await _emit_telemetry({
+        "_id": uuid.uuid4().hex, "ts": datetime.now(timezone.utc), "event": "speaking_eval",
+        "user_id": user_id, "plan": decision.plan, "mode": ("full" if user_audio else "transcript"),
+        "context": context, "success": True, "latency_ms": latency_ms,
+        "quota_remaining": max(decision.remaining - 1, 0), "period_key": decision.period_key,
     })
     return JSONResponse(content=result_dump, headers=_quota_headers(decision))
 

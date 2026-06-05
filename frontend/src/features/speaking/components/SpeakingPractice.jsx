@@ -68,6 +68,32 @@ async function submitLizSpeakingEval({ user, part, audioBlob, transcript, durati
   return resp.json();
 }
 
+// Primary Liz Live grading: hand the backend the conversation_id and let it
+// pull the call recording ElevenLabs stored server-side, cut the candidate's
+// spans, and run the FULL Azure pipeline → real word-level pronunciation. No
+// dependence on the flaky browser parallel recorder.
+async function submitLizConversationEval({ user, part, conversationId, transcript, clientRequestId }) {
+  const base = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_API_URL || '';
+  const form = new FormData();
+  form.append('user_id', user.id);
+  form.append('conversation_id', conversationId);
+  form.append('part', part);
+  form.append('cue_card_prompt', CONVERSATIONAL_CUE_LABEL[part] || `IELTS Speaking — ${part}`);
+  form.append('cue_card_bullets', transcript || '');
+  form.append('user_language', user.feedback_language || 'en');
+  form.append('target_band', String(user.target_band || 7.0));
+  form.append('context', 'practice');
+  if (clientRequestId) form.append('client_request_id', clientRequestId);
+  const resp = await fetch(`${base}/api/speaking/evaluate-liz`, { method: 'POST', body: form });
+  if (!resp.ok) {
+    let detail;
+    try { detail = await resp.json(); } catch (_e) { detail = await resp.text(); }
+    const msg = typeof detail === 'string' ? detail : (detail?.detail?.message || detail?.detail || `HTTP ${resp.status}`);
+    throw new Error(msg);
+  }
+  return resp.json();
+}
+
 // User-only speaking time from the conversation turns. WPM must be the
 // candidate's words over the time THEY spoke — not the whole call (which
 // includes Liz's questions + the gaps while the candidate listened), which
@@ -150,11 +176,12 @@ function LiveConversation({ part, user, onExit }) {
 
     const blob = liz.userAudioBlob;
     const transcript = liz.userTranscript;
+    const conversationId = liz.conversationId;
     // Candidate's own speaking time (not the whole call) → realistic WPM.
     const durationSecs = userSpeakingSeconds(liz.transcriptTurns, liz.elapsedSeconds);
 
-    // No usable audio AND no transcript → nothing to grade, exit cleanly.
-    if (!blob && !(transcript && transcript.trim())) {
+    // Nothing to work with at all → exit cleanly.
+    if (!conversationId && !blob && !(transcript && transcript.trim())) {
       onExit?.();
       liz.reset();
       return;
@@ -164,12 +191,14 @@ function LiveConversation({ part, user, onExit }) {
     if (!clientRequestIdRef.current) {
       clientRequestIdRef.current = mintClientRequestId();
     }
-    // Prefer audio (gives pronunciation), but if the parallel recording failed
-    // and we have the ElevenLabs transcript, grade from that so the candidate
-    // ALWAYS reaches a results screen instead of being dumped back to the picker.
-    const submitPromise = blob
-      ? submitLizSpeakingEval({ user, part, audioBlob: blob, transcript, durationSecs, clientRequestId: clientRequestIdRef.current })
-      : submitLizTranscriptEval({ user, part, transcript, durationSecs, clientRequestId: clientRequestIdRef.current });
+    // Primary path: hand the backend the conversation_id so it pulls the
+    // ElevenLabs call recording and runs real Azure pronunciation. Fall back to
+    // the local blob, then the transcript, so a result always appears.
+    const submitPromise = conversationId
+      ? submitLizConversationEval({ user, part, conversationId, transcript, clientRequestId: clientRequestIdRef.current })
+      : blob
+        ? submitLizSpeakingEval({ user, part, audioBlob: blob, transcript, durationSecs, clientRequestId: clientRequestIdRef.current })
+        : submitLizTranscriptEval({ user, part, transcript, durationSecs, clientRequestId: clientRequestIdRef.current });
     submitPromise
       .then((data) => {
         setScoreResult(data);

@@ -248,6 +248,64 @@ async def transcode_to_wav(audio_bytes: bytes) -> bytes:
     return await asyncio.to_thread(_run_sync)
 
 
+def build_user_audio_from_turns(
+    call_audio_bytes: bytes,
+    turns: List[Dict[str, Any]],
+    total_secs: float = 0.0,
+) -> Optional[Dict[str, Any]]:
+    """Cut the candidate's spans out of the full Liz call recording (a single
+    mixed track) using the transcript turn timestamps, concatenate them, and
+    return {"wav_bytes": 16kHz-mono-WAV, "user_secs": seconds}. This is how we
+    get REAL pronunciation for Liz Live: ElevenLabs records the whole call
+    server-side, so we don't depend on the flaky browser parallel recorder.
+    Returns None when there are no user spans or slicing fails."""
+    if not call_audio_bytes or not turns:
+        return None
+    sorted_turns = sorted(
+        [t for t in turns if isinstance(t.get("time_in_call_secs"), (int, float))],
+        key=lambda t: t["time_in_call_secs"],
+    )
+    spans: List[Tuple[float, float]] = []
+    for i, t in enumerate(sorted_turns):
+        if t.get("role") != "user":
+            continue
+        start = max(0.0, float(t["time_in_call_secs"]))
+        if i + 1 < len(sorted_turns):
+            end = float(sorted_turns[i + 1]["time_in_call_secs"])
+        else:
+            end = total_secs if total_secs and total_secs > start else start + 30.0
+        if end > start:
+            spans.append((start, end))
+    if not spans:
+        return None
+
+    def _run_sync() -> Optional[Dict[str, Any]]:
+        try:
+            import io
+            from pydub import AudioSegment  # type: ignore
+            ffmpeg_bin = _resolve_ffmpeg_once()
+            if ffmpeg_bin:
+                AudioSegment.converter = ffmpeg_bin
+            seg = AudioSegment.from_file(io.BytesIO(call_audio_bytes))
+            out = AudioSegment.empty()
+            user_secs = 0.0
+            for start, end in spans:
+                out += seg[int(start * 1000):int(end * 1000)]
+                user_secs += end - start
+            out = out.set_channels(1).set_frame_rate(16000)
+            buf = io.BytesIO()
+            out.export(buf, format="wav")
+            data = buf.getvalue()
+            if not data:
+                return None
+            return {"wav_bytes": data, "user_secs": round(user_secs, 1)}
+        except Exception as exc:  # pragma: no cover - defensive
+            logger.warning("build_user_audio_from_turns failed: %s", exc)
+            return None
+
+    return _run_sync()
+
+
 # ─── Azure pronunciation assessment ──────────────────────────────────────────
 
 

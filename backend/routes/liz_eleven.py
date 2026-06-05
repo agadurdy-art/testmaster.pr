@@ -291,6 +291,53 @@ async def _fetch_conversation(conversation_id: str) -> Dict[str, Any]:
     return r.json()
 
 
+async def _fetch_conversation_audio(conversation_id: str) -> Optional[bytes]:
+    """Download the full call recording from ElevenLabs (server-side, reliable —
+    no dependence on a flaky browser parallel recorder). Returns raw audio bytes
+    (mp3) or None if unavailable."""
+    if not ELEVEN_API_KEY:
+        return None
+    url = f"{ELEVENLABS_API_BASE}/convai/conversations/{conversation_id}/audio"
+    headers = {"xi-api-key": ELEVEN_API_KEY}
+    try:
+        async with httpx.AsyncClient(timeout=60.0) as client:
+            r = await client.get(url, headers=headers)
+    except httpx.HTTPError as exc:
+        logger.warning("ElevenLabs conversation audio fetch failed: %s", exc)
+        return None
+    if r.status_code != 200 or not r.content:
+        logger.warning("ElevenLabs audio fetch returned %s", r.status_code)
+        return None
+    return r.content
+
+
+async def fetch_liz_conversation(conversation_id: str) -> Dict[str, Any]:
+    """One-shot fetch for grading a Liz Live part: polled transcript + the call
+    audio. Returns {transcript, turns, user_transcript, audio_bytes,
+    total_secs}. audio_bytes may be None (then caller grades from transcript)."""
+    payload = await _fetch_conversation_ready(conversation_id)
+    transcript, turns = _flatten_transcript(payload)
+    total_secs = float(
+        (payload.get("metadata") or {}).get("call_duration_secs") or 0
+    )
+    audio_bytes = await _fetch_conversation_audio(conversation_id)
+    return {
+        "transcript": transcript,
+        "turns": turns,
+        "user_transcript": userTranscriptFromTurns(turns),
+        "audio_bytes": audio_bytes,
+        "total_secs": total_secs,
+    }
+
+
+def userTranscriptFromTurns(turns: List[Dict[str, Any]]) -> str:
+    return " ".join(
+        (t.get("message") or "").strip()
+        for t in (turns or [])
+        if t.get("role") == "user" and (t.get("message") or "").strip()
+    )
+
+
 def _has_user_turn(payload: Dict[str, Any]) -> bool:
     for t in (payload.get("transcript") or []):
         if t.get("role") == "user" and (t.get("message") or "").strip():

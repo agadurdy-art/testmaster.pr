@@ -55,6 +55,8 @@ def _env_seconds(key: str, default: float) -> float:
 # Longest prefix wins. Order matters for ties but Python dicts preserve order.
 TIMEOUTS_S: dict[str, float] = {
     "/api/speaking/evaluate-fulltest": _env_seconds("ROUTE_TIMEOUT_FULLTEST_S", 180.0),
+    # Liz Live grading = transcript poll + ElevenLabs audio fetch + Azure + Sonnet.
+    "/api/speaking/evaluate-liz": _env_seconds("ROUTE_TIMEOUT_LIZ_S", 170.0),
     "/api/speaking/evaluate":          _env_seconds("ROUTE_TIMEOUT_SPEAKING_S", 110.0),
     "/api/writing-practice/evaluate":  _env_seconds("ROUTE_TIMEOUT_WRITING_S", 100.0),
     "/api/cambridge/evaluate/writing": _env_seconds("ROUTE_TIMEOUT_CAMBRIDGE_WRITING_S", 100.0),
