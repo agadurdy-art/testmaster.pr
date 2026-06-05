@@ -481,6 +481,15 @@ export default function ResultsState({ data, onRetryCard, onNewCard }) {
     .filter((t) => t && (t.message || '').trim());
   const lizNote = data?.liz_note;
   const audioSrc = resolveAudioSrc(data?.audio_url);
+  // Word-level pronunciation only carries real signal when there's audio /
+  // per-token pron data. For a Liz Live conversation graded from the transcript
+  // (no audio), the "transcript" block is just the candidate's words again —
+  // identical to what the conversation panel already shows — so suppress that
+  // redundant text and let the conversation BE the transcript (keep the
+  // delivery stats + vocabulary, which aren't shown anywhere else).
+  const hasPron = TRANSCRIPT_TOKENS.some((t) => t && t.pron);
+  const showWordLevel = hasPron || Boolean(audioSrc);
+  const redundantTranscript = CONVERSATION_TURNS.length > 0 && !showWordLevel;
   const meta = buildContextLine(data, FLUENCY);
   // Premium QB submit returns Azure pronunciation detail + Liz's practice
   // plan. When present we surface them in a dedicated drawer and hide the
@@ -669,53 +678,61 @@ export default function ResultsState({ data, onRetryCard, onNewCard }) {
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20, flexWrap: 'wrap', gap: 12 }}>
               <div>
-                <div className="sp-mono-label">Your transcript</div>
+                <div className="sp-mono-label">{redundantTranscript ? 'Delivery' : 'Your transcript'}</div>
                 <h3 className="sp-font-display" style={{ fontSize: 22, fontWeight: 600, marginTop: 2 }}>
-                  Word‑level pronunciation
+                  {redundantTranscript ? 'Your speaking, measured' : 'Word‑level pronunciation'}
                 </h3>
               </div>
-              <AudioPlayer src={audioSrc} fallbackDurationLabel={FLUENCY.duration} />
+              {!redundantTranscript && <AudioPlayer src={audioSrc} fallbackDurationLabel={FLUENCY.duration} />}
             </div>
 
-            {/* Legend */}
-            <div
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                alignItems: 'center',
-                gap: 16,
-                fontSize: 12,
-                color: 'var(--sp-muted-fg)',
-                marginBottom: 20,
-                paddingBottom: 16,
-                borderBottom: '1px solid var(--sp-border)',
-              }}
-            >
-              <span className="sp-mono-label">Pronunciation</span>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ display: 'inline-block', width: 24, height: 3, borderRadius: 2, background: 'var(--sp-primary)' }} />
-                Clear
-              </span>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ display: 'inline-block', width: 24, height: 3, borderRadius: 2, background: 'var(--sp-warn)' }} />
-                Minor issue
-              </span>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-                <span
+            {redundantTranscript ? (
+              <p style={{ fontSize: 13, color: 'var(--sp-muted-fg)', marginBottom: 20, paddingBottom: 16, borderBottom: '1px solid var(--sp-border)' }}>
+                Your full answers are shown in the conversation above. Here's how your delivery measured up.
+              </p>
+            ) : (
+              <>
+                {/* Legend */}
+                <div
                   style={{
-                    display: 'inline-block',
-                    width: 24,
-                    height: 3,
-                    borderRadius: 2,
-                    background: 'repeating-linear-gradient(135deg, hsl(0 78% 55%) 0 2px, transparent 2px 4px)',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    alignItems: 'center',
+                    gap: 16,
+                    fontSize: 12,
+                    color: 'var(--sp-muted-fg)',
+                    marginBottom: 20,
+                    paddingBottom: 16,
+                    borderBottom: '1px solid var(--sp-border)',
                   }}
-                />
-                Needs work
-              </span>
-              <span style={{ marginLeft: 'auto', fontSize: 12 }}>Tap any word to hear it</span>
-            </div>
+                >
+                  <span className="sp-mono-label">Pronunciation</span>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ display: 'inline-block', width: 24, height: 3, borderRadius: 2, background: 'var(--sp-primary)' }} />
+                    Clear
+                  </span>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ display: 'inline-block', width: 24, height: 3, borderRadius: 2, background: 'var(--sp-warn)' }} />
+                    Minor issue
+                  </span>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                    <span
+                      style={{
+                        display: 'inline-block',
+                        width: 24,
+                        height: 3,
+                        borderRadius: 2,
+                        background: 'repeating-linear-gradient(135deg, hsl(0 78% 55%) 0 2px, transparent 2px 4px)',
+                      }}
+                    />
+                    Needs work
+                  </span>
+                  <span style={{ marginLeft: 'auto', fontSize: 12 }}>Tap any word to hear it</span>
+                </div>
 
-            <Transcript tokens={TRANSCRIPT_TOKENS} />
+                <Transcript tokens={TRANSCRIPT_TOKENS} />
+              </>
+            )}
 
             <FluencyStats fluency={FLUENCY} />
             <VocabularyProfileBar profile={data?.vocabulary_profile} />
