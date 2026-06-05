@@ -242,7 +242,14 @@ function LiveConversation({ part, user, onExit }) {
           </div>
         ) : (
           <div className="liz-scope">
-            <VoiceOverlay liz={liz} onClose={handleClose} />
+            {/* End session must STOP the Liz session (which finalises the
+                transcript + flips isEnded → the submit effect grades it), NOT
+                just exit. Wiring this to handleClose was why ending a Part 1/3
+                conversation dumped the user back to the picker with no result. */}
+            <VoiceOverlay
+              liz={liz}
+              onClose={async () => { try { await liz.stop(); } catch (_e) { handleClose(); } }}
+            />
           </div>
         )}
       </section>
