@@ -68,6 +68,37 @@ async function submitLizSpeakingEval({ user, part, audioBlob, transcript, durati
   return resp.json();
 }
 
+// Transcript-only grading for Liz Live when the parallel mic recording didn't
+// capture usable audio. ElevenLabs still gives us a reliable user transcript,
+// so the candidate gets a band + FC/LR/GRA (no pronunciation detail). Keeps the
+// Liz Live flow from dead-ending on the part selector with no result.
+async function submitLizTranscriptEval({ user, part, transcript, durationSecs, clientRequestId }) {
+  const base = process.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_API_URL || '';
+  const form = new FormData();
+  form.append('user_id', user.id);
+  form.append('part', part);
+  form.append('transcript', transcript || '');
+  form.append('cue_card_prompt', CONVERSATIONAL_CUE_LABEL[part] || `IELTS Speaking — ${part}`);
+  form.append('user_language', user.feedback_language || 'en');
+  form.append('target_band', String(user.target_band || 7.0));
+  form.append('duration_seconds', String(durationSecs || 0));
+  form.append('context', 'practice');
+  if (clientRequestId) form.append('client_request_id', clientRequestId);
+  const resp = await fetch(`${base}/api/speaking/evaluate-transcript`, {
+    method: 'POST',
+    body: form,
+  });
+  if (!resp.ok) {
+    let detail;
+    try { detail = await resp.json(); } catch (_e) { detail = await resp.text(); }
+    const msg = typeof detail === 'string'
+      ? detail
+      : (detail?.detail?.message || detail?.detail || `HTTP ${resp.status}`);
+    throw new Error(msg);
+  }
+  return resp.json();
+}
+
 // Live conversation gate for Part 1/3 — auto-starts a Liz session inside the
 // ConversationProvider, renders VoiceOverlay, and on session end posts the
 // user-only audio + transcript to /api/speaking/evaluate so the candidate
@@ -100,7 +131,8 @@ function LiveConversation({ part, user, onExit }) {
     const transcript = liz.userTranscript;
     const durationSecs = liz.elapsedSeconds;
 
-    if (!blob) {
+    // No usable audio AND no transcript → nothing to grade, exit cleanly.
+    if (!blob && !(transcript && transcript.trim())) {
       onExit?.();
       liz.reset();
       return;
@@ -110,14 +142,13 @@ function LiveConversation({ part, user, onExit }) {
     if (!clientRequestIdRef.current) {
       clientRequestIdRef.current = mintClientRequestId();
     }
-    submitLizSpeakingEval({
-      user,
-      part,
-      audioBlob: blob,
-      transcript,
-      durationSecs,
-      clientRequestId: clientRequestIdRef.current,
-    })
+    // Prefer audio (gives pronunciation), but if the parallel recording failed
+    // and we have the ElevenLabs transcript, grade from that so the candidate
+    // ALWAYS reaches a results screen instead of being dumped back to the picker.
+    const submitPromise = blob
+      ? submitLizSpeakingEval({ user, part, audioBlob: blob, transcript, durationSecs, clientRequestId: clientRequestIdRef.current })
+      : submitLizTranscriptEval({ user, part, transcript, durationSecs, clientRequestId: clientRequestIdRef.current });
+    submitPromise
       .then((data) => {
         setScoreResult(data);
         clientRequestIdRef.current = null;

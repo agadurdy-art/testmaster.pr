@@ -805,6 +805,30 @@ async def evaluate_speaking_basic(
     )
 
 
+async def evaluate_speaking_from_transcript(
+    req: SpeakingEvaluationRequest,
+    transcript: str,
+) -> SpeakingEvaluationResult:
+    """Grade from a PROVIDED transcript — no audio, no Azure/Whisper.
+
+    Used for Liz Live (Part 1/3), where ElevenLabs returns a reliable user-only
+    transcript even when the parallel mic recording fails. The candidate still
+    gets a band + FC/LR/GRA from their verbatim words; pronunciation detail is
+    simply omitted (no audio to analyse). Raises only if the transcript is empty.
+    """
+    if not transcript or not transcript.strip():
+        raise SpeakingEvaluatorFailure("empty transcript", attempts=0)
+    duration = float(req.duration_seconds or 0.0)
+    fluency = compute_fluency(transcript, duration)
+    return await _run_evaluator_llm(
+        req=req,
+        transcript=transcript,
+        fluency=fluency,
+        azure_block=_BASIC_AZURE_BLOCK,
+        mode_instruction=_BASIC_MODE_INSTRUCTION,
+    )
+
+
 async def _default_whisper_transcribe(audio_bytes: bytes) -> str:
     """Default Whisper transcription via emergentintegrations. Lazy-imported
     so unit tests that inject a fake transcribe_audio don't pay for the

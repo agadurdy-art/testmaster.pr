@@ -40,6 +40,7 @@ from services.speaking_evaluator import (
     SpeakingEvaluatorFailure,
     evaluate_speaking,
     evaluate_speaking_basic,
+    evaluate_speaking_from_transcript,
     evaluate_speaking_fulltest,
 )
 from services.tier_resolver import (
@@ -412,6 +413,113 @@ async def evaluate(
         "period_key": decision.period_key,
     })
 
+    return JSONResponse(content=result_dump, headers=_quota_headers(decision))
+
+
+@router.post("/evaluate-transcript")
+async def evaluate_transcript(
+    request: Request,
+    user_id: str = Form(...),
+    part: str = Form("part1"),
+    transcript: str = Form(...),
+    cue_card_prompt: str = Form(""),
+    cue_card_bullets: str = Form(""),
+    user_language: str = Form("en"),
+    target_band: float = Form(7.0),
+    duration_seconds: float = Form(0.0),
+    context: str = Form("practice"),
+    client_request_id: str = Form(..., min_length=1, max_length=128),
+    set_id: Optional[str] = Form(None),
+    question_id: Optional[str] = Form(None),
+    book_id: Optional[str] = Form(None),
+    test_id: Optional[str] = Form(None),
+    caller: dict = Depends(auth_session.current_user),
+):
+    """Transcript-only speaking evaluation (no audio).
+
+    Liz Live (Part 1/3) provides a reliable user-only transcript from
+    ElevenLabs even when the parallel mic recording fails. Grade from that so
+    the candidate always gets a band; pronunciation detail is omitted. Counts
+    as one eval, same quota path as /evaluate.
+    """
+    auth_session.require_self_or_admin(user_id, caller)
+    if db is None:
+        raise HTTPException(status_code=503, detail={"code": "db_unavailable", "message": "DB not initialised"})
+    if context not in _VALID_CONTEXTS:
+        context = "practice"
+    if not transcript or not transcript.strip():
+        raise HTTPException(status_code=422, detail={"code": "empty_transcript", "message": "No transcript to grade."})
+
+    user = await db.users.find_one({"id": user_id}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=404, detail={"code": "user_not_found", "message": "User not found"})
+
+    cached = await speaking_idempotency.lookup(db, user_id=user_id, anon_key=None, client_request_id=client_request_id)
+    if cached is not None:
+        return JSONResponse(content=cached, headers={"X-Speaking-Cached": "1"})
+
+    req = _build_eval_request(
+        part=part,
+        cue_card_prompt=cue_card_prompt or f"IELTS Speaking — {part}",
+        cue_card_bullets=cue_card_bullets,
+        user_language=user_language,
+        target_band=target_band,
+        duration_seconds=duration_seconds,
+    )
+
+    decision = await resolve_speaking_eval(db, user)
+    if not decision.allowed:
+        raise HTTPException(
+            status_code=402,
+            detail={
+                "code": "quota_exhausted",
+                "message": decision.message or "You've used all evaluations for this period.",
+                "quota": decision.quota, "used": decision.used, "period": decision.period_key,
+                "resets_at": decision.resets_at, "upgrade_to": decision.upgrade_to, "current_plan": decision.plan,
+            },
+        )
+
+    started = time.monotonic()
+    try:
+        result = await evaluate_speaking_from_transcript(req, transcript)
+    except SpeakingEvaluatorFailure as exc:
+        raise HTTPException(
+            status_code=502,
+            detail={"code": "speaking_evaluator_failed", "message": str(exc), "last_error": exc.last_error},
+        )
+    latency_ms = int((time.monotonic() - started) * 1000)
+
+    result_dump = result.model_dump()
+    result_dump["part"] = req.part.value
+    result_dump["cue_card_prompt"] = req.cue_card_prompt
+    if question_id:
+        result_dump["question_id"] = question_id
+
+    await _persist_attempt(
+        user_id=user_id, client_request_id=client_request_id,
+        audio_meta={"relative_url": None, "filename": None, "bytes": 0},
+        req=req, result_dump=result_dump, decision=decision, context=context,
+        set_id=set_id, question_id=question_id, book_id=book_id, test_id=test_id,
+    )
+    try:
+        from server import persist_attempt as _persist_test_attempt
+        _scores = (result_dump or {}).get("scores") or {}
+        await _persist_test_attempt(
+            user_id=user_id,
+            test_id=test_id or f"speaking_{req.part.value}_{question_id or set_id or 'practice'}",
+            test_type="speaking", band_score=float(_scores.get("overall") or 0.0),
+            feedback={"source": "speaking_unified_transcript", "context": context, "part": req.part.value, "scores": _scores},
+        )
+    except Exception as _e:
+        logger.warning("persist_attempt mirror skipped (evaluate-transcript): %s", _e)
+    await record_speaking_eval(db, user, decision)
+    await speaking_idempotency.store(db, user_id=user_id, anon_key=None, client_request_id=client_request_id, result=result_dump)
+    await _emit_telemetry({
+        "_id": uuid.uuid4().hex, "ts": datetime.now(timezone.utc), "event": "speaking_eval",
+        "user_id": user_id, "plan": decision.plan, "mode": "transcript", "context": context,
+        "success": True, "latency_ms": latency_ms, "quota_remaining": max(decision.remaining - 1, 0),
+        "period_key": decision.period_key,
+    })
     return JSONResponse(content=result_dump, headers=_quota_headers(decision))
 
 
