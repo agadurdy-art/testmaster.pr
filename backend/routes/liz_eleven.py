@@ -28,6 +28,7 @@ Agent (set 2026-04-29):
 """
 from __future__ import annotations
 
+import asyncio
 import logging
 import os
 from datetime import datetime, timezone
@@ -290,6 +291,36 @@ async def _fetch_conversation(conversation_id: str) -> Dict[str, Any]:
     return r.json()
 
 
+def _has_user_turn(payload: Dict[str, Any]) -> bool:
+    for t in (payload.get("transcript") or []):
+        if t.get("role") == "user" and (t.get("message") or "").strip():
+            return True
+    return False
+
+
+async def _fetch_conversation_ready(
+    conversation_id: str, *, max_attempts: int = 8, delay: float = 1.5,
+) -> Dict[str, Any]:
+    """Poll the ElevenLabs conversation until the transcript is populated.
+
+    The Conversation API needs a few seconds to process a just-ended call;
+    fetching once returns an empty `transcript`, which left Liz Live with no
+    audio AND no transcript to grade (dead-end to the part selector). Retry
+    until user turns appear or the conversation reaches a terminal status."""
+    payload: Dict[str, Any] = {}
+    for attempt in range(max_attempts):
+        payload = await _fetch_conversation(conversation_id)
+        status = str(payload.get("status") or "").lower()
+        if _has_user_turn(payload):
+            return payload
+        if status in {"done", "processed", "completed", "failed"}:
+            # Terminal but still no user turns — nothing more to wait for.
+            return payload
+        if attempt < max_attempts - 1:
+            await asyncio.sleep(delay)
+    return payload
+
+
 def _flatten_transcript(payload: Dict[str, Any]) -> tuple[str, List[Dict[str, Any]]]:
     """ElevenLabs Conversation API returns a `transcript` array of turns:
         { role: 'user' | 'agent', message: '...', time_in_call_secs: N, ... }
@@ -407,7 +438,7 @@ async def finalize_conversation(req: FinalizeRequest, caller: dict = Depends(aut
             quota=_quota_payload(grant),
         )
 
-    payload = await _fetch_conversation(req.conversation_id)
+    payload = await _fetch_conversation_ready(req.conversation_id)
     transcript, turns = _flatten_transcript(payload)
 
     # ElevenLabs reports duration server-side; trust it over the client clock.
