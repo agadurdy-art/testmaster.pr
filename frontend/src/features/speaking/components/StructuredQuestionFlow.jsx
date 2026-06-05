@@ -65,26 +65,39 @@ async function fetchRandomSet(part) {
   const sets = modulesBody.modules || modulesBody.sets || [];
   if (!sets.length) throw new Error('No speaking sets available');
 
-  // Shuffle and try sets until one actually has questions for this part — a
-  // single malformed/empty set no longer dead-ends the whole flow.
-  const order = sets.map((_, i) => i).sort(() => Math.random() - 0.5);
+  // The set endpoint wraps the payload as { success, set: {...} } — read the
+  // inner object (older callers that returned it flat still work via fallback).
+  const unwrap = (body) => (body && body.set) ? body.set : body;
+
+  // Probe candidate sets WITHOUT audio first (include_audio=true makes the
+  // backend synthesise TTS for every question — slow, and pointless for a set
+  // we might discard). Once we find one with questions, fetch just that set
+  // with audio. Cap the probes so a bad data state can't hang the loader.
+  const order = sets.map((_, i) => i).sort(() => Math.random() - 0.5).slice(0, 6);
   let lastErr = null;
   for (const idx of order) {
     const pick = sets[idx];
     const setId = pick.set_id || pick.id;
     if (!setId) continue;
     try {
+      const probeRes = await fetch(
+        `${API_BASE}/api/speaking/set/${encodeURIComponent(setId)}?include_audio=false&mode=practice`,
+      );
+      if (!probeRes.ok) { lastErr = new Error(`Set fetch failed: ${probeRes.status}`); continue; }
+      const probe = unwrap(await probeRes.json());
+      if (!extractQuestions(probe[PART_KEY[part]] || {}).length) continue; // empty → next set
+
+      // This set has questions — fetch it again WITH audio so Liz can read them.
       const setRes = await fetch(
         `${API_BASE}/api/speaking/set/${encodeURIComponent(setId)}?include_audio=true&mode=practice`,
       );
-      if (!setRes.ok) { lastErr = new Error(`Set fetch failed: ${setRes.status}`); continue; }
-      const setBody = await setRes.json();
+      const setBody = setRes.ok ? unwrap(await setRes.json()) : probe;
       const block = setBody[PART_KEY[part]] || {};
       const raw = extractQuestions(block);
-      if (!raw.length) continue; // try the next set
+      if (!raw.length) continue;
       const trimmed = raw.slice(0, MAX_QUESTIONS_PER_PART).map((q, i) => ({
         index: i + 1,
-        id: q.id || `${setId}_${part}_q${i + 1}`,
+        id: (typeof q === 'object' && q.id) || `${setId}_${part}_q${i + 1}`,
         text: (typeof q === 'string' ? q : (q.text || q.question)) || `Question ${i + 1}`,
         audioUrl: (typeof q === 'object' && q.audio_url) || null,
         targetTime: (typeof q === 'object' && q.target_time) || 15,
