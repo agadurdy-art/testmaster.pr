@@ -335,14 +335,15 @@ function SpeakingPracticeInner({ onExit, user }) {
     );
   }
 
-  // Part 1 / Part 3 — structured per-question flow (each question gets its
-  // own audio playback + recording + per-Q evaluation). Replaces the old
-  // Liz-conversational flow so the results screen can show Q1/Q2/.../Qn
-  // tabs with individual feedback. See memory:
-  // project_speaking_practice_v2_refactor.md
+  // Part 1 / Part 3 — LIVE conversation with Liz (premium). Liz connects and
+  // asks the questions conversationally (no pre-synthesised per-question TTS,
+  // which loaded slowly), then the user-only audio is graded and shown on the
+  // detailed results screen. Aga 2026-06-05: premium Part 1/3 must be the Liz
+  // Live experience, not the StructuredQuestionFlow "listen → record" flow.
+  // (StructuredQuestionFlow is kept for non-live/lower-tier use.)
   if (pendingLivePart) {
     return (
-      <StructuredQuestionFlow
+      <LiveConversation
         part={pendingLivePart}
         user={user}
         onExit={() => setPendingLivePart(null)}
