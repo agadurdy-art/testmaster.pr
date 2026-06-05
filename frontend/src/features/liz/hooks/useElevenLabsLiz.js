@@ -225,6 +225,7 @@ export default function useElevenLabsLiz({ userId } = {}) {
     cueCardBullets = [],
     part2Theme: incomingTheme = null,
     part2Transcript: incomingTranscript = null,
+    kind = null,
   } = {}) => {
     if (!userId) {
       setPhase(PHASES.ERROR);
@@ -255,6 +256,7 @@ export default function useElevenLabsLiz({ userId } = {}) {
         body: JSON.stringify({
           user_id: userId,
           part,
+          kind: kind || null,
           cue_card_topic: cueCardTopic || null,
           cue_card_bullets: cueCardBullets?.length ? cueCardBullets : null,
           part2_theme: incomingTheme || null,

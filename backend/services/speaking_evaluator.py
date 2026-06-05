@@ -887,6 +887,38 @@ async def evaluate_speaking_from_transcript(
     )
 
 
+_EXAM_MODE_INSTRUCTION = (
+    "This transcript is a COMPLETE IELTS Speaking test — Part 1 (interview), "
+    "Part 2 (long turn / cue card) and Part 3 (discussion) in one continuous "
+    "session. Award ONE HOLISTIC band per criterion across the WHOLE test, the "
+    "way a real examiner does; do NOT grade it as a single part. The transcript "
+    "is the candidate's speech only (examiner questions removed). No audio was "
+    "analysed, so estimate pronunciation from the transcript and keep PR within "
+    "about one band of the others unless the wording shows clear evidence. Use "
+    "the full B4-B9 range and reward sustained, developed Part 3 answers."
+)
+
+
+async def evaluate_exam_from_transcript(
+    req: SpeakingEvaluationRequest,
+    transcript: str,
+) -> SpeakingEvaluationResult:
+    """Holistic full-mock-exam grading from the candidate's transcript (no audio
+    / Azure — too slow + expensive + fragile on a 10-15 min recording). Fast,
+    cheap, reliable: one Sonnet pass over the whole test."""
+    if not transcript or not transcript.strip():
+        raise SpeakingEvaluatorFailure("empty transcript", attempts=0)
+    duration = float(req.duration_seconds or 0.0)
+    fluency = compute_fluency(transcript, duration)
+    return await _run_evaluator_llm(
+        req=req,
+        transcript=transcript,
+        fluency=fluency,
+        azure_block=_BASIC_AZURE_BLOCK,
+        mode_instruction=_EXAM_MODE_INSTRUCTION,
+    )
+
+
 async def _default_whisper_transcribe(audio_bytes: bytes) -> str:
     """Default Whisper transcription via emergentintegrations. Lazy-imported
     so unit tests that inject a fake transcribe_audio don't pay for the

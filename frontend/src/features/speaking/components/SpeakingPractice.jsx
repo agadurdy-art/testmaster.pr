@@ -14,6 +14,7 @@ import { adaptSpeakingResult } from '../lib/adaptSpeakingResult';
 import useElevenLabsLiz from '../../liz/hooks/useElevenLabsLiz';
 import VoiceOverlay from '../../liz/components/VoiceOverlay';
 import FullTestFlow from './FullTestFlow';
+import MockExamFlow from './MockExamFlow';
 import { mintClientRequestId } from '../../../lib/clientRequestId';
 import '../../liz/liz.css';
 
@@ -359,6 +360,7 @@ function SpeakingPracticeInner({ onExit, user }) {
   // True when the user has opened the 3-part Full Test orchestrator. Mutually
   // exclusive with pendingLivePart and the per-part flow states.
   const [pendingFullTest, setPendingFullTest] = useState(false);
+  const [pendingMockExam, setPendingMockExam] = useState(false);
 
   // Lock the Full Test card for plans that aren't Monthly/Exam Pack. The
   // backend enforces the same rule, but locking in the UI gives a clearer
@@ -428,14 +430,17 @@ function SpeakingPracticeInner({ onExit, user }) {
     // PartSelector passes the clicked part id explicitly so we don't read a
     // stale `flow.selectedPart` from before React flushed setSelectedPart.
     const part = partOverride || flow.selectedPart;
-    // Locked parts (e.g. Full Test on Free/Weekly) route to upgrade rather
-    // than into a session that the backend will 402 anyway.
-    if (lockedParts.has(part)) {
-      window.location.href = '/pricing/v2';
+    // Full Test = the single-session mock exam with Liz (one continuous
+    // ElevenLabs conversation, graded holistically from the transcript). It
+    // handles its own premium gate (shows an upgrade panel on liz_live_locked)
+    // rather than a hard redirect.
+    if (part === 'fulltest') {
+      setPendingMockExam(true);
       return;
     }
-    if (part === 'fulltest') {
-      setPendingFullTest(true);
+    // Other locked parts route to upgrade rather than a session the backend 402s.
+    if (lockedParts.has(part)) {
+      window.location.href = '/pricing/v2';
       return;
     }
     if (CONVERSATIONAL_PARTS.has(part)) {
@@ -445,7 +450,18 @@ function SpeakingPracticeInner({ onExit, user }) {
     }
   };
 
-  // Full Test — 3-part orchestrator with one shared theme.
+  // Full Test = single-session mock exam (one continuous Liz conversation,
+  // holistic transcript grading). The old multi-phase FullTestFlow is kept in
+  // the codebase but no longer wired here (Aga 2026-06-05: build the solid
+  // single-piece exam, revisit/remove the old examiner later).
+  if (pendingMockExam) {
+    return (
+      <MockExamFlow
+        user={user}
+        onExit={() => setPendingMockExam(false)}
+      />
+    );
+  }
   if (pendingFullTest) {
     return (
       <FullTestFlow

@@ -51,6 +51,12 @@ router = APIRouter(prefix="/api/liz_eleven", tags=["Liz ElevenLabs Conversationa
 
 ELEVENLABS_API_BASE = "https://api.elevenlabs.io/v1"
 ELEVEN_AGENT_ID = os.getenv("ELEVENLABS_AGENT_ID")
+# Dedicated agent that runs a COMPLETE 3-part mock IELTS Speaking exam in one
+# continuous conversation (created via the ElevenLabs API 2026-06-05). Falls
+# back to the created id so it works before the Railway env var is set.
+ELEVEN_EXAM_AGENT_ID = os.getenv(
+    "ELEVENLABS_EXAM_AGENT_ID", "agent_2401ktbhb8w1ev18xskqy2hqqmve"
+)
 ELEVEN_API_KEY = os.getenv("ELEVENLABS_API_KEY")
 SIGNED_URL_TIMEOUT = 12.0  # seconds — ElevenLabs returns in ~200ms typically
 TRANSCRIPT_TIMEOUT = 15.0
@@ -70,6 +76,9 @@ def set_db(database) -> None:
 class TokenRequest(BaseModel):
     user_id: str
     part: str = Field(default="part1", description="part1 | part3")
+    # kind="exam" routes to the full-mock-exam agent (one continuous 3-part
+    # session); otherwise the per-part Liz Live agent is used.
+    kind: Optional[str] = None
     # Optional Part 2 hand-off so Part 3 can ask connected questions.
     part2_theme: Optional[str] = None
     part2_transcript: Optional[str] = None
@@ -402,11 +411,12 @@ async def mint_token(req: TokenRequest, caller: dict = Depends(auth_session.curr
             status_code=503,
             detail={"code": "db_unavailable", "message": "DB not initialised"},
         )
-    if not ELEVEN_AGENT_ID:
+    agent_id = ELEVEN_EXAM_AGENT_ID if req.kind == "exam" else ELEVEN_AGENT_ID
+    if not agent_id:
         raise HTTPException(
             status_code=500,
             detail={"code": "agent_unconfigured",
-                    "message": "ELEVENLABS_AGENT_ID not set on server"},
+                    "message": "ELEVENLABS agent id not set on server"},
         )
 
     user = await db.users.find_one({"id": req.user_id}, {"_id": 0})
@@ -433,10 +443,10 @@ async def mint_token(req: TokenRequest, caller: dict = Depends(auth_session.curr
     # signed_url → wss://api.elevenlabs.io/v1/convai/conversation answers
     # reliably. We still mint a conversation_token for clients that prefer
     # WebRTC and can tolerate the validate 404 race.
-    signed_url = await _fetch_signed_url(ELEVEN_AGENT_ID)
+    signed_url = await _fetch_signed_url(agent_id)
     conversation_token = ""
     try:
-        conversation_token = await _fetch_conversation_token(ELEVEN_AGENT_ID)
+        conversation_token = await _fetch_conversation_token(agent_id)
     except HTTPException as exc:
         # Token mint is best-effort now; WS path is what the SDK uses.
         logger.info("conversation_token mint skipped: %s", exc.detail)
@@ -446,7 +456,7 @@ async def mint_token(req: TokenRequest, caller: dict = Depends(auth_session.curr
         conversation_token=conversation_token,
         signed_url=signed_url,
         connection_type="websocket",
-        agent_id=ELEVEN_AGENT_ID,
+        agent_id=agent_id,
         conversation_dynamic_variables=dynamic_vars,
         quota=_quota_payload(grant),
     )
