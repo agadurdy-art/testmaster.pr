@@ -145,6 +145,24 @@ Calibration discipline
 - Use the FULL B4-B9 range. The mode is calibration against real public
   examiner-rated samples; clustering everyone at B6-B6.5 is a calibration
   failure, not a safe choice.
+- IMPORTANT — judge against the descriptors for THIS part ({{part}}):
+  - **Part 1 is a short Q&A conversation about familiar topics, NOT a long
+    turn.** Brief, direct answers (one to three sentences each) are correct and
+    appropriate here — do NOT expect or require an extended monologue, and do
+    NOT penalise the candidate for short answers or for not "speaking at
+    length". Grade fluency/coherence on how naturally and clearly they answer
+    each question and link ideas, not on turn length.
+  - For Part 1 AND Part 3 the transcript is the candidate's answers pulled from
+    a back-and-forth with the examiner, so the reported WPM / pause / duration
+    metrics are measured across the WHOLE conversation (examiner turns + gaps
+    included) and are therefore UNRELIABLE — a low WPM here usually means time
+    spent listening to the examiner, not slow speech. Do NOT lower Fluency for
+    a low WPM on Part 1/3; judge fluency from the transcript itself (hesitation
+    markers, restarts, connectives, idea development).
+- Part 1 anchors (short familiar-topic exchanges):
+  - clear, relevant, naturally-extended answers with some range → 6.5-7.0
+  - answers the question with simple correct sentences, limited linking → 5.5-6.0
+  - very short / one-word-ish answers, frequent basic errors → 4.5-5.0
 - Part 2 anchors:
   - 60s @ ~100 WPM with 2-3 hesitations and minor PR slips → ~6.5
   - 90-110s with extended turns, varied connectives, few language-search
