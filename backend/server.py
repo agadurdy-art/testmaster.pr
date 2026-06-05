@@ -2679,21 +2679,28 @@ async def get_user_progress(user_id: str, caller: dict = Depends(auth_session.cu
     band_count = 0
     best_band = 0
     
+    # Failed / aborted sessions get persisted with a band of 0-2 (e.g. a mic
+    # that didn't capture, an evaluator error). Excluding band <= 2 keeps those
+    # from dragging the per-skill averages and counts down (was showing
+    # Speaking 1.3 across 24 "tests" when only a couple were genuine).
+    MIN_VALID_BAND = 2.0
     for attempt in attempts:
         test_type = attempt['test_type']
-        band = attempt.get('band_score', 0)
-        
+        band = attempt.get('band_score', 0) or 0
+
+        if band <= MIN_VALID_BAND:
+            continue
+
         if test_type not in by_type:
             by_type[test_type] = {"count": 0, "total_band": 0, "avg_score": 0.0}
-        
+
         by_type[test_type]['count'] += 1
         by_type[test_type]['total_band'] += band
-        
-        if band > 0:
-            total_band_score += band
-            band_count += 1
-            if band > best_band:
-                best_band = band
+
+        total_band_score += band
+        band_count += 1
+        if band > best_band:
+            best_band = band
     
     # Calculate averages per type
     for type_key in by_type:
@@ -2937,10 +2944,12 @@ async def get_dashboard_summary(user_id: str, caller: dict = Depends(auth_sessio
         "writing": [],
         "speaking": [],
     }
+    # Exclude failed/aborted sessions (band <= 2) so they don't drag the
+    # per-skill averages down — same rule as /progress.
     for a in attempts:
         skill = _skill_from_test_type(a.get("test_type"))
         band = a.get("band_score") or 0
-        if band and skill in per_skill_bands:
+        if band > 2 and skill in per_skill_bands:
             per_skill_bands[skill].append(float(band))
 
     skill_bands: dict = {}
@@ -2980,8 +2989,8 @@ async def get_dashboard_summary(user_id: str, caller: dict = Depends(auth_sessio
         # Flag it for the frontend
         skill_bands[weakest_skill]["isWeakest"] = True
 
-    # --- Current band (average across all attempts with bands) ---
-    all_bands = [float(a["band_score"]) for a in attempts if a.get("band_score")]
+    # --- Current band (average across genuine attempts; band <= 2 excluded) ---
+    all_bands = [float(a["band_score"]) for a in attempts if (a.get("band_score") or 0) > 2]
     current_band = round(sum(all_bands) / len(all_bands), 1) if all_bands else None
     # Prefer the explicit user doc value if the onboarding flow captured one.
     if user.get("current_band") is not None:

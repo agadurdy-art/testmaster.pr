@@ -151,8 +151,8 @@ export default function Progress({ user }) {
       const t = new Date(a.completed_at).getTime();
       return t >= lo && t < hi;
     };
-    const thisWeek = attempts.filter((a) => inRange(a, now - week, now + 1));
-    const lastWeek = attempts.filter((a) => inRange(a, now - 2 * week, now - week));
+    const thisWeek = attempts.filter((a) => (a.band_score || 0) > 2 && inRange(a, now - week, now + 1));
+    const lastWeek = attempts.filter((a) => (a.band_score || 0) > 2 && inRange(a, now - 2 * week, now - week));
     const avg = (arr) => arr.length
       ? arr.reduce((acc, a) => acc + (a.band_score || 0), 0) / arr.length
       : 0;
@@ -203,7 +203,7 @@ export default function Progress({ user }) {
         ? now - 30 * day
         : 0; // 'all'
     const inWindow = attempts
-      .filter((a) => a.band_score && new Date(a.completed_at).getTime() >= cutoff)
+      .filter((a) => (a.band_score || 0) > 2 && new Date(a.completed_at).getTime() >= cutoff)
       .sort((a, b) => new Date(a.completed_at) - new Date(b.completed_at));
     return inWindow.map((a) => ({
       date: new Date(a.completed_at),
