@@ -556,13 +556,35 @@ export default function ResultsState({ data, onRetryCard, onNewCard }) {
             )}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <button className="sp-btn-secondary" style={{ height: 36, fontSize: 13 }}>
+            <button
+              type="button"
+              className="sp-btn-secondary"
+              style={{ height: 36, fontSize: 13 }}
+              title="Your attempts are saved automatically — view your speaking history in Progress"
+              onClick={() => { window.location.href = '/progress'; }}
+            >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M12 5v14M5 12h14" />
               </svg>
-              Save to journal
+              View in Progress
             </button>
-            <button className="sp-btn-secondary" style={{ height: 36, fontSize: 13 }}>
+            <button
+              type="button"
+              className="sp-btn-secondary"
+              style={{ height: 36, fontSize: 13 }}
+              onClick={(e) => {
+                const s = `My IELTS Speaking ${(data?.part || '').replace('part', 'Part ')} result on testmaster.pro — Band ${SCORES?.overall ?? '-'} (Fluency ${SCORES?.fc ?? '-'}, Lexical ${SCORES?.lr ?? '-'}, Grammar ${SCORES?.gra ?? '-'}, Pronunciation ${SCORES?.pr ?? '-'}).`;
+                const btn = e.currentTarget;
+                const restore = btn.lastChild?.textContent;
+                try {
+                  navigator.clipboard?.writeText(s);
+                  if (btn.lastChild) {
+                    btn.lastChild.textContent = ' Copied!';
+                    setTimeout(() => { if (btn.lastChild) btn.lastChild.textContent = restore; }, 1500);
+                  }
+                } catch (_e) { /* clipboard unavailable */ }
+              }}
+            >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M16 6l-4-4-4 4M12 2v14M20 16v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2" />
               </svg>
@@ -572,23 +594,31 @@ export default function ResultsState({ data, onRetryCard, onNewCard }) {
         </div>
 
         {/* Full conversation with Liz (Part 1/3 live) — examiner questions +
-            the candidate's answers, so the whole exchange can be reviewed. */}
+            the candidate's answers. Collapsed by default (it's long); native
+            <details> keeps it hook-free below the early return above. */}
         {CONVERSATION_TURNS.length > 0 && (
-          <div
+          <details
             style={{
               background: 'var(--sp-card)',
               borderRadius: 'var(--sp-radius)',
               border: '1px solid var(--sp-border)',
               boxShadow: 'var(--sp-shadow-card)',
-              padding: 32,
+              padding: '20px 32px',
               marginBottom: 32,
             }}
           >
-            <div className="sp-mono-label" style={{ marginBottom: 4 }}>Conversation with Liz</div>
-            <h3 className="sp-font-display" style={{ fontSize: 22, fontWeight: 600, marginBottom: 18 }}>
-              Full exchange
-            </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            <summary style={{ cursor: 'pointer', listStyle: 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+              <span>
+                <span className="sp-mono-label" style={{ display: 'block', marginBottom: 2 }}>Conversation with Liz</span>
+                <span className="sp-font-display" style={{ fontSize: 20, fontWeight: 600 }}>
+                  Full exchange
+                </span>
+              </span>
+              <span className="sp-mono-label" style={{ color: 'var(--sp-primary)' }}>
+                {CONVERSATION_TURNS.filter((t) => t.role === 'user').length} answers · tap to expand
+              </span>
+            </summary>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 18 }}>
               {CONVERSATION_TURNS.map((t, i) => {
                 const isLiz = t.role === 'agent';
                 return (
@@ -614,7 +644,7 @@ export default function ResultsState({ data, onRetryCard, onNewCard }) {
                 );
               })}
             </div>
-          </div>
+          </details>
         )}
 
         {/* Two-panel layout */}

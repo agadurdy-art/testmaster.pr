@@ -68,6 +68,27 @@ async function submitLizSpeakingEval({ user, part, audioBlob, transcript, durati
   return resp.json();
 }
 
+// User-only speaking time from the conversation turns. WPM must be the
+// candidate's words over the time THEY spoke — not the whole call (which
+// includes Liz's questions + the gaps while the candidate listened), which
+// made Part 1/3 WPM look absurdly low. Each user turn runs from its start to
+// the next turn's start (Liz's reply); the last turn runs to call end.
+function userSpeakingSeconds(turns, totalElapsed) {
+  const sorted = (Array.isArray(turns) ? turns : [])
+    .filter((t) => typeof t?.time_in_call_secs === 'number')
+    .slice()
+    .sort((a, b) => a.time_in_call_secs - b.time_in_call_secs);
+  let total = 0;
+  for (let i = 0; i < sorted.length; i++) {
+    if (sorted[i].role !== 'user') continue;
+    const start = sorted[i].time_in_call_secs;
+    const next = sorted[i + 1];
+    const end = next ? next.time_in_call_secs : totalElapsed;
+    if (typeof end === 'number' && end > start) total += end - start;
+  }
+  return total > 0 ? Math.round(total) : (totalElapsed || 0);
+}
+
 // Transcript-only grading for Liz Live when the parallel mic recording didn't
 // capture usable audio. ElevenLabs still gives us a reliable user transcript,
 // so the candidate gets a band + FC/LR/GRA (no pronunciation detail). Keeps the
@@ -129,7 +150,8 @@ function LiveConversation({ part, user, onExit }) {
 
     const blob = liz.userAudioBlob;
     const transcript = liz.userTranscript;
-    const durationSecs = liz.elapsedSeconds;
+    // Candidate's own speaking time (not the whole call) → realistic WPM.
+    const durationSecs = userSpeakingSeconds(liz.transcriptTurns, liz.elapsedSeconds);
 
     // No usable audio AND no transcript → nothing to grade, exit cleanly.
     if (!blob && !(transcript && transcript.trim())) {
@@ -183,7 +205,7 @@ function LiveConversation({ part, user, onExit }) {
     // get parity drift between Liz Live and the cue-card flow (task #138).
     const adapted = adaptSpeakingResult(scoreResult, {
       targetBand: user?.target_band,
-      durationSeconds: liz.elapsedSeconds,
+      durationSeconds: userSpeakingSeconds(liz.transcriptTurns, liz.elapsedSeconds),
     }) || scoreResult;
     // Surface the FULL back-and-forth (Liz's questions + the candidate's
     // answers) on the results screen — the candidate wants to review the whole
