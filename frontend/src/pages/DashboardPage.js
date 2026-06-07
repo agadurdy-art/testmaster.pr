@@ -410,7 +410,7 @@ export default function DashboardPage({ user, onLogout }) {
           onSetMockDate={handleSetMockDate}
           languageWireCode={languageWireCode}
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
           <FullMockCard
             tone="gold"
             eyebrow="Official"
@@ -424,6 +424,13 @@ export default function DashboardPage({ user, onLogout }) {
             title="Fresh mocks, made for you"
             description="New prompts every week — calibrated to your weak skill."
             onClick={() => navigate("/question-bank?fulltests=ai")}
+          />
+          <FullMockCard
+            tone="liz"
+            eyebrow="Speaking · Liz ✦"
+            title="Speaking mock with Liz"
+            description="One continuous 12–14 min exam — Parts 1–3 live, holistic band at the end."
+            onClick={() => navigate("/speaking-premium?mock=1")}
           />
         </div>
       </section>
@@ -1314,8 +1321,10 @@ function MockTestFrameWith4Grid({
 }
 
 function FullMockCard({ tone = "gold", eyebrow, title, description, onClick }) {
-  const toneToken = tone === "gold" ? "var(--gold)" : "var(--sky)";
-  const inkToken = tone === "gold" ? "var(--gold-ink)" : "var(--sky)";
+  const toneMap = { gold: "var(--gold)", sky: "var(--sky)", liz: "var(--liz)" };
+  const inkMap = { gold: "var(--gold-ink)", sky: "var(--sky)", liz: "var(--liz)" };
+  const toneToken = toneMap[tone] || toneMap.gold;
+  const inkToken = inkMap[tone] || inkMap.gold;
   return (
     <button
       type="button"

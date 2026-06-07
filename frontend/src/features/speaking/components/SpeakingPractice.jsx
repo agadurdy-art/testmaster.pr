@@ -360,7 +360,16 @@ function SpeakingPracticeInner({ onExit, user }) {
   // True when the user has opened the 3-part Full Test orchestrator. Mutually
   // exclusive with pendingLivePart and the per-part flow states.
   const [pendingFullTest, setPendingFullTest] = useState(false);
-  const [pendingMockExam, setPendingMockExam] = useState(false);
+  // Deep-link: /speaking-premium?mock=1 (Dashboard → Mock Test Center →
+  // "Speaking mock with Liz") opens the single-session mock exam directly,
+  // skipping the part picker.
+  const [pendingMockExam, setPendingMockExam] = useState(() => {
+    try {
+      return new URLSearchParams(window.location.search).get('mock') === '1';
+    } catch (_e) {
+      return false;
+    }
+  });
 
   // Lock the Full Test card for plans that aren't Monthly/Exam Pack. The
   // backend enforces the same rule, but locking in the UI gives a clearer
