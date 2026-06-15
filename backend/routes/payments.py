@@ -205,7 +205,13 @@ async def verify_paypal_webhook_signature(headers: dict, body: dict) -> bool:
 
 async def _check_plan_expiry(user: dict) -> dict:
     expires_at = user.get("plan_expires_at")
-    if expires_at and user.get("payment_method") == "bank_transfer":
+    # Downgrade ANY finite plan whose window has passed. Only one-time/period
+    # plans ever set plan_expires_at (PayPal exam & custom, SePay, bank transfer);
+    # recurring PayPal weekly/monthly subscriptions never set it, so they are
+    # untouched here and renew via PayPal. (Previously this was gated to
+    # payment_method=="bank_transfer", so PayPal Exam packs never expired and
+    # granted Exam tier forever.)
+    if expires_at:
         try:
             exp_dt = datetime.fromisoformat(expires_at) if isinstance(expires_at, str) else expires_at
             if exp_dt < datetime.now(timezone.utc):
@@ -443,6 +449,12 @@ async def paypal_capture_order(req: PaypalCaptureOrderRequest):
             "lastPayment": now.isoformat(),
             "monthly_usage": {"liz_messages": 0, "speaking_evals": 0, "reset_date": now.isoformat()},
         }
+        # Exam Pack is a one-time purchase that must auto-expire after 30 days
+        # (PLAN_FEATURES["exam"].auto_expires_30d). Without an expiry it granted
+        # Exam tier forever; _check_plan_expiry reaps it once this passes.
+        if plan_name == "exam":
+            update_fields["plan_expires_at"] = (now + timedelta(days=30)).isoformat()
+            update_fields["payment_method"] = "paypal"
     await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
     await db.kofi_events.insert_one({
         "provider": "paypal", "kind": "capture-order", "order_id": req.orderId,

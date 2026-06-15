@@ -26,7 +26,7 @@ const GE_TABS = [
   // Home + Stages ikisi de GE Dashboard'a gider (Stages = içerdeki stage map),
   // Profile GE branding'i Profile.js'in kendi conditional render'ına bırakılır.
   { key: 'home', label: 'Home', path: '/ge/dashboard', Icon: Home, matchPrefix: ['/dashboard', '/ge/dashboard'] },
-  { key: 'review', label: 'Review', path: '/daily-practice', Icon: Repeat, matchPrefix: ['/daily-practice'] },
+  { key: 'review', label: 'Review', path: '/unified/daily-habit', Icon: Repeat, matchPrefix: ['/unified/daily-habit'] },
   { key: 'coach', label: 'Ray', path: '/ray', Icon: GraduationCap, matchPrefix: ['/ray'], center: true, avatar: RAY_AVATAR_URL },
   { key: 'stages', label: 'Stages', path: '/ge/dashboard', Icon: BookOpen, matchPrefix: ['/ge/dashboard', '/unified/stage', '/game-bank'] },
   { key: 'profile', label: 'Profile', path: '/profile', Icon: User, matchPrefix: ['/profile', '/settings'] },

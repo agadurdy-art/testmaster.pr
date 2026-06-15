@@ -661,6 +661,7 @@ function AppWithSessionHandler() {
         <Route path="/samples/writing/band-6-5-task2" element={<SampleReportBand65Task2 />} />
         <Route path="/samples/writing/band-8-0-task2" element={<SampleReportBand80Task2 />} />
         <Route path="/samples/writing/band-5-0-task2" element={<SampleReportBand50Task2 />} />
+        <Route path="/samples/writing" element={<Navigate to="/samples/writing/band-6-5-task2" replace />} />
         <Route path="/samples/writing/:slug" element={<Navigate to="/samples/writing/band-6-5-task2" replace />} />
         <Route path="/samples/speaking/band-6-5-part2" element={<SampleReportSpeakingPart2 />} />
         <Route path="/samples/speaking/:slug" element={<Navigate to="/samples/speaking/band-6-5-part2" replace />} />
