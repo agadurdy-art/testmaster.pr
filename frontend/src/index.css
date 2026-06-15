@@ -341,5 +341,21 @@ html[lang="tr"] * {
 .lg-terms{position:relative;z-index:2;margin-top:16px;text-align:center;color:rgba(255,255,255,.55);font-size:12px;line-height:1.5}
 .lg-terms a{color:rgba(255,255,255,.8);text-decoration:none}
 .lg-terms a:hover{text-decoration:underline}
+/* status / info surfaces shared by ResetPassword + VerifyEmail glass pages */
+.lg-card.lg-center{text-align:center}
+.lg-status{width:74px;height:74px;border-radius:50%;display:grid;place-items:center;margin:2px auto 16px}
+.lg-status.is-load{background:rgba(16,185,129,.12);color:var(--lg-brand-deep)}
+.lg-status.is-ok{background:rgba(16,185,129,.14);color:#059669}
+.lg-status.is-info{background:rgba(59,130,246,.14);color:#2563eb}
+.lg-status.is-err{background:rgba(239,68,68,.13);color:#dc2626}
+.lg-msg{font-size:14px;color:var(--lg-text-soft);line-height:1.55;margin:0 0 20px}
+.lg-msg.err{color:#dc2626}
+.lg-info{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);border-radius:14px;padding:15px 16px;margin:0 0 18px;text-align:left}
+.lg-info h3{margin:0 0 8px;font-size:13.5px;font-weight:700;color:#047857}
+.lg-info ul{margin:0;padding:0;list-style:none}
+.lg-info li{font-size:13px;color:#0f7a5a;padding:2px 0;display:flex;gap:8px;align-items:flex-start}
+.lg-info li::before{content:"✓";color:var(--lg-brand);font-weight:700}
+.lg-ghost{width:100%;margin-top:10px;padding:13px;border-radius:13px;border:1px solid var(--lg-field-border);background:#fff;color:#1f2a44;font-size:14.5px;font-weight:600;cursor:pointer;transition:border-color .2s,transform .15s var(--lg-ease)}
+.lg-ghost:hover{border-color:#cdd6e6;transform:translateY(-1px)}
 @media (prefers-reduced-motion:reduce){ .lg-aurora i,.lg-card,.lg-card::before,.lg-cta::after{animation:none!important} }
 @media (max-width:480px){ .lg-card{padding:28px 22px 24px} .lg-title{font-size:21px} }

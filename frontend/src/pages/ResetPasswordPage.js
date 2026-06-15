@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Card } from '../components/ui/card';
-import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
+import { Eye, EyeOff } from 'lucide-react';
 import { resetPassword } from '../lib/api';
 import { toast } from 'sonner';
 
@@ -13,6 +11,7 @@ export default function ResetPasswordPage() {
   const [confirm, setConfirm] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [token, setToken] = useState('');
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     const t = searchParams.get('token');
@@ -53,37 +52,60 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 flex items-center justify-center px-4">
-      <Card className="max-w-md w-full p-8">
-        <h1 className="text-2xl font-bold mb-4 text-center">Reset Password</h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-2">New password</label>
-            <Input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter a new password (min 8 characters)"
-              minLength={8}
-              required
-            />
+    <div className="lg-auth">
+      <div className="lg-aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div className="lg-shell">
+        <div className="lg-card">
+          <div className="lg-brand">
+            <div className="lg-logo">IA</div>
+            <div><b>IELTS Ace</b><small>by testmaster.pro</small></div>
           </div>
-          <div>
-            <label className="block text-sm font-medium mb-2">Confirm new password</label>
-            <Input
-              type="password"
-              value={confirm}
-              onChange={(e) => setConfirm(e.target.value)}
-              placeholder="Re-enter your new password"
-              minLength={8}
-              required
-            />
+
+          <h1 className="lg-title">Set a new password</h1>
+          <p className="lg-sub">Choose a strong password — at least 8 characters.</p>
+
+          <form onSubmit={handleSubmit}>
+            <div className="lg-field">
+              <input
+                id="rp-pwd"
+                type={show ? 'text' : 'password'}
+                placeholder=" "
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                minLength={8}
+                required
+                autoComplete="new-password"
+              />
+              <label htmlFor="rp-pwd">New password</label>
+              <button type="button" className="lg-eye" onClick={() => setShow((v) => !v)} tabIndex={-1} aria-label="Toggle password visibility">
+                {show ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
+
+            <div className="lg-field">
+              <input
+                id="rp-confirm"
+                type={show ? 'text' : 'password'}
+                placeholder=" "
+                value={confirm}
+                onChange={(e) => setConfirm(e.target.value)}
+                minLength={8}
+                required
+                autoComplete="new-password"
+              />
+              <label htmlFor="rp-confirm">Confirm new password</label>
+            </div>
+
+            <button type="submit" className="lg-cta" disabled={submitting}>
+              {submitting ? 'Updating…' : 'Set new password'}
+            </button>
+          </form>
+
+          <div className="lg-foot">
+            <button type="button" onClick={() => navigate('/login')}>Back to sign in</button>
           </div>
-          <Button type="submit" className="w-full" disabled={submitting}>
-            {submitting ? 'Updating...' : 'Set New Password'}
-          </Button>
-        </form>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }
