@@ -141,6 +141,10 @@ export default function SpeakingPracticeQB({ user }) {
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const timerRef = useRef(null);
+  // Holds the latest stopRecording so the state-driven countdown effect can
+  // auto-stop without re-subscribing every second (stopRecording's identity
+  // changes as speakingTime ticks).
+  const stopRecordingRef = useRef(null);
   // Stable across retries of a single QB part submission. Backend
   // /api/speaking/evaluate de-dupes on (user_id, client_request_id).
   const clientRequestIdRef = useRef(null);
@@ -397,16 +401,11 @@ export default function SpeakingPracticeQB({ user }) {
       setRecordingState(STATES.RECORDING);
       
       const maxTime = currentPart === 2 ? 120 : (currentPart === 3 ? 75 : 25);
-      setTimeLeft(maxTime);
       setSpeakingTime(0);
-      
-      timerRef.current = setInterval(() => {
-        setSpeakingTime(prev => prev + 1);
-        setTimeLeft(prev => {
-          if (prev <= 1) { stopRecording(); return 0; }
-          return prev - 1;
-        });
-      }, 1000);
+      setTimeLeft(maxTime);
+      // The countdown itself is driven by a state effect keyed on RECORDING
+      // (see below) — no inline interval here, so the async getUserMedia await
+      // above can't race the timer into a frozen/stuck state.
     } catch (error) {
       console.error('Error starting recording:', error);
       toast.error('Could not access microphone');
@@ -416,45 +415,84 @@ export default function SpeakingPracticeQB({ user }) {
 
   const stopRecording = useCallback(async () => {
     if (timerRef.current) clearInterval(timerRef.current);
-    
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
-      setRecordingState(STATES.PROCESSING);
-      mediaRecorderRef.current.stop();
-      
-      await new Promise(resolve => setTimeout(resolve, 300));
-      
-      const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
-      const question = getCurrentQuestion();
-      const questionId = question?.id || `part${currentPart}`;
-      const transcript = await transcribeAudio(audioBlob, questionId, String(currentPart));
-      
-      // Store audio blob for premium evaluation
-      audioBlobsRef.current[questionId] = audioBlob;
-      
-      const answer = {
-        part: String(currentPart),
-        question_id: questionId,
-        question: currentPart === 2 ? moduleContent.part2?.cue_card?.topic : question?.text,
-        transcript: transcript || '[No speech detected]',
-        duration: speakingTime
-      };
-      
-      setAnswers(prev => [...prev, answer]);
+
+    // Resilient stop: ALWAYS leave RECORDING so the user can never get stuck on
+    // the recording screen (the old code gated the whole transition on
+    // mediaRecorder.state === 'recording'; when that wasn't true it silently
+    // did nothing and the UI froze). Capture whatever audio exists, finalize if
+    // we have any, otherwise reset to IDLE with a clear message.
+    setRecordingState(STATES.PROCESSING);
+    try {
+      const mr = mediaRecorderRef.current;
+      if (mr && mr.state === 'recording') {
+        mr.stop();
+        await new Promise((resolve) => setTimeout(resolve, 300));
+      }
+    } catch (_) { /* recorder already gone — fall through to finalize */ }
+
+    const chunks = audioChunksRef.current || [];
+    if (chunks.length === 0) {
       audioChunksRef.current = [];
       mediaRecorderRef.current = null;
-
-      // Expose this question's audio for playback verification. Revoke any
-      // prior URL to avoid leaking blob: handles across questions.
-      setLastRecordingUrl((prev) => {
-        if (prev) {
-          try { URL.revokeObjectURL(prev); } catch (_) { /* ignore */ }
-        }
-        return URL.createObjectURL(audioBlob);
-      });
-
-      setRecordingState(STATES.READY_NEXT);
+      toast.error('No audio was captured. Tap Start and record again.');
+      setRecordingState(STATES.IDLE);
+      return;
     }
+
+    const audioBlob = new Blob(chunks, { type: 'audio/webm' });
+    const question = getCurrentQuestion();
+    const questionId = question?.id || `part${currentPart}`;
+    const transcript = await transcribeAudio(audioBlob, questionId, String(currentPart));
+
+    // Store audio blob for premium evaluation
+    audioBlobsRef.current[questionId] = audioBlob;
+
+    const answer = {
+      part: String(currentPart),
+      question_id: questionId,
+      question: currentPart === 2 ? moduleContent.part2?.cue_card?.topic : question?.text,
+      transcript: transcript || '[No speech detected]',
+      duration: speakingTime,
+    };
+
+    setAnswers((prev) => [...prev, answer]);
+    audioChunksRef.current = [];
+    mediaRecorderRef.current = null;
+
+    // Expose this question's audio for playback verification. Revoke any prior
+    // URL to avoid leaking blob: handles across questions.
+    setLastRecordingUrl((prev) => {
+      if (prev) {
+        try { URL.revokeObjectURL(prev); } catch (_) { /* ignore */ }
+      }
+      return URL.createObjectURL(audioBlob);
+    });
+
+    setRecordingState(STATES.READY_NEXT);
   }, [getCurrentQuestion, currentPart, moduleContent, speakingTime]);
+
+  // Keep a live handle to stopRecording for the countdown effect (below).
+  useEffect(() => {
+    stopRecordingRef.current = stopRecording;
+  }, [stopRecording]);
+
+  // State-driven recording countdown. Runs only while RECORDING, cleans up on
+  // any state change — so it cannot freeze, leak, or collide with the prep
+  // timer. A separate watcher auto-stops at 0 (no side-effects inside setState).
+  useEffect(() => {
+    if (recordingState !== STATES.RECORDING) return undefined;
+    const id = setInterval(() => {
+      setSpeakingTime((s) => s + 1);
+      setTimeLeft((prev) => Math.max(0, prev - 1));
+    }, 1000);
+    return () => clearInterval(id);
+  }, [recordingState]);
+
+  useEffect(() => {
+    if (recordingState === STATES.RECORDING && timeLeft === 0) {
+      stopRecordingRef.current?.();
+    }
+  }, [timeLeft, recordingState]);
 
   const togglePlayback = useCallback(() => {
     if (!audioRef.current || !lastRecordingUrl) return;
@@ -469,18 +507,27 @@ export default function SpeakingPracticeQB({ user }) {
   }, [lastRecordingUrl, isPlayingBack]);
 
   const transcribeAudio = async (blob, questionId, part) => {
+    // Bounded so a hung/slow transcribe never strands the user on the
+    // Processing screen — stopRecording proceeds to READY_NEXT with a null
+    // transcript and the real evaluation re-transcribes on submit anyway.
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000);
     try {
       const formData = new FormData();
       formData.append('audio', blob, 'recording.webm');
       formData.append('question_id', questionId);
       formData.append('part', part);
-      
-      const res = await fetch(`${API_URL}/api/speaking/transcribe`, { method: 'POST', body: formData });
+
+      const res = await fetch(`${API_URL}/api/speaking/transcribe`, {
+        method: 'POST', body: formData, signal: controller.signal,
+      });
       const data = await res.json();
       return data.success ? data.transcript : null;
     } catch (error) {
       console.error('Transcription error:', error);
       return null;
+    } finally {
+      clearTimeout(timeout);
     }
   };
 
