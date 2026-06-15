@@ -39,7 +39,9 @@ export default function DashboardLayout({
         theme={themeMode}
         onThemeChange={setTheme}
       />
-      <main className="max-w-[1160px] mx-auto px-6 md:px-10 pt-14 md:pt-20 pb-20 body-pad-bottom">
+      {/* Content width widened 1160→1320 (+xl padding): the narrow column left
+          big empty gutters on laptop/desktop. Layout & colours unchanged. */}
+      <main className="max-w-[1320px] mx-auto px-6 md:px-10 xl:px-14 pt-14 md:pt-20 pb-20 body-pad-bottom">
         {children}
       </main>
       <DashboardBottomNav active={activeMobileTab} onNavigate={onMobileTab} />
