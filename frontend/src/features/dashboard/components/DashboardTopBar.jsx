@@ -27,8 +27,10 @@ export default function DashboardTopBar({
         WebkitBackdropFilter: "blur(24px) saturate(160%)",
       }}
     >
-      <div className="max-w-[1160px] mx-auto px-6 md:px-10 h-[68px] flex items-center justify-between">
-        <div className="flex items-center gap-10">
+      <div className="max-w-[1280px] mx-auto px-6 md:px-10 h-[68px] flex items-center justify-between">
+        {/* Brand + section nav live in the left sidebar on desktop (≥ lg); hide
+            them here to avoid a duplicate brand/nav. Tools stay on the right. */}
+        <div className="flex items-center gap-10 lg:hidden">
           <BrandLogo size="sm" href="/dashboard" />
           <nav className="desktop-nav items-center gap-6 flex">
             <NavLink href="/dashboard" active={activeSection === "dashboard"}>

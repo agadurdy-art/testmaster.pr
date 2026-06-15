@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../dashboard.css";
 import DashboardTopBar from "./DashboardTopBar";
+import DashboardSideNav from "./DashboardSideNav";
 import DashboardBottomNav from "./DashboardBottomNav";
 import DashboardMobileDrawer from "./DashboardMobileDrawer";
 import { useTheme, THEME_MODES } from "../../../contexts/ThemeContext";
@@ -32,18 +33,27 @@ export default function DashboardLayout({
 
   return (
     <div className={`dashboard-scope ${themeClass}`}>
-      <DashboardTopBar
-        activeSection={activeSection}
-        user={user}
-        onOpenMenu={() => setMenuOpen(true)}
-        theme={themeMode}
-        onThemeChange={setTheme}
-      />
-      {/* Content width widened 1160→1320 (+xl padding): the narrow column left
-          big empty gutters on laptop/desktop. Layout & colours unchanged. */}
-      <main className="max-w-[1320px] mx-auto px-6 md:px-10 xl:px-14 pt-14 md:pt-20 pb-20 body-pad-bottom">
-        {children}
-      </main>
+      {/* Persistent left rail (desktop ≥ lg). Below lg the bottom nav + mobile
+          drawer take over and this is hidden. */}
+      <DashboardSideNav user={user} />
+
+      {/* Everything else shifts right of the 264px rail on lg. */}
+      <div className="lg:pl-[264px]">
+        <DashboardTopBar
+          activeSection={activeSection}
+          user={user}
+          onOpenMenu={() => setMenuOpen(true)}
+          theme={themeMode}
+          onThemeChange={setTheme}
+        />
+        {/* Content widened (the old 1160 column left big empty gutters). With the
+            rail present, cap a touch wider and keep it centred in the remaining
+            space. Layout & colours unchanged. */}
+        <main className="max-w-[1280px] mx-auto px-6 md:px-10 pt-14 md:pt-20 pb-20 body-pad-bottom">
+          {children}
+        </main>
+      </div>
+
       <DashboardBottomNav active={activeMobileTab} onNavigate={onMobileTab} />
       <DashboardMobileDrawer
         open={menuOpen}
