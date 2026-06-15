@@ -47,6 +47,13 @@ export default function EvaluationProgressOverlay({ open, tip }) {
       return undefined;
     }
     startedAtRef.current = Date.now();
+    // Lock body scroll while the overlay is up — and ALWAYS restore it on close.
+    // (Previously the lock was set as a side-effect in the render body, which
+    // never ran its restore because `if (!open) return null` short-circuits
+    // first. The result: after grading finished, body.overflow stayed "hidden"
+    // and the entire results page could no longer scroll.)
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     const stageTimer = setInterval(() => {
       setStageIdx((i) => Math.min(i + 1, STAGES.length - 1));
     }, 7000);
@@ -61,6 +68,7 @@ export default function EvaluationProgressOverlay({ open, tip }) {
       clearInterval(stageTimer);
       clearInterval(elapsedTimer);
       clearInterval(tipTimer);
+      document.body.style.overflow = prevOverflow;
     };
   }, [open]);
 
@@ -68,11 +76,6 @@ export default function EvaluationProgressOverlay({ open, tip }) {
 
   const Stage = STAGES[stageIdx];
   const StageIcon = Stage.icon;
-
-  // Body scroll lock while the overlay is up.
-  if (typeof document !== "undefined") {
-    document.body.style.overflow = "hidden";
-  }
 
   return (
     <div className="fixed inset-0 z-[80] bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
