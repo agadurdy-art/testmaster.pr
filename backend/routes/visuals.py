@@ -111,8 +111,9 @@ async def get_visual_image(name: str):
     """
     Serve a visual PNG image through the API (for ingress compatibility)
     """
-    from fastapi.responses import FileResponse
-    
+    from pathlib import Path
+    from services.asset_cdn import serve_static_asset
+
     try:
         safe_name = "".join(c for c in name if c.isalnum() or c in ('_', '-')).lower()
         # Remove .png extension if present
@@ -120,14 +121,15 @@ async def get_visual_image(name: str):
             safe_name = safe_name[:-3]
         if safe_name.endswith('.'):
             safe_name = safe_name[:-1]
-            
-        png_path = os.path.join(VISUALS_DIR, f"{safe_name}.png")
-        
-        if not os.path.exists(png_path):
-            raise HTTPException(status_code=404, detail=f"Image not found: {safe_name}.png")
-        
-        return FileResponse(png_path, media_type="image/png")
-        
+
+        png_path = Path(VISUALS_DIR) / f"{safe_name}.png"
+
+        # Local in dev; in production redirects to the R2 CDN copy (static/ is
+        # dockerignored so the file isn't on the pod).
+        return serve_static_asset(
+            png_path, "image/png", detail=f"Image not found: {safe_name}.png",
+        )
+
     except HTTPException:
         raise
     except Exception as e:

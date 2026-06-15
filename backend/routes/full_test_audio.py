@@ -6,6 +6,7 @@ Endpoints for generating and serving audio files for Full Test Mode.
 
 from fastapi import APIRouter, HTTPException, BackgroundTasks
 from fastapi.responses import FileResponse, StreamingResponse
+from services.asset_cdn import serve_static_asset
 from typing import Dict, Optional
 import os
 from pathlib import Path
@@ -105,28 +106,23 @@ async def stream_listening_audio(test_id: str, part_number: int):
     This endpoint serves the audio file directly.
     """
     listening_path = AUDIO_BASE_PATH / test_id / "listening"
-    
-    if not listening_path.exists():
-        raise HTTPException(status_code=404, detail=f"Listening audio directory not found for {test_id}")
-    
-    # Search for file matching the part number (with or without hash suffix)
-    exact_match = listening_path / f"listening_part{part_number}.mp3"
-    if exact_match.exists():
-        return FileResponse(
-            path=str(exact_match),
-            media_type="audio/mpeg",
-            filename=f"listening_part{part_number}.mp3"
-        )
-    
-    for file in listening_path.iterdir():
-        if file.name.startswith(f"listening_part{part_number}_") and file.suffix == ".mp3":
-            return FileResponse(
-                path=str(file),
-                media_type="audio/mpeg",
-                filename=f"listening_part{part_number}.mp3"
-            )
-    
-    raise HTTPException(status_code=404, detail=f"Audio file not found for part {part_number}")
+    canonical = f"listening_part{part_number}.mp3"
+
+    # Local dev: serve off disk (exact name, or the hash-suffixed variant).
+    if listening_path.exists():
+        exact_match = listening_path / canonical
+        if exact_match.exists():
+            return FileResponse(path=str(exact_match), media_type="audio/mpeg", filename=canonical)
+        for file in listening_path.iterdir():
+            if file.name.startswith(f"listening_part{part_number}_") and file.suffix == ".mp3":
+                return FileResponse(path=str(file), media_type="audio/mpeg", filename=canonical)
+
+    # Production: the dir isn't on the pod (static/ dockerignored) → R2 CDN copy,
+    # mirrored under the canonical (non-hashed) name.
+    return serve_static_asset(
+        listening_path / canonical, "audio/mpeg", filename=canonical,
+        detail=f"Audio file not found for part {part_number}",
+    )
 
 
 @router.get("/stream/{test_id}/speaking/{question_id}")

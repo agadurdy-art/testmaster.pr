@@ -82,59 +82,57 @@ EXAMINER_VOICES = {
 }
 
 
+# Pre-recorded examiner audio is served as a static asset:
+#   - production: /api/static/audio/speaking/<file> is 307-redirected to the
+#     Cloudflare R2 CDN (see server.py static CDN swap). The .mp3 files are
+#     excluded from the deploy image (backend/.dockerignore) by design — they
+#     live on R2, not on the pod.
+#   - local dev: the same path is served by the StaticFiles mount from the
+#     committed files under backend/static/audio/speaking/.
+# Either way the bytes already exist; nothing is synthesized at request time.
+SPEAKING_AUDIO_URL_BASE = "/api/static/audio/speaking"
+
+# Manifest of pre-recorded question audio that exists on R2 (basenames like
+# "spk_ac_b45_001_p1q1.mp3"). Committed under backend/content/ so it ships in
+# the image even though the .mp3 files themselves do not. Used to decide
+# whether a question has audio, without an HTTP round-trip per question.
+_AUDIO_MANIFEST_PATH = _BACKEND_DIR / "content" / "speaking" / "audio_manifest.json"
+try:
+    _AVAILABLE_AUDIO = set(json.loads(_AUDIO_MANIFEST_PATH.read_text()))
+    print(f"✅ Speaking audio manifest loaded: {len(_AVAILABLE_AUDIO)} files")
+except Exception as e:
+    _AVAILABLE_AUDIO = set()
+    print(f"⚠️  Speaking audio manifest missing ({e}); falling back to disk check")
+
+
 def get_cached_audio_path(question_id: str, set_id: str) -> Path:
     """Get path for cached question audio."""
     return AUDIO_CACHE_DIR / f"{set_id}_{question_id}.mp3"
 
 
 def is_audio_cached(question_id: str, set_id: str) -> bool:
-    """Check if question audio is cached."""
+    """True if pre-recorded audio for this question exists (on R2 per the
+    manifest, or on local disk in dev)."""
+    fname = f"{set_id}_{question_id}.mp3"
+    if fname in _AVAILABLE_AUDIO:
+        return True
     path = get_cached_audio_path(question_id, set_id)
     return path.exists() and path.stat().st_size > 100
 
 
 async def generate_examiner_audio(text: str, voice_key: str, question_id: str, set_id: str) -> Optional[str]:
-    """Generate IELTS examiner-style audio for a question."""
-    # Check cache first
+    """Resolve the URL of the pre-recorded examiner audio for a question.
+
+    All speaking question audio was generated once and stored on Cloudflare R2
+    (see backend/static/audio/speaking + audio_manifest.json). This function
+    NEVER synthesizes audio at request time — it just returns the static URL
+    when the recording exists, or None when it doesn't (the player then skips
+    playback gracefully). `text`/`voice_key` are kept in the signature for
+    backwards-compatibility with the batch pre-gen tooling.
+    """
     if is_audio_cached(question_id, set_id):
-        return f"/api/speaking/audio/{set_id}/{question_id}"
-    
-    if not ELEVENLABS_API_KEY:
-        return None
-    
-    try:
-        client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
-        voice_profile = EXAMINER_VOICES.get(voice_key, EXAMINER_VOICES["british_female_2"])
-        
-        voice_settings = VoiceSettings(
-            stability=voice_profile["stability"],
-            similarity_boost=voice_profile["similarity_boost"],
-            style=voice_profile["style"],
-            use_speaker_boost=False
-        )
-        
-        audio_generator = client.text_to_speech.convert(
-            text=text,
-            voice_id=voice_profile["voice_id"],
-            model_id="eleven_multilingual_v2",
-            voice_settings=voice_settings
-        )
-        
-        audio_data = b""
-        for chunk in audio_generator:
-            audio_data += chunk
-        
-        # Save to cache
-        cache_path = get_cached_audio_path(question_id, set_id)
-        with open(cache_path, 'wb') as f:
-            f.write(audio_data)
-        
-        print(f"✅ Speaking audio cached: {cache_path.name}")
-        return f"/api/speaking/audio/{set_id}/{question_id}"
-        
-    except Exception as e:
-        print(f"Error generating speaking audio: {str(e)}")
-        return None
+        return f"{SPEAKING_AUDIO_URL_BASE}/{set_id}_{question_id}.mp3"
+    return None
 
 
 async def transcribe_audio(audio_data: bytes, language: str = "en") -> Optional[str]:

@@ -166,11 +166,11 @@ async def get_cambridge_image(book_id: str, test_id: str, filename: str):
     """Serve Cambridge test images"""
     base_path = Path(__file__).parent.parent / "static" / "images" / "cambridge" / book_id / test_id
     file_path = base_path / filename
-    
-    if not file_path.exists():
-        raise HTTPException(status_code=404, detail=f"Image not found: {filename}")
-    
-    return FileResponse(file_path, media_type="image/png")
+
+    # Local in dev; in production the file isn't on the pod (static/ is dockerignored)
+    # so this 307-redirects to the R2 CDN copy at the mirrored path.
+    from services.asset_cdn import serve_static_asset
+    return serve_static_asset(file_path, "image/png", detail=f"Image not found: {filename}")
 
 
 

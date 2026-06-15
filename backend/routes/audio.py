@@ -8,6 +8,8 @@ from fastapi.responses import FileResponse
 from pathlib import Path
 import os
 
+from services.asset_cdn import serve_static_asset
+
 router = APIRouter(prefix="/api/audio", tags=["audio"])
 
 # Audio directory — resolve relative to this file so it works in local, Railway,
@@ -16,20 +18,15 @@ AUDIO_DIR = Path(os.getenv("AUDIO_DIR") or (Path(__file__).resolve().parent.pare
 
 @router.get("/cambridge/{book}/{filename}")
 async def get_cambridge_audio(book: str, filename: str):
-    """Serve Cambridge IELTS audio files"""
+    """Serve Cambridge IELTS audio files (local in dev, R2 CDN in production)."""
     # Sanitize inputs
     book = book.replace("..", "").replace("/", "")
     filename = filename.replace("..", "").replace("/", "")
-    
+
     audio_path = AUDIO_DIR / "cambridge" / book / filename
-    
-    if not audio_path.exists():
-        raise HTTPException(status_code=404, detail=f"Audio file not found: {filename}")
-    
-    return FileResponse(
-        path=str(audio_path),
-        media_type="audio/mpeg",
-        filename=filename
+    return serve_static_asset(
+        audio_path, "audio/mpeg", filename=filename,
+        detail=f"Audio file not found: {filename}",
     )
 
 @router.get("/tts/{filename}")
