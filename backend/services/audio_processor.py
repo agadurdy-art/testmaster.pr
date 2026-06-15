@@ -113,6 +113,16 @@ def persist_audio(audio_bytes: bytes, *, suffix: str = ".webm") -> Dict[str, Any
                 "message": "Could not save the recording. Please try again.",
             },
         )
+    # Durable copy to R2 so the recording survives pod restarts / instance
+    # changes (the local disk above is ephemeral on Railway). Same UUID name →
+    # key "recordings/<name>" mirrors /static/recordings/<name>, which the CDN
+    # redirect middleware serves in production. Best-effort: a failure here just
+    # falls back to the in-session disk copy.
+    try:
+        from services.recording_storage import upload_recording
+        upload_recording(f"recordings/{name}", audio_bytes, content_type="audio/webm")
+    except Exception:  # never let storage break evaluation
+        logger.warning("R2 recording mirror skipped for %s", name, exc_info=True)
     # Static is mounted at /static; downstream consumers (UI playback,
     # /api/recordings/{name}) compose the public URL.
     return {

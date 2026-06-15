@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Mic, Play, Pause, Award, CheckCircle, AlertCircle, Lightbulb } from 'lucide-react';
+import PremiumPronunciationDrawer from './PremiumPronunciationDrawer';
 
 const API_BASE = process.env.REACT_APP_BACKEND_URL || '';
 
@@ -248,6 +249,18 @@ export default function StructuredResultsLayout({ feedback, onPracticeAnother, o
                     <div className="text-sm font-semibold text-slate-800 truncate">{v ?? '—'}</div>
                   </div>
                 ))}
+              </div>
+            )}
+
+            {/* Word/phoneme-level pronunciation (Azure, full-mode only). Self-
+                hides in basic mode where there's no word data. */}
+            {(q.pronunciation_analysis || (Array.isArray(q.word_level_results) && q.word_level_results.length > 0)) && (
+              <div className="mt-3">
+                <PremiumPronunciationDrawer
+                  pronunciationAnalysis={q.pronunciation_analysis}
+                  wordLevelResults={q.word_level_results}
+                  defaultOpen={false}
+                />
               </div>
             )}
           </div>

@@ -316,9 +316,10 @@ except Exception as _e:  # noqa: BLE001
 STATIC_BASE_URL = (os.getenv("STATIC_BASE_URL") or "").rstrip("/")
 
 # Path prefixes that must be served from the local pod even in production.
+# Speaking recordings used to live here too, but they are now mirrored to R2 on
+# write (services/audio_processor.persist_audio) so they survive pod restarts and
+# stay playable on the results page — so they go through the CDN redirect below.
 _LOCAL_STATIC_PREFIXES = (
-    "/api/static/recordings/",
-    "/static/recordings/",
     "/api/static/audio/tts_cache/",
     "/static/audio/tts_cache/",
 )
