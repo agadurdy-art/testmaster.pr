@@ -261,3 +261,85 @@
 html[lang="tr"] * {
   text-transform: none !important;
 }
+
+/* -----------------------------------------------------------------------------
+ * Liquid-glass auth surface (LoginPage). Scoped under .lg-auth so it never
+ * leaks. CSS-only, performance-first: aurora blobs animate with TRANSFORM only
+ * (GPU), blur is never animated, backdrop-filter sits on a single element with
+ * an @supports fallback, and all motion stops under prefers-reduced-motion.
+ * Plain CSS appended after @tailwind utilities → no layer-order conflict.
+ * --------------------------------------------------------------------------- */
+.lg-auth{
+  --lg-brand:#10b981; --lg-brand-deep:#059669;
+  --lg-text:#0f1f3d; --lg-text-soft:#5a6783; --lg-muted:#8a93a8;
+  --lg-field:#f4f7fb; --lg-field-border:#e3e9f3;
+  --lg-ease:cubic-bezier(.22,.61,.36,1);
+  position:relative; min-height:100vh; overflow:hidden;
+  background:#070d1c;
+  display:flex; align-items:center; justify-content:center; padding:28px;
+}
+.lg-auth.is-ge{ --lg-brand:#f97316; --lg-brand-deep:#ea580c; }   /* Ray / General English */
+.lg-aurora{position:absolute; inset:-20vmax; z-index:0; pointer-events:none; filter:saturate(1.15)}
+.lg-aurora i{position:absolute; border-radius:50%; opacity:.55; will-change:transform}
+.lg-aurora i:nth-child(1){width:52vmax;height:52vmax;left:-6vmax;top:-8vmax;background:radial-gradient(circle at 30% 30%,var(--lg-brand),transparent 60%);animation:lgD1 26s var(--lg-ease) infinite alternate}
+.lg-aurora i:nth-child(2){width:46vmax;height:46vmax;right:-10vmax;top:6vmax;background:radial-gradient(circle at 60% 40%,#06b6d4,transparent 60%);opacity:.45;animation:lgD2 32s var(--lg-ease) infinite alternate}
+.lg-aurora i:nth-child(3){width:40vmax;height:40vmax;left:18vmax;bottom:-14vmax;background:radial-gradient(circle at 50% 50%,#3b82f6,transparent 62%);opacity:.4;animation:lgD3 30s var(--lg-ease) infinite alternate}
+@keyframes lgD1{to{transform:translate3d(8vmax,6vmax,0) scale(1.12)}}
+@keyframes lgD2{to{transform:translate3d(-7vmax,5vmax,0) scale(1.08)}}
+@keyframes lgD3{to{transform:translate3d(5vmax,-7vmax,0) scale(1.1)}}
+.lg-auth .lg-shell{position:relative; z-index:2; width:100%; max-width:412px}
+.lg-back{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.62);font-size:13px;text-decoration:none;margin-bottom:14px;transition:color .2s}
+.lg-back:hover{color:#fff}
+.lg-card{
+  position:relative; border-radius:26px; padding:34px 32px 26px;
+  background:linear-gradient(160deg,rgba(255,255,255,.92),rgba(255,255,255,.8));
+  -webkit-backdrop-filter:blur(28px) saturate(1.6); backdrop-filter:blur(28px) saturate(1.6);
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 30px 70px -20px rgba(5,18,40,.55),0 8px 24px -12px rgba(5,18,40,.35);
+  overflow:hidden; animation:lgRise .7s var(--lg-ease) both;
+}
+.lg-card::before{content:"";position:absolute;top:0;left:-60%;width:60%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-18deg);animation:lgGlint 7s ease-in-out 1.2s infinite;pointer-events:none}
+@keyframes lgGlint{0%,72%{left:-60%}88%,100%{left:120%}}
+@keyframes lgRise{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){ .lg-card{background:rgba(255,255,255,.97)} }
+.lg-brand{display:flex;align-items:center;gap:11px;margin-bottom:20px}
+.lg-logo{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:18px;background:linear-gradient(140deg,var(--lg-brand),var(--lg-brand-deep));box-shadow:0 6px 16px -4px rgba(16,185,129,.55),0 1px 0 rgba(255,255,255,.5) inset}
+.lg-brand b{font-size:15px;font-weight:800;letter-spacing:-.3px;color:var(--lg-text);display:block}
+.lg-brand small{font-size:11px;font-weight:600;color:var(--lg-brand-deep);letter-spacing:.2px}
+.lg-title{margin:2px 0 4px;font-size:24px;line-height:1.2;font-weight:800;letter-spacing:-.5px;color:var(--lg-text)}
+.lg-sub{margin:0 0 20px;font-size:14px;color:var(--lg-text-soft);line-height:1.5}
+.lg-google{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:13px;border-radius:13px;border:1px solid var(--lg-field-border);background:#fff;font-size:14.5px;font-weight:600;color:#1f2a44;cursor:pointer;box-shadow:0 1px 2px rgba(5,18,40,.04);transition:transform .15s var(--lg-ease),box-shadow .2s,border-color .2s}
+.lg-google:hover{border-color:#cdd6e6;box-shadow:0 6px 18px -8px rgba(5,18,40,.25);transform:translateY(-1px)}
+.lg-google:active{transform:translateY(0) scale(.99)}
+.lg-google:disabled{opacity:.6;cursor:default}
+.lg-divider{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--lg-muted);font-size:12px;font-weight:500}
+.lg-divider::before,.lg-divider::after{content:"";height:1px;flex:1;background:var(--lg-field-border)}
+.lg-field{position:relative;margin-bottom:13px}
+.lg-field input{width:100%;padding:16px 42px 7px 14px;border-radius:13px;border:1px solid var(--lg-field-border);background:var(--lg-field);font-size:14.5px;color:var(--lg-text);outline:none;transition:border-color .2s,box-shadow .2s,background .2s}
+.lg-field input:focus{border-color:var(--lg-brand);background:#fff;box-shadow:0 0 0 4px rgba(16,185,129,.13)}
+.lg-field.is-error input{border-color:#fca5a5}
+.lg-field.is-error input:focus{box-shadow:0 0 0 4px rgba(239,68,68,.13)}
+.lg-field label{position:absolute;left:14px;top:15px;font-size:14.5px;color:var(--lg-muted);pointer-events:none;transition:transform .16s var(--lg-ease),color .16s,font-size .16s;transform-origin:left}
+.lg-field input:focus+label,.lg-field input:not(:placeholder-shown)+label{transform:translateY(-9px);font-size:11px;color:var(--lg-brand-deep);font-weight:600}
+.lg-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--lg-muted);background:none;border:0;cursor:pointer;display:grid;place-items:center;padding:4px}
+.lg-eye:hover{color:var(--lg-text-soft)}
+.lg-hint{font-size:11.5px;margin:5px 2px 0;display:flex;align-items:center;gap:5px}
+.lg-hint.err{color:#dc2626}.lg-hint.ok{color:#059669}
+.lg-warn{display:flex;align-items:flex-start;gap:8px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.35);border-radius:12px;padding:11px;margin:4px 0 2px;color:#92682a;font-size:12px;line-height:1.45}
+.lg-cta{width:100%;margin-top:8px;padding:15px;border:0;border-radius:13px;cursor:pointer;color:#fff;font-size:15px;font-weight:700;letter-spacing:.2px;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--lg-brand),var(--lg-brand-deep));box-shadow:0 10px 24px -8px rgba(16,185,129,.55),0 1px 0 rgba(255,255,255,.35) inset;transition:transform .15s var(--lg-ease),box-shadow .2s}
+.lg-cta:hover{transform:translateY(-1px);box-shadow:0 16px 30px -10px rgba(16,185,129,.65)}
+.lg-cta:active{transform:translateY(0) scale(.99)}
+.lg-cta:disabled{opacity:.55;cursor:default;transform:none;box-shadow:none}
+.lg-cta::after{content:"";position:absolute;top:0;left:-30%;width:30%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-18deg);transition:left .5s var(--lg-ease)}
+.lg-cta:not(:disabled):hover::after{left:130%}
+.lg-forgot{text-align:right;margin:2px 2px 0}
+.lg-forgot button{color:var(--lg-brand-deep);background:none;border:0;font-size:13px;font-weight:600;cursor:pointer}
+.lg-forgot button:hover{text-decoration:underline}
+.lg-foot{margin-top:18px;text-align:center;font-size:13.5px;color:var(--lg-text-soft)}
+.lg-foot button{color:var(--lg-brand-deep);font-weight:700;background:none;border:0;cursor:pointer}
+.lg-foot button:hover{text-decoration:underline}
+.lg-terms{position:relative;z-index:2;margin-top:16px;text-align:center;color:rgba(255,255,255,.55);font-size:12px;line-height:1.5}
+.lg-terms a{color:rgba(255,255,255,.8);text-decoration:none}
+.lg-terms a:hover{text-decoration:underline}
+@media (prefers-reduced-motion:reduce){ .lg-aurora i,.lg-card,.lg-card::before,.lg-cta::after{animation:none!important} }
+@media (max-width:480px){ .lg-card{padding:28px 22px 24px} .lg-title{font-size:21px} }
