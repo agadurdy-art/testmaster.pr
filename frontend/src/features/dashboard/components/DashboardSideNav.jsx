@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   LayoutGrid, PenLine, ClipboardCheck, BookOpen, Type, Lightbulb,
-  Sparkles, TrendingUp, CreditCard, Settings, BookA,
+  Sparkles, TrendingUp, CreditCard, Settings, BookA, ChevronRight,
 } from "lucide-react";
 
 /**
@@ -19,9 +19,26 @@ const GROUPS = [
   {
     items: [
       { label: "Dashboard", href: "/dashboard", icon: LayoutGrid, match: ["/dashboard"] },
-      { label: "Practice", href: "/question-bank", icon: PenLine, match: ["/question-bank"] },
+      {
+        label: "Practice", icon: PenLine, match: ["/question-bank"],
+        children: [
+          { label: "Listening", href: "/question-bank/listening", match: ["/question-bank/listening"] },
+          { label: "Reading", href: "/question-bank/reading", match: ["/question-bank/reading"] },
+          { label: "Writing", href: "/question-bank/writing", match: ["/question-bank/writing"] },
+          { label: "Speaking", href: "/question-bank/speaking", match: ["/question-bank/speaking"] },
+          { label: "All practice", href: "/question-bank", match: ["/question-bank"] },
+        ],
+      },
       { label: "Full tests", href: "/question-bank?fulltests=cambridge", icon: ClipboardCheck, match: ["/full-test", "/cambridge"] },
-      { label: "Courses", href: "/courses", icon: BookOpen, match: ["/courses", "/beginner-course", "/mastery-course", "/advanced-mastery"] },
+      {
+        label: "Courses", icon: BookOpen, match: ["/courses", "/beginner-course", "/mastery-course", "/advanced-mastery"],
+        children: [
+          { label: "Beginner", href: "/beginner-course", match: ["/beginner-course"] },
+          { label: "Mastery", href: "/mastery-course", match: ["/mastery-course"] },
+          { label: "Advanced", href: "/advanced-mastery", match: ["/advanced-mastery"] },
+          { label: "All courses", href: "/courses", match: ["/courses"] },
+        ],
+      },
     ],
   },
   {
@@ -50,7 +67,19 @@ function planLabel(user) {
 export default function DashboardSideNav({ user }) {
   const { pathname } = useLocation();
   const isActive = (m) => m.some((p) => pathname === p || pathname.startsWith(p + "/"));
+  const childActive = (it) => Array.isArray(it.children) && it.children.some((c) => isActive(c.match));
   const initial = (user?.firstName || user?.first_name || user?.name || "U").trim().charAt(0).toUpperCase();
+
+  // Expandable parents (Practice / Courses) start open when one of their
+  // children is the current route; the user can toggle from there.
+  const [open, setOpen] = useState(() => {
+    const o = {};
+    GROUPS.forEach((g) => g.items.forEach((it) => {
+      if (it.children && childActive(it)) o[it.label] = true;
+    }));
+    return o;
+  });
+  const toggle = (label) => setOpen((o) => ({ ...o, [label]: !o[label] }));
 
   return (
     <aside
@@ -84,17 +113,44 @@ export default function DashboardSideNav({ user }) {
             )}
             {g.items.map((it) => {
               const Icon = it.icon;
+              const rowStyle = (active) => ({
+                color: active ? "hsl(var(--primary-ink))" : "hsl(215 20% 42%)",
+                background: active ? "hsl(var(--primary) / .12)" : "transparent",
+              });
+              const rowCls = "relative flex items-center gap-3 h-[42px] px-3 rounded-xl text-[14.5px] font-semibold no-underline transition-colors w-full text-left";
+
+              // Expandable parent (Practice / Courses)
+              if (it.children) {
+                const expanded = !!open[it.label];
+                const parentActive = childActive(it);
+                return (
+                  <div key={it.label}>
+                    <button type="button" onClick={() => toggle(it.label)} className={rowCls} style={rowStyle(parentActive && !expanded)}>
+                      <Icon className="w-[18px] h-[18px] shrink-0" />
+                      <span className="truncate">{it.label}</span>
+                      <ChevronRight className="w-4 h-4 ml-auto shrink-0 transition-transform" style={{ transform: expanded ? "rotate(90deg)" : "none", color: "hsl(var(--muted-fg))" }} />
+                    </button>
+                    {expanded && (
+                      <div className="ml-[23px] pl-3 mt-0.5 mb-1 space-y-px border-l" style={{ borderColor: "hsl(var(--rule) / .7)" }}>
+                        {it.children.map((c) => {
+                          const ca = isActive(c.match);
+                          return (
+                            <Link key={c.label} to={c.href} className="flex items-center h-[34px] px-3 rounded-lg text-[13.5px] no-underline transition-colors"
+                              style={{ color: ca ? "hsl(var(--primary-ink))" : "hsl(215 18% 46%)", background: ca ? "hsl(var(--primary) / .1)" : "transparent", fontWeight: ca ? 600 : 500 }}>
+                              <span className="truncate">{c.label}</span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
+              // Plain link
               const active = isActive(it.match);
               return (
-                <Link
-                  key={it.label}
-                  to={it.href}
-                  className="relative flex items-center gap-3 h-[42px] px-3 rounded-xl text-[14.5px] font-semibold no-underline transition-colors"
-                  style={{
-                    color: active ? "hsl(var(--primary-ink))" : "hsl(215 20% 42%)",
-                    background: active ? "hsl(var(--primary) / .12)" : "transparent",
-                  }}
-                >
+                <Link key={it.label} to={it.href} className={rowCls} style={rowStyle(active)}>
                   {active && (
                     <span className="absolute -left-4 top-[11px] bottom-[11px] w-[3px] rounded-r" style={{ background: "hsl(var(--primary))" }} />
                   )}

@@ -235,58 +235,62 @@ export default function DashboardPage({ user, onLogout }) {
         subhead={t("dashboardV2Subhead")}
       />
 
-      {/* 2. Hero — Liz coaching (prominent) + Steady Hand dial (compact) */}
-      <section className="grid grid-cols-1 lg:grid-cols-[8fr_3fr] gap-6 md:gap-10 items-start mb-10 md:mb-14">
-        <LizMessage
-          message={lizMsg}
-          onPrimary={goto(todayTask?.cta_href || "/question-bank/writing/task2")}
-          onSecondary={goto("/liz")}
-        />
-        <StreakDial
-          minutes={weekStudyMinutes}
-          empty={!hasStreakDay && weekStudyMinutes === 0}
-          onClick={() => setStudyDrilldownOpen(true)}
-        />
-      </section>
+      {/* 2-3. Hero (Liz coaching + Current Band) with an at-a-glance right rail
+              — study dial · exam countdown · target band. The rail fills the
+              space the page used to leave empty; full-width sections continue
+              below it. On mobile the rail stacks under the hero. */}
+      <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-8 lg:items-start mb-12 md:mb-16">
+        <div className="min-w-0 space-y-6 md:space-y-8">
+          <LizMessage
+            message={lizMsg}
+            onPrimary={goto(todayTask?.cta_href || "/question-bank/writing/task2")}
+            onSecondary={goto("/liz")}
+          />
+          <CurrentBandCard
+            band={currentBand}
+            skills={skills}
+            targetBand={targetBand}
+            onSkillClick={(s) => {
+              const path = {
+                Listening: "/question-bank/listening",
+                Reading: "/question-bank/reading",
+                Writing: "/question-bank/writing",
+                Speaking: "/question-bank/speaking",
+              }[s.key];
+              if (path) navigate(path);
+            }}
+          />
+        </div>
+
+        <aside className="space-y-4 mt-6 lg:mt-0 lg:sticky lg:top-24">
+          <StreakDial
+            minutes={weekStudyMinutes}
+            empty={!hasStreakDay && weekStudyMinutes === 0}
+            onClick={() => setStudyDrilldownOpen(true)}
+          />
+          <DaysSquare
+            daysRemaining={daysRemaining}
+            examDate={examDate}
+            today={today}
+            languageWireCode={languageWireCode}
+            streakCount={streakCount}
+            onSet={goto("/profile")}
+            mockDate={mockDateObj}
+            mockDaysRemaining={mockDaysRemaining}
+          />
+          <TargetBandSquare
+            target={targetBand}
+            gap={targetGap}
+            onSet={goto("/profile")}
+          />
+        </aside>
+      </div>
 
       <StudyTimeDrilldown
         userId={user?.id}
         open={studyDrilldownOpen}
         onClose={() => setStudyDrilldownOpen(false)}
       />
-
-      {/* 3. Bands strip — wide Current Band (with skill rows inside) + small Target + small Days */}
-      <section className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-4 mb-12 md:mb-16">
-        <CurrentBandCard
-          band={currentBand}
-          skills={skills}
-          targetBand={targetBand}
-          onSkillClick={(s) => {
-            const path = {
-              Listening: "/question-bank/listening",
-              Reading: "/question-bank/reading",
-              Writing: "/question-bank/writing",
-              Speaking: "/question-bank/speaking",
-            }[s.key];
-            if (path) navigate(path);
-          }}
-        />
-        <TargetBandSquare
-          target={targetBand}
-          gap={targetGap}
-          onSet={goto("/profile")}
-        />
-        <DaysSquare
-          daysRemaining={daysRemaining}
-          examDate={examDate}
-          today={today}
-          languageWireCode={languageWireCode}
-          streakCount={streakCount}
-          onSet={goto("/profile")}
-          mockDate={mockDateObj}
-          mockDaysRemaining={mockDaysRemaining}
-        />
-      </section>
 
       {/* 4. Daily Drill + Smart Practice (side-by-side) */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-12 md:mb-16">
