@@ -16,7 +16,7 @@ import { toast } from 'sonner';
 import { useGoBack } from '../hooks/useGoBack';
 import { mintClientRequestId } from '../lib/clientRequestId';
 import { savePendingSpeaking, getPendingSpeaking, clearPendingSpeaking, attachJobToPending, FREE_RESUME_MS } from '../lib/pendingSpeaking';
-import { ResultsState as SpeakingResultsState, adaptSpeakingResult } from '../features/speaking';
+import { ResultsState as SpeakingResultsState, adaptSpeakingResult, PreparationState, RecordingState } from '../features/speaking';
 import StructuredResultsLayout from '../features/speaking/components/StructuredResultsLayout';
 import '../features/speaking/speaking.css';
 import SpeakingHelperPanel from '../features/speakingHelper/SpeakingHelperPanel';
@@ -1397,7 +1397,41 @@ export default function SpeakingPracticeQB({ user }) {
           </div>
         )}
 
-        {moduleContent && selectedPart && !results && (
+        {/* Part 2 "wow" UI — the polished D7 preparation + recording experience
+            (the landing-page promise), used during the prep and recording phases.
+            Grading is unchanged (leave-safe cue-card job queue). Other phases
+            (Start / processing / Next) keep the shared controls below. */}
+        {moduleContent && selectedPart && !results && currentPart === 2 && (isPrepPhase || recordingState === STATES.RECORDING) && (() => {
+          const cc = {
+            topic: moduleContent.part2?.cue_card?.topic,
+            prompt: moduleContent.part2?.cue_card?.topic,
+            bullets: moduleContent.part2?.cue_card?.bullets || [],
+          };
+          const startSpeakingNow = () => { clearInterval(timerRef.current); setIsPrepPhase(false); startRecording(); };
+          return (
+            <div className="speaking-scope rounded-2xl overflow-hidden border border-emerald-100 shadow-sm">
+              {isPrepPhase ? (
+                <PreparationState
+                  prepRemaining={prepTime}
+                  prepTotal={60}
+                  onAddThirty={() => setPrepTime((p) => p + 30)}
+                  onSkipPrep={startSpeakingNow}
+                  onStartRecording={startSpeakingNow}
+                  onExit={backToParts}
+                  cueCard={cc}
+                />
+              ) : (
+                <RecordingState
+                  recordRemaining={timeLeft}
+                  onStopEarly={stopRecording}
+                  cueCard={cc}
+                />
+              )}
+            </div>
+          );
+        })()}
+
+        {moduleContent && selectedPart && !results && !(currentPart === 2 && (isPrepPhase || recordingState === STATES.RECORDING)) && (
           <div className="space-y-6">
             <Card className={`p-4 ${recordingState === STATES.RECORDING ? 'bg-red-50 border-red-200' : isPrepPhase ? 'bg-yellow-50 border-yellow-200' : 'bg-emerald-50/50 border-emerald-100'}`}>
               <div className="flex items-center justify-between">
