@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   LayoutGrid, PenLine, ClipboardCheck, BookOpen, Type, Lightbulb,
-  Sparkles, TrendingUp, CreditCard, Settings, BookA, ChevronRight,
+  Sparkles, TrendingUp, CreditCard, Settings, BookA, ChevronRight, Mic,
 } from "lucide-react";
 
 /**
@@ -47,6 +47,7 @@ const GROUPS = [
       { label: "Vocabulary", href: "/vocabulary", icon: BookA, match: ["/vocabulary"] },
       { label: "Grammar", href: "/grammar", icon: Type, match: ["/grammar"] },
       { label: "Strategies", href: "/tips", icon: Lightbulb, match: ["/tips"] },
+      { label: "Liz Examiner", href: "/speaking-premium", icon: Mic, match: ["/speaking-premium"], badge: "Live" },
       { label: "Liz · coach", href: "/liz", icon: Sparkles, match: ["/liz"], badge: "Live" },
     ],
   },
