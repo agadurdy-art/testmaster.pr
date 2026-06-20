@@ -1,5 +1,12 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+// The rail is now rendered globally (App.js) on every app page, but its colours
+// + logo gradient read .dashboard-scope CSS variables that live in dashboard.css.
+// That file used to load only on DashboardLayout pages, so on other pages
+// (Liz, Question Bank, etc.) the vars were undefined and the logo tile rendered
+// blank. Importing it here ships the scope tokens wherever the rail loads.
+// (All rules are scoped under .dashboard-scope, so this can't leak elsewhere.)
+import "../dashboard.css";
 import {
   LayoutGrid, PenLine, ClipboardCheck, BookOpen, Type, Lightbulb,
   Sparkles, TrendingUp, CreditCard, Settings, BookA, ChevronRight, Mic, ClipboardList,

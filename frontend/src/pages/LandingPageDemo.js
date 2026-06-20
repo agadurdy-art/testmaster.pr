@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import {
   LandingNav,
   LandingHeroDemo,
@@ -11,7 +11,6 @@ import {
   MeetLiz,
   TrustBlock,
   LizLauncher,
-  PathPickerGate,
   useLiquidGlass,
 } from '../features/landing';
 import '../features/landing/landing.css';
@@ -35,21 +34,26 @@ export default function LandingPageDemo({ user, setUser }) {
   const rootRef = useRef(null);
   useLiquidGlass(rootRef);
 
+  // The landing is now the IELTS landing directly — no path-picker modal
+  // interrupting visitors (Aga 2026-06-21; GE gets its own entry later). Default
+  // the onboarding path hint to IELTS so signup/onboarding follow the same track.
+  useEffect(() => {
+    try { localStorage.setItem('testmaster_onboarding_path', 'ielts'); } catch (_) { /* non-fatal */ }
+  }, []);
+
   return (
-    <PathPickerGate user={user} setUser={setUser}>
-      <div ref={rootRef} className="landing-scope landing-demo has-mobile-cta">
-        <LandingNav />
-        <LandingHeroDemo />
-        <TrustBlock />
-        <MeetLiz />
-        <HowItWorks />
-        <HeadToHead />
-        <PricingTeaserDemo />
-        <FinalCTA />
-        <LandingFooter />
-        <MobileStickyCTA />
-        <LizLauncher />
-      </div>
-    </PathPickerGate>
+    <div ref={rootRef} className="landing-scope landing-demo has-mobile-cta">
+      <LandingNav />
+      <LandingHeroDemo />
+      <TrustBlock />
+      <MeetLiz />
+      <HowItWorks />
+      <HeadToHead />
+      <PricingTeaserDemo />
+      <FinalCTA />
+      <LandingFooter />
+      <MobileStickyCTA />
+      <LizLauncher />
+    </div>
   );
 }

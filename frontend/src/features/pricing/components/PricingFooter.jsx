@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useI18n } from '../../../lib/i18n';
+import { isAdminUser } from '../../../lib/planAccess';
 
-const LANGS = ['EN', 'VI', 'TR', 'ZH'];
+function readUser() {
+  try { return JSON.parse(localStorage.getItem('user') || 'null'); } catch (_) { return null; }
+}
 
 export default function PricingFooter() {
   const { t } = useI18n();
-  const [lang, setLang] = useState('EN');
+  // Status is an internal/admin page — only surface it to admins. Language is
+  // handled by the real i18n selector in the top nav; the old footer EN/VI/TR/ZH
+  // switch only set local state (never changed the language) so it's removed.
+  const isAdmin = isAdminUser(readUser());
   return (
     <footer>
       <div className="container">
@@ -17,22 +23,8 @@ export default function PricingFooter() {
             <li><a href="/privacy">{t('pricingV2FooterPrivacy')}</a></li>
             <li><a href="/terms">{t('pricingV2FooterTerms')}</a></li>
             <li><a href="/contact">{t('pricingV2FooterContact')}</a></li>
-            <li><a href="/status">{t('pricingV2FooterStatus')}</a></li>
+            {isAdmin && <li><a href="/status">{t('pricingV2FooterStatus')}</a></li>}
           </ul>
-          <div className="lang-switch" role="tablist" aria-label="Language">
-            {LANGS.map((l) => (
-              <button
-                key={l}
-                type="button"
-                role="tab"
-                aria-selected={lang === l}
-                className={lang === l ? 'active' : ''}
-                onClick={() => setLang(l)}
-              >
-                {l}
-              </button>
-            ))}
-          </div>
         </div>
         <div className="foot-copy">
           {t('pricingV2FooterCopy')}

@@ -508,6 +508,10 @@ function AppWithSessionHandler() {
     '/login', '/signup', '/start', '/landing', '/privacy', '/terms', '/contact',
     '/status', '/about', '/verify-email', '/reset-password', '/samples',
     '/share-your-story', '/dev', '/admin',
+    // Marketing pricing pages own a full standalone layout (their own nav +
+    // footer + language selector) — forcing the app rail on top doubled the
+    // navigation and broke the rail logo. Let them render standalone.
+    '/pricing',
   ];
   const path = location.pathname;
   const isPublicRoute = path === '/' || PUBLIC_PREFIXES.some((p) => path === p || path.startsWith(p + '/'));

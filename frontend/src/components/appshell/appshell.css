@@ -38,6 +38,14 @@
   border-bottom: 1px solid hsl(var(--as-border));
 }
 
+/* The global left rail (App.js) provides primary navigation on desktop, so this
+   in-page app top nav is redundant there and produced a double navigation.
+   Hide it at lg (≥1024px) — exactly where the rail appears; it stays on mobile
+   where the rail is hidden. */
+@media (min-width: 1024px) {
+  .appshell-nav { display: none; }
+}
+
 .appshell-nav .as-brand {
   display: flex; align-items: center; gap: 10px;
   font-family: var(--as-font-display);
