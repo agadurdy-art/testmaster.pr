@@ -43,7 +43,6 @@ const T = {
 
 const SHADOW_SM = '0 1px 2px hsl(220 15% 20% / 0.04), 0 1px 3px hsl(220 15% 20% / 0.06)';
 const SHADOW = '0 4px 16px hsl(220 15% 20% / 0.08)';
-const SHADOW_LG = '0 12px 40px hsl(220 15% 20% / 0.12)';
 
 // The three product courses. Routes + band ranges + blurbs are stable
 // IELTS Ace product data. lessons / topics / progress are loaded live from
@@ -244,82 +243,7 @@ export default function CoursesPage({ user, onLogout }) {
   );
 }
 
-// ──────────────────────────────────────────────────────────────────────────
-// SceneBar — inline dark pill with three chips, sits next to the page head.
-// "Level quiz" navigates away to /comprehensive-level-test.
-// ──────────────────────────────────────────────────────────────────────────
-function SceneBar({ scene, onChange }) {
-  const chips = [
-    { id: 'liz', label: 'With Liz pick' },
-    { id: 'browse', label: 'Browse all' },
-    { id: 'quiz', label: 'Level quiz' },
-  ];
-  return (
-    <div
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 6,
-        padding: 6,
-        borderRadius: 999,
-        background: `hsl(${T.ink} / 0.85)`,
-        backdropFilter: 'blur(8px)',
-        WebkitBackdropFilter: 'blur(8px)',
-        boxShadow: SHADOW_LG,
-        color: 'white',
-        fontSize: 12,
-        flex: '0 0 auto',
-      }}
-      role="tablist"
-      aria-label="Courses view"
-    >
-      <span
-        style={{
-          padding: '0 10px',
-          opacity: 0.6,
-          letterSpacing: '0.04em',
-          textTransform: 'uppercase',
-        }}
-      >
-        Scene
-      </span>
-      {chips.map((c) => {
-        const active = scene === c.id;
-        return (
-          <button
-            key={c.id}
-            type="button"
-            role="tab"
-            aria-selected={active}
-            onClick={() => onChange(c.id)}
-            style={{
-              padding: '7px 12px',
-              borderRadius: 999,
-              border: 0,
-              cursor: 'pointer',
-              color: 'white',
-              background: active ? `hsl(${T.brand})` : 'transparent',
-              opacity: active ? 1 : 0.7,
-              fontWeight: 500,
-              fontSize: 12,
-              transition: 'opacity 150ms, background 150ms',
-            }}
-            onMouseEnter={(e) => {
-              if (!active) e.currentTarget.style.opacity = '1';
-            }}
-            onMouseLeave={(e) => {
-              if (!active) e.currentTarget.style.opacity = '0.7';
-            }}
-          >
-            {c.label}
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-
-function PageHead({ scene, onChangeScene }) {
+function PageHead({ onChangeScene }) {
   return (
     <header
       style={{
@@ -358,7 +282,29 @@ function PageHead({ scene, onChangeScene }) {
           Start where you are. Move to the next course when Liz says you're ready.
         </p>
       </div>
-      <SceneBar scene={scene} onChange={onChangeScene} />
+      {/* Replaces the old demo "Scene" switcher — the only real action it carried
+          (the level quiz) is now a plain header CTA; the page always shows Liz's
+          recommendation + all courses. */}
+      <button
+        type="button"
+        onClick={() => onChangeScene('quiz')}
+        style={{
+          flex: '0 0 auto',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 8,
+          padding: '10px 18px',
+          borderRadius: 999,
+          border: `1px solid hsl(${T.brand} / 0.35)`,
+          background: `hsl(${T.brand} / 0.08)`,
+          color: `hsl(${T.brandDark})`,
+          fontWeight: 600,
+          fontSize: 14,
+          cursor: 'pointer',
+        }}
+      >
+        Not sure where to start? Take the level quiz →
+      </button>
     </header>
   );
 }

@@ -447,44 +447,27 @@ export default function Progress({ user }) {
 
 /* -------- scene shells -------- */
 
-function SceneBar({ scene, onChip }) {
-  const chips = [
-    { id: 'filled', label: 'Active learner' },
-    { id: 'empty', label: 'New user' },
-    { id: 'edit', label: 'Edit goal' },
-  ];
+// Was a demo "Scene" switcher (Active learner / New user / Edit goal). The state
+// previews are gone — the page derives the real state from the user's data — so
+// only the genuine action remains: edit your goal / weekly pace.
+function SceneBar({ onChip }) {
   return (
-    <div style={{
-      flex: '0 0 auto',
-      display: 'inline-flex', alignItems: 'center', gap: 6,
-      padding: 6, borderRadius: 999,
-      background: `hsl(${T.ink} / 0.85)`, backdropFilter: 'blur(8px)',
-      boxShadow: `0 12px 40px hsl(220 15% 20% / 0.18)`,
-      color: 'white', fontSize: 12,
-    }}>
-      <span style={{ padding: '0 10px', opacity: 0.6, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-        Scene
-      </span>
-      {chips.map((c) => {
-        const active = scene === c.id;
-        return (
-          <button
-            key={c.id}
-            onClick={() => onChip(c.id)}
-            data-active={active ? 'true' : 'false'}
-            data-testid={`progress-scene-${c.id}`}
-            style={{
-              padding: '7px 12px', borderRadius: 999,
-              color: 'white', opacity: active ? 1 : 0.7,
-              fontWeight: 500, border: 0, cursor: 'pointer',
-              background: active ? `hsl(${T.brand})` : 'transparent',
-            }}
-          >
-            {c.label}
-          </button>
-        );
-      })}
-    </div>
+    <button
+      type="button"
+      onClick={() => onChip('edit')}
+      data-testid="progress-edit-goal"
+      style={{
+        flex: '0 0 auto',
+        display: 'inline-flex', alignItems: 'center', gap: 8,
+        padding: '10px 18px', borderRadius: 999,
+        border: `1px solid hsl(${T.brand} / 0.35)`,
+        background: `hsl(${T.brand} / 0.08)`,
+        color: `hsl(${T.brandDark})`,
+        fontWeight: 600, fontSize: 14, cursor: 'pointer',
+      }}
+    >
+      Edit goal
+    </button>
   );
 }
 
