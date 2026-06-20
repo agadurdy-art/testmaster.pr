@@ -37,6 +37,14 @@ async function submitExamEval({ user, conversationId, clientRequestId }) {
   return resp.json();
 }
 
+// Hard cost cap for one mock. A full IELTS Speaking test is ~14 minutes and the
+// exam agent should end on its own before then; this is the worst-case backstop
+// so a stuck / rambling session can't run up ElevenLabs conversation minutes —
+// the dominant cost of a mock (~$0.08–0.10/min). A 15-minute ceiling pins the
+// per-mock ElevenLabs spend at roughly $1.2–1.5, which is the cost we price the
+// 1-credit (~$3) mock against.
+const MAX_EXAM_SECONDS = 15 * 60;
+
 export default function MockExamFlow({ user, onExit }) {
   const liz = useElevenLabsLiz({ userId: user?.id });
   const [started, setStarted] = useState(false);
@@ -77,6 +85,18 @@ export default function MockExamFlow({ user, onExit }) {
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [liz.isEnded]);
+
+  // Cost-cap backstop: once the exam is live, force-end it after MAX_EXAM_SECONDS
+  // so a runaway session can't keep billing ElevenLabs minutes. stop() flows into
+  // the same isEnded → grade path as a natural finish.
+  useEffect(() => {
+    if (!liz.isLive) return undefined;
+    const id = setTimeout(() => {
+      try { liz.stop(); } catch (_) { /* already ending */ }
+    }, MAX_EXAM_SECONDS * 1000);
+    return () => clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [liz.isLive]);
 
   const handleClose = () => {
     onExit?.();
