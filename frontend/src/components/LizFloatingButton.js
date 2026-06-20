@@ -27,7 +27,10 @@ export default function LizFloatingButton({ user }) {
     // bottom nav there.
     <button
       onClick={() => navigate(hasAccess ? '/liz' : '/pricing')}
-      className="hidden md:block fixed left-1/2 -translate-x-1/2 md:bottom-6 z-50 group"
+      /* Centred in the CONTENT area, not the viewport: the 264px left rail shifts
+         the true centre right, so without this the button sat left-of-centre over
+         the dashboard cards. +132px = half the rail width (lg only). */
+      className="hidden md:block fixed left-1/2 -translate-x-1/2 lg:left-[calc(50%+132px)] md:bottom-6 z-50 group"
       data-testid="liz-floating-btn"
       aria-label={hasAccess ? 'Ask Liz' : 'Upgrade to unlock Liz'}
     >
