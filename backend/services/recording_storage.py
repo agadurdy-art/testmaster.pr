@@ -72,3 +72,18 @@ def upload_recording(key: str, data: bytes, content_type: str = "audio/webm") ->
     except Exception as exc:  # noqa: BLE001
         logger.warning("R2 recording upload failed for %s: %s", key, exc)
         return False
+
+
+def download_recording(key: str) -> bytes | None:
+    """Fetch the bytes stored at `key` (e.g. "recordings/<uuid>.webm") from R2.
+    Used by the durable speaking-job worker to re-read a recording after a pod
+    restart wiped the ephemeral local disk copy. Returns None on any failure."""
+    client = _get_client()
+    if client is None:
+        return None
+    try:
+        obj = client.get_object(Bucket=os.environ["R2_BUCKET"], Key=key)
+        return obj["Body"].read()
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("R2 recording download failed for %s: %s", key, exc)
+        return None

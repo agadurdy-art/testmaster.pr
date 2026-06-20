@@ -556,9 +556,23 @@ try:
     from routes.speaking_practice_structured import (
         router as speaking_practice_structured_router,
         set_db as set_speaking_practice_structured_db,
+        ensure_job_indexes as ensure_speaking_job_indexes,
+        sweep_pending_jobs as sweep_speaking_jobs,
     )
     set_speaking_practice_structured_db(db)
     app.include_router(speaking_practice_structured_router)
+
+    @app.on_event("startup")
+    async def _bootstrap_speaking_jobs():
+        # Index the durable job queue, then re-run anything a previous pod left
+        # mid-flight (restart recovery for the leave-safe evaluation). Never let
+        # a hiccup here block server startup.
+        try:
+            await ensure_speaking_job_indexes()
+            await sweep_speaking_jobs()
+        except Exception as _e:  # noqa: BLE001
+            print(f"⚠️  speaking job bootstrap skipped: {_e}")
+
     print("✅ Speaking Practice (structured) routes loaded")
 except Exception as e:
     print(f"⚠️  Could not load speaking practice structured routes: {e}")
