@@ -899,7 +899,8 @@ export default function SpeakingPracticeQB({ user }) {
         return;
       }
 
-      // ── Part 2 (cue card, single long-turn answer) — unchanged single-blob path ──
+      // ── Part 2 (cue card, single long-turn answer) — leave-safe async path ──
+      // Same durable job queue as Part 1/3, just a single-blob 'cuecard' job.
       const combinedBlob = partBlobs.length === 1
         ? partBlobs[0]
         : new Blob(partBlobs, { type: 'audio/webm' });
@@ -918,11 +919,11 @@ export default function SpeakingPracticeQB({ user }) {
       form.append('user_language', user?.feedback_language || 'en');
       form.append('target_band', String(user?.target_band ?? 7.0));
       form.append('duration_seconds', String(totalDuration || 0));
-      form.append('context', 'qb');
+      form.append('topic', moduleContent?.title || cueCardPrompt);
       if (setId) form.append('set_id', setId);
       form.append('client_request_id', clientRequestIdRef.current);
 
-      const res = await fetch(`${API_URL}/api/speaking/evaluate`, {
+      const res = await fetch(`${API_URL}/api/speaking-practice/evaluate-cuecard-async`, {
         method: 'POST',
         body: form,
       });
@@ -952,15 +953,24 @@ export default function SpeakingPracticeQB({ user }) {
       }
 
       const data = await res.json();
-      // /evaluate returns the SpeakingEvaluationResult shape directly (no
-      // wrapping `success` flag). Hand it to the existing adapter via setResults.
-      setResults(data);
-      clearPendingSpeaking();            // graded → nothing left to recover
-      audioBlobsRef.current = {};
-      // Rotate so a re-record + resubmit mints a fresh id.
-      clientRequestIdRef.current = null;
-      setSubmittingTier(null);
-      setSubmitStep('idle');
+      if (data.status === 'completed' && data.result) {
+        finishStructured(data.result);
+        return;
+      }
+      const jobId = data.job_id;
+      if (!jobId) {
+        setSubmitError('Could not start grading. Please try again.');
+        setSubmitStep('error');
+        return;
+      }
+      attachJobToPending(jobId);
+      const polled = await pollStructuredJob(jobId);
+      if (polled.error) {
+        setSubmitError(polled.error);
+        setSubmitStep('error');
+        return;
+      }
+      finishStructured(polled.result);
     } catch (error) {
       console.error('Submit error:', error);
       setSubmitError('Could not reach the evaluation server. Check your connection and try again.');

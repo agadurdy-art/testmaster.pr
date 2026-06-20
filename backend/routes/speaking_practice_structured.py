@@ -27,7 +27,7 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
-from fastapi import APIRouter, HTTPException, Request, Depends
+from fastapi import APIRouter, HTTPException, Request, Depends, UploadFile, File, Form
 import auth_session  # audit: structured speaking eval is user-owned (cost + IDOR)
 from fastapi.responses import JSONResponse
 from starlette.datastructures import UploadFile as StarletteUploadFile
@@ -60,10 +60,11 @@ MAX_QUESTIONS = 10  # safety cap; Smart Practice Part 1 = 5, Part 3 ≤ 6
 JOBS_COLLECTION = "speaking_jobs"
 # Don't email / auto-resume jobs older than this (stale, user long gone).
 JOB_MAX_AGE_SECONDS = 24 * 60 * 60
-# Grace period after completion before emailing — gives a still-watching client
-# time to display the result and mark the job viewed (so we don't email someone
-# who's already looking at their score).
-EMAIL_GRACE_SECONDS = 90
+# Short grace after completion before emailing. Long enough for a still-watching
+# client's next poll (≤2.5s) to mark the job viewed — so we don't email someone
+# who's already looking at their score — but effectively immediate for someone
+# who left (they're not watching, so the few seconds don't matter).
+EMAIL_GRACE_SECONDS = 8
 
 # Keep strong refs to fire-and-forget worker tasks so the event loop doesn't GC
 # them mid-run.
@@ -212,9 +213,19 @@ def _read_job_audio(qmeta: Dict[str, Any]) -> bytes:
     return download_recording(f"recordings/{fn}") or b""
 
 
+def _result_is_valid(result: Dict[str, Any]) -> bool:
+    """A 'clean' result worth emailing: has a numeric overall band (i.e. the
+    evaluator actually produced a score, not a broken/empty payload)."""
+    try:
+        overall = (result or {}).get("scores", {}).get("overall")
+        return isinstance(overall, (int, float)) and overall > 0
+    except Exception:
+        return False
+
+
 async def _maybe_email_result(job_id: str) -> None:
-    """After a grace period, email the result iff the user never viewed it
-    (so a candidate who waited and saw their score isn't emailed too)."""
+    """Shortly after completion, email the result iff it's a clean score AND the
+    user never viewed it (so a candidate who waited and saw it isn't emailed)."""
     try:
         await asyncio.sleep(EMAIL_GRACE_SECONDS)
         if db is None:
@@ -224,6 +235,8 @@ async def _maybe_email_result(job_id: str) -> None:
             return
         if job.get("viewed_at") or job.get("email_sent") or not job.get("user_email"):
             return
+        if not _result_is_valid(job.get("result") or {}):
+            return  # don't email a broken/empty result
         sent = await speaking_result_email.send_speaking_result_email(
             to_email=job.get("user_email"),
             name=job.get("user_name"),
@@ -237,9 +250,90 @@ async def _maybe_email_result(job_id: str) -> None:
         logger.warning("speaking result email check failed for %s: %s", job_id, exc)
 
 
+async def _grade_structured_job(job: Dict[str, Any], user: Dict[str, Any], decision) -> Dict[str, Any]:
+    """Grade a Part 1/3 (multi-question) job and persist the structured attempt."""
+    part = job["part"]
+    topic = job.get("topic") or ""
+    user_language = job.get("user_language") or "en"
+    target_band = job.get("target_band") or 7.0
+    questions_meta = job.get("questions") or []
+
+    result = await evaluate_speaking_practice_structured(
+        part=part,
+        topic=topic,
+        target_band=target_band,
+        user_language=user_language,
+        questions=[
+            {
+                "question": qm.get("question") or "",
+                "audio_bytes": _read_job_audio(qm),
+                "audio_url": qm.get("audio_url"),
+                "duration_seconds": qm.get("duration_seconds") or 0,
+            }
+            for qm in questions_meta
+        ],
+        mode=decision.mode,
+    )
+    result["part"] = part
+    result["topic"] = topic
+    result["target_band"] = target_band
+    result["user_language"] = user_language
+
+    await _persist_structured_attempt(
+        user_id=job["user_id"], client_request_id=job.get("client_request_id"), part=part, topic=topic,
+        user_language=user_language, target_band=target_band, questions_meta=questions_meta,
+        result_dump=result, decision=decision, set_id=job.get("set_id"),
+        book_id=job.get("book_id"), test_id=job.get("test_id"),
+    )
+    return result
+
+
+async def _grade_cuecard_job(job: Dict[str, Any], user: Dict[str, Any], decision) -> Dict[str, Any]:
+    """Grade a Part 2 (single cue-card monologue) job through the same unified
+    evaluator the sync /api/speaking/evaluate endpoint uses."""
+    from schemas.speaking_evaluator import SpeakingEvaluationRequest, SpeakingPart
+    from services.speaking_evaluator import evaluate_speaking, evaluate_speaking_basic
+
+    part = job.get("part") or "part2"
+    questions_meta = job.get("questions") or []
+    audio_bytes = _read_job_audio(questions_meta[0]) if questions_meta else b""
+    duration = (questions_meta[0].get("duration_seconds") if questions_meta else 0) or 0
+    audio_url = questions_meta[0].get("audio_url") if questions_meta else None
+
+    try:
+        part_enum = SpeakingPart(part)
+    except ValueError:
+        part_enum = SpeakingPart.part2
+
+    req = SpeakingEvaluationRequest(
+        part=part_enum,
+        cue_card_prompt=job.get("cue_card_prompt") or f"IELTS Speaking — {part}",
+        cue_card_bullets=job.get("cue_card_bullets") or [],
+        user_language=job.get("user_language") or "en",
+        target_band=job.get("target_band") or 7.0,
+        duration_seconds=duration if duration > 0 else None,
+    )
+
+    if decision.mode == "full":
+        evaluation = await evaluate_speaking(req, audio_bytes)
+    else:
+        evaluation = await evaluate_speaking_basic(req, audio_bytes)
+
+    result = evaluation.model_dump()
+    result["audio_url"] = audio_url
+    result["part"] = part
+    result["topic"] = job.get("topic") or req.cue_card_prompt
+    result["cue_card_prompt"] = req.cue_card_prompt
+    if job.get("question_id"):
+        result["question_id"] = job["question_id"]
+    return result
+
+
 async def process_structured_job(job_id: str) -> None:
     """Grade one enqueued job independently of the original request. Idempotent:
-    completed jobs short-circuit, so the startup sweep can safely re-call it."""
+    completed jobs short-circuit, so the startup sweep can safely re-call it.
+    Dispatches by job kind: 'cuecard' (Part 2 monologue) vs 'structured' (Part
+    1/3 multi-question)."""
     if db is None:
         return
     job = await db[JOBS_COLLECTION].find_one({"_id": job_id})
@@ -252,14 +346,10 @@ async def process_structured_job(job_id: str) -> None:
 
     user_id = job["user_id"]
     part = job["part"]
-    topic = job.get("topic") or ""
-    user_language = job.get("user_language") or "en"
-    target_band = job.get("target_band") or 7.0
     client_request_id = job.get("client_request_id")
     set_id = job.get("set_id")
-    book_id = job.get("book_id")
     test_id = job.get("test_id")
-    questions_meta = job.get("questions") or []
+    kind = job.get("kind") or "structured"
 
     try:
         user = await db.users.find_one({"id": user_id}, {"_id": 0})
@@ -268,35 +358,12 @@ async def process_structured_job(job_id: str) -> None:
 
         decision = await resolve_speaking_eval(db, user)
 
-        result = await evaluate_speaking_practice_structured(
-            part=part,
-            topic=topic,
-            target_band=target_band,
-            user_language=user_language,
-            questions=[
-                {
-                    "question": qm.get("question") or "",
-                    "audio_bytes": _read_job_audio(qm),
-                    "audio_url": qm.get("audio_url"),
-                    "duration_seconds": qm.get("duration_seconds") or 0,
-                }
-                for qm in questions_meta
-            ],
-            mode=decision.mode,
-        )
+        if kind == "cuecard":
+            result = await _grade_cuecard_job(job, user, decision)
+        else:
+            result = await _grade_structured_job(job, user, decision)
 
-        result["part"] = part
-        result["topic"] = topic
-        result["target_band"] = target_band
-        result["user_language"] = user_language
-
-        await _persist_structured_attempt(
-            user_id=user_id, client_request_id=client_request_id, part=part, topic=topic,
-            user_language=user_language, target_band=target_band, questions_meta=questions_meta,
-            result_dump=result, decision=decision, set_id=set_id, book_id=book_id, test_id=test_id,
-        )
-
-        # Mirror to test_attempts so the Progress page sees this session too.
+        # Mirror to test_attempts so the Progress page + Liz see this session.
         try:
             from server import persist_attempt as _persist_test_attempt
             _band = float((result.get("scores") or {}).get("overall") or 0.0)
@@ -311,7 +378,7 @@ async def process_structured_job(job_id: str) -> None:
         except Exception as _e:  # noqa: BLE001
             logger.warning("persist_attempt mirror skipped (job %s): %s", job_id, _e)
 
-        # Charge quota only now (on success), matching the sync endpoint.
+        # Charge quota only now (on success), matching the sync endpoints.
         await record_speaking_eval(db, user, decision)
         if client_request_id:
             await speaking_idempotency.store(
@@ -326,7 +393,7 @@ async def process_structured_job(job_id: str) -> None:
         )
         _spawn(_maybe_email_result(job_id))
     except Exception as exc:  # noqa: BLE001
-        logger.exception("structured speaking job %s failed: %s", job_id, exc)
+        logger.exception("speaking job %s failed: %s", job_id, exc)
         await db[JOBS_COLLECTION].update_one(
             {"_id": job_id},
             {"$set": {"status": "failed", "error": str(exc),
@@ -752,3 +819,87 @@ async def list_speaking_attempts(
     cursor = db[JOBS_COLLECTION].find({"user_id": user_id}).sort("created_at", -1).limit(limit)
     attempts = [_job_summary(job) async for job in cursor]
     return {"attempts": attempts}
+
+
+@router.post("/evaluate-cuecard-async")
+async def evaluate_cuecard_async(
+    audio: UploadFile = File(...),
+    user_id: str = Form(...),
+    part: str = Form("part2"),
+    cue_card_prompt: str = Form(""),
+    cue_card_bullets: str = Form(""),
+    user_language: str = Form("en"),
+    target_band: float = Form(7.0),
+    duration_seconds: float = Form(0.0),
+    client_request_id: str = Form(..., min_length=1, max_length=128),
+    set_id: Optional[str] = Form(None),
+    question_id: Optional[str] = Form(None),
+    topic: Optional[str] = Form(None),
+    caller: dict = Depends(auth_session.current_user),
+):
+    """Leave-safe Part 2 (single cue-card monologue) submit. Same durable job
+    queue as the structured path — uploads the audio, enqueues a 'cuecard' job,
+    returns job_id immediately; the worker grades it via the unified evaluator
+    independent of this connection. Poll GET /jobs/{job_id}."""
+    if db is None:
+        raise HTTPException(status_code=503, detail={"code": "db_unavailable", "message": "DB not initialised"})
+    auth_session.require_self_or_admin(user_id, caller)
+
+    user = await db.users.find_one({"id": user_id}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=404, detail={"code": "user_not_found", "message": "User not found"})
+
+    cached = await speaking_idempotency.lookup(
+        db, user_id=user_id, anon_key=None, client_request_id=client_request_id,
+    )
+    if cached is not None:
+        return JSONResponse(content={"status": "completed", "job_id": None, "result": cached},
+                            headers={"X-Speaking-Cached": "1"})
+
+    audio_bytes = await audio.read()
+    validate_audio(audio_bytes, duration_seconds)
+
+    decision = await resolve_speaking_eval(db, user)
+    if not decision.allowed:
+        raise HTTPException(
+            status_code=402,
+            detail={
+                "code": "quota_exhausted",
+                "message": decision.message or "You've used all evaluations for this period.",
+                "quota": decision.quota, "used": decision.used, "period": decision.period_key,
+                "resets_at": decision.resets_at, "upgrade_to": decision.upgrade_to,
+                "current_plan": decision.plan,
+            },
+        )
+
+    bullets = [b.strip() for b in (cue_card_bullets or "").replace("\r", "").split("\n") if b.strip()]
+    meta = persist_audio(audio_bytes)
+
+    job_id = uuid.uuid4().hex
+    now = datetime.now(timezone.utc)
+    await db[JOBS_COLLECTION].insert_one({
+        "_id": job_id,
+        "kind": "cuecard",
+        "user_id": user_id,
+        "user_email": user.get("email"),
+        "user_name": user.get("first_name") or user.get("name"),
+        "client_request_id": client_request_id,
+        "status": "queued",
+        "part": part if part in {"part1", "part2", "part3"} else "part2",
+        "topic": topic or cue_card_prompt,
+        "user_language": (user_language or "en").lower().split("-")[0][:5] or "en",
+        "target_band": target_band,
+        "cue_card_prompt": cue_card_prompt,
+        "cue_card_bullets": bullets,
+        "set_id": set_id, "book_id": None, "test_id": None, "question_id": question_id,
+        "questions": [{
+            "index": 1, "question": "", "audio_url": meta["relative_url"],
+            "audio_filename": meta["filename"], "audio_bytes": meta["bytes"],
+            "duration_seconds": duration_seconds,
+        }],
+        "created_at": now, "updated_at": now,
+        "result": None, "error": None, "viewed_at": None, "email_sent": False,
+    })
+    _spawn(process_structured_job(job_id))
+
+    return JSONResponse(content={"status": "queued", "job_id": job_id}, headers=_quota_headers(decision))

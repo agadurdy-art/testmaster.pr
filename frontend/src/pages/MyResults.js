@@ -5,6 +5,7 @@ import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import StructuredResultsLayout from '../features/speaking/components/StructuredResultsLayout';
+import { ResultsState as SpeakingResultsState, adaptSpeakingResult } from '../features/speaking';
 import '../features/speaking/speaking.css';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -90,9 +91,19 @@ export default function MyResults({ user }) {
                 onTryAgain={() => navigate('/question-bank/speaking')}
               />
             </div>
-          ) : (
-            <Card className="p-6 text-sm text-gray-600">This result can’t be displayed here yet.</Card>
-          )}
+          ) : (() => {
+            // Part 2 (cue-card) result — the unified SpeakingEvaluationResult shape.
+            const adapted = adaptSpeakingResult(openJob.result, {
+              durationSeconds: openJob.result?.metrics?.total_duration,
+            });
+            return adapted ? (
+              <div className="speaking-scope rounded-2xl overflow-hidden border border-indigo-100 shadow-sm">
+                <SpeakingResultsState data={adapted} onContinue={() => navigate('/question-bank/speaking')} />
+              </div>
+            ) : (
+              <Card className="p-6 text-sm text-gray-600">This result can’t be displayed here yet.</Card>
+            );
+          })()}
         </div>
       </div>
     );
