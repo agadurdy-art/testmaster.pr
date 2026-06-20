@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   LayoutGrid, PenLine, ClipboardCheck, BookOpen, Type, Lightbulb,
-  Sparkles, TrendingUp, CreditCard, Settings, BookA, ChevronRight, Mic,
+  Sparkles, TrendingUp, CreditCard, Settings, BookA, ChevronRight, Mic, ClipboardList,
 } from "lucide-react";
 
 /**
@@ -55,6 +55,7 @@ const GROUPS = [
     title: "You",
     items: [
       { label: "Progress", href: "/progress", icon: TrendingUp, match: ["/progress"] },
+      { label: "My results", href: "/my-results", icon: ClipboardList, match: ["/my-results"] },
       { label: "Plans & pricing", href: "/pricing", icon: CreditCard, match: ["/pricing"] },
     ],
   },

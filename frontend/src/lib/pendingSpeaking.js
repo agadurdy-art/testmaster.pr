@@ -62,6 +62,20 @@ export async function savePendingSpeaking(record) {
   }
 }
 
+// Attach the server-side job id to the saved record once the async submit has
+// enqueued it. A return visit can then reconnect to the SAME grade (poll the
+// job) instead of re-uploading the audio.
+export async function attachJobToPending(jobId) {
+  try {
+    const rec = await getPendingSpeaking();
+    if (!rec) return false;
+    rec.jobId = jobId;
+    return await savePendingSpeaking(rec);
+  } catch (_) {
+    return false;
+  }
+}
+
 export async function getPendingSpeaking() {
   try {
     const db = await openDb();

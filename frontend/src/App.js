@@ -124,6 +124,7 @@ const RayTeacher = lazy(() => import('./pages/RayTeacher'));
 const LizFloatingButton = lazy(() => import('./components/LizFloatingButton'));
 const FeedbackLauncher = lazy(() => import('./components/FeedbackLauncher'));
 const DashboardSideNav = lazy(() => import('./features/dashboard/components/DashboardSideNav'));
+const MyResults = lazy(() => import('./pages/MyResults'));
 const VocabularyLearnMode = lazy(() => import('./pages/VocabularyLearnMode'));
 const VocabularyPracticeMode = lazy(() => import('./pages/VocabularyPracticeMode'));
 const VocabularyQuizMode = lazy(() => import('./pages/VocabularyQuizMode'));
@@ -536,6 +537,7 @@ function AppWithSessionHandler() {
         <Route path="/landing/v1" element={<LandingPage onLogin={handleLogin} user={user} />} />
         <Route path="/login" element={<LoginPage user={user} onLogin={handleLogin} />} />
         <Route path="/start" element={<StartLanding user={user} onLogin={handleLogin} />} />
+        <Route path="/my-results" element={user ? <MyResults user={user} /> : <Navigate to="/login" replace />} />
         <Route path="/signup" element={<SignupBridge user={user} />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms" element={<TermsPage />} />

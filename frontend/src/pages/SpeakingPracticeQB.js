@@ -15,7 +15,7 @@ import {
 import { toast } from 'sonner';
 import { useGoBack } from '../hooks/useGoBack';
 import { mintClientRequestId } from '../lib/clientRequestId';
-import { savePendingSpeaking, getPendingSpeaking, clearPendingSpeaking, FREE_RESUME_MS } from '../lib/pendingSpeaking';
+import { savePendingSpeaking, getPendingSpeaking, clearPendingSpeaking, attachJobToPending, FREE_RESUME_MS } from '../lib/pendingSpeaking';
 import { ResultsState as SpeakingResultsState, adaptSpeakingResult } from '../features/speaking';
 import StructuredResultsLayout from '../features/speaking/components/StructuredResultsLayout';
 import '../features/speaking/speaking.css';
@@ -225,10 +225,22 @@ export default function SpeakingPracticeQB({ user }) {
   // Re-fire a recovered submission. Idempotent within the backend's 10-min
   // window (free); past it the user already consented to a fresh evaluation
   // via the banner copy.
-  const resumePendingSubmission = () => {
+  const resumePendingSubmission = async () => {
     if (!pendingResume?.record) return;
     const rec = pendingResume.record;
     setPendingResume(null);
+    // If the async submit already enqueued a server job, reconnect to it (no
+    // re-upload) — the server graded it whether we stayed or not.
+    if (rec.jobId) {
+      setSubmittingTier(rec.tier || 'free');
+      setSubmitError(null);
+      setSubmitStep('evaluating');
+      const polled = await pollStructuredJob(rec.jobId);
+      if (polled.error) { setSubmitError(polled.error); setSubmitStep('error'); return; }
+      finishStructured(polled.result);
+      return;
+    }
+    // No job yet (the upload never completed) → re-submit idempotently.
     submitTest(rec.tier || 'free', {
       clientRequestId: rec.clientRequestId,
       part: rec.part,
@@ -243,6 +255,36 @@ export default function SpeakingPracticeQB({ user }) {
   const dismissPendingResume = () => {
     clearPendingSpeaking();
     setPendingResume(null);
+  };
+
+  // Common success sink for the structured (Part 1/3) async path.
+  const finishStructured = (result) => {
+    setResults(result);
+    clearPendingSpeaking();          // graded → nothing left to recover
+    audioBlobsRef.current = {};
+    clientRequestIdRef.current = null;
+    setSubmittingTier(null);
+    setSubmitStep('idle');
+  };
+
+  // Poll a durable speaking job until it finishes. The server grades it
+  // independent of this connection, so even if the user left and came back this
+  // resolves the SAME job. Returns {result} or {error}.
+  const pollStructuredJob = async (jobId, { maxMs = 6 * 60 * 1000, intervalMs = 2500 } = {}) => {
+    const deadline = Date.now() + maxMs;
+    while (Date.now() < deadline) {
+      try {
+        const r = await fetch(`${API_URL}/api/speaking-practice/jobs/${jobId}`);
+        if (r.ok) {
+          const j = await r.json();
+          if (j.status === 'completed' && j.result) return { result: j.result };
+          if (j.status === 'failed') return { error: j.error || 'Grading failed. Please try again.' };
+        }
+        // 404 right after enqueue can happen on a read replica — keep polling.
+      } catch (_) { /* transient network — keep polling */ }
+      await new Promise((res) => setTimeout(res, intervalMs));
+    }
+    return { error: 'Grading is taking longer than expected. Your answers are saved — check "My results" in a minute.' };
   };
 
   const loadModules = async () => {
@@ -799,7 +841,11 @@ export default function SpeakingPracticeQB({ user }) {
           form.append(`duration_q${idx}`, String(a.duration || 0));
         });
 
-        const res = await fetch(`${API_URL}/api/speaking-practice/evaluate-structured`, {
+        // Leave-safe async submit: the server enqueues a durable job, grades it
+        // independent of this connection, and we poll for the result. Closing
+        // the tab no longer drops the test — the job still finishes server-side
+        // (and emails the result), and "My results" lists it.
+        const res = await fetch(`${API_URL}/api/speaking-practice/evaluate-structured-async`, {
           method: 'POST',
           body: form,
         });
@@ -829,15 +875,27 @@ export default function SpeakingPracticeQB({ user }) {
         }
 
         const data = await res.json();
-        // Structured response carries a `questions` array → rendered by
-        // StructuredResultsLayout (per-question tabs). Keep the same setResults
-        // sink; the render block branches on the shape.
-        setResults(data);
-        clearPendingSpeaking();          // graded → nothing left to recover
-        audioBlobsRef.current = {};
-        clientRequestIdRef.current = null;
-        setSubmittingTier(null);
-        setSubmitStep('idle');
+        // A cached replay (same client_request_id) returns already-completed.
+        if (data.status === 'completed' && data.result) {
+          finishStructured(data.result);
+          return;
+        }
+        const jobId = data.job_id;
+        if (!jobId) {
+          setSubmitError('Could not start grading. Please try again.');
+          setSubmitStep('error');
+          return;
+        }
+        // Pin the job to the crash-saved record so a leave/return reconnects to
+        // the same grade instead of re-uploading.
+        attachJobToPending(jobId);
+        const polled = await pollStructuredJob(jobId);
+        if (polled.error) {
+          setSubmitError(polled.error);
+          setSubmitStep('error');
+          return;
+        }
+        finishStructured(polled.result);
         return;
       }
 
