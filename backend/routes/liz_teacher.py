@@ -1023,6 +1023,36 @@ async def get_user_context(user_id: str) -> str:
     if "recommended_focus" in profile:
         lines.append(f"Recommended next step: {profile['recommended_focus']}")
 
+    # 9. Detailed speaking history — per-criterion bands + weakest area from the
+    #    latest structured evaluations, so Liz coaches on specifics (e.g. "your
+    #    pronunciation was 5.5 last time") rather than just the skill average.
+    try:
+        spk_attempts = await db.speaking_practice_structured_attempts.find(
+            {"user_id": user_id},
+            {"_id": 0, "part": 1, "topic": 1, "result": 1, "created_at": 1},
+        ).sort("created_at", -1).to_list(3)
+    except Exception:
+        spk_attempts = []
+    _CRIT = {"fc": "fluency & coherence", "lr": "lexical resource", "gra": "grammar", "pr": "pronunciation"}
+    if spk_attempts:
+        lines.append("Recent speaking evaluations (newest first):")
+        for a in spk_attempts:
+            sc = (a.get("result") or {}).get("scores") or {}
+            part = a.get("part") or "speaking"
+            when = str(a.get("created_at", ""))[:10]
+            crit_bits = [f"{label} {sc.get(k)}" for k, label in _CRIT.items() if sc.get(k) is not None]
+            line = f"  - {part} (band {sc.get('overall')}) on {when}"
+            if crit_bits:
+                line += f": {', '.join(crit_bits)}"
+            lines.append(line)
+        latest = (spk_attempts[0].get("result") or {}).get("scores") or {}
+        crit_vals = {k: latest.get(k) for k in _CRIT if isinstance(latest.get(k), (int, float))}
+        if crit_vals:
+            weakest = min(crit_vals, key=crit_vals.get)
+            lines.append(
+                f"Speaking weakest area (latest): {_CRIT[weakest]} (band {crit_vals[weakest]}) — prioritise this in coaching."
+            )
+
     if not lines or len(lines) <= 2:
         return "This is a new student with no test history yet. Welcome them and help them get started with IELTS preparation. Suggest taking a diagnostic test first."
 
