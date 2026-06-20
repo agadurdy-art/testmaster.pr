@@ -91,15 +91,30 @@ export default function DashboardSideNav({ user }) {
       }}
     >
       <Link to="/dashboard" className="flex items-center gap-3 px-2 pb-4 mb-3 border-b hairline no-underline">
+        {/* Logo mark — glass-style emerald tile with a top inner highlight and a
+            soft brand-coloured glow so it reads as a real product logo (it now
+            shows on every page, not just the dashboard). */}
         <span
-          className="w-10 h-10 rounded-xl grid place-items-center text-white font-extrabold text-sm shrink-0"
-          style={{ background: "linear-gradient(140deg, hsl(var(--primary)), hsl(var(--primary-ink)))" }}
+          className="w-10 h-10 rounded-[13px] grid place-items-center text-white font-extrabold text-[15px] shrink-0 relative overflow-hidden tracking-tight"
+          style={{
+            background: "linear-gradient(145deg, hsl(var(--primary)), hsl(var(--primary-ink)))",
+            boxShadow: "0 6px 18px -5px hsl(var(--primary) / .55), inset 0 1px 0 hsl(0 0% 100% / .4)",
+          }}
         >
-          IA
+          <span
+            aria-hidden="true"
+            className="absolute inset-x-0 top-0 h-1/2 opacity-60"
+            style={{ background: "linear-gradient(180deg, hsl(0 0% 100% / .28), transparent)" }}
+          />
+          <span className="relative">IA</span>
         </span>
         <span className="leading-tight">
-          <span className="block text-[15px] font-extrabold" style={{ color: "hsl(var(--fg))" }}>IELTS Ace</span>
-          <span className="block text-[11px] font-semibold" style={{ color: "hsl(var(--primary-ink))" }}>by testmaster.pro</span>
+          <span className="block text-[15px] font-extrabold tracking-tight" style={{ color: "hsl(var(--fg))" }}>
+            IELTS&nbsp;Ace
+          </span>
+          <span className="block text-[10.5px] font-semibold uppercase tracking-[0.1em]" style={{ color: "hsl(var(--primary-ink))" }}>
+            by testmaster.pro
+          </span>
         </span>
       </Link>
 

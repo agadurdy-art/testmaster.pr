@@ -13,7 +13,7 @@ import { toast } from 'sonner';
 import { Toaster } from './components/ui/sonner';
 import MobileBottomNav from './components/MobileBottomNav';
 import useStudyTimeTracking from './hooks/useStudyTimeTracking';
-import { ThemeProvider } from './contexts/ThemeContext';
+import { ThemeProvider, useTheme, THEME_MODES } from './contexts/ThemeContext';
 import { AudioProvider } from './contexts/AudioContext';
 import { useI18n } from './lib/i18n';
 import { scanDomForLanguageLeaks } from './lib/leakDetection';
@@ -123,6 +123,7 @@ const LizTeacher = lazy(() => import('./pages/LizTeacher'));
 const RayTeacher = lazy(() => import('./pages/RayTeacher'));
 const LizFloatingButton = lazy(() => import('./components/LizFloatingButton'));
 const FeedbackLauncher = lazy(() => import('./components/FeedbackLauncher'));
+const DashboardSideNav = lazy(() => import('./features/dashboard/components/DashboardSideNav'));
 const VocabularyLearnMode = lazy(() => import('./pages/VocabularyLearnMode'));
 const VocabularyPracticeMode = lazy(() => import('./pages/VocabularyPracticeMode'));
 const VocabularyQuizMode = lazy(() => import('./pages/VocabularyQuizMode'));
@@ -309,6 +310,7 @@ function AppWithSessionHandler() {
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
+  const { activeTheme } = useTheme();
 
   // Heartbeat-based study-time tracking. Mounted once at the top of the
   // routed app so every authenticated route is counted toward Total Study.
@@ -493,8 +495,41 @@ function AppWithSessionHandler() {
     );
   }
 
+  // ── Global navigation rail ────────────────────────────────────────────────
+  // The left rail (DashboardSideNav) used to live only inside DashboardLayout,
+  // so it vanished on Speaking / Question Bank / Full Test and most other app
+  // pages — the user wanted it everywhere for fast navigation. We now render it
+  // once here for every *authenticated app* route. Excluded: public/marketing
+  // pages (their own headers) and the sealed full-test runner (focus mode while
+  // a timed exam is in progress). The rail is `hidden lg:flex`, so phones are
+  // unaffected and keep their existing bottom nav / back buttons.
+  const PUBLIC_PREFIXES = [
+    '/login', '/signup', '/start', '/landing', '/privacy', '/terms', '/contact',
+    '/status', '/about', '/verify-email', '/reset-password', '/samples',
+    '/share-your-story', '/dev', '/admin',
+  ];
+  const path = location.pathname;
+  const isPublicRoute = path === '/' || PUBLIC_PREFIXES.some((p) => path === p || path.startsWith(p + '/'));
+  const isSealedExam = path.startsWith('/full-test/take');
+  const showRail = !!user && !isPublicRoute && !isSealedExam;
+  const railThemeClass =
+    activeTheme === THEME_MODES.DARK ? 'theme-dark'
+    : activeTheme === THEME_MODES.NIGHT_SHIFT ? 'theme-night'
+    : '';
+
   return (
     <>
+      {/* Wrapped in .dashboard-scope so the rail's CSS variables (--primary,
+          --fg, theme tokens) resolve; bg/min-height neutralised inline so the
+          scope's full-screen paint doesn't cover the page. */}
+      {showRail && (
+        <Suspense fallback={null}>
+          <div className={`dashboard-scope ${railThemeClass}`} style={{ background: 'none', minHeight: 0 }}>
+            <DashboardSideNav user={user} />
+          </div>
+        </Suspense>
+      )}
+      <div className={showRail ? 'lg:pl-[264px]' : ''}>
       <Suspense fallback={<PageLoader />}>
       <Routes>
         <Route path="/" element={<LandingPageDemo user={user} setUser={setUser} />} />
@@ -939,11 +974,12 @@ function AppWithSessionHandler() {
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       </Suspense>
+      </div>
       {user && isIeltsMode(user) && location.pathname.startsWith('/dashboard') && (
         <Suspense fallback={null}><LizFloatingButton user={user} /></Suspense>
       )}
       {user && (
-        <Suspense fallback={null}><FeedbackLauncher user={user} /></Suspense>
+        <Suspense fallback={null}><FeedbackLauncher user={user} railVisible={showRail} /></Suspense>
       )}
       <MobileNavWrapper user={user} />
       <Toaster position="top-right" />

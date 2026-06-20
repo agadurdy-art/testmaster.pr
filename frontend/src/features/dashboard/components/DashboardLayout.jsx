@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "../dashboard.css";
 import DashboardTopBar from "./DashboardTopBar";
-import DashboardSideNav from "./DashboardSideNav";
 import DashboardBottomNav from "./DashboardBottomNav";
 import DashboardMobileDrawer from "./DashboardMobileDrawer";
 import { useTheme, THEME_MODES } from "../../../contexts/ThemeContext";
@@ -33,12 +32,11 @@ export default function DashboardLayout({
 
   return (
     <div className={`dashboard-scope ${themeClass}`}>
-      {/* Persistent left rail (desktop ≥ lg). Below lg the bottom nav + mobile
-          drawer take over and this is hidden. */}
-      <DashboardSideNav user={user} />
-
-      {/* Everything else shifts right of the 264px rail on lg. */}
-      <div className="lg:pl-[264px]">
+      {/* The persistent left rail is now rendered once globally (AppNavRail in
+          App.js) for every authenticated app page, and it already shifts the
+          page content right of the 264px rail — so this layout no longer renders
+          its own rail or left padding (that would double them up). */}
+      <div>
         <DashboardTopBar
           activeSection={activeSection}
           user={user}
