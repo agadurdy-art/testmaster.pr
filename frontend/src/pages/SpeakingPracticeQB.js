@@ -15,6 +15,7 @@ import {
 import { toast } from 'sonner';
 import { useGoBack } from '../hooks/useGoBack';
 import { mintClientRequestId } from '../lib/clientRequestId';
+import { savePendingSpeaking, getPendingSpeaking, clearPendingSpeaking, FREE_RESUME_MS } from '../lib/pendingSpeaking';
 import { ResultsState as SpeakingResultsState, adaptSpeakingResult } from '../features/speaking';
 import StructuredResultsLayout from '../features/speaking/components/StructuredResultsLayout';
 import '../features/speaking/speaking.css';
@@ -113,6 +114,10 @@ export default function SpeakingPracticeQB({ user }) {
   const [submittingTier, setSubmittingTier] = useState(null);
   const [submitStep, setSubmitStep] = useState('idle');
   const [submitError, setSubmitError] = useState(null);
+  // A crash-saved submission found in IndexedDB on load (page-leave recovery).
+  // null = none; otherwise the persisted record + whether it's still in the
+  // free idempotency window.
+  const [pendingResume, setPendingResume] = useState(null);
   // Object URL of the most-recently-stopped recording. Lets the candidate
   // press Play to verify their mic actually captured speech before they
   // commit to the next question / submit. Revoked when a new recording
@@ -188,6 +193,57 @@ export default function SpeakingPracticeQB({ user }) {
       if (promptWatchdogRef.current) clearTimeout(promptWatchdogRef.current);
     };
   }, [filterTrack, filterBand]);
+
+  // Page-leave recovery: on first load, surface any crash-saved submission so
+  // the user can finish grading instead of silently losing the test. We only
+  // offer it when not already mid-submit.
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const rec = await getPendingSpeaking();
+      if (cancelled || !rec || !rec.blobs || Object.keys(rec.blobs).length === 0) return;
+      const ageMs = Date.now() - (rec.createdAt || 0);
+      // Drop records older than 24h — far past any usefulness, and the audio
+      // shouldn't linger on disk indefinitely.
+      if (ageMs > 24 * 60 * 60 * 1000) { clearPendingSpeaking(); return; }
+      setPendingResume({ record: rec, free: ageMs < FREE_RESUME_MS });
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
+  // While a grade is actively in flight, nudge before an accidental tab close.
+  // The answers are already crash-saved to IndexedDB so nothing is truly lost,
+  // but finishing here avoids a needless re-grade round-trip.
+  useEffect(() => {
+    const active = submittingTier && submitStep !== 'error' && submitStep !== 'idle';
+    if (!active) return undefined;
+    const onBeforeUnload = (e) => { e.preventDefault(); e.returnValue = ''; };
+    window.addEventListener('beforeunload', onBeforeUnload);
+    return () => window.removeEventListener('beforeunload', onBeforeUnload);
+  }, [submittingTier, submitStep]);
+
+  // Re-fire a recovered submission. Idempotent within the backend's 10-min
+  // window (free); past it the user already consented to a fresh evaluation
+  // via the banner copy.
+  const resumePendingSubmission = () => {
+    if (!pendingResume?.record) return;
+    const rec = pendingResume.record;
+    setPendingResume(null);
+    submitTest(rec.tier || 'free', {
+      clientRequestId: rec.clientRequestId,
+      part: rec.part,
+      setId: rec.setId,
+      topic: rec.topic,
+      cueCard: rec.cueCard,
+      answers: rec.answers || [],
+      blobs: rec.blobs || {},
+    });
+  };
+
+  const dismissPendingResume = () => {
+    clearPendingSpeaking();
+    setPendingResume(null);
+  };
 
   const loadModules = async () => {
     // sessionStorage cache — repeat visits to QB Speaking within 5 min
@@ -648,7 +704,7 @@ export default function SpeakingPracticeQB({ user }) {
     });
   };
 
-  const submitTest = async (tier = 'free') => {
+  const submitTest = async (tier = 'free', resumeData = null) => {
     // Per-part submission. Routes to the unified Sonnet-backed
     // /api/speaking/evaluate endpoint (same path Smart Practice/Cambridge use).
     // The legacy /api/speaking/submit required EMERGENT_LLM_KEY and silently
@@ -656,16 +712,26 @@ export default function SpeakingPracticeQB({ user }) {
     // the key was missing — which surfaced as "No evaluation data returned"
     // in the UI. The unified endpoint uses ANTHROPIC_API_KEY (Sonnet)
     // and auto-tiers from the user's plan instead of free/premium toggle.
+    //
+    // `resumeData` (optional) lets a recovered submission re-run WITHOUT relying
+    // on component state — it carries the part, answers, blobs and (crucially)
+    // the original client_request_id, so a resume after a page-leave is
+    // idempotent (free within the backend's 10-min window).
     setShowTierModal(false);
     setSubmittingTier(tier);
     setSubmitError(null);
     setSubmitStep('uploading');
 
     try {
-      const partAnswers = answers.filter(a => a.part === String(currentPart));
-      const partBlobs = partAnswers
-        .map(a => audioBlobsRef.current[a.question_id])
-        .filter(Boolean);
+      // Resolve the submission payload from resumeData when resuming, otherwise
+      // from live component state.
+      const part = resumeData ? resumeData.part : currentPart;
+      const setId = resumeData ? resumeData.setId : selectedModule;
+      const partAnswers = resumeData
+        ? resumeData.answers
+        : answers.filter(a => a.part === String(currentPart));
+      const blobFor = (qid) => (resumeData ? resumeData.blobs?.[qid] : audioBlobsRef.current[qid]);
+      const partBlobs = partAnswers.map(a => blobFor(a.question_id)).filter(Boolean);
 
       if (partBlobs.length === 0) {
         setSubmitError('No audio captured for this part. Re-record your answers and try again.');
@@ -673,10 +739,37 @@ export default function SpeakingPracticeQB({ user }) {
         return;
       }
 
-      // Mint once and reuse on transient retry so the backend idempotency
-      // cache short-circuits without re-running Azure + Sonnet.
-      if (!clientRequestIdRef.current) {
+      // Mint once and reuse on transient retry / page-leave resume so the
+      // backend idempotency cache short-circuits without re-running Azure +
+      // Sonnet (and without charging a second evaluation).
+      if (resumeData?.clientRequestId) {
+        clientRequestIdRef.current = resumeData.clientRequestId;
+      } else if (!clientRequestIdRef.current) {
         clientRequestIdRef.current = mintClientRequestId();
+      }
+
+      // Crash-safe persistence: before the (long) request goes out, stash
+      // everything needed to re-run it so closing the tab can't lose the test.
+      // Skipped when we're already resuming (the record is already on disk).
+      if (!resumeData) {
+        const topic = moduleContent?.title || (part === 1 ? 'Part 1 — Introduction' : part === 3 ? 'Part 3 — Discussion' : 'Part 2 — Long Turn');
+        const blobs = {};
+        partAnswers.forEach((a) => { const b = blobFor(a.question_id); if (b) blobs[a.question_id] = b; });
+        savePendingSpeaking({
+          clientRequestId: clientRequestIdRef.current,
+          tier,
+          part,
+          setId: setId || null,
+          topic,
+          cueCard: part === 2 ? {
+            prompt: moduleContent?.part2?.cue_card?.topic || 'Cue card monologue',
+            bullets: moduleContent?.part2?.cue_card?.bullets || [],
+          } : null,
+          answers: partAnswers.map(a => ({ question_id: a.question_id, part: a.part, question: a.question, duration: a.duration })),
+          blobs,
+          createdAt: Date.now(),
+        });
+        setPendingResume(null); // hide any stale resume banner now that we're live
       }
 
       // Multi-question parts (Part 1 interview, Part 3 discussion) route to the
@@ -685,24 +778,24 @@ export default function SpeakingPracticeQB({ user }) {
       // counted as ONE eval. The legacy single-blob path concatenated every
       // answer into one webm and ran Azure recognize_once(), which stopped at
       // the first pause — so only the first question was ever evaluated.
-      if (currentPart === 1 || currentPart === 3) {
+      if (part === 1 || part === 3) {
         const form = new FormData();
         form.append('user_id', user?.id || '');
-        form.append('part', `part${currentPart}`);
-        form.append('topic', moduleContent?.title || (currentPart === 1 ? 'Part 1 — Introduction' : 'Part 3 — Discussion'));
+        form.append('part', `part${part}`);
+        form.append('topic', (resumeData ? resumeData.topic : moduleContent?.title) || (part === 1 ? 'Part 1 — Introduction' : 'Part 3 — Discussion'));
         form.append('user_language', user?.feedback_language || user?.preferred_language || 'en');
         form.append('target_band', String(user?.target_band ?? 7.0));
         form.append('client_request_id', clientRequestIdRef.current);
-        if (selectedModule) form.append('set_id', selectedModule);
+        if (setId) form.append('set_id', setId);
 
         // One contiguous question_q{i}/audio_q{i}/duration_q{i} triple per answer.
         let idx = 0;
         partAnswers.forEach((a) => {
-          const blob = audioBlobsRef.current[a.question_id];
+          const blob = blobFor(a.question_id);
           if (!blob) return; // skip any answer without captured audio
           idx += 1;
           form.append(`question_q${idx}`, a.question || '');
-          form.append(`audio_q${idx}`, blob, `qb-part${currentPart}-q${idx}-${Date.now()}.webm`);
+          form.append(`audio_q${idx}`, blob, `qb-part${part}-q${idx}-${Date.now()}.webm`);
           form.append(`duration_q${idx}`, String(a.duration || 0));
         });
 
@@ -740,6 +833,7 @@ export default function SpeakingPracticeQB({ user }) {
         // StructuredResultsLayout (per-question tabs). Keep the same setResults
         // sink; the render block branches on the shape.
         setResults(data);
+        clearPendingSpeaking();          // graded → nothing left to recover
         audioBlobsRef.current = {};
         clientRequestIdRef.current = null;
         setSubmittingTier(null);
@@ -752,22 +846,22 @@ export default function SpeakingPracticeQB({ user }) {
         ? partBlobs[0]
         : new Blob(partBlobs, { type: 'audio/webm' });
 
-      const cueCardPrompt = moduleContent?.part2?.cue_card?.topic || 'Cue card monologue';
-      const cueCardBullets = (moduleContent?.part2?.cue_card?.bullets || []).join('\n');
+      const cueCardPrompt = (resumeData ? resumeData.cueCard?.prompt : moduleContent?.part2?.cue_card?.topic) || 'Cue card monologue';
+      const cueCardBullets = ((resumeData ? resumeData.cueCard?.bullets : moduleContent?.part2?.cue_card?.bullets) || []).join('\n');
 
       const totalDuration = partAnswers.reduce((s, a) => s + (a.duration || 0), 0);
 
       const form = new FormData();
-      form.append('audio', combinedBlob, `qb-part${currentPart}-${Date.now()}.webm`);
+      form.append('audio', combinedBlob, `qb-part${part}-${Date.now()}.webm`);
       form.append('user_id', user?.id || '');
-      form.append('part', `part${currentPart}`);
+      form.append('part', `part${part}`);
       form.append('cue_card_prompt', cueCardPrompt);
       form.append('cue_card_bullets', cueCardBullets);
       form.append('user_language', user?.feedback_language || 'en');
       form.append('target_band', String(user?.target_band ?? 7.0));
       form.append('duration_seconds', String(totalDuration || 0));
       form.append('context', 'qb');
-      if (selectedModule) form.append('set_id', selectedModule);
+      if (setId) form.append('set_id', setId);
       form.append('client_request_id', clientRequestIdRef.current);
 
       const res = await fetch(`${API_URL}/api/speaking/evaluate`, {
@@ -803,6 +897,7 @@ export default function SpeakingPracticeQB({ user }) {
       // /evaluate returns the SpeakingEvaluationResult shape directly (no
       // wrapping `success` flag). Hand it to the existing adapter via setResults.
       setResults(data);
+      clearPendingSpeaking();            // graded → nothing left to recover
       audioBlobsRef.current = {};
       // Rotate so a re-record + resubmit mints a fresh id.
       clientRequestIdRef.current = null;
@@ -896,7 +991,31 @@ export default function SpeakingPracticeQB({ user }) {
   return (
     <div className="min-h-screen bg-gray-50">
       <audio ref={audioRef} onEnded={handleAudioEnded} onError={handleAudioError} />
-      
+
+      {pendingResume && !submittingTier && (
+        <div className="sticky top-0 z-30 bg-amber-50 border-b border-amber-200">
+          <div className="max-w-4xl mx-auto px-4 py-3 flex items-center gap-3 flex-wrap">
+            <RotateCcw className="w-5 h-5 text-amber-600 shrink-0" />
+            <div className="flex-1 min-w-[200px]">
+              <p className="text-sm font-medium text-amber-900">
+                You have a {pendingResume.record.part === 2 ? 'Part 2' : `Part ${pendingResume.record.part}`} speaking test waiting to be graded.
+              </p>
+              <p className="text-xs text-amber-700">
+                {pendingResume.free
+                  ? 'Your answers were saved on this device — pick up where you left off. This won’t use an extra evaluation.'
+                  : 'Your answers were saved on this device. Grading it now will use one evaluation.'}
+              </p>
+            </div>
+            <Button onClick={resumePendingSubmission} className="bg-amber-600 hover:bg-amber-700 text-white">
+              {pendingResume.free ? 'Get my result' : 'Grade it now'}
+            </Button>
+            <Button variant="ghost" onClick={dismissPendingResume} className="text-amber-700 hover:bg-amber-100">
+              Discard
+            </Button>
+          </div>
+        </div>
+      )}
+
       <div className="bg-white border-b sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between flex-wrap gap-3">
@@ -1541,6 +1660,15 @@ function SubmittingOverlay({ tier, step, error, onRetry, onCancel }) {
   const isError = step === 'error';
   const isPremium = tier === 'premium';
 
+  // Live elapsed counter — a moving number reassures the user the grade is
+  // actually progressing during the otherwise-silent 30–60s wait.
+  const [elapsed, setElapsed] = useState(0);
+  useEffect(() => {
+    if (isError) return undefined;
+    const id = setInterval(() => setElapsed((s) => s + 1), 1000);
+    return () => clearInterval(id);
+  }, [isError]);
+
   const stepCopy = {
     preparing: {
       title: 'Preparing your audio',
@@ -1548,7 +1676,7 @@ function SubmittingOverlay({ tier, step, error, onRetry, onCancel }) {
     },
     uploading: {
       title: 'Uploading to Liz',
-      detail: 'Sending your answers to the evaluator. Don\'t close this window.',
+      detail: 'Sending your answers to the evaluator…',
     },
     evaluating: {
       title: isPremium ? 'Liz is evaluating your speaking' : 'Liz is reviewing your answers',
@@ -1602,7 +1730,10 @@ function SubmittingOverlay({ tier, step, error, onRetry, onCancel }) {
             </div>
 
             <h2 className="text-xl font-bold text-gray-900 mb-2">{copy.title}</h2>
-            <p className="text-sm text-gray-600 mb-6">{copy.detail}</p>
+            <p className="text-sm text-gray-600 mb-2">{copy.detail}</p>
+            <p className="text-xs font-mono text-gray-400 mb-5">
+              {Math.floor(elapsed / 60)}:{String(elapsed % 60).padStart(2, '0')} elapsed · usually {isPremium ? '30–60s' : '15–25s'}
+            </p>
 
             <div className="flex items-center justify-center gap-2 mb-6">
               <StepDot active={step === 'preparing'} done={step === 'uploading' || step === 'evaluating'} />
@@ -1616,8 +1747,10 @@ function SubmittingOverlay({ tier, step, error, onRetry, onCancel }) {
               <StepDot active={step === 'evaluating'} done={false} />
             </div>
 
-            <p className="text-xs text-gray-400">
-              Please keep this window open. Your test won't be saved if you leave.
+            <p className="text-xs text-gray-500">
+              <CheckCircle className="w-3.5 h-3.5 text-emerald-500 inline -mt-0.5 mr-1" />
+              Your answers are saved on this device. If you need to leave, come back
+              and tap <b>Get my result</b> — nothing is lost.
             </p>
           </>
         )}
