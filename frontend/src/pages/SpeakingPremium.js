@@ -1,28 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mic, Sparkles, MessageCircle, Lock, ArrowRight } from 'lucide-react';
+import { Mic, Sparkles, MessageCircle, ArrowRight, Minus, Plus } from 'lucide-react';
+import { PayPalButtons } from '@paypal/react-paypal-js';
 import MockExamFlow from '../features/speaking/components/MockExamFlow';
-import { isSpeakingPremiumUser, getPlanLabel } from '../lib/planAccess';
+import { isAdminUser } from '../lib/planAccess';
 import '../features/speaking/speaking.css';
 
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+const paypalClientId = process.env.REACT_APP_PAYPAL_CLIENT_ID;
+const MOCK_CREDIT_PRICE = 3; // USD per Full Mock Test credit
+
 /**
- * Liz Examiner — Liz live full AI tutor (gated route).
- * (Was branded "Speaking Premium" pre-2026-05-10; renamed per Aga to keep
- * Smart Practice / Liz pipelines unambiguous in the UI.)
- *
- * Gate: only `monthly` and `exam` tiers (admins bypass). Free / weekly users
- * see a locked card with a short conversion blurb → /pricing/v2.
- *
- * On unlock, mounts the D7 SpeakingPractice flow which:
- *   - 2026-04-29: Part 1 / Part 3 are migrating from Gemini Live to ElevenLabs
- *     Conversational AI. Until Phase B lands, those parts show a placeholder
- *     that routes the candidate to Part 2.
- *   - keeps Part 2 on the monologue cue-card flow with Sonnet eval
- *
- * Mounted at /speaking-premium. The `/liz` route mounts a different surface
- * (LizTeacher avatar + chat); these are intentionally separate per Aga
- * 2026-04-28 — premium speaking IS Liz live conversation; the Liz button
- * (e.g. on the Dashboard) routes to LizTeacher.
+ * Full Mock Test — one continuous ElevenLabs conversation with Liz, graded
+ * holistically. Credit-gated: each mock costs one $3 credit (admins run free).
+ * No credits → a $3-package purchase panel (buy as many as you want).
+ * (Renamed from "Liz Examiner" / speaking-premium; mounted at /full-mock.)
  */
 export default function SpeakingPremium({ user }) {
   const navigate = useNavigate();
@@ -32,117 +24,127 @@ export default function SpeakingPremium({ user }) {
     return null;
   }
 
-  if (isSpeakingPremiumUser(user)) {
-    // Full Mock Test = one continuous ElevenLabs conversation with Liz, graded
-    // holistically. The per-part practice that used to live on this surface now
-    // lives in Speaking Practice (Question Bank), so this page is just the mock.
+  const credits = Number(user?.mockCredits || 0);
+  const canRun = isAdminUser(user) || credits >= 1;
+
+  if (canRun) {
     return (
       <div className="speaking-scope">
-        <MockExamFlow
-          user={user}
-          onExit={() => navigate('/dashboard')}
-        />
+        <MockExamFlow user={user} onExit={() => navigate('/dashboard')} />
       </div>
     );
   }
 
-  return <SpeakingPremiumLocked user={user} onUpgrade={() => navigate('/pricing/v2')} />;
+  return <MockCreditPurchase user={user} onBack={() => navigate('/dashboard')} />;
 }
 
-function SpeakingPremiumLocked({ user, onUpgrade }) {
-  const planLabel = getPlanLabel(user?.plan);
+function MockCreditPurchase({ user, onBack }) {
+  const [qty, setQty] = useState(1);
+  const [busy, setBusy] = useState(false);
+  const clamp = (n) => Math.max(1, Math.min(50, n));
+  const total = (qty * MOCK_CREDIT_PRICE).toFixed(2);
 
   return (
     <div className="min-h-screen bg-slate-50 px-5 sm:px-8 py-12 md:py-20">
-      <div className="mx-auto max-w-3xl">
-        <button
-          type="button"
-          onClick={() => window.history.back()}
-          className="text-[13px] text-slate-500 hover:text-slate-700 mb-6"
-        >
+      <div className="mx-auto max-w-2xl">
+        <button type="button" onClick={onBack} className="text-[13px] text-slate-500 hover:text-slate-700 mb-6">
           ← Back
         </button>
 
         <div className="rounded-3xl border border-slate-200 bg-white shadow-[0_24px_48px_-32px_rgba(15,23,42,0.25)] overflow-hidden">
-          {/* Locked banner */}
-          <div className="relative bg-gradient-to-br from-violet-600 via-fuchsia-600 to-rose-500 px-6 sm:px-10 py-10 text-white">
-            <div className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-white/15 backdrop-blur px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider">
-              <Lock className="w-3 h-3" />
-              Premium
-            </div>
+          <div className="relative bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-600 px-6 sm:px-10 py-10 text-white">
             <div className="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur px-3 py-1 text-[12px] font-medium">
-              <Sparkles className="w-3.5 h-3.5" />
-              Liz Live · ElevenLabs
+              <Sparkles className="w-3.5 h-3.5" /> Full Mock Test · ElevenLabs
             </div>
-            <h1
-              className="mt-4 text-[28px] sm:text-[34px] leading-tight font-semibold tracking-tight"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              Speak with Liz, like a real examiner.
+            <h1 className="mt-4 text-[28px] sm:text-[34px] leading-tight font-semibold tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+              A full IELTS Speaking mock with Liz.
             </h1>
             <p className="mt-3 max-w-xl text-white/85 text-[15px] leading-relaxed">
-              Real-time voice conversation for Part 1 & Part 3, plus a
-              calibrated Part 2 monologue with pronunciation feedback. The
-              closest thing to a 1-on-1 IELTS speaking tutor.
+              One continuous 12–14 minute exam — Parts 1, 2 and 3 live with Liz,
+              then a holistic band with full feedback. Each mock is one credit.
             </p>
           </div>
 
-          {/* Premium feature blurb — short, conversion-focused */}
           <div className="px-6 sm:px-10 py-8">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-              <Feature
-                icon={<MessageCircle className="w-4 h-4" />}
-                title="Live conversation"
-                desc="Liz asks, you answer — natural turn-taking on Part 1 & 3."
-              />
-              <Feature
-                icon={<Mic className="w-4 h-4" />}
-                title="Pronunciation map"
-                desc="Per-word coaching on stress, vowels and clarity."
-              />
-              <Feature
-                icon={<Sparkles className="w-4 h-4" />}
-                title="Examiner-calibrated"
-                desc="Sonnet eval anchored to Cambridge band descriptors."
-              />
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
+              <Feature icon={<MessageCircle className="w-4 h-4" />} title="Live exam" desc="Liz runs all three parts back-to-back, like the real test." />
+              <Feature icon={<Mic className="w-4 h-4" />} title="Holistic band" desc="One calibrated band across the whole performance." />
+              <Feature icon={<Sparkles className="w-4 h-4" />} title="Full feedback" desc="Strengths, fixes and the transcript, saved to My results." />
             </div>
 
-            <div className="mt-8 rounded-2xl border border-slate-100 bg-slate-50/70 px-5 py-4">
-              <div className="flex flex-wrap items-center justify-between gap-3">
+            {/* Quantity → $3 each */}
+            <div className="rounded-2xl border border-slate-100 bg-slate-50/70 px-5 py-5">
+              <div className="flex items-center justify-between gap-4 flex-wrap">
                 <div>
-                  <div className="text-[12px] uppercase tracking-wider text-slate-500 font-medium">
-                    Your plan
-                  </div>
-                  <div className="text-[15px] font-medium text-slate-800">
-                    {planLabel} — Liz Examiner not included
-                  </div>
+                  <div className="text-[12px] uppercase tracking-wider text-slate-500 font-medium">Full Mock credits</div>
+                  <div className="text-[15px] font-medium text-slate-800">${MOCK_CREDIT_PRICE} each · 1 credit = 1 mock</div>
                 </div>
-                <button
-                  type="button"
-                  onClick={onUpgrade}
-                  className="inline-flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white font-medium text-[14px] px-5 py-2.5 rounded-xl"
-                >
-                  Upgrade to unlock
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                <div className="flex items-center gap-3">
+                  <button type="button" onClick={() => setQty((n) => clamp(n - 1))} className="w-9 h-9 grid place-items-center rounded-lg border border-slate-200 bg-white hover:bg-slate-50" aria-label="Fewer">
+                    <Minus className="w-4 h-4" />
+                  </button>
+                  <span className="w-10 text-center text-lg font-bold text-slate-900">{qty}</span>
+                  <button type="button" onClick={() => setQty((n) => clamp(n + 1))} className="w-9 h-9 grid place-items-center rounded-lg border border-slate-200 bg-white hover:bg-slate-50" aria-label="More">
+                    <Plus className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
-              <div className="mt-2 text-[12px] text-slate-500">
-                Available on Monthly and Exam Pack tiers. Standard speaking
-                practice stays free on your current plan.
+              <div className="mt-4 flex items-center justify-between">
+                <span className="text-[13px] text-slate-500">Total</span>
+                <span className="text-xl font-bold text-slate-900">${total}</span>
               </div>
+
+              <div className="mt-5">
+                {paypalClientId ? (
+                  <PayPalButtons
+                    style={{ layout: 'vertical', color: 'gold', shape: 'pill', label: 'pay', height: 42 }}
+                    disabled={busy}
+                    forceReRender={[qty]}
+                    createOrder={async () => {
+                      const res = await fetch(`${API_URL}/api/payments/paypal/create-order`, {
+                        method: 'POST', headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ planId: 'mock_credits', email: user.email, quantity: qty }),
+                      });
+                      const data = await res.json();
+                      if (!res.ok) throw new Error(data.detail || 'Failed to create order');
+                      return data.orderId;
+                    }}
+                    onApprove={async (data) => {
+                      setBusy(true);
+                      const res = await fetch(`${API_URL}/api/payments/paypal/capture-order`, {
+                        method: 'POST', headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ orderId: data.orderID, planId: 'mock_credits', email: user.email, quantity: qty }),
+                      });
+                      const result = await res.json();
+                      setBusy(false);
+                      if (res.ok) {
+                        const bal = result.mock_credits_balance ?? ((Number(user?.mockCredits || 0)) + qty);
+                        try {
+                          const u = { ...user, mockCredits: bal };
+                          localStorage.setItem('user', JSON.stringify(u));
+                        } catch (_) { /* non-fatal */ }
+                        alert(`${qty} Full Mock credit${qty !== 1 ? 's' : ''} added. Starting your mock…`);
+                        window.location.reload();
+                      } else {
+                        alert(result.detail || 'Payment capture failed');
+                      }
+                    }}
+                  />
+                ) : (
+                  <button type="button" onClick={() => (window.location.href = '/pricing/v2')} className="w-full inline-flex items-center justify-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white font-medium text-[14px] px-5 py-3 rounded-xl">
+                    See plans & pricing <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <div className="mt-6 text-center text-[13px] text-slate-500">
+              Just want to practise?{' '}
+              <a href="/question-bank/speaking" className="text-slate-700 underline underline-offset-2 hover:text-slate-900">
+                Parts-based Speaking Practice is included →
+              </a>
             </div>
           </div>
-        </div>
-
-        {/* Secondary path for users who want to keep practising right now */}
-        <div className="mt-6 text-center text-[13px] text-slate-500">
-          Not ready to upgrade?{' '}
-          <a
-            href="/speaking-practice"
-            className="text-slate-700 underline underline-offset-2 hover:text-slate-900"
-          >
-            Continue standard speaking practice →
-          </a>
         </div>
       </div>
     </div>
@@ -152,13 +154,11 @@ function SpeakingPremiumLocked({ user, onUpgrade }) {
 function Feature({ icon, title, desc }) {
   return (
     <div>
-      <div className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-violet-50 text-violet-700 mb-2">
+      <div className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 mb-2">
         {icon}
       </div>
       <div className="text-[14px] font-semibold text-slate-900">{title}</div>
-      <div className="mt-1 text-[13px] text-slate-600 leading-relaxed">
-        {desc}
-      </div>
+      <div className="mt-1 text-[13px] text-slate-600 leading-relaxed">{desc}</div>
     </div>
   );
 }

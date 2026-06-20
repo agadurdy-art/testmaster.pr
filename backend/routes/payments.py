@@ -86,6 +86,13 @@ def set_db(database):
     db = database
 
 
+# Full Mock Test credits — one-time top-up, separate from plans. 1 credit = 1
+# full ElevenLabs mock exam (≈$1.2–1.5 cost, capped). Sold as $3 packages; the
+# user buys however many they want (quantity). Stored on user.mockCredits.
+MOCK_CREDIT_UNIT_PRICE = "3.00"
+MOCK_CREDIT_MAX_QTY = 50
+
+
 # ============ Models ============
 
 class PaypalCreateOrderRequest(BaseModel):
@@ -95,6 +102,8 @@ class PaypalCreateOrderRequest(BaseModel):
     # Ignored for fixed plans (weekly/monthly/exam read PLAN_PRICES_USD).
     priceUsd: Optional[str] = None
     durationDays: Optional[int] = None
+    # mock_credits only — number of $3 mock-credit packages to buy.
+    quantity: Optional[int] = None
 
 
 class PaypalCaptureOrderRequest(BaseModel):
@@ -105,6 +114,21 @@ class PaypalCaptureOrderRequest(BaseModel):
     # the pool sizes server-side so the client can't tamper with them.
     priceUsd: Optional[str] = None
     durationDays: Optional[int] = None
+    # mock_credits only — recomputed server-side at capture (anti-tamper).
+    quantity: Optional[int] = None
+
+
+def _mock_credit_amount(quantity: Optional[int]) -> tuple:
+    """Validate quantity and return (qty, amount_string) for mock-credit orders."""
+    try:
+        qty = int(quantity or 0)
+    except (TypeError, ValueError):
+        raise HTTPException(status_code=400, detail="Invalid quantity")
+    if qty < 1 or qty > MOCK_CREDIT_MAX_QTY:
+        raise HTTPException(status_code=400, detail="quantity out of range")
+    from decimal import Decimal, ROUND_HALF_UP
+    total = (Decimal(MOCK_CREDIT_UNIT_PRICE) * qty).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+    return qty, format(total, "f")
 
 
 class ActivateSubscriptionRequest(BaseModel):
@@ -273,6 +297,9 @@ async def paypal_create_order(req: PaypalCreateOrderRequest):
             raise HTTPException(status_code=400, detail="durationDays out of range")
         amount_value = format(price_dec, "f")
         order_description = f"IELTS Ace Custom — {days} days"
+    elif plan_id == "mock_credits":
+        qty, amount_value = _mock_credit_amount(req.quantity)
+        order_description = f"IELTS Ace — {qty} Full Mock Test credit{'s' if qty != 1 else ''}"
     elif plan_id in PAYPAL_PLAN_PRICES:
         amount_value = PAYPAL_PLAN_PRICES[plan_id]
         order_description = f"IELTS Ace {plan_id} plan"
@@ -327,6 +354,8 @@ async def paypal_capture_order(req: PaypalCaptureOrderRequest):
             raise HTTPException(status_code=400, detail="priceUsd out of range")
         if days < 3 or days > 365:
             raise HTTPException(status_code=400, detail="durationDays out of range")
+    elif plan_id == "mock_credits":
+        _mock_credit_amount(req.quantity)  # validates quantity range
     elif plan_id not in PAYPAL_PLAN_PRICES:
         raise HTTPException(status_code=400, detail="Invalid planId")
     user = await _get_user_by_email(email)
@@ -394,6 +423,8 @@ async def paypal_capture_order(req: PaypalCaptureOrderRequest):
         except (InvalidOperation, TypeError, ValueError):
             raise HTTPException(status_code=400, detail="Invalid priceUsd")
         expected_value = format(expected_dec, "f")
+    elif plan_id == "mock_credits":
+        _qty, expected_value = _mock_credit_amount(req.quantity)
     else:
         expected_value = PAYPAL_PLAN_PRICES[plan_id]
     if captured_value != expected_value:
@@ -414,6 +445,29 @@ async def paypal_capture_order(req: PaypalCaptureOrderRequest):
             logger.info(f"PayPal capture {capture_id} already processed; ignoring replay")
             raise HTTPException(status_code=409, detail="Capture already processed")
     now = datetime.now(timezone.utc)
+
+    # Mock-credit top-up: not a plan change — just increment the user's balance
+    # by the purchased quantity and record the (idempotent) capture.
+    if plan_id == "mock_credits":
+        qty, _amt = _mock_credit_amount(req.quantity)
+        updated = await db.users.find_one_and_update(
+            {"id": user["id"]},
+            {"$inc": {"mockCredits": qty}, "$set": {"lastPayment": now.isoformat()}},
+            return_document=True,
+        )
+        await db.kofi_events.insert_one({
+            "provider": "paypal", "kind": "capture-order", "order_id": req.orderId,
+            "capture_id": capture_id,
+            "plan_id": "mock_credits", "email": email, "amount_usd": captured_value,
+            "mock_credits_added": qty, "payload": data,
+            "processed_at": now.isoformat(),
+        })
+        return {
+            "detail": "Mock credits added",
+            "mock_credits_added": qty,
+            "mock_credits_balance": (updated or {}).get("mockCredits", qty),
+        }
+
     plan_name, subscription_label = PAYPAL_PLAN_MAPPING[plan_id]
 
     # Custom: write subscription doc with effective_tier + 3 pools; expires_at

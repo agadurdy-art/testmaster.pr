@@ -427,7 +427,21 @@ async def mint_token(req: TokenRequest, caller: dict = Depends(auth_session.curr
         )
 
     grant = await resolve_liz_live_grant(db, user)
-    if not grant.allowed:
+    is_exam = req.kind == "exam"
+    if is_exam:
+        # Full Mock is credit-gated (1 credit per mock), independent of plan.
+        # Admins run free. We only CHECK here; the decrement happens below once a
+        # working session token is secured, so a failed mint costs nothing.
+        if not grant.is_admin and int(user.get("mockCredits") or 0) < 1:
+            raise HTTPException(
+                status_code=402,
+                detail={
+                    "code": "no_mock_credits",
+                    "message": "You need a Full Mock Test credit to start. Each mock is one $3 credit.",
+                    "mock_credits": int(user.get("mockCredits") or 0),
+                },
+            )
+    elif not grant.allowed:
         raise HTTPException(
             status_code=402,
             detail={
@@ -451,6 +465,24 @@ async def mint_token(req: TokenRequest, caller: dict = Depends(auth_session.curr
         # Token mint is best-effort now; WS path is what the SDK uses.
         logger.info("conversation_token mint skipped: %s", exc.detail)
     dynamic_vars = _build_dynamic_variables(user, req)
+
+    # Charge the mock credit now that we have a working session token. The
+    # atomic guard (mockCredits >= 1) re-checks the balance to avoid a race or
+    # double-spend between the early check and here.
+    if is_exam and not grant.is_admin:
+        deducted = await db.users.find_one_and_update(
+            {"id": req.user_id, "mockCredits": {"$gte": 1}},
+            {"$inc": {"mockCredits": -1}},
+        )
+        if not deducted:
+            raise HTTPException(
+                status_code=402,
+                detail={
+                    "code": "no_mock_credits",
+                    "message": "You need a Full Mock Test credit to start. Each mock is one $3 credit.",
+                    "mock_credits": 0,
+                },
+            )
 
     return TokenResponse(
         conversation_token=conversation_token,
