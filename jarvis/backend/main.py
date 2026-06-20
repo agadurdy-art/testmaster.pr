@@ -3,6 +3,7 @@ WebSocket, and proxies ElevenLabs TTS for the voice. Single-user: set JARVIS_TOK
 to require a shared secret (mandatory before exposing publicly)."""
 from __future__ import annotations
 
+import hmac
 import os
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Header, HTTPException
@@ -12,6 +13,7 @@ from pathlib import Path
 
 from agents import load_roster, GATES
 from runner import stream_run, PERMISSION_MODE
+from social_routes import build_social_router
 import tts
 
 app = FastAPI(title="JARVIS Control Room")
@@ -21,11 +23,23 @@ app.add_middleware(
 
 FRONTEND = Path(__file__).resolve().parent.parent / "frontend"
 AUTH_TOKEN = os.environ.get("JARVIS_TOKEN")  # if set, required on /ws and /api
+SOCIAL_ONLY = os.environ.get("JARVIS_SOCIAL_ONLY", "").lower() in {"1", "true", "yes"}
+
+
+def _token_ok(token: str | None) -> bool:
+    """Constant-time shared-secret check. No token configured ⇒ open (local dev);
+    the mobile/tunnel launchers require JARVIS_TOKEN so exposure is always gated."""
+    if not AUTH_TOKEN:
+        return True
+    return bool(token) and hmac.compare_digest(str(token), AUTH_TOKEN)
 
 
 def _check(token: str | None):
-    if AUTH_TOKEN and token != AUTH_TOKEN:
+    if not _token_ok(token):
         raise HTTPException(status_code=401, detail="unauthorized")
+
+
+app.include_router(build_social_router(_check))
 
 
 def _narration(ev: dict) -> str | None:
@@ -44,14 +58,19 @@ def _narration(ev: dict) -> str | None:
 
 
 @app.get("/api/health")
-def health():
+def health(authorization: str | None = Header(default=None)):
+    _check((authorization or "").removeprefix("Bearer ").strip() or None)
     return {"ok": True, "permission_mode": PERMISSION_MODE,
-            "auth": bool(AUTH_TOKEN), "agents": len(load_roster())}
+            "auth": bool(AUTH_TOKEN), "agents": 0 if SOCIAL_ONLY else len(load_roster()),
+            "social_only": SOCIAL_ONLY}
 
 
 @app.get("/api/agents")
 def agents(authorization: str | None = Header(default=None)):
     _check((authorization or "").removeprefix("Bearer ").strip() or None)
+    if SOCIAL_ONLY:
+        return {"agents": [], "squads": {"product": [], "marketing": []},
+                "social_only": True}
     roster = load_roster()
     return {
         "agents": roster,
@@ -80,8 +99,15 @@ async def ws_run(ws: WebSocket):
     await ws.accept()
     try:
         req = await ws.receive_json()
-        if AUTH_TOKEN and req.get("token") != AUTH_TOKEN:
+        if not _token_ok(req.get("token")):
             await ws.send_json({"type": "error", "message": "unauthorized"})
+            await ws.close()
+            return
+        if SOCIAL_ONLY:
+            await ws.send_json({
+                "type": "error",
+                "message": "agent execution is disabled on the mobile Social Studio",
+            })
             await ws.close()
             return
         command = (req.get("command") or "").strip()
@@ -108,14 +134,26 @@ async def ws_run(ws: WebSocket):
 
 
 # --- static frontend (served last so /api and /ws take precedence) ---
+_FRONTEND_ROOT = FRONTEND.resolve()
+
+
+def _spa_index():
+    return FileResponse(_FRONTEND_ROOT / "index.html")
+
+
 @app.get("/")
 def index():
-    return FileResponse(FRONTEND / "index.html")
+    return _spa_index()
 
 
 @app.get("/{path:path}")
 def static_files(path: str):
-    target = FRONTEND / path
-    if target.is_file():
+    # Containment guard: resolve the requested path and only serve files that
+    # live INSIDE the frontend dir. Without this, `/..%2f.token` (or any `../`)
+    # would escape the static root and leak jarvis/.token + backend source —
+    # critical once the studio is exposed over the Cloudflare tunnel. Anything
+    # outside the root falls back to the SPA shell.
+    target = (_FRONTEND_ROOT / path).resolve()
+    if (target == _FRONTEND_ROOT or _FRONTEND_ROOT in target.parents) and target.is_file():
         return FileResponse(target)
-    return FileResponse(FRONTEND / "index.html")
+    return _spa_index()

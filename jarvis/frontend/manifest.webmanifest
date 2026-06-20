@@ -1,0 +1,17 @@
+{
+  "name": "JARVIS Social Studio",
+  "short_name": "JARVIS",
+  "description": "testmaster.pro agent control room and mobile social publishing studio",
+  "start_url": "/#social",
+  "display": "standalone",
+  "background_color": "#0a0e14",
+  "theme_color": "#0a0e14",
+  "icons": [
+    {
+      "src": "/jarvis-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

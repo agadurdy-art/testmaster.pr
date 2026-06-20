@@ -131,3 +131,4 @@ backend/static/strategies/**/_orig_backup/
 prototypes/
 backend/email_campaigns/
 jarvis/.token
+jarvis/data/
