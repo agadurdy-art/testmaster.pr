@@ -93,6 +93,7 @@ class User(BaseModel):
         description="ISO-8601 UTC timestamp; None for free or non-expiring plans",
     )
     examCredits: int = Field(default=0)
+    mockCredits: int = Field(default=0)  # Full Mock Test credits (1 credit = 1 mock)
     ai_interview_free_seconds_used: int = Field(default=0)
     ai_mentor_messages_used: int = Field(default=0)
     verification_sent_at: Optional[str] = None
