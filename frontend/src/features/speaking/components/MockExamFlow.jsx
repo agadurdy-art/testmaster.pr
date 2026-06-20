@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Clock, Ban, CreditCard, Volume2, Mic, CheckCircle2, AlertTriangle } from 'lucide-react';
 
 import SpeakingHeader from './SpeakingHeader';
 import ProcessingState from './ProcessingState';
@@ -54,12 +55,14 @@ export default function MockExamFlow({ user, onExit }) {
   const submittedRef = useRef(false);
   const clientRequestIdRef = useRef(null);
 
-  useEffect(() => {
+  // No auto-start: the candidate must pass the pre-flight (warnings + mic check)
+  // first. Starting is what mints the session and spends the credit, so it must
+  // be a deliberate action.
+  const beginExam = () => {
     if (started || !user?.id) return;
     setStarted(true);
     liz.start({ part: 'part1', kind: 'exam' });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [started, user?.id]);
+  };
 
   // Liz session ended → grade the whole exam from the transcript.
   useEffect(() => {
@@ -140,20 +143,33 @@ export default function MockExamFlow({ user, onExit }) {
     );
   }
 
-  if (liz.isError && liz.errorCode === 'liz_live_locked') {
+  if (liz.isError && (liz.errorCode === 'liz_live_locked' || liz.errorCode === 'no_mock_credits')) {
+    const noCredits = liz.errorCode === 'no_mock_credits';
     return (
       <>
         <SpeakingHeader user={user} />
         <section style={{ maxWidth: 1320, margin: '0 auto', padding: '32px 32px 80px' }}>
           <div style={{ background: 'var(--sp-card)', borderRadius: 'var(--sp-radius)', border: '1px solid var(--sp-border)', boxShadow: 'var(--sp-shadow-card)', padding: 48, textAlign: 'center', maxWidth: 560, margin: '0 auto' }}>
-            <h2 className="sp-font-display" style={{ fontSize: 24, fontWeight: 600, marginBottom: 12 }}>The mock exam is a Premium feature</h2>
-            <p style={{ color: 'var(--sp-muted-fg)', marginBottom: 24 }}>{liz.error || 'Upgrade your plan to take a full live mock exam with Liz.'}</p>
+            <h2 className="sp-font-display" style={{ fontSize: 24, fontWeight: 600, marginBottom: 12 }}>{noCredits ? 'You need a Full Mock credit' : 'The mock exam is a Premium feature'}</h2>
+            <p style={{ color: 'var(--sp-muted-fg)', marginBottom: 24 }}>{liz.error || (noCredits ? 'Each full mock is one $3 credit. Buy credits to start.' : 'Upgrade your plan to take a full live mock exam with Liz.')}</p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-              <a className="sp-btn-primary" href="/pricing/v2" style={{ height: 44, padding: '0 22px', display: 'inline-flex', alignItems: 'center' }}>See plans</a>
+              <a className="sp-btn-primary" href={noCredits ? '/full-mock' : '/pricing/v2'} style={{ height: 44, padding: '0 22px', display: 'inline-flex', alignItems: 'center' }}>{noCredits ? 'Buy credits' : 'See plans'}</a>
               <button className="sp-btn-ghost" onClick={handleClose} style={{ height: 44, padding: '0 18px' }}>Back</button>
             </div>
           </div>
         </section>
+      </>
+    );
+  }
+
+  // Pre-flight — shown until the candidate deliberately starts. Sets expectations
+  // (length, no pausing, credit is spent even if ended early) and verifies the
+  // mic before a single credit is spent.
+  if (!started) {
+    return (
+      <>
+        <SpeakingHeader user={user} />
+        <ExamPreflight onStart={beginExam} onCancel={handleClose} />
       </>
     );
   }
@@ -170,5 +186,137 @@ export default function MockExamFlow({ user, onExit }) {
         </div>
       </section>
     </>
+  );
+}
+
+// Pre-flight gate: expectations + a real mic check before the exam (and the
+// credit) starts.
+function ExamPreflight({ onStart, onCancel }) {
+  const [micOk, setMicOk] = useState(false);
+
+  const RULES = [
+    { icon: Clock, title: 'About 12–14 minutes', body: 'All three parts run back-to-back, just like the real test.' },
+    { icon: Ban, title: 'No pausing or restarting', body: 'Once it starts you can’t stop and resume — set aside the full time.' },
+    { icon: CreditCard, title: 'One credit, spent on start', body: 'Ending early still uses your credit, so begin only when you’re ready.' },
+    { icon: Volume2, title: 'Find a quiet room', body: 'Use a headset if you can, and speak naturally at a normal pace.' },
+  ];
+
+  return (
+    <section style={{ maxWidth: 720, margin: '0 auto', padding: '24px 24px 80px' }}>
+      <div style={{ background: 'var(--sp-card)', borderRadius: 'var(--sp-radius)', border: '1px solid var(--sp-border)', boxShadow: 'var(--sp-shadow-card)', padding: 32 }}>
+        <h2 className="sp-font-display" style={{ fontSize: 26, fontWeight: 600, marginBottom: 6 }}>Before you start</h2>
+        <p style={{ color: 'var(--sp-muted-fg)', marginBottom: 22, fontSize: 14 }}>A full IELTS Speaking mock with Liz. Please read this first.</p>
+
+        <div style={{ display: 'grid', gap: 12, marginBottom: 24 }}>
+          {RULES.map((r) => {
+            const Icon = r.icon;
+            return (
+              <div key={r.title} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', background: 'var(--sp-bg, #fafafa)', border: '1px solid var(--sp-border)', borderRadius: 14, padding: '12px 14px' }}>
+                <span style={{ flexShrink: 0, width: 34, height: 34, borderRadius: 9, display: 'grid', placeItems: 'center', background: 'hsl(160 60% 94%)', color: 'hsl(160 70% 30%)' }}>
+                  <Icon style={{ width: 17, height: 17 }} />
+                </span>
+                <span>
+                  <b style={{ display: 'block', fontSize: 14.5, color: 'var(--sp-foreground)' }}>{r.title}</b>
+                  <small style={{ color: 'var(--sp-muted-fg)', fontSize: 13 }}>{r.body}</small>
+                </span>
+              </div>
+            );
+          })}
+        </div>
+
+        <MicCheck onResult={setMicOk} />
+
+        <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end', marginTop: 24, flexWrap: 'wrap' }}>
+          <button className="sp-btn-ghost" onClick={onCancel} style={{ height: 46, padding: '0 20px' }}>Back</button>
+          <button
+            className="sp-btn-primary"
+            onClick={onStart}
+            disabled={!micOk}
+            style={{ height: 46, padding: '0 26px', opacity: micOk ? 1 : 0.5, cursor: micOk ? 'pointer' : 'not-allowed' }}
+          >
+            {micOk ? 'Start exam →' : 'Check your mic first'}
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function MicCheck({ onResult }) {
+  const [state, setState] = useState('idle'); // idle | checking | ok | denied
+  const [level, setLevel] = useState(0);
+  const rafRef = useRef(null);
+  const streamRef = useRef(null);
+  const ctxRef = useRef(null);
+
+  const cleanup = () => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    try { streamRef.current?.getTracks().forEach((t) => t.stop()); } catch (_) { /* ignore */ }
+    try { ctxRef.current?.close(); } catch (_) { /* ignore */ }
+    streamRef.current = null;
+    ctxRef.current = null;
+  };
+
+  useEffect(() => cleanup, []);
+
+  const start = async () => {
+    setState('checking');
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      streamRef.current = stream;
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      const ctx = new Ctx();
+      ctxRef.current = ctx;
+      const analyser = ctx.createAnalyser();
+      analyser.fftSize = 512;
+      ctx.createMediaStreamSource(stream).connect(analyser);
+      const data = new Uint8Array(analyser.frequencyBinCount);
+      const tick = () => {
+        analyser.getByteTimeDomainData(data);
+        let peak = 0;
+        for (let i = 0; i < data.length; i += 1) { const v = Math.abs(data[i] - 128); if (v > peak) peak = v; }
+        const lvl = Math.min(1, peak / 40);
+        setLevel(lvl);
+        if (lvl > 0.15) { setState('ok'); onResult?.(true); }
+        rafRef.current = requestAnimationFrame(tick);
+      };
+      tick();
+    } catch (_) {
+      setState('denied');
+      onResult?.(false);
+    }
+  };
+
+  return (
+    <div style={{ border: '1px solid var(--sp-border)', borderRadius: 14, padding: '14px 16px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+        <Mic style={{ width: 17, height: 17, color: 'var(--sp-muted-fg)' }} />
+        <b style={{ fontSize: 14, color: 'var(--sp-foreground)' }}>Microphone check</b>
+        {state === 'ok' && <span style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 5, color: 'hsl(160 70% 32%)', fontSize: 13, fontWeight: 600 }}><CheckCircle2 style={{ width: 15, height: 15 }} /> Working</span>}
+        {state === 'denied' && <span style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 5, color: 'hsl(0 70% 45%)', fontSize: 13, fontWeight: 600 }}><AlertTriangle style={{ width: 15, height: 15 }} /> Blocked</span>}
+      </div>
+
+      {state === 'idle' && (
+        <button className="sp-btn-ghost" onClick={start} style={{ height: 40, padding: '0 16px' }}>Test microphone</button>
+      )}
+
+      {(state === 'checking' || state === 'ok') && (
+        <>
+          <div style={{ height: 10, borderRadius: 999, background: 'var(--sp-border)', overflow: 'hidden' }}>
+            <div style={{ height: '100%', width: `${Math.round(level * 100)}%`, background: state === 'ok' ? 'hsl(160 70% 42%)' : 'hsl(199 89% 55%)', transition: 'width 80ms linear' }} />
+          </div>
+          <small style={{ display: 'block', marginTop: 8, color: 'var(--sp-muted-fg)', fontSize: 12.5 }}>
+            {state === 'ok' ? 'Great — your mic is picking up sound.' : 'Say something out loud to test your mic…'}
+          </small>
+        </>
+      )}
+
+      {state === 'denied' && (
+        <small style={{ display: 'block', color: 'var(--sp-muted-fg)', fontSize: 12.5 }}>
+          Mic access was blocked. Click the lock icon in the address bar → Microphone → Allow, then{' '}
+          <button onClick={start} style={{ background: 'none', border: 'none', color: 'hsl(160 70% 32%)', cursor: 'pointer', textDecoration: 'underline', padding: 0, fontSize: 12.5 }}>try again</button>.
+        </small>
+      )}
+    </div>
   );
 }
