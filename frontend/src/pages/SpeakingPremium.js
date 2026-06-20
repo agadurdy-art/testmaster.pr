@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mic, Sparkles, MessageCircle, Lock, ArrowRight } from 'lucide-react';
-import { SpeakingPractice } from '../features/speaking';
+import MockExamFlow from '../features/speaking/components/MockExamFlow';
 import { isSpeakingPremiumUser, getPlanLabel } from '../lib/planAccess';
 import '../features/speaking/speaking.css';
 
@@ -33,11 +33,14 @@ export default function SpeakingPremium({ user }) {
   }
 
   if (isSpeakingPremiumUser(user)) {
+    // Full Mock Test = one continuous ElevenLabs conversation with Liz, graded
+    // holistically. The per-part practice that used to live on this surface now
+    // lives in Speaking Practice (Question Bank), so this page is just the mock.
     return (
       <div className="speaking-scope">
-        <SpeakingPractice
+        <MockExamFlow
           user={user}
-          onExit={() => navigate('/dashboard/v2')}
+          onExit={() => navigate('/dashboard')}
         />
       </div>
     );

@@ -727,10 +727,14 @@ function AppWithSessionHandler() {
         <Route path="/pricing/v2" element={<PricingPageV2 user={user} />} />
         <Route path="/onboarding/v2" element={<OnboardingPageV2 user={user} onUserUpdate={setUser} />} />
         <Route path="/speaking/v2" element={<SpeakingPracticeV2 />} />
+        {/* Full Mock Test (ElevenLabs). Renamed from the old "Liz Examiner" /
+            speaking-premium surface; the old path now redirects here so existing
+            links keep working. */}
         <Route
-          path="/speaking-premium"
+          path="/full-mock"
           element={user ? <SpeakingPremium user={user} /> : <RedirectToLogin />}
         />
+        <Route path="/speaking-premium" element={<Navigate to="/full-mock" replace />} />
         <Route
           path="/speaking-practice"
           element={

@@ -1367,12 +1367,11 @@ export default function SpeakingPracticeQB({ user }) {
               </Card>
             </div>
 
-            {/* Full Test — all 3 parts back-to-back. Navigates to the unified
-                /speaking-premium surface which hosts the FullTestFlow orchestrator.
-                Tier gating happens there (Monthly + Exam Pack only). */}
+            {/* Full Mock Test — one continuous ElevenLabs conversation with Liz,
+                graded holistically. Lives at /full-mock (gating handled there). */}
             <Card
               className="p-5 cursor-pointer hover:shadow-md transition-all border-2 hover:border-amber-400 bg-gradient-to-r from-amber-50 via-orange-50 to-amber-50"
-              onClick={() => navigate('/speaking-premium')}
+              onClick={() => navigate('/full-mock')}
             >
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg flex items-center justify-center shrink-0">

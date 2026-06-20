@@ -355,7 +355,7 @@ export default function DashboardPage({ user, onLogout }) {
             }[key];
             if (path) navigate(path);
           }}
-          onSpeakingPremium={() => navigate("/speaking-premium")}
+          onSpeakingPremium={() => navigate("/full-mock")}
         />
       </section>
 
@@ -434,7 +434,7 @@ export default function DashboardPage({ user, onLogout }) {
             eyebrow="Speaking · Liz ✦"
             title="Speaking mock with Liz"
             description="One continuous 12–14 min exam — Parts 1–3 live, holistic band at the end."
-            onClick={() => navigate("/speaking-premium?mock=1")}
+            onClick={() => navigate("/full-mock")}
           />
         </div>
       </section>

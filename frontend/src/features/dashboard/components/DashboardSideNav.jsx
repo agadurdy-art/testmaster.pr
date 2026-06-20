@@ -47,7 +47,7 @@ const GROUPS = [
       { label: "Vocabulary", href: "/vocabulary", icon: BookA, match: ["/vocabulary"] },
       { label: "Grammar", href: "/grammar", icon: Type, match: ["/grammar"] },
       { label: "Strategies", href: "/tips", icon: Lightbulb, match: ["/tips"] },
-      { label: "Liz Examiner", href: "/speaking-premium", icon: Mic, match: ["/speaking-premium"], badge: "Live" },
+      { label: "Full Mock Test", href: "/full-mock", icon: Mic, match: ["/full-mock", "/speaking-premium"], badge: "Live" },
       { label: "Liz · coach", href: "/liz", icon: Sparkles, match: ["/liz"], badge: "Live" },
     ],
   },
