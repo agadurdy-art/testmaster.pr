@@ -145,6 +145,16 @@ export default function SpeakingPracticeQB({ user }) {
   // auto-stop without re-subscribing every second (stopRecording's identity
   // changes as speakingTime ticks).
   const stopRecordingRef = useRef(null);
+  // Prompt-phase ("Listening...") failure guards. The prompt audio can 404,
+  // fail to decode, get blocked by autoplay, or never emit `ended` (broken
+  // file) — any of which previously hung the user on "Listening..." forever.
+  // promptAdvancedRef ensures we leave the prompt phase exactly once no matter
+  // which recovery signal fires first; promptWatchdogRef is the last-resort
+  // timer; advanceFromPromptRef always holds the latest advance closure so the
+  // timers/handlers never call a stale one.
+  const promptAdvancedRef = useRef(false);
+  const promptWatchdogRef = useRef(null);
+  const advanceFromPromptRef = useRef(() => {});
   // Stable across retries of a single QB part submission. Backend
   // /api/speaking/evaluate de-dupes on (user_id, client_request_id).
   const clientRequestIdRef = useRef(null);
@@ -175,6 +185,7 @@ export default function SpeakingPracticeQB({ user }) {
     loadModules();
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
+      if (promptWatchdogRef.current) clearTimeout(promptWatchdogRef.current);
     };
   }, [filterTrack, filterBand]);
 
@@ -319,26 +330,57 @@ export default function SpeakingPracticeQB({ user }) {
     return null;
   }, [moduleContent, currentPart, currentQuestionIndex]);
 
+  // Single-fire exit from the "Listening..." prompt phase. Whichever signal
+  // arrives first — audio `ended`, an `error`/404, a rejected play() promise,
+  // or the watchdog — wins; the rest no-op. Refreshed every render so the
+  // timers/handlers always run against the current part.
+  advanceFromPromptRef.current = () => {
+    if (promptAdvancedRef.current) return;
+    promptAdvancedRef.current = true;
+    if (promptWatchdogRef.current) {
+      clearTimeout(promptWatchdogRef.current);
+      promptWatchdogRef.current = null;
+    }
+    if (currentPart === 2) startPrepPhase();
+    else startRecording();
+  };
+
   const playQuestionAudio = useCallback(async () => {
     const question = getCurrentQuestion();
     if (!question) return;
-    
+
+    // Arm the prompt-phase guards before anything can fire.
+    promptAdvancedRef.current = false;
+    if (promptWatchdogRef.current) {
+      clearTimeout(promptWatchdogRef.current);
+      promptWatchdogRef.current = null;
+    }
     setRecordingState(STATES.PROMPT_PLAYING);
-    
+
     let audioUrl = null;
     if (currentPart === 1) audioUrl = question.audio_url;
     else if (currentPart === 2) audioUrl = moduleContent.part2?.audio_url;
     else if (currentPart === 3) audioUrl = question.audio_url;
-    
+
     if (audioUrl && audioRef.current) {
       const fullUrl = audioUrl.startsWith('/api') ? `${API_URL}${audioUrl}` : audioUrl;
+      // Last-resort watchdog: if the prompt audio stalls or never emits `ended`
+      // (broken file that still loads metadata), don't strand the user on
+      // "Listening...". Prompts are short sentences (<12s), so 30s never trips
+      // during real playback. The `error`/`catch` paths handle the fast 404 case.
+      promptWatchdogRef.current = setTimeout(() => advanceFromPromptRef.current(), 30000);
       audioRef.current.src = fullUrl;
-      audioRef.current.play();
+      try {
+        const p = audioRef.current.play();
+        if (p && typeof p.then === 'function') {
+          p.catch(() => advanceFromPromptRef.current());
+        }
+      } catch (_) {
+        advanceFromPromptRef.current();
+      }
     } else {
-      setTimeout(() => {
-        if (currentPart === 2) startPrepPhase();
-        else startRecording();
-      }, 500);
+      // No audio attached to this question — go straight to prep/recording.
+      setTimeout(() => advanceFromPromptRef.current(), 500);
     }
   }, [getCurrentQuestion, currentPart, moduleContent]);
 
@@ -352,8 +394,19 @@ export default function SpeakingPracticeQB({ user }) {
       return;
     }
     if (recordingState !== STATES.PROMPT_PLAYING) return;
-    if (currentPart === 2) startPrepPhase();
-    else setTimeout(() => startRecording(), 500);
+    advanceFromPromptRef.current();
+  };
+
+  // Same shared <audio> element: a load/decode error during prompt playback
+  // must advance the user (so a missing audio_url can't freeze "Listening..."),
+  // but an error while replaying their own recording just resets the button.
+  const handleAudioError = () => {
+    if (recordingState === STATES.READY_NEXT) {
+      setIsPlayingBack(false);
+      return;
+    }
+    if (recordingState !== STATES.PROMPT_PLAYING) return;
+    advanceFromPromptRef.current();
   };
 
   const startPrepPhase = () => {
@@ -842,7 +895,7 @@ export default function SpeakingPracticeQB({ user }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <audio ref={audioRef} onEnded={handleAudioEnded} />
+      <audio ref={audioRef} onEnded={handleAudioEnded} onError={handleAudioError} />
       
       <div className="bg-white border-b sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 py-4">
