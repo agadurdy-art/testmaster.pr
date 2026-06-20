@@ -417,3 +417,6 @@ html[lang="tr"] * {
   .tt-shell{ padding-bottom:88px; }   /* room so the sticky bar never covers the terms line */
 }
 @media (prefers-reduced-motion:reduce){ .tt-cardwrap::before,.tt-cardwrap::after{ animation:none!important; } }
+
+/* Reading-passage highlighter marks (IELTS CDI-style). Yellow, text colour kept. */
+mark.rp-hl { background: #fde68a; color: inherit; border-radius: 2px; padding: 0 1px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }

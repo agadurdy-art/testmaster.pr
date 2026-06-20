@@ -9,11 +9,13 @@ import {
   Play, Pause, RotateCcw, BookOpen
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { usePassageHighlighter, HighlightMenu } from '../components/reading/PassageHighlighter';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function ReadingPracticeGeneral({ user }) {
   const navigate = useNavigate();
+  const hl = usePassageHighlighter();
   const [searchParams] = useSearchParams();
   const topic = searchParams.get('topic');
   const band = searchParams.get('band');
@@ -203,12 +205,29 @@ export default function ReadingPracticeGeneral({ user }) {
                   <Badge className="bg-white/20">{moduleContent.band_target}</Badge>
                   <Badge className="bg-purple-400/30">{moduleContent.reading_scenario?.text_type}</Badge>
                 </div>
-                <h2 className="text-lg font-bold">{moduleContent.reading_scenario?.title}</h2>
-                <p className="text-sm text-purple-100 mt-1 italic">{moduleContent.reading_scenario?.context}</p>
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h2 className="text-lg font-bold">{moduleContent.reading_scenario?.title}</h2>
+                    <p className="text-sm text-purple-100 mt-1 italic">{moduleContent.reading_scenario?.context}</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={hl.clearAll}
+                    className="shrink-0 inline-flex items-center gap-1.5 text-[11px] font-medium bg-white/15 hover:bg-white/25 rounded-full px-3 py-1.5 transition-colors"
+                    title="Select text in the passage to highlight it. Click here to clear all highlights."
+                  >
+                    <span className="w-3 h-3 rounded-sm bg-yellow-300 inline-block" />
+                    Clear highlights
+                  </button>
+                </div>
               </div>
               <div className="p-6 max-h-[600px] overflow-y-auto bg-gray-50">
                 {/* Paragraph render avoids Safari/iOS Reader Mode auto-engage. */}
-                <div className="font-sans text-sm text-gray-700 leading-relaxed space-y-3">
+                <div
+                  ref={hl.ref}
+                  onMouseUp={hl.onMouseUp}
+                  className="font-sans text-sm text-gray-700 leading-relaxed space-y-3 select-text"
+                >
                   {String(moduleContent.reading_scenario?.passage || '')
                     .split(/\n\s*\n/)
                     .filter((p) => p.trim().length > 0)
@@ -217,6 +236,7 @@ export default function ReadingPracticeGeneral({ user }) {
                     ))}
                 </div>
               </div>
+              <HighlightMenu hl={hl} />
             </Card>
 
             {/* Right: Questions */}

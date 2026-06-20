@@ -9,11 +9,13 @@ import {
   Play, Pause, RotateCcw
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { usePassageHighlighter, HighlightMenu } from '../components/reading/PassageHighlighter';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function ReadingPracticeAcademic({ user }) {
   const navigate = useNavigate();
+  const hl = usePassageHighlighter();
   const [searchParams] = useSearchParams();
   const topic = searchParams.get('topic');
   const band = searchParams.get('band');
@@ -229,16 +231,35 @@ export default function ReadingPracticeAcademic({ user }) {
             {/* Left: Passage */}
             <Card className="p-0 overflow-hidden">
               <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4">
-                <Badge className="bg-white/20 mb-2">{moduleContent.band_target}</Badge>
-                <h2 className="text-lg font-bold">{moduleContent.reading_scenario?.title}</h2>
-                <p className="text-sm text-blue-100 mt-1">{moduleContent.reading_scenario?.text_type}</p>
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <Badge className="bg-white/20 mb-2">{moduleContent.band_target}</Badge>
+                    <h2 className="text-lg font-bold">{moduleContent.reading_scenario?.title}</h2>
+                    <p className="text-sm text-blue-100 mt-1">{moduleContent.reading_scenario?.text_type}</p>
+                  </div>
+                  {/* IELTS-style highlighter: select passage text → Highlight chip. */}
+                  <button
+                    type="button"
+                    onClick={hl.clearAll}
+                    className="shrink-0 inline-flex items-center gap-1.5 text-[11px] font-medium bg-white/15 hover:bg-white/25 rounded-full px-3 py-1.5 transition-colors"
+                    title="Select text in the passage to highlight it. Click here to clear all highlights."
+                  >
+                    <span className="w-3 h-3 rounded-sm bg-yellow-300 inline-block" />
+                    Clear highlights
+                  </button>
+                </div>
               </div>
               <div className="p-6 max-h-[600px] overflow-y-auto">
                 {/* Render passage as paragraphs (not <pre>) — a single long
                     <pre> block triggers Safari/iOS Reader Mode auto-engage,
                     which strips the rest of the app chrome and leaves the
-                    user looking at just the passage with no questions. */}
-                <div className="font-sans text-sm text-gray-700 leading-relaxed space-y-3">
+                    user looking at just the passage with no questions.
+                    The ref + onMouseUp drive the highlighter (select → Highlight). */}
+                <div
+                  ref={hl.ref}
+                  onMouseUp={hl.onMouseUp}
+                  className="font-sans text-sm text-gray-700 leading-relaxed space-y-3 select-text"
+                >
                   {String(moduleContent.reading_scenario?.passage || '')
                     .split(/\n\s*\n/)
                     .filter((p) => p.trim().length > 0)
@@ -247,6 +268,7 @@ export default function ReadingPracticeAcademic({ user }) {
                     ))}
                 </div>
               </div>
+              <HighlightMenu hl={hl} />
             </Card>
 
             {/* Right: Questions */}
