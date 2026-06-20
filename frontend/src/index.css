@@ -359,3 +359,61 @@ html[lang="tr"] * {
 .lg-ghost:hover{border-color:#cdd6e6;transform:translateY(-1px)}
 @media (prefers-reduced-motion:reduce){ .lg-aurora i,.lg-card,.lg-card::before,.lg-cta::after{animation:none!important} }
 @media (max-width:480px){ .lg-card{padding:28px 22px 24px} .lg-title{font-size:21px} }
+
+/* -----------------------------------------------------------------------------
+ * /start — paid-social conversion landing. Builds on the .lg-auth base (aurora
+ * + glass card tokens) and adds a two-pane hero (promise + proof | signup) with
+ * a premium spinning conic-gradient border on the card (pattern #9). CSS-only;
+ * all motion halts under prefers-reduced-motion.
+ * --------------------------------------------------------------------------- */
+.tt-land{ align-items:flex-start; padding:0; }
+.tt-shell{ position:relative; z-index:2; width:100%; max-width:1040px; margin:0 auto; padding:clamp(28px,6vh,72px) 24px 40px; }
+.tt-hero{ display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(28px,5vw,64px); align-items:center; }
+.tt-copy{ color:#fff; }
+.tt-copy .lg-brand b{ color:#fff; }
+.tt-copy .lg-brand small{ color:rgba(255,255,255,.7); }
+.tt-h1{ font-size:clamp(28px,4.4vw,44px); line-height:1.08; font-weight:800; letter-spacing:-.8px; margin:18px 0 14px; color:#fff; }
+.tt-lead{ font-size:clamp(15px,1.5vw,17px); line-height:1.55; color:rgba(255,255,255,.74); max-width:30em; margin:0 0 26px; }
+.tt-benefits{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:15px; }
+.tt-benefits li{ display:flex; gap:13px; align-items:flex-start; }
+.tt-bicon{ flex:0 0 auto; width:38px; height:38px; border-radius:11px; display:grid; place-items:center; color:#fff; background:linear-gradient(140deg,var(--lg-brand),#06b6d4); box-shadow:0 6px 16px -6px rgba(16,185,129,.6),0 1px 0 rgba(255,255,255,.4) inset; }
+.tt-benefits b{ display:block; font-size:14.5px; font-weight:700; color:#fff; margin-bottom:1px; }
+.tt-benefits small{ display:block; font-size:13px; line-height:1.45; color:rgba(255,255,255,.62); }
+
+/* Spinning conic border wrapper (pattern #9). The gradient lives on an
+ * oversized square pseudo that's clipped to the wrapper's rounded rect via
+ * overflow:hidden — so its corners never protrude as it rotates. The card
+ * sits on top (z-index) and masks the centre, leaving only a glowing ring. */
+.tt-cardwrap{ position:relative; border-radius:28px; padding:2px; overflow:hidden;
+  box-shadow:0 30px 80px -28px rgba(16,185,129,.45); }
+.tt-cardwrap::before{ content:""; position:absolute; top:50%; left:50%; width:240%; height:240%;
+  background:conic-gradient(from 0deg, var(--lg-brand), #06b6d4, #3b82f6, var(--lg-brand));
+  transform:translate(-50%,-50%) rotate(0deg); animation:ttSpin 7s linear infinite; }
+@keyframes ttSpin{ to{ transform:translate(-50%,-50%) rotate(1turn); } }
+.tt-card{ position:relative; z-index:1; border-radius:26px; }
+.tt-cardtitle{ font-size:21px; font-weight:800; letter-spacing:-.4px; color:var(--lg-text); margin:0 0 3px; }
+.tt-cardsub{ font-size:13px; color:var(--lg-text-soft); margin:0 0 18px; }
+.tt-signin{ color:var(--lg-brand-deep); font-weight:700; text-decoration:none; }
+.tt-signin:hover{ text-decoration:underline; }
+.tt-terms{ position:relative; z-index:2; text-align:center; margin:26px auto 0; color:rgba(255,255,255,.5); font-size:12px; }
+.tt-terms a{ color:rgba(255,255,255,.78); text-decoration:none; }
+.tt-terms a:hover{ text-decoration:underline; }
+
+@media (max-width:860px){
+  .tt-hero{ grid-template-columns:1fr; gap:26px; }
+  .tt-copy{ text-align:center; }
+  .tt-copy .lg-brand{ justify-content:center; }
+  .tt-lead{ margin-left:auto; margin-right:auto; }
+  .tt-benefits{ max-width:420px; margin:0 auto; text-align:left; }
+}
+.tt-sticky{ display:none; }
+@media (max-width:860px){
+  .tt-sticky{ display:flex; align-items:center; justify-content:center; position:fixed;
+    left:14px; right:14px; bottom:calc(14px + env(safe-area-inset-bottom,0px)); z-index:30;
+    padding:16px; border:0; border-radius:15px; color:#fff; font-size:16px; font-weight:700;
+    background:linear-gradient(135deg,var(--lg-brand),var(--lg-brand-deep));
+    box-shadow:0 12px 30px -8px rgba(16,185,129,.65),0 1px 0 rgba(255,255,255,.35) inset; cursor:pointer; }
+  .tt-sticky:active{ transform:scale(.99); }
+  .tt-shell{ padding-bottom:88px; }   /* room so the sticky bar never covers the terms line */
+}
+@media (prefers-reduced-motion:reduce){ .tt-cardwrap::before,.tt-cardwrap::after{ animation:none!important; } }

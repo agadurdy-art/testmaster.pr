@@ -26,6 +26,7 @@ import {
   stashPendingCustomMeta,
 } from './lib/pendingPlan';
 import { isIeltsMode, homePath, normalizeProduct } from './lib/learningMode';
+import { track } from './lib/analytics';
 
 // Critical pages - loaded immediately
 import Dashboard from './pages/Dashboard';
@@ -51,6 +52,7 @@ const AdminLearningMode = lazy(() => import('./pages/AdminLearningMode'));
 const AdminTestimonials = lazy(() => import('./pages/AdminTestimonials'));
 const ShareYourStoryPage = lazy(() => import('./pages/ShareYourStoryPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
+const StartLanding = lazy(() => import('./pages/StartLanding'));
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
 const TermsPage = lazy(() => import('./pages/TermsPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
@@ -378,6 +380,10 @@ function AppWithSessionHandler() {
           } catch (_) { /* non-fatal */ }
         }
         if (userData.onboarding_complete === false && !hasMode) {
+          // Brand-new Google account → count it as a conversion (mirrors the
+          // email sign_up fired on /start). UTM persists in sessionStorage so
+          // the OAuth round-trip doesn't lose campaign attribution.
+          track('sign_up', { method: 'google' });
           navigate('/onboarding');
           return;
         }
@@ -494,6 +500,7 @@ function AppWithSessionHandler() {
         <Route path="/" element={<LandingPageDemo user={user} setUser={setUser} />} />
         <Route path="/landing/v1" element={<LandingPage onLogin={handleLogin} user={user} />} />
         <Route path="/login" element={<LoginPage user={user} onLogin={handleLogin} />} />
+        <Route path="/start" element={<StartLanding user={user} onLogin={handleLogin} />} />
         <Route path="/signup" element={<SignupBridge user={user} />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms" element={<TermsPage />} />
