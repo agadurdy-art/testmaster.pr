@@ -515,8 +515,13 @@ function AppWithSessionHandler() {
   ];
   const path = location.pathname;
   const isPublicRoute = path === '/' || PUBLIC_PREFIXES.some((p) => path === p || path.startsWith(p + '/'));
-  const isSealedExam = path.startsWith('/full-test/take');
-  const showRail = !!user && !isPublicRoute && !isSealedExam;
+  // Focus mode = immersive activities that run full-screen with their OWN
+  // header/timer: the sealed full-test runner and the Reading/Listening/Writing
+  // practice surfaces. Forcing the rail on these double-headed them and cramped
+  // the test layout. (Question Bank home + the speaking picker keep the rail.)
+  const isFocusMode = path.startsWith('/full-test/take')
+    || /^\/question-bank\/(reading|listening|writing)(\/|$)/.test(path);
+  const showRail = !!user && !isPublicRoute && !isFocusMode;
   const railThemeClass =
     activeTheme === THEME_MODES.DARK ? 'theme-dark'
     : activeTheme === THEME_MODES.NIGHT_SHIFT ? 'theme-night'
