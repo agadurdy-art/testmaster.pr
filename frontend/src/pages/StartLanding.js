@@ -105,7 +105,7 @@ export default function StartLanding({ user, onLogin }) {
           {/* Left: the promise + proof */}
           <div className="tt-copy">
             <div className="lg-brand">
-              <div className="lg-logo">IA</div>
+              <img src="/brand/ielts-ace-logo.jpg" alt="IELTS Ace" style={{ width: 42, height: 42, borderRadius: 13, objectFit: 'cover', boxShadow: '0 6px 16px -4px rgba(16,185,129,.35)' }} />
               <div>
                 <b>IELTS Ace</b>
                 <small>by testmaster.pro</small>

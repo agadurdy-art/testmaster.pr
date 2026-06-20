@@ -183,7 +183,7 @@ export default function LoginPage({ user, onLogin }) {
 
         <div className="lg-card">
           <div className="lg-brand">
-            <div className="lg-logo">{isGE ? 'GE' : 'IA'}</div>
+            <img src="/brand/ielts-ace-logo.jpg" alt="IELTS Ace" style={{ width: 42, height: 42, borderRadius: 13, objectFit: 'cover', boxShadow: '0 6px 16px -4px rgba(16,185,129,.35)' }} />
             <div>
               <b>{brandTitle}</b>
               <small>{brandTagline}</small>

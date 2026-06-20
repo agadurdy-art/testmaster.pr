@@ -7,6 +7,7 @@ import { Link, useLocation } from "react-router-dom";
 // blank. Importing it here ships the scope tokens wherever the rail loads.
 // (All rules are scoped under .dashboard-scope, so this can't leak elsewhere.)
 import "../dashboard.css";
+import BrandLogo from "../../../components/BrandLogo";
 import {
   LayoutGrid, PenLine, ClipboardCheck, BookOpen, Type, Lightbulb,
   Sparkles, TrendingUp, CreditCard, Settings, BookA, ChevronRight, Mic, ClipboardList,
@@ -99,32 +100,10 @@ export default function DashboardSideNav({ user }) {
         WebkitBackdropFilter: "blur(20px) saturate(160%)",
       }}
     >
-      <Link to="/dashboard" className="flex items-center gap-3 px-2 pb-4 mb-3 border-b hairline no-underline">
-        {/* Logo mark — glass-style emerald tile with a top inner highlight and a
-            soft brand-coloured glow so it reads as a real product logo (it now
-            shows on every page, not just the dashboard). */}
-        <span
-          className="w-10 h-10 rounded-[13px] grid place-items-center text-white font-extrabold text-[15px] shrink-0 relative overflow-hidden tracking-tight"
-          style={{
-            background: "linear-gradient(145deg, hsl(var(--primary)), hsl(var(--primary-ink)))",
-            boxShadow: "0 6px 18px -5px hsl(var(--primary) / .55), inset 0 1px 0 hsl(0 0% 100% / .4)",
-          }}
-        >
-          <span
-            aria-hidden="true"
-            className="absolute inset-x-0 top-0 h-1/2 opacity-60"
-            style={{ background: "linear-gradient(180deg, hsl(0 0% 100% / .28), transparent)" }}
-          />
-          <span className="relative">IA</span>
-        </span>
-        <span className="leading-tight">
-          <span className="block text-[15px] font-extrabold tracking-tight" style={{ color: "hsl(var(--fg))" }}>
-            IELTS&nbsp;Ace
-          </span>
-          <span className="block text-[10.5px] font-semibold uppercase tracking-[0.1em]" style={{ color: "hsl(var(--primary-ink))" }}>
-            by testmaster.pro
-          </span>
-        </span>
+      {/* Real brand lockup (the actual /brand logo mark + wordmark), shared with
+          every other nav via BrandLogo — replaces the old placeholder "IA" tile. */}
+      <Link to="/dashboard" className="block px-2 pb-4 mb-3 border-b hairline no-underline" style={{ color: "hsl(var(--fg))" }}>
+        <BrandLogo size="md" href={null} />
       </Link>
 
       <nav className="flex-1 overflow-y-auto -mx-1 px-1 space-y-0.5">
