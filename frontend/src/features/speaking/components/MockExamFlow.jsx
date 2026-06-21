@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { ConversationProvider } from '@elevenlabs/react';
 import { Clock, Ban, CreditCard, Volume2, Mic, CheckCircle2, AlertTriangle } from 'lucide-react';
 
 import SpeakingHeader from './SpeakingHeader';
@@ -46,7 +47,7 @@ async function submitExamEval({ user, conversationId, clientRequestId }) {
 // 1-credit (~$3) mock against.
 const MAX_EXAM_SECONDS = 15 * 60;
 
-export default function MockExamFlow({ user, onExit }) {
+function MockExamFlowInner({ user, onExit }) {
   const liz = useElevenLabsLiz({ userId: user?.id });
   const [started, setStarted] = useState(false);
   const [phase, setPhase] = useState('live'); // live | submitting | results | error
@@ -186,6 +187,19 @@ export default function MockExamFlow({ user, onExit }) {
         </div>
       </section>
     </>
+  );
+}
+
+// useElevenLabsLiz → useConversation() must run inside a ConversationProvider
+// (required by @elevenlabs/react ≥1.2). Mirror SpeakingPractice/LizD8: keep the
+// hook in an Inner component and wrap the export. Without this the whole
+// /full-mock route throws "useRegisterCallbacks must be used within a
+// ConversationProvider" → the error-boundary "Something went wrong" screen.
+export default function MockExamFlow(props) {
+  return (
+    <ConversationProvider>
+      <MockExamFlowInner {...props} />
+    </ConversationProvider>
   );
 }
 
