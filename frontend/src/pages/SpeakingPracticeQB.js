@@ -525,7 +525,37 @@ export default function SpeakingPracticeQB({ user }) {
     }, 1000);
   };
 
+  // Part 2 is the D7 "wow" cue-card experience end-to-end. Landing on Part 2
+  // drops the candidate straight into the 1-minute preparation (the real-test
+  // behaviour) so they see the polished prep surface — big cue card, live
+  // countdown, notepad — instead of a bare "Start" screen with an empty status
+  // card. Condition-gated rather than ref-gated so the mic-denied / no-audio
+  // recovery paths (which bounce back to IDLE) re-arm it: the user lands back on
+  // prep, never on an empty card. Parts 1 & 3 keep their listen-then-record flow.
+  useEffect(() => {
+    if (
+      currentPart === 2 &&
+      selectedPart === 2 &&
+      moduleContent &&
+      !results &&
+      recordingState === STATES.IDLE &&
+      !isPrepPhase &&
+      !recordingIntentRef.current
+    ) {
+      startPrepPhase();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPart, selectedPart, moduleContent, results, recordingState, isPrepPhase]);
+
+  // Set while startRecording is in-flight (mic getUserMedia is async, so there's
+  // a render gap where recordingState is still IDLE and isPrepPhase is already
+  // false). The Part 2 auto-prep effect checks this so it can't spuriously
+  // restart preparation during that gap (which would race a second prep timer
+  // against the recording we're about to begin).
+  const recordingIntentRef = useRef(false);
+
   const startRecording = async () => {
+    recordingIntentRef.current = true;
     try {
       audioChunksRef.current = [];
       // Stop any active playback and free the previous blob URL so the user
@@ -550,6 +580,7 @@ export default function SpeakingPracticeQB({ user }) {
       mediaRecorderRef.current = mediaRecorder;
       mediaRecorder.start();
       setRecordingState(STATES.RECORDING);
+      recordingIntentRef.current = false;
       
       const maxTime = currentPart === 2 ? 120 : (currentPart === 3 ? 75 : 25);
       setSpeakingTime(0);
@@ -560,6 +591,7 @@ export default function SpeakingPracticeQB({ user }) {
     } catch (error) {
       console.error('Error starting recording:', error);
       toast.error('Could not access microphone');
+      recordingIntentRef.current = false;
       setRecordingState(STATES.IDLE);
     }
   };
@@ -1400,7 +1432,7 @@ export default function SpeakingPracticeQB({ user }) {
             (the landing-page promise), used during the prep and recording phases.
             Grading is unchanged (leave-safe cue-card job queue). Other phases
             (Start / processing / Next) keep the shared controls below. */}
-        {moduleContent && selectedPart && !results && currentPart === 2 && (isPrepPhase || recordingState === STATES.RECORDING) && (() => {
+        {moduleContent && selectedPart && !results && currentPart === 2 && (isPrepPhase || recordingState === STATES.RECORDING || recordingState === STATES.IDLE) && (() => {
           const cc = {
             topic: moduleContent.part2?.cue_card?.topic,
             prompt: moduleContent.part2?.cue_card?.topic,
@@ -1409,7 +1441,7 @@ export default function SpeakingPracticeQB({ user }) {
           const startSpeakingNow = () => { clearInterval(timerRef.current); setIsPrepPhase(false); startRecording(); };
           return (
             <div className="speaking-scope rounded-2xl overflow-hidden border border-emerald-100 shadow-sm">
-              {isPrepPhase ? (
+              {recordingState !== STATES.RECORDING ? (
                 <PreparationState
                   prepRemaining={prepTime}
                   prepTotal={60}
@@ -1430,7 +1462,7 @@ export default function SpeakingPracticeQB({ user }) {
           );
         })()}
 
-        {moduleContent && selectedPart && !results && !(currentPart === 2 && (isPrepPhase || recordingState === STATES.RECORDING)) && (
+        {moduleContent && selectedPart && !results && !(currentPart === 2 && (isPrepPhase || recordingState === STATES.RECORDING || recordingState === STATES.IDLE)) && (
           <div className="space-y-6">
             <Card className={`p-4 ${recordingState === STATES.RECORDING ? 'bg-red-50 border-red-200' : isPrepPhase ? 'bg-yellow-50 border-yellow-200' : 'bg-emerald-50/50 border-emerald-100'}`}>
               <div className="flex items-center justify-between">
