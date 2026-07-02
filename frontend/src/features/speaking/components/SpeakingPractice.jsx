@@ -7,13 +7,17 @@ import RecordingState from './RecordingState';
 import ResultsState from './ResultsState';
 import ProcessingState from './ProcessingState';
 import ErrorState from './ErrorState';
-import StructuredQuestionFlow from './StructuredQuestionFlow';
+// NOTE (Faz 3, 2026-07-02): StructuredQuestionFlow and FullTestFlow stay in
+// the repo per Aga's 2026-06-05 decision ("revisit/remove the old examiner
+// later") but are no longer imported here — neither was reachable (the
+// pendingFullTest branch had no trigger; StructuredQuestionFlow was imported
+// without ever being rendered), yet both shipped in this route's chunk
+// (~1,350 lines of dead bundle). Re-import them if a flow gets re-wired.
 import { useSpeakingFlow } from '../hooks/useSpeakingFlow';
 import { pickRandomCueCard } from '../lib/pickCueCard';
 import { adaptSpeakingResult } from '../lib/adaptSpeakingResult';
 import useElevenLabsLiz from '../../liz/hooks/useElevenLabsLiz';
 import VoiceOverlay from '../../liz/components/VoiceOverlay';
-import FullTestFlow from './FullTestFlow';
 import MockExamFlow from './MockExamFlow';
 import { mintClientRequestId } from '../../../lib/clientRequestId';
 import '../../liz/liz.css';
@@ -377,7 +381,6 @@ function SpeakingPracticeInner({ onExit, user }) {
   const [pendingLivePart, setPendingLivePart] = useState(null);
   // True when the user has opened the 3-part Full Test orchestrator. Mutually
   // exclusive with pendingLivePart and the per-part flow states.
-  const [pendingFullTest, setPendingFullTest] = useState(false);
   // Deep-link: /speaking-premium?mock=1 (Dashboard → Mock Test Center →
   // "Speaking mock with Liz") opens the single-session mock exam directly,
   // skipping the part picker.
@@ -436,7 +439,6 @@ function SpeakingPracticeInner({ onExit, user }) {
   const handleExit = () => {
     flow.reset();
     setPendingLivePart(null);
-    setPendingFullTest(false);
     setCueCardKey((k) => k + 1);
     if (onExit) onExit();
   };
@@ -480,20 +482,14 @@ function SpeakingPracticeInner({ onExit, user }) {
   // Full Test = single-session mock exam (one continuous Liz conversation,
   // holistic transcript grading). The old multi-phase FullTestFlow is kept in
   // the codebase but no longer wired here (Aga 2026-06-05: build the solid
-  // single-piece exam, revisit/remove the old examiner later).
+  // single-piece exam, revisit/remove the old examiner later). Its unreachable
+  // render branch + import were dropped in Faz 3 so it stops shipping in this
+  // chunk — see the import-site note at the top of this file.
   if (pendingMockExam) {
     return (
       <MockExamFlow
         user={user}
         onExit={() => setPendingMockExam(false)}
-      />
-    );
-  }
-  if (pendingFullTest) {
-    return (
-      <FullTestFlow
-        user={user}
-        onExit={() => setPendingFullTest(false)}
       />
     );
   }
