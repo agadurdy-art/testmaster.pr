@@ -1,12 +1,14 @@
 """
 Pronunciation Check API - Uses OpenAI Whisper for speech-to-text
 """
-from fastapi import APIRouter, UploadFile, File, Form, HTTPException
+from fastapi import APIRouter, UploadFile, File, Form, HTTPException, Depends
 from services.openai_compat import OpenAISpeechToText
 import os
 import tempfile
 import logging
 from dotenv import load_dotenv
+
+import auth_session  # Faz 0 (2026-07-02): Whisper spend must not be anonymous
 
 load_dotenv()
 logger = logging.getLogger(__name__)
@@ -20,7 +22,8 @@ stt = OpenAISpeechToText(api_key=os.environ.get("OPENAI_API_KEY") or os.environ.
 async def check_pronunciation(
     audio: UploadFile = File(...),
     target_word: str = Form(...),
-    target_sentence: str = Form(default="")
+    target_sentence: str = Form(default=""),
+    _caller: dict = Depends(auth_session.current_user),
 ):
     """Check pronunciation by transcribing audio and comparing to target"""
     try:

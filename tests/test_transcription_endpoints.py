@@ -183,10 +183,13 @@ class TestSpeakingQuestionBankEndpoints:
 
 
 class TestSpeakingPracticeEvaluation:
-    """Test speaking practice evaluation endpoint."""
-    
-    def test_speaking_practice_evaluate_endpoint(self):
-        """Test /api/speaking-practice/evaluate endpoint."""
+    """Legacy /api/speaking-practice/evaluate was removed (Faz 0, 2026-07-02).
+
+    It was an unmetered LLM side door; the metered replacement is
+    /api/speaking-practice/evaluate-structured. Verify the old route is gone.
+    """
+
+    def test_legacy_speaking_practice_evaluate_removed(self):
         payload = {
             "part": "part1",
             "topic": "Home & Accommodation",
@@ -197,21 +200,16 @@ class TestSpeakingPracticeEvaluation:
                 }
             ]
         }
-        
+
         response = requests.post(
             f"{BASE_URL}/api/speaking-practice/evaluate",
             json=payload
         )
-        
-        # Should return 200 or 500 (if AI evaluation fails)
-        assert response.status_code in [200, 500], f"Unexpected status: {response.status_code}"
-        
-        if response.status_code == 200:
-            data = response.json()
-            assert 'overall_band' in data or 'band_score' in data
-            print(f"✓ Speaking evaluation returned band score")
-        else:
-            print(f"✓ Speaking evaluation endpoint exists (AI may have failed)")
+
+        assert response.status_code in [404, 405], (
+            f"Legacy endpoint should be removed, got: {response.status_code}"
+        )
+        print("✓ Legacy /api/speaking-practice/evaluate is gone")
 
 
 if __name__ == "__main__":

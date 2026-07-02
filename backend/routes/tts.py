@@ -3,7 +3,9 @@ Text-to-Speech API Routes using ElevenLabs
 For IELTS Speaking test question audio generation
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+
+import auth_session  # Faz 0 (2026-07-02): voices listing = admin-only
 from fastapi.responses import Response
 from pydantic import BaseModel
 from typing import List, Optional
@@ -196,19 +198,23 @@ async def generate_speaking_questions_audio(request: TTSBatchRequest):
             if request.include_transitions and idx > 0:
                 transition = transitions[idx % len(transitions)]
                 full_text = f"{transition} {text}"
-            
-            # Generate audio
-            audio_generator = client.text_to_speech.convert(
-                text=full_text,
-                voice_id=request.voice_id,
-                model_id="eleven_multilingual_v2",
-                voice_settings=voice_settings
+
+            # Generate audio. Same rule as /generate (audit P3): the ElevenLabs
+            # SDK call + chunk iteration are BLOCKING — offload each synthesis
+            # to a thread so a batch doesn't stall the whole worker.
+            def _synthesize_one(t: str = full_text) -> bytes:
+                gen = client.text_to_speech.convert(
+                    text=t,
+                    voice_id=request.voice_id,
+                    model_id="eleven_multilingual_v2",
+                    voice_settings=voice_settings
+                )
+                return b"".join(gen)
+
+            audio_data = await asyncio.wait_for(
+                asyncio.to_thread(_synthesize_one), timeout=60
             )
-            
-            audio_data = b""
-            for chunk in audio_generator:
-                audio_data += chunk
-            
+
             # Save to cache (use original text for cache key)
             with open(cache_path, 'wb') as f:
                 f.write(audio_data)
@@ -228,16 +234,17 @@ async def generate_speaking_questions_audio(request: TTSBatchRequest):
         raise HTTPException(status_code=500, detail=f"Error generating TTS: {str(e)}")
 
 @router.get("/voices")
-async def get_available_voices():
-    """Get list of available ElevenLabs voices"""
+async def get_available_voices(_admin: dict = Depends(auth_session.require_admin)):
+    """Get list of available ElevenLabs voices (admin utility)."""
     try:
+        import asyncio
         from elevenlabs import ElevenLabs
         
         if not ELEVENLABS_API_KEY:
             raise HTTPException(status_code=500, detail="ElevenLabs API key not configured")
         
         client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
-        voices_response = client.voices.get_all()
+        voices_response = await asyncio.to_thread(client.voices.get_all)
         
         # Return simplified voice list
         voices = []

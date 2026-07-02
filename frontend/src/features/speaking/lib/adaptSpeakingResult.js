@@ -19,16 +19,25 @@
  *   data.liz_note         = string
  *   data.criteria?        = optional CriteriaBreakdown for the rubric drawer
  *
- * The adapter never throws on unknown shapes — it falls back to the D7
- * fixture so the page never crashes. Always returns a *new* object so the
- * caller can mutate freely.
+ * The adapter never throws on unknown shapes. Missing data renders as missing
+ * (empty transcript, zeroed delivery stats) — NEVER as the D7 demo fixture.
+ * Faz 1 (2026-07-02): the old fixture fallbacks leaked the Vietnamese "aunt
+ * Mai" demo transcript and fabricated 6.5 bands / 107 WPM into real results
+ * on legacy shapes — the source of the "wrong words underlined in my
+ * pronunciation" reports. Always returns a *new* object so the caller can
+ * mutate freely.
  */
 
-import {
-  SCORES as FIXTURE_SCORES,
-  FLUENCY as FIXTURE_FLUENCY,
-  TRANSCRIPT_TOKENS as FIXTURE_TOKENS,
-} from '../constants';
+// Honest empty-state for delivery stats when a legacy result carries none.
+// Matches the '—' conventions the legacy converters already use.
+const EMPTY_FLUENCY = {
+  wpm: 0,
+  pauses: '—',
+  fillers: '—',
+  unique: '—',
+  duration: '—',
+  words: 0,
+};
 
 const NUMERIC_RE = /^-?\d+(?:\.\d+)?$/;
 
@@ -145,13 +154,19 @@ function isLegacyFlatShape(raw) {
 /** Build the canonical scores block from a per-criterion source. */
 function buildScores({ fc, lr, gra, pr, overall, target }) {
   const overallVal = clampBand(roundHalf(overall ?? avg([fc, lr, gra, pr])));
+  // No fixture fallbacks: a missing criterion inherits the REAL overall band
+  // (legacy shape detection guarantees at least one band exists) instead of
+  // the demo 6.5s. `?? 0` guards the impossible no-band case — an obvious
+  // 0.0 beats a plausible fabricated score. ResultsState calls .toFixed(1)
+  // on these, so they must stay numeric.
+  const safeOverall = overallVal ?? 0;
   return {
-    overall: overallVal ?? FIXTURE_SCORES.overall,
-    target: clampBand(target ?? FIXTURE_SCORES.target) ?? FIXTURE_SCORES.target,
-    fc: clampBand(roundHalf(fc)) ?? FIXTURE_SCORES.fc,
-    lr: clampBand(roundHalf(lr)) ?? FIXTURE_SCORES.lr,
-    gra: clampBand(roundHalf(gra)) ?? FIXTURE_SCORES.gra,
-    pr: clampBand(roundHalf(pr)) ?? FIXTURE_SCORES.pr,
+    overall: safeOverall,
+    target: clampBand(target ?? 7.0) ?? 7.0,
+    fc: clampBand(roundHalf(fc)) ?? safeOverall,
+    lr: clampBand(roundHalf(lr)) ?? safeOverall,
+    gra: clampBand(roundHalf(gra)) ?? safeOverall,
+    pr: clampBand(roundHalf(pr)) ?? safeOverall,
   };
 }
 
@@ -223,7 +238,7 @@ function fromLegacyFlat(raw, ctx) {
   return {
     scores,
     fluency,
-    transcript_tokens: tokensFromTranscript(raw.transcript) || FIXTURE_TOKENS,
+    transcript_tokens: tokensFromTranscript(raw.transcript) || [],
     liz_note: lizNote,
     criteria: {
       fc: { band: scores.fc, explanation: toFeedback(raw.fluency_coherence ?? crit.fluency_coherence) || '—' },
@@ -307,7 +322,7 @@ function fromLegacyMultiResponse(raw, ctx) {
       duration: durationLabel(raw?.duration_seconds ?? ctx?.durationSeconds),
       words: raw?.feedback?.word_count ?? 0,
     },
-    transcript_tokens: tokens.length ? tokens : FIXTURE_TOKENS,
+    transcript_tokens: tokens,
     liz_note: lizNote,
     criteria: {
       fc: {
@@ -375,7 +390,7 @@ function fromFulltest(raw) {
   return {
     scores: { ...raw.scores },
     fluency,
-    transcript_tokens: tokens.length ? tokens : FIXTURE_TOKENS,
+    transcript_tokens: tokens,
     live_transcript_words: [],
     liz_note: raw.liz_note || '',
     criteria,
@@ -401,10 +416,10 @@ function fromCanonical(raw) {
   // poisoning the SWR cache or whatever fed the data in.
   return {
     scores: { ...raw.scores },
-    fluency: raw.fluency ? { ...raw.fluency } : { ...FIXTURE_FLUENCY },
+    fluency: raw.fluency ? { ...raw.fluency } : { ...EMPTY_FLUENCY },
     transcript_tokens: Array.isArray(raw.transcript_tokens)
       ? raw.transcript_tokens.map((tok) => ({ ...tok }))
-      : FIXTURE_TOKENS,
+      : [],
     live_transcript_words: Array.isArray(raw.live_transcript_words)
       ? [...raw.live_transcript_words]
       : [],

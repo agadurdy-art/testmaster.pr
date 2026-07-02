@@ -145,7 +145,6 @@ export default function SpeakingPracticeQB({ user }) {
   const audioRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
-  const timerRef = useRef(null);
   // Holds the latest stopRecording so the state-driven countdown effect can
   // auto-stop without re-subscribing every second (stopRecording's identity
   // changes as speakingTime ticks).
@@ -189,7 +188,6 @@ export default function SpeakingPracticeQB({ user }) {
   useEffect(() => {
     loadModules();
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
       if (promptWatchdogRef.current) clearTimeout(promptWatchdogRef.current);
     };
   }, [filterTrack, filterBand]);
@@ -507,22 +505,16 @@ export default function SpeakingPracticeQB({ user }) {
     advanceFromPromptRef.current();
   };
 
+  // Prep is state-driven exactly like the recording countdown below: the
+  // interval only decrements state, and a separate watcher starts recording at
+  // 0. The old version called startRecording() INSIDE the setPrepTime updater —
+  // updaters can be invoked twice (StrictMode/concurrent), which is the classic
+  // double-getUserMedia / frozen-countdown bug this file already fixed once for
+  // the recording timer.
   const startPrepPhase = () => {
     setIsPrepPhase(true);
     setPrepTime(60);
     setRecordingState(STATES.IDLE);
-    
-    timerRef.current = setInterval(() => {
-      setPrepTime(prev => {
-        if (prev <= 1) {
-          clearInterval(timerRef.current);
-          setIsPrepPhase(false);
-          startRecording();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
   };
 
   // Part 2 is the D7 "wow" cue-card experience end-to-end. Landing on Part 2
@@ -597,8 +589,6 @@ export default function SpeakingPracticeQB({ user }) {
   };
 
   const stopRecording = useCallback(async () => {
-    if (timerRef.current) clearInterval(timerRef.current);
-
     // Resilient stop: ALWAYS leave RECORDING so the user can never get stuck on
     // the recording screen (the old code gated the whole transition on
     // mediaRecorder.state === 'recording'; when that wasn't true it silently
@@ -677,6 +667,23 @@ export default function SpeakingPracticeQB({ user }) {
     }
   }, [timeLeft, recordingState]);
 
+  // State-driven prep countdown (mirror of the recording countdown above).
+  // Runs only while isPrepPhase; cleans up on any change — backToParts just
+  // flips isPrepPhase and the interval dies with it.
+  useEffect(() => {
+    if (!isPrepPhase) return undefined;
+    const id = setInterval(() => setPrepTime((p) => Math.max(0, p - 1)), 1000);
+    return () => clearInterval(id);
+  }, [isPrepPhase]);
+
+  useEffect(() => {
+    if (isPrepPhase && prepTime === 0) {
+      setIsPrepPhase(false);
+      startRecording();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prepTime, isPrepPhase]);
+
   const togglePlayback = useCallback(() => {
     if (!audioRef.current || !lastRecordingUrl) return;
     if (isPlayingBack) {
@@ -714,17 +721,35 @@ export default function SpeakingPracticeQB({ user }) {
     }
   };
 
+  // Disarm the "Listening..." prompt phase when the user leaves the question
+  // screen. Without this, a pending 30s watchdog (or a late play().catch) could
+  // fire on the part-picker screen and silently start prep/recording — mic on,
+  // no question mounted (Faz 1 fix, 2026-07-02). Setting promptAdvancedRef
+  // makes every queued advance callback a no-op; playQuestionAudio re-arms it.
+  const cancelPromptPhase = () => {
+    promptAdvancedRef.current = true;
+    if (promptWatchdogRef.current) {
+      clearTimeout(promptWatchdogRef.current);
+      promptWatchdogRef.current = null;
+    }
+    if (audioRef.current) {
+      try { audioRef.current.pause(); } catch (_) { /* ignore */ }
+    }
+  };
+
   const choosePart = (partNum) => {
+    cancelPromptPhase();
     setSelectedPart(partNum);
     setCurrentPart(partNum);
     setCurrentQuestionIndex(0);
     setRecordingState(STATES.IDLE);
+    setIsPrepPhase(false);
     setAnswers([]);
     audioBlobsRef.current = {};
   };
 
   const backToParts = () => {
-    if (timerRef.current) clearInterval(timerRef.current);
+    cancelPromptPhase();
     setSelectedPart(null);
     setCurrentPart(1);
     setCurrentQuestionIndex(0);
@@ -1438,7 +1463,7 @@ export default function SpeakingPracticeQB({ user }) {
             prompt: moduleContent.part2?.cue_card?.topic,
             bullets: moduleContent.part2?.cue_card?.bullets || [],
           };
-          const startSpeakingNow = () => { clearInterval(timerRef.current); setIsPrepPhase(false); startRecording(); };
+          const startSpeakingNow = () => { setIsPrepPhase(false); startRecording(); };
           return (
             <div className="speaking-scope rounded-2xl overflow-hidden border border-emerald-100 shadow-sm">
               {recordingState !== STATES.RECORDING ? (
@@ -1522,7 +1547,7 @@ export default function SpeakingPracticeQB({ user }) {
                 </Button>
               )}
               {recordingState === STATES.READY_NEXT && <Button onClick={moveToNext} className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white shadow-md shadow-emerald-200 px-8"><SkipForward className="w-5 h-5 mr-2" /> Next</Button>}
-              {isPrepPhase && <Button onClick={() => { clearInterval(timerRef.current); setIsPrepPhase(false); startRecording(); }} className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white shadow-md shadow-emerald-200 px-8"><Mic className="w-5 h-5 mr-2" /> Start Speaking</Button>}
+              {isPrepPhase && <Button onClick={() => { setIsPrepPhase(false); startRecording(); }} className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white shadow-md shadow-emerald-200 px-8"><Mic className="w-5 h-5 mr-2" /> Start Speaking</Button>}
             </div>
 
             {/* Footer: confirm which part the user is on + escape hatch back

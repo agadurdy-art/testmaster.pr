@@ -258,6 +258,12 @@ async def _grade_structured_job(job: Dict[str, Any], user: Dict[str, Any], decis
     target_band = job.get("target_band") or 7.0
     questions_meta = job.get("questions") or []
 
+    # _read_job_audio can hit the R2 mirror (blocking boto3 download) when the
+    # pod restarted since submit — keep it off the event loop (Faz 1).
+    question_audio = await asyncio.gather(
+        *[asyncio.to_thread(_read_job_audio, qm) for qm in questions_meta]
+    )
+
     result = await evaluate_speaking_practice_structured(
         part=part,
         topic=topic,
@@ -266,11 +272,11 @@ async def _grade_structured_job(job: Dict[str, Any], user: Dict[str, Any], decis
         questions=[
             {
                 "question": qm.get("question") or "",
-                "audio_bytes": _read_job_audio(qm),
+                "audio_bytes": audio_bytes,
                 "audio_url": qm.get("audio_url"),
                 "duration_seconds": qm.get("duration_seconds") or 0,
             }
-            for qm in questions_meta
+            for qm, audio_bytes in zip(questions_meta, question_audio)
         ],
         mode=decision.mode,
     )
@@ -296,7 +302,13 @@ async def _grade_cuecard_job(job: Dict[str, Any], user: Dict[str, Any], decision
 
     part = job.get("part") or "part2"
     questions_meta = job.get("questions") or []
-    audio_bytes = _read_job_audio(questions_meta[0]) if questions_meta else b""
+    # Off-loop for the same reason as the structured path: the R2 fallback
+    # download inside _read_job_audio is blocking network I/O (Faz 1).
+    audio_bytes = (
+        await asyncio.to_thread(_read_job_audio, questions_meta[0])
+        if questions_meta
+        else b""
+    )
     duration = (questions_meta[0].get("duration_seconds") if questions_meta else 0) or 0
     audio_url = questions_meta[0].get("audio_url") if questions_meta else None
 

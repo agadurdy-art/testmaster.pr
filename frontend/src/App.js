@@ -735,7 +735,7 @@ function AppWithSessionHandler() {
         <Route path="/landing/demo" element={<LandingPageDemo user={user} setUser={setUser} />} />
         <Route path="/pricing/v2" element={<PricingPageV2 user={user} />} />
         <Route path="/onboarding/v2" element={<OnboardingPageV2 user={user} onUserUpdate={setUser} />} />
-        <Route path="/speaking/v2" element={<SpeakingPracticeV2 />} />
+        <Route path="/speaking/v2" element={<SpeakingPracticeV2 user={user} />} />
         {/* Full Mock Test (ElevenLabs). Renamed from the old "Liz Examiner" /
             speaking-premium surface; the old path now redirects here so existing
             links keep working. */}

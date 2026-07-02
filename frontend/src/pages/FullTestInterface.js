@@ -107,6 +107,9 @@ export default function FullTestInterface({ user }) {
   const audioChunksRef = useRef([]);
   const questionAudioRef = useRef(null);
   const recordingStartRef = useRef(null);
+  // True while startSpeakingRecording's async getUserMedia is in flight —
+  // blocks a second concurrent start (double mic stream). See Faz 1 note.
+  const speakingStartingRef = useRef(false);
   // Stable across retries of the same Full Test speaking submission. Minted on
   // the first submit, reused on retries (so backend idempotency cache hits),
   // rotated to null only after a successful response.
@@ -429,6 +432,11 @@ export default function FullTestInterface({ user }) {
   };
 
   const startSpeakingRecording = async () => {
+    // Re-entrancy guard (Faz 1): the prep-timer watcher can only fire this
+    // once, but getUserMedia is async — a second call during that gap would
+    // open two mic streams and orphan one recorder.
+    if (speakingStartingRef.current) return;
+    speakingStartingRef.current = true;
     try {
       if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
         mediaRecorderRef.current.stop();
@@ -462,6 +470,8 @@ export default function FullTestInterface({ user }) {
       setPartTimeRemaining(PART_MAX_DURATION[partAtStart]);
     } catch (error) {
       toast.error('Could not access microphone');
+    } finally {
+      speakingStartingRef.current = false;
     }
   };
 
@@ -482,21 +492,27 @@ export default function FullTestInterface({ user }) {
     }
   };
 
+  // Timers are state-driven with separate zero-watchers (Faz 1, 2026-07-02):
+  // the old versions called stopSpeakingRecording()/startSpeakingRecording()
+  // INSIDE the setState updater — updaters can run twice under StrictMode/
+  // concurrent rendering, which risks a double mic-stop or double getUserMedia.
+
   // Auto-stop timer for active recording (caps part duration)
   useEffect(() => {
     let interval;
     if (speakingState === 'RECORDING' && partTimeRemaining > 0) {
       interval = setInterval(() => {
-        setPartTimeRemaining(prev => {
-          if (prev <= 1) {
-            stopSpeakingRecording();
-            return 0;
-          }
-          return prev - 1;
-        });
+        setPartTimeRemaining(prev => Math.max(0, prev - 1));
       }, 1000);
     }
     return () => clearInterval(interval);
+  }, [speakingState, partTimeRemaining]);
+
+  useEffect(() => {
+    if (speakingState === 'RECORDING' && partTimeRemaining === 0) {
+      stopSpeakingRecording();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [speakingState, partTimeRemaining]);
 
   // Part 2 prep timer: counts down 60s before speaking
@@ -504,17 +520,17 @@ export default function FullTestInterface({ user }) {
     let interval;
     if (speakingState === 'PREP' && prepTimeRemaining > 0) {
       interval = setInterval(() => {
-        setPrepTimeRemaining(prev => {
-          if (prev <= 1) {
-            // Auto-start recording when prep ends
-            startSpeakingRecording();
-            return 0;
-          }
-          return prev - 1;
-        });
+        setPrepTimeRemaining(prev => Math.max(0, prev - 1));
       }, 1000);
     }
     return () => clearInterval(interval);
+  }, [speakingState, prepTimeRemaining]);
+
+  useEffect(() => {
+    if (speakingState === 'PREP' && prepTimeRemaining === 0) {
+      // Auto-start recording when prep ends (re-entrancy guarded).
+      startSpeakingRecording();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [speakingState, prepTimeRemaining]);
 

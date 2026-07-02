@@ -205,10 +205,17 @@ function LiveConversation({ part, user, onExit }) {
     // Primary path: hand the backend the conversation_id so it pulls the
     // ElevenLabs call recording and runs real Azure pronunciation. Fall back to
     // the local blob, then the transcript, so a result always appears.
-    const transcriptFallback = () =>
-      (transcript && transcript.trim())
+    // Tell the user when we degraded to transcript-only grading (Faz 1,
+    // 2026-07-02). The silent fallback meant results sometimes arrived with
+    // no word-level pronunciation and no explanation — reported as "the
+    // pronunciation analysis is missing/broken".
+    let usedTranscriptFallback = false;
+    const transcriptFallback = () => {
+      usedTranscriptFallback = true;
+      return (transcript && transcript.trim())
         ? submitLizTranscriptEval({ user, part, transcript, durationSecs, clientRequestId: clientRequestIdRef.current })
         : Promise.reject(new Error('No transcript to grade.'));
+    };
 
     let submitPromise;
     if (conversationId) {
@@ -228,6 +235,17 @@ function LiveConversation({ part, user, onExit }) {
     }
     submitPromise
       .then((data) => {
+        if (usedTranscriptFallback && data && typeof data === 'object') {
+          const note =
+            "Note: word-level pronunciation analysis wasn't available for " +
+            'this session, so I graded from your transcript. Your band ' +
+            'scores are complete — record again any time for the full ' +
+            'pronunciation breakdown.';
+          data = {
+            ...data,
+            liz_note: data.liz_note ? `${data.liz_note}\n\n${note}` : note,
+          };
+        }
         setScoreResult(data);
         clientRequestIdRef.current = null;
         setPhase('results');

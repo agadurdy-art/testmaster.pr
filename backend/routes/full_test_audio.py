@@ -4,7 +4,9 @@ Full Test Mode Audio API Routes
 Endpoints for generating and serving audio files for Full Test Mode.
 """
 
-from fastapi import APIRouter, HTTPException, BackgroundTasks
+from fastapi import APIRouter, HTTPException, BackgroundTasks, Depends
+
+import auth_session  # Faz 0 (2026-07-02): ElevenLabs bulk synthesis = admin-only
 from fastapi.responses import FileResponse, StreamingResponse
 from services.asset_cdn import serve_static_asset
 from typing import Dict, Optional
@@ -282,7 +284,8 @@ async def generate_listening_audio(
 @router.post("/generate/speaking/{test_id}")
 async def generate_speaking_audio(
     test_id: str,
-    part: Optional[int] = None
+    part: Optional[int] = None,
+    _admin: dict = Depends(auth_session.require_admin),
 ):
     """
     Generate speaking question audio for a test.

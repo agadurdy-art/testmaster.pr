@@ -2,8 +2,10 @@
 
 import os
 import tempfile
-from fastapi import APIRouter, UploadFile, File, Form
+from fastapi import APIRouter, UploadFile, File, Form, Depends
 from dotenv import load_dotenv
+
+import auth_session  # Faz 0 (2026-07-02): Whisper spend must not be anonymous
 
 load_dotenv()
 
@@ -37,6 +39,7 @@ async def evaluate_speech(
     audio: UploadFile = File(...),
     expected_text: str = Form(""),
     prompt_text: str = Form(""),
+    _caller: dict = Depends(auth_session.current_user),
 ):
     """Transcribe audio with Whisper and evaluate against expected text."""
     from services.openai_compat import OpenAISpeechToText

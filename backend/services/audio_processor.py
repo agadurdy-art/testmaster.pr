@@ -118,11 +118,26 @@ def persist_audio(audio_bytes: bytes, *, suffix: str = ".webm") -> Dict[str, Any
     # key "recordings/<name>" mirrors /static/recordings/<name>, which the CDN
     # redirect middleware serves in production. Best-effort: a failure here just
     # falls back to the in-session disk copy.
+    #
+    # Faz 1 (2026-07-02): boto3 put_object is BLOCKING network I/O; running it
+    # inline stalled the event loop for the duration of a multi-MB upload. The
+    # mirror was already fire-and-forget semantically (failures only warn), so
+    # push it to the default thread executor when a loop is running.
+    def _mirror_to_r2() -> None:
+        try:
+            from services.recording_storage import upload_recording
+            upload_recording(
+                f"recordings/{name}", audio_bytes, content_type="audio/webm"
+            )
+        except Exception:  # never let storage break evaluation
+            logger.warning("R2 recording mirror skipped for %s", name, exc_info=True)
+
     try:
-        from services.recording_storage import upload_recording
-        upload_recording(f"recordings/{name}", audio_bytes, content_type="audio/webm")
-    except Exception:  # never let storage break evaluation
-        logger.warning("R2 recording mirror skipped for %s", name, exc_info=True)
+        import asyncio
+
+        asyncio.get_running_loop().run_in_executor(None, _mirror_to_r2)
+    except RuntimeError:  # no running loop (sync/script context) — do it inline
+        _mirror_to_r2()
     # Static is mounted at /static; downstream consumers (UI playback,
     # /api/recordings/{name}) compose the public URL.
     return {

@@ -129,6 +129,13 @@ export default function CambridgeTestInterface() {
   const [questionPlayCounts, setQuestionPlayCounts] = useState({});  // Track plays per question
   const [questionRecordings, setQuestionRecordings] = useState({});  // Store recordings per question
   const [recordingTime, setRecordingTime] = useState(0);
+  // TTS couldn't play (fetch failed or the audio element errored). We then
+  // reveal the question TEXT and open the record path — Part 1/3 hides the
+  // question by design (listening-first), so without this reveal a TTS outage
+  // hard-locked the flow: Record only renders from READY_TO_RECORD, and
+  // READY_TO_RECORD was only reachable via a successful playback ending
+  // (Faz 1 fix, 2026-07-02 — the "Cambridge speaking stuck" QA report).
+  const [ttsUnavailable, setTtsUnavailable] = useState(false);
   const recordingTimerRef = useRef(null);
   const ttsAudioRef = useRef(null);
   // Map<questionIndex, uuid> — keeps each question's id stable across
@@ -2669,8 +2676,12 @@ export default function CambridgeTestInterface() {
       }
     } catch (error) {
       console.error('TTS Error:', error);
-      toast.error('Could not play question audio');
-      setSpeakingState(SPEAKING_STATES.IDLE);
+      // Never dead-end the flow on a TTS failure: reveal the question text
+      // and open the record path (READY_TO_RECORD) instead of bouncing to
+      // IDLE, where Record is unreachable.
+      toast.error('Question audio unavailable — read the question and record your answer.');
+      setTtsUnavailable(true);
+      setSpeakingState(SPEAKING_STATES.READY_TO_RECORD);
     }
   };
 
@@ -2678,6 +2689,16 @@ export default function CambridgeTestInterface() {
   const handleTTSEnded = () => {
     setSpeakingState(SPEAKING_STATES.READY_TO_RECORD);
     setTtsAudioUrl(null); // Clear URL to prevent re-play
+  };
+
+  // The <audio> element itself can error after a good /generate response
+  // (404'd cache file, decode error). Same recovery as a failed fetch —
+  // without this the UI sat on "Listen carefully..." forever.
+  const handleTTSError = () => {
+    toast.error('Question audio unavailable — read the question and record your answer.');
+    setTtsUnavailable(true);
+    setTtsAudioUrl(null);
+    setSpeakingState(SPEAKING_STATES.READY_TO_RECORD);
   };
 
   // Start Part 2 preparation timer
@@ -2723,8 +2744,15 @@ export default function CambridgeTestInterface() {
               onClick={() => {
                 setCurrentPart(idx);
                 setSpeakingQuestionIndex(0);
-                setSpeakingState(SPEAKING_STATES.IDLE);
+                // Land on RECORDED (not IDLE) when this question already has an
+                // answer, so the playback/re-record card is visible again.
+                setSpeakingState(
+                  questionRecordings[`part${idx}_q0`]
+                    ? SPEAKING_STATES.RECORDED
+                    : SPEAKING_STATES.IDLE
+                );
                 setTtsAudioUrl(null);
+                setTtsUnavailable(false);
                 setRecordingTime(0);
                 setIsPreparing(false);
               }}
@@ -2821,8 +2849,19 @@ export default function CambridgeTestInterface() {
                     src={ttsAudioUrl}
                     autoPlay
                     onEnded={handleTTSEnded}
+                    onError={handleTTSError}
                     onPlay={() => setSpeakingState(SPEAKING_STATES.PLAYING_PROMPT)}
                   />
+                )}
+
+                {/* Question text reveal — only when audio can't carry it:
+                    TTS failed, or both plays are spent (the candidate can no
+                    longer re-listen, so hiding the text just blocks them). */}
+                {(ttsUnavailable ||
+                  (questionPlayCounts[`part${currentPart}_q${speakingQuestionIndex}`] || 0) >= 2) && (
+                  <div className="p-4 mb-6 bg-slate-700/60 rounded-lg border border-slate-600 text-center">
+                    <p className="text-sm text-gray-200">{questions[speakingQuestionIndex]}</p>
+                  </div>
                 )}
 
                 {/* Step 1: Listen Button */}
@@ -2852,8 +2891,22 @@ export default function CambridgeTestInterface() {
                       )}
                     </Button>
                     <span className="text-sm text-gray-400">
-                      ({2 - (questionPlayCounts[`part${currentPart}_q${speakingQuestionIndex}`] || 0)} plays left)
+                      ({Math.max(0, 2 - (questionPlayCounts[`part${currentPart}_q${speakingQuestionIndex}`] || 0))} plays left)
                     </span>
+                    {/* Plays spent while back in IDLE (e.g. after Previous/Next
+                        navigation): Listen is disabled, so give the candidate
+                        an explicit way into the record step — otherwise this
+                        was a hard dead-end. */}
+                    {speakingState === SPEAKING_STATES.IDLE &&
+                      (questionPlayCounts[`part${currentPart}_q${speakingQuestionIndex}`] || 0) >= 2 && (
+                      <Button
+                        onClick={() => setSpeakingState(SPEAKING_STATES.READY_TO_RECORD)}
+                        className="bg-red-600 hover:bg-red-700"
+                        size="lg"
+                      >
+                        <Mic className="w-5 h-5 mr-2" /> Continue to Recording
+                      </Button>
+                    )}
                   </div>
                 )}
 
@@ -2926,9 +2979,15 @@ export default function CambridgeTestInterface() {
                 <Button
                   onClick={() => {
                     if (speakingQuestionIndex > 0) {
-                      setSpeakingQuestionIndex(speakingQuestionIndex - 1);
-                      setSpeakingState(SPEAKING_STATES.IDLE);
+                      const prevIdx = speakingQuestionIndex - 1;
+                      setSpeakingQuestionIndex(prevIdx);
+                      setSpeakingState(
+                        questionRecordings[`part${currentPart}_q${prevIdx}`]
+                          ? SPEAKING_STATES.RECORDED
+                          : SPEAKING_STATES.IDLE
+                      );
                       setTtsAudioUrl(null);
+                      setTtsUnavailable(false);
                       setRecordingTime(0);
                     }
                   }}
@@ -2941,9 +3000,15 @@ export default function CambridgeTestInterface() {
                 {speakingQuestionIndex < questions.length - 1 ? (
                   <Button
                     onClick={() => {
-                      setSpeakingQuestionIndex(speakingQuestionIndex + 1);
-                      setSpeakingState(SPEAKING_STATES.IDLE);
+                      const nextIdx = speakingQuestionIndex + 1;
+                      setSpeakingQuestionIndex(nextIdx);
+                      setSpeakingState(
+                        questionRecordings[`part${currentPart}_q${nextIdx}`]
+                          ? SPEAKING_STATES.RECORDED
+                          : SPEAKING_STATES.IDLE
+                      );
                       setTtsAudioUrl(null);
+                      setTtsUnavailable(false);
                       setRecordingTime(0);
                     }}
                     className="bg-orange-600 hover:bg-orange-700"

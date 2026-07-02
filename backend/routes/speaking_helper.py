@@ -35,9 +35,10 @@ from __future__ import annotations
 
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, Field
 
+import auth_session  # Faz 0 (2026-07-02): Haiku spend must not be anonymous
 from services.llm_compat import LlmChat, UserMessage
 
 
@@ -152,7 +153,10 @@ def _build_user_prompt(req: HelperRequest) -> str:
 
 
 @router.post("/helper", response_model=HelperResponse)
-async def speaking_helper(req: HelperRequest) -> HelperResponse:
+async def speaking_helper(
+    req: HelperRequest,
+    _caller: dict = Depends(auth_session.current_user),
+) -> HelperResponse:
     user_prompt = _build_user_prompt(req)
 
     chat = (

@@ -147,31 +147,31 @@ async def assess_pronunciation(
             temp_file.write(content)
             temp_path = temp_file.name
         
-        # Configure pronunciation assessment
-        speech_config = get_speech_config()
-        audio_config = speechsdk.audio.AudioConfig(filename=temp_path)
-        
-        # Pronunciation assessment config
-        pronunciation_config = speechsdk.PronunciationAssessmentConfig(
-            reference_text=reference_text,
-            grading_system=speechsdk.PronunciationAssessmentGradingSystem.HundredMark,
-            granularity=speechsdk.PronunciationAssessmentGranularity.Word,
-            enable_miscue=True
-        )
-        pronunciation_config.enable_prosody_assessment()
-        
-        # Create recognizer
-        recognizer = speechsdk.SpeechRecognizer(
-            speech_config=speech_config,
-            language=language,
-            audio_config=audio_config
-        )
-        
-        # Apply pronunciation assessment
-        pronunciation_config.apply_to(recognizer)
-        
-        # Perform recognition
-        result = recognizer.recognize_once()
+        # recognize_once is fine here semantically (a single word/sentence is
+        # one utterance) but the sync Azure SDK BLOCKS the event loop, so the
+        # whole configure+recognize step runs in a thread (Faz 1, 2026-07-02).
+        def _recognize_sync():
+            speech_config = get_speech_config()
+            audio_config = speechsdk.audio.AudioConfig(filename=temp_path)
+
+            pronunciation_config = speechsdk.PronunciationAssessmentConfig(
+                reference_text=reference_text,
+                grading_system=speechsdk.PronunciationAssessmentGradingSystem.HundredMark,
+                granularity=speechsdk.PronunciationAssessmentGranularity.Word,
+                enable_miscue=True
+            )
+            pronunciation_config.enable_prosody_assessment()
+
+            recognizer = speechsdk.SpeechRecognizer(
+                speech_config=speech_config,
+                language=language,
+                audio_config=audio_config
+            )
+            pronunciation_config.apply_to(recognizer)
+            return recognizer.recognize_once()
+
+        import asyncio
+        result = await asyncio.to_thread(_recognize_sync)
         
         if result.reason == speechsdk.ResultReason.RecognizedSpeech:
             # Get pronunciation assessment result

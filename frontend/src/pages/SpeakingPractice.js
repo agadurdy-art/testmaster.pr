@@ -64,14 +64,32 @@ export default function SpeakingPractice({ user }) {
   // recorded duration on stop — backend uses this for fluency (WPM, etc.).
   const recordStartRef = useRef(null);
 
+  // State-driven countdowns with separate zero-watchers (Faz 1, 2026-07-02):
+  // side effects (stopRecording / toasts) used to run INSIDE the setState
+  // updaters, which React may invoke twice — double toast, double mic-stop.
   useEffect(() => {
     if (isPreparing && prepTime > 0) {
-      timerRef.current = setInterval(() => { setPrepTime(prev => { if (prev <= 1) { setIsPreparing(false); toast.info('Prep time over!'); return 0; } return prev - 1; }); }, 1000);
+      timerRef.current = setInterval(() => setPrepTime(prev => Math.max(0, prev - 1)), 1000);
     } else if (isSpeaking && speakTime > 0) {
-      timerRef.current = setInterval(() => { setSpeakTime(prev => { if (prev <= 1) { stopRecording(); toast.info('Time is over.'); return 0; } return prev - 1; }); }, 1000);
+      timerRef.current = setInterval(() => setSpeakTime(prev => Math.max(0, prev - 1)), 1000);
     }
     return () => clearInterval(timerRef.current);
   }, [isPreparing, prepTime, isSpeaking, speakTime]);
+
+  useEffect(() => {
+    if (isPreparing && prepTime === 0) {
+      setIsPreparing(false);
+      toast.info('Prep time over!');
+    }
+  }, [isPreparing, prepTime]);
+
+  useEffect(() => {
+    if (isSpeaking && speakTime === 0) {
+      stopRecording();
+      toast.info('Time is over.');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSpeaking, speakTime]);
 
   const formatTime = (seconds) => `${Math.floor(seconds / 60)}:${(seconds % 60).toString().padStart(2, '0')}`;
 

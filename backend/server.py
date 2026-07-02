@@ -696,8 +696,9 @@ except Exception as e:
 
 # Cambridge Speaking evaluation routes
 try:
-    from routes.cambridge_speaking import router as cambridge_speaking_router
-    app.include_router(cambridge_speaking_router)
+    import routes.cambridge_speaking as cambridge_speaking_module
+    cambridge_speaking_module.set_db(db)
+    app.include_router(cambridge_speaking_module.router)
     print("✅ Cambridge Speaking routes loaded")
 except Exception as e:
     print(f"⚠️  Could not load Cambridge Speaking routes: {e}")
@@ -2602,8 +2603,25 @@ async def evaluate_speaking(data: SpeakingTest, caller: dict = Depends(auth_sess
 
 # Speaking test with AI - simple transcribe endpoint
 @api_router.post("/transcribe-audio")
-async def transcribe_audio_simple(file: UploadFile = File(...)):
-    """Simple transcription endpoint for beginner course and other uses."""
+async def transcribe_audio_simple(
+    request: Request,
+    file: UploadFile = File(...),
+    caller: Optional[dict] = Depends(auth_session.current_user_optional),
+):
+    """Simple transcription endpoint for beginner course and other uses.
+
+    Faz 0 (2026-07-02): this hits Whisper (paid) but must stay reachable from
+    public surfaces (level tests, course previews). Logged-in users pass via
+    their session token (attached by the frontend fetch wrapper); anonymous
+    callers are capped per IP per day instead of being blocked outright.
+    """
+    if caller is None:
+        from routes.speaking_unified import _client_ip
+        from security_utils import enforce_anon_daily_limit
+
+        await enforce_anon_daily_limit(
+            db, scope="transcribe_audio", ip=_client_ip(request), limit=20
+        )
     try:
         # Read audio file
         audio_data = await file.read()
@@ -5289,106 +5307,6 @@ async def evaluate_writing(request: WritingEvaluationRequest):
     except Exception as e:
         logger.error(f"Writing evaluation error: {e}")
         raise HTTPException(status_code=500, detail=f"Evaluation failed: {str(e)}")
-
-
-# ============ Speaking Practice Evaluation ============
-
-class SpeakingPracticeRequest(BaseModel):
-    part: str  # part1, part2, part3
-    topic: str
-    responses: List[Dict[str, Any]]  # List of {question, answer} pairs
-
-@api_router.post("/speaking-practice/evaluate")
-async def evaluate_speaking_practice(request: SpeakingPracticeRequest, _caller: dict = Depends(auth_session.current_user)):
-    """Evaluate IELTS speaking practice with detailed feedback"""
-    try:
-        chat = LlmChat(
-            api_key=os.getenv("EMERGENT_LLM_KEY"),
-            session_id=str(uuid.uuid4()),
-            system_message="You are an experienced IELTS examiner providing detailed speaking feedback."
-        ).with_model("openai", "gpt-4o")
-        
-        part_desc = {
-            "part1": "Part 1 (Introduction & Interview - familiar topics)",
-            "part2": "Part 2 (Individual Long Turn - cue card)",
-            "part3": "Part 3 (Two-way Discussion - abstract ideas)"
-        }.get(request.part, "Speaking Test")
-        
-        # Format responses for evaluation
-        responses_text = "\n\n".join([
-            f"Question: {r.get('question', 'N/A')}\nAnswer: {r.get('answer', 'No response')}"
-            for r in request.responses
-        ])
-        
-        prompt = f"""You are an experienced IELTS Speaking examiner. Evaluate this IELTS {part_desc} practice.
-
-TOPIC: {request.topic}
-
-RESPONSES:
-{responses_text}
-
-Provide a comprehensive evaluation in the following JSON format:
-{{
-    "overall_band": <float between 1.0 and 9.0, in 0.5 increments>,
-    "scores": {{
-        "fluency_coherence": <float 1.0-9.0>,
-        "lexical_resource": <float 1.0-9.0>,
-        "grammar": <float 1.0-9.0>,
-        "pronunciation": <float 1.0-9.0>
-    }},
-    "strengths": [<3-4 specific things done well in speaking>],
-    "improvements": [<3-4 specific areas to improve with examples>],
-    "pronunciation_tips": "<specific pronunciation advice based on their responses>",
-    "model_answer": "<A sample Band 8+ response to the main question, showing ideal vocabulary and structure>"
-}}
-
-Consider:
-- Fluency: Did they speak smoothly? Any hesitations?
-- Vocabulary: Range and appropriateness of words used
-- Grammar: Variety and accuracy of structures
-- Pronunciation: (Assess based on word choices and likely pronunciation patterns)
-
-Be encouraging but honest. Provide actionable feedback."""
-
-        response = await chat.send_message(UserMessage(text=prompt))
-        
-        # Handle different response formats
-        if isinstance(response, dict):
-            return response
-        
-        response_text = str(response).strip()
-        
-        # Try to extract JSON from response
-        import re
-        # Remove markdown code fences if present
-        if "```json" in response_text:
-            response_text = response_text.split("```json")[1].split("```")[0].strip()
-        elif "```" in response_text:
-            response_text = response_text.split("```")[1].split("```")[0].strip()
-        
-        json_match = re.search(r'\{[\s\S]*\}', response_text)
-        if json_match:
-            result = json.loads(json_match.group())
-            return result
-        
-        # Fallback response
-        return {
-            "overall_band": 5.5,
-            "scores": {
-                "fluency_coherence": 5.5,
-                "lexical_resource": 5.5,
-                "grammar": 5.5,
-                "pronunciation": 5.5
-            },
-            "strengths": ["You attempted to answer all questions", "You showed willingness to communicate"],
-            "improvements": ["Extend your answers with more details", "Use more varied vocabulary"],
-            "pronunciation_tips": "Practice word stress patterns and intonation.",
-            "model_answer": "Unable to generate model answer. Please try again."
-        }
-        
-    except Exception as e:
-        logging.getLogger(__name__).error(f"Speaking evaluation error: {e}")
-        raise HTTPException(status_code=500, detail="Failed to evaluate speaking")
 
 
 # ============ MASTERY COURSE ENDPOINTS (Band 4.5-6.5) ============

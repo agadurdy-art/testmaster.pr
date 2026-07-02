@@ -229,3 +229,46 @@ async def verify_paypal_webhook_signature(
     verification = response.json()
     if verification.get("verification_status") != "SUCCESS":
         raise HTTPException(status_code=401, detail="Invalid PayPal webhook signature.")
+
+
+async def enforce_anon_daily_limit(db, scope: str, ip: str, limit: int) -> None:
+    """Per-IP daily counter for endpoints that must stay public.
+
+    Faz 0 (2026-07-02): /api/transcribe-audio is called by public surfaces
+    (level tests, beginner/mastery course previews) so it cannot require a
+    session — but it hits Whisper (paid). Logged-in callers skip this (the
+    global fetch wrapper attaches their Bearer token); anonymous callers get
+    `limit` calls per IP per UTC day, enough for a level test but not a loop.
+
+    Best-effort: a Mongo failure must never take the feature down, so errors
+    fail OPEN (logged, not raised). The 429 is the only intentional raise.
+    """
+    from datetime import datetime, timezone
+
+    day = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    try:
+        doc = await db.anon_rate_limits.find_one_and_update(
+            {"scope": scope, "ip": ip, "day": day},
+            {
+                "$inc": {"count": 1},
+                "$setOnInsert": {"created_at": datetime.now(timezone.utc)},
+            },
+            upsert=True,
+            return_document=True,  # AFTER semantics for pymongo>=4 bool alias
+        )
+        count = int((doc or {}).get("count", 1))
+    except Exception as exc:  # pragma: no cover — fail open
+        import logging
+
+        logging.getLogger(__name__).warning(
+            "anon rate limit check failed (%s); allowing request", exc
+        )
+        return
+    if count > limit:
+        raise HTTPException(
+            status_code=429,
+            detail=(
+                "Daily free limit reached for this feature. "
+                "Please sign in to continue."
+            ),
+        )
