@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#05080f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="JARVIS" />
+  <link rel="icon" href="/jarvis-icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/jarvis-icon.svg" />
+  <title>JARVIS · Talk</title>
+  <style>
+    :root{ color-scheme:dark; --bg:#05080f; --sky:#5aa2ff; --sky2:#7cc6ff; }
+    *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    html,body{ height:100%; }
+    body{
+      margin:0; background:radial-gradient(120% 90% at 50% -10%, #0d1730 0%, #05080f 60%);
+      color:#dbe5f7; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+      display:flex; flex-direction:column; overflow:hidden;
+      padding-top:env(safe-area-inset-top); padding-bottom:env(safe-area-inset-bottom);
+    }
+    button{ font:inherit; color:inherit; border:none; background:none; cursor:pointer; }
+    .hidden{ display:none!important; }
+
+    /* header */
+    header{ display:flex; align-items:center; gap:.6rem; padding:.7rem 1rem; }
+    .brand{ font-weight:800; letter-spacing:.32em; color:var(--sky2); font-size:1.05rem; }
+    .dot{ width:8px; height:8px; border-radius:50%; background:#33415c; transition:.3s; }
+    .dot.on{ background:#34d399; box-shadow:0 0 10px #34d399; }
+    .hbtn{ margin-left:auto; width:38px; height:38px; border-radius:12px; background:rgba(120,160,255,.08);
+      border:1px solid rgba(120,160,255,.15); font-size:1.1rem; display:flex; align-items:center; justify-content:center; }
+
+    /* conversation */
+    #log{ flex:1; overflow-y:auto; padding:.5rem 1rem 1rem; display:flex; flex-direction:column; gap:.6rem; }
+    #log::-webkit-scrollbar{ width:0; }
+    .msg{ max-width:84%; padding:.7rem .95rem; border-radius:18px; font-size:1rem; line-height:1.45; white-space:pre-wrap; word-break:break-word; }
+    .me{ align-self:flex-end; background:linear-gradient(180deg,#1e4fb0,#1a3f8c); border-bottom-right-radius:6px; }
+    .ai{ align-self:flex-start; background:rgba(22,30,48,.92); border:1px solid rgba(120,160,255,.14); border-bottom-left-radius:6px; }
+    .ai.partial{ opacity:.85; }
+    .activity{ align-self:flex-start; font-size:.74rem; color:#74839e; padding:.1rem .4rem; font-family:ui-monospace,monospace; }
+    .empty{ margin:auto; text-align:center; color:#5b6680; font-size:.95rem; max-width:280px; line-height:1.6; }
+
+    /* orb */
+    .stage{ display:flex; flex-direction:column; align-items:center; gap:.6rem; padding:.4rem 1rem 1.4rem; }
+    .status{ font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; color:#8595b3; min-height:1em; }
+    .orbwrap{ position:relative; width:128px; height:128px; display:flex; align-items:center; justify-content:center; }
+    .ring{ position:absolute; inset:0; border-radius:50%; border:2px solid rgba(90,162,255,.25); }
+    .orb{ width:108px; height:108px; border-radius:50%; font-size:2.5rem; display:flex; align-items:center; justify-content:center;
+      background:radial-gradient(circle at 35% 30%, #2f6fd6, #14306e 70%); box-shadow:0 0 30px rgba(70,140,255,.35), inset 0 0 20px rgba(0,0,0,.4);
+      transition:transform .15s, box-shadow .3s; }
+    .orb:active{ transform:scale(.95); }
+    .listening .orb{ background:radial-gradient(circle at 35% 30%, #ff6a8b, #8c1a3f 70%); box-shadow:0 0 40px rgba(255,90,120,.5); }
+    .listening .ring{ animation:ripple 1.4s ease-out infinite; }
+    .listening .ring:nth-child(2){ animation-delay:.5s; }
+    .thinking .orb{ animation:breathe 1.1s ease-in-out infinite; }
+    .speaking .orb{ box-shadow:0 0 46px rgba(90,200,160,.55); background:radial-gradient(circle at 35% 30%, #2fb47a, #105c40 70%); }
+    .speaking .ring{ animation:ripple 1s ease-out infinite; border-color:rgba(60,210,150,.4); }
+    @keyframes ripple{ 0%{ transform:scale(.85); opacity:.7 } 100%{ transform:scale(1.45); opacity:0 } }
+    @keyframes breathe{ 0%,100%{ transform:scale(.96) } 50%{ transform:scale(1.06) } }
+    .hint{ font-size:.72rem; color:#5b6680; }
+
+    /* text fallback */
+    .row{ display:flex; gap:.5rem; width:100%; max-width:520px; }
+    .row input{ flex:1; background:rgba(15,22,38,.9); border:1px solid rgba(120,160,255,.16); border-radius:14px; padding:.7rem .9rem; outline:none; font-size:1rem; color:#dbe5f7; }
+    .row button{ background:var(--sky); color:#04122e; font-weight:700; border-radius:14px; padding:0 1rem; }
+
+    /* settings sheet + login */
+    .sheet{ position:fixed; inset:0; background:rgba(2,6,15,.72); backdrop-filter:blur(6px); display:flex; align-items:flex-end; z-index:40; }
+    .card{ width:100%; background:#0c1426; border:1px solid rgba(120,160,255,.16); border-radius:22px 22px 0 0; padding:1.2rem 1.2rem calc(1.4rem + env(safe-area-inset-bottom)); }
+    .login .card{ border-radius:22px; max-width:360px; margin:auto; }
+    .login{ align-items:center; justify-content:center; }
+    .card h3{ margin:.2rem 0 1rem; font-weight:700; letter-spacing:.1em; color:var(--sky2); }
+    .opt{ display:flex; align-items:center; justify-content:space-between; padding:.7rem 0; border-bottom:1px solid rgba(120,160,255,.08); font-size:.95rem; }
+    .opt:last-child{ border:none; }
+    .seg{ display:flex; background:#060b16; border-radius:12px; padding:3px; }
+    .seg button{ padding:.4rem .8rem; border-radius:9px; font-size:.82rem; color:#8595b3; }
+    .seg button.sel{ background:var(--sky); color:#04122e; font-weight:700; }
+    .sw{ width:50px; height:30px; border-radius:30px; background:#27324a; position:relative; transition:.2s; }
+    .sw.on{ background:#34d399; }
+    .sw::after{ content:""; position:absolute; top:3px; left:3px; width:24px; height:24px; border-radius:50%; background:#fff; transition:.2s; }
+    .sw.on::after{ left:23px; }
+    .card input[type=password]{ width:100%; background:#060b16; border:1px solid rgba(120,160,255,.16); border-radius:14px; padding:.8rem; outline:none; color:#dbe5f7; font-size:1rem; margin-bottom:.8rem; }
+    .primary{ width:100%; background:var(--sky); color:#04122e; font-weight:700; border-radius:14px; padding:.85rem; margin-top:.4rem; }
+    .ghost{ width:100%; color:#8595b3; padding:.7rem; font-size:.9rem; }
+    .muted{ color:#5b6680; font-size:.78rem; line-height:1.5; }
+  </style>
+</head>
+<body>
+  <!-- LOGIN -->
+  <div id="login" class="sheet login hidden">
+    <div class="card">
+      <h3 style="text-align:center">J.A.R.V.I.S</h3>
+      <p class="muted" style="text-align:center;margin-top:-.4rem;margin-bottom:1rem">erişim anahtarı</p>
+      <input id="tokenInput" type="password" placeholder="JARVIS_TOKEN" autocomplete="off" />
+      <button id="tokenSave" class="primary">Gir</button>
+    </div>
+  </div>
+
+  <!-- APP -->
+  <header>
+    <span class="brand">JARVIS</span>
+    <span id="conn" class="dot" title="bağlantı"></span>
+    <button id="openSettings" class="hbtn">⚙</button>
+  </header>
+
+  <div id="log">
+    <div class="empty" id="emptyHint">Mikrofona dokun ve konuş.<br/>JARVIS sesli cevap verir.<br/><br/>“testmaster ana sayfasını kontrol et”, “bugün ne yapmalıyım?”, “marketing-lead'e instagram postu hazırlat”…</div>
+  </div>
+
+  <div class="stage" id="stage">
+    <div class="status" id="status">hazır</div>
+    <div class="orbwrap" id="orbwrap">
+      <div class="ring"></div><div class="ring"></div>
+      <button class="orb" id="orb">🎙️</button>
+    </div>
+    <div class="hint" id="hint">konuşmak için dokun</div>
+    <div class="row">
+      <input id="textInput" placeholder="ya da buraya yaz…" enterkeyhint="send" />
+      <button id="textSend">↑</button>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div id="settings" class="sheet hidden">
+    <div class="card">
+      <h3>Ayarlar</h3>
+      <div class="opt">
+        <span>Eller serbest<br/><span class="muted">cevaptan sonra otomatik dinle</span></span>
+        <div class="sw" id="swHands"></div>
+      </div>
+      <div class="opt">
+        <span>Sesli cevap</span>
+        <div class="sw on" id="swVoice"></div>
+      </div>
+      <div class="opt">
+        <span>Ses kalitesi</span>
+        <div class="seg" id="voiceSrc">
+          <button data-v="device" class="sel">Cihaz (ücretsiz)</button>
+          <button data-v="hd">HD</button>
+        </div>
+      </div>
+      <div class="opt">
+        <span>Konuşma dili</span>
+        <div class="seg" id="lang">
+          <button data-l="tr-TR" class="sel">TR</button>
+          <button data-l="en-US">EN</button>
+        </div>
+      </div>
+      <button id="resetSession" class="ghost">↺ Yeni konuşma (hafızayı sıfırla)</button>
+      <button id="logout" class="ghost">Çıkış (anahtarı sil)</button>
+      <button id="closeSettings" class="primary">Kapat</button>
+      <p class="muted" style="margin-top:.9rem">HD ses ElevenLabs kullanır (ücretli). Cihaz sesi tamamen ücretsiz ve çevrimdışı çalışır.</p>
+    </div>
+  </div>
+
+<script>
+(() => {
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const log = $("log"), orb = $("orb"), stage = $("stage"), statusEl = $("status"), hintEl = $("hint");
+
+  // ---- persisted settings ----
+  const store = {
+    get token(){ return localStorage.getItem("jarvis_token") || ""; },
+    set token(v){ v ? localStorage.setItem("jarvis_token", v) : localStorage.removeItem("jarvis_token"); },
+    get(k, d){ const v = localStorage.getItem("jarvis_talk_"+k); return v===null ? d : v; },
+    set(k, v){ localStorage.setItem("jarvis_talk_"+k, v); },
+  };
+  let handsFree = store.get("hands","0")==="1";
+  let voiceOn   = store.get("voice","1")==="1";
+  let voiceSrc  = store.get("vsrc","device");   // device | hd
+  let sttLang   = store.get("lang","tr-TR");
+  let sessionId = null;
+
+  // ---- state machine ----
+  let state = "idle";   // idle | listening | thinking | speaking
+  const STATUS = { idle:"hazır", listening:"dinliyorum…", thinking:"düşünüyor…", speaking:"konuşuyor…" };
+  function setState(s){
+    state = s;
+    stage.className = "stage " + s;
+    statusEl.textContent = STATUS[s] || s;
+    orb.textContent = s==="listening" ? "■" : s==="speaking" ? "🔊" : s==="thinking" ? "…" : "🎙️";
+  }
+
+  // ---- conversation rendering ----
+  function bubble(cls, text){
+    $("emptyHint")?.remove();
+    const d = document.createElement("div");
+    d.className = "msg " + cls; d.textContent = text;
+    log.appendChild(d); log.scrollTop = log.scrollHeight; return d;
+  }
+  function activity(text){
+    $("emptyHint")?.remove();
+    const d = document.createElement("div");
+    d.className = "activity"; d.textContent = text;
+    log.appendChild(d); log.scrollTop = log.scrollHeight; return d;
+  }
+
+  // ---- iOS TTS priming (must run inside a user gesture, ONCE) ----
+  // iOS shares one audio session between mic input and speaker output, so we must
+  // NOT play any audio right before starting recognition (it kills the mic). We
+  // only "prime" speechSynthesis with a near-silent utterance the first time, then
+  // give it a moment to finish before the mic grabs the audio session.
+  let ttsPrimed = false;
+  function primeTTS(){
+    if (ttsPrimed || !("speechSynthesis" in window)) return false;
+    ttsPrimed = true;
+    try { speechSynthesis.getVoices(); const u = new SpeechSynthesisUtterance(" "); u.volume = 0; speechSynthesis.speak(u); } catch {}
+    return true;   // signals: we just primed, caller should delay the mic a touch
+  }
+
+  // ---- speech recognition (STT) ----
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let rec = null, finalText = "", manualStop = false;
+  function startListening(){
+    if (!SR){ hintEl.textContent = "bu tarayıcı ses tanımıyor — yazarak kullan"; return; }
+    if (state === "speaking"){ stopSpeaking(); }
+    finalText = ""; manualStop = false;
+    try {
+      rec = new SR();
+      rec.lang = sttLang; rec.interimResults = true; rec.continuous = false; rec.maxAlternatives = 1;
+      let liveBubble = null;
+      rec.onresult = e => {
+        let interim = "", fin = "";
+        for (let i=0;i<e.results.length;i++){
+          const t = e.results[i][0].transcript;
+          if (e.results[i].isFinal) fin += t; else interim += t;
+        }
+        finalText = (fin || interim).trim();
+        if (!liveBubble) liveBubble = bubble("me", "");
+        liveBubble.textContent = finalText || "…";
+        log.scrollTop = log.scrollHeight;
+      };
+      rec.onerror = ev => {
+        if (ev.error === "no-speech" || ev.error === "aborted") return;
+        hintEl.textContent = "mic: "+ev.error;
+        if (ev.error === "not-allowed" || ev.error === "service-not-allowed")
+          activity("🎤 mikrofon izni yok — Ayarlar > Safari > Mikrofon, ve Ayarlar > Genel > Klavye > Dikte AÇIK");
+        else activity("🎤 mic hatası: "+ev.error);
+      };
+      rec.onend = () => {
+        rec = null;
+        if (manualStop && !finalText){ setState("idle"); hintEl.textContent="konuşmak için dokun"; return; }
+        const text = finalText.trim();
+        if (text){ send(text); }
+        else { setState("idle"); hintEl.textContent="konuşmak için dokun"; }
+      };
+      rec.start();
+      setState("listening"); hintEl.textContent = "bitince tekrar dokun";
+    } catch(err){ hintEl.textContent = "mic başlatılamadı"; setState("idle"); }
+  }
+  function stopListening(){ manualStop = true; try { rec && rec.stop(); } catch {} }
+
+  // ---- text-to-speech (TTS) ----
+  let currentAudio = null;
+  function looksTurkish(t){ return /[çğıöşüÇĞİÖŞÜ]/.test(t) || /\b(bir|için|ve|ben|sen|nasıl|merhaba|tamam)\b/i.test(t); }
+  function cleanForSpeech(t){
+    return t.replace(/```[\s\S]*?```/g,"")        // code blocks
+            .replace(/`([^`]+)`/g,"$1")
+            .replace(/[*#_>~|]/g,"")
+            .replace(/\[(.*?)\]\(.*?\)/g,"$1")
+            .replace(/\s+/g," ").trim();
+  }
+  function stopSpeaking(){
+    try { speechSynthesis.cancel(); } catch {}
+    if (currentAudio){ try { currentAudio.pause(); } catch {} currentAudio = null; }
+  }
+  async function speak(text){
+    const clean = cleanForSpeech(text);
+    if (!voiceOn || !clean){ afterSpeak(); return; }
+    setState("speaking");
+    if (voiceSrc === "hd"){
+      try {
+        const r = await fetch("/api/tts", { method:"POST",
+          headers:{ "Content-Type":"application/json", ...authHeaders() },
+          body: JSON.stringify({ text: clean.slice(0,800) }) });
+        if (!r.ok) throw new Error("tts "+r.status);
+        const url = URL.createObjectURL(await r.blob());
+        currentAudio = new Audio(url);
+        currentAudio.onended = () => { URL.revokeObjectURL(url); currentAudio=null; afterSpeak(); };
+        currentAudio.onerror = () => { URL.revokeObjectURL(url); currentAudio=null; afterSpeak(); };
+        await currentAudio.play();
+        return;
+      } catch(e){ /* fall through to device voice */ }
+    }
+    deviceSpeak(clean);
+  }
+  function deviceSpeak(clean){
+    try {
+      const u = new SpeechSynthesisUtterance(clean.slice(0,1000));
+      const tr = looksTurkish(clean);
+      u.lang = tr ? "tr-TR" : "en-GB";
+      const voices = speechSynthesis.getVoices();
+      const pick = voices.find(v => v.lang === u.lang)
+                || voices.find(v => v.lang.startsWith(tr ? "tr" : "en"));
+      if (pick) u.voice = pick;
+      u.rate = 1.02; u.pitch = 1.0;
+      u.onend = afterSpeak; u.onerror = afterSpeak;
+      speechSynthesis.cancel(); speechSynthesis.speak(u);
+    } catch { afterSpeak(); }
+  }
+  function afterSpeak(){
+    if (handsFree){ setTimeout(()=>{ if (state!=="listening") startListening(); }, 350); }
+    else { setState("idle"); hintEl.textContent="konuşmak için dokun"; }
+  }
+
+  // ---- backend run over WebSocket ----
+  function authHeaders(){ const t = store.token; return t ? { Authorization:"Bearer "+t } : {}; }
+  function send(text){
+    if (!text.trim()) return;
+    setState("thinking"); hintEl.textContent = "JARVIS çalışıyor…";
+    const proto = location.protocol === "https:" ? "wss" : "ws";
+    const ws = new WebSocket(`${proto}://${location.host}/ws/run`);
+    let streamed = "", finalResult = "", aiBubble = null, errored = false;
+    ws.onopen = () => { $("conn").classList.add("on"); ws.send(JSON.stringify({
+      command: text, agent: null, mode: "chat", session_id: sessionId,
+      token: store.token, speak: false })); };
+    ws.onmessage = m => {
+      let ev; try { ev = JSON.parse(m.data); } catch { return; }
+      if (ev.session_id) sessionId = ev.session_id;
+      switch (ev.type){
+        case "text":
+          streamed += ev.text;
+          if (!aiBubble) aiBubble = bubble("ai partial", "");
+          aiBubble.textContent = streamed; log.scrollTop = log.scrollHeight; break;
+        case "agent":
+          activity("▸ "+(ev.agent||"agent")+(ev.label?": "+ev.label.slice(0,60):"")); break;
+        case "tool":
+          activity("· "+ev.tool+(ev.summary?" "+ev.summary.slice(0,50):"")); break;
+        case "result":
+          finalResult = (ev.result||"").trim(); if (ev.is_error) errored = true; break;
+        case "error":
+          errored = true; activity("✖ "+(ev.message||"error").slice(0,120)); break;
+      }
+    };
+    ws.onerror = () => { $("conn").classList.remove("on"); };
+    ws.onclose = () => {
+      $("conn").classList.remove("on");
+      const reply = (finalResult || streamed).trim();
+      if (aiBubble){ aiBubble.className = "msg ai"; if (reply) aiBubble.textContent = reply; }
+      else if (reply) bubble("ai", reply);
+      if (reply && !errored) speak(reply);
+      else { setState("idle"); hintEl.textContent="konuşmak için dokun"; }
+    };
+  }
+
+  // ---- orb / input handlers ----
+  orb.addEventListener("click", () => {
+    if (state === "listening") return stopListening();
+    if (state === "speaking") { stopSpeaking(); setState("idle"); hintEl.textContent="konuşmak için dokun"; return; }
+    if (state === "thinking") return;        // let it finish
+    // Prime TTS once (in this gesture), then give iOS a moment to release the
+    // audio session before the mic claims it — otherwise recognition fails.
+    const primed = primeTTS();
+    setTimeout(startListening, primed ? 350 : 0);
+  });
+  function sendTyped(){
+    const v = $("textInput").value.trim(); if (!v) return;
+    primeTTS(); $("textInput").value = ""; bubble("me", v); send(v);
+  }
+  $("textSend").addEventListener("click", sendTyped);
+  $("textInput").addEventListener("keydown", e => { if (e.key==="Enter") sendTyped(); });
+
+  // ---- settings ----
+  function applyToggles(){
+    $("swHands").classList.toggle("on", handsFree);
+    $("swVoice").classList.toggle("on", voiceOn);
+    document.querySelectorAll("#voiceSrc button").forEach(b => b.classList.toggle("sel", b.dataset.v===voiceSrc));
+    document.querySelectorAll("#lang button").forEach(b => b.classList.toggle("sel", b.dataset.l===sttLang));
+  }
+  $("openSettings").addEventListener("click", () => $("settings").classList.remove("hidden"));
+  $("closeSettings").addEventListener("click", () => $("settings").classList.add("hidden"));
+  $("swHands").addEventListener("click", () => { handsFree=!handsFree; store.set("hands",handsFree?"1":"0"); applyToggles(); });
+  $("swVoice").addEventListener("click", () => { voiceOn=!voiceOn; store.set("voice",voiceOn?"1":"0"); if(!voiceOn) stopSpeaking(); applyToggles(); });
+  $("voiceSrc").addEventListener("click", e => { const b=e.target.closest("button"); if(!b)return; voiceSrc=b.dataset.v; store.set("vsrc",voiceSrc); applyToggles(); });
+  $("lang").addEventListener("click", e => { const b=e.target.closest("button"); if(!b)return; sttLang=b.dataset.l; store.set("lang",sttLang); applyToggles(); });
+  $("resetSession").addEventListener("click", () => {
+    sessionId=null; stopSpeaking(); log.innerHTML='<div class="empty">Yeni konuşma. Mikrofona dokun.</div>';
+    $("settings").classList.add("hidden"); setState("idle");
+  });
+  $("logout").addEventListener("click", () => { store.token=""; location.reload(); });
+
+  // ---- login gate ----
+  function showLogin(){ $("login").classList.remove("hidden"); }
+  $("tokenSave").addEventListener("click", () => {
+    const v = $("tokenInput").value.trim(); if (!v) return;
+    store.token = v; $("login").classList.add("hidden"); boot();
+  });
+  $("tokenInput").addEventListener("keydown", e => { if (e.key==="Enter") $("tokenSave").click(); });
+
+  async function boot(){
+    try {
+      const r = await fetch("/api/health", { headers: authHeaders() });
+      if (r.status === 401){ showLogin(); return; }
+      const h = await r.json();
+      if (h.social_only){
+        bubble("ai", "Bu sunucu sadece Social Studio modunda. Konuşmak için JARVIS'i tam modda başlat (talk-mobile.sh).");
+      }
+      $("conn").classList.add("on"); setTimeout(()=>$("conn").classList.remove("on"), 1200);
+    } catch { /* offline-ish; still usable for typing once connected */ }
+    applyToggles(); setState("idle");
+  }
+
+  // voices load async on iOS
+  if ("speechSynthesis" in window) speechSynthesis.onvoiceschanged = () => {};
+  applyToggles();
+  boot();
+})();
+</script>
+</body>
+</html>

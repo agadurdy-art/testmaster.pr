@@ -81,6 +81,69 @@ def agents(authorization: str | None = Header(default=None)):
     }
 
 
+_SIRI_SESSION = Path(__file__).resolve().parent.parent / "data" / "siri_session.txt"
+
+
+def _siri_session_get() -> str | None:
+    try:
+        return _SIRI_SESSION.read_text().strip() or None
+    except Exception:
+        return None
+
+
+def _siri_session_set(sid: str | None) -> None:
+    try:
+        _SIRI_SESSION.parent.mkdir(parents=True, exist_ok=True)
+        if sid:
+            _SIRI_SESSION.write_text(sid)
+        elif _SIRI_SESSION.exists():
+            _SIRI_SESSION.unlink()
+    except Exception:
+        pass
+
+
+@app.post("/api/ask")
+async def ask(payload: dict, authorization: str | None = Header(default=None)):
+    """Single-shot, hands-free endpoint for Siri / Shortcuts. Takes spoken text,
+    runs JARVIS in conversational mode, and returns the final spoken reply as plain
+    JSON. Conversation continuity is kept server-side (last session is resumed) so
+    the Shortcut stays stateless: just send {"text": "..."}. Say a reset phrase or
+    pass {"reset": true} to start a fresh conversation."""
+    _check((authorization or "").removeprefix("Bearer ").strip() or None)
+    if SOCIAL_ONLY:
+        raise HTTPException(status_code=403, detail="agent execution disabled")
+    text = ((payload or {}).get("text") or (payload or {}).get("command") or "").strip()
+    if not text:
+        raise HTTPException(status_code=400, detail="text required")
+
+    reset = bool((payload or {}).get("reset"))
+    low = text.lower()
+    if any(p in low for p in ("yeni konuşma", "yeni sohbet", "new conversation",
+                              "sıfırla", "reset", "baştan başla", "start over")):
+        reset = True
+    session_id = None if reset else ((payload or {}).get("session_id") or _siri_session_get())
+
+    reply, streamed, new_sid, is_error = "", "", session_id, False
+    try:
+        async for ev in stream_run(text, agent=None, session_id=session_id, mode="chat"):
+            t = ev.get("type")
+            if ev.get("session_id"):
+                new_sid = ev["session_id"]
+            if t == "text":
+                streamed += ev.get("text", "")
+            elif t == "result":
+                reply = (ev.get("result") or "").strip()
+                is_error = bool(ev.get("is_error"))
+            elif t == "error":
+                is_error = True
+    except Exception as e:  # noqa: BLE001
+        raise HTTPException(status_code=502, detail=f"run failed: {e}")
+
+    _siri_session_set(new_sid)
+    answer = (reply or streamed).strip() or "İşlem tamamlandı."
+    return {"reply": answer, "session_id": new_sid, "is_error": is_error}
+
+
 @app.post("/api/tts")
 async def tts_endpoint(payload: dict, authorization: str | None = Header(default=None)):
     _check((authorization or "").removeprefix("Bearer ").strip() or None)
@@ -114,11 +177,12 @@ async def ws_run(ws: WebSocket):
         agent = req.get("agent") or None
         session_id = req.get("session_id") or None
         speak = req.get("speak", True)
+        mode = "chat" if req.get("mode") == "chat" else "agent"
         if not command:
             await ws.send_json({"type": "error", "message": "command required"})
             await ws.close()
             return
-        async for ev in stream_run(command, agent=agent, session_id=session_id):
+        async for ev in stream_run(command, agent=agent, session_id=session_id, mode=mode):
             await ws.send_json(ev)
             if speak:
                 line = _narration(ev)

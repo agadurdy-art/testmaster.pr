@@ -27,10 +27,30 @@ JARVIS_PREFIX = (
     "Narrate progress in short, clear status lines. Request:\n\n"
 )
 
+# Conversational framing for the voice "Talk to JARVIS" surface. Replies are read
+# aloud, so keep them short and free of markdown/code. Still able to dispatch the
+# agent team when the user clearly asks for a build/QA/deploy or marketing task.
+CHAT_PREFIX = (
+    "You are JARVIS, a calm, concise British AI assistant for the testmaster.pro "
+    "founder. You are in a spoken conversation: your reply is read aloud, so answer "
+    "directly in 1-4 short sentences, plain prose only — no markdown, no code blocks, "
+    "no bullet lists, no emoji. You can also drive the testmaster.pro agent team: if "
+    "the user clearly asks for a build, QA, deploy or marketing task, dispatch it via "
+    "the Agent tool to the right orchestrator (release-captain for build/QA/deploy, "
+    "marketing-lead for marketing) and say briefly what you dispatched. Otherwise just "
+    "answer conversationally. The user may speak Turkish or English; reply in the same "
+    "language. Message:\n\n"
+)
+
 
 def build_command(prompt: str, *, agent: str | None = None,
-                  session_id: str | None = None) -> list[str]:
-    text = prompt if agent else (JARVIS_PREFIX + prompt)
+                  session_id: str | None = None, mode: str = "agent") -> list[str]:
+    if agent:
+        text = prompt
+    elif mode == "chat":
+        text = CHAT_PREFIX + prompt
+    else:
+        text = JARVIS_PREFIX + prompt
     cmd = [
         CLAUDE_BIN, "-p", text,
         "--output-format", "stream-json",
@@ -143,9 +163,10 @@ def _child_env() -> dict:
 
 
 async def stream_run(prompt: str, *, agent: str | None = None,
-                     session_id: str | None = None) -> AsyncIterator[dict]:
+                     session_id: str | None = None,
+                     mode: str = "agent") -> AsyncIterator[dict]:
     """Yield normalized UI events for a single command run."""
-    cmd = build_command(prompt, agent=agent, session_id=session_id)
+    cmd = build_command(prompt, agent=agent, session_id=session_id, mode=mode)
     yield {"type": "started", "command": " ".join(cmd[:3]) + " …", "agent": agent}
     proc = await asyncio.create_subprocess_exec(
         *cmd, cwd=str(REPO_ROOT), env=_child_env(),
