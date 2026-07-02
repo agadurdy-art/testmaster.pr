@@ -19,7 +19,7 @@ import { homePath } from '../lib/learningMode';
  *   /ray/chat       → conversational Ray (future, GE Premium)
  *
  * The hub itself doesn't gate anything — it routes kids to existing
- * surfaces they already have access to (/game-bank, /daily-practice,
+ * surfaces they already have access to (/game-bank, /unified/daily-habit,
  * /unified). The "Talk to Ray" card opens a coming-soon toast for now.
  */
 
@@ -260,7 +260,9 @@ export default function RayTeacher({ user }) {
       title: 'Daily challenge',
       sub: 'Review words you learned',
       tone: 'daily',
-      route: '/daily-practice',
+      // /daily-practice was a dead route (2026-06-20 cleanup audit) — the
+      // live daily-review surface is /unified/daily-habit.
+      route: '/unified/daily-habit',
     },
     {
       key: 'talk',
@@ -355,7 +357,7 @@ export default function RayTeacher({ user }) {
           </button>
           <button
             className="ray-library-link"
-            onClick={() => navigate('/daily-practice')}
+            onClick={() => navigate('/unified/daily-habit')}
             type="button"
             data-testid="ray-quick-review"
           >

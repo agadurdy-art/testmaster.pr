@@ -56,6 +56,7 @@ def serve_static_asset(
     cdn_rel: Optional[str] = None,
     filename: Optional[str] = None,
     detail: str = "Asset not found",
+    cache_seconds: int = 86400,
 ):
     """Serve `local_path` from disk, or 307-redirect to its R2 CDN copy.
 
@@ -66,12 +67,28 @@ def serve_static_asset(
             it's derived from `local_path`'s position under `static/`.
         filename: optional download filename for the local FileResponse.
         detail: 404 message when neither disk nor CDN can serve it.
+        cache_seconds: browser cache TTL (Faz 3, 2026-07-02 — these responses
+            previously carried NO Cache-Control, so every audio replay was a
+            full API round trip). Default 1 day: static/ content is
+            content-addressed or UUID-named, but a few keys (pre-generated
+            question audio) can be regenerated in place, so we stop short of
+            `immutable`. Pass a smaller value for genuinely mutable assets.
     """
     if local_path and local_path.exists():
-        return FileResponse(str(local_path), media_type=media_type, filename=filename)
+        return FileResponse(
+            str(local_path),
+            media_type=media_type,
+            filename=filename,
+            headers={"Cache-Control": f"public, max-age={cache_seconds}"},
+        )
 
     key = _cdn_key(local_path, cdn_rel)
     if STATIC_BASE_URL and key:
-        return RedirectResponse(url=f"{STATIC_BASE_URL}/{key}", status_code=307)
+        # Cache the redirect hop itself (1h) so repeat plays go straight to R2.
+        return RedirectResponse(
+            url=f"{STATIC_BASE_URL}/{key}",
+            status_code=307,
+            headers={"Cache-Control": "public, max-age=3600"},
+        )
 
     raise HTTPException(status_code=404, detail=detail)

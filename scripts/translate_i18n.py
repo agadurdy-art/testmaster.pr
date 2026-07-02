@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Auto-translate the i18n dictionary in frontend/src/lib/i18n.js.
+"""Auto-translate the per-language i18n dictionaries in frontend/src/locales/.
+
+Faz 3 (2026-07-02): the single lib/i18n.js dictionary (788 KB of main bundle)
+was split into one lazy-loaded file per language: frontend/src/locales/<lang>.js
+(`const <lang> = { ... }; export default <lang>;`). This script now reads EN
+from locales/en.js and writes each target language to its own file.
 
 Mirrors scripts/translate-i18n.mjs but goes through the Emergent LLM gateway
 (emergentintegrations + EMERGENT_LLM_KEY) instead of a direct Anthropic key,
@@ -33,7 +38,7 @@ from typing import Iterable
 
 # Repo layout: scripts/ is a sibling of backend/ and frontend/.
 REPO_ROOT = Path(__file__).resolve().parent.parent
-I18N_PATH = REPO_ROOT / "frontend" / "src" / "lib" / "i18n.js"
+LOCALES_DIR = REPO_ROOT / "frontend" / "src" / "locales"
 BACKEND_ENV = REPO_ROOT / "backend" / ".env"
 
 BATCH_SIZE = 80
@@ -90,19 +95,21 @@ ENTRY_RE = re.compile(
 )
 
 
-def find_block(source: str, lang_key: str) -> tuple[int, int, str]:
-    """Return (start, end, body) covering the full `  <lang_key>: { ... },` block.
+def locale_path(lang_key: str) -> Path:
+    return LOCALES_DIR / f"{lang_key}.js"
 
-    `start` points at the two-space indent before `<lang_key>:` and `end` is one
-    past the trailing comma (if present). `body` is the content between braces,
-    excluding them. This way callers can do
-    `source[:start] + format_dict_block(...) + source[end:]` without creating
-    duplicate `  lang:` prefixes or double commas.
-    """
-    marker = f"  {lang_key}: {{"
+
+def read_locale_body(lang_key: str) -> str:
+    """Return the body between the braces of `const <lang> = { ... };` in
+    locales/<lang>.js. Missing file → empty body (language not populated)."""
+    path = locale_path(lang_key)
+    if not path.exists():
+        return ""
+    source = path.read_text(encoding="utf-8")
+    marker = f"const {lang_key} = {{"
     start = source.find(marker)
     if start == -1:
-        raise ValueError(f"Block not found: {lang_key}")
+        raise ValueError(f"Dictionary not found in {path}")
     brace_start = source.index("{", start)
     depth = 0
     for i in range(brace_start, len(source)):
@@ -112,11 +119,8 @@ def find_block(source: str, lang_key: str) -> tuple[int, int, str]:
         elif ch == "}":
             depth -= 1
             if depth == 0:
-                end = i + 1
-                if end < len(source) and source[end] == ",":
-                    end += 1
-                return start, end, source[brace_start + 1 : i]
-    raise ValueError(f"Unbalanced braces for {lang_key}")
+                return source[brace_start + 1 : i]
+    raise ValueError(f"Unbalanced braces in {path}")
 
 
 def unescape_js(s: str) -> str:
@@ -145,12 +149,22 @@ def parse_dict_body(body: str) -> list[tuple[str, str]]:
     return entries
 
 
-def format_dict_block(lang_key: str, entries: Iterable[tuple[str, str]]) -> str:
-    lines = [f"  {lang_key}: {{"]
+def write_locale_file(lang_key: str, entries: Iterable[tuple[str, str]]) -> None:
+    lines = [
+        "// Auto-split from lib/i18n.js (Faz 3, 2026-07-02). One language per",
+        "// file so only the ACTIVE language ships to the browser — the full",
+        "// 12-language dictionary was 788 KB (59%) of the main bundle.",
+        "// Populated by scripts/translate_i18n.py (Sonnet auto-translate);",
+        "// missing keys fall back to EN via t().",
+        f"const {lang_key} = {{",
+    ]
     for key, value in entries:
-        lines.append(f"    {key}: '{escape_js_single(value)}',")
-    lines.append("  },")
-    return "\n".join(lines)
+        lines.append(f"  {key}: '{escape_js_single(value)}',")
+    lines.append("};")
+    lines.append("")
+    lines.append(f"export default {lang_key};")
+    lines.append("")
+    locale_path(lang_key).write_text("\n".join(lines), encoding="utf-8")
 
 
 # ---------------------------------------------------------------------------
@@ -294,10 +308,8 @@ async def translate_all(
 # ---------------------------------------------------------------------------
 
 async def main() -> None:
-    source = I18N_PATH.read_text(encoding="utf-8")
-    _, _, en_body = find_block(source, "en")
-    en_entries = parse_dict_body(en_body)
-    print(f"Parsed {len(en_entries)} EN keys from {I18N_PATH}")
+    en_entries = parse_dict_body(read_locale_body("en"))
+    print(f"Parsed {len(en_entries)} EN keys from {locale_path('en')}")
 
     env_langs = [s.strip() for s in os.environ.get("LANGS", "").split(",") if s.strip()]
     candidates = env_langs if env_langs else list(LANG_NAMES.keys())
@@ -307,8 +319,7 @@ async def main() -> None:
         if lang not in LANG_NAMES:
             print(f"Skip unknown language: {lang}")
             continue
-        _, _, body = find_block(source, lang)
-        existing = parse_dict_body(body)
+        existing = parse_dict_body(read_locale_body(lang))
         if existing and not FORCE:
             print(f"Skip {lang} (already has {len(existing)} keys; set FORCE=1 to overwrite).")
             continue
@@ -318,7 +329,6 @@ async def main() -> None:
         print("Nothing to translate.")
         return
 
-    mutated = source
     completed: list[str] = []
     failed: list[tuple[str, str]] = []
     for lang in targets:
@@ -334,13 +344,11 @@ async def main() -> None:
                 print("Permanent error — stopping further languages.")
                 break
             continue
-        start, end, _ = find_block(mutated, lang)
-        mutated = mutated[:start] + format_dict_block(lang, entries) + mutated[end:]
-        # Incremental write: persist after each language so a later failure
-        # doesn't throw away progress already made.
-        I18N_PATH.write_text(mutated, encoding="utf-8")
+        # Incremental write: each language persists to its own file, so a
+        # later failure doesn't throw away progress already made.
+        write_locale_file(lang, entries)
         completed.append(lang)
-        print(f"[{lang}] ✓ {len(entries)} keys written + file flushed.")
+        print(f"[{lang}] ✓ {len(entries)} keys written to {locale_path(lang)}.")
 
     if DRY:
         print("DRY run — no file changes.")
@@ -351,7 +359,7 @@ async def main() -> None:
         print("Failed:")
         for lang, msg in failed:
             print(f"  - {lang}: {msg}")
-    print(f"File: {I18N_PATH}")
+    print(f"Files: {LOCALES_DIR}/<lang>.js")
 
 
 if __name__ == "__main__":

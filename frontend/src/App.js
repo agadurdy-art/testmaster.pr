@@ -836,10 +836,13 @@ function AppWithSessionHandler() {
           path="/unified/lesson/:lessonId" 
           element={user ? <UnifiedLessonPage user={user} /> : <RedirectToLogin />} 
         />
-        <Route 
-          path="/unified/daily-habit" 
-          element={user ? <DailyHabitPage user={user} /> : <RedirectToLogin />} 
+        <Route
+          path="/unified/daily-habit"
+          element={user ? <DailyHabitPage user={user} /> : <RedirectToLogin />}
         />
+        {/* /daily-practice never had a page (2026-06-20 cleanup audit) but was
+            linked from Ray's library — keep old links/bookmarks working. */}
+        <Route path="/daily-practice" element={<Navigate to="/unified/daily-habit" replace />} />
         <Route 
           path="/game-demo" 
           element={<GameDemo />} 
