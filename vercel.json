@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "cd frontend && npm install --legacy-peer-deps --no-audit --no-fund && npm install --legacy-peer-deps ajv@^8 && CI=true GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true npx craco build",
+  "buildCommand": "cd frontend && npm install --legacy-peer-deps --no-audit --no-fund && npx vite build",
   "outputDirectory": "frontend/build",
   "installCommand": "echo skip-root-install",
   "framework": null,
