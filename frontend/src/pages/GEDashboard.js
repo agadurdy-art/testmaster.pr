@@ -435,7 +435,10 @@ export default function GEDashboard({ user, onLogout }) {
         const inProgress = Object.values(lp)
           .filter(x => x && x.lesson_id && !x.completed)
           .sort((a, b) => (b.updated_at || '').localeCompare(a.updated_at || ''))[0];
-        const resumeId = inProgress?.lesson_id || 'stage_1_foundations_unit_01_lesson_01';
+        // DB lesson_ids use the short stage form ("stage_1_unit_01_lesson_01");
+        // the long form ("stage_1_foundations_...") 404s on /lessons/{id} and
+        // renders a bogus "Lesson Locked" screen for brand-new users.
+        const resumeId = inProgress?.lesson_id || 'stage_1_unit_01_lesson_01';
         const parsed = parseLessonId(resumeId);
         setResumeLesson({
           lesson_id: resumeId,
@@ -751,10 +754,21 @@ const isUnlocked = isAdmin || (stage.total_lessons || stage.total_units || 0) > 
   );
 }
 
-// Parse a unified lesson_id "stage_2_starters_unit_01_lesson_03" → structured fields.
+// Parse a unified lesson_id → structured fields. Accepts both the long form
+// ("stage_2_starters_unit_01_lesson_03") and the short form the DB actually
+// stores ("stage_1_unit_01_lesson_01").
 function parseLessonId(lessonId) {
   if (!lessonId || typeof lessonId !== 'string') {
     return { stage_id: null, stage_number: null, unit_number: null, lesson_number: null };
+  }
+  const short = lessonId.match(/^stage_(\d+)_unit_(\d+)_lesson_(\d+)$/);
+  if (short) {
+    return {
+      stage_id: `stage_${short[1]}`,
+      stage_number: parseInt(short[1], 10),
+      unit_number: parseInt(short[2], 10),
+      lesson_number: parseInt(short[3], 10),
+    };
   }
   const m = lessonId.match(/^(stage_(\d+)_[a-z_]+?)_unit_(\d+)_lesson_(\d+)$/);
   if (!m) {
