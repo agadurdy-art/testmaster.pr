@@ -6,11 +6,11 @@
 
 **Architecture:** Copy the working tree with fresh git history. Purge order keeps the build green after every commit: first flip the mode library to GE-always, then unwire route groups, then rebrand auth/onboarding/shell, then bulk-delete the now-unreferenced IELTS files. `yarn build` is the regression gate after each task; a bundle-grep + live E2E gate closes the phase.
 
-**Tech Stack:** React 19 + Vite 7 (CRA-compatible `REACT_APP_*` env inlining), react-router 7, yarn 1.22. Backend stays `api.testmaster.pro` (Railway `sublime-celebration`/`testmaster.pr`) — the copied `backend/` is NEVER deployed.
+**Tech Stack:** React 19 + Vite 7 (CRA-compatible `REACT_APP_*` env inlining), react-router 7, yarn 1.22. Backend: FastAPI + Motor, Dockerfile build, deployed to a **new dedicated Railway project `ray-english`** (spec amendment 2026-07-24). `api.testmaster.pro` stays live as instant rollback.
 
-**Spec:** `docs/superpowers/specs/2026-07-22-ray-english-cf-migration-design.md`
+**Spec:** `docs/superpowers/specs/2026-07-22-ray-english-cf-migration-design.md` (incl. 2026-07-24 amendment)
 
-**⚠️ Standing landmine:** never run `railway up` against service `testmaster.pr`. Env-var changes only. This plan touches Railway zero times.
+**⚠️ Standing landmine:** never run `railway up` against service `testmaster.pr` (project `sublime-celebration`). The ONLY permitted contact with it in this plan is `railway variables --json` (read-only) in Task 14. The new `ray-english` Railway project is a separate blast radius — `railway up` there is safe and expected.
 
 ---
 
@@ -55,24 +55,24 @@ Expected: find prints nothing extra; spec file exists.
 - [ ] **Step 1: Write `backend/README.md`**
 
 ```markdown
-# Ray English backend — COPIED, NOT DEPLOYED
+# Ray English backend
 
-⚠️ **DO NOT DEPLOY THIS DIRECTORY. DO NOT RUN `railway up` FROM ANYWHERE IN THIS REPO.**
+FastAPI + Motor backend, deployed to the **dedicated Railway project
+`ray-english`** (Dockerfile build, healthcheck `/api/health`). This directory
+IS the deploy source for that project — `railway up` from here (linked to
+`ray-english`) is the normal deploy path.
 
-The live backend for Ray English is `https://api.testmaster.pro` — Railway
-project `sublime-celebration`, service `testmaster.pr` (a monolith snapshot
-from 2026-07-03 that still serves the GE endpoints).
+⚠️ **NEVER deploy to the OLD backend.** `https://api.testmaster.pro` = Railway
+project `sublime-celebration`, service `testmaster.pr` — a 2026-07-03 monolith
+snapshot kept as rollback. `railway up` into THAT service replaces the
+snapshot and **deletes the GE endpoints**. Before any `railway up`, run
+`railway status` and confirm the linked project is `ray-english`, not
+`sublime-celebration`.
 
-Running `railway up` into that service replaces the snapshot and **deletes the
-GE endpoints**, killing ge.testmaster.pro and the stemhouse CTA silently.
-
-Until this backend gets its own deployment (a later phase, decided by Aga):
-- **Allowed on `testmaster.pr`:** environment-variable changes only
-  (they trigger a safe snapshot rebuild — verified twice).
-- **Forbidden:** `railway up`, `railway redeploy` with a new build, service
-  deletion, changing the attached repo.
-
-This copy exists for safekeeping and future migration reference only.
+Env vars (same Mongo as the old backend → same users/content/tokens):
+`MONGO_URL`, `DB_NAME`, `STATIC_BASE_URL`, `CORS_ORIGINS` (GE origins), plus
+the AI keys the snapshot uses. Rollback: rebuild the frontend with
+`REACT_APP_BACKEND_URL=https://api.testmaster.pro`.
 ```
 
 - [ ] **Step 2: Overwrite root `README.md`**
@@ -84,10 +84,11 @@ General English learning app (Ray, the AI tutor) — the standalone GE product
 split out of testmaster-fresh on 2026-07-24.
 
 - **Live:** https://ge.testmaster.pro (CF Pages project `ge-testmaster`)
-- **Backend:** https://api.testmaster.pro — external, NOT in this repo's
-  deploy path. See `backend/README.md` for the hard deployment warning.
+- **Backend:** `backend/` → Railway project **`ray-english`** (own service +
+  domain). See `backend/README.md` — NEVER deploy to the old
+  `testmaster.pr` service (rollback snapshot).
 - **Frontend:** `frontend/` — React 19 + Vite. Build:
-  `cd frontend && REACT_APP_BACKEND_URL=https://api.testmaster.pro yarn build`
+  `cd frontend && REACT_APP_BACKEND_URL=<ray-english Railway URL> yarn build`
 - **Deploy:** `npx wrangler pages deploy build --project-name ge-testmaster`
   (from `frontend/`), then purge ge.testmaster.pro index in CF.
 
@@ -634,7 +635,94 @@ Expected: small residue from locale strings for deleted pages is acceptable (nev
 cd /Users/aga/ray-english && git add -A && git diff --cached --quiet || git commit -m "chore: purge dead IELTS locale strings flagged by bundle gate"
 ```
 
-### Task 14: Push to private GitHub `agadurdy-art/ray-english`
+### Task 14: Provision the `ray-english` Railway backend
+
+**Goal:** GE gets its own backend service; `testmaster.pr` becomes rollback-only.
+
+- [ ] **Step 1: Read the old service's env vars (READ-ONLY contact)**
+
+```bash
+mkdir -p /tmp/railway-peek && cd /tmp/railway-peek
+railway link   # interactive: choose project "sublime-celebration", service "testmaster.pr"
+railway variables --json > /Users/aga/.secrets/testmaster-pr-vars.json
+chmod 600 /Users/aga/.secrets/testmaster-pr-vars.json
+cd / && rm -rf /tmp/railway-peek   # unlink dir so no future `railway up` can target it
+```
+
+Expected: JSON with at least `MONGO_URL`, `DB_NAME`, `CORS_ORIGINS`, `STATIC_BASE_URL`. ⚠️ Do NOT run any other railway command while linked to testmaster.pr.
+
+- [ ] **Step 2: Create the new Railway project from `backend/`**
+
+```bash
+cd /Users/aga/ray-english/backend
+railway init --name ray-english   # creates a NEW project; confirm prompt shows "ray-english"
+railway status                    # MUST print project: ray-english (not sublime-celebration)
+```
+
+- [ ] **Step 3: Set env vars on the new service**
+
+From the saved JSON, set each needed var (values from the file — never paste into the plan/commits):
+
+```bash
+railway variables --set "MONGO_URL=<from json>" --set "DB_NAME=<from json>" \
+  --set "STATIC_BASE_URL=<from json>" \
+  --set "CORS_ORIGINS=https://ge.testmaster.pro,https://ge-testmaster.pages.dev"
+```
+
+Also copy any AI/eval keys present in the JSON that `server.py`/`bootstrap.py` read (`EMERGENT_LLM_KEY`, `OPENAI_API_KEY`, `UNIFIED_SPEAKING_EVAL_ENABLED`, …) — existing product config, not new paid-API usage.
+
+- [ ] **Step 4: Deploy + generate domain**
+
+```bash
+railway status && railway up --detach   # SAFE: linked to ray-english (verified in Step 2)
+railway domain                          # generate <something>.up.railway.app; record it as RAY_API
+```
+
+Watch build logs (`railway logs --build`) until the Dockerfile build passes healthcheck `/api/health`.
+
+- [ ] **Step 5: Smoke the new backend**
+
+```bash
+curl -s -o /dev/null -w "%{http_code}\n" https://$RAY_API/api/health          # expect 200
+curl -s -o /dev/null -w "%{http_code}\n" https://$RAY_API/api/unified/stages  # expect 200 or 401 — NOT 404 (route exists)
+```
+
+If `/api/unified/stages` returns 404, the repo backend has drifted from the snapshot — STOP, report, do not switch the frontend (rollback stance: frontend keeps api.testmaster.pro).
+
+- [ ] **Step 6: Document the deploy target**
+
+Append to `backend/README.md`: the actual Railway project id + generated domain. Commit:
+
+```bash
+cd /Users/aga/ray-english && git add backend/README.md && git commit -m "docs: ray-english Railway project + domain"
+```
+
+### Task 15: Point the frontend at the new backend
+
+- [ ] **Step 1: Rebuild with the new URL**
+
+```bash
+cd /Users/aga/ray-english/frontend
+REACT_APP_BACKEND_URL=https://$RAY_API yarn build
+```
+
+- [ ] **Step 2: Confirm the bundle calls the new backend and gate greps still pass**
+
+```bash
+grep -rl "api.testmaster.pro" build/assets/ || echo OK-old-url-gone
+grep -rl "$RAY_API" build/assets/ && echo OK-new-url-present
+grep -rl "ielts-ace-logo" build/ || echo OK-logo
+```
+
+Expected: three OK lines. (If any doc/config string still mentions api.testmaster.pro in the bundle, find the hardcoded site — `grep -rn "api.testmaster.pro" src/` — and route it through `process.env.REACT_APP_BACKEND_URL`.)
+
+- [ ] **Step 3: Commit any changes**
+
+```bash
+cd /Users/aga/ray-english && git add -A && git diff --cached --quiet || git commit -m "fix: route all backend URLs through REACT_APP_BACKEND_URL"
+```
+
+### Task 16: Push to private GitHub `agadurdy-art/ray-english`
 
 - [ ] **Step 1: Create + push**
 
@@ -652,9 +740,9 @@ git rev-parse main
 
 Expected: identical SHAs. (Deploy claims only after this check — standing rule.)
 
-### Task 15: Deploy to CF Pages `ge-testmaster` + cache purge
+### Task 17: Deploy to CF Pages `ge-testmaster` + cache purge
 
-- [ ] **Step 1: Deploy the Task-13 build**
+- [ ] **Step 1: Deploy the Task-15 build (new backend URL baked in)**
 
 ```bash
 cd /Users/aga/ray-english/frontend
@@ -683,7 +771,7 @@ curl -s -o /dev/null -w "%{http_code} %{redirect_url}\n" https://ge.testmaster.p
 
 Expected: title contains `Ray English`; root serves the app (SPA `_redirects` 302 → `/landing/ge` acceptable at either HTTP or router level). Also confirm noindex still on: `curl -sI https://ge.testmaster.pro/ | grep -i x-robots-tag` → `noindex, nofollow`.
 
-### Task 16: Live E2E + IELTS-absence + design-review
+### Task 18: Live E2E + IELTS-absence + design-review
 
 - [ ] **Step 1: IELTS routes are gone (live)**
 
@@ -691,7 +779,7 @@ Open in browser (chrome-devtools/playwright MCP) and confirm each renders the 40
 
 - [ ] **Step 2: Fresh-signup GE flow (live)**
 
-Sign up `uatest-ray-0724@testmaster.pro` (password `UatRay#2026x`, deletable). Verify: login page shows **Ray English** brand + ray logo → onboarding starts at the **language** step (no path/band steps, no Back button, step label "Meet Ray") → lands on `/ge/dashboard` (8 stages) → Lesson 1 opens with content → `/ge/placement-test` loads Q1 → `/pricing/ge` renders. Also log in with the existing `uatest-ge-0722@testmaster.pro` (`UatGe#2026x`) → must land on `/ge/dashboard`.
+Sign up `uatest-ray-0724@testmaster.pro` (password `UatRay#2026x`, deletable). Verify: login page shows **Ray English** brand + ray logo → onboarding starts at the **language** step (no path/band steps, no Back button, step label "Meet Ray") → lands on `/ge/dashboard` (8 stages) → Lesson 1 opens with content → `/ge/placement-test` loads Q1 → `/pricing/ge` renders. Also log in with the existing `uatest-ge-0722@testmaster.pro` (`UatGe#2026x`) → must land on `/ge/dashboard`. **In the browser Network tab confirm every `/api/*` call goes to the `ray-english` Railway domain (not api.testmaster.pro) and succeeds** — this is the backend-parity gate. If GE flows fail against the new backend, rollback: rebuild frontend with `REACT_APP_BACKEND_URL=https://api.testmaster.pro`, redeploy, report the drift.
 
 - [ ] **Step 3: Shell checks**
 
@@ -699,7 +787,7 @@ Desktop ≥1280: left rail shows the GE groups (Dashboard/Course map/Daily habit
 
 - [ ] **Step 4: design-review pass (mandatory gate)**
 
-Invoke the `design-review` skill on the changed surfaces: login page, onboarding (language + Meet Ray steps), GE side rail, desktop + mobile screenshots. Fix violations, redeploy (repeat Task 15 steps), re-verify.
+Invoke the `design-review` skill on the changed surfaces: login page, onboarding (language + Meet Ray steps), GE side rail, desktop + mobile screenshots. Fix violations, redeploy (repeat Task 17 steps), re-verify.
 
 - [ ] **Step 5: Final commit + push**
 
@@ -713,9 +801,10 @@ Expected: SHAs match. F1 done — report to Aga; F2 (stemhouse → CF Workers) g
 
 ---
 
-## Out of scope for this plan (per spec)
+## Out of scope for this plan (per spec + 2026-07-24 amendment)
 
-- Deploying `backend/` (never; see the landmine).
-- noindex removal, ge.stemhousebenluc.com, 301s, CORS changes (F3).
+- Retiring `testmaster.pr` / api.testmaster.pro (kept as rollback; Aga decides later).
+- Custom domain for the new backend (Railway domain is fine for F1; [DECIDE] later).
+- noindex removal, ge.stemhousebenluc.com, 301s (F3).
 - stemhouse repo changes (F2).
 - GE content/pedagogy changes; locale dead-key deep-clean beyond the bundle gate.

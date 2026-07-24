@@ -2,6 +2,9 @@
 
 Date: 2026-07-22
 Status: Approved by Aga (design presented in session, "onay")
+Amended: 2026-07-24 — Aga: "railway içinde ayrı GE için yeni yer aç" → the copied
+backend IS deployed, to a **new dedicated Railway project** (`ray-english`).
+This defuses the testmaster.pr landmine for GE permanently.
 Predecessor: `2026-07-22-ge-stemhouse-design.md` (GE revival — shipped, live)
 
 ## Problem
@@ -20,9 +23,12 @@ Predecessor: `2026-07-22-ge-stemhouse-design.md` (GE revival — shipped, live)
 
 ## Decisions (Aga, 2026-07-22)
 
-- Copy **frontend + backend** into the new repo. Backend is copied for safekeeping
-  only — it is **NOT deployed**; the live backend stays `api.testmaster.pro`
-  (Railway project `sublime-celebration`, service `testmaster.pr`).
+- Copy **frontend + backend** into the new repo. **(Amended 2026-07-24)** The
+  backend IS deployed — to a **new dedicated Railway project `ray-english`**
+  (own service, own domain), so GE never depends on the fragile
+  `testmaster.pr` snapshot again. `api.testmaster.pro` stays untouched and
+  serves as instant rollback (rebuild frontend with the old URL) until the new
+  backend is live-verified.
 - **Delete IELTS completely** from the new repo — pure GE app. Login always lands
   on `/ge/dashboard` regardless of `learning_mode`.
 - **Full migration** of stemhouse to Cloudflare Workers via OpenNext, including
@@ -48,9 +54,17 @@ git history, pushed to private GitHub `agadurdy-art/ray-english`.
   auth (Bearer token via localStorage `tm_auth_token`), i18n as-is.
 - App root `/` redirects to `/landing/ge` (as today via `_redirects`).
 
-**Backend:** copied into the repo (`backend/`) untouched, with a README warning:
-NOT deployed; `railway up` into `testmaster.pr` deletes GE — env-only changes
-allowed on that service until the backend has its own deployment.
+**Backend (amended 2026-07-24):** copied into the repo (`backend/`) untouched
+and **deployed to a new Railway project `ray-english`** (Dockerfile build,
+healthcheck `/api/health`, Railway-generated domain). Env vars are copied
+read-only from `testmaster.pr` (`railway variables --json` — never `railway
+up` there): `MONGO_URL`, `DB_NAME`, `STATIC_BASE_URL`, `CORS_ORIGINS` (set to
+the GE origins), plus any AI keys the snapshot uses (existing product
+behavior, not a new paid-API call site). Same Mongo → same users/content/auth
+tokens. The frontend's `REACT_APP_BACKEND_URL` points at the new domain only
+after the new backend passes smoke + live E2E; `api.testmaster.pro` remains
+the instant-rollback URL. A README warning in `backend/` still forbids ever
+touching `testmaster.pr` with `railway up`.
 
 **Deploy:** same CF Pages project `ge-testmaster` (direct upload:
 `REACT_APP_BACKEND_URL=https://api.testmaster.pro npm run build && npx wrangler
@@ -92,8 +106,9 @@ becomes a no-op wrapper (custom-event loss accepted; GA4 later = [DECIDE]).
 - CNAME `ge.stemhousebenluc.com` → `ge-testmaster.pages.dev`; attach as second
   custom domain on CF Pages project `ge-testmaster` (wrangler OAuth token —
   zone token lacks Pages scope).
-- Add `https://ge.stemhousebenluc.com` to `CORS_ORIGINS` on Railway service
-  `testmaster.pr` (env change only — auto snapshot rebuild is safe, verified).
+- Add `https://ge.stemhousebenluc.com` to `CORS_ORIGINS` on the **`ray-english`
+  Railway project** (GE's own backend after the F1 amendment — no
+  `testmaster.pr` involvement at all).
 - Remove noindex for the new domain (host-conditional: ge.testmaster.pro keeps
   noindex, or becomes moot once redirected).
 - ge.testmaster.pro 301 → ge.stemhousebenluc.com (CF Redirect Rule on
@@ -110,7 +125,14 @@ timing is Aga-gated, so F3 waits on it.
 
 ## Error handling / risks
 
-- **Railway landmine:** never `railway up` to `testmaster.pr`. Env-only.
+- **Railway landmine:** never `railway up` to `testmaster.pr`. Env-only, and
+  after the F1 amendment not even that — GE runs on its own project. Reading
+  its variables (`railway variables --json`) is the only permitted contact.
+- **Backend parity risk (new):** the repo backend may have drifted from the
+  2026-07-03 `testmaster.pr` snapshot. Gate: smoke (`/api/health`, GE route
+  existence) + full live E2E against the new backend BEFORE the frontend
+  switches to it. Rollback = rebuild frontend with
+  `REACT_APP_BACKEND_URL=https://api.testmaster.pro`.
 - **CF Pages stale shell:** after each deploy run the targeted purge
   (verify-assets pattern) and hard-reload check — stable-name assets aren't
   purged automatically.
@@ -130,7 +152,10 @@ redirect. UI-touching changes get a design-review pass.
 
 ## Out of scope
 
-- Deploying the copied backend (stays on api.testmaster.pro).
+- Retiring `testmaster.pr` / api.testmaster.pro (kept as rollback; retirement
+  is a later Aga decision once the new backend has run clean).
+- A custom domain for the new backend (Railway domain is fine for F1;
+  `api.rayenglish...` naming = [DECIDE] later).
 - GE content/pedagogy changes; new features. This is a re-homing + purge.
 - GA4 / custom event analytics ([DECIDE] later).
 - testmaster-fresh repo itself (untouched; 6 unpushed local commits remain
