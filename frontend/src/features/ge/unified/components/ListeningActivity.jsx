@@ -259,9 +259,17 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
           </div>
         </div>
 
+        {/* The scene line tells the child who is talking and where, before
+            they press play — the authors write one for every recording. */}
+        {(activity?.scene_description || activity?.scene) && (
+          <p className="text-sm text-cyan-900 bg-cyan-50 border border-cyan-100 rounded-xl px-3 py-2">
+            {stripMeta(activity.scene_description || activity.scene)}
+          </p>
+        )}
+
         <AudioBar />
         {showTranscript && transcript && (
-          <div className="bg-gray-50 rounded-xl p-3 text-sm text-gray-700">{transcript}</div>
+          <div className="bg-gray-50 rounded-xl p-3 text-sm text-gray-700 whitespace-pre-line">{transcript}</div>
         )}
 
         {questions.length === 0 ? (

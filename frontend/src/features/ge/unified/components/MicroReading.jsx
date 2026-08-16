@@ -132,7 +132,9 @@ function MicroReading({ activity, onComplete, onSkip }) {
         result = result.replace(regex, `<mark class="bg-yellow-100 px-0.5 rounded">$1</mark>`);
       });
     }
-    return result;
+    // Multi-voice passages separate each speaker with a blank line — keep
+    // the paragraphs visible (innerHTML collapses raw newlines).
+    return result.replace(/\n\n/g, '<br/><br/>').replace(/\n/g, '<br/>');
   };
 
   const checkAnswer = (answer, correctAnswer) => {

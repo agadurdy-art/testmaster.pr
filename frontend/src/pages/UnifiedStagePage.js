@@ -503,14 +503,24 @@ export default function UnifiedStagePage({ user }) {
   const [stage, setStage] = useState(null);
   const [userProgress, setUserProgress] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
+  const [retryTick, setRetryTick] = useState(0);
 
   useEffect(() => {
     let alive = true;
     (async () => {
       try {
         setLoading(true);
+        setLoadError(false);
         const stageRes = await fetch(`${API_URL}/api/unified/stages/${stageId}`);
         const stageData = await stageRes.json();
+        // A 404/error body ({detail: ...}) is truthy — without this check it
+        // used to render as an empty stage with a misleading "Coming Soon"
+        // (seen live during a backend deploy restart, 2026-08-16).
+        if (!stageRes.ok || !stageData.stage_id) {
+          if (alive) setLoadError(true);
+          return;
+        }
         if (stageData.units) {
           await Promise.all(
             stageData.units.map(async (unit) => {
@@ -540,12 +550,13 @@ export default function UnifiedStagePage({ user }) {
         }
       } catch (err) {
         console.error('Error loading stage data:', err);
+        if (alive) setLoadError(true);
       } finally {
         if (alive) setLoading(false);
       }
     })();
     return () => { alive = false; };
-  }, [stageId, user]);
+  }, [stageId, user, retryTick]);
 
   const handleLessonClick = (lesson) => {
     navigate(`/unified/lesson/${lesson.lesson_id}`);
@@ -576,13 +587,26 @@ export default function UnifiedStagePage({ user }) {
     );
   }
 
-  if (!stage) {
+  if (loadError || !stage) {
     return (
       <div className="gstg">
         <style>{STAGE_CSS}</style>
         <div className="gstg-bg" />
         <div className="min-h-screen flex items-center justify-center">
-          <p className="text-gray-600">Stage not found</p>
+          <div className="text-center space-y-4">
+            <p className="text-gray-600">
+              {loadError ? "We couldn't load this stage. It may be updating right now." : 'Stage not found'}
+            </p>
+            {loadError && (
+              <button
+                type="button"
+                onClick={() => setRetryTick(t => t + 1)}
+                className="px-5 py-2.5 rounded-full bg-emerald-600 text-white font-semibold hover:bg-emerald-700"
+                data-testid="stage-retry-btn">
+                Try again
+              </button>
+            )}
+          </div>
         </div>
       </div>
     );
