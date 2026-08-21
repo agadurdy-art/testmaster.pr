@@ -6,7 +6,8 @@
   "scripts": {
     "setup": "npm install && npx playwright install chromium",
     "crawl": "node crawl.js",
-    "crawl:verbose": "VERBOSE=1 node crawl.js"
+    "crawl:verbose": "VERBOSE=1 node crawl.js",
+    "audit:live": "node live-persona-audit.js"
   },
   "dependencies": {
     "playwright": "^1.48.0"

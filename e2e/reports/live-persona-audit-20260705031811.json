@@ -1,0 +1,1171 @@
+{
+  "generatedAt": "2026-07-05T03:21:20.182Z",
+  "baseUrl": "https://testmaster.pro",
+  "apiUrl": "https://api.testmaster.pro",
+  "runId": "20260705031811",
+  "seo": {
+    "robots": "# testmaster.pro — IELTS Ace (independent AI IELTS practice)\n# Search + AI crawlers are welcome on public marketing/tool pages.\n\nUser-agent: *\nAllow: /\n\n# Internal, dev, A/B-variant and one-time-token surfaces — keep out of the index.\nDisallow: /dev/\nDisallow: /demo/\nDisallow: /feature-showcase\nDisallow: /status\nDisallow: /landing/demo\nDisallow: /landing/v1\nDisallow: /landing/v2\nDisallow: /pricing/v1\nDisallow: /pricing/v2\nDisallow: /pricing/ge\nDisallow: /r/\nDisallow: /reset-password\nDisallow: /verify-email\n\n# Generative-engine crawlers (GEO) — explicitly allowed so answers can cite us.\nUser-agent: GPTBot\nAllow: /\nUser-agent: OAI-SearchBot\nAllow: /\nUser-agent: ChatGPT-User\nAllow: /\nUser-agent: PerplexityBot\nAllow: /\nUser-agent: Google-Extended\nAllow: /\nUser-agent: ClaudeBot\nAllow: /\n\nSitemap: https://testmaster.pro/sitemap.xml\n",
+    "sitemapUrls": [
+      "https://testmaster.pro/",
+      "https://testmaster.pro/score-my-essay",
+      "https://testmaster.pro/score-my-speaking",
+      "https://testmaster.pro/ielts-band-score-calculator",
+      "https://testmaster.pro/ielts-faq",
+      "https://testmaster.pro/pricing",
+      "https://testmaster.pro/samples/writing/band-5-0-task2",
+      "https://testmaster.pro/samples/writing/band-6-5-task2",
+      "https://testmaster.pro/samples/writing/band-8-0-task2",
+      "https://testmaster.pro/samples/speaking/band-6-5-part2",
+      "https://testmaster.pro/about",
+      "https://testmaster.pro/contact",
+      "https://testmaster.pro/privacy",
+      "https://testmaster.pro/terms"
+    ],
+    "rows": [
+      {
+        "url": "https://testmaster.pro/",
+        "status": 200,
+        "title": "IELTS Ace — AI IELTS Writing &amp; Speaking Practice with Band Feedback",
+        "description": "Practice IELTS Writing, Speaking, Reading and Listening with Liz, an AI tutor calibrated to examiner band descriptors. Instant band estimates with line-by-line feedback in your language. Free, no credit card.",
+        "canonical": "https://testmaster.pro/",
+        "h1InHtml": true,
+        "rawTextLen": 7467,
+        "jsShell": false
+      },
+      {
+        "url": "https://testmaster.pro/score-my-essay",
+        "status": 200,
+        "title": "Free IELTS Writing Checker — AI Band Score &amp; Feedback | IELTS Ace",
+        "description": "Paste your IELTS Task 1 or Task 2 essay and get an AI band estimate with line-by-line feedback on Task Response, Coherence, Lexical Resource and Grammar. Free evaluation, no credit card.",
+        "canonical": "https://testmaster.pro/score-my-essay",
+        "h1InHtml": true,
+        "rawTextLen": 2130,
+        "jsShell": false
+      },
+      {
+        "url": "https://testmaster.pro/score-my-speaking",
+        "status": 200,
+        "title": "IELTS Speaking Practice with AI Feedback — All 4 Criteria | IELTS Ace",
+        "description": "Practice IELTS Speaking Parts 1, 2 and 3 with AI feedback on Fluency, Lexical Resource, Grammar and Pronunciation, plus a band estimate and model answers.",
+        "canonical": "https://testmaster.pro/score-my-speaking",
+        "h1InHtml": true,
+        "rawTextLen": 2221,
+        "jsShell": false
+      },
+      {
+        "url": "https://testmaster.pro/ielts-band-score-calculator",
+        "status": 200,
+        "title": "IELTS Band Score Calculator — Overall Band with Official Rounding | IELTS Ace",
+        "description": "Free IELTS band score calculator. Enter your Listening, Reading, Writing and Speaking scores to get your overall IELTS band, using the official rounding rules — .25 rounds up to the next half band, .75 up to the next whole band.",
+        "canonical": "https://testmaster.pro/ielts-band-score-calculator",
+        "h1InHtml": true,
+        "rawTextLen": 3487,
+        "jsShell": false
+      },
+      {
+        "url": "https://testmaster.pro/ielts-faq",
+        "status": 200,
+        "title": "IELTS FAQ — Band Scores, Scoring, Format &amp; Validity | IELTS Ace",
+        "description": "Clear, accurate answers to common IELTS questions: how the overall band is calculated, what a good score is, how Writing and Speaking are marked, how long results are valid, and more.",
+        "canonical": "https://testmaster.pro/ielts-faq",
+        "h1InHtml": true,
+        "rawTextLen": 5581,
+        "jsShell": false
+      },
+      {
+        "url": "https://testmaster.pro/pricing",
+        "status": 200,
+        "title": "Pricing — Free, Weekly, Monthly &amp; Exam Pack | IELTS Ace",
+        "description": "Start free with full IELTS band-level feedback. Plans from $2.99/week to a $19.99 Exam Pack — cancel anytime, keep everything you have done.",
+        "canonical": "https://testmaster.pro/pricing",
+        "h1InHtml": true,
+        "rawTextLen": 5111,
+        "jsShell": false
+      },
+      {
+        "url": "https://testmaster.pro/samples/writing/band-5-0-task2",
+        "status": 200,
+        "title": "IELTS Writing Task 2 — Band 5.0 Sample &amp; Feedback | IELTS Ace",
+        "description": "A real IELTS Writing Task 2 essay marked at band 5.0, with line-by-line examiner-style feedback on Task Response, Coherence, Lexical Resource and Grammar.",
+        "canonical": "https://testmaster.pro/samples/writing/band-5-0-task2",
+        "h1InHtml": true,
+        "rawTextLen": 5734,
+        "jsShell": false
+      },
+      {
+        "url": "https://testmaster.pro/samples/writing/band-6-5-task2",
+        "status": 200,
+        "title": "IELTS Writing Task 2 — Band 6.5 Sample &amp; Feedback | IELTS Ace",
+        "description": "A real IELTS Writing Task 2 essay marked at band 6.5, showing the exact lines that cost band points and the rewrites that lift them.",
+        "canonical": "https://testmaster.pro/samples/writing/band-6-5-task2",
+        "h1InHtml": true,
+        "rawTextLen": 6016,
+        "jsShell": false
+      },
+      {
+        "url": "https://testmaster.pro/samples/writing/band-8-0-task2",
+        "status": 200,
+        "title": "IELTS Writing Task 2 — Band 8.0 Sample &amp; Feedback | IELTS Ace",
+        "description": "A real IELTS Writing Task 2 essay marked at band 8.0 — what a high-band answer looks like across all four IELTS criteria.",
+        "canonical": "https://testmaster.pro/samples/writing/band-8-0-task2",
+        "h1InHtml": true,
+        "rawTextLen": 6532,
+        "jsShell": false
+      },
+      {
+        "url": "https://testmaster.pro/samples/speaking/band-6-5-part2",
+        "status": 200,
+        "title": "IELTS Speaking Part 2 — Band 6.5 Sample &amp; Feedback | IELTS Ace",
+        "description": "A real IELTS Speaking Part 2 answer marked at band 6.5, with feedback on Fluency, Lexical Resource, Grammar and Pronunciation.",
+        "canonical": "https://testmaster.pro/samples/speaking/band-6-5-part2",
+        "h1InHtml": true,
+        "rawTextLen": 5819,
+        "jsShell": false
+      },
+      {
+        "url": "https://testmaster.pro/about",
+        "status": 200,
+        "title": "About IELTS Ace — Honest AI IELTS Band Scores",
+        "description": "IELTS Ace is an independent AI IELTS practice tool built by an English teacher with 10+ years of experience, calibrated to examiner standards. Not affiliated with IELTS, British Council, IDP or Cambridge.",
+        "canonical": "https://testmaster.pro/about",
+        "h1InHtml": true,
+        "rawTextLen": 6316,
+        "jsShell": false
+      },
+      {
+        "url": "https://testmaster.pro/contact",
+        "status": 200,
+        "title": "Contact — IELTS Ace",
+        "description": "Get in touch with IELTS Ace — questions about AI IELTS Writing and Speaking evaluations, plans, or feedback.",
+        "canonical": "https://testmaster.pro/contact",
+        "h1InHtml": true,
+        "rawTextLen": 1143,
+        "jsShell": false
+      },
+      {
+        "url": "https://testmaster.pro/privacy",
+        "status": 200,
+        "title": "Privacy Policy — IELTS Ace",
+        "description": "How IELTS Ace collects, uses and protects your data — essays, recordings, account details and payments.",
+        "canonical": "https://testmaster.pro/privacy",
+        "h1InHtml": true,
+        "rawTextLen": 3393,
+        "jsShell": false
+      },
+      {
+        "url": "https://testmaster.pro/terms",
+        "status": 200,
+        "title": "Terms of Service — IELTS Ace",
+        "description": "The terms that govern your use of IELTS Ace — AI IELTS practice, evaluations, plans and refunds.",
+        "canonical": "https://testmaster.pro/terms",
+        "h1InHtml": true,
+        "rawTextLen": 2736,
+        "jsShell": false
+      }
+    ]
+  },
+  "personas": [
+    {
+      "persona": "beginner",
+      "email": "codex.20260705031811.beginner@testmaster.pro",
+      "created": true,
+      "userId": "7252bca5-a8b6-405e-8265-4d85c5c17348",
+      "viewport": [
+        1366,
+        900
+      ],
+      "probes": [
+        {
+          "label": "beginner",
+          "route": "/dashboard",
+          "url": "https://testmaster.pro/dashboard",
+          "status": 200,
+          "finalUrl": "/dashboard",
+          "bodyLen": 2758,
+          "h1": "Good morning, Codex.",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "beginner",
+          "route": "/quick-assessment",
+          "url": "https://testmaster.pro/quick-assessment",
+          "status": 200,
+          "finalUrl": "/quick-assessment",
+          "bodyLen": 627,
+          "h1": "15 minutes to your estimated band.",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "beginner",
+          "route": "/beginner-course",
+          "url": "https://testmaster.pro/beginner-course",
+          "status": 200,
+          "finalUrl": "/beginner-course",
+          "bodyLen": 466,
+          "h1": "Let's Learn English!",
+          "title": "IELTS Ace",
+          "consoleErrors": [
+            "Failed to load resource: the server responded with a status of 404 ()",
+            "Error fetching lessons: Error: Failed to fetch lessons at xs (https://testmaster.pro/assets/BeginnerCourse-BKWsYzwE.js:1:52319)"
+          ],
+          "failedResponses": [
+            {
+              "status": 404,
+              "url": "https://ielts-backend-production-fefd.up.railway.app/api/beginner-english/lessons"
+            }
+          ],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "beginner",
+          "route": "/learning-tools",
+          "url": "https://testmaster.pro/learning-tools",
+          "status": 200,
+          "finalUrl": "/learning-tools",
+          "bodyLen": 952,
+          "h1": "Your IELTS Tools",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "persona": "writing",
+      "email": "codex.20260705031811.writing@testmaster.pro",
+      "created": true,
+      "userId": "c12d4fae-5ae4-43f9-bdb9-73e48a4dd51f",
+      "viewport": [
+        1440,
+        960
+      ],
+      "probes": [
+        {
+          "label": "writing",
+          "route": "/writing-practice",
+          "url": "https://testmaster.pro/writing-practice",
+          "status": 200,
+          "finalUrl": "/writing-practice",
+          "bodyLen": 647,
+          "h1": "Writing Practice",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "writing",
+          "route": "/question-bank/writing/task2",
+          "url": "https://testmaster.pro/question-bank/writing/task2",
+          "status": 200,
+          "finalUrl": "/question-bank/writing/task2",
+          "bodyLen": 3623,
+          "h1": "Writing Task 2",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "writing",
+          "route": "/question-bank/writing/task1",
+          "url": "https://testmaster.pro/question-bank/writing/task1",
+          "status": 200,
+          "finalUrl": "/question-bank/writing/task1",
+          "bodyLen": 1047,
+          "h1": "Writing Task 1",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "writing",
+          "route": "/sample-reports",
+          "url": "https://testmaster.pro/sample-reports",
+          "status": 200,
+          "finalUrl": "/sample-reports",
+          "bodyLen": 1310,
+          "h1": "Sample reports",
+          "title": "IELTS Ace",
+          "consoleErrors": [
+            "Error generating visual: TypeError: Failed to fetch at window.fetch (https://testmaster.pro/assets/index-DXlUb5mi.js:20:7023) at D (https://testmaster.pro/assets/WritingTask1Practice-C4c0PCr1.js:1:5688) at https://testmaster.pro/assets/Writ"
+          ],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "persona": "speaking",
+      "email": "codex.20260705031811.speaking@testmaster.pro",
+      "created": true,
+      "userId": "83072ec5-51bd-4db7-9099-d21c19974bd7",
+      "viewport": [
+        1366,
+        900
+      ],
+      "probes": [
+        {
+          "label": "speaking",
+          "route": "/speaking-practice",
+          "url": "https://testmaster.pro/speaking-practice",
+          "status": 200,
+          "finalUrl": "/speaking-practice",
+          "bodyLen": 1581,
+          "h1": "",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "speaking",
+          "route": "/speaking/v2",
+          "url": "https://testmaster.pro/speaking/v2",
+          "status": 200,
+          "finalUrl": "/speaking/v2",
+          "bodyLen": 1581,
+          "h1": "",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "speaking",
+          "route": "/full-mock",
+          "url": "https://testmaster.pro/full-mock",
+          "status": 200,
+          "finalUrl": "/full-mock",
+          "bodyLen": 759,
+          "h1": "A full IELTS Speaking mock with Liz.",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "speaking",
+          "route": "/liz",
+          "url": "https://testmaster.pro/liz",
+          "status": 200,
+          "finalUrl": "/liz",
+          "bodyLen": 458,
+          "h1": "Meet Liz, Your AI Teacher",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "persona": "reading",
+      "email": "codex.20260705031811.reading@testmaster.pro",
+      "created": true,
+      "userId": "289cfc8f-361b-4a39-a26d-c9b157df44e7",
+      "viewport": [
+        1366,
+        900
+      ],
+      "probes": [
+        {
+          "label": "reading",
+          "route": "/question-bank",
+          "url": "https://testmaster.pro/question-bank",
+          "status": 200,
+          "finalUrl": "/question-bank",
+          "bodyLen": 269,
+          "h1": "",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "reading",
+          "route": "/question-bank/reading/academic",
+          "url": "https://testmaster.pro/question-bank/reading/academic",
+          "status": 200,
+          "finalUrl": "/question-bank/reading/academic",
+          "bodyLen": 7045,
+          "h1": "Academic Reading Practice",
+          "title": "IELTS Ace",
+          "consoleErrors": [
+            "Error loading topics: TypeError: Failed to fetch at window.fetch (https://testmaster.pro/assets/index-DXlUb5mi.js:20:7023) at ye (https://testmaster.pro/assets/QuestionBank-CYwQ4xlH.js:1:79884) at gs (https://testmaster.pro/assets/QuestionB"
+          ],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "reading",
+          "route": "/question-bank/reading/general",
+          "url": "https://testmaster.pro/question-bank/reading/general",
+          "status": 200,
+          "finalUrl": "/question-bank/reading/general",
+          "bodyLen": 6470,
+          "h1": "General Training Reading",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "reading",
+          "route": "/question-bank/reading/practice",
+          "url": "https://testmaster.pro/question-bank/reading/practice",
+          "status": 200,
+          "finalUrl": "/question-bank/reading/practice",
+          "bodyLen": 1191,
+          "h1": "Practice by Question Type",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "persona": "listening",
+      "email": "codex.20260705031811.listening@testmaster.pro",
+      "created": true,
+      "userId": "c5b8c60b-7cb3-4aa1-a145-ec7bb52e9f52",
+      "viewport": [
+        1366,
+        900
+      ],
+      "probes": [
+        {
+          "label": "listening",
+          "route": "/question-bank/listening",
+          "url": "https://testmaster.pro/question-bank/listening",
+          "status": 200,
+          "finalUrl": "/question-bank/listening",
+          "bodyLen": 1247,
+          "h1": "Listening Practice",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "listening",
+          "route": "/test/listening",
+          "url": "https://testmaster.pro/test/listening",
+          "status": 200,
+          "finalUrl": "/test/listening",
+          "bodyLen": 296,
+          "h1": "",
+          "title": "IELTS Ace",
+          "consoleErrors": [
+            "Failed to load resource: the server responded with a status of 404 ()"
+          ],
+          "failedResponses": [
+            {
+              "status": 404,
+              "url": "https://ielts-backend-production-fefd.up.railway.app/api/tests?test_type=listening"
+            }
+          ],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "listening",
+          "route": "/full-test",
+          "url": "https://testmaster.pro/full-test",
+          "status": 200,
+          "finalUrl": "/full-test",
+          "bodyLen": 2065,
+          "h1": "IELTS Full Test Mode",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "listening",
+          "route": "/progress",
+          "url": "https://testmaster.pro/progress",
+          "status": 200,
+          "finalUrl": "/progress",
+          "bodyLen": 771,
+          "h1": "Nothing to show — yet.",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "persona": "mock",
+      "email": "codex.20260705031811.mock@testmaster.pro",
+      "created": true,
+      "userId": "858bb140-8c4b-4e39-8f29-e56723e91ba4",
+      "viewport": [
+        1536,
+        960
+      ],
+      "probes": [
+        {
+          "label": "mock",
+          "route": "/full-test",
+          "url": "https://testmaster.pro/full-test",
+          "status": 200,
+          "finalUrl": "/full-test",
+          "bodyLen": 2059,
+          "h1": "IELTS Full Test Mode",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "mock",
+          "route": "/test/reading",
+          "url": "https://testmaster.pro/test/reading",
+          "status": 200,
+          "finalUrl": "/test/reading",
+          "bodyLen": 290,
+          "h1": "",
+          "title": "IELTS Ace",
+          "consoleErrors": [
+            "Failed to load resource: the server responded with a status of 404 ()"
+          ],
+          "failedResponses": [
+            {
+              "status": 404,
+              "url": "https://ielts-backend-production-fefd.up.railway.app/api/tests?test_type=reading"
+            }
+          ],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "mock",
+          "route": "/test/writing",
+          "url": "https://testmaster.pro/test/writing",
+          "status": 200,
+          "finalUrl": "/test/writing",
+          "bodyLen": 290,
+          "h1": "",
+          "title": "IELTS Ace",
+          "consoleErrors": [
+            "Failed to load resource: the server responded with a status of 404 ()"
+          ],
+          "failedResponses": [
+            {
+              "status": 404,
+              "url": "https://ielts-backend-production-fefd.up.railway.app/api/tests?test_type=writing"
+            }
+          ],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "mock",
+          "route": "/my-results",
+          "url": "https://testmaster.pro/my-results",
+          "status": 200,
+          "finalUrl": "/my-results",
+          "bodyLen": 350,
+          "h1": "My speaking results",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "persona": "vocab",
+      "email": "codex.20260705031811.vocab@testmaster.pro",
+      "created": true,
+      "userId": "98be6b7e-faee-4f4d-ba26-7fa9dc3319c7",
+      "viewport": [
+        1366,
+        900
+      ],
+      "probes": [
+        {
+          "label": "vocab",
+          "route": "/grammar",
+          "url": "https://testmaster.pro/grammar",
+          "status": 200,
+          "finalUrl": "/grammar",
+          "bodyLen": 2498,
+          "h1": "The IELTS 8 Grammar Blueprint",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "vocab",
+          "route": "/vocabulary",
+          "url": "https://testmaster.pro/vocabulary",
+          "status": 200,
+          "finalUrl": "/vocabulary",
+          "bodyLen": 2490,
+          "h1": "IELTS Vocabulary — by Theme",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "vocab",
+          "route": "/mastery-course",
+          "url": "https://testmaster.pro/mastery-course",
+          "status": 200,
+          "finalUrl": "/mastery-course",
+          "bodyLen": 521,
+          "h1": "IELTS Mastery Blueprint",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "vocab",
+          "route": "/advanced-mastery",
+          "url": "https://testmaster.pro/advanced-mastery",
+          "status": 200,
+          "finalUrl": "/advanced-mastery",
+          "bodyLen": 2959,
+          "h1": "Advanced IELTS Mastery",
+          "title": "IELTS Ace",
+          "consoleErrors": [
+            "Error fetching modules: TypeError: Failed to fetch at window.fetch (https://testmaster.pro/assets/index-DXlUb5mi.js:20:7023) at cs (https://testmaster.pro/assets/MasteryCourse-RqwkBR3I.js:1:64941) at https://testmaster.pro/assets/MasteryCou"
+          ],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "persona": "pricing",
+      "email": "codex.20260705031811.pricing@testmaster.pro",
+      "created": true,
+      "userId": "e5b08dcc-1047-490c-8e96-ec42b64934e3",
+      "viewport": [
+        1366,
+        900
+      ],
+      "probes": [
+        {
+          "label": "pricing",
+          "route": "/pricing",
+          "url": "https://testmaster.pro/pricing",
+          "status": 200,
+          "finalUrl": "/pricing",
+          "bodyLen": 2643,
+          "h1": "Pay for exactly the days you need.",
+          "title": "Pricing — Free, Weekly, Monthly & Exam Pack | IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "pricing",
+          "route": "/profile",
+          "url": "https://testmaster.pro/profile",
+          "status": 200,
+          "finalUrl": "/profile",
+          "bodyLen": 1036,
+          "h1": "Your profile.",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "pricing",
+          "route": "/checkout/bank/monthly",
+          "url": "https://testmaster.pro/checkout/bank/monthly",
+          "status": 200,
+          "finalUrl": "/checkout/bank/monthly",
+          "bodyLen": 706,
+          "h1": "Pay 243.000 ₫",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "pricing",
+          "route": "/contact",
+          "url": "https://testmaster.pro/contact",
+          "status": 200,
+          "finalUrl": "/contact",
+          "bodyLen": 439,
+          "h1": "Contact",
+          "title": "Contact — IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "persona": "mobile",
+      "email": "codex.20260705031811.mobile@testmaster.pro",
+      "created": true,
+      "userId": "03ba84b2-676f-4165-bc38-7700dcb664ed",
+      "viewport": [
+        390,
+        844
+      ],
+      "probes": [
+        {
+          "label": "mobile",
+          "route": "/",
+          "url": "https://testmaster.pro/",
+          "status": 200,
+          "finalUrl": "/",
+          "bodyLen": 6520,
+          "h1": "Score your IELTS in minutes — in your language.",
+          "title": "IELTS Ace — AI IELTS Writing & Speaking Practice with Band Feedback",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "mobile",
+          "route": "/dashboard",
+          "url": "https://testmaster.pro/dashboard",
+          "status": 200,
+          "finalUrl": "/dashboard",
+          "bodyLen": 2637,
+          "h1": "Good morning, Codex.",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "mobile",
+          "route": "/question-bank",
+          "url": "https://testmaster.pro/question-bank",
+          "status": 200,
+          "finalUrl": "/question-bank",
+          "bodyLen": 64,
+          "h1": "",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "mobile",
+          "route": "/pricing",
+          "url": "https://testmaster.pro/pricing",
+          "status": 200,
+          "finalUrl": "/pricing",
+          "bodyLen": 2630,
+          "h1": "Pay for exactly the days you need.",
+          "title": "Pricing — Free, Weekly, Monthly & Exam Pack | IELTS Ace",
+          "consoleErrors": [
+            "Error loading topics: TypeError: Failed to fetch at window.fetch (https://testmaster.pro/assets/index-DXlUb5mi.js:20:7023) at ye (https://testmaster.pro/assets/QuestionBank-CYwQ4xlH.js:1:79884) at gs (https://testmaster.pro/assets/QuestionB"
+          ],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "persona": "returning",
+      "email": "codex.20260705031811.returning@testmaster.pro",
+      "created": true,
+      "userId": "8061be68-fc12-44bb-903a-0d94e1d076a5",
+      "viewport": [
+        1280,
+        800
+      ],
+      "probes": [
+        {
+          "label": "returning",
+          "route": "/dashboard/v2",
+          "url": "https://testmaster.pro/dashboard/v2",
+          "status": 200,
+          "finalUrl": "/dashboard/v2",
+          "bodyLen": 2765,
+          "h1": "Good morning, there.",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "returning",
+          "route": "/courses",
+          "url": "https://testmaster.pro/courses",
+          "status": 200,
+          "finalUrl": "/courses",
+          "bodyLen": 1667,
+          "h1": "Three courses. One clear path.",
+          "title": "IELTS Ace",
+          "consoleErrors": [
+            "Failed to load resource: the server responded with a status of 404 ()"
+          ],
+          "failedResponses": [
+            {
+              "status": 404,
+              "url": "https://ielts-backend-production-fefd.up.railway.app/api/beginner-english/lessons"
+            }
+          ],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "returning",
+          "route": "/review-bank",
+          "url": "https://testmaster.pro/review-bank",
+          "status": 200,
+          "finalUrl": "/review-bank",
+          "bodyLen": 302,
+          "h1": "",
+          "title": "IELTS Ace",
+          "consoleErrors": [],
+          "failedResponses": [],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        },
+        {
+          "label": "returning",
+          "route": "/learning",
+          "url": "https://testmaster.pro/learning",
+          "status": 200,
+          "finalUrl": "/learning",
+          "bodyLen": 102,
+          "h1": "",
+          "title": "IELTS Ace",
+          "consoleErrors": [
+            "Failed to load resource: the server responded with a status of 404 ()",
+            "Failed to load resource: the server responded with a status of 404 ()",
+            "TypeError: Cannot read properties of undefined (reading 'map') at H (https://testmaster.pro/assets/LearningPlatform-BGuRYdcO.js:1:4246) at kc (https://testmaster.pro/assets/index-DXlUb5mi.js:9:48096) at Kc (https://testmaster.pro/assets/ind",
+            "App Error: TypeError: Cannot read properties of undefined (reading 'map') at H (https://testmaster.pro/assets/LearningPlatform-BGuRYdcO.js:1:4246) at kc (https://testmaster.pro/assets/index-DXlUb5mi.js:9:48096) at Kc (https://testmaster.pro"
+          ],
+          "failedResponses": [
+            {
+              "status": 404,
+              "url": "https://ielts-backend-production-fefd.up.railway.app/api/learning-platform/progress/8061be68-fc12-44bb-903a-0d94e1d076a5"
+            },
+            {
+              "status": 404,
+              "url": "https://ielts-backend-production-fefd.up.railway.app/api/learning-platform/levels"
+            }
+          ],
+          "pageErrors": [],
+          "ok": true,
+          "error": ""
+        }
+      ]
+    }
+  ],
+  "publicProbes": [
+    {
+      "label": "public",
+      "route": "/",
+      "url": "https://testmaster.pro/",
+      "status": 200,
+      "finalUrl": "/",
+      "bodyLen": 6623,
+      "h1": "Score your IELTS in minutes — in your language.",
+      "title": "IELTS Ace — AI IELTS Writing & Speaking Practice with Band Feedback",
+      "consoleErrors": [],
+      "failedResponses": [],
+      "pageErrors": [],
+      "ok": true,
+      "error": ""
+    },
+    {
+      "label": "public",
+      "route": "/score-my-essay",
+      "url": "https://testmaster.pro/score-my-essay",
+      "status": 200,
+      "finalUrl": "/score-my-essay",
+      "bodyLen": 1336,
+      "h1": "Score my own essay — free, one per email.",
+      "title": "Score my own essay — free IELTS writing evaluation · IELTS Ace",
+      "consoleErrors": [],
+      "failedResponses": [],
+      "pageErrors": [],
+      "ok": true,
+      "error": ""
+    },
+    {
+      "label": "public",
+      "route": "/score-my-speaking",
+      "url": "https://testmaster.pro/score-my-speaking",
+      "status": 200,
+      "finalUrl": "/score-my-speaking",
+      "bodyLen": 1426,
+      "h1": "Score my speaking — free, one per email.",
+      "title": "Score my speaking — free IELTS speaking evaluation · IELTS Ace",
+      "consoleErrors": [],
+      "failedResponses": [],
+      "pageErrors": [],
+      "ok": true,
+      "error": ""
+    },
+    {
+      "label": "public",
+      "route": "/ielts-band-score-calculator",
+      "url": "https://testmaster.pro/ielts-band-score-calculator",
+      "status": 200,
+      "finalUrl": "/ielts-band-score-calculator",
+      "bodyLen": 2712,
+      "h1": "IELTS Band Score Calculator",
+      "title": "IELTS Band Score Calculator — Overall Band with Official Rounding | IELTS Ace",
+      "consoleErrors": [],
+      "failedResponses": [],
+      "pageErrors": [],
+      "ok": true,
+      "error": ""
+    },
+    {
+      "label": "public",
+      "route": "/ielts-faq",
+      "url": "https://testmaster.pro/ielts-faq",
+      "status": 200,
+      "finalUrl": "/ielts-faq",
+      "bodyLen": 4818,
+      "h1": "Frequently asked questions about IELTS",
+      "title": "IELTS FAQ — Band Scores, Scoring, Format & Validity | IELTS Ace",
+      "consoleErrors": [],
+      "failedResponses": [],
+      "pageErrors": [],
+      "ok": true,
+      "error": ""
+    },
+    {
+      "label": "public",
+      "route": "/pricing",
+      "url": "https://testmaster.pro/pricing",
+      "status": 200,
+      "finalUrl": "/pricing",
+      "bodyLen": 2700,
+      "h1": "Pay for exactly the days you need.",
+      "title": "Pricing — Free, Weekly, Monthly & Exam Pack | IELTS Ace",
+      "consoleErrors": [],
+      "failedResponses": [],
+      "pageErrors": [],
+      "ok": true,
+      "error": ""
+    },
+    {
+      "label": "public",
+      "route": "/samples/writing/band-5-0-task2",
+      "url": "https://testmaster.pro/samples/writing/band-5-0-task2",
+      "status": 200,
+      "finalUrl": "/samples/writing/band-5-0-task2",
+      "bodyLen": 4235,
+      "h1": "A real Band 5.0 Writing Task 2, graded as Cambridge would.",
+      "title": "Sample Band 5.0 Writing Task 2 Evaluation · IELTS Ace",
+      "consoleErrors": [],
+      "failedResponses": [],
+      "pageErrors": [],
+      "ok": true,
+      "error": ""
+    },
+    {
+      "label": "public",
+      "route": "/samples/writing/band-6-5-task2",
+      "url": "https://testmaster.pro/samples/writing/band-6-5-task2",
+      "status": 200,
+      "finalUrl": "/samples/writing/band-6-5-task2",
+      "bodyLen": 4517,
+      "h1": "A real Band 6.5 Writing Task 2, graded as Cambridge would.",
+      "title": "Sample Band 6.5 Writing Task 2 Evaluation · IELTS Ace",
+      "consoleErrors": [],
+      "failedResponses": [],
+      "pageErrors": [],
+      "ok": true,
+      "error": ""
+    },
+    {
+      "label": "public",
+      "route": "/samples/writing/band-8-0-task2",
+      "url": "https://testmaster.pro/samples/writing/band-8-0-task2",
+      "status": 200,
+      "finalUrl": "/samples/writing/band-8-0-task2",
+      "bodyLen": 5035,
+      "h1": "A real Band 8.0 Writing Task 2, graded as Cambridge would.",
+      "title": "Sample Band 8.0 Writing Task 2 Evaluation · IELTS Ace",
+      "consoleErrors": [],
+      "failedResponses": [],
+      "pageErrors": [],
+      "ok": true,
+      "error": ""
+    },
+    {
+      "label": "public",
+      "route": "/samples/speaking/band-6-5-part2",
+      "url": "https://testmaster.pro/samples/speaking/band-6-5-part2",
+      "status": 200,
+      "finalUrl": "/samples/speaking/band-6-5-part2",
+      "bodyLen": 4316,
+      "h1": "The full Speaking Practice — four states, one scroll.",
+      "title": "Sample Band 6.5 Speaking Part 2 — full walkthrough · IELTS Ace",
+      "consoleErrors": [],
+      "failedResponses": [],
+      "pageErrors": [],
+      "ok": true,
+      "error": ""
+    },
+    {
+      "label": "public",
+      "route": "/about",
+      "url": "https://testmaster.pro/about",
+      "status": 200,
+      "finalUrl": "/about",
+      "bodyLen": 5574,
+      "h1": "Built by a teacher who got tired of telling students\nthe same thing every IELTS book leaves out.",
+      "title": "About IELTS Ace — Honest AI IELTS Band Scores",
+      "consoleErrors": [],
+      "failedResponses": [],
+      "pageErrors": [],
+      "ok": true,
+      "error": ""
+    },
+    {
+      "label": "public",
+      "route": "/contact",
+      "url": "https://testmaster.pro/contact",
+      "status": 200,
+      "finalUrl": "/contact",
+      "bodyLen": 430,
+      "h1": "Contact",
+      "title": "Contact — IELTS Ace",
+      "consoleErrors": [],
+      "failedResponses": [],
+      "pageErrors": [],
+      "ok": true,
+      "error": ""
+    },
+    {
+      "label": "public",
+      "route": "/privacy",
+      "url": "https://testmaster.pro/privacy",
+      "status": 200,
+      "finalUrl": "/privacy",
+      "bodyLen": 2668,
+      "h1": "Privacy Policy",
+      "title": "Privacy Policy — IELTS Ace",
+      "consoleErrors": [],
+      "failedResponses": [],
+      "pageErrors": [],
+      "ok": true,
+      "error": ""
+    },
+    {
+      "label": "public",
+      "route": "/terms",
+      "url": "https://testmaster.pro/terms",
+      "status": 200,
+      "finalUrl": "/terms",
+      "bodyLen": 2013,
+      "h1": "Terms of Service",
+      "title": "Terms of Service — IELTS Ace",
+      "consoleErrors": [],
+      "failedResponses": [],
+      "pageErrors": [],
+      "ok": true,
+      "error": ""
+    }
+  ],
+  "essaySmoke": {
+    "route": "/score-my-essay",
+    "ok": true,
+    "detail": "IELTS Ace by testmaster.pro Writing Speaking Reading Listening Samples Pricing Log in Try free Sample Evaluation — see exactly how your essay will be scored. Nothing here is editable. Jump to evaluator → Home/Score my essay Score my own essay — free, one per email. Paste your IELTS writing task belo"
+  },
+  "summary": {
+    "personas": 11,
+    "routeChecks": 54,
+    "ok": 54,
+    "hardFailures": 0,
+    "clientWarnings": 10
+  }
+}
